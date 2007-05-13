@@ -20,7 +20,7 @@ public class ReadOpeningProjectFileReport extends Service {
 
     public InfoOpeningProjectFileReport run(String username, String costCenter, Integer projectCode,
             String userNumber) throws ExcepcaoPersistencia {
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         InfoOpeningProjectFileReport infoOpeningProjectFileReport = new InfoOpeningProjectFileReport();
         if (userNumber != null
                 && projectCode != null

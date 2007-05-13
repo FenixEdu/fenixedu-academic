@@ -28,7 +28,7 @@ public class PersistentRevenueReport extends PersistentReport implements IPersis
         List<IRevenueReportLine> result = new ArrayList<IRevenueReportLine>();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 

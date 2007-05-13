@@ -23,25 +23,11 @@
     <li class="navheader"><bean:message key="title.extraWork" /></li>
 	<li><html:link page="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization"><bean:message key="link.insertAuthorization" /></html:link></li>
 	<li><html:link page="/manageExtraWorkAuthorization.do?method=prepareExtraWorkAuthorizationsSearch"><bean:message key="link.showAuthorizations" /></html:link></li>	<li><html:link page="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"><bean:message key="link.paymentRequests" /></html:link></li>
-	--%>
+	 --%>
 	<li class="navheader"><bean:message key="title.monthClosure" /></li>
     <li><html:link page="/monthClosure.do?method=prepareToCloseMonth"><bean:message key="link.closeMonth" /></html:link></li>
     <%--
-     <li><html:link page="/monthClosure.do?method=prepareToCloseExtraWorkMonth"><bean:message key="link.sendGIAF" /></html:link></li>
+    <li><html:link page="/monthClosure.do?method=prepareToCloseExtraWorkMonth"><bean:message key="link.closeExtraMonth" /></html:link></li>
      --%>
 	<%}%>
-    <%-- 
-    <li><bean:message key="link.consult" />
-    	<ul>
-			<li><html:link page="/workByEmployee.do?method=prepareInputs"><bean:message key="link.work.employee.sheet" /></html:link></li>
-    	</ul>    
-    </li>
-    <li><bean:message key="link.extraWork" />
-    	<ul>
-    		<li><html:link page="/managementMoneyCostCenter.do?method=prepareYear"><bean:message key="link.extraWork.money.cost.center" /></html:link></li>
-    		<li><html:link page="/requestsExtraWork.do?method=prepareInputs"><bean:message key="link.extraWork.requests" /></html:link></li>
-			<li><html:link page="/extraWorkByEmployee.do?method=prepareInputs"><bean:message key="link.extraWork.employee" /></html:link></li>
-    	</ul>    
-    </li>
-    --%>
 </ul>   

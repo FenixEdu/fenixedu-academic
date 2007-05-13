@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.persistenceTierOracle.Oracle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -38,162 +39,220 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private static Map connectionsMap = new HashMap();
 
-    public static synchronized PersistentSuportOracle getInstance() {
-        if (instance == null) {
-            instance = new PersistentSuportOracle();
-        }
-        return instance;
+    public class ConnectionProperties {
+	private String resourceFileName;
+
+	private String userNamePropertyName;
+
+	private String userPassPropertyName;
+
+	private String urlPropertyName;
+
+	public ConnectionProperties(String resourceFileName, String userNamePropertyName,
+		String userPassPropertyName, String urlPropertyName) {
+	    super();
+	    this.resourceFileName = resourceFileName;
+	    this.userNamePropertyName = userNamePropertyName;
+	    this.userPassPropertyName = userPassPropertyName;
+	    this.urlPropertyName = urlPropertyName;
+	}
+    }
+
+    private static ConnectionProperties connectionProperties;
+
+    public PersistentSuportOracle(String resourceFileName, String userNamePropertyName,
+	    String userPassPropertyName, String urlPropertyName) {
+	super();
+	connectionProperties = new ConnectionProperties(resourceFileName, userNamePropertyName,
+		userPassPropertyName, urlPropertyName);
+    }
+
+    public static synchronized PersistentSuportOracle getProjectDBInstance() {
+	if (instance == null) {
+	    instance = new PersistentSuportOracle("/projectsManagement.properties",
+		    "db.projectManagement.user", "db.projectManagement.pass",
+		    "db.projectManagement.alias");
+	}
+	return instance;
+    }
+
+    public static synchronized PersistentSuportOracle getGiafDBInstance() {
+	if (instance == null) {
+	    instance = new PersistentSuportOracle("/giaf.properties", "db.giaf.user", "db.giaf.pass",
+		    "db.giaf.alias");
+	}
+	return instance;
     }
 
     private void openConnection() throws ExcepcaoPersistencia {
-        if (databaseUrl == null) {
-            Properties properties = new Properties();
-            InputStream inputStream = instance.getClass().getResourceAsStream("/projectsManagement.properties");
-            try {
-                properties.load(inputStream);
-            } catch (IOException e) {
-                throw new ExcepcaoPersistencia(e.getMessage());
-            }
-            String DBUserName = properties.getProperty("db.projectManagement.user");
-            String DBUserPass = properties.getProperty("db.projectManagement.pass");
-            String DBUrl = properties.getProperty("db.projectManagement.alias");
-            if (DBUserName == null || DBUserPass == null || DBUrl == null) {
-                throw new ExcepcaoPersistencia();
-            }
-            StringBuilder stringBuffer = new StringBuilder();
-            stringBuffer.append("jdbc:oracle:thin:");
-            stringBuffer.append(DBUserName);
-            stringBuffer.append("/");
-            stringBuffer.append(DBUserPass);
-            stringBuffer.append("@");
-            stringBuffer.append(DBUrl);
-            databaseUrl = stringBuffer.toString();
-        }
-        try {
-            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	if (databaseUrl == null) {
+	    Properties properties = new Properties();
+	    InputStream inputStream = instance.getClass().getResourceAsStream(
+		    connectionProperties.resourceFileName);
+	    try {
+		properties.load(inputStream);
+	    } catch (IOException e) {
+		throw new ExcepcaoPersistencia(e.getMessage());
+	    }
+	    String DBUserName = properties.getProperty(connectionProperties.userNamePropertyName);
+	    String DBUserPass = properties.getProperty(connectionProperties.userPassPropertyName);
+	    String DBUrl = properties.getProperty(connectionProperties.urlPropertyName);
+	    if (DBUserName == null || DBUserPass == null || DBUrl == null) {
+		throw new ExcepcaoPersistencia();
+	    }
+	    StringBuilder stringBuffer = new StringBuilder();
+	    stringBuffer.append("jdbc:oracle:thin:");
+	    stringBuffer.append(DBUserName);
+	    stringBuffer.append("/");
+	    stringBuffer.append(DBUserPass);
+	    stringBuffer.append("@");
+	    stringBuffer.append(DBUrl);
+	    databaseUrl = stringBuffer.toString();
+	}
+	try {
+	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+	} catch (SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	}
     }
 
     private void closeConnection() throws ExcepcaoPersistencia {
-        Connection thisconnection = (Connection) connectionsMap.get(Thread.currentThread());
-        try {
-            thisconnection.close();
-            connectionsMap.remove(Thread.currentThread());
-        } catch (Exception e) {
-            throw new ExcepcaoPersistencia();
-        }
+	Connection thisconnection = (Connection) connectionsMap.get(Thread.currentThread());
+	try {
+	    thisconnection.close();
+	    connectionsMap.remove(Thread.currentThread());
+	} catch (Exception e) {
+	    throw new ExcepcaoPersistencia();
+	}
     }
 
     public synchronized void startTransaction() throws ExcepcaoPersistencia {
-        try {
-            openConnection();
-            connection = DriverManager.getConnection(databaseUrl);
-            connection.setAutoCommit(false);
-            connectionsMap.put(Thread.currentThread(), connection);
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	try {
+	    openConnection();
+	    connection = DriverManager.getConnection(databaseUrl);
+	    connection.setAutoCommit(false);
+	    connectionsMap.put(Thread.currentThread(), connection);
+	} catch (SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	}
     }
 
     public synchronized void commitTransaction() throws ExcepcaoPersistencia {
-        Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.commit();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	try {
+	    thisConnection.commit();
+	    closeConnection();
+	} catch (SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	}
     }
 
     public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
-        Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.rollback();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	try {
+	    thisConnection.rollback();
+	    closeConnection();
+	} catch (SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	}
     }
 
     public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
-        Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
-        if (thisConnection == null) {
-            if (connection == null)
-                try {
-                    openConnection();
-                    connection = DriverManager.getConnection(databaseUrl);
-                } catch (java.sql.SQLException e) {
-                }
-            thisConnection = connection;
-        }
-        PreparedStatement sql = null;
-        try {
-            sql = thisConnection.prepareStatement(statement);
-        } catch (java.sql.SQLException e) {
-        }
-        return sql;
+	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	if (thisConnection == null) {
+	    if (connection == null)
+		try {
+		    openConnection();
+		    connection = DriverManager.getConnection(databaseUrl);
+		} catch (java.sql.SQLException e) {
+		}
+	    thisConnection = connection;
+	}
+	PreparedStatement sql = null;
+	try {
+	    sql = thisConnection.prepareStatement(statement);
+	} catch (java.sql.SQLException e) {
+	}
+	return sql;
+    }
+
+    public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
+	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	if (thisConnection == null) {
+	    if (connection == null)
+		try {
+		    openConnection();
+		    connection = DriverManager.getConnection(databaseUrl);
+		} catch (java.sql.SQLException e) {
+		}
+	    thisConnection = connection;
+	}
+	CallableStatement sql = null;
+	try {
+	    sql = thisConnection.prepareCall(statement);
+	} catch (java.sql.SQLException e) {
+	}
+	return sql;
     }
 
     public IPersistentProject getIPersistentProject() {
-        return new PersistentProject();
+	return new PersistentProject();
     }
 
     public IPersistentProjectUser getIPersistentProjectUser() {
-        return new PersistentProjectUser();
+	return new PersistentProjectUser();
     }
 
     public IPersistentRubric getIPersistentRubric() {
-        return new PersistentRubric();
+	return new PersistentRubric();
     }
 
     public IPersistentExpensesReport getIPersistentExpensesReport() {
-        return new PersistentExpensesReport();
+	return new PersistentExpensesReport();
     }
 
     public IPersistentReport getIPersistentRevenueReport() {
-        return new PersistentRevenueReport();
+	return new PersistentRevenueReport();
     }
 
     public IPersistentSummaryReport getIPersistentSummaryReport() {
-        return new PersistentSummaryReport();
+	return new PersistentSummaryReport();
     }
 
     public IPersistentExpensesResume getIPersistentExpensesResume() {
-        return new PersistentExpensesResume();
+	return new PersistentExpensesResume();
     }
 
     public IPersistentReport getIPersistentMovementReport() {
-        return new PersistentMovementReport();
+	return new PersistentMovementReport();
     }
 
     public IPersistentExpensesReport getIPersistentCompleteExpensesReport() {
-        return new PersistentCompleteExpensesReport();
+	return new PersistentCompleteExpensesReport();
     }
 
     public IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport() {
-        return new PersistentOpeningProjectFileReport();
+	return new PersistentOpeningProjectFileReport();
     }
 
     public IPersistentReport getIPersistentProjectMemberBudget() {
-        return new PersistentProjectMemberBudget();
+	return new PersistentProjectMemberBudget();
     }
 
     public IPersistentReport getIPersistentProjectBudgetaryBalanceReport() {
-        return new PersistentProjectBudgetaryBalanceReport();
+	return new PersistentProjectBudgetaryBalanceReport();
     }
 
     public IPersistentReport getIPersistentGeneratedOverheadsReport() {
-        return new PersistentGeneratedOverheadsReport();
+	return new PersistentGeneratedOverheadsReport();
     }
 
     public IPersistentReport getIPersistentTransferedOverheadsReport() {
-        return new PersistentTransferedOverheadsReport();
+	return new PersistentTransferedOverheadsReport();
     }
 
     public IPersistentReport getIPersistentOverheadsSummaryReport() {
-        return new PersistentOverheadsSummaryReport();
+	return new PersistentOverheadsSummaryReport();
     }
 
 }

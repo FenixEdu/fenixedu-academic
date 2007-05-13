@@ -29,7 +29,7 @@ public class PersistentMovementReport extends PersistentReport implements IPersi
     public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         List result = new ArrayList();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();

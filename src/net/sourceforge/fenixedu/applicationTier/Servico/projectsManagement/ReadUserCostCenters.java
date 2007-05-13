@@ -23,7 +23,7 @@ public class ReadUserCostCenters extends Service {
     public List run(Person person, String costCenter, String userNumber) throws ExcepcaoPersistencia {
         List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(
                 new Integer(userNumber));
 

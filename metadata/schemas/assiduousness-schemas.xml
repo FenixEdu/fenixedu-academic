@@ -691,7 +691,7 @@
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="month"  bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="unit" key="label.costCenter" schema="show.employeeUnit" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="employee" key="label.employee" schema="show.employeePersonalInformation2" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="employee.person" key="label.employee" schema="show.employeePersonalInformation" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="edit.extraWorkAuthorization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">

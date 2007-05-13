@@ -31,7 +31,7 @@ public class ReadExpensesReport extends Service {
 
     public InfoExpensesReport run(String username, String costCenter, ReportType reportType, Integer projectCode, String rubric, String userNumber)
             throws ExcepcaoPersistencia {
-        IPersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        IPersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         Integer coordID = new Integer(userNumber);
         InfoExpensesReport infoReport = new InfoExpensesReport();
         if (coordID != null

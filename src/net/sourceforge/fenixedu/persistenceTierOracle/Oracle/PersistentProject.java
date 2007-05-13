@@ -37,7 +37,7 @@ public class PersistentProject implements IPersistentProject {
         // and p.projectCode = up.id_proj order by p.projectCode";
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(query.toString());
@@ -80,7 +80,7 @@ public class PersistentProject implements IPersistentProject {
             String query = stringBuffer.toString();
 
             try {
-                PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+                PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
                 p.startTransaction();
 
                 PreparedStatement stmt = p.prepareStatement(query);
@@ -127,7 +127,7 @@ public class PersistentProject implements IPersistentProject {
         String query = stringBuffer.toString();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(query);
@@ -158,7 +158,7 @@ public class PersistentProject implements IPersistentProject {
                 + projectCode;
         Project project = new Project();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -186,7 +186,7 @@ public class PersistentProject implements IPersistentProject {
         String query = " select count(*) from web_user_projs up where up.login='" + userCode + "' and up.id_proj=" + projectCode;
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(query);
@@ -210,7 +210,7 @@ public class PersistentProject implements IPersistentProject {
         stringBuffer.append(userCode);
         stringBuffer.append("'");
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(stringBuffer.toString());

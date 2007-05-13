@@ -85,4 +85,9 @@ public class YearMonth implements Serializable {
 	}
     }
 
+    public Partial getPartial() {
+	return new Partial().with(DateTimeFieldType.monthOfYear(), getNumberOfMonth()).with(
+		DateTimeFieldType.year(), getYear());
+    }
+
 }

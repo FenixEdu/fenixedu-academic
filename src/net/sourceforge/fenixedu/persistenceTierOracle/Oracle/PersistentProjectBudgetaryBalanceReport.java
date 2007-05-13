@@ -26,7 +26,7 @@ public class PersistentProjectBudgetaryBalanceReport extends PersistentReport im
         List result = new ArrayList();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 

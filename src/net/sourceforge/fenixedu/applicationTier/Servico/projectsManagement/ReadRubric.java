@@ -23,7 +23,7 @@ public class ReadRubric extends Service {
     }
 
     public List run(String username, String costCenter, RubricType rubricType, String userNumber) throws ExcepcaoPersistencia {
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         List<IRubric> rubricList = p.getIPersistentRubric().getRubricList(rubricType.getRubricTableName());
         List<InfoRubric> infoRubricList = new ArrayList<InfoRubric>();
         for (IRubric rubric : rubricList)

@@ -118,4 +118,13 @@ public class JustificationMotive extends JustificationMotive_Base {
 	}
 	return false;
     }
+
+    public Integer getGiafCode(Assiduousness assiduousness, YearMonthDay day) {
+	if (assiduousness.getStatusBetween(day, day).get(0).getAssiduousnessStatus().getDescription()
+		.equalsIgnoreCase("Contrato a termo certo")) {
+	    return getGiafCodeContractedStatus() == null ? 0 : getGiafCodeContractedStatus();
+	}
+	return getGiafCodeOtherStatus() == null ? 0 : getGiafCodeOtherStatus();
+    }
+
 }

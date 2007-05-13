@@ -32,7 +32,7 @@ public class ReadOverheadReport extends Service {
 	    Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
 	InfoOverheadReport infoReport = new InfoOverheadReport();
 	List<IReportLine> infoLines = new ArrayList<IReportLine>();
-	IPersistentSuportOracle p = PersistentSuportOracle.getInstance();
+	IPersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser()
 		.getCostCenterByID(new Integer(costCenter))));
 	if (userNumber.equals(costCenter) || hasFullCostCenterAccess(userView, costCenter)) {

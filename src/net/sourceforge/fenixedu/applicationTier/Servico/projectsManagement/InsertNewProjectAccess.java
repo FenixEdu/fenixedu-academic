@@ -34,7 +34,7 @@ public class InsertNewProjectAccess extends Service {
 
         deletePastProjectAccesses(person);
 
-        IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
+        IPersistentSuportOracle po = PersistentSuportOracle.getProjectDBInstance();
         Integer coordinatorCode = new Integer(userNumber);
         Boolean isCostCenter = setProjectsRoles(person, costCenter);
 

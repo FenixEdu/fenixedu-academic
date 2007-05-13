@@ -36,7 +36,7 @@ public class RemoveProjectAccess extends Service {
         List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true);
         
         if (projectAccesses.size() == 1) {
-            IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+            IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
             if (persistentSupportOracle.getIPersistentProject().countUserProject(getUserNumber(person)) == 0) {
                 Iterator iter = person.getPersonRolesIterator();
                 while (iter.hasNext()) {

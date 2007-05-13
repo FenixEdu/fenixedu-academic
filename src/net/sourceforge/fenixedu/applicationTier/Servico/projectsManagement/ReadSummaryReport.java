@@ -27,7 +27,7 @@ public class ReadSummaryReport extends Service {
 	    String userNumber) throws ExcepcaoPersistencia {
 	InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	if (coordinatorCode == null)
 	    coordinatorCode = new Integer(userNumber);
 	List lines = null;

@@ -31,7 +31,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
         List result = new ArrayList();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
@@ -83,7 +83,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
         List result = new ArrayList();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();
@@ -135,7 +135,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
     public List getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         List rubricList = new ArrayList();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             StringBuilder stringBuffer = new StringBuilder();

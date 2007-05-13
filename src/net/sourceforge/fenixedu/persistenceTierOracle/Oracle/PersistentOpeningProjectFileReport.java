@@ -30,7 +30,7 @@ public class PersistentOpeningProjectFileReport extends PersistentReport impleme
         IOpeningProjectFileReport report = null;
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();
@@ -98,7 +98,7 @@ public class PersistentOpeningProjectFileReport extends PersistentReport impleme
     public List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue) throws ExcepcaoPersistencia {
         List report = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();

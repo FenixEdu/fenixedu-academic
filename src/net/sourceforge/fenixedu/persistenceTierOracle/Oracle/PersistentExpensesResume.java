@@ -29,7 +29,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
     public ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         ISummaryPTEReportLine report = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             String query = new String("select \"RECEITA\", \"DESPESA\", \"IVA\", \"TOTAL\" from " + tableOrView + " where PROJECTCODE='"
@@ -55,7 +55,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
     public ISummaryEURReportLine getSummaryEURReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         ISummaryEURReportLine report = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             String query = new String("select \"RECEITA\", \"DESPESA\", \"IVA\", \"AD_POR_JUST\",  \"TOTAL\" from " + tableOrView
@@ -82,7 +82,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
     public IAdiantamentosReportLine getAdiantamentosReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         IAdiantamentosReportLine report = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();
@@ -112,7 +112,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
     public ICabimentosReportLine getCabimentosReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         ICabimentosReportLine report = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();

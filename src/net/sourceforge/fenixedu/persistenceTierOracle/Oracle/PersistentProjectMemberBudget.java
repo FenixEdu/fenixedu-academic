@@ -28,7 +28,7 @@ public class PersistentProjectMemberBudget extends PersistentReport implements I
         List result = new ArrayList();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             String rubricTableOrView = getTableOrViewName(p, ReportType.RUBRIC_BUDGET_MEMBER);

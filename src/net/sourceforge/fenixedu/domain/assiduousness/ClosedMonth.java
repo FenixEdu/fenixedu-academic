@@ -14,9 +14,9 @@ import org.joda.time.YearMonthDay;
 public class ClosedMonth extends ClosedMonth_Base {
 
     static final public Comparator<ClosedMonth> COMPARATOR_BY_DATE = new Comparator<ClosedMonth>() {
-        public int compare(final ClosedMonth o1, final ClosedMonth o2) {
-            return o1.getClosedYearMonth().compareTo(o2.getClosedYearMonth());
-        }
+	public int compare(final ClosedMonth o1, final ClosedMonth o2) {
+	    return o1.getClosedYearMonth().compareTo(o2.getClosedYearMonth());
+	}
     };
 
     public static final int dayOfMonthToCloseLastMonth = 4;
@@ -74,15 +74,15 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public static ClosedMonth getLastMonthClosed(boolean extraWork) {
-        ClosedMonth resultClosedMonth = null;
-        for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
-            if (resultClosedMonth == null
-                    || (closedMonth.getClosedYearMonth().isAfter(resultClosedMonth.getClosedYearMonth()) && (!extraWork || closedMonth
-                            .getClosedForExtraWork()))) {
-                resultClosedMonth = closedMonth;
-            }
-        }
-        return resultClosedMonth;
+	ClosedMonth resultClosedMonth = null;
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if ((resultClosedMonth == null || closedMonth.getClosedYearMonth().isAfter(
+		    resultClosedMonth.getClosedYearMonth()))
+		    && ((!extraWork) || closedMonth.getClosedForExtraWork())) {
+		resultClosedMonth = closedMonth;
+	    }
+	}
+	return resultClosedMonth;
     }
 
     public boolean sameClosedMonth(ClosedMonth closedMonth) {
@@ -113,6 +113,18 @@ public class ClosedMonth extends ClosedMonth_Base {
             }
         }
         return null;
+    }
+
+    public static ClosedMonth getClosedMonth(Partial partial) {
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == partial
+		    .get(DateTimeFieldType.year())
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == partial
+			    .get(DateTimeFieldType.monthOfYear())) {
+		return closedMonth;
+	    }
+	}
+	return null;
     }
 
     public void delete() {

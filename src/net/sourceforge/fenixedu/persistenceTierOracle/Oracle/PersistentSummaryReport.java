@@ -26,7 +26,7 @@ public class PersistentSummaryReport extends PersistentReport implements IPersis
         List result = new ArrayList();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
@@ -65,7 +65,7 @@ public class PersistentSummaryReport extends PersistentReport implements IPersis
     public List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes) throws ExcepcaoPersistencia {
         List result = new ArrayList();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder queryBuffer = new StringBuilder();

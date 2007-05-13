@@ -31,7 +31,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
         List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
@@ -73,7 +73,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
         List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
@@ -116,7 +116,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
     public List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         List<LabelValueBean> rubricList = new ArrayList<LabelValueBean>();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             StringBuilder query = new StringBuilder();
             query.append("select distinct r.COD, r.DESCRICAO from ");

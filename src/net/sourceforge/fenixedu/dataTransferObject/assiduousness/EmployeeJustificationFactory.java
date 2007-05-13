@@ -38,7 +38,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
-import org.joda.time.Interval;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
@@ -168,7 +167,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			if (isOverlapingOtherJustification(duration, null)) {
-			    return new ActionMessage("error.overlapingOtherJustification");
+			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), duration,
@@ -193,6 +192,10 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			if (!numberOfHours.isShorterThan(dayDuration)) {
 			    return new ActionMessage("errors.numberOfHoursLongerThanDay");
+			}
+			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(),
+				numberOfHours)) {
+			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
 			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
@@ -383,7 +386,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			if (isOverlapingOtherJustification(duration, getJustification())) {
-			    return new ActionMessage("error.overlapingOtherJustification");
+			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), duration,
@@ -407,6 +410,10 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			if (!numberOfHours.isShorterThan(dayDuration)) {
 			    return new ActionMessage("errors.numberOfHoursLongerThanDay");
+			}
+			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(),
+				numberOfHours)) {
+			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(
 				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
@@ -693,7 +700,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingOtherJustification(duration, null)) {
 			    result.append(assiduousness.getEmployee().getEmployeeNumber());
 			    result.append(" - ");
-			    result.append(bundle.getString("error.overlapingOtherJustification"));
+			    result.append(bundle.getString("errors.overlapingOtherJustification"));
 			    result.append("<br/>");
 			    continue;
 			}
@@ -805,6 +812,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    }
 			}
 		    }
+		    if (getJustificationMotive().getJustificationType()
+			    .equals(JustificationType.BALANCE)
+			    && isOverlapingAnotherBalanceLeave(assiduousness, duration)) {
+			result.append(assiduousness.getEmployee().getEmployeeNumber());
+			result.append(" - ");
+			result.append(bundle.getString("errors.overlapingOtherJustification"));
+			result.append("<br/>");
+		    }
 		    new Leave(assiduousness, dateTime, duration, getJustificationMotive(), null,
 			    getNotes(), new DateTime(), getModifiedBy());
 		}
@@ -881,6 +896,20 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 	if (!clockings.isEmpty()) {
 	    return true;
+	}
+	return false;
+    }
+
+    protected boolean isOverlapingAnotherBalanceLeave(Assiduousness assiduousness, Duration duration) {
+	final List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate());
+	if (!leaves.isEmpty()) {
+	    for (Leave leave : leaves) {
+		if (leave.getJustificationMotive().getJustificationType().equals(
+			JustificationType.BALANCE)
+			&& leave.getDuration().equals(duration)) {
+		    return true;
+		}
+	    }
 	}
 	return false;
     }

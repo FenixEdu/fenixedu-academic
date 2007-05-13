@@ -29,7 +29,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         String query = queryBuffer.toString();
         IRubric result = null;
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(query);
@@ -55,7 +55,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         String query = queryBuffer.toString();
         List<IRubric> result = new ArrayList<IRubric>();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -88,7 +88,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
             String query = stringBuffer.toString();
 
             try {
-                PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+                PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
                 p.startTransaction();
                 PreparedStatement stmt = p.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
@@ -115,7 +115,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         query.append(userNumber);
         query.append("'");
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             PreparedStatement stmt = p.prepareStatement(query.toString());
             ResultSet rs = stmt.executeQuery();
@@ -136,7 +136,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         query.append(costCenter);
         query.append("'");
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             PreparedStatement stmt = p.prepareStatement(query.toString());
             ResultSet rs = stmt.executeQuery();

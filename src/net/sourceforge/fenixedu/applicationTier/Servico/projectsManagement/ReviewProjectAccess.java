@@ -32,7 +32,7 @@ public class ReviewProjectAccess extends Service {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
                     IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle
-                            .getInstance();
+                            .getProjectDBInstance();
                     if ((persistentSupportOracle.getIPersistentProject().countUserProject(
                             employee.getEmployeeNumber()) == 0)) {
                         List<ProjectAccess> accessesToDelete = ProjectAccess
@@ -56,7 +56,7 @@ public class ReviewProjectAccess extends Service {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
                     IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle
-                            .getInstance();
+                            .getProjectDBInstance();
                     if ((persistentSupportOracle.getIPersistentProject().countUserProject(
                             employee.getEmployeeNumber()) == 0)) {
                         List<ProjectAccess> accessesToDelete = ProjectAccess

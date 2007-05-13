@@ -39,7 +39,7 @@ public class ReadUserProjects extends Service {
 	    }
 	}
 
-	PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	List<Project> projectList = new ArrayList<Project>();
 	if (StringUtils.isEmpty(costCenter) || costCenter.equals(userNumber)) {
 	    projectList = p.getIPersistentProject().readByUserLogin(userNumber);

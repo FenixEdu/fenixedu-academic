@@ -27,7 +27,7 @@ public class PersistentRubric implements IPersistentRubric {
         String query = "select COD, DESCRICAO from " + rubricTableName + " order by COD";
 
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
 
             PreparedStatement stmt = p.prepareStatement(query);

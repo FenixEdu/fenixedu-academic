@@ -25,7 +25,7 @@ public class ReadCoordinators extends Service {
     public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
         List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
 
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         Integer thisCoordinator = new Integer(userNumber);
 
         List<Integer> coordinatorsCodes = new ArrayList<Integer>();

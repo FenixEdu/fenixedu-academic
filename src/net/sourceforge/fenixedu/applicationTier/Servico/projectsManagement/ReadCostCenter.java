@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class ReadCostCenter extends Service {
     public InfoRubric run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
-        return InfoRubric.newInfoFromDomain(PersistentSuportOracle.getInstance().getIPersistentProjectUser().getCostCenterByID(
+        return InfoRubric.newInfoFromDomain(PersistentSuportOracle.getProjectDBInstance().getIPersistentProjectUser().getCostCenterByID(
                 new Integer(costCenter)));
     }
 }

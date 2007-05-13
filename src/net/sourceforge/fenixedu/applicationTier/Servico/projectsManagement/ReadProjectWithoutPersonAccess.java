@@ -38,7 +38,7 @@ public class ReadProjectWithoutPersonAccess extends Service {
             projectCodes.add(infoProjectAccess.getKeyProject());
         }
         
-        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
         List<Project> projectList = persistentSupportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
         List<InfoProject> infoProjects = new ArrayList<InfoProject>();
         for (Project project : projectList) {

@@ -4074,7 +4074,10 @@ class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends 
         JustificationGroup justificationGroup;
 		Boolean actualWorkTime;
         DateTime lastModifiedDate;
-		Integer keyModifiedBy;       
+		Integer keyModifiedBy;
+		Integer giafCodeContractedStatus;
+		Integer giafCodeOtherStatus;
+		Boolean accumulate;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends net.sourceforge.fenixedu.domain.DomainObject {

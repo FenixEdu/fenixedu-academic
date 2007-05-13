@@ -57,7 +57,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
         if (costCenter != null && !costCenter.equals("")) {
             Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
             if (!costCenter.equals(role.getPortalSubApplication())) {
-                PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+                PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
                 if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber,
                         new Integer(costCenter)) != null) {
                     s.addParameter("userNumber", costCenter, s.parametersArray().length - 1);

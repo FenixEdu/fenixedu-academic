@@ -25,7 +25,7 @@ public class ReadProjectAccesses extends Service {
 
     public List run(String username, String costCenter, String userNumber) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
         if (persistentSupportOracle.getIPersistentProject().countUserProject(new Integer(userNumber)) == 0)
             throw new InvalidArgumentsServiceException();
 
@@ -52,7 +52,7 @@ public class ReadProjectAccesses extends Service {
                     .readProjectAccessesByCoordinator(personCoordinator);
             // ProjectAccess.getAllByPersonUsernameAndCoordinator(username, personCoordinator, true);
 
-            IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+            IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
             for (ProjectAccess projectAccess : projectAcessesList) {
                 InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
                 infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(persistentSupportOracle
@@ -67,7 +67,7 @@ public class ReadProjectAccesses extends Service {
             Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
         Person person = (Person) rootDomainObject.readPartyByOID(personCode);
 
-        IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
+        IPersistentSuportOracle spOracle = PersistentSuportOracle.getProjectDBInstance();
         InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(ProjectAccess
                 .getByPersonAndProject(person, projectCode));
         infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(spOracle.getIPersistentProject()

@@ -27,7 +27,7 @@ public class PersistentTransferedOverheadsReport extends PersistentReport implem
     public List<ITransferedOverheadsReportLine> getCompleteReport(ReportType reportType, Integer costCenterCoordinatorId) throws ExcepcaoPersistencia {
         List<ITransferedOverheadsReportLine> result = new ArrayList<ITransferedOverheadsReportLine>();
         try {
-            PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
             StringBuilder stringBuffer = new StringBuilder();

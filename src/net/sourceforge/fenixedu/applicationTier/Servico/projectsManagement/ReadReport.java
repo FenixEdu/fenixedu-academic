@@ -33,7 +33,7 @@ public class ReadReport extends Service {
         List<IReportLine> infoLines = new ArrayList<IReportLine>();
         
                
-        PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
         if (projectCode != null
                 && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess.getByUsernameAndProjectCode(userView, projectCode) != null)
                 || (costCenter!=null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter)!= null)) {
