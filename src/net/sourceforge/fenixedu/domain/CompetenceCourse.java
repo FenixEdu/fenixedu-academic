@@ -306,7 +306,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public RegimeType getRegime() {
-	return getRecentCompetenceCourseInformation().getRegime();
+	final CompetenceCourseInformation recentCompetenceCourseInformation = getRecentCompetenceCourseInformation();
+	return recentCompetenceCourseInformation != null ? recentCompetenceCourseInformation.getRegime() : null;
     }
 
     public void setRegime(RegimeType regimeType) {
