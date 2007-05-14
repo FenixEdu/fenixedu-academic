@@ -632,7 +632,6 @@ public class CourseGroup extends CourseGroup_Base {
     public void addCurricularCourse(final CurricularPeriod curricularPeriod,
 	    final CurricularCourse curricularCourse, final ExecutionPeriod start,
 	    final ExecutionPeriod end) {
-	
-	new Context(this, curricularCourse, curricularPeriod, start, end);
+	curricularCourse.addContext(this, curricularPeriod, start, end);
     }
 }
