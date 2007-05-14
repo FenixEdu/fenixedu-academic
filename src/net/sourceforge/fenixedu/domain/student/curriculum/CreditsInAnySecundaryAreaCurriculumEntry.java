@@ -13,7 +13,7 @@ public class CreditsInAnySecundaryAreaCurriculumEntry extends CreditsCurriculumE
     
     @Override
     public double getEctsCredits() {
-	return this.creditsInAnySecundaryArea.getObject().getGivenCredits();
+	return creditsInAnySecundaryArea.getObject().getEctsCredits();
     }
 
 }
