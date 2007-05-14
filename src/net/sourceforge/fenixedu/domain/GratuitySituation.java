@@ -50,6 +50,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public void delete() {
+	removeStudentCurricularPlan();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
