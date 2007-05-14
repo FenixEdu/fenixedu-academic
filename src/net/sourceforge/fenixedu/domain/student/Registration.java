@@ -180,10 +180,19 @@ public class Registration extends Registration_Base {
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
 	    ;
 
+	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete())
+	    ;
+
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
 	}
 
+	if (hasExternalRegistrationData()) {
+	    getExternalRegistrationData().delete();
+	}
+
+	removeRegistrationYear();
+	removeDegree();
 	removeStudent();
 	removeRootDomainObject();
 	getShiftsSet().clear();
@@ -196,13 +205,6 @@ public class Registration extends Registration_Base {
 		    "error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
 	}
     }
-
-    /**
-     * @deprecated
-     * @see getLastStudentCurricularPlan
-     * 
-     * 
-     */
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
@@ -747,6 +749,20 @@ public class Registration extends Registration_Base {
 		.getRegistrationNumbersSet()) {
 	    if (registrationNumber.getNumber().equals(number)
 		    && registrationNumber.getRegistration().getDegreeType() == degreeType) {
+		registrations.add(registrationNumber.getRegistration());
+	    }
+	}
+	return registrations;
+    }
+
+    public static List<Registration> readByNumberAndDegreeTypeAndAgreement(Integer number,
+	    DegreeType degreeType, boolean normalAgreement) {
+	final List<Registration> registrations = new ArrayList<Registration>();
+	for (RegistrationNumber registrationNumber : RootDomainObject.getInstance()
+		.getRegistrationNumbersSet()) {
+	    if (registrationNumber.getNumber().equals(number)
+		    && registrationNumber.getRegistration().getDegreeType() == degreeType
+		    && registrationNumber.getRegistration().getRegistrationAgreement().isNormal() == normalAgreement) {
 		registrations.add(registrationNumber.getRegistration());
 	    }
 	}
@@ -1318,8 +1334,8 @@ public class Registration extends Registration_Base {
 
     @Override
     public Degree getDegree() {
-	return super.getDegree() != null ? super.getDegree() : getLastStudentCurricularPlan()
-		.getDegree();
+	return super.getDegree() != null ? super.getDegree()
+		: (hasAnyStudentCurricularPlans() ? getLastStudentCurricularPlan().getDegree() : null);
     }
 
     public DegreeType getDegreeType() {
@@ -1537,7 +1553,8 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear getFirstEnrolmentExecutionYear() {
-	return getSortedEnrolmentsExecutionYears().first();
+	final SortedSet<ExecutionYear> sortedEnrolmentsExecutionYears = getSortedEnrolmentsExecutionYears();
+	return sortedEnrolmentsExecutionYears.isEmpty() ? null : sortedEnrolmentsExecutionYears.first();
     }
 
     public ExecutionYear getLastEnrolmentExecutionYear() {
@@ -1651,10 +1668,6 @@ public class Registration extends Registration_Base {
 	return totalEctsCredits;
     }
 
-    /**
-     * @deprecated
-     * @see getLastDegreeCurricularPlan
-     */
     public DegreeCurricularPlan getActiveDegreeCurricularPlan() {
 	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
     }
@@ -1880,6 +1893,15 @@ public class Registration extends Registration_Base {
 	return getStudent().readAttendByExecutionCourse(executionCourse);
     }
 
+    public Attends readRegistrationAttendByExecutionCourse(ExecutionCourse executionCourse) {
+	for (Attends attend : this.getAssociatedAttends()) {
+	    if (attend.getExecutionCourse().equals(executionCourse)) {
+		return attend;
+	    }
+	}
+	return null;
+    }
+
     @Override
     public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
 	super.setRegistrationAgreement(registrationAgreement == null ? RegistrationAgreement.NORMAL
@@ -1903,13 +1925,11 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
-	    if (proposalAttributedByCoordinator != null
-		    && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
+	    if (proposalAttributedByCoordinator != null && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
 		return proposalAttributedByCoordinator;
 	    }
 	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
-	    if (proposalAttributedByTeacher != null
-		    && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
+	    if (proposalAttributedByTeacher != null && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
 		if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
 		    return proposalAttributedByTeacher;
 		}
@@ -1917,7 +1937,6 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-
     private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
 	final Scheduleing scheduleing = proposal.getScheduleing();
 	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
@@ -1937,5 +1956,6 @@ public class Registration extends Registration_Base {
 
 	return false;
     }
+
 
 }
