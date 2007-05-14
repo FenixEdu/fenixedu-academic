@@ -3972,6 +3972,18 @@ class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net
 	DateTime lastModifiedDate;
 }
 
+class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyUnit;
+	Integer year;
+	Double spent;
+}
+
+class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyUnitExtraWorkAmount;
+	YearMonthDay date;
+	Double amount;
+}
+
 class net.sourceforge.fenixedu.domain.assiduousness.Schedule extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay beginDate;
 	YearMonthDay endDate;
@@ -6082,6 +6094,20 @@ relation ExtraWorkAuthorizationWorkingUnit {
 relation ExtraWorkRequestUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;	
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
+		multiplicity *;
+	}
+}
+
+relation UnitExtraWorkAmountUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;	
+	net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount playsRole unitExtraWorkAmounts {
+		multiplicity *;
+	}
+}
+
+relation UnitExtraWorkAmountUnitExtraWorkMovement {
+	net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount playsRole unitExtraWorkAmount;	
+	net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement playsRole unitExtraWorkMovements {
 		multiplicity *;
 	}
 }
@@ -9802,6 +9828,20 @@ relation RootDomainObjectEmployeeExtraWorkAuthorization {
 relation RootDomainObjectExtraWorkRequest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUnitExtraWorkAmount {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount playsRole unitsExtraWorkAmounts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUnitExtraWorkMovement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement playsRole unitsExtraWorkMovements {
 		multiplicity *;
 	}
 }
