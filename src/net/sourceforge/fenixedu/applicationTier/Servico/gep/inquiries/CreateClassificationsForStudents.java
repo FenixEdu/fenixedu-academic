@@ -14,7 +14,6 @@ import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -22,10 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -98,7 +94,7 @@ public class CreateClassificationsForStudents extends Service {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
 		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	for (Registration registration : degreeCurricularPlan.getRegistrations()) {
-	    if (registration.isInRegisteredState()) {
+	    if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
 		if (registration.getRegistrationYear() == currentExecutionYear) {
                     try {
                         if (registration.getEntryGrade() != null) {
