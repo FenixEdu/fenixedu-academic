@@ -36,4 +36,11 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
 	setInstitution(institution);
 	setCoordinatorName(externalRegistrationDataBean.getCoordinatorName());
     }
+
+    public void delete() {
+	removeRootDomainObject();
+	removeInstitution();
+	removeRegistration();
+	super.deleteDomainObject();
+    }
 }
