@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create Tables For UnitExtraWork" createTablesForUnitExtraWork.sql
