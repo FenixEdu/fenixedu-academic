@@ -406,6 +406,40 @@
 				</logic:equal>
 			</logic:iterate>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.CreditsInScientificAreaCurriculumEntry">
+					<tr>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.credits.in.scientific.area"/></td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+					</tr>
+				</logic:equal>
+			</logic:iterate>
+			<logic:iterate id="curriculumEntry" name="curriculumEntries">
+				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.CreditsInAnySecundaryAreaCurriculumEntry">
+					<tr>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td colspan="2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.credits.in.any.secondary.area"/></td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter">-</td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="ectsCredits"/></td>
+					</tr>
+				</logic:equal>
+			</logic:iterate>
+			<logic:iterate id="curriculumEntry" name="curriculumEntries">
 				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
 					<tr>
 						<td></td>

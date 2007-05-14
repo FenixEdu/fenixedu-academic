@@ -34,11 +34,12 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
 
         addNotNeedToEnrols(curriculumEntries, studentCurricularPlan);
         addDismissals(curriculumEntries, studentCurricularPlan);
-        //addCredits(curriculumEntries, studentCurricularPlan);
+        addCredits(curriculumEntries, studentCurricularPlan);
 
         return curriculumEntries;
     }
 
+    @Override
     protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
 	final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
 	
