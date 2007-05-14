@@ -330,4 +330,13 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return true;
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void delete() {
+
+	super.setGratuityPaymentPlan(null);
+
+	super.delete();
+    }
+
 }
