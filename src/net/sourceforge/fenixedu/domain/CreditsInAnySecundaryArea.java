@@ -6,16 +6,20 @@ package net.sourceforge.fenixedu.domain;
 
 public class CreditsInAnySecundaryArea extends CreditsInAnySecundaryArea_Base {
 
-	public CreditsInAnySecundaryArea() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public CreditsInAnySecundaryArea() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public void delete() {
-		removeEnrolment();
-		removeStudentCurricularPlan();
-		removeRootDomainObject();
-        super.deleteDomainObject();
-	}
+    public void delete() {
+	removeEnrolment();
+	removeStudentCurricularPlan();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+
+    public double getEctsCredits() {
+	return 7.5;
+    }
 
 }
