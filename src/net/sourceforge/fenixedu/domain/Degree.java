@@ -24,8 +24,10 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -322,15 +324,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
-    public String getPresentationName() {
-	final ResourceBundle enumResourceBundle = ResourceBundle
-		.getBundle("resources.EnumerationResources");
-	final ResourceBundle appResourceBundle = ResourceBundle
-		.getBundle("resources.ApplicationResources");
-	return enumResourceBundle.getString(getDegreeType().toString()) + " "
-		+ appResourceBundle.getString("label.in") + " " + getNome();
-    }
-
     public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	if (!isBolonhaDegree()) {
@@ -422,8 +415,53 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
-    public String getName() {
+    final public String getName() {
 	return this.getNome();
+    }
+
+    final public MultiLanguageString getNameI18N() {
+	final MultiLanguageString multiLanguageString = new MultiLanguageString();
+	if (getName() != null && getName().length() > 0) {
+	    multiLanguageString.setContent(Language.pt, getName());
+	}
+	if (getNameEn() != null && getNameEn().length() > 0) {
+	    multiLanguageString.setContent(Language.en, getNameEn());
+	}
+	return multiLanguageString;
+    }
+
+    final public String getPresentationName() {
+	final ResourceBundle enumResourceBundle = ResourceBundle
+		.getBundle("resources.EnumerationResources");
+	final ResourceBundle appResourceBundle = ResourceBundle
+		.getBundle("resources.ApplicationResources");
+	return enumResourceBundle.getString(getDegreeType().toString()) + " "
+		+ appResourceBundle.getString("label.in") + " " + getNome();
+    }
+
+    final public String getFilteredName() {
+	final StringBuilder result = new StringBuilder(getName());
+	
+	for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
+	    final String toRemove = " - " + campus.getName();
+	    if (result.toString().contains(toRemove)) {
+		result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
+	    }
+	}
+	
+	return result.toString();
+    }
+
+    final public String getSeniorTitle() {
+	final StringBuilder seniorTitle = new StringBuilder();
+	
+	seniorTitle.append(getDegreeType().getSeniorTitle());
+	seniorTitle.append(" ");
+	seniorTitle.append(ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale()).getString("label.in"));
+	seniorTitle.append(" ");
+	seniorTitle.append(getFilteredName());
+	
+	return seniorTitle.toString();
     }
 
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
@@ -854,17 +892,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public String constructSchoolClassPrefix(final Integer curricularYear) {
 	return isBolonhaDegree() ? StringAppender.append(getSigla(), "0", curricularYear.toString())
 		: "";
-    }
-
-    public MultiLanguageString getNameI18N() {
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getName() != null && getName().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getName());
-	}
-	if (getNameEn() != null && getNameEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getNameEn());
-	}
-	return multiLanguageString;
     }
 
 }
