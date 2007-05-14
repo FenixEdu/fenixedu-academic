@@ -156,7 +156,27 @@ public enum DegreeType {
 	return DegreeType.class.getSimpleName() + "." + name();
     }
 
-    public String getSeniorTitle() {
+    final public String getFilteredName() {
+	final StringBuilder result = new StringBuilder(getLocalizedName());
+	final String toRemove;
+	
+	if (isBolonhaType()) {
+	    toRemove = " Bolonha";
+	} else if (this == DegreeType.DEGREE) {
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    toRemove = " (" + getYears() + " " + applicationResources.getString("years") + ")";
+	} else {
+	    toRemove = "";
+	}
+	
+	if (result.toString().contains(toRemove)) {
+	    result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
+	}
+	
+	return result.toString();
+    }
+
+    final public String getSeniorTitle() {
 	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + ".senior.title");
     }
 
