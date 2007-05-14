@@ -107,14 +107,15 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class Person extends Person_Base {
 
-    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
+    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator(
+	    "sendDate");
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
 
-    /***************************************************************************
-     * BUSINESS SERVICES *
-     **************************************************************************/
+    /***********************************************************************
+         * BUSINESS SERVICES *
+         **********************************************************************/
 
     private IdDocument getIdDocument() {
 	final Iterator<IdDocument> documentIterator = getIdDocumentsSet().iterator();
@@ -190,10 +191,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
-     * @deprecated use Person(PersonBean personBean)
-     * @see Person(PersonBean personBean)
-     */
+         * 
+         * @deprecated use Person(PersonBean personBean)
+         * @see Person(PersonBean personBean)
+         */
     public Person(InfoPersonEditor personToCreate, Country country) {
 
 	super();
@@ -318,10 +319,10 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
-     * @deprecated use edit(PersonBean personBean)
-     * @see edit(PersonBean personBean)
-     */
+         * 
+         * @deprecated use edit(PersonBean personBean)
+         * @see edit(PersonBean personBean)
+         */
     public void edit(InfoPersonEditor personToEdit, Country country) {
 	setProperties(personToEdit);
 	if (country != null) {
@@ -778,9 +779,9 @@ public class Person extends Person_Base {
 	return points;
     }
 
-    /***************************************************************************
-     * PRIVATE METHODS *
-     **************************************************************************/
+    /***********************************************************************
+         * PRIVATE METHODS *
+         **********************************************************************/
 
     private void setProperties(InfoPersonEditor infoPerson) {
 
@@ -944,9 +945,9 @@ public class Person extends Person_Base {
 	setAvailableWebSite(personBean.isHomepageAvailable());
     }
 
-    /***************************************************************************
-     * OTHER METHODS *
-     **************************************************************************/
+    /***********************************************************************
+         * OTHER METHODS *
+         **********************************************************************/
 
     public String getSlideName() {
 	return "/photos/person/P" + getIdInternal();
@@ -1068,19 +1069,20 @@ public class Person extends Person_Base {
     }
 
     /**
-     * @return a group that only contains this person
-     */
+         * @return a group that only contains this person
+         */
     public PersonGroup getPersonGroup() {
 	return new PersonGroup(this);
     }
 
     /**
-     * 
-     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
-     * 
-     * @return true if the person have been deleted, false otherwise
-     */
+         * 
+         * IMPORTANT: This method is evil and should NOT be used! You are NOT
+         * God!
+         * 
+         * 
+         * @return true if the person have been deleted, false otherwise
+         */
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
@@ -1108,6 +1110,11 @@ public class Person extends Person_Base {
 	if (hasPersonName()) {
 	    getPersonName().delete();
 	}
+
+	getBookmarkedBoards().clear();
+	getPersonRoles().clear();
+	getManageableDepartmentCredits().clear();
+	getAdvisories().clear();
 
 	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
 	    ;
@@ -1314,7 +1321,8 @@ public class Person extends Person_Base {
     }
 
     public SortedSet<SentSms> getSentSmsSortedBySendDate() {
-	final SortedSet<SentSms> sentSmsSortedBySendDate = new TreeSet<SentSms>(new ReverseComparator(PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
+	final SortedSet<SentSms> sentSmsSortedBySendDate = new TreeSet<SentSms>(new ReverseComparator(
+		PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
 	sentSmsSortedBySendDate.addAll(this.getSentSmsSet());
 	return sentSmsSortedBySendDate;
     }
@@ -2138,16 +2146,18 @@ public class Person extends Person_Base {
 	if (getStudent() != null) {
 	    for (final Registration registration : getStudent().getRegistrationsSet()) {
 		if (registration.isActive()) {
-		    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    for (final StudentCurricularPlan studentCurricularPlan : registration
+			    .getStudentCurricularPlansSet()) {
 			if (studentCurricularPlan.isActive()) {
-			    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+			    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
+				    .getDegreeCurricularPlan();
 			    final Degree degree = degreeCurricularPlan.getDegree();
 			    organizationalUnits.add(degree.getPresentationName());
 			}
 		    }
 		}
 	    }
-	}	
+	}
 	return organizationalUnits;
     }
 
