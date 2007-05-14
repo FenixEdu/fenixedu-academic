@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
 <html:xhtml/>
@@ -103,6 +104,9 @@
 				final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 				request.setAttribute("studentCurriculum", studentCurriculum);
 			
+				final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+				request.setAttribute("executionYear", executionYear);
+				
 				final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(null);
 				request.setAttribute("totalEctsCredits", totalEctsCredits);
 				
@@ -118,11 +122,14 @@
 				final double sumPi = studentCurriculum.getSumPi(null);
 				request.setAttribute("sumPi", sumPi);
 			%>
+			<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 			<p class="mvert05"><strong><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><strong><bean:message key="bolonha.special.case.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>			
 			<p class="mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="average"/></b></p>
 			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
 			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
-			<p class="mtop1 mbottom05"><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="curricularYear"/></p>
+			<p class="mtop1 mbottom05"><strong><bean:message key="curricular.year.in.begin.of.curricular.year.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p class="mvert05"><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="curricularYear"/></p>
 			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
 			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</p>
 		</logic:equal>
