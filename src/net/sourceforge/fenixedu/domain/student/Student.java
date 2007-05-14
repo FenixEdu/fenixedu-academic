@@ -554,14 +554,13 @@ public class Student extends Student_Base {
     }
 
     public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
-        for (final Registration registration : getRegistrationsSet()) {
-            for (Attends attend : registration.getAssociatedAttends()) {
-                if (attend.getExecutionCourse().equals(executionCourse)) {
-                    return attend;
-                }
-            }
-        }
-        return null;
+	for (final Registration registration : getRegistrationsSet()) {
+	    Attends attends = registration.readRegistrationAttendByExecutionCourse(executionCourse);
+	    if (attends != null) {
+		return attends;
+	    }
+	}
+	return null;
     }
 
     public SortedSet<ExternalEnrolment> getSortedExternalEnrolments() {
