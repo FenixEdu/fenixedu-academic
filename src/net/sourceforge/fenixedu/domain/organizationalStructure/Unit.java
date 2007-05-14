@@ -847,7 +847,19 @@ public class Unit extends Unit_Base {
 	
 	return parentUnits;
     }
-    
+
+    public String getShortPresentationName() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final Unit unit : getParentUnits()) {
+	    if (!unit.isAggregateUnit() && unit != RootDomainObject.getInstance().getInstitutionUnit()) {
+		stringBuilder.append(unit.getName());
+		stringBuilder.append(" - ");
+	    }
+	}
+	stringBuilder.append(getName());
+	return stringBuilder.toString();
+    }
+
     public SortedSet<Unit> getSortedExternalChilds() {
 	final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);	
 	for (final Unit unit : getSubUnits()) {
