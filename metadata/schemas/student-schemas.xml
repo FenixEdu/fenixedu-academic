@@ -119,7 +119,7 @@
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="" />
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypesProvider" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeProvider" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
 	<slot name="degree" key="label.degree"

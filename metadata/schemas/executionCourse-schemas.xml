@@ -637,3 +637,19 @@
     <slot name="evaluations" key="label.archive.options.evaluations"/>
     <slot name="files" key="label.archive.options.files"/>
 </schema>
+
+<schema name="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+		type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
+	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.executionPeriod">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider"/>
+		<property name="format" value="${semester}º Semestre - ${executionYear.year}" />
+	</slot>
+	<slot name="degreeTypes" key="label.degreeType" layout="option-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypesProvider" />
+		<property name="eachSchema" value="degree.type"/>
+	</slot>
+</schema>
+
+<schema name="degree.type" type="net.sourceforge.fenixedu.domain.degree.DegreeType">
+	<slot name="name" key="label.degreeType"/>
+</schema>

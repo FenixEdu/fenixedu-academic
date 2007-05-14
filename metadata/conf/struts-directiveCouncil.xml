@@ -77,6 +77,12 @@
 		input="/index.do">
 		<forward name="success" path="teacherSummariesControlList" />			
 	</action>
+
+	<action path="/evaluationMethodControl"
+			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.EvaluationMethodControlDA"
+			parameter="method">
+		<forward name="search" path="df.page.evaluation.method.control"/>
+	</action>
       		  
  	</action-mappings>
 
