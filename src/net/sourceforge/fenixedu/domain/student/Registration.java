@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -1957,5 +1958,28 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    public boolean isAvailableDegreeTypeForInquiries() {
+	final DegreeType degreeType = getDegreeType();
+	return degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+    }
 
+    public boolean hasInquiriesToRespond() {
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    if (executionPeriod.getState().equals(PeriodState.CURRENT) && !hasInquiryResponseFor(executionCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasInquiryResponseFor(final ExecutionCourse executionCourse) {
+	for (final InquiriesRegistry inquiriesRegistry : getAssociatedInquiriesRegistries()) {
+	    if (inquiriesRegistry.getExecutionCourse() == executionCourse) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

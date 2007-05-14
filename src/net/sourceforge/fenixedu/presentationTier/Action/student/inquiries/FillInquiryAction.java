@@ -105,6 +105,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	return actionMapping.findForward("fillInquiry");
     }
 
+    
     public ActionForward prepareCourses(ActionMapping actionMapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -115,9 +116,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	    throw new InvalidSessionActionException();
 	}
 
-	if (registration.getDegreeType() != DegreeType.DEGREE
-                && registration.getDegreeType() != DegreeType.BOLONHA_DEGREE
-                && registration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	if (!registration.isAvailableDegreeTypeForInquiries()) {
 	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY,
 		    "message.inquiries.not.open.for.non.degrees");
 	    return actionMapping.findForward("inquiryIntroduction");

@@ -153,6 +153,13 @@
 				key="error.NotAuthorized"
 				path="/publicNotAuthorized.do"/>	
         </action>
+
+        <action path="/respondToInquiriesQuestion"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToInquiriesQuestion">
+            <forward name="respondToInquiriesQuestion" path="/respondToInquiriesQuestion.jsp"/>
+        </action>		
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

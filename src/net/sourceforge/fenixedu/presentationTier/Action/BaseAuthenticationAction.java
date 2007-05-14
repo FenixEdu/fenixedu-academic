@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -18,13 +16,16 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.FenixDateFormat;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -32,7 +33,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.DurationFieldType;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -55,7 +55,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    }
 
 	    final HttpSession session = request.getSession(false);
-	    if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
+
+	    if (isStudentAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
@@ -64,6 +67,27 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication",
 		    "errors.invalidAuthentication");
 	}
+    }
+
+    private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
+	if (userView.hasRoleType(RoleType.STUDENT)) {
+	    final Person person = userView.getPerson();
+	    final Student student = person.getStudent();
+	    if (student != null) {
+		if (student.doesNotWantToRespondToInquiries()) {
+		    return false;
+		}
+		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+		if (executionPeriod != null && executionPeriod.getInquiryResponsePeriod() != null && executionPeriod.getInquiryResponsePeriod().insidePeriod()) {
+		    for (final Registration reistration : student.getRegistrationsSet()) {
+			if (reistration.isAvailableDegreeTypeForInquiries() && reistration.hasInquiriesToRespond()) {
+			    return true;
+			}
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request,
@@ -87,6 +111,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	}
 	
 	return checkExpirationDate(mapping, request, userView, actionForward);
+    }
+
+    private ActionForward handleSessionCreationAndForwardToInquiriesResponseQuestion(HttpServletRequest request, IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
     }
 
     private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView, ActionForward actionForward) {

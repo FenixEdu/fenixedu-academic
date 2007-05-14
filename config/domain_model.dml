@@ -2262,6 +2262,12 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Character arithmeticMeanClassification;        
 }
 
+class net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyExecutionPeriod;
+    Integer keyStudent;
+    Boolean dontWantToRespond;
+}
+
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
 	Integer keyExecutionCourse;
@@ -5616,6 +5622,19 @@ relation InquiryResponsePeriodExecutionPeriod {
     net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+relation InquiriesStudentExecutionPeriodStudent {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod playsRole inquiriesStudentExecutionPeriods {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.student.Student playsRole student;
+}
+
+relation InquiriesStudentExecutionPeriodExecutionPeriod {
+    net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod playsRole inquiriesStudentExecutionPeriods {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
 
 relation OtherTypeCreditLineExecutionPeriod {
     net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole associatedOtherTypeCreditLines {
@@ -12936,4 +12955,12 @@ relation RootDomainObjectInquiryResponsePeriod {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectInquiriesStudentExecutionPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod playsRole inquiriesStudentExecutionPeriods  {
+		multiplicity *;
+	}
+}
+
 

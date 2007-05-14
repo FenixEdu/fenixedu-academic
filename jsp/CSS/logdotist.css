@@ -117,3 +117,14 @@ a.button {
 .oldbrowser {
 	display: none;
 }
+
+.infoop2 {
+	background-color: #fafade;
+	vertical-align: middle;
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid #f2f2a6;
+	}
+
+.infoop2 p { margin: 0.25em 0; }
+
+.mtop1 { margin-top: 1em;}

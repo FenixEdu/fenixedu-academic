@@ -29,4 +29,8 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 	return getBegin().isBeforeNow() && getEnd().isAfterNow();
     }
 
+    public boolean insidePeriod() {
+	return !getBegin().isAfterNow() && !getEnd().isBeforeNow();
+    }
+
 }

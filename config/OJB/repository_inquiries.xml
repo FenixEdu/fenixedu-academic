@@ -12,3 +12,6 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" table="INQUIRY_RESPONSE_PERIOD">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod" table="INQUIRIES_STUDENT_EXECUTION_PERIOD">
+</class-descriptor>
