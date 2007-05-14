@@ -127,4 +127,14 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return getGiafCodeOtherStatus() == null ? 0 : getGiafCodeOtherStatus();
     }
 
+    public static JustificationMotive getJustificationMotiveByGiafCode(Integer code,
+	    Assiduousness assiduousness, YearMonthDay day) {
+	for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
+		.getJustificationMotives()) {
+	    if (justificationMotive.getGiafCode(assiduousness, day).equals(code)) {
+		return justificationMotive;
+	    }
+	}
+	return null;
+    }
 }
