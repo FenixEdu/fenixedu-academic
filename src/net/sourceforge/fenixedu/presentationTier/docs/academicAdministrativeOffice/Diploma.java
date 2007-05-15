@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -15,7 +14,6 @@ import org.joda.time.YearMonthDay;
 
 public class Diploma extends AdministrativeOfficeDocument {
 
-    
     protected Diploma(final DocumentRequest documentRequest) {
 	super(documentRequest);
     }
@@ -41,9 +39,14 @@ public class Diploma extends AdministrativeOfficeDocument {
 
 	parameters.put("conclusionDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	parameters.put("institutionName", institutionUnit.getName());
-	parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
-	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+
+	if (registration.getDegreeType().isDegree()) {
+	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
+	} else {
+	    parameters.put("dissertationTitle", "A E-mpresa e o trabalhador Inteligente nas Indústrias Tradicionais na Nova Economia ou na Economia baseada no conhecimento");
+	}
+    
     }
 
 }
