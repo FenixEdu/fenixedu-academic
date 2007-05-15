@@ -106,7 +106,7 @@ public class ExportClosedExtraWorkMonth extends Service {
                 result.append("M").append(fieldSeparator).append("130").append(fieldSeparator);
                 result.append(dateFormat.print(beginDate)).append(fieldSeparator);
                 result.append(dateFormat.print(endDate)).append(fieldSeparator);
-                int hours = Math.round(duration.toPeriod(PeriodType.minutes()).getMinutes() / 60);
+                long hours = Math.round((double)duration.toPeriod(PeriodType.minutes()).getMinutes() / (double)60);
                 result.append(employeeNumberFormat.format(hours)).append("00").append(fieldSeparator);
                 result.append(employeeNumberFormat.format(hours)).append("00\r\n");
             }
