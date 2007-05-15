@@ -31,7 +31,6 @@
 	<parameter name="nameOfFather" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionDate" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
