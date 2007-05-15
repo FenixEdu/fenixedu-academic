@@ -19,12 +19,28 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
 
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) request.getServiceParameters().getParameter(0);
-	final Proposal proposal = rootDomainObject.readProposalByOID(infoProposalEditor.getIdInternal());
 	final IUserView userView = (IUserView) request.getRequester();
-	if (!authorized(userView.getPerson(), proposal)) {
-	    throw new NotAuthorizedFilterException();
+	final InfoProposalEditor infoProposalEditor = (InfoProposalEditor) request.getServiceParameters().getParameter(0);
+	if (infoProposalEditor.getIdInternal() != null) {
+	    final Proposal proposal = rootDomainObject.readProposalByOID(infoProposalEditor.getIdInternal());
+	    if (!authorized(userView.getPerson(), proposal)) {
+		throw new NotAuthorizedFilterException();
+	    }
+	} else {
+	    final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getIdInternal();
+	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	    final Scheduleing scheduleing = executionDegree.getScheduling();
+	    if (!authorized(userView.getPerson(), scheduleing)) {
+		throw new NotAuthorizedFilterException();
+	    }
 	}
+    }
+
+    private boolean authorized(final Person person, final Scheduleing scheduleing) {
+	if (person.hasRole(RoleType.TEACHER) && scheduleing.isInsideProposalSubmissionPeriod()) {
+	    return true;
+	}
+	return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);
     }
 
     private boolean authorized(final Person person, final Proposal proposal) {
@@ -34,6 +50,10 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
 		return true;
 	    }
 	}
+	return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);
+    }
+
+    private boolean isCoordinatorOrDepartmentAdminOffice(final Person person, final Scheduleing scheduleing) {
 	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
 	    if (isCoordinatorFor(executionDegree, person)) {
 		return true;
