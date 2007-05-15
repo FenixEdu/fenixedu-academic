@@ -97,6 +97,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setWhenDateTime(new DateTime());
     }
     
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee, ExecutionPeriod executionPeriod) {
+	this(enrolment, enrolmentEvaluationType, evaluationState, employee);
+	if(executionPeriod == null) {
+	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+	}
+	setExecutionPeriod(executionPeriod);
+    }
+
+    
     public int compareTo(Object o) {
 	EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 	if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().equals(

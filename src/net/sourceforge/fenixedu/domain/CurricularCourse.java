@@ -1505,8 +1505,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 			result.add(enrolment);
 		    }
 		} else if (markSheetType == MarkSheetType.IMPROVEMENT) {
-		    if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType)
-			    && enrolment.hasAttendsFor(executionPeriod)) {
+		    if (enrolment.hasImprovementFor(executionPeriod) && !enrolment.hasAssociatedMarkSheet(markSheetType)) {
 			result.add(enrolment);
 		    }
 		}
@@ -1529,7 +1528,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 		}
 		if (enrolment.hasImprovement()
 			&& !enrolment.hasAssociatedMarkSheet(MarkSheetType.IMPROVEMENT)
-			&& enrolment.hasAttendsFor(executionPeriod)) {
+			&& enrolment.hasImprovementFor(executionPeriod)) {
 		    return true;
 		}
 	    }

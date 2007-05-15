@@ -135,7 +135,7 @@ public class CreateMarkSheetByTeacher extends Service {
     private MarkSheetType findMarkSheetType(ExecutionCourse executionCourse, Enrolment enrolment)
             throws InvalidArgumentsServiceException {
 
-        if (enrolment.isImprovementForExecutionCourse(executionCourse) && enrolment.hasAttendsFor(executionCourse.getExecutionPeriod())) {
+        if (enrolment.isImprovementForExecutionCourse(executionCourse) && enrolment.hasImprovementFor(executionCourse.getExecutionPeriod())) {
             return MarkSheetType.IMPROVEMENT;
 
         } else {

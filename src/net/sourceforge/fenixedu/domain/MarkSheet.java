@@ -139,7 +139,7 @@ public class MarkSheet extends MarkSheet_Base {
                     .addNewEnrolmentEvaluation(enrolmentEvaluationState,
                             getMarkSheetType().getEnrolmentEvaluationType(),
                             responsibleTeacher.getPerson(), evaluationBean.getGrade(),
-                            getCreationDate(), evaluationBean.getEvaluationDate());
+                            getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
             
             addEnrolmentEvaluations(enrolmentEvaluation);
         }
@@ -180,7 +180,7 @@ public class MarkSheet extends MarkSheet_Base {
                     .addNewEnrolmentEvaluation(enrolmentEvaluationState,
                             getMarkSheetType().getEnrolmentEvaluationType(),
                             responsibleTeacher.getPerson(), evaluationBean.getGrade(),
-                            getCreationDate(), evaluationBean.getEvaluationDate());
+                            getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
         } else {
             enrolmentEvaluation
                     .edit(responsibleTeacher.getPerson(), evaluationBean.getGrade(),

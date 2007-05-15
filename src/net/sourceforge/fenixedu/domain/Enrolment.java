@@ -537,7 +537,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
-	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee, executionPeriod);
 	createAttendForImprovement(executionPeriod);
 	
 	return enrolmentEvaluation;
@@ -680,6 +680,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean hasImprovement() {
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.IMPROVEMENT);
     }
+    
+    public boolean hasImprovementFor(ExecutionPeriod executionPeriod) {
+	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
+	    if(enrolmentEvaluation.isImprovment() && enrolmentEvaluation.getExecutionPeriod() != null &&
+		    enrolmentEvaluation.getExecutionPeriod().equals(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public boolean hasSpecialSeason() {
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.SPECIAL_SEASON);
@@ -814,9 +824,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public EnrolmentEvaluation addNewEnrolmentEvaluation(
 	    EnrolmentEvaluationState enrolmentEvaluationState,
 	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String grade,
-	    Date availableDate, Date examDate) {
-	return new EnrolmentEvaluation(this, enrolmentEvaluationState, enrolmentEvaluationType,
+	    Date availableDate, Date examDate, ExecutionPeriod executionPeriod) {
+	EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState, enrolmentEvaluationType,
 		responsibleFor, grade, availableDate, examDate, new DateTime());
+	if(enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
+	    enrolmentEvaluation.setExecutionPeriod(executionPeriod);
+	}
+	return enrolmentEvaluation;
     }
 
     public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
@@ -1239,5 +1253,4 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		
 		return getRegistration().getDissertationProposal(previousExecutionYear);
 	}
-
 }
