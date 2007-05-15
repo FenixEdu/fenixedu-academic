@@ -70,16 +70,6 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	}
     }
 
-    @Override
-    public void setPerson(Person person) {
-	throw new DomainException("error.candidacy.CandidacySituation.cannot.modify.person");
-    }
-
-    @Override
-    public void setCandidacy(Candidacy candidacy) {
-	throw new DomainException("error.candidacy.CandidacySituation.cannot.modify.candidacy");
-    }
-
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
 		getCandidacySituationType().getQualifiedName());
@@ -139,4 +129,12 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public abstract CandidacySituationType getCandidacySituationType();
 
     public abstract boolean canExecuteOperationAutomatically();
+    
+    public void delete(){
+	removeCandidacy();
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+    
 }

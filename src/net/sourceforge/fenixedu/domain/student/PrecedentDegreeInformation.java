@@ -38,5 +38,15 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setCountry(precedentDegreeInformationBean.getCountry());
     }
+    
+    public void delete() {
+	removeCountry();
+	removeInstitution();
+	removeStudent();
+	removeStudentCandidacy();
+	
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 
 }

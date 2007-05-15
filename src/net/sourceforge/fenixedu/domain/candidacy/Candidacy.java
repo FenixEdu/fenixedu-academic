@@ -106,4 +106,15 @@ public abstract class Candidacy extends Candidacy_Base {
 		.getSituationDate().toYearMonthDay();
     }
 
+    public void delete() {
+
+	removePerson();
+
+	for (; !getCandidacySituationsSet().isEmpty(); getCandidacySituationsSet().iterator().next()
+		.delete())
+	    ;
+
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

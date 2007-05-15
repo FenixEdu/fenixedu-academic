@@ -122,4 +122,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return result;
     }
 
+    public void delete() {
+	removeRegistration();
+	removeExecutionDegree();
+
+	if (hasPrecedentDegreeInformation() && !getPrecedentDegreeInformation().hasStudent()) {
+	    getPrecedentDegreeInformation().delete();
+	}
+
+	super.delete();
+    }
 }
