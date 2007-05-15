@@ -267,8 +267,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	InvitedPersonBean bean = null;
-	final IViewState viewState = RenderUtils
-		.getViewState("invitedPersonBeanWithResponsibilityParty");
+	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
 	if (viewState != null) {
 	    bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 	} else {

@@ -102,8 +102,7 @@ public class Invitation extends Invitation_Base {
 
     @Override
     public void delete() {
-	LoginPeriod period = getInvitedPerson().getLoginIdentification().readLoginPeriodByTimeInterval(
-		getBeginDate(), getEndDate());
+	LoginPeriod period = getInvitedPerson().getLoginIdentification().readLoginPeriodByTimeInterval(getBeginDate(), getEndDate());
 	if (period != null) {
 	    period.delete();
 	}

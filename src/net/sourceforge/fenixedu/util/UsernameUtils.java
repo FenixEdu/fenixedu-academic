@@ -46,18 +46,17 @@ public class UsernameUtils extends FenixUtil {
 
 	    Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
 
-	    if (mostImportantRole.getRoleType() == RoleType.TEACHER) {
+	    if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.TEACHER) {
 		istUsername = ist + sumNumber(person.getTeacher().getTeacherNumber(), 10000);
 
-	    } else if (mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
+	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
 		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
 
-	    } else if (mostImportantRole.getRoleType() == RoleType.GRANT_OWNER
-		    && person.getGrantOwner() != null) {
+	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER && person.hasGrantOwner()) {
 		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
 
-	    } else if (mostImportantRole.getRoleType() == RoleType.STUDENT
-		    || mostImportantRole.getRoleType() == RoleType.ALUMNI) {
+	    } else if (mostImportantRole != null && 
+		    (mostImportantRole.getRoleType() == RoleType.STUDENT || mostImportantRole.getRoleType() == RoleType.ALUMNI)) {
 		
 		if (person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
 		    final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();
@@ -66,10 +65,9 @@ public class UsernameUtils extends FenixUtil {
 		    } else {// new master degree students
 			istUsername = ist + sumNumber(number, 100000);
 		    }
+		    
 		} else if (person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
-		    istUsername = ist
-			    + sumNumber(person.getStudentByType(
-				    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
+		    istUsername = ist + sumNumber(person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
 
 		} else {
 		    Registration registration = person.getStudentByType(DegreeType.DEGREE);
@@ -80,13 +78,12 @@ public class UsernameUtils extends FenixUtil {
 			registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
 		    }
 		    if (registration == null) {
-			registration = person
-				.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+			registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		    }
 		    if (registration != null) {
-			if (registration.getRegistrationAgreement().isNormal()
-				|| person.getStudent().getNumber() > 10000) {
+			if (registration.getRegistrationAgreement().isNormal() || person.getStudent().getNumber() > 10000) {
 			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 100000);
+			
 			} else if (!registration.getRegistrationAgreement().isNormal()) {
 			    istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
 			    // we subtract 100000 from the external/foreign
