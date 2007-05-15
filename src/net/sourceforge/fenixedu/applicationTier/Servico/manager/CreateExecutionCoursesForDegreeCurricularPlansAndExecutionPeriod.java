@@ -37,12 +37,25 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                     if (originalCode != null) {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
                         final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), sigla, executionPeriod);
+                        initLessonLoad(executionCourse, curricularCourse);
                         executionCourse.createSite();
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                     }
 		}
             }
         }
+    }
+
+    private void initLessonLoad(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
+	executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+	executionCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
+	executionCourse.setPraticalHours(curricularCourse.getPraticalHours());
+	executionCourse.setLabHours(curricularCourse.getLabHours());
+	executionCourse.setSeminaryHours(curricularCourse.getSeminaryHours());
+	executionCourse.setProblemsHours(curricularCourse.getProblemsHours());
+	executionCourse.setTutorialOrientationHours(curricularCourse.getTutorialOrientationHours());
+	executionCourse.setTrainingPeriodHours(curricularCourse.getTrainingPeriodHours());
+	executionCourse.setFieldWorkHours(curricularCourse.getFieldWorkHours());
     }
 
     private String getCodeForCurricularCourse(final CurricularCourse curricularCourse) {
