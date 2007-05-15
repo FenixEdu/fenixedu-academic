@@ -103,6 +103,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setTutorialOrientationHours(Double.valueOf(0));
 	addAssociatedEvaluations(new FinalEvaluation());
 	setAvailableGradeSubmission(Boolean.TRUE);
+	setAvailableForInquiries(Boolean.TRUE);
     }
 
     public List<Grouping> getGroupings() {
