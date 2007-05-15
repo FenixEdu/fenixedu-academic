@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Inquiry Student Execution Period Table" createTableInquiriesStudentExecutionPeriod.sql
