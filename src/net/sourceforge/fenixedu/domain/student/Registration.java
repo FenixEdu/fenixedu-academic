@@ -1347,10 +1347,6 @@ public class Registration extends Registration_Base {
 	return getDegreeType().isBolonhaType();
     }
 
-    final public boolean isPreBolonhaAfterFirstBolonhaExecutionYear() {
-	return !isBolonha() && getStartExecutionYear() == ExecutionYear.readFirstBolonhaExecutionYear(); 
-    }
-    
     public boolean isActiveForOffice(Unit office) {
 	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
@@ -1644,6 +1640,10 @@ public class Registration extends Registration_Base {
 	return ExecutionYear.readByDateTime(getStartDate().toDateTimeAtMidnight());
     }
 
+    final public boolean hasStartedBeforeFirstBolonhaExecutionYear() {
+	return getStartExecutionYear().isBefore(ExecutionYear.readFirstBolonhaExecutionYear());
+    }
+    
     public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
 	return getStudentCurricularPlan(executionPeriod) != null;
     }
