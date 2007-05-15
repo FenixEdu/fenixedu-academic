@@ -181,6 +181,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
+    static final public ExecutionYear readFirstBolonhaExecutionYear() {
+	//TODO: have the patience and time to parameterize this in build.properties
+	return ExecutionYear.readExecutionYearByName("2006/2007");
+    }
+    
     public String getNextYearsYearString() {
 	final int yearPart1 = Integer.parseInt(getYear().substring(0, 4)) + 1;
 	final int yearPart2 = Integer.parseInt(getYear().substring(5, 9)) + 1;
