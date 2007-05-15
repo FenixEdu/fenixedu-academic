@@ -294,7 +294,10 @@ public enum GradeScale {
 	} else if (isApproved(grade)) {
 	    return EnrollmentState.APROVED;
 	} else {
-	    throw new DomainException("GradeScale.unable.to.get.enrolment.state");
+	    return EnrollmentState.NOT_APROVED;
+	    
+	    //TODO:
+	    //throw new DomainException("GradeScale.unable.to.get.enrolment.state");
 	}
     }
     
