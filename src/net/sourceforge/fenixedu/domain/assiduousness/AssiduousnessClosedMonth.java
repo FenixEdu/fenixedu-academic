@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -68,35 +69,35 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     }
 
     public HashMap<JustificationMotive, Duration> getClosedMonthJustificationsMap() {
-	HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
-	YearMonthDay day = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.monthOfYear()), 1);
-	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
-	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-		    getAssiduousness(), day);
-	    Duration duration = closedMonthJustificationscodesMap.get(code);
-	    if (duration == null) {
-		duration = Duration.ZERO;
-	    }
-	    duration = duration.plus(closedMonthJustification.getJustificationDuration());
-	    closedMonthJustificationscodesMap.put(code, duration);
-	}
+        HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
+        YearMonthDay day = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
+                DateTimeFieldType.monthOfYear()), 1);
+        for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
+            Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
+                    getAssiduousness(), day);
+            Duration duration = closedMonthJustificationscodesMap.get(code);
+            if (duration == null) {
+                duration = Duration.ZERO;
+            }
+            duration = duration.plus(closedMonthJustification.getJustificationDuration());
+            closedMonthJustificationscodesMap.put(code, duration);
+        }
 
-	HashMap<JustificationMotive, Duration> closedMonthJustificationsMap = new HashMap<JustificationMotive, Duration>();
-	for (Integer code : closedMonthJustificationscodesMap.keySet()) {
-	    Duration oldDuration = closedMonthJustificationscodesMap.get(code);
-	    JustificationMotive justificationMotive = JustificationMotive
-		    .getJustificationMotiveByGiafCode(code, getAssiduousness(), day);
-	    Duration duration = closedMonthJustificationsMap.get(justificationMotive);
-	    if (duration == null) {
-		duration = Duration.ZERO;
-	    }
-	    duration = duration.plus(oldDuration);
+        HashMap<JustificationMotive, Duration> closedMonthJustificationsMap = new HashMap<JustificationMotive, Duration>();
+        for (Integer code : closedMonthJustificationscodesMap.keySet()) {
+            Duration oldDuration = closedMonthJustificationscodesMap.get(code);
+            JustificationMotive justificationMotive = JustificationMotive
+                    .getJustificationMotiveByGiafCode(code, getAssiduousness(), day);
+            Duration duration = closedMonthJustificationsMap.get(justificationMotive);
+            if (duration == null) {
+                duration = Duration.ZERO;
+            }
+            duration = duration.plus(oldDuration);
             closedMonthJustificationsMap.put(justificationMotive, duration);
-	}
+        }
 
-	return closedMonthJustificationsMap;
+        return closedMonthJustificationsMap;
     }
 
     private double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {
@@ -179,7 +180,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
                 DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
         unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
         unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
-        
+
         double anualRemaining = (double) Assiduousness.MAX_A66_PER_YEAR
                 - getAssiduousness().getTotalArticle66ByYear(
                         getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()));
@@ -202,8 +203,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
         int countUnjustifiedWorkingDays = 0;
         for (Leave leave : getAssiduousness().getLeaves(beginDate, endDate)) {
             if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
-                countUnjustifiedWorkingDays += leave.getUtilDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
-                        .toDateTimeAtMidnight()));
+                countUnjustifiedWorkingDays += leave.getUtilDaysBetween(new Interval(beginDate
+                        .toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight()));
             }
         }
         setUnjustifiedDays(countUnjustifiedWorkingDays);
@@ -233,5 +234,19 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
             result = result.plus(assiduousnessExtraWork.getNightBalance());
         }
         return result;
+    }
+
+    public Map<WorkScheduleType, Duration> getNightWorkByWorkScheduleType() {
+        Map<WorkScheduleType, Duration> nightWorkByWorkScheduleType = new HashMap<WorkScheduleType, Duration>();
+        for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
+            Duration duration = nightWorkByWorkScheduleType.get(assiduousnessExtraWork
+                    .getWorkScheduleType());
+            if (duration == null) {
+                duration = Duration.ZERO;
+            }
+            duration = duration.plus(assiduousnessExtraWork.getNightBalance());
+            nightWorkByWorkScheduleType.put(assiduousnessExtraWork.getWorkScheduleType(), duration);
+        }
+        return nightWorkByWorkScheduleType;
     }
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Holiday;
@@ -13,9 +14,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -37,6 +38,10 @@ public class ExportClosedExtraWorkMonth extends Service {
     private DecimalFormat employeeNumberFormat = new DecimalFormat("000000");
 
     private DecimalFormat justificationCodeFormat = new DecimalFormat("000");
+
+    private DecimalFormat hourFormat = new DecimalFormat("00000000");
+
+    private String fieldSeparator = ("\t");
 
     private List<YearMonthDay> unjustifiedDays;
 
@@ -60,6 +65,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 	HashMap<Assiduousness, AssiduousnessClosedMonth> allAssiduousnessClosedMonths = getAssiduousnessClosedMonths(closedMonth);
 	a66JustificationMotive = getA66JustificationMotive();
 	unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
+
+	StringBuilder extraWorkResult = new StringBuilder();
 	for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
 	    unjustifiedDays = new ArrayList<YearMonthDay>();
 	    if (assiduousness.isStatusActive(beginDate, endDate)
@@ -68,6 +75,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 			.append(getAssiduousnessMonthBalance(assiduousness,
 				allLeaves.get(assiduousness), allAssiduousnessClosedMonths
 					.get(assiduousness), closedMonth, beginDate, endDate));
+
+		extraWorkResult.append(getAssiduousnessExtraWork(assiduousness,
+			allAssiduousnessClosedMonths.get(assiduousness), beginDate, endDate));
 	    }
 	}
 
@@ -75,6 +85,33 @@ public class ExportClosedExtraWorkMonth extends Service {
 	// allLeaves.get(assiduousness),
 	// beginDate, endDate));
 	//        
+	return result.append(extraWorkResult).toString();
+    }
+
+    private String getAssiduousnessExtraWork(Assiduousness assiduousness,
+	    AssiduousnessClosedMonth assiduousnessClosedMonth, YearMonthDay beginDate,
+	    YearMonthDay endDate) {
+	StringBuilder result = new StringBuilder();
+	Map<WorkScheduleType, Duration> nightWorkByWorkScheduleType = assiduousnessClosedMonth
+		.getNightWorkByWorkScheduleType();
+	for (WorkScheduleType workScheduleType : nightWorkByWorkScheduleType.keySet()) {
+	    Duration duration = nightWorkByWorkScheduleType.get(workScheduleType);
+	    if (workScheduleType.isNocturnal() && duration.isLongerThan(Duration.ZERO)) {
+		result.append(beginDate.getYear()).append(fieldSeparator);
+		result.append(monthFormat.format(beginDate.getMonthOfYear() + 1)).append(fieldSeparator);
+		result.append(
+			employeeNumberFormat.format(assiduousness.getEmployee().getEmployeeNumber()))
+			.append(fieldSeparator);
+		result.append("M").append(fieldSeparator).append("130").append(fieldSeparator);
+		result.append(beginDate).append(fieldSeparator);
+		result.append(endDate).append(fieldSeparator);
+                System.out.println((double)duration.toPeriod(PeriodType.minutes()).getMinutes() / (double)60);
+                System.out.println(Math.round((double)duration.toPeriod(PeriodType.minutes()).getMinutes() / (double)60));
+                long hours = Math.round((double)duration.toPeriod(PeriodType.minutes()).getMinutes() / (double)60);
+		result.append(hourFormat.format(hours)).append(fieldSeparator);
+		result.append(hourFormat.format(hours)).append("00\r\n");
+	    }
+	}
 	return result.toString();
     }
 
@@ -167,15 +204,16 @@ public class ExportClosedExtraWorkMonth extends Service {
 	for (YearMonthDay day : daysToUnjustify) {
 	    Integer code = justificationMotive.getGiafCode(assiduousness, day);
 	    if (code != 0) {
-		line.append(day.getYear()).append(" ");
-		line.append(monthFormat.format(day.getMonthOfYear() + 1)).append(" ");
+		line.append(day.getYear()).append(fieldSeparator);
+		line.append(monthFormat.format(day.getMonthOfYear() + 1)).append(fieldSeparator);
 		line
 			.append(
 				employeeNumberFormat.format(assiduousness.getEmployee()
-					.getEmployeeNumber())).append(" ");
-		line.append("F").append(" ");
-		line.append(justificationCodeFormat.format(code)).append(" ");
-		line.append(day).append(" ").append(day).append(" 100 100\r\n");
+					.getEmployeeNumber())).append(fieldSeparator);
+		line.append("F").append(fieldSeparator);
+		line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+		line.append(day).append(fieldSeparator).append(day).append(fieldSeparator).append("100")
+			.append(fieldSeparator).append("100\r\n");
 	    }
 	}
 	return line;
@@ -233,17 +271,17 @@ public class ExportClosedExtraWorkMonth extends Service {
 	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(), start);
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
-	    line.append(start.getYear()).append(" ");
-	    line.append(monthFormat.format(start.getMonthOfYear() + 1)).append(" ");
+	    line.append(start.getYear()).append(fieldSeparator);
+	    line.append(monthFormat.format(start.getMonthOfYear() + 1)).append(fieldSeparator);
 	    line.append(
 		    employeeNumberFormat.format(leave.getAssiduousness().getEmployee()
-			    .getEmployeeNumber())).append(" ");
-	    line.append("F").append(" ");
-	    line.append(justificationCodeFormat.format(code)).append(" ");
-	    line.append(start).append(" ");
-	    line.append(end).append(" ");
+			    .getEmployeeNumber())).append(fieldSeparator);
+	    line.append("F").append(fieldSeparator);
+	    line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+	    line.append(start).append(fieldSeparator);
+	    line.append(end).append(fieldSeparator);
 	    int days = Days.daysBetween(start, end).getDays() + 1;
-	    line.append(days).append("00 ");
+	    line.append(days).append("00").append(fieldSeparator);
 	    Interval interval = new Interval(start.toDateTimeAtMidnight().getMillis(), end
 		    .toDateTimeAtMidnight().getMillis());
 	    line.append(leave.getUtilDaysBetween(interval)).append("00\r\n");
@@ -286,16 +324,16 @@ public class ExportClosedExtraWorkMonth extends Service {
 	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(), beginDate);
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
-	    line.append(beginDate.getYear()).append(" ");
-	    line.append(monthFormat.format(beginDate.getMonthOfYear() + 1)).append(" ");
+	    line.append(beginDate.getYear()).append(fieldSeparator);
+	    line.append(monthFormat.format(beginDate.getMonthOfYear() + 1)).append(fieldSeparator);
 	    line.append(
 		    employeeNumberFormat.format(leave.getAssiduousness().getEmployee()
-			    .getEmployeeNumber())).append(" ");
-	    line.append("F").append(" ");
-	    line.append(justificationCodeFormat.format(code)).append(" ");
-	    line.append(leave.getDate().toYearMonthDay()).append(" ");
-	    line.append(leave.getDate().toYearMonthDay()).append(" ");
-	    line.append("050 ").append("050\r\n");
+			    .getEmployeeNumber())).append(fieldSeparator);
+	    line.append("F").append(fieldSeparator);
+	    line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+	    line.append(leave.getDate().toYearMonthDay()).append(fieldSeparator);
+	    line.append(leave.getDate().toYearMonthDay()).append(fieldSeparator);
+	    line.append("050").append(fieldSeparator).append("050\r\n");
 	}
 	return line;
     }
