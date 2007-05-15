@@ -1348,7 +1348,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isPreBolonhaAfterFirstBolonhaExecutionYear() {
-	return !isBolonha() && getStartExecutionYear() == ExecutionYear.getFirstBolonhaExecutionYear(); 
+	return !isBolonha() && getStartExecutionYear() == ExecutionYear.readFirstBolonhaExecutionYear(); 
     }
     
     public boolean isActiveForOffice(Unit office) {
