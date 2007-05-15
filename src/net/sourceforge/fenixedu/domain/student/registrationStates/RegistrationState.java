@@ -100,8 +100,16 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	RegistrationState previousState = getPrevious();
 	if (nextState != null && previousState != null
 		&& !previousState.getValidNextStates().contains(nextState.getStateType().name())) {
-	    throw new DomainException("error.cannot.delete.registrationState.incoherentState");
+	    throw new DomainException("error.cannot.delete.registrationState.incoherentState: "
+		    + previousState.getStateType().name() + " -> " + nextState.getStateType().name());
 	}
+	removeRegistration();
+	removeResponsiblePerson();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+    
+    public void deleteWithoutCheckRules() {
 	removeRegistration();
 	removeResponsiblePerson();
 	removeRootDomainObject();
