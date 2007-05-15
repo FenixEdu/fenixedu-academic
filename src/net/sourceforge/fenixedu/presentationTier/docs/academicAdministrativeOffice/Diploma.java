@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -33,7 +34,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	parameters.put("registration", registration);
 	
 	final Person person = registration.getPerson();
-	parameters.put("name", person.getName());
+	parameters.put("name", StringFormatter.prettyPrint(person.getName()));
 	parameters.put("nameOfFather", person.getNameOfFather());
 	parameters.put("nameOfMother", person.getNameOfMother());
 	parameters.put("birthLocale", person.getDistrictOfBirth());
