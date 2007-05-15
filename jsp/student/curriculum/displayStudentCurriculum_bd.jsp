@@ -107,19 +107,19 @@
 				final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 				request.setAttribute("executionYear", executionYear);
 				
-				final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(null);
+				final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 				request.setAttribute("totalEctsCredits", totalEctsCredits);
 				
-				final double average = studentCurriculum.getRoundedAverage(null, true);
+				final double average = studentCurriculum.getRoundedAverage(executionYear, true);
 				request.setAttribute("average", average);
 			
-				final int curricularYear = studentCurriculum.calculateCurricularYear(null);
+				final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
 				request.setAttribute("curricularYear", curricularYear);
 			
-				final double sumPiCi = studentCurriculum.getSumPiCi(null);
+				final double sumPiCi = studentCurriculum.getSumPiCi(executionYear);
 				request.setAttribute("sumPiCi", sumPiCi);
 			
-				final double sumPi = studentCurriculum.getSumPi(null);
+				final double sumPi = studentCurriculum.getSumPi(executionYear);
 				request.setAttribute("sumPi", sumPi);
 			%>
 			<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
