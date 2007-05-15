@@ -871,6 +871,28 @@
     <definition name="show-event-edit-page" extends="definition.manager.masterPage">
     	<put name="body" value="/manager/researchActivity/showEditEvent.jsp"/>
     </definition>    
+
+
+
+	<definition name="show-scientific-journal-list-page-merge-jounal-issues" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showScientificJournalsToMergeJournalIssues.jsp"/>
+    </definition>
+	<definition name="show-journal-issue-merge-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showJournalIssuesToMerge.jsp"/>
+    </definition>
+	<definition name="show-journal-issue-merge-list" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showJournalIssuesToMergeList.jsp"/>
+    </definition>    
+	<definition name="show-event-list-page-merge-event-editions" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventsToMergeEventEditions.jsp"/>
+    </definition>            
+	<definition name="show-event-edition-merge-page" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventEditionsToMerge.jsp"/>
+    </definition>            
+	<definition name="show-event-edition-merge-list" extends="definition.manager.masterPage">
+    	<put name="body" value="/manager/researchActivity/showEventEditionsToMergeList.jsp"/>
+    </definition>    
+    
 	
 
 	<!--  =========== Research Unit Site Management ========== -->					

@@ -2293,7 +2293,39 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA">                                    
             <forward name="show-research-activity-list" path="show-event-list-page"/> 
             <forward name="show-research-activity-edit" path="show-event-edit-page"/> 
+        </action>    
+        
+		<action path="/editScientificJournalMergeJournalIssues" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditScientificJournalDA">                                    
+            <forward name="show-research-activity-list" path="show-scientific-journal-list-page-merge-jounal-issues"/>  
+            <forward name="prepareChooseJournalIssueToMerge" path="/mergeJournalIssues.do?method=prepareMerge"/>
         </action>             
+                     
+		<action path="/mergeJournalIssues" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeJournalIssuesDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-journal-issue-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-journal-issue-merge-list"/> 
+        </action> 	 
+                 
+		<action path="/editEventMergeEventEditions" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.EditEventDA">                                    
+            <forward name="show-research-activity-list" path="show-event-list-page-merge-event-editions"/>  
+            <forward name="prepareChooseEventEditionToMerge" path="/mergeEventEditions.do?method=prepareMerge"/>
+        </action>             
+                     
+		<action path="/mergeEventEditions" 	    	
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.researchActivity.MergeEventEditionsDA">                                    
+            <forward name="show-research-activity-merge-page" path="show-event-edition-merge-page"/> 
+            <forward name="show-research-activity-merge-list" path="show-event-edition-merge-list"/> 
+        </action> 	 
       
  
     	<!-- ========== Research Unit Site Creation ============================= -->

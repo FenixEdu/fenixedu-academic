@@ -85,6 +85,16 @@
 	<slot name="issn" key="label.scientific.journal.issn"/>
 </schema>
 
+<schema name="scientific.journal.merge.list.with.journal.issue.number"  type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" 
+	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="name" layout="scientific-journal-stage">
+		<property name="enumClasses(DRAFT)" value="color973"/>
+		<property name="enumClasses(APPROVED)" value="color379"/>
+	</slot>
+	<slot name="issn" key="label.scientific.journal.issn"/>
+	<slot name="journalIssuesCount" key="label.scientific.journal.issues.count"/>
+</schema>
+
 
 <schema name="scientific.journal.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ScientificJournal" 
 	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
@@ -152,6 +162,16 @@
 	</slot>
 	<slot name="eventType" key="label.event.eventType"/>
 </schema>
+
+<schema name="event.merge.list.with.journal.issue.number" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<slot name="name" layout="event-stage">
+		<property name="enumClasses(DRAFT)" value=""/>
+		<property name="enumClasses(APPROVED)" value=""/>
+	</slot>
+	<slot name="eventType" key="label.event.eventType"/>
+	<slot name="eventEditionsCount" key="label.event.editions.count"/>
+</schema>
+
 <schema name="event.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" layout="event-stage">
 		<property name="enumClasses(DRAFT)" value=""/>
@@ -195,6 +215,7 @@
 	bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="volume" key="label.volume"/>	
 	<slot name="number" key="label.number"/>
+	<slot name="month" key="label.month"/>
 	<slot name="year"/>
 </schema>
 
