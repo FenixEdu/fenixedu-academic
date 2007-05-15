@@ -90,6 +90,7 @@ valueType net.sourceforge.fenixedu.util.tests.TestType                  				    
 valueType net.sourceforge.fenixedu.util.tests.Response                  				        				as Response;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitType                  					as UnitType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                 					as FunctionType;
+valueType net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType        					as ResearchFunctionType; 
 valueType net.sourceforge.fenixedu.domain.QualificationType														as QualificationType;
 valueType net.sourceforge.fenixedu.util.ByteArray																as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                          				    as ContentType;
@@ -3578,7 +3579,11 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType
 		Integer keyUnit;
 		Integer keyParentInherentFunction;
 	}
-
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
+		ResearchFunctionType researchFunctionType;
+	}
+	
 class net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule extends net.sourceforge.fenixedu.domain.DomainObject {	
 	Integer keyAccountabilityType;
 	Integer keyAllowedParentPartyType;
@@ -3605,6 +3610,10 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 		
 		}
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+		
+		}
+
+		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
 		
 		}
 
@@ -4704,6 +4713,8 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showAnnouncements;
 		Boolean showEvents;
 		Boolean showFlags;
+		Boolean showResearchMembers;
+		Boolean showPublications;
 		UnitSiteLayoutType layout;
 		MultiLanguageString sideBanner;
 	}

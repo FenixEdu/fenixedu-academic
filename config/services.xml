@@ -8319,6 +8319,20 @@
         </filterChains>
     </service>   
     <service>
+    	<name>CreateResearchContract</name>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateResearchContract</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+    </service>
+    <service>
+    	<name>DeleteResearchContract</name>
+    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteResearchContract</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+    </service>    
+    <service>
     	<name>CreateFunction</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateFunction</implementationClass>
         <description></description>

@@ -98,7 +98,7 @@
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
 		        <fr:property name="columnClasses" value="width100px,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/activities/createEventEdition.do?method=invalidCreate"/>
+			<fr:destination name="invalid" path="/activities/createEventEdition.do?method=invalidCreate&createNewEvent=true"/>
 		</fr:edit>
 		<br/>
 		<html:submit property="newEvent"><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -113,7 +113,7 @@
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
 		        <fr:property name="columnClasses" value="width100px,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/activities/createEventEdition.do?method=invalidCreate"/>
+			<fr:destination name="invalid" path="/activities/createEventEdition.do?method=invalidCreate&createNewEdition=true"/>
 		</fr:edit>
 		<br/>
 		<html:submit property="newEventEdition"><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>

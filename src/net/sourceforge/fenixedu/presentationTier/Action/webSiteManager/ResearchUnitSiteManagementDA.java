@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -64,6 +66,59 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		return prepareAddManager(mapping, actionForm, request, response);
 	}
 
+	public ActionForward managePeople(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		ResearchContractBean bean = new ResearchContractBean();
+		bean.setUnit(getSite(request).getUnit());
+		request.setAttribute("bean", bean);
+		return mapping.findForward("managePeople");
+	}
+
+	public ActionForward addPerson(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+
+		IViewState viewState = RenderUtils.getViewState("createPersonContract");
+		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
+			try {
+				executeService("CreateResearchContract", new Object[] { bean });
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+				return managePeople(mapping, actionForm, request, response);
+			}
+			RenderUtils.invalidateViewState();
+		}
+		return managePeople(mapping, actionForm, request, response);
+	}
+
+	public ActionForward removePerson(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+
+		String contractID = request.getParameter("cid");
+		ResearchContract contract = (ResearchContract) RootDomainObject.readDomainObjectByOID(
+				ResearchContract.class, Integer.valueOf(contractID));
+		try {
+			executeService("DeleteResearchContract", new Object[] { contract });
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+
+		return managePeople(mapping, actionForm, request, response);
+	}
+
+	public ActionForward changeOptionalSections(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState("optionalSections");
+		if (viewState != null && viewState.isValid()) {
+			request.setAttribute("optionalSectionsChanged", true);
+		}
+
+		return mapping.findForward("editConfiguration");
+	}
+	
 	@Override
 	protected ResearchUnitSite getSite(HttpServletRequest request) {
 		String siteID = request.getParameter("oid");

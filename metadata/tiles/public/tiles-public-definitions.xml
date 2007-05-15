@@ -137,13 +137,13 @@
 	<definition name="definition.public.researchUnit.noPaddingLayout" extends="definition.public.noPaddingLayout">
 			<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp" />
 			<put name="profile_navigation" value="/publico/researchUnitSite/profileNavigation.jsp" />
-			<put name="page-context" value="/publico/researchUnitSite/siteContext.jsp" />
+			<put name="body-context" value="/publico/researchUnitSite/siteContext.jsp" />
 	</definition>
 
 	<definition name="definition.public.researchUnit" extends="definition.public.paddingLayout">
 			<put name="profile_navigation" value="/publico/researchUnitSite/profileNavigation.jsp" />
 			<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp" />
-			<put name="page-context" value="/publico/researchUnitSite/siteContext.jsp" />
+			<put name="body-context" value="/publico/researchUnitSite/siteContext.jsp" />
 	</definition>
 
     <definition name="definition.public.department.frontPage" extends="definition.public.noPaddingLayout">

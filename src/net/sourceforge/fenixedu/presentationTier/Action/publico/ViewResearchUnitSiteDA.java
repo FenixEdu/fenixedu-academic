@@ -7,15 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -50,7 +48,20 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		return mapping.findForward(redirect);
 	}
 
+	public ActionForward showResearchers(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		ResearchUnitSite site = getSite(request);
+		request.setAttribute("researchUnit", site.getUnit());
+		return mapping.findForward("showResearchers");
+	}
 
+	public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ResearchUnit unit = getSite(request).getUnit();
+		request.setAttribute("publications", ResearchResultPublication.sort(unit.getAssociatedPublications()));
+		return mapping.findForward("showPublications");
+	}
+	
 	private List<Announcement> getEventAnnouncements(ResearchUnitSite site) {
 		PartyAnnouncementBoard eventBoard = getEventBoards(site.getUnit());
 		List<Announcement> announcements = (eventBoard != null) ? eventBoard.getAnnouncements()
@@ -58,7 +69,6 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		return announcements;
 	}
 
-	
 	private List<Announcement> getAnnouncements(ResearchUnitSite site) {
 		PartyAnnouncementBoard announcementBoard = getAnnouncementBoards(site.getUnit());
 		List<Announcement> announcements = (announcementBoard != null) ? announcementBoard
@@ -98,15 +108,16 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		return (possibleResearchUnitSite instanceof ResearchUnitSite) ? (ResearchUnitSite) possibleResearchUnitSite
 				: null;
 	}
-	
+
 	@Override
 	protected String getDirectLinkContext(HttpServletRequest request) {
 		ResearchUnitSite site = getSite(request);
-		
-        try {
-            return RequestUtils.absoluteURL(request, ResearchUnitProcessor.getResearchUnitPath(site.getUnit())).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
+
+		try {
+			return RequestUtils.absoluteURL(request,
+					ResearchUnitProcessor.getResearchUnitPath(site.getUnit())).toString();
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 }

@@ -42,7 +42,12 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
-		request.setAttribute("createNewEvent", "true");
+		if(request.getParameter("createNewEvent")!=null) {
+			request.setAttribute("createNewEvent", "true");
+		}
+		if(request.getParameter("createNewEdition")!=null) {
+			request.setAttribute("createNewEdition", "true");
+		}
 		request.setAttribute("eventEditionBean", bean);
 		return prepare(mapping, form, request, response);
 	}

@@ -74,6 +74,7 @@
         <forward name="editFooterNavigation" path="researchSite-edit-footer-navigation"/>
         <forward name="organizeTopLinks" path="researchSite-edit-organizeTopLinks"/>
         <forward name="organizeFooterLinks" path="researchSite-edit-organizeFooterLinks"/>
+        <forward name="managePeople" path="researchSite-manage-people"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"

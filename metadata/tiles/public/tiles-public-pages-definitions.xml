@@ -442,22 +442,34 @@
 		<put name="useFlags" value="false"/>
 	</definition>
 	
+	 <definition name="show-research-unit-researchers" extends="definition.public.researchUnit">
+        <put name="body" value="/publico/researchUnitSite/showResearchers.jsp"/>
+    </definition>   
+
+	 <definition name="show-research-unit-publications" extends="definition.public.researchUnit">
+        <put name="body" value="/publico/researchUnitSite/showPublications.jsp"/>
+    </definition>   
+   
 	<definition name="view-researchUnit-section" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>
+    
     <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section-deny.jsp"/>
     </definition>
+    
     <definition name="view-researchUnit-section-adviseLogin" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
     </definition>
+    
     <definition name="view-researchUnit-item" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/item.jsp"/>
     </definition>
+
     <definition name="view-researchUnit-item-deny" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/item-deny.jsp"/>

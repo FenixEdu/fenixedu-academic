@@ -12,6 +12,15 @@
 			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.view"/>
 		</html:link>
 	</li>
+	
+	<li class="navheader"><bean:message key="link.site.researchUnit" bundle="WEBSITEMANAGER_RESOURCES"/></li>
+    <li>
+	    <html:link page="<%= "/manageResearchUnitSite.do?method=managePeople&amp;oid=" + siteID %>">
+            <bean:message key="link.site.contract" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+
+	
 	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.configuration"/></li>
 	<li>
 		<html:link page="<%= "/manageResearchUnitSite.do?method=prepareAddManager&amp;oid=" + siteID%>">
@@ -23,7 +32,7 @@
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
-    
+  
     
 	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></li>
     <li>

@@ -83,7 +83,8 @@
 <!-- Definitions for class net.sourceforge.fenixedu.domain.organizationalStructure.Contract -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Contract" table="ACCOUNTABILITY">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract"/>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract -->
@@ -93,6 +94,10 @@
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" table="ACCOUNTABILITY">
+               
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract" table="ACCOUNTABILITY">
                
 </class-descriptor>
 
@@ -114,6 +119,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType" table="ACCOUNTABILITY_TYPE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Function"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Function -->
@@ -121,6 +127,10 @@
 
 </class-descriptor>
 
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction" table="ACCOUNTABILITY_TYPE">
+
+</class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName" table="UNIT_NAME">
     	

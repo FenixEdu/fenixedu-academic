@@ -17,8 +17,10 @@ public enum AccountabilityTypeEnum {
     //Contracts
     WORKING_CONTRACT,
     MAILING_CONTRACT,         
-    INVITATION; 
+    INVITATION,
          
+    RESEARCH_CONTRACT;
+    
     public String getName() {
         return name();
     }

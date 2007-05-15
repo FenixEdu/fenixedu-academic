@@ -8,7 +8,7 @@
 <h2><bean:message key="label.editManagers.title" bundle="MANAGER_RESOURCES"/></h2>
 
 <div class="infoop2">
-	<p>Esta funcionalidade permite-lhe escolher as pessoas que têm acesso à gestão do site.</p>
+	<p><bean:message key="label.webSiteManagers.explanation" bundle="MANAGER_RESOURCES"/></p>
 </div>
 
 <p class="mtop15 mbottom05">

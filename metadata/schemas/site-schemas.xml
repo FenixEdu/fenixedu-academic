@@ -63,6 +63,15 @@
     </slot>
 </schema>
 
+<schema name="researchSite.optional.sections" type="net.sourceforge.fenixedu.domain.ResearchUnitSite" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="showResearchMembers" layout="radio" key="label.researchUnitSite.showResearchMembers">
+        <property name="classes" value="liinline nobullet"/>
+    </slot>
+     <slot name="showPublications" layout="radio" key="label.researchUnitSite.showPublications">
+        <property name="classes" value="liinline nobullet"/>
+    </slot>
+</schema>
+
 <schema name="site.banner.create" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.BannerBean" bundle="WEBSITEMANAGER_RESOURCES">
     <slot name="mainImage.file" key="label.site.banner.mainImage">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
@@ -155,3 +164,47 @@
     </slot>
 </schema>
 
+<schema name="create.researchContract" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
+	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personNameString"/>
+		<property name="labelField" value="text"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchPersonsForParticipations"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="end">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
+	<slot name="functionType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType"/> 
+		<property name="eachLayout" value=""/>
+	</slot>
+</schema>
+
+
+<schema name="view.researchContract" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract" bundle="WEBSITEMANAGER_RESOURCES">
+	<slot name="person.name" key="label.personName"/>
+	<slot name="beginDate" key="label.begin"/>
+	<slot name="endDate" layout="null-as-label" key="label.end">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="default"/>
+	</slot>
+	<slot name="accountabilityType.researchFunctionType" key="label.functionType"/>
+</schema>
+
+<schema name="person.in.contract" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract" bundle="WEBSITEMANAGER_RESOURCES">
+	<slot name="person" layout="conditional-link">
+		<property name="visibleIf" value="homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showNickName"/>
+		<property name="blankTarget" value="true"/>
+	</slot>
+</schema>
