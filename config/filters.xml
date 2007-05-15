@@ -917,5 +917,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>        
-             
+    <filter>
+        <name>SubmitFinalWorkProposalAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

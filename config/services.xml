@@ -5989,7 +5989,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TeacherOrDepartmentAdminOfficeAuthorization" />
+			<chain name="SubmitFinalWorkProposalAuthorization" />
 		</filterChains>
 	</service>
 	<service>

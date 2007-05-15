@@ -998,6 +998,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>SubmitFinalWorkProposalAuthorization</name>
+        <expression>SubmitFinalWorkProposalAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>CoordinatorOrDepartmentAdminOfficeAuthorization</name>
         <expression>DepartmentAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
         <description/>
