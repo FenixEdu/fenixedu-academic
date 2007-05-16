@@ -39,6 +39,7 @@
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="approvementsInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isFree" isForPrompting="false" class="java.lang.Boolean"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -65,7 +66,7 @@
 						height="11"
 						key="staticText-11"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -81,7 +82,7 @@
 						height="11"
 						key="staticText-12"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -97,7 +98,7 @@
 						height="11"
 						key="staticText-13"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -113,7 +114,7 @@
 						height="11"
 						key="staticText-14"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -128,7 +129,7 @@
 						width="50"
 						height="11"
 						key="textField-25">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -143,7 +144,7 @@
 						width="50"
 						height="11"
 						key="textField-26">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -158,7 +159,7 @@
 						width="50"
 						height="11"
 						key="textField-27">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -200,7 +201,7 @@
 						width="50"
 						height="11"
 						key="textField-29">
-							<printWhenExpression><![CDATA[Boolean.valueOf($P{documentRequest}.hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">

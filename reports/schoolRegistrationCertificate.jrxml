@@ -37,6 +37,7 @@
 	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="situation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isFree" isForPrompting="false" class="java.lang.Boolean"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -63,7 +64,7 @@
 						height="11"
 						key="staticText-7"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -79,7 +80,7 @@
 						height="11"
 						key="staticText-8"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -95,7 +96,7 @@
 						height="11"
 						key="staticText-9"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -111,7 +112,7 @@
 						height="11"
 						key="staticText-10"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -126,7 +127,7 @@
 						width="50"
 						height="11"
 						key="textField-11">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -141,7 +142,7 @@
 						width="50"
 						height="11"
 						key="textField-12">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -156,7 +157,7 @@
 						width="50"
 						height="11"
 						key="textField-13">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -197,7 +198,7 @@
 						width="50"
 						height="11"
 						key="textField-15">
-							<printWhenExpression><![CDATA[Boolean.valueOf(((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest)$P{documentRequest}).hasEvent())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
