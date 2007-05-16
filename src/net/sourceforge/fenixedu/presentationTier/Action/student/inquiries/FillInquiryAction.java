@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
@@ -159,8 +158,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	// removing the attending courses which inquiries were already answered
 	for (InfoInquiriesRegistry iir : studentInquiriesResgistries) {
 	    for (InfoFrequenta iattends : studentAttends) {
-		if (iir.getExecutionCourse().equals(iattends.getDisciplinaExecucao())
-			&& iir.getExecutionPeriod().equals(currentExecutionPeriod)) {
+		if (iir.getExecutionCourse() == iattends.getDisciplinaExecucao() && iir.getExecutionPeriod() == currentExecutionPeriod) {
 		    evaluatedAttends.add(iattends);
 		}
 
