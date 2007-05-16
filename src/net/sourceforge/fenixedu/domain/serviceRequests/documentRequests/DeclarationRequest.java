@@ -92,7 +92,13 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	}
     }
 
-    final protected boolean isFree() {
+
+    /**
+     * Important: Notice that this method's return value may not be the same 
+     * before and after conclusion of the academic service request.
+     */
+    @Override
+    final public boolean isFree() {
 	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    return false;
 	}

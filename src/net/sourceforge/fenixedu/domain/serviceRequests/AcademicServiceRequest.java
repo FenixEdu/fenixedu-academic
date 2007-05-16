@@ -103,7 +103,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     /**
      * This method is overwritten in the subclasses
      */
-    protected boolean isFree() {
+    public boolean isFree() {
 	return !isPayable() || isFreeProcessed();
     }
 

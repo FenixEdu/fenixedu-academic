@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -79,7 +78,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     @Override
-    protected boolean isFree() {
+    final public boolean isFree() {
 	return false;
     }
 

@@ -90,7 +90,12 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	}
     }
 
-    final protected boolean isFree() {
+    /**
+     * Important: Notice that this method's return value may not be the same 
+     * before and after conclusion of the academic service request.
+     */
+    @Override
+    final public boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
 	    return super.isFree() || (!isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear());
