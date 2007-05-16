@@ -27,3 +27,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Research Function Accountability Types" addResearchFunctionAccountabilityTypes.sql
+execute "Add Research Members to site" showResearchMembers.sql
+execute "Adding Member functionality" changes-20070515114523.sql
+execute "Adding member functionality to research unit site" ResearchUnitMembersFunctionality.sql
+execute "Adding Publications Functionality" changes-20070515162927.sql
+execute "Adding publication functionality to research unit site" ResearchUnitPublicationFunctionality.sql
+execute "Add Research Activity Functionalities" addResearchActivityFunctionalities.sql
