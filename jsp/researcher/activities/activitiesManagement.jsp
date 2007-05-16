@@ -25,15 +25,27 @@
 	</script>
 
 
-	<p class="dblock" id="instructionsButton"><a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver tipos de actividades existentes no sistema</a></p>
+	<p class="dblock" id="instructionsButton"><a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/></a></p>
 	<div id="instructions" class="dblock">
 		<div class="mtop025">
 			<table class="tstyle1 thlight mtop05">
-				<tr><th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th><th><bean:message bundle="RESEARCHER_RESOURCES" key="label.subTypes" /></th><th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roles" /></th></tr>
-				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td></tr>
-				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td></tr>
-				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td><td style="text-align: center;">-</td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td></tr>
-				<tr><td class="acenter highlight5"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations.roles" /></td></tr>
+				<tr><th class="width12em">Actividades</th><th>Tipos</th><th>Papéis</th></tr>
+				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td></tr>
+				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td></tr>
+				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td><td style="text-align: center;">-</td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td></tr>
+				<tr>
+					<td  class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
+				</tr>
+				<tr>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles.roles" /></td>
+				</tr>
+				<tr>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
+				</tr>
 			</table>
 		</div>
 
