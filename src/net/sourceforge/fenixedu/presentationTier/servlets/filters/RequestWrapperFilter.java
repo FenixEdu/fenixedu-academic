@@ -80,7 +80,7 @@ public class RequestWrapperFilter implements Filter {
         public boolean isUserInRole(final String role) {
             final IUserView userView = SessionUtils.getUserView(this);
             final RoleType roleType = RoleType.valueOf(role);
-            return userView.hasRoleType(roleType);
+            return userView != null && userView.hasRoleType(roleType);
         }
 
         /*
