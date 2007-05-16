@@ -113,7 +113,7 @@ public class EditGroupShift extends Service {
             }
             executionCourseNames.append(executionCourse.getNome());
         }
-        new Email("Fenix System", messages.getMessage("suporte.mail"), null, emails, null, null,
+        new Email("Fenix System", messages.getMessage("noreply.mail"), null, emails, null, null,
                 messages.getMessage("message.subject.grouping.change"), messages.getMessage(
                         "message.body.grouping.change.shift", registration.getNumber().toString(),
                         studentGroup.getGroupNumber().toString()));
