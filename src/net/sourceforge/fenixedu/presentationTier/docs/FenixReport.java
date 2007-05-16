@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public abstract class FenixReport implements Serializable {
@@ -38,5 +39,9 @@ public abstract class FenixReport implements Serializable {
     public abstract String getReportFileName();
     
     protected abstract void fillReport();
+
+	public JasperPrintProcessor getPreProcessor() {
+		return null;
+	}
     
 }

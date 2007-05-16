@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +18,8 @@ import net.sourceforge.fenixedu.util.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ThesisSubmissionDA extends FenixDispatchAction {
 
@@ -175,7 +179,17 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         
         if (bean != null && bean.getFile() != null) {
-            executeService("CreateThesisDissertationFile", getThesis(request), bean.getFile(), bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+        	File temporaryFile = null;
+        	
+        	try {
+	            temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+				executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+        	}
+        	finally {
+        		if (temporaryFile != null) {
+        			temporaryFile.delete();
+        		}
+        	}
         }
         
         return prepareThesisSubmission(mapping, actionForm, request, response);
@@ -197,7 +211,17 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         
         if (bean != null && bean.getFile() != null) {
-            executeService("CreateThesisAbstractFile", getThesis(request), bean.getFile(), bean.getSimpleFileName(), null, null, null);
+        	File temporaryFile = null;
+        	
+        	try {
+	            temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+	            executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), null, null, null);
+        	}
+        	finally {
+        		if (temporaryFile != null) {
+        			temporaryFile.delete();
+        		}
+        	}
         }
         
         return prepareThesisSubmission(mapping, actionForm, request, response);

@@ -195,7 +195,7 @@
         <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
             <property name="required" value="true"/>
             <property name="type" value="word"/>
-            <property name="length" value="200"/>
+            <property name="length" value="250"/>
         </validator>
         
         <property name="columns" value="65"/>
@@ -205,7 +205,7 @@
         <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
             <property name="required" value="true"/>
             <property name="type" value="word"/>
-            <property name="length" value="200"/>
+            <property name="length" value="250"/>
         </validator>
         
         <property name="columns" value="65"/>
