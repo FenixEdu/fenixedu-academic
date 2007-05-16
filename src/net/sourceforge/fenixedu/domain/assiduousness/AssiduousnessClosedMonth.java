@@ -203,7 +203,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
         int countUnjustifiedWorkingDays = 0;
         for (Leave leave : getAssiduousness().getLeaves(beginDate, endDate)) {
             if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
-                countUnjustifiedWorkingDays += leave.getUtilDaysBetween(new Interval(beginDate
+                countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate
                         .toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight()));
             }
         }

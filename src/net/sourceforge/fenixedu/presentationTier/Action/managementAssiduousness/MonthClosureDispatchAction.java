@@ -9,13 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -26,6 +29,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
+import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
@@ -108,7 +112,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     public ActionForward exportClosedMonthList(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExportList");
-        if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {            
+        if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
             final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
             StyledExcelSpreadsheet spreadsheet = getSpreadSheet(closedMonth);
 
@@ -129,8 +133,15 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
         spreadsheet.addHeader("Saldo");
         spreadsheet.addHeader("Inj/V");
         spreadsheet.addHeader("A66/V");
-        spreadsheet.getSheet().setMargin(HSSFSheet.TopMargin, 0.3);
+        spreadsheet.addHeader("FER.");
+        spreadsheet.addHeader("ATES");
+        spreadsheet.addHeader("NOJO");
+        spreadsheet.addHeader("CASA");
+        spreadsheet.addHeader("PART");
+        spreadsheet.addHeader("LS/V");
+        spreadsheet.getSheet().setMargin(HSSFSheet.TopMargin, 0.5);
         spreadsheet.getSheet().setMargin(HSSFSheet.BottomMargin, 0.3);
+        spreadsheet.getSheet().setGridsPrinted(true);
 
         for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth
                 .getAssiduousnessClosedMonths()) {
@@ -150,16 +161,74 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
                     + assiduousnessClosedMonth.getArticle66();
             double thisMonthUnjustified = assiduousnessClosedMonth.getAccumulatedUnjustified()
                     - previousUnjustified + assiduousnessClosedMonth.getUnjustifiedDays();
-	    fillInRow(spreadsheet, assiduousnessClosedMonth, thisMonthA66, thisMonthA66
-		    + previousNotCompleteA66, thisMonthUnjustified, thisMonthUnjustified
-		    + previousNotCompleteUnjustified);
+
+            YearMonthDay beginDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.monthOfYear()), 01);
+            YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
+            int vacationsDays = getVacationsDays(assiduousnessClosedMonth.getAssiduousness(), beginDate,
+                    endDate);
+            int medicalIssuesDays = getMedicalIssuesDays(assiduousnessClosedMonth.getAssiduousness(),
+                    beginDate, endDate);
+            int familyDeathDays = assiduousnessClosedMonth.getAssiduousness().getLeavesNumberOfWorkDays(
+                    beginDate, endDate, "NOJO");
+            int weddingDays = assiduousnessClosedMonth.getAssiduousness().getLeavesNumberOfWorkDays(
+                    beginDate, endDate, "LPC");
+            int paternityDays = getPaternityDays(assiduousnessClosedMonth.getAssiduousness(), beginDate,
+                    endDate);
+            int leaveWithoutPayDays = assiduousnessClosedMonth.getAssiduousness()
+                    .getLeavesNumberOfWorkDays(beginDate, endDate, "LS/V");
+            fillInRow(spreadsheet, assiduousnessClosedMonth, thisMonthA66, thisMonthA66
+                    + previousNotCompleteA66, thisMonthUnjustified, thisMonthUnjustified
+                    + previousNotCompleteUnjustified, vacationsDays, medicalIssuesDays, familyDeathDays,
+                    weddingDays, paternityDays, leaveWithoutPayDays);
         }
         return spreadsheet;
     }
 
+    private int getPaternityDays(Assiduousness assiduousness, YearMonthDay beginDate,
+            YearMonthDay endDate) {
+        int paternityDays = assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "L.Pat");
+        paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "LP");
+        paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "LMAR");
+        paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "LP25%");
+        paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "PATERNID");
+        return paternityDays;
+    }
+
+    private int getMedicalIssuesDays(Assiduousness assiduousness, YearMonthDay beginDate,
+            YearMonthDay endDate) {
+        int countWorkDays = 0;
+        for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
+            if (leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.SICKNESS
+                    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
+                countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
+                        endDate.toDateTimeAtMidnight()));
+            }
+        }
+        return countWorkDays;
+    }
+
+    private int getVacationsDays(Assiduousness assiduousness, YearMonthDay beginDate,
+            YearMonthDay endDate) {
+        int countWorkDays = 0;
+        for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
+            if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS || leave
+                    .getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS)
+                    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
+                countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
+                        endDate.toDateTimeAtMidnight()));
+            }
+        }
+        return countWorkDays;
+    }
+
     private void fillInRow(StyledExcelSpreadsheet spreadsheet,
             AssiduousnessClosedMonth assiduousnessClosedMonth, double a66, double totalA66,
-            double unjustified, double totalUnjustified) {
+            double unjustified, double totalUnjustified, int vacationDays, int medicalIssuesDays,
+            int familyDeathDays, int weddingDays, int paternityDays, int leaveWithoutPayDays) {
         spreadsheet.newRow();
         DecimalFormat decimalFormat = new DecimalFormat(".0");
         String a66String = a66 == 0 ? "" : decimalFormat.format(a66);
@@ -178,64 +247,70 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
                 DurationFieldType.minutes())).toString());
         spreadsheet.addCell(unjustifiedString + "  " + totalUnjustifiedString);
         spreadsheet.addCell(a66String + "  " + totalA66String);
+        spreadsheet.addCell(((Integer)vacationDays).toString());
+        spreadsheet.addCell(((Integer)medicalIssuesDays).toString());
+        spreadsheet.addCell(((Integer)familyDeathDays).toString());
+        spreadsheet.addCell(((Integer)weddingDays).toString());
+        spreadsheet.addCell(((Integer)paternityDays).toString());
+        spreadsheet.addCell(((Integer)leaveWithoutPayDays).toString());
     }
 
     public ActionForward prepareToCloseExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	YearMonth yearMonthToExport = getYearMonthToClose(true);
-	YearMonth yearMonth = new YearMonth(2007, 01);
-	if (yearMonthToExport != null) {
-	    request.setAttribute("yearMonthToExport", yearMonthToExport);
-	    yearMonth = new YearMonth(yearMonthToExport.getYear(), yearMonthToExport.getNumberOfMonth());
-	    yearMonth.addMonth();
-	}
-	if (ClosedMonth.isMonthClosed(yearMonth.getPartial())) {
-	    request.setAttribute("yearMonth", yearMonth);
-	}
-	return mapping.findForward("close-extra-work-month");
+            HttpServletRequest request, HttpServletResponse response) {
+        YearMonth yearMonthToExport = getYearMonthToClose(true);
+        YearMonth yearMonth = new YearMonth(2007, 01);
+        if (yearMonthToExport != null) {
+            request.setAttribute("yearMonthToExport", yearMonthToExport);
+            yearMonth = new YearMonth(yearMonthToExport.getYear(), yearMonthToExport.getNumberOfMonth());
+            yearMonth.addMonth();
+        }
+        if (ClosedMonth.isMonthClosed(yearMonth.getPartial())) {
+            request.setAttribute("yearMonth", yearMonth);
+        }
+        return mapping.findForward("close-extra-work-month");
     }
 
     public ActionForward closeExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	final IUserView userView = SessionUtils.getUserView(request);
-	if (yearMonth != null && !ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
-	    ServiceUtils.executeService(userView, "CloseExtraWorkMonth", new Object[] { closedMonth });
-	}
-	RenderUtils.invalidateViewState();
-	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+        final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+        final IUserView userView = SessionUtils.getUserView(request);
+        if (yearMonth != null && !ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
+            ServiceUtils.executeService(userView, "CloseExtraWorkMonth", new Object[] { closedMonth });
+        }
+        RenderUtils.invalidateViewState();
+        return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
     }
 
     public ActionForward exportExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
-	if (yearMonth == null) {
-	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
-	}
+        YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
+        if (yearMonth == null) {
+            return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+        }
 
-	final IUserView userView = SessionUtils.getUserView(request);
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	String result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth",
-		new Object[] { closedMonth });
-	response.setContentType("text/plain");
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
-	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
-		month).append("-").append(yearMonth.getYear()).toString()
-		+ ".txt");
+        final IUserView userView = SessionUtils.getUserView(request);
+        ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+        String result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth",
+                new Object[] { closedMonth });
+        response.setContentType("text/plain");
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
+                LanguageUtils.getLocale());
+        String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
+        response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
+                month).append("-").append(yearMonth.getYear()).toString()
+                + ".txt");
 
-	byte[] data = result.getBytes();
-	response.setContentLength(data.length);
-	ServletOutputStream writer = response.getOutputStream();
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
+        byte[] data = result.getBytes();
+        response.setContentLength(data.length);
+        ServletOutputStream writer = response.getOutputStream();
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        response.flushBuffer();
 
-	return mapping.findForward("");
+        return mapping.findForward("");
     }
 
     public ActionForward openMonth(ActionMapping mapping, ActionForm actionForm,
@@ -246,17 +321,17 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
                     new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
         }
         RenderUtils.invalidateViewState();
-	return prepareToCloseMonth(mapping, actionForm, request, response);
+        return prepareToCloseMonth(mapping, actionForm, request, response);
     }
 
     public ActionForward openExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
-	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenExtraWorkClosedMonth",
-		    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
-	}
-	RenderUtils.invalidateViewState();
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
+        if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenExtraWorkClosedMonth",
+                    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
+        }
+        RenderUtils.invalidateViewState();
         return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
     }
 }
