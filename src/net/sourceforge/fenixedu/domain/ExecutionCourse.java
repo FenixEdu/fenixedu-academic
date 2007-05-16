@@ -363,6 +363,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean canBeDeleted() {
+	if (hasAnyAssociatedInquiriesCourses()) throw new DomainException("error.execution.course.cant.delete");
+	if (hasAnyAssociatedInquiriesRegistries()) throw new DomainException("error.execution.course.cant.delete");
         if (hasAnyAssociatedSummaries()) throw new DomainException("error.execution.course.cant.delete");
         if (!getGroupings().isEmpty()) throw new DomainException("error.execution.course.cant.delete");
         if (hasAnyAssociatedBibliographicReferences()) throw new DomainException("error.execution.course.cant.delete");
