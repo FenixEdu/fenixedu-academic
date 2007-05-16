@@ -60,7 +60,7 @@ public enum DegreeType {
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
-	    true,
+	    false,
 	    AdministrativeOfficeType.MASTER_DEGREE),
 
     BOLONHA_ADVANCED_FORMATION_DIPLOMA(
