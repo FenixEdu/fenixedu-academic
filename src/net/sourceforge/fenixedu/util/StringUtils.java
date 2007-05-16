@@ -113,8 +113,8 @@ public class StringUtils {
 	    for (final String word : words) {
 		final String toAdd = word + " ";
 		
-		if (currentLineLength + toAdd.length() > LINE_LENGTH) {
-		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH - 1, ' ') + '\n';
+		if (currentLineLength + toAdd.length() > LINE_LENGTH_WITH_SUFFIX) {
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH_WITH_SUFFIX - 1, ' ') + '\n';
 		    currentLineLength = toAdd.length();
 		} else {
 		    currentLineLength += toAdd.length();
