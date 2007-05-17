@@ -380,7 +380,7 @@
 		<logic:present role="RESEARCHER">
 		<tr>
 			<logic:notEmpty name="UserView" property="person.researchInterests">
-				<th><bean:message key="label.homepage.showInterests" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<th><bean:message key="label.homepage.showInterests" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</th>
 				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showInterests" value="true"/></td>
   			</logic:notEmpty>
   			
@@ -393,12 +393,12 @@
 
 		<tr>
 			<logic:notEmpty name="UserView" property="person.researchResultPublications">
-				<th><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<th><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</th>
 				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showPublications" value="true"/></td>
   			</logic:notEmpty>
   			
   			<logic:empty name="UserView" property="person.researchResultPublications">
-				<th><span class="color888"><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<th><span class="color888"><bean:message key="label.homepage.showPublications" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
 				<td><input type="checkbox" disabled="disabled"/></td>
 				<td><span class="color888"><bean:message key="label.homepage.options.publications.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
   			</logic:empty>
@@ -406,12 +406,12 @@
 
 		<tr>
 			<logic:notEmpty name="UserView" property="person.researchResultPatents">
-				<th><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<th><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</th>
 				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showPatents" value="true"/></td>
   			</logic:notEmpty>
 
   			<logic:empty name="UserView" property="person.researchResultPatents">
-				<th><span class="color888"><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<th><span class="color888"><bean:message key="label.homepage.showPatents" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
 				<td><input type="checkbox" disabled="disabled"/></td>
 				<td><span class="color888"><bean:message key="label.homepage.options.patents.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
   			</logic:empty>
@@ -419,12 +419,12 @@
 
 		<tr>
 			<logic:notEmpty name="UserView" property="person.participations">
-				<th><bean:message key="label.homepage.showParticipations" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<th><bean:message key="label.homepage.showParticipations" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</th>
 				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showParticipations" value="true"/></td>
   			</logic:notEmpty>
 
   			<logic:empty name="UserView" property="person.participations">
-				<th><span class="color888"><bean:message key="label.homepage.showParticipations" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<th><span class="color888"><bean:message key="label.homepage.showParticipations" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
 				<td><input type="checkbox" disabled="disabled"/></td>
 				<td><span class="color888"><bean:message key="label.homepage.options.participations.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
   			</logic:empty>
