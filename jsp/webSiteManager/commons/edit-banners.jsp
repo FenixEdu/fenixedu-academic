@@ -124,6 +124,20 @@
                         </tr>
                         <tr>
                             <th>
+                                <bean:message key="label.site.banner.repeat" bundle="WEBSITEMANAGER_RESOURCES"/>:
+                            </th>
+                            <td>
+                                <fr:edit id="editBannerRepeat" name="editBannerBean" slot="repeat" layout="radio">
+                                    <fr:layout>
+                                    	<fr:property name="classes" value="liinline nobullet"/>
+                                    </fr:layout>
+                                </fr:edit>
+                            </td>
+                            <td class="tdclear tderror1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <bean:message key="label.site.banner.color" bundle="WEBSITEMANAGER_RESOURCES"/>:
                             </th>
                             <td>
@@ -194,10 +208,17 @@
     </strong>
 </div>
 
-<div class="infoop2">
-    <p class="mvert0">
-        <bean:message key="message.site.banners.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+<div class="infoop2" id="message">
+    <p class="mbottom05">
+        <bean:message key="message.site.banners.add.intro" bundle="WEBSITEMANAGER_RESOURCES"/>
+        <a class="switchInline" href="javascript:showElement('site-banners-message');"><bean:message key="link.site.banners.add.expand" bundle="WEBSITEMANAGER_RESOURCES"/>...</a>
     </p>
+
+	<div class="switchNone" id="site-banners-message">
+	    <p class="mbottom05">
+	    	<bean:message key="message.site.banners.add.body" bundle="WEBSITEMANAGER_RESOURCES"/>
+	    </p>
+    </div>
 </div>
 
 <fr:form action="<%= String.format("%s?method=addBanner&amp;%s", actionName, context) %>" encoding="multipart/form-data">
@@ -213,3 +234,7 @@
         <bean:message key="button.create"/>
     </html:submit>
 </fr:form>
+
+<script type="text/javascript">
+	switchGlobal();
+</script>

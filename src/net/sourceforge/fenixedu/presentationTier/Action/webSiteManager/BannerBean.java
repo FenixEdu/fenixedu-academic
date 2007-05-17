@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
+import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 
 public class BannerBean implements Serializable {
 
@@ -16,17 +17,20 @@ public class BannerBean implements Serializable {
     private String color;
     private String link;
     private Integer weight;
+    private UnitSiteBannerRepeatType repeat;
     
     public BannerBean() {
         super();
         
         this.mainImage = new SimpleFileBean();
         this.backgroundImage = new SimpleFileBean();
+        this.repeat = UnitSiteBannerRepeatType.HORIZONTAL;
     }
 
     public BannerBean(UnitSiteBanner banner) {
         this();
         
+        this.repeat = banner.getRepeatType();
         this.color  = banner.getColor();
         this.link   = banner.getLink();
         this.weight = banner.getWeight();
@@ -70,6 +74,14 @@ public class BannerBean implements Serializable {
 
 	public void setWeight(Integer weight) {
 		this.weight = weight;
+	}
+
+	public UnitSiteBannerRepeatType getRepeat() {
+		return repeat;
+	}
+
+	public void setRepeat(UnitSiteBannerRepeatType repeat) {
+		this.repeat = repeat;
 	}
 	
 }

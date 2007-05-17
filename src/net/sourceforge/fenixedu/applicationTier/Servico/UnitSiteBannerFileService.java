@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
+import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -88,7 +89,7 @@ public class UnitSiteBannerFileService extends Service {
 	}
 
 	protected void updateBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName,
-			File backFile, String backName, String color, String link, Integer weight) throws FenixServiceException, IOException {
+			File backFile, String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight) throws FenixServiceException, IOException {
 		UnitSiteBannerFile main = createBannerFile(site, mainFile, mainName);
 		UnitSiteBannerFile background = createBannerFile(site, backFile, backName);
 
@@ -100,6 +101,7 @@ public class UnitSiteBannerFileService extends Service {
 			banner.setBackgroundImage(background);
 		}
 
+		banner.setRepeatType(repeat);
 		banner.setColor(color);
 		banner.setLink(link);
 		banner.setWeight(weight);

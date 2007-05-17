@@ -208,7 +208,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		File backgroundFile = back.getFile() == null ? null : FileUtils.copyToTemporaryFile(back.getFile());
 
 		try {
-			executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
+			executeService("UpdateUnitSiteBanner", site, banner, mainFile, main.getName(), backgroundFile, back.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
 		}
 		finally {
 			if (mainFile != null) {
@@ -257,7 +257,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		File backgroundFile = background.getFile() == null ? null : FileUtils.copyToTemporaryFile(background.getFile());
 		try {
 			executeService("CreateUnitSiteBanner", site, mainFile, main.getName(), backgroundFile,
-					background.getName(), bean.getColor(), bean.getLink(), bean.getWeight());
+					background.getName(), bean.getRepeat(), bean.getColor(), bean.getLink(), bean.getWeight());
 		} finally {
 			if (mainFile != null) {
 				mainFile.delete();

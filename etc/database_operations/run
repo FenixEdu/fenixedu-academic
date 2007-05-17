@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Table Assiduousness Vacations" alterTableAssiduousnessVacations.sql
+execute "Add 'repeat' field to UnitSiteBanner" addRepeatToUnitSiteBanner.sql

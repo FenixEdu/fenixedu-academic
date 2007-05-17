@@ -94,6 +94,9 @@
         <property name="fileSizeSlot" value="backgroundImage.size"/>
         <property name="fileContentTypeSlot" value="backgroundImage.contentType"/>
     </slot>
+    <slot name="repeat" key="label.site.banner.repeat" layout="radio">
+    	<property name="classes" value="liinline nobullet"/>
+    </slot>
     <slot name="color" key="label.site.banner.color"/>
     <slot name="link" key="label.site.banner.link" layout="input-with-comment">
         <property name="size" value="40"/>
@@ -121,6 +124,7 @@
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="site.banner.file.view"/>
     </slot>
+    <slot name="repeatType" key="label.site.banner.repeat"/>
     <slot name="color" key="label.site.banner.color" layout="null-as-label">
         <property name="label" value="-"/>
         <property name="subLayout" value="webcolor"/>

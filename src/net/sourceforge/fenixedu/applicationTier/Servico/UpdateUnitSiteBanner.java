@@ -7,10 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
+import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 
 public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
 
-    public void run(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile, String backName, String color, String link, Integer weight) throws FenixServiceException, IOException {
+    public void run(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile, String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight) throws FenixServiceException, IOException {
         UnitSiteBannerFile main = banner.getMainImage();
         if (main != null && mainFile != null) {
             main.delete();
@@ -21,7 +22,7 @@ public class UpdateUnitSiteBanner extends UnitSiteBannerFileService {
             background.delete();
         }
 
-        updateBanner(site, banner, mainFile, mainName, backFile, backName, color, link, weight);
+        updateBanner(site, banner, mainFile, mainName, backFile, backName, repeat, color, link, weight);
     }
     
 }

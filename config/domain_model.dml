@@ -190,6 +190,7 @@ valueType net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStag
 valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												as PartyContactType;
 valueType net.sourceforge.fenixedu.domain.Language																as Language;
 valueType net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                              as UnitSiteLayoutType;
+valueType net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                              as UnitSiteBannerRepeatType;
 
 /*
 *
@@ -4742,6 +4743,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		String color;
 		String link;
 		Integer weight;
+		UnitSiteBannerRepeatType repeatType;
 	}
 
 	class net.sourceforge.fenixedu.domain.UnitSiteLink extends net.sourceforge.fenixedu.domain.DomainObject {
