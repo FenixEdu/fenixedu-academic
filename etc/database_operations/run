@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table Assiduousness Vacations" createTableAssiduousnessVacations.sql
