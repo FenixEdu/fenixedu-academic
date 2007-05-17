@@ -18,7 +18,12 @@
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
 <fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">
-<p class="mtop15 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
+
+<%--
+<p class="mtop2 mbottom025"><strong><bean:message key="label.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
+--%>
+
+<p class="mvert15 color888 smalltxt"><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/><span class="required">*</span><bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
@@ -72,7 +77,8 @@
 	</tr>
 </table>
 
-<p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
+
+<p class="mtop2 mbottom025"><strong>Campos opcionais:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
@@ -208,7 +214,6 @@
 	</fr:create>			
 	</p>
 
-<p class="smalltxt"><em><bean:message key="label.fieldsWith" bundle="SITE_RESOURCES"/><span class="required">*</span><bean:message key="label.areRequired" bundle="SITE_RESOURCES"/></em></p>
 
 	<p class="mtop1">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
