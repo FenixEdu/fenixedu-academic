@@ -217,6 +217,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return Collections.min(RootDomainObject.getInstance().getExecutionPeriods());
     }
 
+    public static ExecutionPeriod readLastExecutionPeriod() {
+	return Collections.max(RootDomainObject.getInstance().getExecutionPeriods());
+    }
+
     public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
 	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
 	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
