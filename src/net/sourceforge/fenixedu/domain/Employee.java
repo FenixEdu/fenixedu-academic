@@ -30,15 +30,14 @@ import org.joda.time.YearMonthDay;
 public class Employee extends Employee_Base {
 
     public Employee(Person person, Integer employeeNumber, Boolean active) {
-	super();	
+	super();
 	setEmployeeNumber(employeeNumber);
 	setCreationDate(new DateTime());
 	setPerson(person);
 	setActive(active);
-	setAntiquity(new Date(System.currentTimeMillis()));
 	setWorkingHours(0);
 	setAssiduousness(null);
-	setRootDomainObject(RootDomainObject.getInstance());	
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     @Override
@@ -57,7 +56,7 @@ public class Employee extends Employee_Base {
 	}
 	super.setPerson(person);
     }
-   
+
     private void checkEmployeeNumber(Integer employeeNumber) {
 	Employee employee = readByNumber(employeeNumber);
 	if (employee != null && !employee.equals(this)) {
@@ -65,11 +64,13 @@ public class Employee extends Employee_Base {
 	}
     }
 
-    public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {	
-	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType, EmployeeContract.class);	
+    public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {
+	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType,
+		EmployeeContract.class);
     }
 
-    public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
+    public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType,
+	    YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList<Contract>();
 	for (final Contract accountability : getContractsByContractType(contractType)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
@@ -106,7 +107,8 @@ public class Employee extends Employee_Base {
 
     }
 
-    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
+    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType,
+	    YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	Contract contractToReturn = null;
 	for (Contract contract : getContractsByContractType(contractType, begin, end)) {
@@ -160,9 +162,10 @@ public class Employee extends Employee_Base {
 	Contract contract = getCurrentContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
 	return (contract != null) ? contract.getMailingUnit() : null;
     }
-    
+
     public Unit getLastWorkingPlace(YearMonthDay beginDate, YearMonthDay endDate) {
-	Contract lastContract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT, beginDate, endDate);
+	Contract lastContract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT,
+		beginDate, endDate);
 	return lastContract != null ? lastContract.getWorkingUnit() : null;
     }
 
@@ -178,12 +181,14 @@ public class Employee extends Employee_Base {
 
     public Department getCurrentDepartmentWorkingPlace() {
 	Contract contract = getCurrentWorkingContract();
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(), true) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
+		contract.getWorkingUnit(), true) : null;
     }
 
     public Department getLastDepartmentWorkingPlace() {
 	Contract contract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT);
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(), false) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
+		contract.getWorkingUnit(), false) : null;
     }
 
     public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
@@ -195,11 +200,11 @@ public class Employee extends Employee_Base {
     private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
 	Collection<Unit> parentUnits = unit.getParentUnits();
 	if (unitDepartment(unit, onlyActiveEmployees)) {
-	    return ((DepartmentUnit)unit).getDepartment();
+	    return ((DepartmentUnit) unit).getDepartment();
 	} else if (!parentUnits.isEmpty()) {
 	    for (Unit parentUnit : parentUnits) {
 		if (unitDepartment(parentUnit, onlyActiveEmployees)) {
-		    return ((DepartmentUnit)parentUnit).getDepartment();
+		    return ((DepartmentUnit) parentUnit).getDepartment();
 		} else if (parentUnit.hasAnyParentUnits()) {
 		    Department department = getEmployeeDepartmentUnit(parentUnit, onlyActiveEmployees);
 		    if (department != null) {
@@ -212,8 +217,8 @@ public class Employee extends Employee_Base {
     }
 
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees) {
-	return (unit.isDepartmentUnit() && ((DepartmentUnit)unit).getDepartment() != null 
-		&& (!onlyActiveEmployees || ((DepartmentUnit)unit).getDepartment().getAllCurrentActiveWorkingEmployees().contains(this)));
+	return (unit.isDepartmentUnit() && ((DepartmentUnit) unit).getDepartment() != null && (!onlyActiveEmployees || ((DepartmentUnit) unit)
+		.getDepartment().getAllCurrentActiveWorkingEmployees().contains(this)));
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {
@@ -244,7 +249,8 @@ public class Employee extends Employee_Base {
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null
+		: getCurrentWorkingPlace().getAdministrativeOffice();
 	if (administrativeOffice == null) {
 	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
 		if (personFunction.getFunction().getFunctionType().equals(
@@ -264,14 +270,15 @@ public class Employee extends Employee_Base {
     private RoleType getRoleType() {
 	return RoleType.EMPLOYEE;
     }
-    
+
     public String getRoleLoginAlias() {
-	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-	
+	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(
+		getRoleType());
+
 	if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
 	    return "F" + getEmployeeNumber();
 	} else {
-	    return roleLoginAlias.get(0).getAlias(); 
+	    return roleLoginAlias.get(0).getAlias();
 	}
     }
 }
