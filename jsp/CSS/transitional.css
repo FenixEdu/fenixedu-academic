@@ -1382,8 +1382,8 @@ text-align: center;
 }
 .usiteintro {
 text-align: left;
-margin: 1em;
 padding: 1em;
+background: #f8f8f8;
 }
 .usiteintrofloated {
 text-align: left;
