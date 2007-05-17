@@ -285,8 +285,8 @@
     </slot>
     <slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
-   		<property name="columns" value="70"/>
-   		<property name="rows" value="15"/>
+   		<property name="columns" value="85"/>
+   		<property name="rows" value="25"/>
    		<property name="config" value="advanced" />
 	</slot>
     <slot name="visible" bundle="SITE_RESOURCES"/>
@@ -313,8 +313,8 @@
 	</slot>
 	<slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
-   		<property name="columns" value="70"/>
-   		<property name="rows" value="15"/>
+   		<property name="columns" value="85"/>
+   		<property name="rows" value="25"/>
    		<property name="config" value="advanced" />
 	</slot>
     <slot name="visible" bundle="SITE_RESOURCES"/>
