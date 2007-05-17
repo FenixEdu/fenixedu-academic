@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.CreateStudentStatuteFactory;
@@ -39,8 +40,13 @@ public class StudentStatutesDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	// add new statute
-	executeFactoryMethod();
+	try {
+	    // add new statute
+	    executeFactoryMethod();
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+
 
 	final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
 	request.setAttribute("student", student);

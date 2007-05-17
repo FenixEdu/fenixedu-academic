@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.student;
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 /**
@@ -20,10 +21,17 @@ public class StudentStatute extends StudentStatute_Base {
     public StudentStatute(Student student, StudentStatuteType statuteType,
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 	this();
-	setStudent(student);
 	setBeginExecutionPeriod(beginExecutionPeriod);
 	setEndExecutionPeriod(endExecutionPeriod);
 	setStatuteType(statuteType);
+
+	for (StudentStatute statute : student.getStudentStatutes()) {
+	    if (statute.overlapsWith(this)) {
+		throw new DomainException("error.studentStatute.alreadyExistsOneOverlapingStatute");
+	    }
+	}
+
+	setStudent(student);
     }
 
     public boolean isValidInExecutionPeriod(final ExecutionPeriod executionPeriod) {
@@ -64,6 +72,45 @@ public class StudentStatute extends StudentStatute_Base {
 	}
     }
 
+    public boolean overlapsWith(StudentStatute statute) {
+
+	if (statute.getStatuteType() != getStatuteType()) {
+	    return false;
+	}
+
+	ExecutionPeriod thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod()
+		: ExecutionPeriod.readFirstExecutionPeriod();
+	ExecutionPeriod thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod()
+		: ExecutionPeriod.readLastExecutionPeriod();
+
+	ExecutionPeriod statuteBegin = statute.getBeginExecutionPeriod() != null ? statute
+		.getBeginExecutionPeriod() : ExecutionPeriod.readFirstExecutionPeriod();
+	ExecutionPeriod statuteEnd = statute.getEndExecutionPeriod() != null ? statute
+		.getEndExecutionPeriod() : ExecutionPeriod.readLastExecutionPeriod();
+
+	return statuteBegin.isAfterOrEquals(thisStatuteBegin)
+		&& statuteBegin.isBeforeOrEquals(thisStatuteEnd)
+		|| statuteEnd.isAfterOrEquals(thisStatuteBegin)
+		&& statuteEnd.isBeforeOrEquals(thisStatuteEnd);
+
+    }
+
+    public void add(StudentStatute statute) {
+	if (this.overlapsWith(statute)) {
+	    if (statute.getBeginExecutionPeriod() == null
+		    || (getBeginExecutionPeriod() != null && statute.getBeginExecutionPeriod().isBefore(
+			    getBeginExecutionPeriod()))) {
+		setBeginExecutionPeriod(statute.getBeginExecutionPeriod());
+	    }
+
+	    if (statute.getEndExecutionPeriod() == null
+		    || (getEndExecutionPeriod() != null && statute.getEndExecutionPeriod().isAfter(
+			    getEndExecutionPeriod()))) {
+		setEndExecutionPeriod(statute.getEndExecutionPeriod());
+	    }
+	}
+    }
+
     public static class DeleteStudentStatuteFactory implements FactoryExecutor {
 
 	StudentStatute studentStatute;
@@ -77,6 +124,12 @@ public class StudentStatute extends StudentStatute_Base {
 	    return true;
 	}
 
+    }
+
+    public String toDetailedString() {
+	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ")
+		+ " ..... "
+		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
 
 }
