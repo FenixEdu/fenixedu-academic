@@ -1405,7 +1405,6 @@ class net.sourceforge.fenixedu.domain.District extends net.sourceforge.fenixedu.
 class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.domain.DomainObject {
 	Boolean active;
 	Integer employeeNumber;
-	YearMonthDay antiquityYearMonthDay;
 	Integer keyPerson;
 	Integer workingHours;
 	Integer keyAssiduousness;
@@ -3941,6 +3940,20 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork exten
 	Duration unjustified;
 }
 
+class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAssiduousness;
+	Integer year;
+	Double normalDays;
+	Double normalWithLeavesDiscount;
+	Double antiquityDays;
+	Double ageDays;
+	Double accumulatedDays;
+	Double bonusDays;
+	Double lowTimeVacationsDays;
+	Double article17Days;
+	DateTime lastModifiedDate;
+}
+
 class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth extends net.sourceforge.fenixedu.domain.DomainObject {
 	Partial closedYearMonth;
 	Boolean closedForBalance;
@@ -5369,6 +5382,14 @@ relation AssiduousnessExtraWorkWorkScheduleType {
 		multiplicity *;
 	}
 }
+
+relation AssiduousnessVacationsAssiduousness {
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations playsRole AssiduousnessVacations {
+		multiplicity *;
+	}
+}
+
 
 
 relation ClosedMonthAssiduousnessClosedMonth {
@@ -10271,6 +10292,13 @@ relation RootDomainObjectResultUnitAssociation {
 relation RootDomainObjectAssiduousness {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousnesss {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessVacations {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations playsRole assiduousnessVacations {
 		multiplicity *;
 	}
 }

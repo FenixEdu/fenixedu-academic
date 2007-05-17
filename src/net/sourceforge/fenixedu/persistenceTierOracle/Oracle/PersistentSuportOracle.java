@@ -191,6 +191,9 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	try {
 	    sql = thisConnection.prepareCall(statement);
 	} catch (java.sql.SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	} catch (java.lang.NullPointerException e) {
+	    throw new ExcepcaoPersistencia();
 	}
 	return sql;
     }
