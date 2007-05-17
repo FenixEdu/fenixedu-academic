@@ -151,6 +151,21 @@
 	<slot name="modifiedByNumber" key="label.employee" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
+<schema name="show.vacations"
+	type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations">
+	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="normalWithLeavesDiscount" key="label.normalVacation" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="antiquityDays" key="label.antiquityVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="ageDays" key="label.ageVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedDays" key="label.accumulatedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="bonusDays" key="label.bonusVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="lowTimeVacationsDays" key="label.lowTimeVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="article17Days" key="label.article17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="extraWorkDays" key="label.extraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="lastYearExtraWorkDays" key="label.lastYearExtraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="totalDays" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
 <schema name="choose.date"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
 	<slot name="year"
@@ -163,6 +178,15 @@
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+</schema>
+
+<schema name="choose.year"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
+	<slot name="year"
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
 	</slot>
 </schema>
 

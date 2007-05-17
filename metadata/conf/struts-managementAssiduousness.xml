@@ -48,6 +48,7 @@
 			<forward name="show-schedule" path="show-schedule"/>
 			<forward name="show-clockings" path="show-clockings"/>
 			<forward name="show-justifications" path="show-justifications"/>
+			<forward name="show-vacations" path="show-vacations"/>
 			<forward name="show-all-schedules" path="show-all-schedules"/>
 		</action>
 		<action path="/viewAssiduousness"

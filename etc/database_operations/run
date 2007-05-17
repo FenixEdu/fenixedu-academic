@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table Assiduousness Vacations" alterTableAssiduousnessVacations.sql

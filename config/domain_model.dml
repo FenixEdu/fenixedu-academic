@@ -3951,6 +3951,8 @@ class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations exten
 	Double bonusDays;
 	Double lowTimeVacationsDays;
 	Double article17Days;
+	Double extraWorkDays;
+	Double lastYearExtraWorkDays;
 	DateTime lastModifiedDate;
 }
 

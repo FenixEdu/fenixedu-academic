@@ -91,7 +91,9 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	    return actionForward;
 	}
 	YearMonth yearMonth = getYearMonth(request, employee);
-	request.setAttribute("yearMonth", yearMonth);
+	if (yearMonth != null) {
+	    request.setAttribute("yearMonth", yearMonth);
+	}
 
 	List<Schedule> schedules = new ArrayList<Schedule>(employee.getAssiduousness().getSchedules());
 	if (!schedules.isEmpty()) {
@@ -130,7 +132,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	YearMonth yearMonth = getYearMonth(request, employee);
 	if (yearMonth == null) {
-	    return mapping.findForward("show-employee-work-sheet");
+	    return mapping.findForward("show-clockings");
 	}
 
 	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
@@ -176,7 +178,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	YearMonth yearMonth = getYearMonth(request, employee);
 	if (yearMonth == null) {
-	    return mapping.findForward("show-employee-work-sheet");
+	    return mapping.findForward("show-justifications");
 	}
 
 	if (employee.getAssiduousness() != null) {
@@ -195,6 +197,33 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employee", employee);
 	return mapping.findForward("show-justifications");
+    }
+
+    public ActionForward showVacations(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth == null) {
+	    return mapping.findForward("show-vacations");
+	}
+
+	if (employee.getAssiduousness() != null) {
+	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth()
+		    .ordinal() + 1, 01);
+	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(),
+		    yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth().getMaximumValue());
+	    request.setAttribute("vacations", employee.getAssiduousness()
+		    .getAssiduousnessVacationsByYear(yearMonth.getYear()));
+	    setEmployeeStatus(request, employee, beginDate, endDate);
+	}
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employee", employee);
+	return mapping.findForward("show-vacations");
     }
 
     private ActionForward validateEmployee(ActionMapping mapping, HttpServletRequest request,
@@ -260,6 +289,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	request.setAttribute("yearMonth", yearMonth);
 	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
 	employeeWorkSheet.setEmployee(employee);
+	request.setAttribute("employee", employee);
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
     }
 

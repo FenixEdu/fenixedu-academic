@@ -59,6 +59,16 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 
     private DomainReference<ExtraWorkRequest> extraWorkRequest;
 
+    public static final int YEAR_HOUR_LIMIT = 100;
+
+    public static final double nightExtraWorkPercentage = 0.25;
+
+    public static final double firstHourPercentage = 1.25;
+
+    public static final double secondHourPercentage = 1.50;
+
+    public static final double weeklyRestPercentage = 2;
+
     public ExtraWorkRequestFactory() {
 	super();
 	YearMonthDay date = new YearMonthDay();
@@ -326,6 +336,9 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	    if (actionMessage != null) {
 		return actionMessage;
 	    }
+
+	    Double totalValue = getThisRequestValue();
+
 	    if (getNightHours() != null || getExtraNightHours() != null || getExtraNightDays() != null
 		    || getHolidayHours() != null || getSaturdayHours() != null
 		    || getSundayHours() != null || getWorkdayHours() != null) {
@@ -338,9 +351,35 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	return null;
     }
 
+    private Double getThisRequestValue() {
+
+	GiafInterface giafInterface = new GiafInterface();
+	YearMonthDay day = new YearMonthDay(getPartialDate().get(DateTimeFieldType.year()),
+		getPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
+	Double hourValue = new Double(0);
+	try {
+	    hourValue = giafInterface.getEmployeeHourValue(getEmployee(), day);
+	    System.out.println("day " + day);
+	} catch (ExcepcaoPersistencia e) {
+	    //return new ActionMessage("error.connectionError");
+	}
+	System.out.println("Valor = " + hourValue);
+
+	Double totalValue = new Double(0);
+	//	  public static final double nightExtraWorkPercentage = 0.25;
+	//	    public static final double firstHourPercentage = 1.25;
+	//	    public static final double secondHourPercentage = 1.50;
+	//	    public static final double weeklyRestPercentage= 2;
+
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(getPartialDate());
+	AssiduousnessClosedMonth assiduousnessClosedMonth = getEmployee().getAssiduousness()
+		.getAssiduousnessClosedMonth(closedMonth);
+
+	return null;
+    }
+
     protected ActionMessage validateBalances() {
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(getPartialDate().get(
-		DateTimeFieldType.year()), getPartialDate().get(DateTimeFieldType.monthOfYear())));
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(getPartialDate());
 	if (!getIsMonthClosed()) {
 	    return new ActionMessage("error.extraWorkRequest.monthNotClosed");
 	}
@@ -351,12 +390,11 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 		.getAssiduousnessClosedMonth(closedMonth);
 
 	Duration nightHoursWorked = assiduousnessClosedMonth.getTotalNightBalance();
-	// só para quem tem horário nocturno:
 
 	EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization = getEmployeeExtraWorkAuthorization();
 
-	if (getNightHours() != null) {
-	    if(!employeeExtraWorkAuthorization.getNightExtraWork()) {
+	if (getNightHours() != null) {// só para quem tem horário nocturno:
+	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.nightWork"));
 	    }
@@ -365,9 +403,9 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 			.getString("label.nightWork"));
 	    }
 	}
-	// para quem não tem horário nocturno:
-	if (getExtraNightHours() != null && getExtraNightDays() != null) {
-	    if(!employeeExtraWorkAuthorization.getNightExtraWork()) {
+
+	if (getExtraNightHours() != null && getExtraNightDays() != null) {// para quem não tem horário nocturno:
+	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.nightWork"));
 	    }
@@ -378,7 +416,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	}
 
 	if (getSaturdayHours() != null) {
-	    if(!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
+	    if (!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.saturdayWork"));
 	    }
@@ -389,7 +427,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	}
 
 	if (getSundayHours() != null) {
-	    if(!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
+	    if (!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.sundayWork"));
 	    }
@@ -400,7 +438,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	}
 
 	if (getHolidayHours() != null) {
-	    if(!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
+	    if (!employeeExtraWorkAuthorization.getWeeklyRestExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.holidayWork"));
 	    }
@@ -411,27 +449,47 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	}
 
 	if (getWorkdayHours() != null) {
-	    if(!employeeExtraWorkAuthorization.getNormalExtraWork()) {
+	    if (!employeeExtraWorkAuthorization.getNormalExtraWork()
+		    && !employeeExtraWorkAuthorization.getNormalExtraWorkPlusOneHundredHours()
+		    && !employeeExtraWorkAuthorization.getNormalExtraWorkPlusTwoHours()
+		    && !employeeExtraWorkAuthorization.getAuxiliarPersonel()
+		    && !employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.normalExtraWork"));
 	    }
+	    if (employeeExtraWorkAuthorization.getNormalExtraWork()) {
+		//		if (getWorkdayHours() > DAY_HOUR_LIMIT) {
+		//		    return new ActionMessage("error.extraWorkRequest.extraWorkLimitReached",
+		//			    DAY_HOUR_LIMIT, bundle.getString("label.hoursPerDay"));
+		//		}
+		int hoursPerYear = getHourByYearExtraWork() + getWorkdayHours();
+		if (hoursPerYear > YEAR_HOUR_LIMIT) {
+		    return new ActionMessage("error.extraWorkRequest.extraWorkLimitReached",
+			    YEAR_HOUR_LIMIT, bundle.getString("label.hoursPerYear"));
+		}
+	    }
+
 	    if (assiduousnessClosedMonth.getBalance().toPeriod(PeriodType.dayTime()).getHours() < getWorkdayHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.normalExtraWork"));
 	    }
 	}
 
-	GiafInterface giafInterface = new GiafInterface();
-	YearMonthDay day = new YearMonthDay(getPartialDate().get(DateTimeFieldType.year()),
-		getPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
-	Double value = new Double(0);
-	try {
-	    value = giafInterface.getEmployeeHourValue(getEmployee(), day);
-	} catch (ExcepcaoPersistencia e) {
-	    return new ActionMessage("error.connectionError");
-	}
-	System.out.println("Valor = " + value);
 	return null;
+    }
+
+    private Integer getHourByYearExtraWork() {
+	int result = 0;
+	for (ExtraWorkRequest request : getEmployee().getAssiduousness().getExtraWorkRequests()) {
+	    if (request.getPartialDate().get(DateTimeFieldType.year()) == getPartialDate().get(
+		    DateTimeFieldType.year())) {
+		if (getExtraWorkRequest() == null
+			|| (getExtraWorkRequest().getPartialDate().get(DateTimeFieldType.monthOfYear()) != request
+				.getPartialDate().get(DateTimeFieldType.monthOfYear())))
+		    result = result + request.getTotalHours();
+	    }
+	}
+	return result;
     }
 
     private EmployeeExtraWorkAuthorization getEmployeeExtraWorkAuthorization() {
@@ -444,7 +502,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 		if (employeeExtraWorkAuthorization.getExtraWorkAuthorization().existsBetweenDates(begin,
 			end)
 			&& employeeExtraWorkAuthorization.getExtraWorkAuthorization().getPayingUnit()
-				.getExtraPayingUnitAuthorizations().contains(getUnit())) {
+				.equals(getUnit())) {
 		    return employeeExtraWorkAuthorization;
 		}
 	    }

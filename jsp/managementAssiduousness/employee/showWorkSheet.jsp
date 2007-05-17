@@ -203,11 +203,13 @@
 		<br />
 		</div>
 	
+	<logic:present name="employeeStatusList">
 		<fr:view name="employeeStatusList" schema="show.employeeStatus">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="showinfo1 thbold" />
 			</fr:layout>
 		</fr:view>
+	</logic:present>
 		
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
 		<p>
