@@ -387,7 +387,9 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.HtmlEditorRenderer"/>
     
     <!--@ This layout can be used to edit html text using the TinyMCE editor instead of the standard html editor. -->
-    <renderer mode="input" type="java.lang.String" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.RichTextInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.RichTextInputRenderer">
+		<property name="safe" value="true"/>
+    </renderer>
 
     <!--@ This layout indicates that we want to accept a text that can be very long and extend over multiple lines.  -->
     <renderer mode="input" type="java.lang.String" layout="longText" class="net.sourceforge.fenixedu.renderers.TextAreaInputRenderer"/>
