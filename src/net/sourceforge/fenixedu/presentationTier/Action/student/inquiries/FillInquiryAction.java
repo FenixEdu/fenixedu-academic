@@ -158,7 +158,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	// removing the attending courses which inquiries were already answered
 	for (InfoInquiriesRegistry iir : studentInquiriesResgistries) {
 	    for (InfoFrequenta iattends : studentAttends) {
-		if (iir.getExecutionCourse() == iattends.getDisciplinaExecucao() && iir.getExecutionPeriod() == currentExecutionPeriod) {
+		if (same(iir.getExecutionCourse(), iattends.getDisciplinaExecucao()) && same(iir.getExecutionPeriod(), currentExecutionPeriod)) {
 		    evaluatedAttends.add(iattends);
 		}
 
@@ -171,6 +171,16 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	return actionMapping.findForward("inquiryIntroduction");
 
+    }
+
+    private boolean same(final InfoExecutionCourse infoExecutionCourse1, final InfoExecutionCourse infoExecutionCourse2) {
+	return infoExecutionCourse1 != null && infoExecutionCourse2 != null
+			&& infoExecutionCourse1.getExecutionCourse() == infoExecutionCourse2.getExecutionCourse();
+    }
+
+    private boolean same(final InfoExecutionPeriod infoExecutionPeriod1, final InfoExecutionPeriod infoExecutionPeriod2) {
+	return infoExecutionPeriod1 != null && infoExecutionPeriod2 != null
+			&& infoExecutionPeriod1.getExecutionPeriod() == infoExecutionPeriod2.getExecutionPeriod();
     }
 
     private boolean insidePeriod(final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
