@@ -162,5 +162,6 @@ public class SQL2JavaConverters {
     public static FieldConversion UnitClassification2SQLUnitClassificationFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.UnitClassification2SQLUnitClassificationFieldConversion();    
     public static FieldConversion UnitSiteLayoutType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.UnitSiteLayoutType2SqlConversion();    
     public static FieldConversion ResearchFunctionType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchFunctionType2SqlConversion();
-    public static FieldConversion UnitSiteBannerRepeatType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.UnitSiteBannerRepeatType2SqlConversion();
+    public static FieldConversion UnitSiteBannerRepeatType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.UnitSiteBannerRepeatType2SqlConversion();    
+    public static FieldConversion JavaCycleType2SqlCycleTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCycleType2SqlCycleTypeFieldConversion();
 }
