@@ -1446,6 +1446,14 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
 			class net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup {
 			}
 
+		class net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
+		}
+
+		class net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
+		}
+
+			class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup {
+			}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
 	}
@@ -8986,7 +8994,7 @@ relation UserIdentification{
 }
 
 relation CurriculumGroupStudentCurricularPlan {
-	net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup playsRole root;
+	net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup playsRole root;
 	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole parentStudentCurricularPlan;
 }
 
