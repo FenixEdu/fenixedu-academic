@@ -46,12 +46,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	super();
     }
 
-    public CurriculumGroup(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
-	super();
-	init(studentCurricularPlan, courseGroup, executionPeriod);
-    }
-
     public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
 	this();
 
@@ -72,24 +66,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
     }
 
-    private void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
-	checkParameters(studentCurricularPlan, courseGroup, executionPeriod);
-	setDegreeModule(courseGroup);
-	setParentStudentCurricularPlan(studentCurricularPlan);
-	addChildCurriculumGroups(courseGroup, executionPeriod);
-    }
-
-    private void checkParameters(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
-	if (studentCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.studentCurriculum.curriculumGroup.studentCurricularPlan.cannot.be.null");
-	}
-	checkParameters(courseGroup, executionPeriod);
-    }
-
-    private void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+    protected void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
 	if (courseGroup == null) {
 	    throw new DomainException(
 		    "error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
@@ -124,7 +101,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	checkParameters(courseGroup, executionPeriod);
     }
 
-    private void addChildCurriculumGroups(final CourseGroup courseGroup,
+    protected void addChildCurriculumGroups(final CourseGroup courseGroup,
 	    final ExecutionPeriod executionPeriod) {
 	for (final CourseGroup childCourseGroup : courseGroup
 		.getNotOptionalChildCourseGroups(executionPeriod)) {
@@ -191,13 +168,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean isRoot() {
-	return hasParentStudentCurricularPlan();
+	return false;
     }
 
     @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return isRoot() ? getParentStudentCurricularPlan() : getCurriculumGroup()
-		.getStudentCurricularPlan();
+	return getCurriculumGroup().getStudentCurricularPlan();
     }
 
     // alterar isto, colocar as regras
@@ -343,7 +319,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumLine> getCurriculumLines() {
-	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+	Set<CurriculumLine> result = new TreeSet<CurriculumLine>(
+		CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isLeaf()) {
@@ -355,7 +332,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Set<CurriculumGroup> getCurriculumGroups() {
-	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+	Set<CurriculumGroup> result = new TreeSet<CurriculumGroup>(
+		CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (!curriculumModule.isLeaf()) {

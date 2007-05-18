@@ -29,4 +29,5 @@ function executeWithTempFile() {
 
 execute "Alter Table Assiduousness Vacations" alterTableAssiduousnessVacations.sql
 execute "Add 'repeat' field to UnitSiteBanner" addRepeatToUnitSiteBanner.sql
+execute "Migrate Curriculum Groups To Root And Cycle Groups" migrateCurriculumGroupsToRootAndCycleGroups.sql
 execute "Fix writing permission for department's boards" correctDepartmentBoardsWritingPermission.sql

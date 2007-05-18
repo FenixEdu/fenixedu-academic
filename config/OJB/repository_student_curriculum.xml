@@ -4,33 +4,26 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule" table="CURRICULUM_MODULE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" />
-
-	
-	
-    	
-    
-    
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" />	
-		
-    	
-    				
-    			
-
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" />	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup" />	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" table="CURRICULUM_MODULE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" />	
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup" />	    
-		
-    	
-    				
-    			
-
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup" table="CURRICULUM_MODULE" />
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" table="CURRICULUM_MODULE" >
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup" />	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup" table="CURRICULUM_MODULE" />
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup" table="CURRICULUM_MODULE"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup" table="CURRICULUM_MODULE"/>

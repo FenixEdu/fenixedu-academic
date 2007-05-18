@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -1236,7 +1237,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void createStudentCurriculumStructureFor(final ExecutionPeriod executionPeriod) {
 	if (getDegreeCurricularPlan().isBolonha()) {
-	    new CurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod);
+	    new RootCurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod);
 	}
     }
 
