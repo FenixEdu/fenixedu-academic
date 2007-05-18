@@ -29,7 +29,7 @@
 	<field name="balanceTimeFormatted" class="java.lang.String"/>
 	<field name="notes" class="java.lang.String"/>
 	<field name="unjustifiedTimeFormatted" class="java.lang.String"/>
-	<field name="clockingsFormatted" class="java.lang.String"/>
+	<field name="clockingsFormattedToManagement" class="java.lang.String"/>
 	<field name="weekDay" class="java.lang.String"/>
 
 		<background>
@@ -237,10 +237,10 @@
 						height="15"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
-					<textElement>
+					<textElement isStyledText="true">
 						<font fontName="Verdana"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{clockingsFormatted}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{clockingsFormattedToManagement}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

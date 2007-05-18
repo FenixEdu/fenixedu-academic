@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,13 +17,17 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeSchedul
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.FileEntry;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Month;
@@ -231,6 +236,27 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	return mapping.findForward("show-vacations");
     }
 
+    public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	Integer personID = new Integer(request.getParameter("personID"));
+	Party party = rootDomainObject.readPartyByOID(personID);
+	if (party.isPerson()) {
+	    Person person = (Person) party;
+	    FileEntry personalPhoto = person.getPersonalPhoto();
+	    if (personalPhoto != null) {
+		try {
+		    response.setContentType(personalPhoto.getContentType().getMimeType());
+		    DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+		    dos.write(personalPhoto.getContents());
+		    dos.close();
+		} catch (java.io.IOException e) {
+		    throw new FenixActionException(e);
+		}
+	    }
+	}
+	return null;
+    }
+
     private ActionForward validateEmployee(ActionMapping mapping, HttpServletRequest request,
 	    final Employee employee) {
 	if (employee == null || employee.getAssiduousness() == null) {
@@ -310,4 +336,5 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
 	request.setAttribute("employeeStatusList", employeeStatusList);
     }
+
 }

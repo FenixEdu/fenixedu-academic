@@ -9,6 +9,7 @@
 	<bean:define id="month" value='<%=request.getParameter("month")%>'/>
 	<bean:define id="year" value='<%=request.getParameter("year")%>'/>
 	<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
+	<bean:define id="personID" name="employee" property="person.idInternal" />
 	
 	<p><bean:message key="label.show"/>: <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
@@ -29,11 +30,18 @@
 		
 	<span class="toprint"><br />
 	</span>
-	<fr:view name="employee" schema="show.employeeInformation">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="showinfo1 thbold" />
-		</fr:layout>
-	</fr:view>
+	
+	<table border="0">
+		<tr><td>
+		<html:img src="<%= request.getContextPath() +"/managementAssiduousness/viewEmployeeAssiduousness.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+		</td><td>
+		<fr:view name="employee" schema="show.employeeInformation">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="showinfo1 thbold" />
+			</fr:layout>
+		</fr:view>
+		</td></tr>
+	</table>
 	
 	<logic:present name="yearMonth">
 		<bean:define id="yearMonthSchema" value='<%=request.getParameter("yearMonthSchema")%>'/>

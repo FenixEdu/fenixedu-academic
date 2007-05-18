@@ -34,3 +34,6 @@
 		</html:submit>
 	</p>
 </html:form>
+<script type="text/javascript">
+	document.getElementsByName("employeeNumber")[0].focus();
+</script>

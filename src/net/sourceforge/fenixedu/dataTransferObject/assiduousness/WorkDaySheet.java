@@ -96,7 +96,7 @@ public class WorkDaySheet implements Serializable {
     }
 
     public String getNotes() {
-	return notes;
+	return notes == null ? "" : notes;
     }
 
     public void setNotes(String notes) {
@@ -199,12 +199,12 @@ public class WorkDaySheet implements Serializable {
 		    if (result.length() != 0) {
 			result.append(", ");
 			if (isPreviousMissingClocking) {
-			    resultToManagement.append("</span>, <span class='color890'>");
+			    resultToManagement.append("</font>, <font color='#889900'>");
 			} else {
-			    resultToManagement.append(",<span class='color890'> ");
+			    resultToManagement.append(",<font color='#889900'> ");
 			}
 		    } else {
-			resultToManagement.append("<span class='color890'>");
+			resultToManagement.append("<font color='#889900'>");
 		    }
 		    resultToManagement.append(fmt.print(timeOfDay));
 		    isPreviousMissingClocking = true;
@@ -212,7 +212,7 @@ public class WorkDaySheet implements Serializable {
 		    if (result.length() != 0) {
 			result.append(", ");
 			if (isPreviousMissingClocking) {
-			    resultToManagement.append("</span>, ");
+			    resultToManagement.append("</font>, ");
 			} else {
 			    resultToManagement.append(", ");
 			}
@@ -224,7 +224,7 @@ public class WorkDaySheet implements Serializable {
 	    }
 	}
 	if (isPreviousMissingClocking) {
-	    resultToManagement.append("</span>");
+	    resultToManagement.append("</font>");
 	}
 	clockings = " " + result.toString();
 	clockingsToManagement = " " + resultToManagement.toString();
