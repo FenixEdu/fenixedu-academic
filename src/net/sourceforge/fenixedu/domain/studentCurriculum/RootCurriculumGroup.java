@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -16,8 +19,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	super();
     }
 
-    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
+    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan,
+	    RootCourseGroup rootCourseGroup, ExecutionPeriod executionPeriod, CycleType cycleType) {
 	this();
 
 	if (studentCurricularPlan == null) {
@@ -26,13 +29,22 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
 
 	setParentStudentCurricularPlan(studentCurricularPlan);
-	init(courseGroup, executionPeriod);
+	init(rootCourseGroup, executionPeriod, cycleType);
     }
-    
-    private void init(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+
+    private void init(RootCourseGroup courseGroup, ExecutionPeriod executionPeriod, CycleType cycleType) {
 	checkParameters(courseGroup, executionPeriod);
 	setDegreeModule(courseGroup);
-	addChildCurriculumGroups(courseGroup, executionPeriod);
+	addChildCurriculumGroups(courseGroup, executionPeriod, cycleType);
+    }
+
+    @Override
+    public void setDegreeModule(DegreeModule degreeModule) {
+	if (!(degreeModule instanceof RootCourseGroup)) {
+	    throw new DomainException(
+		    "error.curriculumGroup.RootCurriculumGroup.degreeModuleMustBeRootCourseGroup");
+	}
+	super.setDegreeModule(degreeModule);
     }
 
     @Override
@@ -50,10 +62,18 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return getParentStudentCurricularPlan();
     }
 
-    @Override
-    protected void addChildCurriculumGroups(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
-        // TODO Auto-generated method stub
-        super.addChildCurriculumGroups(courseGroup, executionPeriod);
+    private void addChildCurriculumGroups(RootCourseGroup rootCourseGroup,
+	    ExecutionPeriod executionPeriod, CycleType cycle) {
+
+	if (rootCourseGroup.hasCycleGroups()) {
+	    for (final CycleCourseGroup cycleCourseGroup : rootCourseGroup.getCycleCourseGroups(cycle)) {
+		new CycleCurriculumGroup(this, cycleCourseGroup, executionPeriod);
+	    }
+
+	} else {
+	    super.addChildCurriculumGroups(rootCourseGroup, executionPeriod);
+	}
+
     }
-    
+
 }

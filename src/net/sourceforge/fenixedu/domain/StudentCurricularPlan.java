@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
@@ -1222,22 +1223,32 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    DegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState curricularPlanState,
 	    YearMonthDay startDate, ExecutionPeriod executionPeriod) {
 
+	return createBolonhaStudentCurricularPlan(registration, degreeCurricularPlan,
+		curricularPlanState, startDate, executionPeriod, null);
+    }
+
+    public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
+	    DegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState curricularPlanState,
+	    YearMonthDay startDate, ExecutionPeriod executionPeriod, CycleType cycleType) {
+
 	return new StudentCurricularPlan(registration, degreeCurricularPlan, curricularPlanState,
-		startDate, executionPeriod);
+		startDate, executionPeriod, cycleType);
     }
 
     private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
 	    StudentCurricularPlanState curricularPlanState, YearMonthDay startDate,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionPeriod executionPeriod, CycleType cycleType) {
 
 	this();
 	init(registration, degreeCurricularPlan, curricularPlanState, startDate);
-	createStudentCurriculumStructureFor(executionPeriod);
+	createStudentCurriculumStructureFor(executionPeriod, cycleType);
     }
 
-    private void createStudentCurriculumStructureFor(final ExecutionPeriod executionPeriod) {
+    private void createStudentCurriculumStructureFor(final ExecutionPeriod executionPeriod,
+	    CycleType cycleType) {
 	if (getDegreeCurricularPlan().isBolonha()) {
-	    new RootCurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod);
+	    new RootCurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod,
+		    cycleType);
 	}
     }
 
@@ -1510,16 +1521,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return result;
     }
-    
+
     public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
 	final Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
-	
+
 	for (final Enrolment enrolment : getEnrolmentsByExecutionYear(executionYear)) {
-	    if (!result.containsKey(enrolment.getCurricularCourse()) || result.get(enrolment.getCurricularCourse()).isBefore(enrolment)) {
+	    if (!result.containsKey(enrolment.getCurricularCourse())
+		    || result.get(enrolment.getCurricularCourse()).isBefore(enrolment)) {
 		result.put(enrolment.getCurricularCourse(), enrolment);
 	    }
 	}
-	
+
 	return result.values();
     }
 
@@ -1916,14 +1928,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Note: This is enrolment without rules and should only be used for first
-     * time enrolments
-     * 
-     * @param curriculumGroup
-     * @param curricularPeriod
-     * @param executionPeriod
-     * @param createdBy
-     */
+         * Note: This is enrolment without rules and should only be used for
+         * first time enrolments
+         * 
+         * @param curriculumGroup
+         * @param curricularPeriod
+         * @param executionPeriod
+         * @param createdBy
+         */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup,
 	    CurricularPeriod curricularPeriod, ExecutionPeriod executionPeriod, String createdBy) {
 
@@ -2284,7 +2296,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
-	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
+		Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (curricularCourse == enrolment.getCurricularCourse()) {
 		enrolments.add(enrolment);
@@ -2310,7 +2323,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isSecondCycle() {
-	return getDegreeType().isSecondCycle();	
+	return getDegreeType().isSecondCycle();
     }
 
     public boolean isFirstCycle() {

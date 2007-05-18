@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLim
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -578,4 +580,6 @@ public class CourseGroup extends CourseGroup_Base {
 	    final ExecutionPeriod end) {
 	return curricularCourse.addContext(this, curricularPeriod, start, end);
     }
+    
 }
+

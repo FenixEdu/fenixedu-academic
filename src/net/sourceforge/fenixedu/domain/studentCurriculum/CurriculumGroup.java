@@ -83,7 +83,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	init(parentCurriculumGroup, courseGroup, executionPeriod);
     }
 
-    private void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup,
+    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup,
 	    ExecutionPeriod executionPeriod) {
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	checkParameters(curriculumGroup, courseGroup, executionPeriod);

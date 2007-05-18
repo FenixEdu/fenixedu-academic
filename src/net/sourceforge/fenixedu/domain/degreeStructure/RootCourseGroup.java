@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class RootCourseGroup extends RootCourseGroup_Base {
-    
-    protected  RootCourseGroup() {
-        super();
+
+    protected RootCourseGroup() {
+	super();
     }
-    
+
     public RootCourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name,
 	    final String nameEn) {
 	if (degreeCurricularPlan == null) {
@@ -26,30 +26,33 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     }
 
     private void createCycleCourseGroups(DegreeType courseGroupType) {
-	if(courseGroupType.isBolonhaType()) {
+	if (courseGroupType.isBolonhaType()) {
 	    ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	    if(courseGroupType.isFirstCycle()) {
-		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE, executionPeriod, null);
+	    if (courseGroupType.isFirstCycle()) {
+		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE,
+			executionPeriod, null);
 	    }
-	    if(courseGroupType.isSecondCycle()) {
-		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE, executionPeriod, null);
+	    if (courseGroupType.isSecondCycle()) {
+		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE,
+			executionPeriod, null);
 	    }
-	    if(courseGroupType.isThirdCycle()) {
-		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionPeriod, null);
+	    if (courseGroupType.isThirdCycle()) {
+		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE,
+			executionPeriod, null);
 	    }
 	}
     }
 
     @Override
     public boolean isRoot() {
-        return true;
+	return true;
     }
-    
+
     public void delete() {
 	removeParentDegreeCurricularPlan();
 	super.delete();
     }
-    
+
     static public RootCourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan,
 	    final String name, final String nameEn) {
 	return new RootCourseGroup(degreeCurricularPlan, name, nameEn);
@@ -57,7 +60,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 
     @Override
     public void addParentContexts(Context parentContexts) {
-        throw new DomainException("error.degreeStructure.RootCourseGroup.cannot.have.parent.contexts");
+	throw new DomainException("error.degreeStructure.RootCourseGroup.cannot.have.parent.contexts");
     }
 
     public CycleCourseGroup getFirstCycleCourseGroup() {
@@ -72,22 +75,35 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	return getCycleCourseGroup(CycleType.THIRD_CYCLE);
     }
 
-    private CycleCourseGroup getCycleCourseGroup(CycleType cycleType) {
+    public CycleCourseGroup getCycleCourseGroup(CycleType cycleType) {
 	for (CycleCourseGroup cycleCourseGroup : getCycleCourseGroups()) {
-	    if(cycleCourseGroup.getCycleType() == cycleType) {
+	    if (cycleCourseGroup.getCycleType() == cycleType) {
 		return cycleCourseGroup;
 	    }
 	}
 	return null;
     }
-    
-    private Collection<CycleCourseGroup> getCycleCourseGroups() {
+
+    public Collection<CycleCourseGroup> getCycleCourseGroups(CycleType cycle) {
 	Collection<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
 	for (Context context : getChildContextsSet()) {
-	    if(context.getChildDegreeModule().isCycleCourseGroup()){
-		result.add((CycleCourseGroup) context.getChildDegreeModule());
+	    if (context.getChildDegreeModule().isCycleCourseGroup()) {
+		CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
+		if (cycle == null || cycle == cycleCourseGroup.getCycleType()) {
+		    result.add((CycleCourseGroup) context.getChildDegreeModule());
+		}
 	    }
 	}
 	return result;
+
     }
+
+    private Collection<CycleCourseGroup> getCycleCourseGroups() {
+	return getCycleCourseGroups(null);
+    }
+
+    public boolean hasCycleGroups() {
+	return !getCycleCourseGroups().isEmpty();
+    }
+
 }
