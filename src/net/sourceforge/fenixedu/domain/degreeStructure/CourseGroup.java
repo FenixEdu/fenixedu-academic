@@ -39,46 +39,34 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    static public CourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan,
-	    final String name, final String nameEn, final DegreeType courseGroupType) {
-	return new CourseGroup(degreeCurricularPlan, name, nameEn, courseGroupType);
-    }
-
     protected CourseGroup() {
 	super();
     }
 
-    protected CourseGroup(final String name, final String nameEn, final DegreeType courseGroupType) {
+    protected CourseGroup(final String name, final String nameEn) {
 	this();
-	init(name, nameEn, courseGroupType);
+	init(name, nameEn);
     }
 
-    protected void init(final String name, final String nameEn, final DegreeType courseGroupType) {
+    protected void init(final String name, final String nameEn) {
 	super.setName(StringFormatter.prettyPrint(name));
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
-	super.setCourseGroupType(courseGroupType);
-    }
-
-    public CourseGroup(final DegreeCurricularPlan degreeCurricularPlan, final String name,
-	    final String nameEn, final DegreeType courseGroupType) {
-	this(name, nameEn, courseGroupType);
-	if (degreeCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.degreeStructure.CourseGroup.degreeCurricularPlan.cannot.be.null");
-	}
-	setParentDegreeCurricularPlan(degreeCurricularPlan);
     }
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-	    final DegreeType courseGroupType, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	init(parentCourseGroup, name, nameEn, begin, end);
+    }
 
-	init(name, nameEn, courseGroupType);
+    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, 
+	    ExecutionPeriod begin, ExecutionPeriod end) {
+	init(name, nameEn);
 	if (parentCourseGroup == null) {
 	    throw new DomainException(
 		    "error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
 	}
 	parentCourseGroup.checkDuplicateChildNames(name, nameEn);
-	new Context(parentCourseGroup, this, null, begin, end);
+	new Context(parentCourseGroup, this, null, begin, end);	
     }
 
     public boolean isLeaf() {
@@ -109,7 +97,6 @@ public class CourseGroup extends CourseGroup_Base {
 
     public void delete() {
 	if (getCanBeDeleted()) {
-	    removeParentDegreeCurricularPlan();
 	    super.delete();
 	    for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules()
 		    .get(0).delete())
@@ -135,14 +122,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public boolean isRoot() {
-	return (super.getParentDegreeCurricularPlan() != null);
+	return false;
     }
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-	if (isRoot()) {
-	    return super.getParentDegreeCurricularPlan();
-	}
 	return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup()
 		.getParentDegreeCurricularPlan() : null;
     }
@@ -240,12 +224,6 @@ public class CourseGroup extends CourseGroup_Base {
     @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setNameEn(String nameEn) {
 	super.setNameEn(nameEn);
-    }
-
-    @Override
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
-    public void setCourseGroupType(DegreeType courseGroupType) {
-	super.setCourseGroupType(courseGroupType);
     }
 
     public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException {
@@ -593,40 +571,6 @@ public class CourseGroup extends CourseGroup_Base {
 	    }
 	}
 	return false;
-    }
-
-    private boolean hasCourseGroupType(final DegreeType courseGroupType) {
-	return getCourseGroupType() == courseGroupType;
-    }
-
-    public boolean isFirstCycle() {
-	return hasCourseGroupType(DegreeType.BOLONHA_DEGREE);
-    }
-
-    public boolean isSecondCycle() {
-	return hasCourseGroupType(DegreeType.BOLONHA_MASTER_DEGREE);
-    }
-
-    public CourseGroup getFirstCycleCourseGroup() {
-	return getCourseGroup(DegreeType.BOLONHA_DEGREE);
-    }
-
-    public CourseGroup getSecondCycleCourseGroup() {
-	return getCourseGroup(DegreeType.BOLONHA_MASTER_DEGREE);
-    }
-
-    private CourseGroup getCourseGroup(final DegreeType courseGroupType) {
-	if (hasCourseGroupType(courseGroupType)) {
-	    return this;
-	}
-	for (final Context context : getChildContexts(CourseGroup.class)) {
-	    final CourseGroup courseGroup = (CourseGroup) context.getChildDegreeModule();
-	    final CourseGroup search = courseGroup.getCourseGroup(courseGroupType);
-	    if (search != null) {
-		return search;
-	    }
-	}
-	return null;
     }
 
     public Context addCurricularCourse(final CurricularPeriod curricularPeriod,

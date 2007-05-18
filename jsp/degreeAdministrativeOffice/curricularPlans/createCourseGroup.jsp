@@ -40,14 +40,6 @@
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{!empty CourseGroupManagement.courseGroupTypeValues}">
-			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CourseGroupManagement.courseGroupTypeValue}">
-				<f:selectItems value="#{CourseGroupManagement.courseGroupTypeValues}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
-		
 		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 		<h:selectOneMenu value="#{CourseGroupManagement.beginExecutionPeriodID}">
 			<f:selectItems value="#{CourseGroupManagement.beginExecutionPeriodItems}" />

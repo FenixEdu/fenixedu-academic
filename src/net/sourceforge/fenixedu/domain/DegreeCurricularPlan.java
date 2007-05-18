@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -183,18 +184,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void createDefaultCourseGroups() {
-	CourseGroup.createRoot(this, getName(), getName(), getCourseGroupType());
-    }
-
-    private DegreeType getCourseGroupType() {
-	switch (getDegreeType()) {
-	case BOLONHA_DEGREE:
-	case BOLONHA_MASTER_DEGREE:
-	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    return getDegreeType();
-	default:
-	    return null;
-	}
+	RootCourseGroup.createRoot(this, getName(), getName());
     }
 
     private void createDefaultCurricularRules() {
@@ -900,9 +890,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name,
-	    final String nameEn, final DegreeType courseGroupType, final ExecutionPeriod begin,
+	    final String nameEn, final ExecutionPeriod begin,
 	    final ExecutionPeriod end) {
-	return new CourseGroup(parentCourseGroup, name, nameEn, courseGroupType, begin, end);
+	return new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
     }
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
@@ -1006,7 +996,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void setRoot(CourseGroup courseGroup) {
+    public void setRoot(RootCourseGroup courseGroup) {
 	super.setRoot(courseGroup);
     }
 

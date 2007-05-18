@@ -26,56 +26,56 @@ public enum DegreeType {
 	    CurricularPeriodType.FIVE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE),
+	    AdministrativeOfficeType.DEGREE, false, false, false),
 
     MASTER_DEGREE(
 	    GradeScale.TYPE5,
 	    CurricularPeriodType.TWO_YEAR,
 	    false,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false),
 
     BOLONHA_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.THREE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE),
+	    AdministrativeOfficeType.DEGREE, true, false, false),
 
     BOLONHA_MASTER_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.TWO_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE),
+	    AdministrativeOfficeType.DEGREE, false, true, false),
 
     BOLONHA_INTEGRATED_MASTER_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.FIVE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE),
+	    AdministrativeOfficeType.DEGREE, true, true, false),
 
     BOLONHA_PHD_PROGRAM(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true),
 
     BOLONHA_ADVANCED_FORMATION_DIPLOMA(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true),
 
     BOLONHA_SPECIALIZATION_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE);
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false);
 
     private GradeScale gradeScale;
 
@@ -86,15 +86,25 @@ public enum DegreeType {
     private boolean canCreateStudentOnlyWithCandidacy;
 
     private AdministrativeOfficeType administrativeOfficeType;
-
+    
+    private boolean isFirstCycle;
+    
+    private boolean isSecondCycle;
+    
+    private boolean isThirdCycle;
+    
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType,
 	    boolean canCreateStudent, boolean canCreateStudentOnlyWithCandidacy,
-	    AdministrativeOfficeType administrativeOfficeType) {
+	    AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle, boolean isSecondCycle, 
+	    boolean isThirdCycle) {
 	this.gradeScale = gradeScale;
 	this.curricularPeriodType = curricularPeriodType;
 	this.canCreateStudent = canCreateStudent;
 	this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
 	this.administrativeOfficeType = administrativeOfficeType;
+	this.isFirstCycle = isFirstCycle;
+	this.isSecondCycle = isSecondCycle;
+	this.isThirdCycle = isThirdCycle;
     }
 
     public String getName() {
@@ -195,5 +205,17 @@ public enum DegreeType {
 
 	return result;
     }
+
+   public boolean isFirstCycle() {
+       return isFirstCycle;
+   }
+
+   public boolean isSecondCycle() {
+       return isSecondCycle;
+   }
+
+   public boolean isThirdCycle() {
+       return isThirdCycle;
+   }
     
  }

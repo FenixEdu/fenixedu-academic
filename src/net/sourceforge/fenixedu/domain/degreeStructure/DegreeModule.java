@@ -210,6 +210,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public boolean isOptional() {
 	return false;
     }
+    
+    public boolean isCycleCourseGroup() {
+	return false;
+    }
 
     public Degree getDegree() {
 	return getParentDegreeCurricularPlan().getDegree();

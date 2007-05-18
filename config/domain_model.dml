@@ -191,6 +191,7 @@ valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												a
 valueType net.sourceforge.fenixedu.domain.Language																as Language;
 valueType net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                              as UnitSiteLayoutType;
 valueType net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                              as UnitSiteBannerRepeatType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                             as CycleType;
 
 /*
 *
@@ -1239,9 +1240,15 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		}
 		
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
-		Integer keyParentDegreeCurricularPlan;
-		DegreeType courseGroupType;
 	}
+	
+		class net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup {
+			Integer keyParentDegreeCurricularPlan;
+		}
+	
+		class net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup {
+			CycleType cycleType;
+		}
 
 class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -5404,6 +5411,7 @@ relation AssiduousnessVacationsAssiduousness {
 
 
 
+
 relation ClosedMonthAssiduousnessClosedMonth {
 	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonth;
 	
@@ -5872,7 +5880,7 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 
 
 relation DegreeCurricularPlanDegreeModule {
-    net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole root;
+    net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup playsRole root;
     
     net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole parentDegreeCurricularPlan;
 }
@@ -12493,6 +12501,15 @@ relation PermissionUnitQuestion {
 relation QuestionBankParty {
 	net.sourceforge.fenixedu.domain.tests.NewQuestionBank playsRole questionBank;
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole owner;
+}
+
+relation AffinityCycleCourseGroup {
+	net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup playsRole sourceAffinities {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup playsRole destinationAffinities {
+		multiplicity *;
+	}
 }
 
 /*****************************************************************

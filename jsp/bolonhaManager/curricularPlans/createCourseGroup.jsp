@@ -37,13 +37,6 @@
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{!empty CourseGroupManagement.courseGroupTypeValues}">
-			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CourseGroupManagement.courseGroupTypeValue}">
-				<f:selectItems value="#{CourseGroupManagement.courseGroupTypeValues}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="</p>" escape="false"/>
-		</h:panelGroup>
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<br/>

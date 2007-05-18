@@ -504,42 +504,4 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-
-    public CurriculumGroup getFirstCycleCurriculumGroup() {
-	if (hasDegreeModule() && getDegreeModule().isFirstCycle()) {
-	    return this;
-	}
-
-	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if (curriculumModule.isLeaf()) {
-		continue;
-	    }
-	    final CurriculumGroup firstCycleCurriculumGroup = ((CurriculumGroup) curriculumModule)
-		    .getFirstCycleCurriculumGroup();
-	    if (firstCycleCurriculumGroup != null) {
-		return firstCycleCurriculumGroup;
-	    }
-	}
-
-	return null;
-    }
-
-    public CurriculumGroup getSecondCycleCurriculumGroup() {
-	if (hasDegreeModule() && getDegreeModule().isSecondCycle()) {
-	    return this;
-	}
-
-	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if (curriculumModule.isLeaf()) {
-		continue;
-	    }
-	    final CurriculumGroup secondCycleCurriculumGroup = ((CurriculumGroup) curriculumModule)
-		    .getSecondCycleCurriculumGroup();
-	    if (secondCycleCurriculumGroup != null) {
-		return secondCycleCurriculumGroup;
-	    }
-	}
-
-	return null;
-    }
 }

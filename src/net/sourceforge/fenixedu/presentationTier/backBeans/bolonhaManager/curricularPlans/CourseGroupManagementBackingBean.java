@@ -28,7 +28,6 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     
     private String name = null;
     private String nameEn = null;
-    private String courseGroupTypeValue = null;
     private Integer courseGroupID;
     private List<SelectItem> courseGroups = null;
 
@@ -52,24 +51,13 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;    
     }
     
-    public String getCourseGroupTypeValue() {
+    /*public String getCourseGroupTypeValue() {
         return (courseGroupTypeValue == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getCourseGroupType().name() : courseGroupTypeValue;    
-    }
+    }*/
     
-    private DegreeType getCourseGroupType() {
+    /*private DegreeType getCourseGroupType() {
 	return StringUtils.isEmpty(getCourseGroupTypeValue()) ? null : DegreeType.valueOf(getCourseGroupTypeValue());
-    }
-    
-    public List<SelectItem> getCourseGroupTypeValues() {
-	final List<SelectItem> result = new ArrayList<SelectItem>();
-	final DegreeType degreeType = getDegreeCurricularPlan().getDegree().getDegreeType();
-	if (degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    result.add(new SelectItem("", " -"));
-	    result.add(new SelectItem(DegreeType.BOLONHA_DEGREE.name(), bolonhaBundle.getString("CourseGroupType." + DegreeType.BOLONHA_DEGREE.name())));
-	    result.add(new SelectItem(DegreeType.BOLONHA_MASTER_DEGREE.name(), bolonhaBundle.getString("CourseGroupType." + DegreeType.BOLONHA_MASTER_DEGREE.name())));
-	}
-	return result;
-    }
+    }*/
     
     public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
@@ -83,10 +71,6 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         this.nameEn = nameEn;
     }
     
-    public void setCourseGroupTypeValue(String courseGroupTypeValue) {
-        this.courseGroupTypeValue = courseGroupTypeValue;
-    }
-
     public CourseGroup getCourseGroup(Integer courseGroupID) {
         return (CourseGroup) rootDomainObject.readDegreeModuleByOID(courseGroupID);
     }
@@ -106,7 +90,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String createCourseGroup() {
         try {
             final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(),
-                    getNameEn(), getCourseGroupType(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
+                    getNameEn(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";

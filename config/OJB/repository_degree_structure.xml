@@ -23,7 +23,8 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" table="DEGREE_MODULE">
-	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" />
 	
 	
 	
@@ -31,6 +32,15 @@
 			
 </class-descriptor>
 
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup" table="DEGREE_MODULE"/>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" table="DEGREE_MODULE"/>
 
 
 

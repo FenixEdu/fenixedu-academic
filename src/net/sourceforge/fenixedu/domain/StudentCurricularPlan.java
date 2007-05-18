@@ -2309,40 +2309,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public CurriculumGroup getFirstCycleCurriculumGroup() {
-	return isBolonha() ? getRoot().getFirstCycleCurriculumGroup() : null;
-    }
-
-    public CurriculumGroup getSecondCycleCurriculumGroup() {
-	return isBolonha() ? getRoot().getSecondCycleCurriculumGroup() : null;
-    }
-
     public boolean isSecondCycle() {
-	if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
-	    return true;
-	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    final CurriculumGroup secondCycleCurriculumGroup = getSecondCycleCurriculumGroup();
-	    if (secondCycleCurriculumGroup == null) {
-		return false;
-	    }
-
-	    return !secondCycleCurriculumGroup.getEnrolments().isEmpty();
-
-	} else {
-	    return false;
-	}
+	return getDegreeType().isSecondCycle();	
     }
 
     public boolean isFirstCycle() {
-	switch (getDegreeType()) {
-	case DEGREE:
-	case BOLONHA_DEGREE:
-	    return true;
-	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    return !isSecondCycle();
-	default:
-	    return false;
-	}
+	return getDegreeType().isFirstCycle();
     }
 
 }
