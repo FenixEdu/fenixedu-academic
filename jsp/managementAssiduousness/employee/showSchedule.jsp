@@ -14,29 +14,26 @@
 <bean:define id="employeeNumber" name="employeeScheduleBean" property="employee.employeeNumber" />
 <bean:define id="employeeID" name="employeeScheduleBean" property="employee.idInternal" />
 
-<p><bean:message key="label.show" />: <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-	<bean:message key="link.workSheet" />
-</html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-	<bean:message key="label.schedule" />
-</html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showClockings&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-	<bean:message key="link.clockings" />
-</html:link>, <html:link
-	page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-	<bean:message key="link.justifications" />
-</html:link></p>
-
-
-
-	<span class="toprint"><br />
-	</span>
-	<fr:view name="employeeScheduleBean" property="employee" schema="show.employeeInformation">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="showinfo1 thbold" />
-		</fr:layout>
-	</fr:view>
+<logic:present name="yearMonth">
+	<logic:present name="employee">
+		<bean:define id="month" name="yearMonth" property="month" />
+		<bean:define id="year" name="yearMonth" property="year" />
+		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
+		
+		<bean:define id="employee" name="employee"/>
+		<bean:define id="employeeStatusList" name="employeeStatusList"/>
+		<bean:define id="yearMonth" name="yearMonth"/>
+		<br/>
+		<%request.setAttribute("employee", employee);
+		request.setAttribute("employeeStatusList", employeeStatusList);
+		request.setAttribute("yearMonth", yearMonth);%>
+		<jsp:include page="common/consultEmployeeAssiduousnessMenu.jsp">
+			<jsp:param name="month" value="<%=month.toString() %>" />
+			<jsp:param name="year" value="<%=year.toString() %>" />
+			<jsp:param name="yearMonthSchema" value="false" />
+		</jsp:include>
+	</logic:present>
+</logic:present>
 
 		<span class="mbottom0"><h3><bean:message key="link.schedules" bundle="ASSIDUOUSNESS_RESOURCES"/>:</h3></span>
 		<table class="showinfo1 thbold mtop0">
