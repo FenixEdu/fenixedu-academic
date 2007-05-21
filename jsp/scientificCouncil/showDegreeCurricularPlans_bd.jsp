@@ -8,7 +8,7 @@
 <bean:define id="degreeCurricularPlans" name="component" property="degreeCurricularPlans"/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoop"><bean:message key="message.public.degreeCurricularPlan.choose"/></td>
           </tr>

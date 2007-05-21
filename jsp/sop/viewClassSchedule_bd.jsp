@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
     	<td class="infoselected">
     		<p>O curso seleccionado &eacute;:</p>

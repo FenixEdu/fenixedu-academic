@@ -13,7 +13,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeName" property="degreeName"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.specializationArea" property="specializationArea"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuityId" property="gratuityId"/>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
 				<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>

@@ -6,7 +6,7 @@
 <h2><bean:message key="title.student.enrollment.improvment" /></h2>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
 			<b><bean:message key="label.student.enrollment.number"/></b>
@@ -38,7 +38,7 @@
 		<bean:define id="studentID" name="student" property="idInternal"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentID" property="studentID" value="<%= studentID.toString() %>"/>
 		
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<table width="98%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th class="listClasses-header">
 					<bean:message key="label.curricular.course.name"/>
@@ -106,7 +106,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentID" property="studentID" value="<%= studentID.toString() %>"/>
 		
 		
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<table width="98%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th class="listClasses-header">
 					<bean:message key="label.curricular.course.name"/>

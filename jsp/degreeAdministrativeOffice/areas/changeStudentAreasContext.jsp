@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:xhtml/>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 			<logic:present name="studentCurricularPlan">

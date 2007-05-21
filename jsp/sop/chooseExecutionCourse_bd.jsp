@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         
-	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	   	<table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoselected"><p>O curso seleccionado
               &eacute;:</p>

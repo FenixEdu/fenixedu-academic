@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h2><bean:message key="title.search.result.roomsWithoutExams"/></h2>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoselected"><p>Crit&eacute;rios:</p>
 			<strong>
@@ -16,7 +16,7 @@
 	</tr>
 </table>
 <br />
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <th class="listClasses-header">
                         <bean:message key="property.room.name"/>

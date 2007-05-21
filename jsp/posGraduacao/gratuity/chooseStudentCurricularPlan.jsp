@@ -6,7 +6,7 @@
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></h2>
 
 <logic:present name="studentCurricularPlans">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
 				<logic:iterate id="studentCurricularPlan" name="studentCurricularPlans" length="1">

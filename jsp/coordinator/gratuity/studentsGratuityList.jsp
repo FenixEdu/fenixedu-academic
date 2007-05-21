@@ -38,7 +38,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <p />
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
 			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="chosenYear"/><br/>

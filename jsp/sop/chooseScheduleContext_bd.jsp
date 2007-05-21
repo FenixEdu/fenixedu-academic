@@ -16,7 +16,7 @@
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0">
     	<tr>
         	<td bgcolor="#FFFFFF" class="infoop">
         		Por favor, proceda &agrave; escolha do curso pretendido.
@@ -35,7 +35,7 @@
 	</p>
 
 	<br />
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYear" /></td>
 		</tr>

@@ -21,7 +21,7 @@
 			<html:hidden alt="<%= SessionConstants.NEXT_PAGE %>" property="<%= SessionConstants.NEXT_PAGE %>"
 						 value="<%= pageContext.findAttribute("nextPage").toString() %>"/>
         	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-         <table width="100%" border="0" cellpadding="0" cellspacing="0">
+         <table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
               do curso pretendido.</td>
@@ -34,7 +34,7 @@
        </html:select>
 	 </p>
 	 <br />
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYear" /></td>
           </tr>

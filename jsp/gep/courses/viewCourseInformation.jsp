@@ -9,7 +9,7 @@
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
 	<br/>
 	<logic:present name="infoExecutionDegree">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
 				<p>

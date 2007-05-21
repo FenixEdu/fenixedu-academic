@@ -9,7 +9,7 @@
 	<bean:define id="executionYear" name="executionPeriod" property="executionYear.year" />
 </logic:present>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 			<b><bean:message key="label.student.enrollment.number"/></b>&nbsp;

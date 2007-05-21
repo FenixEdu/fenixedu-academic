@@ -5,7 +5,8 @@
 <bean:define id="dotTitle"type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+<table class="mtop2" width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
@@ -19,7 +20,7 @@ e alterar aulas).</p>
 
 <br />
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
@@ -31,7 +32,7 @@ e alterar aulas).</p>
 
 <br />
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
@@ -42,7 +43,7 @@ e alterar aulas).</p>
 
 <br />
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
@@ -54,7 +55,7 @@ e alterar aulas).</p>
 
 <br />
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>

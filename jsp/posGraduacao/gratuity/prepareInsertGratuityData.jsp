@@ -12,7 +12,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<table width="98%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="center" class="infoselected">
 					<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>

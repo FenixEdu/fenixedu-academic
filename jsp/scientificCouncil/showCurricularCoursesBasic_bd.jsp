@@ -10,7 +10,7 @@
 <bean:define id="curricularPlan" name="component" property="infoDegreeCurricularPlan"/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoop"><bean:message key="message.basicCurricularCoursesSelection"/></td>
           </tr>
