@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.lang.ref.SoftReference;
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -130,13 +133,48 @@ public class LoginAlias extends LoginAlias_Base {
 	}
     }
 
+    /**
+     * This map is a temporary solution until DML provides indexed
+     * relations.
+     * 
+     */
+    private static final Map<String, SoftReference<LoginAlias>> loginAliasMap = new Hashtable<String, SoftReference<LoginAlias>>();
+
+    public static LoginAlias readLoginByUsername(final String username) {
+	// Temporary solution until DML provides indexed relations.
+	final String lowerCaseUsername = username.toLowerCase();
+	final SoftReference<LoginAlias> loginAliasReference = loginAliasMap.get(lowerCaseUsername);
+	if (loginAliasReference != null) {
+	    final LoginAlias loginAlias = loginAliasReference.get();
+	    if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
+		    && loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
+		return loginAlias;
+	    } else {
+		loginAliasMap.remove(lowerCaseUsername);
+	    }
+	}
+	// *** end of hack
+
+	for (final LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
+	    // Temporary solution until DML provides indexed relations.
+	    final String lowerCaseLoginUsername = loginAlias.getAlias().toLowerCase();
+	    if (!loginAliasMap.containsKey(lowerCaseLoginUsername)) {
+		loginAliasMap.put(lowerCaseLoginUsername, new SoftReference<LoginAlias>(loginAlias));
+	    }
+	    // *** end of hack
+
+	    if (lowerCaseLoginUsername.equalsIgnoreCase(lowerCaseUsername)) {
+		return loginAlias;
+	    }
+	}
+	return null;
+    }
+
     private void checkIfAliasAlreadyExists(String username, Login login) {
 	if (login != null && username != null) {
-	    for (LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
-		if (!loginAlias.getLogin().equals(login)
-			&& username.equalsIgnoreCase(loginAlias.getAlias())) {
-		    throw new DomainException("error.alias.already.exists");
-		}
+	    final LoginAlias loginAlias = readLoginByUsername(username);
+	    if (loginAlias != null && loginAlias.getLogin() != login) {
+		throw new DomainException("error.alias.already.exists");
 	    }
 	}
     }

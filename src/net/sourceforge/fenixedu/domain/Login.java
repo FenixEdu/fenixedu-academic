@@ -190,43 +190,11 @@ public class Login extends Login_Base {
 	return loginPeriods;
     }
 
-    /**
-         * This map is a temporary solution until DML provides indexed
-         * relations.
-         * 
-         */
     private static final Map<String, SoftReference<LoginAlias>> loginMap = new Hashtable<String, SoftReference<LoginAlias>>();
 
     public static Login readLoginByUsername(String username) {
-
-	// Temporary solution until DML provides indexed relations.
-	final String lowerCaseUsername = username.toLowerCase();
-	final SoftReference<LoginAlias> loginReference = loginMap.get(lowerCaseUsername);
-	if (loginReference != null && loginReference.get() != null) {
-	    final Login login = loginReference.get().getLogin();
-	    if (login != null && login.getRootDomainObject() == RootDomainObject.getInstance()
-		    && login.hasUsername(lowerCaseUsername)) {
-		return login;
-	    } else {
-		loginMap.remove(lowerCaseUsername);
-	    }
-	}
-	// *** end of hack
-
-	for (final LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
-
-	    // Temporary solution until DML provides indexed relations.
-	    final String lowerCaseLoginUsername = loginAlias.getAlias().toLowerCase();
-	    if (!loginMap.containsKey(lowerCaseLoginUsername)) {
-		loginMap.put(lowerCaseLoginUsername, new SoftReference<LoginAlias>(loginAlias));
-	    }
-	    // *** end of hack
-
-	    if (lowerCaseLoginUsername.equalsIgnoreCase(lowerCaseUsername)) {
-		return loginAlias.getLogin();
-	    }
-	}
-	return null;
+	final LoginAlias loginAlias = LoginAlias.readLoginByUsername(username);
+	return loginAlias == null ? null : loginAlias.getLogin();
     }
 
     public void closeLoginIfNecessary() {
