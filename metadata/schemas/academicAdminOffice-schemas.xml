@@ -1,4 +1,4 @@
-<schema name="choose.executionDegree"
+<schema name="choose.executionDegree.toCreateRegistration"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="degree" key="label.degree" 
 		layout="menu-select-postback"
@@ -10,6 +10,11 @@
 		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
 		<property name="destination" value="degreePostBack"/>
 	</slot>
+	<slot name="cycleType" key="label.cycle" layout="menu-select" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.CycleTypeProvider" />
+		<property name="saveOptions" value="true" />
+		<property name="format" value="${name}" />
+	</slot>		
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -20,6 +25,11 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreeCurricularPlanPostBack"/>		
 	</slot>
+</schema>
+
+<schema name="choose.executionDegree" extends="choose.executionDegree.toCreateRegistration"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<remove name="cycleType"/>
 </schema>
 
 <schema name="choose.person"

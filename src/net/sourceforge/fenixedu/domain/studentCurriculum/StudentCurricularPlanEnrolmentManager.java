@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
@@ -25,7 +26,8 @@ import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext, Person responsiblePerson) {
+    public StudentCurricularPlanEnrolmentManager(StudentCurricularPlan plan,
+	    EnrolmentContext enrolmentContext, Person responsiblePerson) {
 	super(plan, enrolmentContext, responsiblePerson);
     }
 
@@ -37,7 +39,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		curriculumModule.delete();
 	    }
 	}
-	
+
 	// After, remove CurriculumGroups and evaluate rules
 	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
 	    if (!curriculumModule.isLeaf()) {
@@ -45,10 +47,11 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	    }
 	}
     }
-    
+
     @Override
     protected void addEnroled() {
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : studentCurricularPlan.getDegreeModulesToEvaluate(executionPeriod)) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : studentCurricularPlan
+		.getDegreeModulesToEvaluate(executionPeriod)) {
 	    enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
 	}
     }
@@ -56,30 +59,37 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
     @Override
     protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-	
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
-	    
+
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
+		.getDegreeModuleToEvaluate()) {
+
 	    if (degreeModuleToEvaluate.canCollectRules()) {
-		
+
 		final Set<ICurricularRule> curricularRules = new HashSet<ICurricularRule>();
-		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromDegreeModule(executionPeriod));
-		curricularRules.addAll(degreeModuleToEvaluate.getCurricularRulesFromCurriculumGroup(executionPeriod));
-		
+		curricularRules.addAll(degreeModuleToEvaluate
+			.getCurricularRulesFromDegreeModule(executionPeriod));
+		curricularRules.addAll(degreeModuleToEvaluate
+			.getCurricularRulesFromCurriculumGroup(executionPeriod));
+
 		if (degreeModuleToEvaluate.isLeaf()) {
-		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(curricularCourse));
+		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate
+			    .getDegreeModule();
+		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(
+			    curricularCourse));
 		}
 		result.put(degreeModuleToEvaluate, curricularRules);
 	    }
 	}
-	
+
 	return result;
     }
 
     @Override
-    protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
+    protected void performEnrolments(
+	    final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 	final String createdBy = responsiblePerson.getIstUsername();
-	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap.entrySet()) {
+	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesEnrolMap
+		.entrySet()) {
 
 	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -89,7 +99,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper
+				.getCurriculumModule();
 			enrolment.setEnrolmentCondition(enrollmentCondition);
 		    }
 		} else {
@@ -99,25 +110,29 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
 		    if (degreeModule.isLeaf()) {
 			if (degreeModuleToEvaluate.isOptional()) {
-			    createOptionalEnrolmentFor(enrollmentCondition,
-				    degreeModuleToEvaluate, curriculumGroup);
+			    createOptionalEnrolmentFor(enrollmentCondition, degreeModuleToEvaluate,
+				    curriculumGroup);
 
 			} else {
 			    new Enrolment(studentCurricularPlan, curriculumGroup,
-				    (CurricularCourse) degreeModule, executionPeriod, enrollmentCondition, createdBy);
+				    (CurricularCourse) degreeModule, executionPeriod,
+				    enrollmentCondition, createdBy);
 			}
+
+		    } else if (degreeModule instanceof CycleCourseGroup) {
+			new CycleCurriculumGroup((RootCurriculumGroup) degreeModuleToEvaluate
+				.getCurriculumGroup(), (CycleCourseGroup) degreeModule, executionPeriod);
 		    } else {
 			new CurriculumGroup(degreeModuleToEvaluate.getCurriculumGroup(),
-				(CourseGroup) degreeModuleToEvaluate.getDegreeModule(), executionPeriod);
+				(CourseGroup) degreeModule, executionPeriod);
 		    }
-
 		}
 	    }
 	}
     }
 
-    private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition, final IDegreeModuleToEvaluate ixpto,
-	    final CurriculumGroup curriculumGroup) {
+    private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition,
+	    final IDegreeModuleToEvaluate ixpto, final CurriculumGroup curriculumGroup) {
 
 	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) ixpto;
 	final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) optionalDegreeModuleToEnrol
@@ -125,8 +140,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	final CurricularCourse curricularCourse = optionalDegreeModuleToEnrol.getCurricularCourse();
 
 	enrolmentContext.getStudentCurricularPlan().createOptionalEnrolment(curriculumGroup,
-		executionPeriod, optionalCurricularCourse, curricularCourse,
-		enrollmentCondition);
+		executionPeriod, optionalCurricularCourse, curricularCourse, enrollmentCondition);
     }
 
 }

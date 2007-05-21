@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
@@ -52,6 +53,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -1972,15 +1974,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    ExecutionPeriod executionPeriod, EnrollmentCondition enrollmentCondition) {
 
 	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
-	    if (degreeModuleToEnrol.getContext().getChildDegreeModule().isLeaf()) {
+	    final DegreeModule childDegreeModule = degreeModuleToEnrol.getContext()
+		    .getChildDegreeModule();
+	    if (childDegreeModule.isLeaf()) {
 		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(),
-			(CurricularCourse) degreeModuleToEnrol.getContext().getChildDegreeModule(),
-			executionPeriod, enrollmentCondition, AccessControl.getUserView()
-				.getUtilizador());
+			(CurricularCourse) childDegreeModule, executionPeriod, enrollmentCondition,
+			AccessControl.getUserView().getUtilizador());
+	    } else if (childDegreeModule instanceof CycleCourseGroup) {
+		new CycleCurriculumGroup((RootCurriculumGroup) degreeModuleToEnrol.getCurriculumGroup(),
+			(CycleCourseGroup) childDegreeModule, executionPeriod);
 	    } else {
 		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(),
-			(CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule(),
-			executionPeriod);
+			(CourseGroup) childDegreeModule, executionPeriod);
 	    }
 	}
     }
@@ -2329,11 +2334,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isFirstCycle() {
 	return getDegreeType().isFirstCycle();
     }
-    
+
     public String print() {
 	if (hasRoot()) {
 	    final StringBuilder result = new StringBuilder();
-	    result.append("[SCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+	    result.append("[SCP ").append(this.getIdInternal()).append("] ").append(this.getName())
+		    .append("\n");
 	    result.append(getRoot().print(""));
 	    return result.toString();
 	} else {

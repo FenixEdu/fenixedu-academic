@@ -19,7 +19,7 @@
 	<fr:edit id="executionDegree"
 			 name="executionDegreeBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean"
-			 schema="choose.executionDegree">
+			 schema="choose.executionDegree.toCreateRegistration">
 		<fr:destination name="degreePostBack" path="/createStudent.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/createStudent.do?method=chooseDegreeCurricularPlanPostBack"/>	
 		<fr:destination name="invalid" path="/createStudent.do?method=chooseExecutionDegreeInvalid"/>

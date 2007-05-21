@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -116,13 +117,13 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan,
-	    StudentCandidacy studentCandidacy, RegistrationAgreement agreement) {
+	    StudentCandidacy studentCandidacy, RegistrationAgreement agreement, CycleType cycleType) {
 	this(person, null, agreement, studentCandidacy, degreeCurricularPlan);
 
 	// create scp
 	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
 		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod());
+			.readActualExecutionPeriod(), cycleType);
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
@@ -1643,7 +1644,7 @@ public class Registration extends Registration_Base {
     final public boolean hasStartedBeforeFirstBolonhaExecutionYear() {
 	return getStartExecutionYear().isBefore(ExecutionYear.readFirstBolonhaExecutionYear());
     }
-    
+
     public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
 	return getStudentCurricularPlan(executionPeriod) != null;
     }
@@ -1934,11 +1935,13 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
-	    if (proposalAttributedByCoordinator != null && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
+	    if (proposalAttributedByCoordinator != null
+		    && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
 		return proposalAttributedByCoordinator;
 	    }
 	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
-	    if (proposalAttributedByTeacher != null && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
+	    if (proposalAttributedByTeacher != null
+		    && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
 		if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
 		    return proposalAttributedByTeacher;
 		}
@@ -1946,6 +1949,7 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
+
     private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
 	final Scheduleing scheduleing = proposal.getScheduleing();
 	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
@@ -1968,14 +1972,16 @@ public class Registration extends Registration_Base {
 
     public boolean isAvailableDegreeTypeForInquiries() {
 	final DegreeType degreeType = getDegreeType();
-	return degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+	return degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE
+		|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
     }
 
     public boolean hasInquiriesToRespond() {
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	    if (executionPeriod.getState().equals(PeriodState.CURRENT) && !hasInquiryResponseFor(executionCourse)) {
+	    if (executionPeriod.getState().equals(PeriodState.CURRENT)
+		    && !hasInquiryResponseFor(executionCourse)) {
 		return true;
 	    }
 	}

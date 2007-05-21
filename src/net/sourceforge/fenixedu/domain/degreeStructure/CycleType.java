@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-
 public enum CycleType {
 
     FIRST_CYCLE,
@@ -11,6 +10,10 @@ public enum CycleType {
 
     public String getQualifiedName() {
 	return this.getClass().getSimpleName() + "." + name();
+    }
+
+    public String getName() {
+	return name();
     }
 
 }
