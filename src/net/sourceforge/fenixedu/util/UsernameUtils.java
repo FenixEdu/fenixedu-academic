@@ -85,11 +85,20 @@ public class UsernameUtils extends FenixUtil {
 			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 100000);
 			
 			} else if (!registration.getRegistrationAgreement().isNormal()) {
-			    istUsername = ist + sumNumber(registration.getNumber(), 50000 - 100000);
-			    // we subtract 100000 from the external/foreign
-			    // student
-			    // number to get his original legacy system
-			    // number
+			    
+			    final Integer number = registration.getNumber();
+			    if (number > 100000) {
+				// we subtract 100000 from the external/foreign
+				// student
+				// number to get his original legacy system
+				// number
+				istUsername = ist + sumNumber(number, 50000 - 100000);
+			    } else if (number < 10000) {
+				istUsername = ist + sumNumber(number, 50000);
+			    } else {
+				istUsername = ist + sumNumber(number, 100000);
+			    }
+			    
 			}
 		    } else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
 			// phd
