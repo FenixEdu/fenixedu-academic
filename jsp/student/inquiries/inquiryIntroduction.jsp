@@ -24,11 +24,13 @@
 				<strong><bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/></strong>
 				<ul>
 					<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
-						<li>
-							<html:link page='<%= new StringBuilder().append("/fillInquiries.do?method=prepare&amp;").append(InquiriesUtil.STUDENT_ATTENDS_ID).append("=").append(attends.getIdInternal().toString()).toString() %>'>
-								<bean:write name="attends" property="disciplinaExecucao.nome" />
-							</html:link>
-						</li>
+						<logic:equal name="attends" property="disciplinaExecucao.availableForInquiries" value="true">
+							<li>
+								<html:link page='<%= new StringBuilder().append("/fillInquiries.do?method=prepare&amp;").append(InquiriesUtil.STUDENT_ATTENDS_ID).append("=").append(attends.getIdInternal().toString()).toString() %>'>
+									<bean:write name="attends" property="disciplinaExecucao.nome" />
+								</html:link>
+							</li>
+						</logic:equal>
 					</logic:iterate>
 				</ul>
 			</logic:notEmpty>
