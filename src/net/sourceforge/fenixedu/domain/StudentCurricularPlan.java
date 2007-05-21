@@ -2329,5 +2329,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isFirstCycle() {
 	return getDegreeType().isFirstCycle();
     }
+    
+    public String print() {
+	if (hasRoot()) {
+	    final StringBuilder result = new StringBuilder();
+	    result.append("[SCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+	    result.append(getRoot().print(""));
+	    return result.toString();
+	} else {
+	    return "";
+	}
+    }
 
 }
