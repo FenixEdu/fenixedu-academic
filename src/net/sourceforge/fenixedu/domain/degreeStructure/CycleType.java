@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 public enum CycleType {
 
     FIRST_CYCLE,
@@ -12,8 +16,9 @@ public enum CycleType {
 	return this.getClass().getSimpleName() + "." + name();
     }
 
-    public String getName() {
-	return name();
+    public String getDescription() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(name());
     }
 
 }
