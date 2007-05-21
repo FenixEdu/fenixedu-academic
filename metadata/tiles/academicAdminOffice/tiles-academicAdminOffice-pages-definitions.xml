@@ -428,5 +428,16 @@
 	<definition name="notNeedToEnrol.showAprovedEnrolments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
 	</definition>	
-		
+	<!-- Lists -->
+	<definition name="lists.chooseExecutionDegree" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/chooseExecutionDegree.jsp"></put>
+    </definition>
+    <definition name="lists.chooseCurricularCourse" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/chooseCurricularCourses.jsp"></put>
+    </definition>
+    <definition name="lists.studentByCurricularCourse" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/studentsByCurricularCourses.jsp"></put>
+    </definition>
+    
+    
 </tiles-definitions>
