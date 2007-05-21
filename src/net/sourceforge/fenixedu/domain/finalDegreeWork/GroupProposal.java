@@ -8,11 +8,18 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class GroupProposal extends GroupProposal_Base {
 
-	public static final Comparator<GroupProposal> COMPARATOR_BY_PREFERENCE_ORDER = new BeanComparator("orderOfPreference");
+    public static final Comparator<GroupProposal> COMPARATOR_BY_PREFERENCE_ORDER = new BeanComparator("orderOfPreference");
 
     public GroupProposal() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public void delete() {
+	removeFinalDegreeDegreeWorkGroup();
+	removeFinalDegreeWorkProposal();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
 }
