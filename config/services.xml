@@ -11863,7 +11863,23 @@
         <isTransactional>true</isTransactional>  
 		<filterChains>
 		</filterChains>
-    </service>
+    </service>      
+    <service>
+    	<name>SearchStudentByCriteria</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudentByCriteria</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>    
+    <service>
+    	<name>ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>       
 	<service>
 		<name>OpenExtraWorkClosedMonth</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
