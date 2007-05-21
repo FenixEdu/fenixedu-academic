@@ -167,6 +167,13 @@
 </schema>
 
 
+<schema name="DocumentRequestCreateBean.DIPLOMA_REQUEST.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" 
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="requestedCycle" key="label.cycleType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="year" key="label.year"/>
