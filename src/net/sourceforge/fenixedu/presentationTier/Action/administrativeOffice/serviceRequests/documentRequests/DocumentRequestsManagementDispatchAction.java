@@ -160,11 +160,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     private void setAdditionalInformationSchemaName(HttpServletRequest request,
 	    final DocumentRequestCreateBean requestCreateBean) {
-	if (requestCreateBean.getChosenDocumentRequestType().getHasAdditionalInformation()) {
+	if (requestCreateBean.getHasAdditionalInformation()) {
 	    request
 		    .setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
-			    + requestCreateBean.getChosenDocumentRequestType().name()
-			    + ".AdditionalInformation");
+			+ requestCreateBean.getChosenDocumentRequestType().name()
+			+ ".AdditionalInformation");
 	}
     }
 
