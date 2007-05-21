@@ -131,10 +131,10 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	}
     }
 
-    private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition,
-	    final IDegreeModuleToEvaluate ixpto, final CurriculumGroup curriculumGroup) {
+    private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition, final IDegreeModuleToEvaluate degreeModuleToEvaluate,
+	    final CurriculumGroup curriculumGroup) {
 
-	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) ixpto;
+	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = (OptionalDegreeModuleToEnrol) degreeModuleToEvaluate;
 	final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) optionalDegreeModuleToEnrol
 		.getDegreeModule();
 	final CurricularCourse curricularCourse = optionalDegreeModuleToEnrol.getCurricularCourse();
