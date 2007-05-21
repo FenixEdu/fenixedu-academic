@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -48,6 +51,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 		return prepare(mapping, form, request, response);
 	}
 
+	
 	public ActionForward createScientificJournal(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -85,6 +89,15 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 		return prepare(mapping, form, request, response);
 	}
 
+	public ActionForward addNewLanguage(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ResearchJournalIssueCreationBean bean = getJournalIssueBean(request);
+		request.setAttribute("bean", bean);
+		return prepare(mapping, form, request, response);
+	}
+	
+	
 	public ActionForward prepareJournalIssueParticipation(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -130,7 +143,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 		if (bean.getRole() != null) {
 			try {
 				executeService(request, "CreateResearchActivityParticipation", new Object[] {
-						bean.getJournalIssue(), bean.getRole(), person });
+						bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage() });
 
 			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage(), null);
@@ -152,7 +165,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 
 		try {
 			executeService(request, "CreateResearchActivityParticipation", new Object[] {
-					bean.getJournalIssue(), bean.getRole(), person });
+					bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage()});
 		} catch (DomainException e) {
 			addActionMessage(request, e.getMessage(), null);
 			request.setAttribute("inexistentJournalBean", bean);

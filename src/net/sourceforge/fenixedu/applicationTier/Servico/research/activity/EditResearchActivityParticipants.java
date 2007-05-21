@@ -12,25 +12,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditResearchActivityParticipants extends Service {
 
-	public List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans) throws ExcepcaoPersistencia, FenixServiceException {
-			
+	public List<ResearchActivityParticipantEditionBean> run(
+			List<ResearchActivityParticipantEditionBean> beans) throws ExcepcaoPersistencia,
+			FenixServiceException {
+
 		List<ResearchActivityParticipantEditionBean> notEditedParticipants = new ArrayList<ResearchActivityParticipantEditionBean>();
-		
-		for (ResearchActivityParticipantEditionBean bean : beans)
-		{
+
+		for (ResearchActivityParticipantEditionBean bean : beans) {
 			Participation participation = bean.getParticipation();
-			if(!bean.getRole().equals(participation.getRole()))
-			{
+			participation.setRoleMessage(bean.getRoleMessage());
+
+			if (!bean.getRole().equals(participation.getRole())) {
 				try {
 					participation.setRole(bean.getRole());
-				} catch(DomainException e) {
+				} catch (DomainException e) {
 					notEditedParticipants.add(bean);
 				}
 			}
 		}
-		
+
 		return notEditedParticipants;
-		
+
 	}
-	
+
 }

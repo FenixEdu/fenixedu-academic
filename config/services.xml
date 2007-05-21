@@ -11880,4 +11880,11 @@
 			<chain name="StudentAuthorization"/>
 		</filterChains>
     </service>
+    <service>
+    	<name>EnableExternalLogin</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLogin</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains/>
+    </service>
 </serviceDefinitions>

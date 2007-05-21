@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ParticipationsInterface;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class ParticipantBean implements Serializable {
 
@@ -30,6 +31,16 @@ public abstract class ParticipantBean implements Serializable {
 
     private ParticipationType participationType;
 
+    private MultiLanguageString roleMessage;
+    
+    public MultiLanguageString getRoleMessage() {
+		return roleMessage;
+	}
+
+	public void setRoleMessage(MultiLanguageString roleMessage) {
+		this.roleMessage = roleMessage;
+	}
+	
     public ParticipantBean() {
 	setPerson(null);
 	setUnit(null);
@@ -77,7 +88,7 @@ public abstract class ParticipantBean implements Serializable {
 
     public ExternalContract getExternalPerson() {
 	if (!person.isNullReference())
-	    return person.getObject().getExternalPerson();
+	    return person.getObject().getExternalContract();
 	else
 	    return new DomainReference<ExternalContract>(null).getObject();
     }

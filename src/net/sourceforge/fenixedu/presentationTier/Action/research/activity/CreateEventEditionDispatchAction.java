@@ -52,6 +52,15 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		return prepare(mapping, form, request, response);
 	}
 
+	public ActionForward addNewLanguage(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		
+		ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
+		request.setAttribute("eventEditionBean", bean);
+		return prepare(mapping, form, request, response);
+	}
+	
 	public ActionForward prepareCreateEventEditionParticipation(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
@@ -137,7 +146,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		if (bean.getEditionRole() != null) {
 			try {
 				executeService(request, "CreateResearchActivityParticipation", new Object[] {
-						bean.getEventEdition(), bean.getEditionRole(), person });
+						bean.getEventEdition(), bean.getEditionRole(), person, bean.getRoleMessage() });
 			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage(), null);
 				request.setAttribute("existentEventBean", bean);

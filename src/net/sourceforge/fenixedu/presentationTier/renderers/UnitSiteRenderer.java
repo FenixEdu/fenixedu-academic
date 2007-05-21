@@ -4,9 +4,11 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -39,8 +41,10 @@ public class UnitSiteRenderer extends OutputRenderer {
 	private boolean targetBlank;
 
 	private boolean moduleRelative;
-	
+
 	private boolean contextRelative;
+
+	private String separator;
 	
 	public boolean isContextRelative() {
 		return contextRelative;
@@ -114,22 +118,23 @@ public class UnitSiteRenderer extends OutputRenderer {
 			Unit unit = (Unit) object;
 			HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
 			unitPresentation.addChild(getUnitComponent(unit));
-			if(isParenteShown()) {
-				
-				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
-						public boolean evaluate(Object arg0) {
-						return !((Unit)arg0).isAggregateUnit();
-					}
-					
-				});
-				
-				if(!parentUnits.isEmpty()) {
-					unitPresentation.addChild(new HtmlText("-"));
+			if (isParenteShown()) {
+
+				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(),
+						new Predicate() {
+							public boolean evaluate(Object arg0) {
+								return !((Unit) arg0).isAggregateUnit();
+							}
+
+						});
+
+				if (!parentUnits.isEmpty()) {
+					unitPresentation.addChild(new HtmlText(getSeparator(),false));
 					int i = 0;
 					int size = parentUnits.size();
-					for(Unit parentUnit : parentUnits) {
+					for (Unit parentUnit : parentUnits) {
 						unitPresentation.addChild(getUnitComponent(parentUnit));
-						if(i<size-1) {
+						if (i < size - 1) {
 							unitPresentation.addChild(new HtmlText(","));
 						}
 						i++;
@@ -149,7 +154,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 					link.setTarget("_blank");
 				}
 				link.setModuleRelative(isModuleRelative());
-                link.setContextRelative(isContextRelative());
+				link.setContextRelative(isContextRelative());
 				component = link;
 			} else {
 				component = renderValue(unit, findSchema(), getUnitLayout());
@@ -158,25 +163,30 @@ public class UnitSiteRenderer extends OutputRenderer {
 		}
 
 		private boolean unitHasSite(Unit unit) {
-			if(unit.isDegreeUnit()) {
-				return unit.getDegree().hasSite();
-			}
-			if(unit.isDepartmentUnit()) {
-				return unit.getDepartmentUnit().hasSite();
-			}
-			return false;
+			return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
 		}
-		
+
 		private String resolveUnitURL(Unit unit) {
-			if(unit.isDegreeUnit()) {
+			if (unit.isDegreeUnit()) {
 				return DegreeProcessor.getDegreePath(unit.getDegree());
 			}
-			if(unit.isDepartmentUnit()) {
+			if (unit.isDepartmentUnit()) {
 				return DepartmentProcessor.getDepartmentPath(unit.getDepartment());
+			}
+			if(unit instanceof ResearchUnit) {
+				return ResearchUnitProcessor.getResearchUnitPath((ResearchUnit)unit);
 			}
 			return null;
 		}
 
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
 	}
 
 }

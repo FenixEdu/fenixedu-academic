@@ -2,10 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
 import org.joda.time.YearMonthDay;
@@ -22,13 +25,46 @@ public class ResearchContractBean implements Serializable {
 
 	private YearMonthDay end;
 
-	private DomainReference<Unit> unit;
+	private DomainReference<ResearchUnit> unit;
 
 	private ResearchFunctionType functionType;
+	
+	private String email;
+	
+	private IDDocumentType documentType;
+	
+	private String documentIDNumber;
+	
+
+	public String getDocumentIDNumber() {
+		return documentIDNumber;
+	}
+
+	public void setDocumentIDNumber(String documentIDNumber) {
+		this.documentIDNumber = documentIDNumber;
+	}
+
+	public IDDocumentType getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(IDDocumentType documentType) {
+		this.documentType = documentType;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public ResearchContractBean() {
 		setPersonName(null);
 		setUnit(null);
+		setExternalPerson(Boolean.FALSE);
+		setPersonNameString(null);
 	}
 
 	public YearMonthDay getBegin() {
@@ -68,12 +104,12 @@ public class ResearchContractBean implements Serializable {
 		this.personName = new DomainReference<PersonName>(personName);
 	}
 
-	public Unit getUnit() {
+	public ResearchUnit getUnit() {
 		return unit.getObject();
 	}
 
-	public void setUnit(Unit unit) {
-		this.unit = new DomainReference<Unit>(unit);
+	public void setUnit(ResearchUnit unit) {
+		this.unit = new DomainReference<ResearchUnit>(unit);
 	}
 
 	public String getPersonNameString() {
@@ -92,4 +128,7 @@ public class ResearchContractBean implements Serializable {
 		this.externalPerson = externalPerson;
 	}
 
+	public boolean getShowMessage() {
+		return getExternalPerson() && getPerson()==null && getPersonNameString()!=null && getPersonNameString().length()>0; 
+	}
 }

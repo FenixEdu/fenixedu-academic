@@ -30,6 +30,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -930,7 +932,7 @@ public class Unit extends Unit_Base {
 		return hasSite();
 	}
 
-	public List<ResearchResultPublication> getAssociatedPublications() {
+	public List<ResearchResultPublication> getResearchResultPublications() {
 		Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
 
 		for (ResultUnitAssociation association : getResultUnitAssociations()) {
@@ -940,7 +942,7 @@ public class Unit extends Unit_Base {
 		}
 		return new ArrayList<ResearchResultPublication>(publications);
 	}
-
+	
 	public List<ResearchResultPatent> getAssociatedPatents() {
 		Set<ResearchResultPatent> patents = new HashSet<ResearchResultPatent>();
 

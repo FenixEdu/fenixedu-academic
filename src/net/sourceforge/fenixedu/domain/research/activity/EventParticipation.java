@@ -5,10 +5,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class EventParticipation extends EventParticipation_Base {
     
-    public  EventParticipation(Party party, ResearchActivityParticipationRole role, Event event) {
+    public  EventParticipation(Party party, ResearchActivityParticipationRole role, Event event, MultiLanguageString roleMessage) {
 	super();
 	if(alreadyHasParticipation(party, role, event)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
@@ -16,6 +17,7 @@ public class EventParticipation extends EventParticipation_Base {
 	super.setParty(party);
 	super.setRole(role);
 	super.setEvent(event);
+	super.setRoleMessage(roleMessage);
     }
     
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, Event event) {

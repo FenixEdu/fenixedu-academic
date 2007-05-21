@@ -45,7 +45,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     public String getPersonNameWithLogin() {
         Person person = getPerson();
         
-        if (person.hasExternalPerson()) {
+        if (person.hasExternalContract()) {
             return getPersonName() + " (Externa)";
         }
         else {
@@ -70,7 +70,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
         }
         else {
-            ExternalContract contract = person.getExternalPerson();
+            ExternalContract contract = person.getExternalContract();
             if (contract != null) {
                 setAffiliation(contract.getInstitutionUnit().getName());
             }

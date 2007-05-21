@@ -236,7 +236,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 	    try {
 		executeService(request, "CreateResearchActivityParticipation",
 			new Object[] { participantBean.getActivity(), participantBean.getRole(),
-				participantBean.getPerson() });
+				participantBean.getPerson(), participantBean.getRoleMessage() });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage(), null);
 		request.setAttribute("participationRoleBean", participantBean);
@@ -271,7 +271,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 	List<ResearchActivityParticipantEditionBean> participantBeans = new ArrayList<ResearchActivityParticipantEditionBean>();
 	for (Participation participation : participations) {
 	    participantBeans.add(new ResearchActivityParticipantEditionBean(participation, participation
-		    .getRole()));
+		    .getRole(), participation.getRoleMessage()));
 	}
 	return participantBeans;
     }

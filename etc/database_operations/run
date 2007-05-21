@@ -35,3 +35,7 @@ execute "Add Affinity CycleCourseGroup Table" addAffinityCycleCourseGroupTable.s
 execute "Add CycleType Column" addCycleTypeColumn.sql
 execute "Alter RootCourseGroup Type" alterRootCourseGroupType.sql
 execute "Change CycleCourseGroupt Type" changeToCycleCourseGroupType.sql 
+execute "Add Boolean to Research Contract" addBooleanToResearchContract.sql
+execute "Add Participation Specification" addParticipationSpecification.sql
+execute "Modify Research Activity Participations" modifyResearchActivityParticipations.sql
+execute "Temporary Login Modifications" temporaryLoginModifications.sql

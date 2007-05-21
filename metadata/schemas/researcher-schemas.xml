@@ -188,6 +188,9 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="eventEditionCreation.fullInfo" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -239,6 +242,9 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="eventCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -258,6 +264,9 @@ extends="eventCreation">
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
 	</slot>
 </schema>
 
@@ -379,6 +388,7 @@ extends="eventCreation">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
 		<property name="showRoles" value="true"/>
+		<property name="showRoleMessage" value="true"/>
 	</slot>
 </schema>
 
@@ -405,6 +415,7 @@ extends="eventCreation">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
 		<property name="showRoles" value="true"/>
+		<property name="showRoleMessage" value="true"/>
 	</slot>
 </schema>
 
@@ -420,6 +431,7 @@ extends="eventCreation">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
 		<property name="showRoles" value="true"/>
+		<property name="showRoleMessage" value="true"/>
 	</slot>
 </schema>
 
@@ -442,6 +454,7 @@ extends="eventCreation">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
 		<property name="showRoles" value="true"/>
+		<property name="showRoleMessage" value="true"/>
 	</slot>
 
 </schema>
@@ -455,6 +468,8 @@ extends="eventCreation">
 	<slot name="participations" layout="show-participation-list" key="label.participants">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showNickName"/>
+		<property name="showRoles" value="true"/>
+		<property name="showRoleMessage" value="true"/>
 	</slot>
 </schema>
 
@@ -491,6 +506,9 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="scientificJournalCreation.journalName" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -512,6 +530,9 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="journalCreation.inexistentJournal" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -525,12 +546,18 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="activityParticipants.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean">
 	<slot name="role" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
 	</slot>
 </schema>
 
@@ -649,6 +676,9 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>	
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="cooperationParticipation.summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Participation">
@@ -679,6 +709,9 @@ extends="eventCreation">
 	<slot name="role" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="roleMessage">
+		<property name="size" value="50"/>
 	</slot>
 </schema>
 

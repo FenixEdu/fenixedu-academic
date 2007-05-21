@@ -454,6 +454,12 @@
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>
+
+	<definition name="show-research-unit-result" extends="definition.public.researchUnit">
+		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
+        <put name="body" value="/publico/researcher/showResearchResult.jsp"/>
+    </definition>
+        
     
     <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
@@ -495,4 +501,14 @@
 	<definition name="research-view-event" extends="definition.public.researchUnit">
 		<put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
 	</definition>		
+
+	<definition name="start-request-login-process" path="/layout/istLayout.jsp">
+		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
+	</definition>		
+
+	<definition name="request-login-finish-process" path="/layout/istLayout.jsp">
+		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
+	</definition>		
+
+	
 </tiles-definitions>

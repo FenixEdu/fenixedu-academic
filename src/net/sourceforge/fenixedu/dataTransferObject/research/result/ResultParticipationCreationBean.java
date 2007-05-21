@@ -107,7 +107,7 @@ public class ResultParticipationCreationBean implements Serializable {
 
     public ExternalContract getExternalPerson() {
 	return (this.participator == null) ? null : this.participator.getObject().getPerson()
-		.getExternalPerson();
+		.getExternalContract();
     }
 
     public void setExternalPerson(ExternalContract externalPerson) {

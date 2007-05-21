@@ -64,6 +64,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle dinline"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="input" path="/activities/createJournalIssue.do?method=addNewLanguage"/>
 	</fr:edit>
 	<br/>
 	<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>

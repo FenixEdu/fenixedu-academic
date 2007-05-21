@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.research.activity.Event;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResearchEventCreationBean implements Serializable {
     private DomainReference<Event> event;
@@ -15,8 +16,17 @@ public class ResearchEventCreationBean implements Serializable {
     private EventType eventType;
     private ScopeType locationType;
     private String url;
+    private MultiLanguageString roleMessage;
+    
+    public MultiLanguageString getRoleMessage() {
+		return roleMessage;
+	}
 
-    public ResearchEventCreationBean() {
+	public void setRoleMessage(MultiLanguageString roleMessage) {
+		this.roleMessage = roleMessage;
+	}
+    
+	public ResearchEventCreationBean() {
     	setEvent(null);
     }
     

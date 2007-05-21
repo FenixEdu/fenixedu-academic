@@ -27,10 +27,29 @@
 	</fr:layout>
 </fr:view>
 
-<fr:edit id="createPersonContract" name="bean" schema="create.researchContract" action="<%= "/manageResearchUnitSite.do?method=addPerson&oid=" + siteID %>">
+<bean:define id="schema" value="create.researchContract.internal" type="java.lang.String"/>
+
+<logic:equal name="bean" property="externalPerson" value="true">
+	<bean:define id="schema" value="create.researchContract.external" type="java.lang.String"/>
+</logic:equal>
+
+<logic:equal name="bean" property="showMessage" value="true">
+	<div class="infoop2">
+		<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/>
+	</div>
+</logic:equal>
+
+<fr:form action="<%= "/manageResearchUnitSite.do?method=addPersonWrapper&oid=" + siteID %>">
+	<fr:edit id="createPersonContract" name="bean" schema="<%= schema %>" >
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="invalid" path="/manageResearchUnitSite.do?method=managePeople"/>
-</fr:edit>
+	<fr:destination name="postBack" path="/manageResearchUnitSite.do?method=managePeoplePostBack"/>
+	</fr:edit>
+	<html:submit><bean:message key="label.submit" bundle="DEFAULT"/></html:submit>
+	<logic:equal name="bean" property="showMessage" value="true">
+		<html:submit property="createPerson"><bean:message key="label.create" bundle="DEFAULT"/></html:submit>
+	</logic:equal>
+</fr:form>

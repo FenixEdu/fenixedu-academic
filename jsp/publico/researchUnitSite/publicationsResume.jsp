@@ -6,8 +6,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
+		<bean:define id="siteID" name="site" property="idInternal"/>
 
 		<bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
+
 		<ul style="width: 600px;">
 		<logic:iterate id="result" name="results" scope="request">
  			<bean:define id="resultId" name="result" property="idInternal"/>
@@ -17,7 +19,7 @@
 		 					<fr:property name="htmlSeparator" value=", "/>
 		 					<fr:property name="indentation" value="false"/>
 		 				</fr:layout>
-		 				<fr:destination name="view.publication" path="<%= "/homepage/showResearchResult.do?method=showPublication&amp;resultId=" + resultId + "&amp;homepageID=" + request.getParameter("homepageID")%>"/>
+		 				<fr:destination name="view.publication" path="<%= "/unitSite/showResearchResult.do?method=showPublication&amp;resultId=" + resultId + "&amp;siteID=" + siteID %>"/>
 		 			</fr:view> (<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
 					<p class="mtop025">
 					<logic:iterate id="file" name="result" property="resultDocumentFiles">

@@ -7,59 +7,74 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResearchScientificJournalCreationBean implements Serializable {
-    private DomainReference<ScientificJournal> scientificJournal;
-    private String scientificJournalName;
-    private ResearchActivityParticipationRole role;
-    private ScopeType locationType;
-    private String issn;
-    private String publisher;
-    
-    public String getIssn() {
-        return issn;
-    }
+	private DomainReference<ScientificJournal> scientificJournal;
 
-    public void setIssn(String issn) {
-        this.issn = issn;
-    }
+	private String scientificJournalName;
 
-    public ResearchScientificJournalCreationBean() {
-    	setScientificJournal(null);
-    }
-    
+	private ResearchActivityParticipationRole role;
+
+	private ScopeType locationType;
+
+	private String issn;
+
+	private String publisher;
+
+	private MultiLanguageString roleMessage;
+
+	public MultiLanguageString getRoleMessage() {
+		return roleMessage;
+	}
+
+	public void setRoleMessage(MultiLanguageString roleMessage) {
+		this.roleMessage = roleMessage;
+	}
+
+	public String getIssn() {
+		return issn;
+	}
+
+	public void setIssn(String issn) {
+		this.issn = issn;
+	}
+
+	public ResearchScientificJournalCreationBean() {
+		setScientificJournal(null);
+	}
+
 	public ResearchActivityParticipationRole getRole() {
-        return role;
-    }
+		return role;
+	}
 
-    public void setRole(ResearchActivityParticipationRole participationRole) {
-        this.role = participationRole;
-    }
+	public void setRole(ResearchActivityParticipationRole participationRole) {
+		this.role = participationRole;
+	}
 
-    public String getScientificJournalName() {
-        return scientificJournalName;
-    }
-    
-    public void setScientificJournalName(String scientificJournalName) {
-        this.scientificJournalName = scientificJournalName;
-    }
-    
+	public String getScientificJournalName() {
+		return scientificJournalName;
+	}
 
-    public ScientificJournal getScientificJournal() {
-        return this.scientificJournal.getObject();
-    }
+	public void setScientificJournalName(String scientificJournalName) {
+		this.scientificJournalName = scientificJournalName;
+	}
 
-    public void setScientificJournal(ScientificJournal scientificJournal) {
-        this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
-    }
-    
-    public ScopeType getLocationType() {
-        return locationType;
-    }
+	public ScientificJournal getScientificJournal() {
+		return this.scientificJournal.getObject();
+	}
 
-    public void setLocationType(ScopeType locationType) {
-        this.locationType = locationType;
-    }
+	public void setScientificJournal(ScientificJournal scientificJournal) {
+		this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+	}
+
+	public ScopeType getLocationType() {
+		return locationType;
+	}
+
+	public void setLocationType(ScopeType locationType) {
+		this.locationType = locationType;
+	}
 
 	public String getPublisher() {
 		return publisher;
@@ -68,5 +83,5 @@ public class ResearchScientificJournalCreationBean implements Serializable {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-    
+
 }

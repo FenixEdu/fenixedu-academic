@@ -3629,7 +3629,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 		}
 
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
-		
+			Boolean externalContract;
 		}
 
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
@@ -4287,6 +4287,7 @@ class net.sourceforge.fenixedu.domain.research.project.ProjectParticipation exte
 
 class net.sourceforge.fenixedu.domain.research.activity.Participation extends net.sourceforge.fenixedu.domain.DomainObject {
 	ResearchActivityParticipationRole role;
+	MultiLanguageString roleMessage;
     String ojbConcreteClass;
 	Integer keyParty;
 }
@@ -4395,6 +4396,7 @@ class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourcef
 
 class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer keyPerson;	
+	Integer keyLoginRequest;
 	String userUId;
 	String lastLoginHost;
 	String currentLoginHost;
@@ -4402,6 +4404,10 @@ class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.doma
 	DateTime currentLoginDateTimeDateTime;
 }
 
+class net.sourceforge.fenixedu.domain.LoginRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyUser;
+	String hash;
+}
 
 class net.sourceforge.fenixedu.domain.system.CronRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime buildVersion;
@@ -8989,6 +8995,11 @@ relation PartyInterest {
 	}
 }
 
+relation UserLoginRequest {
+    net.sourceforge.fenixedu.domain.LoginRequest playsRole loginRequest;
+    net.sourceforge.fenixedu.domain.User playsRole user;
+}
+
 relation UserPerson{
     net.sourceforge.fenixedu.domain.Person playsRole person;
     net.sourceforge.fenixedu.domain.User playsRole user;
@@ -10515,6 +10526,13 @@ relation RootDomainObjectPublicationTypeAttribute {
 relation RootDomainObjectCandidateEnrolment {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectLoginRequest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.LoginRequest playsRole loginRequests {
 		multiplicity *;
 	}
 }

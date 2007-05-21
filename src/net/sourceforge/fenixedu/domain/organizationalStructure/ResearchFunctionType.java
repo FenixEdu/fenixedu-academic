@@ -8,6 +8,8 @@ public enum ResearchFunctionType {
 	COLLABORATORS,
 	OTHER_STAFF,
 	PHD_STUDENT,
-	MSC_STUDENT;
+	MSC_STUDENT,
+	POST_DOC_STUDENT
+	;
 	
 }

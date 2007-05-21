@@ -29,7 +29,7 @@ public class InfoAuthor extends InfoObject {
             setAuthor(author.getName());
             setIdInternal(author.getIdInternal());
             setKeyPerson(author.getIdInternal());
-            setOrganization((author.getExternalPerson() != null) ? (author.getExternalPerson()
+            setOrganization((author.getExternalContract() != null) ? (author.getExternalContract()
                     .getInstitutionUnit().getName() + "     (Pessoa externa)") : "");
         }
     }

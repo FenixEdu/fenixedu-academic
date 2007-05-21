@@ -112,7 +112,8 @@ public class FileItemCreationBean implements Serializable {
         LABORATORY_GUIDE("laboratoryGuide"),
         DIDACTIL_TEXT("didactilText"),
         STUDY_BOOK("studyBook"),
-        SITE_CONTENT("siteContent")
+        SITE_CONTENT("siteContent"),
+        PROGRAM ("program")
         ;
    	
    	private String type;

@@ -17,7 +17,7 @@ public class ExternalContract extends ExternalContract_Base {
     public ExternalContract(Person person, Unit institution, YearMonthDay beginDate, YearMonthDay endDate) {
 	super();
 	
-	if(person.hasExternalPerson()) {
+	if(person.hasExternalContract()) {
 	    throw new DomainException("error.externalContract.person.already.is.externalPerson");
 	}
 	

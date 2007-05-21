@@ -274,8 +274,8 @@ public class ResultParticipation extends ResultParticipation_Base {
 			
 			text.append(unit + ": " + employee.getLastWorkingPlace().getName());
 		} else {
-			if (person.hasExternalPerson()) {
-				text.append(unit + ": " + person.getExternalPerson().getInstitutionUnit().getName());
+			if (person.hasExternalContract()) {
+				text.append(unit + ": " + person.getExternalContract().getInstitutionUnit().getName());
 			} else {
 				text.append("username: " + person.getUsername());
 			}

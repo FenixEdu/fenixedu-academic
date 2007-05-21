@@ -39,7 +39,7 @@ public class ProjectParticipantSimpleCreationBean implements Serializable {
     }
     
     public ExternalContract getExternalPerson() {
-        return (this.person == null) ? null : this.person.getObject().getExternalPerson();
+        return (this.person == null) ? null : this.person.getObject().getExternalContract();
     }
 
     public void setExternalPerson(ExternalContract externalPerson) {

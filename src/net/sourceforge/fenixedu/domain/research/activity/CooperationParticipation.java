@@ -5,10 +5,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CooperationParticipation extends CooperationParticipation_Base {
     
-    public  CooperationParticipation(Party party, ResearchActivityParticipationRole role, Cooperation cooperation) {
+    public  CooperationParticipation(Party party, ResearchActivityParticipationRole role, Cooperation cooperation, MultiLanguageString roleMessage) {
         super();
         if(alreadyHasParticipation(party, role, cooperation)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
@@ -16,6 +17,7 @@ public class CooperationParticipation extends CooperationParticipation_Base {
         super.setParty(party);
         super.setRole(role);
         super.setCooperation(cooperation);
+        super.setRoleMessage(roleMessage);
     }
 
 
@@ -35,7 +37,17 @@ public class CooperationParticipation extends CooperationParticipation_Base {
 
     @Override
     public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+    	switch(this.getCooperation().getCooperationType()) {
+    	case ScientificOrganizationsAndNetworks:
+    		return ResearchActivityParticipationRole.getAllScientificOrganizationsAndNetworksRoles();
+    	case BilateralCooperation:
+    		return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+    	case Commission:
+    		return ResearchActivityParticipationRole.getAllCommissionRoles();
+    	default:
+    		return ResearchActivityParticipationRole.getAllBilateralCooperationRoles();
+    	}
+    	
     }
 
     @Override

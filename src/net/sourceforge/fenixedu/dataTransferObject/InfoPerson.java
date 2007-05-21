@@ -192,7 +192,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public InfoExternalPerson getInfoExternalPerson() {
-        return InfoExternalPerson.newInfoFromDomain(getPerson().getExternalPerson());
+        return InfoExternalPerson.newInfoFromDomain(getPerson().getExternalContract());
     }
 
     public Homepage getHomepage() {

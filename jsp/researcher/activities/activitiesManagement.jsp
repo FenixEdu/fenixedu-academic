@@ -36,7 +36,7 @@
 				<tr>
 					<td  class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
 				</tr>
 				<tr>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
@@ -44,7 +44,7 @@
 				</tr>
 				<tr>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
 				</tr>
 			</table>
 		</div>

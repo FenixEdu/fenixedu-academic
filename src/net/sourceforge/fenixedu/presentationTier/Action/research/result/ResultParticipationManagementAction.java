@@ -340,7 +340,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 			createResultParticipationSchema = "resultParticipation.fullCreationWithRole";
 		    }
 		} else {
-		    bean.setOrganization(bean.getParticipator().getPerson().getExternalPerson()
+		    bean.setOrganization(bean.getParticipator().getPerson().getExternalContract()
 			    .getInstitutionUnit());
 		    createResultParticipationSchema = "resultParticipation.creationWithRole";
 		}

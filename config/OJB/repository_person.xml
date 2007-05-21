@@ -12,6 +12,14 @@
 	  
 </class-descriptor>
 
+<!--  **********************************
+     Definitions for net.sourceforge.fenixedu.domain.LoginRequest
+	  ********************************** -->
+	  
+<class-descriptor class="net.sourceforge.fenixedu.domain.LoginRequest" table="LOGIN_REQUEST">
+	  
+</class-descriptor>
+
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.Identification 
      *********************************** -->

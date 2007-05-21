@@ -62,11 +62,12 @@
 <fr:form action="/activities/createEventEdition.do?method=prepareCreateEventEditionParticipation">
 	<logic:notPresent name="createNewEvent">
 	<logic:notPresent name="createNewEdition">
-		<fr:edit name="eventEditionBean" schema="<%= schema %>" >
+		<fr:edit id="eventEditionBean" name="eventEditionBean" schema="<%= schema %>" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="input" path="/activities/createEventEdition.do?method=addNewLanguage"/>
 		</fr:edit>
 		<br/>
 		<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>

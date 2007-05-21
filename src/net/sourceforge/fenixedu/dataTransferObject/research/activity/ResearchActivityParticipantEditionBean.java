@@ -6,15 +6,26 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResearchActivityParticipantEditionBean implements Serializable {
 
-	 DomainReference<Participation> participation;
-	 ResearchActivityParticipationRole role;
+	 private DomainReference<Participation> participation;
+	 private ResearchActivityParticipationRole role;
+	 private MultiLanguageString roleMessage;
 	 
-	 public ResearchActivityParticipantEditionBean(Participation participation, ResearchActivityParticipationRole role) {
+	 public MultiLanguageString getRoleMessage() {
+		return roleMessage;
+	}
+
+	public void setRoleMessage(MultiLanguageString roleMessage) {
+		this.roleMessage = roleMessage;
+	}
+
+	public ResearchActivityParticipantEditionBean(Participation participation, ResearchActivityParticipationRole role, MultiLanguageString roleMessage) {
 		setParticipation(participation);
 		setRole(role);
+		setRoleMessage(roleMessage);
 	}
 	 
 	public Participation getParticipation() {

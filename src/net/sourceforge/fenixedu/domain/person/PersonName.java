@@ -62,7 +62,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	super();
 	this.setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
-	setIsExternalPerson(Boolean.valueOf(person.hasExternalPerson()));
+	setIsExternalPerson(Boolean.valueOf(person.hasExternalContract()));
     }
 
     public int compareTo(PersonName personName) {
@@ -136,8 +136,8 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	if (employee != null && employee.getLastWorkingPlace() != null) {
 	    textToAppend = employee.getLastWorkingPlace().getName();
 	} else {
-	    if (person.hasExternalPerson()) {
-		textToAppend = person.getExternalPerson().getInstitutionUnit().getName();
+	    if (person.hasExternalContract()) {
+		textToAppend = person.getExternalContract().getInstitutionUnit().getName();
 	    } else {
 		textToAppend = person.getUsername();
 	    }

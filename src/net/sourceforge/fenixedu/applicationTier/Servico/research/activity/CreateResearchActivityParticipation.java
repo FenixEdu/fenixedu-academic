@@ -18,41 +18,42 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateResearchActivityParticipation extends Service {
 	
-	public void run(Event event, ResearchActivityParticipationRole role, Person person)
+	public void run(Event event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
 			throws ExcepcaoPersistencia, FenixServiceException {
 
-		new EventParticipation(person, role, event);
+		new EventParticipation(person, role, event, roleMessage);
 	}
 
-	public void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person)
+	public void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
 			throws ExcepcaoPersistencia, FenixServiceException {
 
-		new ScientificJournalParticipation(person, role, journal);
+		new ScientificJournalParticipation(person, role, journal,roleMessage);
 	}
 
 	public void run(ScientificJournal journal, ParticipantBean bean)
 			throws FenixServiceException {
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
 		
-		new ScientificJournalParticipation(unit, bean.getRole(), journal);
+		new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage());
 	}
 	
 	public void run(Event event, ParticipantBean bean) throws ExcepcaoPersistencia,
 		FenixServiceException {
 	
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
-		new EventParticipation(unit, bean.getRole(), event);
+		new EventParticipation(unit, bean.getRole(), event,bean.getRoleMessage());
 	}
 	
-	public void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person) {
-	    new JournalIssueParticipation(issue,role,person);
+	public void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage) {
+	    new JournalIssueParticipation(issue,role,person, roleMessage);
 	}
 	
-	public void run(EventEdition edition, ResearchActivityParticipationRole role, Person person) {
-	    new EventEditionParticipation(person,role,edition);
+	public void run(EventEdition edition, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage) {
+	    new EventEditionParticipation(person,role,edition,roleMessage);
 	}
 		
 	public void run(ResearchCooperationCreationBean cooperationBean, Person person) 
@@ -63,7 +64,7 @@ public class CreateResearchActivityParticipation extends Service {
 		Cooperation cooperation = new Cooperation(cooperationBean.getRole(), person, cooperationBean.getCooperationName(), 
 				cooperationBean.getType(), unit, cooperationBean.getStartDate(), cooperationBean.getEndDate());
 		
-		new CooperationParticipation(person, cooperationBean.getRole(), cooperation);	
+		new CooperationParticipation(person, cooperationBean.getRole(), cooperation, cooperationBean.getRoleMessage());	
 	}
 	
 	private Unit getUnit(Unit unit, String unitName, boolean isExternalUnit) throws FenixServiceException {

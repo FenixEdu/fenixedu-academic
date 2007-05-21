@@ -75,6 +75,7 @@
         <forward name="organizeTopLinks" path="researchSite-edit-organizeTopLinks"/>
         <forward name="organizeFooterLinks" path="researchSite-edit-organizeFooterLinks"/>
         <forward name="managePeople" path="researchSite-manage-people"/>
+        <forward name="externalPersonExtraInfo" path="researchSite-external-person-extra-info"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -159,6 +160,7 @@
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>	
 	<message-resources parameter="resources.WebsiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
+	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
      <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"

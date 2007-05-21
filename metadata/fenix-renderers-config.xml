@@ -114,6 +114,7 @@ Documentation:
 		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${istUsername}"/>
 		<property name="showRoles" value="false"/>
+		<property name="showRoleMessage" value="false"/>
 	</renderer>
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
@@ -340,6 +341,7 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteRenderer" layout="unit-link">
 		<property name="moduleRelative" value="false"/>
 		<property name="contextRelative" value="true"/>
+		<property name="separator" value="-"/>
 	</renderer>
     <!-- input -->
 

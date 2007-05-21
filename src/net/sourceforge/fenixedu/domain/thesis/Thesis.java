@@ -870,7 +870,7 @@ public class Thesis extends Thesis_Base {
             conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
         }
         else {
-            if (! orientator.hasExternalPerson()) {
+            if (! orientator.hasExternalContract()) {
                 hasInternal = true;
             }
             
@@ -880,7 +880,7 @@ public class Thesis extends Thesis_Base {
             }
         }
         
-        if (coorientator != null && !coorientator.hasExternalPerson()) {
+        if (coorientator != null && !coorientator.hasExternalContract()) {
             hasInternal = true;
         }
         
@@ -900,7 +900,7 @@ public class Thesis extends Thesis_Base {
             conditions.add(new ThesisCondition("thesis.condition.president.required"));
         }
         else {
-            if (president.hasExternalPerson()) {
+            if (president.hasExternalContract()) {
                 conditions.add(new ThesisCondition("thesis.condition.president.notInternal"));
             }
             else {
@@ -1174,7 +1174,7 @@ public class Thesis extends Thesis_Base {
     }
 
     private boolean isInternalPerson(Person person) {
-        return person != null && !person.hasExternalPerson() && person.hasTeacher();
+        return person != null && !person.hasExternalContract() && person.hasTeacher();
     }
     
     @Override

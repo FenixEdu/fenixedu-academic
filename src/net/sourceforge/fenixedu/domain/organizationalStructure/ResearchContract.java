@@ -7,8 +7,8 @@ import org.joda.time.YearMonthDay;
 
 public class ResearchContract extends ResearchContract_Base {
 
-	public ResearchContract(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit,
-			ResearchFunctionType functionType) {
+	public ResearchContract(Person person, YearMonthDay beginDate, YearMonthDay endDate, ResearchUnit unit,
+			ResearchFunctionType functionType, Boolean isExternalContract) {
 
 		super();
 		for (Accountability accountability : person.getParentAccountabilities(
@@ -22,6 +22,7 @@ public class ResearchContract extends ResearchContract_Base {
 		}
 
 		super.init(person, beginDate, endDate, unit);
+		setExternalContract(isExternalContract);
 		setAccountabilityType(ResearchFunction
 				.readAccountabilityTypeByResearchFunctionType(functionType));
 	}

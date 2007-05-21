@@ -109,7 +109,7 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
         String name = person.getName();
         HtmlComponent component = super.render(name, String.class);
         
-        if (person.hasExternalPerson()) {
+        if (person.hasExternalContract()) {
             return addLabel(person, component, getExternalLabel());
         }
         else {

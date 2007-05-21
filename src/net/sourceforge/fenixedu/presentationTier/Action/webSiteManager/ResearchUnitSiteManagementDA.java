@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -75,6 +76,53 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		return mapping.findForward("managePeople");
 	}
 
+	public ActionForward managePeoplePostBack(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		ResearchContractBean bean = (ResearchContractBean) RenderUtils.getViewState(
+				"createPersonContract").getMetaObject().getObject();
+		request.setAttribute("bean", bean);
+		RenderUtils.invalidateViewState();
+		return mapping.findForward("managePeople");
+	}
+
+	public ActionForward addPersonWrapper(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+
+		return (request.getParameter("createPerson") != null) ? prepareAddNewPerson(mapping, actionForm,
+				request, response) : addPerson(mapping, actionForm, request, response);
+	}
+
+	public ActionForward prepareAddNewPerson(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		IViewState viewState = RenderUtils.getViewState("createPersonContract");
+		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
+			request.setAttribute("bean",bean);
+			return mapping.findForward("externalPersonExtraInfo");
+		}
+		return managePeople(mapping, actionForm, request, response);
+	}
+	
+	public ActionForward addNewPerson(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		IViewState viewState = RenderUtils.getViewState("extraInfo");
+		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
+			try {
+				executeService("CreateResearchContract", new Object[] { bean, getLoggedPerson(request),
+						LoginRequestManagement.getRequestURL(request) });
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+				return managePeople(mapping, actionForm, request, response);
+			}
+		}
+		return managePeople(mapping, actionForm, request, response);
+	}
+
 	public ActionForward addPerson(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
@@ -82,8 +130,12 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		IViewState viewState = RenderUtils.getViewState("createPersonContract");
 		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
 			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
+			if (bean.getPerson() == null) {
+				return managePeoplePostBack(mapping, actionForm, request, response);
+			}
 			try {
-				executeService("CreateResearchContract", new Object[] { bean });
+				executeService("CreateResearchContract", new Object[] { bean, getLoggedPerson(request),
+						LoginRequestManagement.getRequestURL(request) });
 			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage());
 				return managePeople(mapping, actionForm, request, response);
@@ -118,7 +170,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
 		return mapping.findForward("editConfiguration");
 	}
-	
+
 	@Override
 	protected ResearchUnitSite getSite(HttpServletRequest request) {
 		String siteID = request.getParameter("oid");
