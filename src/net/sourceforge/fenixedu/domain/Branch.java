@@ -97,26 +97,23 @@ public class Branch extends Branch_Base {
 	if (!this.canBeDeleted())
 	    throw new DomainException("error.branch.cant.delete");
 
-	Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
+	final Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 
 	this.getStudentCurricularPlans().clear();
 	this.getSecundaryStudentCurricularPlansLEIC().clear();
 	this.getSecundaryStudentCurricularPlansLEEC().clear();
 
-	Iterator curricularCourseGroupsIterator = getCurricularCourseGroupsIterator();
+	final Iterator curricularCourseGroupsIterator = getCurricularCourseGroupsIterator();
 	while (curricularCourseGroupsIterator.hasNext()) {
-	    CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) curricularCourseGroupsIterator
-		    .next();
+	    CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) curricularCourseGroupsIterator.next();
 	    curricularCourseGroupsIterator.remove();
 	    curricularCourseGroup.setBranch(commonBranch);
 	}
 
 	removeCurricularCourseScopes(commonBranch);
-
 	removeDegreeCurricularPlan();
-
 	removeRootDomainObject();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
