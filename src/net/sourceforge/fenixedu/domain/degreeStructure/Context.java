@@ -8,8 +8,53 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
+    
+    static {
+	CourseGroupContext.addListener(new RelationAdapter<Context, CourseGroup>() {
+	    
+	    @Override
+	    public void beforeAdd(Context context, CourseGroup courseGroup) {
+	        if(context != null && courseGroup != null) {
+	            if(context.getChildDegreeModule() != null && 
+	        	    context.getChildDegreeModule().isCycleCourseGroup()) {
+	        	CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
+	        	if(cycleCourseGroup.getParentContexts().size() > 1) {
+	        	    throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
+	        	}
+	        	if(!courseGroup.isRoot()) {
+	        	    throw new DomainException("error.degreeStructure.CycleCourseGroup.parent.must.be.RootCourseGroup");
+	        	}
+	            }
+	        }
+	    }
+	    
+	});
+	
+	DegreeModuleContext.addListener(new RelationAdapter<Context, DegreeModule>() {
+	    @Override
+	    public void beforeAdd(Context context, DegreeModule degreeModule) {
+		if(context != null && degreeModule != null) {
+	            if(degreeModule.isRoot()) {
+	        	throw new DomainException("error.degreeStructure.RootCourseGroup.cannot.have.parent.contexts");
+	            }
+	            if(degreeModule.isCycleCourseGroup()) {
+	        	CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) degreeModule;
+	        	if(cycleCourseGroup.getParentContexts().size() > 0) {
+	        	    throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
+	        	}
+	        	if(context.getParentCourseGroup() != null && !context.getParentCourseGroup().isRoot()) {
+	        	    throw new DomainException("error.degreeStructure.CycleCourseGroup.parent.must.be.RootCourseGroup");
+	        	}
+	            }
+	        }
+	    }
+	});
+	
+	
+    }
 
     protected Context() {
         super();
