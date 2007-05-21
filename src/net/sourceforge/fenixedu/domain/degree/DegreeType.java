@@ -285,5 +285,9 @@ public enum DegreeType {
    }
    
    abstract public Collection<CycleType> getCycleTypes();
+
+   final public boolean isStrictlyFirstCycle() {
+       return getCycleTypes().size() == 1 && getCycleTypes().contains(CycleType.FIRST_CYCLE);
+   }
     
 }
