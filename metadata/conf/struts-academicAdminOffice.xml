@@ -734,7 +734,6 @@
 				<forward name="editPartyContact" path="student.editPartyContact"/>
 				<forward name="editPersonalData" path="/student.do?method=prepareEditPersonalData"/>
 		</action>
-		
 		<!-- ===== End Contacts ======== -->
 		
 		<action path="/notNeedToEnrolEnrolments"
@@ -745,9 +744,21 @@
 				<forward name="chooseStudent" path="notNeedToEnrol.chooseStudent"/>
 				<forward name="chooseNotNeedToEnrol" path="notNeedToEnrol.chooseNotNeedToEnrol"/>
 				<forward name="showAprovedEnrolments" path="notNeedToEnrol.showAprovedEnrolments"/>
+		</action>	
+		
+		<!-- Begin: Lists -->
+		<action path="/studentsListByDegree"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.StudentsListDispatchAction"
+				parameter="method"
+				scope="request"
+				>
+				<forward name="chooseExecutionDegree" path="lists.chooseExecutionDegree"/>
+				<forward name="chooseCurricularCourse" path="lists.chooseCurricularCourse"/>
+				<forward name="studentByCurricularCourse" path="lists.studentByCurricularCourse"/>
 		</action>
 		
-
+		
+		<!-- End : Lists -->
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
