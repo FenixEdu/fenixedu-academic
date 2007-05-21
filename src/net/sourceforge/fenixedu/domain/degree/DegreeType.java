@@ -7,12 +7,16 @@
 package net.sourceforge.fenixedu.domain.degree;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 /**
@@ -26,56 +30,118 @@ public enum DegreeType {
 	    CurricularPeriodType.FIVE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE, false, false, false),
+	    AdministrativeOfficeType.DEGREE, false, false, false) {
+
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.emptySet();
+	}
+	
+    },
 
     MASTER_DEGREE(
 	    GradeScale.TYPE5,
 	    CurricularPeriodType.TWO_YEAR,
 	    false,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
+	
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.emptySet();
+	}
+
+    },
 
     BOLONHA_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.THREE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE, true, false, false),
+	    AdministrativeOfficeType.DEGREE, true, false, false) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.singleton(CycleType.FIRST_CYCLE);
+	}
+
+    },
 
     BOLONHA_MASTER_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.TWO_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE, false, true, false),
+	    AdministrativeOfficeType.DEGREE, false, true, false) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.singleton(CycleType.SECOND_CYCLE);
+	}
+
+    },
 
     BOLONHA_INTEGRATED_MASTER_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.FIVE_YEAR,
 	    true,
 	    false,
-	    AdministrativeOfficeType.DEGREE, true, true, false),
+	    AdministrativeOfficeType.DEGREE, true, true, false) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    final Collection<CycleType> result = new HashSet<CycleType>();
+	    result.add(CycleType.FIRST_CYCLE);
+	    result.add(CycleType.SECOND_CYCLE);
+	    
+	    return result;
+	}
+
+    },
+
 
     BOLONHA_PHD_PROGRAM(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.singleton(CycleType.THIRD_CYCLE);
+	}
+
+    },
 
     BOLONHA_ADVANCED_FORMATION_DIPLOMA(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true),
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.singleton(CycleType.THIRD_CYCLE);
+	}
+
+    },
 
     BOLONHA_SPECIALIZATION_DEGREE(
 	    GradeScale.TYPE20,
 	    CurricularPeriodType.YEAR,
 	    true,
 	    true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false);
+	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
+		
+	@Override
+	public Collection<CycleType> getCycleTypes() {
+	    return Collections.emptySet();
+	}
+
+    };
+
 
     private GradeScale gradeScale;
 
@@ -217,5 +283,7 @@ public enum DegreeType {
    public boolean isThirdCycle() {
        return isThirdCycle;
    }
+   
+   abstract public Collection<CycleType> getCycleTypes();
     
- }
+}
