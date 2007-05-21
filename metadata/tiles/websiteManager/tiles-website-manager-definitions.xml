@@ -9,6 +9,6 @@
 		<put name="navGeral" value="/webSiteManager/commonNavGeral.jsp" />  
 		<put name="body" value="/commons/blank.jsp" />
         <put name="navLocal" value="/webSiteManager/navbar.jsp"/>
-		<put name="footer" value="/sop/commonFooterSop.jsp" />
+		<put name="footer" value="/copyright.jsp" />
 	</definition>	
 </tiles-definitions>

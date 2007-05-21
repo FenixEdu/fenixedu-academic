@@ -1,0 +1,94 @@
+/* Color Style Sheet */
+
+/* -----------------------------
+----------- Layout ------------
+----------------------------- */
+
+/* background and border properties */ 
+
+body { background-color: #00202a; }
+#top, #user { background: #16576b; }
+
+#navtop { border-top: 4px solid #277b97; background: #146b88 url(../images/0grad01.gif) bottom repeat-x; }
+#navtop li a { display: block; background: #5fa0b7 url(../images/0corner_left_01.gif) top left repeat-x;}
+#navtop li a span { background: url(../images/0corner_right_01.gif) top right no-repeat; }
+#navtop ul li.selected a { background: #ebe6d6 url(../images/0corner_left_span_01.gif) top left no-repeat; }
+#navtop ul li.selected a span { background: url(../images/0corner_right_span_01.gif) top right no-repeat; }
+#navtop ul li.selected a:hover { background: #ebe6d6 url(../images/0corner_left_span_01.gif) top left no-repeat; color: #000; }
+#navtop ul li.selected a:hover span { background: url(../images/0corner_right_span_01.gif) top right no-repeat; color: #000; }
+#navtop li a:hover { background: #7fb3c5 url(../images/0corner_left_light_01.gif) top left repeat-x; }
+#navtop li a:hover span { background: url(../images/0corner_right_light_01.gif) top right no-repeat; }
+
+#navlateral ul { /*background-color: #f5f5f5;*/ }
+#navlateral ul li { }
+#navlateral ul li a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral ul li.sub a { background: #f6f4ed url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; }
+#navlateral ul li a:hover  { background-color: #fff; }
+#navlateral ul li span { background: url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral ul li.navheader span { background: #f6f4ed; }
+#navlateral ul li.navheader { border-bottom: 1px solid #ebe6d6; }
+
+/* --- new nav --- */
+/* reset */
+#navlateral div.newnav ul li span { border: none; }
+#navlateral div.newnav ul li.navheader { border: none; }
+/* general */
+#navlateral div.newnav ul li > a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral div.newnav ul li > a:hover  { background-color: #fff; }
+#navlateral div.newnav ul li > span { background: url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+/* navheader specific */
+#navlateral div.newnav ul li.navheader > a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border: none;  border-bottom: 1px solid #ebe6d6;}
+#navlateral div.newnav ul li.navheader > span { background: #f6f4ed; border-bottom: 1px solid #ebe6d6; }
+/* navheader sub - to delete */
+#navlateral div.newnav ul li.sub a { background: #f6f4ed url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; }
+
+
+
+/* >>> */ #navlateral { }
+/* >>> */ #container { }
+/* >>> */ #content { background-color: #fff; margin-right: 8px; }
+#footer { background-color: #0b4f64;	}
+
+/* text color properties */ 
+
+body {color: #333; }
+h2, h3, h4 { color: #000; }
+
+#top ul { color: #a5e0f1; }
+#top ul li a { color: #fff; text-decoration: none; }
+#top ul li a:hover { color: #fff; }
+#top #user { color: #8cb1bc; }
+
+#navtop { color: #444; }
+#navtop li a { color: #fff; }
+#navtop li a:hover { color: #fff; }
+#navtop ul li.selected a {	color: #444; }
+
+#navlateral ul li a { color: #333333; }
+#navlateral ul li.sub a { color: #333333; }
+
+#footer {
+border-top: 12px solid #f6f4ed;
+}
+#footer a { color: #7fa9b5; }
+#footer p { color: #7fa9b5; }
+
+
+/* ------------------------------
+----------- Content ------------
+----------------------------- */
+
+#content a {
+text-decoration: none;
+color: #105c93;
+border-bottom: 1px solid #97b7ce;
+}
+#content h3 a {
+border-bottom: none;
+}
+
+#content a:hover {
+/*background: #e5f2fb;*/
+border-bottom: none;
+}
+#content a:visited { }

@@ -38,7 +38,7 @@ a:link, a:visited {
 	margin: 100px auto 0 auto;
 	background: #fff;
 	width:500px;
-	border: 1px solid #333;
+	border: 1px solid #113344;
 	padding: 0 0 20px 0;
 	}
 
@@ -52,9 +52,10 @@ a:link, a:visited {
 
 #dotist_id {
 	height: 70px;
- 	background:url("../images/header_bck.gif") repeat-x top;
+ 	background: #16576b;
+	border-bottom: 4px solid #277b97;
  	margin: 0;
- 	padding: 0 0 0 20px;
+ 	padding: 0 0 0 10px;
 	}
 	
 #txt p {
@@ -117,14 +118,3 @@ a.button {
 .oldbrowser {
 	display: none;
 }
-
-.infoop2 {
-	background-color: #fafade;
-	vertical-align: middle;
-	padding: 0.5em 0.75em;
-	border-bottom: 1px solid #f2f2a6;
-	}
-
-.infoop2 p { margin: 0.25em 0; }
-
-.mtop1 { margin-top: 1em;}

@@ -65,9 +65,7 @@
 						<strong><bean:message key="link.group.teacherPersonalExpectations.title"/></strong>
 					</li>		
 					
-					<li><acronym><bean:message key="label.periodDefinition"/></acronym></li>
-
-					<li class="sub">
+					<li><span><bean:message key="label.periodDefinition"/></span>
 						<ul>
 							<li>
 								<html:link page="/teacherPersonalExpectationsDefinitionPeriod.do?method=showPeriod">

@@ -160,7 +160,7 @@
 				<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
 				<bean:message key="link.sendEmailToAllStudents" /></html:link>
 			</li>			
-			<li class="sub">Listagens
+			<li><span>Listagens</span>
 				<ul>
 					<li>
 						<bean:define id="link2">/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&degreeCurricularPlanID=

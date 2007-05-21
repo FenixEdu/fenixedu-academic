@@ -6,7 +6,7 @@
         <fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>"
                  type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext">
              <fr:layout name="side-menu">
-                <fr:property name="moduleClasses" value="navmod"/>
+                <fr:property name="moduleClasses" value="navheader"/>
                 <fr:property name="selectedClasses" value="highlight5"/>
              </fr:layout>
         </fr:view>

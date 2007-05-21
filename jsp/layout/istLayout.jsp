@@ -13,11 +13,15 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/exam_map.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/gesdis-print.css" />
-<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
+<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/iststyle_print.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" />
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/transitional.css" />
+<!--
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/color.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />
+-->
+
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
@@ -57,7 +61,7 @@
 <table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 
-<td id="latnav_container" width="155">
+<td id="latnav_container" width="155" nowrap="nowrap">
 <!--MAIN NAVIGATION -->   
 <div id="latnav">
 	<tiles:insert attribute="main_navigation" ignore="true"/>

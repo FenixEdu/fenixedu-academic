@@ -1,0 +1,303 @@
+/* 09.01.2006 
+   by João Alfaiate @ Fenix */
+
+/* --------------------------
+ ------- Structure ---------
+-------------------------- */
+	
+body {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 84%;
+margin: 0;
+padding: 0;
+}
+div, p {
+margin: 0;
+padding: 0;
+}
+#wrap {
+margin: 0 auto;
+text-align: left;
+}
+
+/* --- Top Header --- */
+
+#top {
+height: 5.5em;
+position: relative;
+}
+#top ul {
+font-size: 0.85em;
+position: absolute;
+top: 0;
+right: 0;
+background: #062833 url(../images/sup_corner2.gif) bottom left no-repeat;
+margin: 0;
+padding: 0.5em 0.5em 0.75em 2.75em;
+}
+#top ul li { 
+display: inline;
+margin: 0 4px;
+}
+#top ul li.support a {
+background: url(../images/sup1_01.gif) 0 center no-repeat;
+padding: 0.4em;
+padding-left: 18px;
+}
+#top ul li.logout a {
+background: url(../images/sup2_01.gif) 0 center no-repeat;
+padding: 0.4em;
+padding-left: 18px;
+}
+#top #logo {
+padding: 0 0 0 0;
+margin: 0;
+}
+#top #user {text-align: right; }
+#top #user {
+position: absolute;
+bottom: 0;
+right: 0;
+font-size: 0.85em;
+margin: 0;
+padding: 0.75em 1em;
+}
+
+/* --- Main Navigation --- */
+
+#navtop ul {
+margin: 0;
+padding: 0;
+}
+#navtop ul li {
+margin: 0;
+padding: 0;
+}
+#navtop ul li span {
+margin: 0;
+padding: 0;
+}
+#navtop {
+float: left;
+width: 100%;
+font-size: 11px;
+padding-top: 0.5em;
+}
+#navtop ul {
+margin: 0;
+margin-left: 200px;
+list-style: none;
+}
+#navtop li {
+float: left;
+padding: 0;
+font-family: Tahoma, Verdana, Sans-Serif;
+margin: 0;
+}
+#navtop ul li {
+margin-right: 1px;
+}
+#navtop li a {
+float: left;
+font-size: 100%;
+font-weight: normal;
+text-decoration: none;
+white-space: nowrap;
+}
+#navtop li a span {
+float: left;
+padding: 0.75em 10px;
+cursor: pointer; /* IE6 tweak */
+}
+
+/* --- Lateral Navigation --- */
+
+#navlateral ul, #navlateral li {
+margin: 0;
+padding: 0;
+}
+#navlateral {
+width: 15em;
+padding: 0 0 1em 1em;
+float: left;
+font: 0.85em Tahoma, Verdana, Sans-Serif;
+line-height: 1.5em;
+}
+#navlateral ul li {
+list-style: none;
+}
+/* old */
+#navlateral ul li a {
+display: block;
+width: 12.45em;
+padding: 0.8ex 1em 0.8ex 1.5em;
+text-decoration: none;
+}
+#navlateral ul li span {
+display: block;
+/*width: 12.45em;*/
+padding: 0.7ex 1em 0.7ex 1.5em;
+text-decoration: none;
+}
+#navlateral ul li.navheader {
+display: block;
+width: 12.45em;
+margin-top: 0.5em;
+padding: 0.7ex 1em 0.6ex 1.5em;
+font-weight: bold;
+}
+#navlateral ul li ul {
+margin-top: 0.15em;
+margin-left: 1.5em;
+}
+#navlateral ul li ul li a {
+width: 10.95em;
+}
+
+#navlateral ul li.sub { margin-left: 1.0em; }
+#navlateral ul li.sub a {
+width: 11.5em;
+}
+#navlateral ul li.sub a span {
+background: none;
+margin: 0;
+padding: 0;
+padding-left: 0em;
+}
+#navlateral ul li.sub span {
+/*width: 11.5em;*/
+}
+
+
+
+/* --- new nav --- */
+
+/* reset properties */
+#navlateral div.newnav ul li ul {
+margin: 0;
+}
+#navlateral div.newnav ul li.navheader {
+padding: 0;
+font-weight: normal;
+margin-top: 0;
+width: auto;
+}
+#navlateral div.newnav ul li a, #navlateral div.newnav ul li span {
+display: inline;
+padding: 0;
+width: auto;
+}
+
+/* general */
+#navlateral div.newnav ul li > a {
+display: block;
+width: 12.45em;
+padding: 0.8ex 1em 0.8ex 1.5em;
+text-decoration: none;
+}
+#navlateral div.newnav ul li > span {
+display: block;
+/*width: 12.45em;*/
+padding: 0.7ex 1em 0.7ex 1.5em;
+text-decoration: none;
+}
+#navlateral div.newnav ul li a:hover span {
+background: none;
+}
+
+/*  indent */
+#navlateral div.newnav ul li ul li ul {
+margin-top: 0.15em;
+margin-left: 1.5em;
+}
+#navlateral div.newnav ul li ul li ul li a {
+width: 10.95em;
+}
+
+/* navheader specific */
+#navlateral div.newnav ul li.navheader > a { font-weight: bold; }
+#navlateral div.newnav ul li.navheader > span { font-weight: bold; }
+#navlateral div.newnav ul li.navheader { padding-top: 1em; }
+	#navlateral div.newnav ul li.navheader ul li.navheader { padding-top: 0; }
+	#navlateral div.newnav ul li.navheader ul li.navheader a { font-weight: normal; }
+	
+	
+
+
+
+/* --- Container & Content --- */
+
+#navtop {
+border-bottom: 12px solid #ebe6d6;
+}
+
+#container {
+width: 100%;
+float: left;
+padding-top: 1em;
+background: #fff url(../images/latnavgrad_200px.gif) left top repeat-y;
+border-top: 12px solid #f6f4ed;
+}
+
+.container_2col_photo {
+background: #fff !important;
+}
+.container_fenixLayoutPrint {
+background: #fff !important;	
+}
+.container_fenixLayout_1col {
+background: #fff !important;	
+}
+
+#content {
+margin: 0 0 1.0em 200px;
+line-height: 1.5em;
+padding: 0em 2em 1em 2em;
+font-size: 0.85em;
+}
+.content_2col_photo {
+margin: 0 0 1.0em 350px !important;
+}
+.content_fenixLayoutPrint {
+margin: 0 0 1.0em 0 !important;
+}
+.content_fenixLayout_1col {
+margin: 0 0 1.0em 0 !important;
+}
+
+
+/* --- Footer --- */
+
+#footer {
+font-size: 0.85em;
+clear: both;
+text-align: center;
+padding: 1.5em 2em;
+border-top: 12px solid #f6f4ed;
+height: 1%; /* IE margin fix */
+}
+
+#bar {
+height: 10px;
+background: #ebe6d6;
+border-bottom: 12px solid #ebe6d6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

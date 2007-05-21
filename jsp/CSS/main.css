@@ -49,12 +49,79 @@ padding: 0;
 div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
 
+
+
+/* ----------------------
+ ---- Tables -----------
+----------------------- */
+
+.tstyle5 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+.tstyle5 { }
+.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
+.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+
+
+/* ----------------------
+------ Unit Site -------
+----------------------- */
+
+div.unitname {
+position: absolute;
+left: 93px;
+top: 38px;
+}
+div.unitname h1 {
+display: inline;
+padding: 1em 0;
+color: #45556a;
+font-family: "Trebuchet MS", "Bitstream Vera Sans", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+font-size: 21px;
+font-weight: bold;
+}
+div.unitname p {
+color: #7a8899;
+margin-top: 5px;
+}
+
+
+
+/* -----------------------------------
+--- General.css shared properties ---
+------------------------------------ */
+
+.showinfo3 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+
+.showinfo3 th {
+vertical-align: top;
+font-weight: normal;
+border-bottom: 1px solid #aaa;
+padding: 0.5em;
+text-align: left;
+}
+.showinfo3 td {
+border-bottom: 1px solid #ddd;
+padding: 0.5em;
+}
+
+
+
+
+
 /***********************************************************
 	General
 ***********************************************************/
 
 .altJavaScriptSubmitButton { display:block; }
 .showHideDetailsButton { display:none; }
+
+table.smalltxt tr td { font-size: 0.85em;}
+.smalltxt { font-size: 0.85em; }
 
 /* accessibility javascript */
 .switchInline { display: none; }
@@ -89,12 +156,29 @@ div.announcement h3 a { text-decoration: none; }
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }
 .mvert3 { margin-top: 3em; margin-bottom: 3em; }
+.indent6 { margin-left: 6em; }
+.indent9 { margin-left: 9em; }
 
 table.thlight th { font-weight: normal; }
 table.thright th { text-align: right; }
 table.thleft th { text-align: left; }
 
 .bold { font-weight: bold; }
+
+
+/* background-colors */
+.highlight1 { background-color: #fff7bb; } /* amarelo */
+.highlight2 { background-color: #f5f5f5; } 
+.highlight3 { background-color: #def; } /* azul */
+.highlight4 { background-color: #dfb ; } /* verde */
+.highlight5 { background-color: #fdfbdd; } /* amarelo */
+.highlight6 { background-color: #ffc; }
+.bgcolor1 { background-color: #fcfcf0; }
+.bgcolor2 { background-color: #fbfbdd; }
+.bgcolor3 { background-color: #fafaf6; }
+.bgcolor4 { background-color: #f8f8f8; }
+.bgcolorfafafa { background-color: #fbfbfb; }
+
 
 /* content output margin reset 1 */
 .coutput1 div, .coutput1 p {
@@ -150,38 +234,8 @@ margin: 0;
 padding: 0 0.25em;
 }
 
-
-/* ----------------------
- ---- Tables -----------
------------------------ */
-
-.tstyle5 {
-border-collapse: collapse;
-margin: 1em 0;
-}
-.tstyle5 { }
-.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
-.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
-
-
-/* ----------------------
------- Unit Site -------
------------------------ */
-
-div.unitname {
-position: absolute;
-left: 93px;
-top: 38px;
-}
-div.unitname h1 {
-display: inline;
-padding: 1em 0;
-color: #45556a;
-font-family: "Trebuchet MS", "Bitstream Vera Sans", Tahoma, Verdana, Arial, Helvetica, sans-serif;
-font-size: 21px;
-font-weight: bold;
-}
-div.unitname p {
-color: #7a8899;
-margin-top: 5px;
-}
+/* noborder */
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
+td.noborder { border: none; }

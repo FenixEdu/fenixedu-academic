@@ -24,7 +24,7 @@
 			<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" /> 
 			<fr:view name="postingRule"	schema="<%=postingRuleClassName + ".view" %>">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight mtop025"/>
+					<fr:property name="classes" value="thright thlight mtop025"/>
 					<fr:property name="rowClasses" value=",,,tdbold,tdbold,tdbold"/>
 				</fr:layout>
 			</fr:view>

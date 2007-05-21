@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
@@ -158,23 +159,7 @@ public class MenuRenderer extends OutputRenderer {
                     }
                 
                     HtmlListItem item = menu.createItem();
-
-                    HtmlComponent component = getFunctionalityNameComponent(context, functionality, true);
-
-                    if (context.getSelectedFunctionality().equals(functionality)) {
-                        component.setClasses(getSelectedClasses());
-                        component.setStyle(getSelectedStyle());
-                    }
-                    
-                    if (component instanceof HtmlLink || component.getTitle() != null) {
-                        item.addChild(component);
-                    }
-                    else {
-                        HtmlInlineContainer container = new HtmlInlineContainer();
-                        container.addChild(component);
-                        
-                        item.addChild(container);
-                    }
+                    item.addChild(getFunctionalityNameComponent(context, functionality, true));
 
                     if (functionality instanceof Module) {
                         Module module = (Module) functionality;
@@ -187,7 +172,16 @@ public class MenuRenderer extends OutputRenderer {
                         
                         addMenuEntries(context, subMenu, module, level + 1);
                     }
-                }
+
+                    if (context.getSelectedFunctionality().equals(functionality)) {
+                	String existingClasses = item.getClasses() == null ? "" : item.getClasses();
+                	String existingStyle = item.getStyle() == null ? "" : item.getStyle();
+                	
+                	item.setClasses(existingClasses + getSelectedClasses());
+                	item.setStyle(getSelectedStyle());
+                    }
+
+            	}
                 
                 menu.setClasses(getLevelClasses(String.valueOf(level)));
                 menu.setStyle(getLevelStyle(String.valueOf(level)));
@@ -201,7 +195,10 @@ public class MenuRenderer extends OutputRenderer {
      * If the fuctionality is parameterized then the required parameters are appended to the link. 
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
-        HtmlComponent component = new HtmlText(functionality.getName().getContent());
+	HtmlContainer container = new HtmlInlineContainer();
+	container.addChild(new HtmlText(functionality.getName().getContent()));
+	
+        HtmlComponent component = container;
         
         String path = functionality.getPublicPath();
         if (path != null && canMakeLink && functionality.isAvailable(context)) {

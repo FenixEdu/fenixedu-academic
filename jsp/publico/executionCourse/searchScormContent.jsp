@@ -14,10 +14,11 @@
 <html:xhtml/>
 <h2><bean:message key="label.search.scorm"/></h2>
 
-	<p>
+	<div class="infoop2">
+
 		<bean:message key="label.information.about.search.line1"/>
 		<bean:message key="label.information.about.search.line2"/>
-	</p>
+	</div>
 
  	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;executionCourseID=" + request.getParameter("executionCourseID") %>">
 		<fr:hasMessages for="search" type="validation">

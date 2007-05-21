@@ -6,11 +6,5 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<div id="logged">
-	<div class="user">
-		<strong>Utilizador:</strong> 
-		<bean:write name="<%= SessionConstants.U_VIEW %>" property="person.nickname"/>
-	</div>
-	<div class="info"><dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format></div>
-	<div class="clear"></div>
-</div>
+
+Utilizador: <bean:write name="<%= SessionConstants.U_VIEW %>" property="person.nickname"/> - <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>

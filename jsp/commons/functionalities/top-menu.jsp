@@ -6,7 +6,7 @@
         <fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>"
                  type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext">
              <fr:layout name="top-menu">
-                <fr:property name="selectedClasses" value="active"/>
+                <fr:property name="selectedClasses" value="selected"/>
              </fr:layout>
         </fr:view>
     </div>

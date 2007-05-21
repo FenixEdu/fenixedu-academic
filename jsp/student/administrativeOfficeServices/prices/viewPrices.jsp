@@ -22,7 +22,7 @@
 		<bean:define id="insurancePostingRuleClassName" name="insurancePostingRule" property="class.simpleName" />
 		<fr:view name="insurancePostingRule" schema="<%= insurancePostingRuleClassName + ".view-student" %>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight mtop025" />
+				<fr:property name="classes" value="thright thlight mtop025" />
 			</fr:layout>
 		</fr:view>
 

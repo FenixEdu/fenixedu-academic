@@ -9,7 +9,7 @@
     <head>
 
 		<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
-		<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
+		<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 		<link href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" rel="stylesheet" media="print" type="text/css" />
 
 
