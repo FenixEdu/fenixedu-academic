@@ -27,7 +27,8 @@ public enum FunctionType {
     SECRETARY,
     REPRESENTATIVE,
     MEMBER,
-    ASSIDUOUSNESS_RESPONSIBLE;
+    ASSIDUOUSNESS_RESPONSIBLE,
+    PRINCIPAL;
              
     public String getName() {
         return name();
