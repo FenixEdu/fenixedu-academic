@@ -296,12 +296,12 @@ ee - f3f0e7
 cc - dad3ba
 */
 
-.tstyle1 td { border: 1px solid #dad3ba; }
-.tstyle2 td { border: none; border-bottom: 1px solid #dad3ba; border-top: 1px solid #dad3ba; }
-.tstyle3 td { border: 1px solid #dad3ba; background-color: #fbfaf8; }
+.tstyle1 td { border: 1px solid #ccc; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
-.tstyle7 td { border: 1px solid #f3f0e7; background: #f3f0e7; }
+.tstyle7 td { border: 1px solid #eee; background: #eee; }
 .tstyle8 td { padding: 4px; }
 
 
