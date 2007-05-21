@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public enum DocumentRequestType {
 
@@ -14,7 +15,7 @@ public enum DocumentRequestType {
     SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE), 
     ENROLMENT_DECLARATION(false, true, AdministrativeOfficeType.DEGREE), 
     IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE), 
-    DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE);
+    DIPLOMA_REQUEST(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE);
 
     private boolean hasAdditionalInformation;
     
@@ -58,8 +59,12 @@ public enum DocumentRequestType {
 	return this == DIPLOMA_REQUEST;
     }
 
-    public boolean getHasAdditionalInformation() {
+    final public boolean getHasAdditionalInformation() {
 	return hasAdditionalInformation;
+    }
+
+    final public boolean getHasAdditionalInformation(final DegreeType degreeType) {
+	return hasAdditionalInformation && (this != DIPLOMA_REQUEST || (this == DIPLOMA_REQUEST && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
     }
 
     public boolean isAllowedToQuickDeliver() {
