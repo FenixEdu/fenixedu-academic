@@ -10,10 +10,10 @@
 		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
 		<property name="destination" value="degreePostBack"/>
 	</slot>
-	<slot name="cycleType" key="label.cycle" layout="menu-select" >
+	<slot name="cycleType" key="label.cycle" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.CycleTypeProvider" />
 		<property name="saveOptions" value="true" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${description}" />
 	</slot>		
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback"
