@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -91,4 +94,33 @@ public class UniversityUnit extends UniversityUnit_Base {
 	    }
 	}		
     }
+    
+    @SuppressWarnings("unchecked")
+    final static public UniversityUnit getInstitutionsUniversityUnit() {
+	final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	final Collection<UniversityUnit> parentUniversityUnits = (Collection<UniversityUnit>) institutionUnit.getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, UniversityUnit.class);
+	
+	if (parentUniversityUnits.size() != 1) {
+	    throw new DomainException("UniversityUnit.unable.to.determine.single.university.unit.for.institution.unit");
+	}
+	
+	return parentUniversityUnits.iterator().next();
+    }
+    
+    final public Person getInstitutionsUniversityPrincipal() {
+	final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	if (!getChildParties(Unit.class).contains(institutionUnit)) {
+	    throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
+	}
+	
+	final Collection<? extends Accountability> childAccountabilities = institutionUnit.getChildAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);	
+	for (final Accountability accountability : childAccountabilities) {
+	    if (((Function)accountability.getAccountabilityType()).getFunctionType() == FunctionType.PRINCIPAL) {
+		return ((PersonFunction)accountability).getPerson();		
+	    }
+	}
+	
+	return null;
+    }
+    
 }
