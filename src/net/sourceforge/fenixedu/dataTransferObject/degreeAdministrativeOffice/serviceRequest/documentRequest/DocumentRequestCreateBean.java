@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
@@ -32,6 +33,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Collection<String> warningsToReport;
 
     private Integer year;
+    
+    private CycleType requestedCycle;
 
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
@@ -162,6 +165,18 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setSchema(String schema) {
         this.schema = schema;
+    }
+
+    public CycleType getRequestedCycle() {
+        return requestedCycle;
+    }
+
+    public void setRequestedCycle(final CycleType cycleType) {
+        this.requestedCycle = cycleType;
+    }
+
+    final public boolean getHasAdditionalInformation() {
+	return getChosenDocumentRequestType().getHasAdditionalInformation(getRegistration().getDegreeType());
     }
 
 }
