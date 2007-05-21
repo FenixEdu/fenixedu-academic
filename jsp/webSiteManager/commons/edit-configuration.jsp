@@ -13,9 +13,16 @@
 <h2><bean:message key="title.site.configurationOptions" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
 <div class="infoop2 mbottom15">
-    <p class="mvert0">
+    <p class="mtop0">
         <bean:message key="label.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
+       	<a class="switchInline" href="javascript:showElement('site-banners-message');"><bean:message key="link.site.banners.add.expand" bundle="WEBSITEMANAGER_RESOURCES"/>...</a>
     </p>
+
+	<div class="switchNone" id="site-banners-message">
+	    <p class="mbottom05">
+		    <bean:message key="label.site.configuration.instructions" bundle="WEBSITEMANAGER_RESOURCES"/>
+	    </p>
+    </div>
 </div>
 
 
@@ -103,3 +110,7 @@
         <img src="<%= imageBase + "pos3.gif" %>"/>
     </html:link>
 </div>
+
+<script type="text/javascript">
+	switchGlobal();
+</script>

@@ -290,7 +290,7 @@
         <put name="body" value="/webSiteManager/departmentSite/noBoards.jsp" />
     </definition>
     <definition name="department-announcements-list-boards" extends="definition.department.site.announcements.management">
-        <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+        <put name="body" value="/webSiteManager/departmentSite/listAnnouncementBoards.jsp" />
     </definition>
     <definition name="department-announcements-list-announcements" extends="definition.department.site.announcements.management">
         <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
