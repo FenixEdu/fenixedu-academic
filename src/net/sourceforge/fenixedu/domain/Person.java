@@ -2419,4 +2419,8 @@ public class Person extends Person_Base {
 		}
 		return units;
 	}
+	
+	public boolean isExternalPerson() {
+	    return hasExternalContract() || hasExternalResearchContract();
+	}
 }
