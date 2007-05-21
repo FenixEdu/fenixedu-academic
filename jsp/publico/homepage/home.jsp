@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="string" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
 
@@ -69,6 +70,8 @@
 		<!-- research unit -->
 		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
 		<tr>
+		<th><bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
+		<logic:empty name="homepage" property="person.workingResearchUnits">
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentWorkingContract">
 					<logic:present name="homepage" property="researchUnitHomepage">
@@ -76,7 +79,6 @@
 							<bean:define id="researchUnitHomepage" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 							<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 								<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
-								<th><bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
 								<td>
 									<html:link href="<%= url %>">
 										<bean:write name="homepage" property="researchUnit.content"/> 
@@ -107,7 +109,20 @@
 					</logic:present>
 				</logic:present>
 			</logic:present>
-			
+		</logic:empty>
+			<logic:iterate id="unit" name="homepage" property="person.workingResearchUnits">
+				<td>
+					<fr:view name="unit">
+						<fr:layout name="unit-link">
+							<fr:property name="unitLayout" value="values"/>
+							<fr:property name="unitSchema" value="unit.name"/>
+							<fr:property name="targetBlank" value="true"/>
+							<fr:property name="parenteShown" value="true"/>
+							<fr:property name="separator" value="<br/>"/>
+						</fr:layout>
+					</fr:view>
+				</td>
+			</logic:iterate>
 		</tr>
 		</logic:equal>
 
