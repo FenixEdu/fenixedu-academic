@@ -10,7 +10,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         super();
     }
     
-    public CycleCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+    public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
 	    final CycleType cycleType, final ExecutionPeriod begin, final ExecutionPeriod end) {
 	if(cycleType == null) {
 	    throw new DomainException(
