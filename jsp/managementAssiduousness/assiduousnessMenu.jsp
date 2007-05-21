@@ -15,9 +15,9 @@
 	<li class="navheader"><bean:message key="link.consult" /></li>
 	<li><html:link page="/viewAssiduousness.do?method=showSchedules"><bean:message key="link.schedules" /></html:link></li>
 	<li><html:link page="/viewAssiduousness.do?method=showJustificationMotives"><bean:message key="link.justifications" /></html:link></li>
-	<li><html:link page="/viewAssiduousness.do?method=showRegularizationMotives"><bean:message key="link.regularizations" /></html:link></li>	<li><html:link page="/viewAssiduousness.do?method=showBalances"><bean:message key="link.balances" /></html:link></li>
-	<li class="navheader"/>
-    <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth"><bean:message key="link.exportWorkSheets" /></html:link></li>
+	<li><html:link page="/viewAssiduousness.do?method=showRegularizationMotives"><bean:message key="link.regularizations" /></html:link></li>	<li class="navheader"><bean:message key="link.export" /></li>
+    <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportWorkSheets&amp;chooseBetweenDates=true"><bean:message key="link.exportWorkSheets" /></html:link></li>
+    <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportMonthResume"><bean:message key="link.exportMonthResume" /></html:link></li>
     
     <% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
   <%-- 

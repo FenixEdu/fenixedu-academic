@@ -9776,8 +9776,8 @@
 		</filterChains>		
 	</service>
 	<service>
-		<name>ReadMonthBalances</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthBalances</implementationClass>
+		<name>ReadMonthResume</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthResume</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

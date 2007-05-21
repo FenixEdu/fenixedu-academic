@@ -196,10 +196,35 @@
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES" />
 </schema>
 
-<schema name="choose.workDaySheetToExportSearch"
-	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheetToExportSearch">
+<schema name="choose.assiduosunessExportChoice.datesType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
+	<slot name="assiduousnessExportChoicesDatesType"  key="label.searchBy" bundle="ASSIDUOUSNESS_RESOURCES" layout="radio-postback">
+		<property name="destination" value="assiduousnessExportChoicesPostBack"/>
+	</slot>
+	<slot name="action" hidden="true"/>
+</schema>
+
+<schema name="choose.assiduousnessExportChoicesDates.yearMonth"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
+	<slot name="yearMonth.year" key="label.year"
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="yearMonth.month" layout="menu-select" key="label.month"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+</schema>
+
+<schema name="choose.assiduosunessExportChoice.dates"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
 	<slot name="beginDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="endDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+<schema name="choose.assiduosunessExportChoice"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
 	<slot name="costCenter"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />

@@ -32,7 +32,7 @@
 	</span>
 	
 	<table border="0">
-		<tr><td>
+		<tr><td class="invisible">
 		<html:img src="<%= request.getContextPath() +"/managementAssiduousness/viewEmployeeAssiduousness.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		</td><td>
 		<fr:view name="employee" schema="show.employeeInformation">

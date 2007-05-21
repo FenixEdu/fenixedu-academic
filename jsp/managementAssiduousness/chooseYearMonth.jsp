@@ -5,32 +5,50 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <em><bean:message key="title.assiduousness" /></em>
-<h2><bean:message key="link.exportWorkSheets" /></h2>
+<bean:define id="nextAction" name="action" type="java.lang.String"/>
+<h2><bean:message key="<%= "link." + nextAction %>" /></h2>
 <p class="mtop2"><span class="error0"><html:errors /></span></p>
 
-<fr:form action="/exportAssiduousness.do?method=exportToPDFWorkDaySheet">
-	<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
-		<fr:layout>
-			<fr:property name="classes" value="thlight thright" />
-		</fr:layout>
-	</fr:edit>
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-		<bean:message key="button.export" />
-	</html:submit></p>
-</fr:form>
-<br/><br/><br/>
-<h2><bean:message key="link.exportWorkSheets" /></h2>
 <span class="error0 mtop0"><html:messages id="message" message="true">
 	<bean:write name="message" />
 	<br />
 </html:messages></span>
-<fr:form action="/exportAssiduousness.do?method=exportToPDFChoosedWorkDaySheet">
-	<fr:edit id="workDaySheetToExportSearch" name="workDaySheetToExportSearch" schema="choose.workDaySheetToExportSearch">
-		<fr:layout>
-			<fr:property name="classes" value="thlight thright" />
-		</fr:layout>
-	</fr:edit>
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-		<bean:message key="button.export" />
-	</html:submit></p>
-</fr:form>
+
+<logic:present name="assiduousnessExportChoices">
+	<fr:form action="<%="/exportAssiduousness.do?method="+nextAction%>">
+		<logic:equal name="assiduousnessExportChoices" property="canChooseDateType" value="true">
+			<fr:edit id="assiduousnessExportChoicesDatesTypes" name="assiduousnessExportChoices" schema="choose.assiduosunessExportChoice.datesType">
+				<fr:hidden slot="action" value="<%=nextAction %>" />
+				<fr:destination name="assiduousnessExportChoicesPostBack" path="/exportAssiduousness.do?method=chooseAssiduousnessExportChoicesPostBack" />
+				<fr:layout>
+					<fr:property name="classes" value="thlight thright" />
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+		<logic:notEmpty name="assiduousnessExportChoices" property="assiduousnessExportChoicesDatesType">
+			<logic:equal name="assiduousnessExportChoices" property="assiduousnessExportChoicesDatesType" value="MONTHS">
+				<fr:edit id="assiduousnessExportChoicesDates" name="assiduousnessExportChoices" schema="choose.assiduousnessExportChoicesDates.yearMonth">
+					<fr:layout>
+						<fr:property name="classes" value="thlight thright" />
+					</fr:layout>
+				</fr:edit>
+			</logic:equal>
+			<logic:equal name="assiduousnessExportChoices" property="assiduousnessExportChoicesDatesType" value="DATES">
+				<fr:edit id="assiduousnessExportChoicesDates" name="assiduousnessExportChoices" schema="choose.assiduosunessExportChoice.dates">
+					<fr:layout>
+						<fr:property name="classes" value="thlight thright" />
+					</fr:layout>
+				</fr:edit>
+			</logic:equal>
+			<br/>
+			<fr:edit id="assiduousnessExportChoices" name="assiduousnessExportChoices" schema="choose.assiduosunessExportChoice">
+				<fr:layout>
+					<fr:property name="classes" value="thlight thright" />
+				</fr:layout>
+			</fr:edit>
+		</logic:notEmpty>
+		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+			<bean:message key="button.export" />
+		</html:submit></p>
+	</fr:form>
+</logic:present>

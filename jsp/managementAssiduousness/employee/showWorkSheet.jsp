@@ -54,9 +54,6 @@
 			</html:messages>
 		</logic:messagesPresent>
 		
-		<div class="mvert1 invisible">
-		
-		
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
 		<p>
 			<em><bean:message key="message.employee.noWorkSheet" /></em>
