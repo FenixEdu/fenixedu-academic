@@ -6,7 +6,10 @@
 
 /* background and border properties */ 
 
-body { background-color: #00202a; }
+body {
+background-color: #00202a;
+background-color: #1a343d;
+}
 #top, #user { background: #16576b; }
 
 #navtop { border-top: 4px solid #277b97; background: #146b88 url(../images/0grad01.gif) bottom repeat-x; }
