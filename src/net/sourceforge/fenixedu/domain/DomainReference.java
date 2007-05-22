@@ -39,6 +39,12 @@ public class DomainReference<T extends DomainObject> implements Serializable {
             this.oid = object.getIdInternal();
         }
     }
+    
+    public DomainReference(Class clazz, Integer oid) {
+	this.type = clazz;
+        this.className = clazz.getName();
+        this.oid = oid;	
+    }
 
     /**
      * Allows you to check if a certain {@link DomainReference} is a refenrece
