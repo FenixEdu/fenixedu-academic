@@ -644,31 +644,19 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public Enrolment getDissertationEnrolment() {
+    final public Enrolment getDissertationEnrolment() {
         return getDissertationEnrolment(null);
     }
 
-    public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
         for (Registration registration : getRegistrations()) {
             if (!registration.isActive()) {
                 continue;
             }
 
-            StudentCurricularPlan lastStudentCurricularPlan = registration
-                    .getLastStudentCurricularPlan();
-            if (lastStudentCurricularPlan == null) {
-                continue;
-            }
-
-            if (degreeCurricularPlan != null
-                    && lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-                continue;
-            }
-
-            for (Enrolment enrolment : lastStudentCurricularPlan.getEnrolments()) {
-                if (enrolment.getCurricularCourse().isDissertation()) {
-                    return enrolment;
-                }
+            final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
+            if (dissertationEnrolment != null) {
+        	return dissertationEnrolment;
             }
         }
 
