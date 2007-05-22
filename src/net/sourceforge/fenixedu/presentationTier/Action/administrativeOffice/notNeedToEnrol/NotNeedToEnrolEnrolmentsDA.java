@@ -100,4 +100,12 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBean");
 	return readNotNeedToEnrol(mapping, form, request, response, bean);
     }
+    
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBeanDelete");
+	executeService(request, "DeleteNotNeedToEnrollInCurricularCourse", 
+		new Object[] {bean.getSelected().getIdInternal()});
+	return readNotNeedToEnrol(mapping, form, request, response, bean);
+    }    
 }

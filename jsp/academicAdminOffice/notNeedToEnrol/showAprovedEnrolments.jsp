@@ -12,6 +12,12 @@
 	</fr:layout>
 </fr:view>
 <fr:form action="/notNeedToEnrolEnrolments.do">
+	<html:hidden property="method" value="delete"/>
+	<fr:edit id="notNeedToEnrolBeanDelete" name="bean" visible="false"/>
+	<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+</fr:form>
+<br/>
+<fr:form action="/notNeedToEnrolEnrolments.do">
 	<html:hidden property="method" value="editNotNeedToEnrol"/>
 	<logic:notEmpty name="bean" property="aprovedEnrolments">
 		<fr:edit name="bean" property="aprovedEnrolments" schema="notNeedToEnroll.view.aproved.enrolment">
