@@ -30,7 +30,6 @@ public class ReadMonthResume extends Service {
     public List<AssiduousnessMonthlyResume> run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(assiduousnessExportChoices.getYearMonth());
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = new ArrayList<AssiduousnessMonthlyResume>();
-	Calendar c = Calendar.getInstance();
 	if (closedMonth == null) {
 	    HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(
 		    assiduousnessExportChoices.getBeginDate(), assiduousnessExportChoices.getEndDate()

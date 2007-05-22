@@ -110,7 +110,7 @@
 <schema name="show.protocol.data" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
 	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.formatted" layout="values"/>
+	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.formatted" layout="flow"/>
 	<slot name="protocolAction.text" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
@@ -314,11 +314,9 @@
 </schema>
 
 <schema name="show.protocolHistories.formatted" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
-	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="format" value="dd/MM/yyyy"/>
-	</slot>
-	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="format" value="'- Data fim: ' dd/MM/yyyy"/>
+	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label"/>
+	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="--"/>
 	</slot>
 </schema>
 
