@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -560,30 +558,11 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    public DateTime getLastApprovedEnrolmentEvaluationDate() {
-	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlanExceptPast();
-	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
-		Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-	enrolments.addAll(studentCurricularPlan.getAprovedEnrolments());
+    final public DateTime getLastApprovedEnrolmentEvaluationDate() {
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
+	enrolments.addAll(getLastStudentCurricularPlanExceptPast().getAprovedEnrolments());
 
-	final Iterator<Enrolment> iterator = enrolments.tailSet(enrolments.last()).iterator();
-	final Enrolment oneEnrolment = iterator.next();
-	final ExecutionPeriod lastExecutionPeriod = oneEnrolment.getExecutionPeriod();
-	DateTime result = oneEnrolment.getLatestEnrolmentEvaluation().getWhenDateTime();
-	while (iterator.hasNext()) {
-	    final Enrolment anotherEnrolment = iterator.next();
-	    if (anotherEnrolment.getExecutionPeriod() != lastExecutionPeriod) {
-		break;
-	    }
-
-	    final EnrolmentEvaluation enrolmentEvaluation = anotherEnrolment
-		    .getLatestEnrolmentEvaluation();
-	    if (enrolmentEvaluation.getWhenDateTime().isAfter(result)) {
-		result = enrolmentEvaluation.getWhenDateTime();
-	    }
-	}
-
-	return result;
+	return enrolments.last().getLatestEnrolmentEvaluation().getWhenDateTime();
     }
 
     public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
