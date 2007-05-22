@@ -148,7 +148,7 @@ public class Thesis extends Thesis_Base {
             return null;
         }
         else {
-            return new MultiLanguageString(dissertation.getLanguage(), dissertation.getTitle());
+            return new MultiLanguageString(dissertation.getLanguage(), dissertation.getSubTitle());
         }
     }
     
