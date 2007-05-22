@@ -1442,10 +1442,6 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.REGISTERED;
     }
 
-    public boolean isConcluded() {
-	return getActiveStateType() == RegistrationStateType.CONCLUDED;
-    }
-
     public boolean getInterruptedStudies() {
 	return getActiveStateType() == RegistrationStateType.INTERRUPTED;
     }
@@ -1466,6 +1462,21 @@ public class Registration extends Registration_Base {
 	return new StudentCurriculum(this).calculateCurricularYear(null);
     }
 
+    public boolean isConcluded() {
+	return getActiveStateType() == RegistrationStateType.CONCLUDED;
+    }
+
+    final public boolean hasConcludedCycle(final CycleType cycleType) {
+	// TODO
+	if (cycleType == null) {
+
+	} else {
+	    
+	}
+	
+	return true;
+    }
+    
     public int getCurricularYear(ExecutionYear executionYear) {
 	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
@@ -1644,7 +1655,7 @@ public class Registration extends Registration_Base {
     final public boolean hasStartedBeforeFirstBolonhaExecutionYear() {
 	return getStartExecutionYear().isBefore(ExecutionYear.readFirstBolonhaExecutionYear());
     }
-
+    
     public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
 	return getStudentCurricularPlan(executionPeriod) != null;
     }
@@ -1949,7 +1960,6 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-
     private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
 	final Scheduleing scheduleing = proposal.getScheduleing();
 	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
@@ -1996,4 +2006,23 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
+
+    final public Enrolment getDissertationEnrolment() {
+	return getDissertationEnrolment(null);
+    }
+    
+    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	if (lastStudentCurricularPlan == null) {
+	    return null;
+	}
+
+	if (degreeCurricularPlan != null
+		&& lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+	    return null;
+	}
+
+	return lastStudentCurricularPlan.getDissertationEnrolment();
+    }
+
 }
