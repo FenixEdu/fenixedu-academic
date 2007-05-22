@@ -1337,6 +1337,17 @@ public class FillInquiryAction extends FenixDispatchAction {
 	selectedAttendingCourseTeachersClassTypeTP[position] = ArrayUtils.contains(
 		currentAttendingCourseTeacherClassType, ShiftType.TEORICO_PRATICA.getName());
 
+	Boolean[] selectedAttendingCourseTeachersClassTypeS = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeS");
+	selectedAttendingCourseTeachersClassTypeS[position] = ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.SEMINARY.getName());
+	Boolean[] selectedAttendingCourseTeachersClassTypePb = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypePb");
+	selectedAttendingCourseTeachersClassTypePb[position] = ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.PROBLEMS.getName());
+	Boolean[] selectedAttendingCourseTeachersClassTypeF = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeF");
+	selectedAttendingCourseTeachersClassTypeF[position] = ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.FIELD_WORK.getName());
+	Boolean[] selectedAttendingCourseTeachersClassTypeTr = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTr");
+	selectedAttendingCourseTeachersClassTypeTr[position] = ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TRAINING_PERIOD.getName());
+	Boolean[] selectedAttendingCourseTeachersClassTypeTO = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTO");
+	selectedAttendingCourseTeachersClassTypeTO[position] = ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TUTORIAL_ORIENTATION.getName());
+
 	// Answers
 	Integer currentAttendingCourseTeacherQuestion33 = (Integer) inquiryForm
 		.get("currentAttendingCourseTeacherQuestion33");
@@ -1569,34 +1580,68 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Boolean[] selectedAttendingCourseTeachersClassTypeTP = (Boolean[]) inquiryForm
 		.get("selectedAttendingCourseTeachersClassTypeTP");
 
+	Boolean[] selectedAttendingCourseTeachersClassTypeS = (Boolean[]) inquiryForm
+		.get("selectedAttendingCourseTeachersClassTypeS");
+	Boolean[] selectedAttendingCourseTeachersClassTypePb = (Boolean[]) inquiryForm
+		.get("selectedAttendingCourseTeachersClassTypePb");
+	Boolean[] selectedAttendingCourseTeachersClassTypeF = (Boolean[]) inquiryForm
+		.get("selectedAttendingCourseTeachersClassTypeF");
+	Boolean[] selectedAttendingCourseTeachersClassTypeTr = (Boolean[]) inquiryForm
+		.get("selectedAttendingCourseTeachersClassTypeTr");
+	Boolean[] selectedAttendingCourseTeachersClassTypeTO = (Boolean[]) inquiryForm
+		.get("selectedAttendingCourseTeachersClassTypeTO");
+
 	if (selectedAttendingCourseTeachersClassTypeT[position]) {
 	    ShiftType classTypeT = ShiftType.TEORICA;
-
 	    infoInquiriesTeacher.getClassTypes().add(classTypeT);
-	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(
-		    classTypeT);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeT);
 	}
 
 	if (selectedAttendingCourseTeachersClassTypeP[position]) {
 	    ShiftType classTypeP = ShiftType.PRATICA;
 	    infoInquiriesTeacher.getClassTypes().add(classTypeP);
-	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(
-		    classTypeP);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeP);
 	}
 
 	if (selectedAttendingCourseTeachersClassTypeL[position]) {
 	    ShiftType classTypeL = ShiftType.LABORATORIAL;
 	    infoInquiriesTeacher.getClassTypes().add(classTypeL);
-	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(
-		    classTypeL);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeL);
 	}
 
 	if (selectedAttendingCourseTeachersClassTypeTP[position]) {
 	    ShiftType classTypeTP = ShiftType.TEORICO_PRATICA;
 	    infoInquiriesTeacher.getClassTypes().add(classTypeTP);
-	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(
-		    classTypeTP);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeTP);
 	}
+
+	if (selectedAttendingCourseTeachersClassTypeS[position]) {
+	    ShiftType classTypeS = ShiftType.SEMINARY;
+	    infoInquiriesTeacher.getClassTypes().add(classTypeS);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeS);
+	}
+	if (selectedAttendingCourseTeachersClassTypePb[position]) {
+	    ShiftType classTypePb = ShiftType.PROBLEMS;
+	    infoInquiriesTeacher.getClassTypes().add(classTypePb);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypePb);
+	}
+	if (selectedAttendingCourseTeachersClassTypeF[position]) {
+	    ShiftType classTypeF = ShiftType.FIELD_WORK;
+	    infoInquiriesTeacher.getClassTypes().add(classTypeF);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeF);
+	}
+	if (selectedAttendingCourseTeachersClassTypeTr[position]) {
+	    ShiftType classTypeTr = ShiftType.TRAINING_PERIOD;
+	    infoInquiriesTeacher.getClassTypes().add(classTypeTr);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeTr);
+	}
+	if (selectedAttendingCourseTeachersClassTypeTO[position]) {
+	    ShiftType classTypeTO = ShiftType.TUTORIAL_ORIENTATION;
+	    infoInquiriesTeacher.getClassTypes().add(classTypeTO);
+	    infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeTO);
+	}
+
+
 
 	infoInquiriesTeacher.setStudentAssiduity(selectedAttendingCourseTeachersQuestion33[position]);
 	infoInquiriesTeacher.setTeacherAssiduity(selectedAttendingCourseTeachersQuestion34[position]);
@@ -1721,6 +1766,17 @@ public class FillInquiryAction extends FenixDispatchAction {
 		.get("selectedAttendingCourseTeachersClassTypeTP");
 	inquiryForm.set("selectedAttendingCourseTeachersClassTypeTP", removeFromArray(
 		selectedAttendingCourseTeachersClassTypeTP, position));
+
+	Boolean[] selectedAttendingCourseTeachersClassTypeS = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeS");
+	inquiryForm.set("selectedAttendingCourseTeachersClassTypeS", removeFromArray(selectedAttendingCourseTeachersClassTypeS, position));
+	Boolean[] selectedAttendingCourseTeachersClassTypePb = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypePb");
+	inquiryForm.set("selectedAttendingCourseTeachersClassTypePb", removeFromArray(selectedAttendingCourseTeachersClassTypePb, position));
+	Boolean[] selectedAttendingCourseTeachersClassTypeF = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeF");
+	inquiryForm.set("selectedAttendingCourseTeachersClassTypeF", removeFromArray(selectedAttendingCourseTeachersClassTypeF, position));
+	Boolean[] selectedAttendingCourseTeachersClassTypeTr = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTr");
+	inquiryForm.set("selectedAttendingCourseTeachersClassTypeTr", removeFromArray(selectedAttendingCourseTeachersClassTypeTr, position));
+	Boolean[] selectedAttendingCourseTeachersClassTypeTO = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTO");
+	inquiryForm.set("selectedAttendingCourseTeachersClassTypeTO", removeFromArray(selectedAttendingCourseTeachersClassTypeTO, position));
 
 	// Answers
 	Integer[] selectedAttendingCourseTeachersQuestion33 = (Integer[]) inquiryForm

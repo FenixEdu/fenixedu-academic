@@ -19,30 +19,44 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class InfoTeacherWithRemainingClassTypes extends InfoTeacher {
 
-	final private List<ShiftType> remainingClassTypes = new ArrayList<ShiftType>();
+    final private List<ShiftType> remainingClassTypes = new ArrayList<ShiftType>();
 
-	/**
-     * @return Returns the remainingClassTypes.
-     */
-	public List<ShiftType> getRemainingClassTypes() {
-		return remainingClassTypes;
+    public List<ShiftType> getRemainingClassTypes() {
+	return remainingClassTypes;
+    }
+
+    public InfoTeacherWithRemainingClassTypes(final Teacher teacher,
+	    InfoExecutionCourse infoExecutionCourse) {
+	super(teacher);
+
+	if (infoExecutionCourse.getTheoreticalHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.TEORICA);
+	}
+	if (infoExecutionCourse.getPraticalHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.PRATICA);
+	}
+	if (infoExecutionCourse.getLabHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.LABORATORIAL);
+	}
+	if (infoExecutionCourse.getTheoPratHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.TEORICO_PRATICA);
+	}
+	if (infoExecutionCourse.getSeminaryHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.SEMINARY);
+	}
+	if (infoExecutionCourse.getProblemsHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.PROBLEMS);
+	}
+	if (infoExecutionCourse.getFieldWorkHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.FIELD_WORK);
+	}
+	if (infoExecutionCourse.getTrainingPeriodHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.TRAINING_PERIOD);
+	}
+	if (infoExecutionCourse.getTutorialOrientationHours().doubleValue() > 0) {
+	    this.remainingClassTypes.add(ShiftType.TUTORIAL_ORIENTATION);
 	}
 
-	public InfoTeacherWithRemainingClassTypes(final Teacher teacher, InfoExecutionCourse infoExecutionCourse) {
-		super(teacher);
-
-		if (infoExecutionCourse.getTheoreticalHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(ShiftType.TEORICA);
-		}
-		if (infoExecutionCourse.getPraticalHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(ShiftType.PRATICA);
-		}
-		if (infoExecutionCourse.getLabHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(ShiftType.LABORATORIAL);
-		}
-		if (infoExecutionCourse.getTheoPratHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(ShiftType.TEORICO_PRATICA);
-		}
-	}
+    }
 
 }

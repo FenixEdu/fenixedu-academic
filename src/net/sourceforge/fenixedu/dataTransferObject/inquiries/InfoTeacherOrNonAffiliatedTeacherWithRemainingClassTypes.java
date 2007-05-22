@@ -58,7 +58,21 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 		if(infoExecutionCourse.getTheoPratHours().doubleValue() > 0) {
 			this.remainingClassTypes.add(ShiftType.TEORICO_PRATICA);			
 		}
-		
+		if(infoExecutionCourse.getSeminaryHours().doubleValue() > 0) {
+			this.remainingClassTypes.add(ShiftType.SEMINARY);
+		}
+		if(infoExecutionCourse.getProblemsHours().doubleValue() > 0) {
+			this.remainingClassTypes.add(ShiftType.PROBLEMS);
+		}
+		if(infoExecutionCourse.getFieldWorkHours().doubleValue() > 0) {
+			this.remainingClassTypes.add(ShiftType.FIELD_WORK);
+		}
+		if(infoExecutionCourse.getTrainingPeriodHours().doubleValue() > 0) {
+			this.remainingClassTypes.add(ShiftType.TRAINING_PERIOD);
+		}
+		if(infoExecutionCourse.getTutorialOrientationHours().doubleValue() > 0) {
+			this.remainingClassTypes.add(ShiftType.TUTORIAL_ORIENTATION);
+		}
 	}
 	
 	public InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes () {

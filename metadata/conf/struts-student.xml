@@ -169,6 +169,11 @@
             <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeP"/>
             <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeL"/>
             <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeTP"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeS"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypePb"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeF"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeTr"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeTO"/>
 			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseTeachersQuestion33" />
 			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseTeachersQuestion34" />
 			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion35" />
