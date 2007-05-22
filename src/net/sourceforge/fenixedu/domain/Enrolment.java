@@ -98,6 +98,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     };
     
+    static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
+            return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(), o2.getLatestEnrolmentEvaluation());
+        }
+    };
+    
+    static final public Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID = new Comparator<Enrolment>() {
+        public int compare(Enrolment o1, Enrolment o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
+    
     private Integer accumulatedWeight;
 
     private Double accumulatedEctsCredits;
