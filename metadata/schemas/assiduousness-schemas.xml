@@ -924,3 +924,39 @@
 		<property name="formatText" value="hh:mm" />
 	</slot>
 </schema>
+
+<schema name="show.unitExtraWorkAmount" type="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount">
+	<slot name="unit.presentationName" key="label.unit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="total" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="spent" key="label.spent" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="balance" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="edit.unitExtraWorkAmount" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory">	
+	<slot name="year"
+		bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="costCenterCode" key="label.costCenter" bundle="ASSIDUOUSNESS_RESOURCES" 
+			validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="maxLength" value="4" />
+		<property name="size" value="10" />
+	</slot>
+	<slot name="amount" key="label.amount" bundle="ASSIDUOUSNESS_RESOURCES" 
+			validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator">
+		<property name="size" value="10" />
+	</slot>
+</schema>
+
+<schema name="insert.unitExtraWorkMovement" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory">	
+	<slot name="amount" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator">
+		<property name="size" value="10" />
+	</slot>
+</schema>
+
+<schema name="edit.unitExtraWorkMovement" type="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement">	
+	<slot name="amount" validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator">
+		<property name="size" value="10" />
+	</slot>
+</schema>

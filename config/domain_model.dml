@@ -4026,7 +4026,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount extends 
 
 class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyUnitExtraWorkAmount;
-	YearMonthDay date;
+	DateTime date;
 	Double amount;
 }
 

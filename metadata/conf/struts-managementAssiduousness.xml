@@ -140,6 +140,16 @@
 			<forward name="close-month" path="close-month"/>
 			<forward name="close-extra-work-month" path="close-extra-work-month"/>
 		</action>
+		<action path="/manageUnitsExtraWorkAmounts"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ManageExtraWorkUnitAmountDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 				
+			<forward name="show-units-extra-work-amounts" path="show-units-extra-work-amounts"/>
+			<forward name="show-unit-extra-work-movements" path="show-unit-extra-work-movements"/>
+		</action>		
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

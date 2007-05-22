@@ -77,12 +77,18 @@
 	<definition name="edit-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/extraWork/editExtraWorkAuthorization.jsp"/>
 	</definition>
+	<definition name="show-units-extra-work-amounts" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/extraWork/showUnitsExtraWorkAmounts.jsp"/>
+	</definition>
+	<definition name="show-unit-extra-work-movements" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/extraWork/showUnitExtraWorkMovements.jsp"/>
+	</definition>
 	<definition name="prepare-associate-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/prepareAssociateSchedule.jsp"/>
 	</definition>
 	<definition name="associate-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/associateWorkSchedule.jsp"/>
-	</definition>	
+	</definition>
 	<!-- Month Closure-->
 	<definition name="close-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/closeMonth.jsp"/>

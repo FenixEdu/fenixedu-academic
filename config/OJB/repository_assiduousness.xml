@@ -149,3 +149,9 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations" table="ASSIDUOUSNESS_VACATIONS">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount" table="UNIT_EXTRA_WORK_AMOUNT">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement" table="UNIT_EXTRA_WORK_MOVEMENT">
+</class-descriptor>

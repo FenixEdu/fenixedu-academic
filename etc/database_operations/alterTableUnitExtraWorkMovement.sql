@@ -1,0 +1,1 @@
+alter table UNIT_EXTRA_WORK_MOVEMENT modify column DATE datetime NOT NULL default '0000-00-00 00:00:00';
