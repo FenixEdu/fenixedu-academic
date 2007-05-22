@@ -44,6 +44,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
     };
 
+    static final protected Comparator<EnrolmentEvaluation> COMPARATOR_BY_EXAM_DATE = new Comparator<EnrolmentEvaluation>() {
+        public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+            return o1.getExamDateYearMonthDay().compareTo(o2.getExamDateYearMonthDay());
+        }
+    };
+    
     private static final String RECTIFICATION = "RECTIFICAÇÃO";
     
     private static final String RECTIFIED = "RECTIFICADO";
