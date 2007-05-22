@@ -2347,4 +2347,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+    final public Enrolment getDissertationEnrolment() {
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.getCurricularCourse().isDissertation()) {
+		return enrolment;
+	    }
+	}
+
+	return null;
+    }
+
 }
