@@ -85,15 +85,31 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     }
 
     public Collection<CycleCourseGroup> getCycleCourseGroups(CycleType cycle) {
+
 	Collection<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
-	for (Context context : getChildContextsSet()) {
-	    if (context.getChildDegreeModule().isCycleCourseGroup()) {
-		CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
-		if (cycle == null || cycle == cycleCourseGroup.getCycleType()) {
-		    result.add((CycleCourseGroup) context.getChildDegreeModule());
+
+	if (cycle == null) {
+
+	    CycleType firstCycleType = getDegree().getDegreeType().getFirstCycleType();
+	    if (firstCycleType != null) {
+		return getCycleCourseGroups(firstCycleType);
+	    }
+
+	} else {
+
+	    for (Context context : getChildContextsSet()) {
+		if (context.getChildDegreeModule().isCycleCourseGroup()) {
+
+		    CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context
+			    .getChildDegreeModule();
+		    if (cycle == null || cycle == cycleCourseGroup.getCycleType()) {
+			result.add((CycleCourseGroup) context.getChildDegreeModule());
+		    }
 		}
 	    }
+
 	}
+
 	return result;
 
     }
