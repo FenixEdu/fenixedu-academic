@@ -7592,7 +7592,7 @@
 	<service>
 		<name>ReadExecutionPeriodsEnrollmentFenix</name>
 		<implementationClass> 
-			net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods
+			net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsEnrolment
 		</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>

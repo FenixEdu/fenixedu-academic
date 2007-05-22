@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -20,8 +22,9 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  * @author nmgo
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
+    
+    private static final DomainReference<ExecutionPeriod> since = new DomainReference<ExecutionPeriod>(ExecutionPeriod.class, 81);
 
-    private int EXECUTION_PERIOD_ENROLMENT_FENIX = 81;
 
     private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER,
 	    01).getTime();
@@ -43,16 +46,17 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
 	List newRes = new ArrayList();
 	for (Iterator iter = serviceResult.iterator(); iter.hasNext();) {
-	    InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) iter.next();
+	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iter.next();
+	    ExecutionPeriod executionPeriod = infoExecutionPeriod.getExecutionPeriod();
 
-	    if (executionPeriod.getIdInternal().intValue() >= EXECUTION_PERIOD_ENROLMENT_FENIX) {
-		newRes.add(executionPeriod);
+	    if (executionPeriod.isAfterOrEquals(since.getObject())) {
+		newRes.add(infoExecutionPeriod);
 	    } else if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
 		    && degreeType != null
 		    && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
 			    .equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))) {
 		// master degree extra execution periods
-		newRes.add((executionPeriod));
+		newRes.add((infoExecutionPeriod));
 	    }
 	}
 	response.setReturnObject(newRes);
