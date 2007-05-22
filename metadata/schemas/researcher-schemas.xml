@@ -188,8 +188,11 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -242,8 +245,11 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -265,8 +271,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -506,8 +515,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -530,8 +542,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -546,8 +561,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -556,8 +574,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -676,8 +697,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>	
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
@@ -710,8 +734,11 @@ extends="eventCreation">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
-	<slot name="roleMessage">
-		<property name="size" value="50"/>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="size" value="60"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 </schema>
 
