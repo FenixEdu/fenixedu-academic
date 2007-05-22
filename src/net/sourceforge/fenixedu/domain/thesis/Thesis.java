@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import dml.runtime.RelationAdapter;
@@ -149,6 +150,20 @@ public class Thesis extends Thesis_Base {
         }
         else {
             return new MultiLanguageString(dissertation.getLanguage(), dissertation.getSubTitle());
+        }
+    }
+    
+    final public MultiLanguageString getFinalFullTitle() {
+        final ThesisFile dissertation = getDissertation();
+        
+        if (dissertation == null) {
+            return getTitle();
+        } else {
+            final StringBuilder result = new StringBuilder();
+            result.append(dissertation.getTitle());
+            result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
+            
+            return new MultiLanguageString(dissertation.getLanguage(), result.toString());
         }
     }
     
