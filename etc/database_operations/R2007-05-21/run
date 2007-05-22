@@ -1,0 +1,43 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "Alter Table Assiduousness Vacations" alterTableAssiduousnessVacations.sql
+execute "Add 'repeat' field to UnitSiteBanner" addRepeatToUnitSiteBanner.sql
+execute "Migrate Curriculum Groups To Root And Cycle Groups" migrateCurriculumGroupsToRootAndCycleGroups.sql
+execute "Fix writing permission for department's boards" correctDepartmentBoardsWritingPermission.sql
+execute "Add Affinity CycleCourseGroup Table" addAffinityCycleCourseGroupTable.sql
+execute "Add CycleType Column" addCycleTypeColumn.sql
+execute "Alter RootCourseGroup Type" alterRootCourseGroupType.sql
+execute "Change CycleCourseGroupt Type" changeToCycleCourseGroupType.sql 
+execute "Add Boolean to Research Contract" addBooleanToResearchContract.sql
+execute "Add Participation Specification" addParticipationSpecification.sql
+execute "Modify Research Activity Participations" modifyResearchActivityParticipations.sql
+execute "Temporary Login Modifications" temporaryLoginModifications.sql
+execute "Change names of some sections in the department's public site" changeDepartmentSectionNames.sql
+execute "Change Teachers section path in the department's public site" changeDepartmentTeachersPath.sql
