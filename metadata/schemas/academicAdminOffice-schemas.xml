@@ -876,7 +876,7 @@
 <schema name="notNeedToEnroll.view.notNeedToEnroll" 
 	type="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.notNeedToEnrol.degreeCurricularPlan.withbreak"/>
-	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code..withbreak"/>	
+	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code.withbreak"/>	
 	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
 	<slot name="enrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
