@@ -6,11 +6,11 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
-<div id="vert-spacer">
-<table width="100%">
+
+<div style="padding-top: 100px;">
+
 		<logic:notPresent name="<%= SessionConstants.DIPLOMA%>">
- 	<tr>
-		<td>	
+	
 	  		<p>O COORDENADOR DO NÚCLEO DE PÓS-GRADUAÇÃO E FORMAÇÃO CONTÍNUA DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do(a) interessado(a), que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
 			<%--Certificate --%>			
 			<jsp:include page="./certificateTemplate1.jsp" flush="true" />
@@ -128,9 +128,9 @@
 		  	
 	  	</logic:present>
 	  </p>
-	  	</td>
-	</tr>	
-</table>
+
+</div>
+
 
 	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     	<%-- Candidate Information if necessary --%>
