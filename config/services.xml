@@ -7902,7 +7902,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagerOrDegreeAdministrativeOfficeAuthorization" />
+			<chain name="ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice" />
 		</filterChains>
     </service>
     <service>

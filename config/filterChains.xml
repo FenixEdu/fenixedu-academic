@@ -1158,5 +1158,12 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice</name>
+        <expression>ManagerAuthorization || AcademicAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>    
 
 </filterChainsDefinitions>
