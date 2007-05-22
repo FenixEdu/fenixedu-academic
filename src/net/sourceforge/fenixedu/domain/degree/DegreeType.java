@@ -25,27 +25,19 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.FIVE_YEAR,
-	    true,
-	    false,
+    DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, false, false, false) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
 	}
-	
+
     },
 
-    MASTER_DEGREE(
-	    GradeScale.TYPE5,
-	    CurricularPeriodType.TWO_YEAR,
-	    false,
-	    true,
+    MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
-	
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
@@ -53,13 +45,9 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_DEGREE(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.THREE_YEAR,
-	    true,
-	    false,
+    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, true, false, false) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.FIRST_CYCLE);
@@ -67,13 +55,9 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_MASTER_DEGREE(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.TWO_YEAR,
-	    true,
-	    false,
+    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, false, true, false) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.SECOND_CYCLE);
@@ -81,32 +65,23 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.FIVE_YEAR,
-	    true,
-	    false,
+    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, true, true, false) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    final Collection<CycleType> result = new HashSet<CycleType>();
 	    result.add(CycleType.FIRST_CYCLE);
 	    result.add(CycleType.SECOND_CYCLE);
-	    
+
 	    return result;
 	}
 
     },
 
-
-    BOLONHA_PHD_PROGRAM(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.YEAR,
-	    true,
-	    true,
+    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.THIRD_CYCLE);
@@ -114,13 +89,9 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.YEAR,
-	    true,
-	    true,
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.THIRD_CYCLE);
@@ -128,20 +99,15 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_SPECIALIZATION_DEGREE(
-	    GradeScale.TYPE20,
-	    CurricularPeriodType.YEAR,
-	    true,
-	    true,
+    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
-		
+
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
 	}
 
     };
-
 
     private GradeScale gradeScale;
 
@@ -152,17 +118,17 @@ public enum DegreeType {
     private boolean canCreateStudentOnlyWithCandidacy;
 
     private AdministrativeOfficeType administrativeOfficeType;
-    
+
     private boolean isFirstCycle;
-    
+
     private boolean isSecondCycle;
-    
+
     private boolean isThirdCycle;
-    
+
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType,
 	    boolean canCreateStudent, boolean canCreateStudentOnlyWithCandidacy,
-	    AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle, boolean isSecondCycle, 
-	    boolean isThirdCycle) {
+	    AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle,
+	    boolean isSecondCycle, boolean isThirdCycle) {
 	this.gradeScale = gradeScale;
 	this.curricularPeriodType = curricularPeriodType;
 	this.canCreateStudent = canCreateStudent;
@@ -229,7 +195,8 @@ public enum DegreeType {
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(getQualifiedName());
     }
 
     public String getQualifiedName() {
@@ -239,28 +206,30 @@ public enum DegreeType {
     final public String getFilteredName() {
 	final StringBuilder result = new StringBuilder(getLocalizedName());
 	final String toRemove;
-	
+
 	if (isBolonhaType()) {
 	    toRemove = " Bolonha";
 	} else if (this == DegreeType.DEGREE) {
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle(
+		    "resources.ApplicationResources", LanguageUtils.getLocale());
 	    toRemove = " (" + getYears() + " " + applicationResources.getString("years") + ")";
 	} else {
 	    toRemove = "";
 	}
-	
+
 	if (result.toString().contains(toRemove)) {
 	    result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
 	}
-	
+
 	return result.toString();
     }
 
     final public String getSeniorTitle() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + ".senior.title");
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(getQualifiedName() + ".senior.title");
     }
 
-   public static List<DegreeType> getBolonhaDegreeTypes() {
+    public static List<DegreeType> getBolonhaDegreeTypes() {
 	final List<DegreeType> result = new ArrayList<DegreeType>();
 
 	for (final DegreeType degreeType : values()) {
@@ -272,22 +241,30 @@ public enum DegreeType {
 	return result;
     }
 
-   public boolean isFirstCycle() {
-       return isFirstCycle;
-   }
+    public boolean isFirstCycle() {
+	return isFirstCycle;
+    }
 
-   public boolean isSecondCycle() {
-       return isSecondCycle;
-   }
+    public boolean isSecondCycle() {
+	return isSecondCycle;
+    }
 
-   public boolean isThirdCycle() {
-       return isThirdCycle;
-   }
-   
-   abstract public Collection<CycleType> getCycleTypes();
+    public boolean isThirdCycle() {
+	return isThirdCycle;
+    }
 
-   final public boolean isStrictlyFirstCycle() {
-       return getCycleTypes().size() == 1 && getCycleTypes().contains(CycleType.FIRST_CYCLE);
-   }
-    
+    abstract public Collection<CycleType> getCycleTypes();
+
+    final public boolean isStrictlyFirstCycle() {
+	return getCycleTypes().size() == 1 && getCycleTypes().contains(CycleType.FIRST_CYCLE);
+    }
+
+    public CycleType getFirstCycleType() {
+	final Collection<CycleType> cycleTypes = getCycleTypes();
+	if (cycleTypes.isEmpty()) {
+	    return null;
+	}
+	return Collections.min(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+    }
+
 }
