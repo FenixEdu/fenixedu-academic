@@ -311,6 +311,23 @@ public class Person extends Person_Base {
 		setIdentification(documentIdNumber, documentType);
 		setSocialSecurityNumber(socialSecurityNumber);
 	}
+		
+	public void editPersonWithExternalData(PersonBean personBean) {
+	    setProperties(personBean);		
+	    updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	    if(!hasDefaultPhone()) {
+		updateDefaultPhone(personBean.getPhone());
+	    }
+	    if(!hasDefaultMobilePhone()) {
+		updateDefaultMobilePhone(personBean.getMobile());
+	    }
+	    if(!hasDefaultWebAddress()) {
+		updateDefaultWebAddress(personBean.getWebAddress());
+	    }
+	    if(!hasDefaultEmailAddress()) {
+		updateDefaultEmailAddress(personBean.getEmail());
+	    }
+	} 
 
 	@Deprecated
 	public void update(InfoPersonEditor updatedPersonalData, Country country) {

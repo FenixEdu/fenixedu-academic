@@ -45,6 +45,14 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     }
    
     @Override
+    public void setRegimenType(RegimenType regimenType) {
+	if (regimenType == null) {
+	    throw new DomainException("error.LegalRegimen.no.regimenType");
+	}
+	super.setRegimenType(regimenType);
+    }
+    
+    @Override
     public void setCategory(Category category) {
 	if (category == null) {
 	    throw new DomainException("error.teacherLegalRegimen.no.category");
@@ -77,18 +85,20 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 		|| legalRegimenType.equals(LegalRegimenType.TERM_WORK_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.EMERITUS)
 		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT)
-		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT_IN_PROGRESS)
+		|| legalRegimenType.equals(LegalRegimenType.RETIREMENT_IN_PROGRESS)		
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS)
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION)
 		|| legalRegimenType.equals(LegalRegimenType.CERTAIN_FORWARD_CONTRACT_RESCISSION_PROPER_PRESCRIPTIONS)
 		|| legalRegimenType.equals(LegalRegimenType.CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.DENUNCIATION)
+		|| legalRegimenType.equals(LegalRegimenType.RESIGNATION)
 		|| legalRegimenType.equals(LegalRegimenType.IST_OUT_NOMINATION)
 		|| legalRegimenType.equals(LegalRegimenType.SERVICE_TURN_OFF)
 		|| legalRegimenType.equals(LegalRegimenType.TEMPORARY_SUBSTITUTION_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.EXONERATION)
 		|| legalRegimenType.equals(LegalRegimenType.RESCISSION) 
-		|| legalRegimenType.equals(LegalRegimenType.TRANSFERENCE));
+		|| legalRegimenType.equals(LegalRegimenType.TRANSFERENCE)
+		|| legalRegimenType.equals(LegalRegimenType.REFUSED_DEFINITIVE_NOMINATION));
     }   
 }

@@ -16,15 +16,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  * @author Sergio Montelobo
  * 
  */
-public class Category extends Category_Base implements Comparable {
+public class Category extends Category_Base implements Comparable<Category> {
 
     public Category() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public int compareTo(Object o) {
-	Category category = (Category) o;
+    public int compareTo(Category category) {	
 	final int weightCompare = this.getWeight().compareTo(category.getWeight());
 	return weightCompare == 0 ? this.getLongName().compareTo(category.getLongName()) : weightCompare;
     }

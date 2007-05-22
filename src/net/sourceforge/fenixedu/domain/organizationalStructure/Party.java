@@ -810,6 +810,11 @@ abstract public class Party extends Party_Base {
 	/*
 	 * EmailAddress
 	 */
+	
+	public boolean hasDefaultEmailAddress() {
+		return hasDefaultPartyContact(EmailAddress.class);
+	}
+	
 	protected EmailAddress createDefaultEmailAddress(final String value) {
 		return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this,
 				value) : null;
