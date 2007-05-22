@@ -10,14 +10,13 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.YearMonthDay;
-
-import com.sun.tools.xjc.reader.RawTypeSet.Ref;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -32,20 +31,22 @@ public class StudentCurricularPlanFactoryExecutor {
 
 	private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
 
+	private CycleType cycleType;
+
 	public StudentCurricularPlanCreator(Registration registration) {
 	    super();
 	    this.registration = new DomainReference<Registration>(registration);
 	}
 
 	public Object execute() {
-	    
-	    if(getRegistration().getStudentCurricularPlan(getDegreeCurricularPlan()) != null){
+
+	    if (getRegistration().getStudentCurricularPlan(getDegreeCurricularPlan()) != null) {
 		throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
 	    }
-	    
+
 	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
 		    getDegreeCurricularPlan(), StudentCurricularPlanState.ACTIVE, new YearMonthDay(),
-		    ExecutionPeriod.readActualExecutionPeriod());
+		    ExecutionPeriod.readActualExecutionPeriod(), getCycleType());
 	}
 
 	public DegreeCurricularPlan getDegreeCurricularPlan() {
@@ -69,6 +70,14 @@ public class StudentCurricularPlanFactoryExecutor {
 
 	public Degree getDegree() {
 	    return getRegistration().getDegree();
+	}
+
+	public CycleType getCycleType() {
+	    return cycleType;
+	}
+
+	public void setCycleType(CycleType cycleType) {
+	    this.cycleType = cycleType;
 	}
 
     }

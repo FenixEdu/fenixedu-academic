@@ -531,6 +531,11 @@
 
 <schema name="studentCurricularPlan.create" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.applicationTier.factoryExecutors.StudentCurricularPlanFactoryExecutor$StudentCurricularPlanCreator" >
+	<slot name="cycleType" key="label.cycle" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.CycleTypeProvider" />
+		<property name="saveOptions" value="true" />
+		<property name="format" value="${description}" />
+	</slot>	
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
