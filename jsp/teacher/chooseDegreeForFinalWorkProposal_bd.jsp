@@ -163,6 +163,8 @@
 								<td bgcolor="#a2aebc" align="center">
 									<bean:message key="finalDegreeWorkProposalHeader.candidacies.student.phone"/>
 								</td>
+								<td bgcolor="#a2aebc" align="center">
+								</td>
 							</tr>
 							<% boolean isOdd = true; %>
 							<% java.lang.String bgColor = null; %>
@@ -236,6 +238,14 @@
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:write name="student" property="infoPerson.telefone"/>
 											</td>
+											<td bgcolor="<%= bgColor %>" align="center">
+												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
+													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
+													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.idInternal" value="<%= proposalID.toString() %>">
+														<bean:message key="label.attribution.confirmed"/>
+													</logic:equal>
+												</logic:notEmpty>
+											</td>											
 										</logic:iterate>
 									</tr>
 									<logic:iterate id="groupStudent" name="groupProposal" property="infoGroup.groupStudents" offset="1">
