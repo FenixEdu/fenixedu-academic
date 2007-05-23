@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changed Date from YearMonthDay to DateTime" alterTableUnitExtraWorkMovement.sql 
