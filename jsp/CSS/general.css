@@ -296,7 +296,7 @@ ee - f3f0e7
 cc - dad3ba
 */
 
-.tstyle1 td { border: 1px solid #ccc; }
+.tstyle1 td { border: 1px solid #ccc; background-color: #fff; }
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
 .tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
