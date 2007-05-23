@@ -43,7 +43,23 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 	super.setTeacher(null);
 	super.delete();
     }
-   
+
+    @Override
+    public void setLessonHours(Integer lessonHours) {
+	if(lessonHours == null) {
+	    throw new DomainException("error.LegalRegimen.no.lesson.hours");
+	}
+	super.setLessonHours(lessonHours);
+    }
+    
+    @Override
+    public void setTotalHours(Double totalHours) {
+	if(totalHours == null) {
+	    throw new DomainException("error.LegalRegimen.no.total.hours");
+	}
+	super.setTotalHours(totalHours);
+    }
+    
     @Override
     public void setRegimenType(RegimenType regimenType) {
 	if (regimenType == null) {
@@ -54,7 +70,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     
     @Override
     public void setCategory(Category category) {
-	if (category == null) {
+	if (category == null && !isEndSituation()) {
 	    throw new DomainException("error.teacherLegalRegimen.no.category");
 	}
 	super.setCategory(category);
@@ -80,7 +96,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 	return legalRegimenType.equals(LegalRegimenType.FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS);
     }
     
-    private boolean isEndLegalRegimenType(LegalRegimenType legalRegimenType) {
+    public static boolean isEndLegalRegimenType(LegalRegimenType legalRegimenType) {
 	return (legalRegimenType.equals(LegalRegimenType.DEATH)
 		|| legalRegimenType.equals(LegalRegimenType.TERM_WORK_CONTRACT_END)
 		|| legalRegimenType.equals(LegalRegimenType.EMERITUS)

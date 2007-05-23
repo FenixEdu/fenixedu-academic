@@ -1,9 +1,15 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.ServiceExemption" table="SERVICE_EXEMPTION">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EmployeeServiceExemption"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption" table="SERVICE_EXEMPTION">
+      
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.EmployeeServiceExemption -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.EmployeeServiceExemption" table="SERVICE_EXEMPTION">
       
 </class-descriptor>
