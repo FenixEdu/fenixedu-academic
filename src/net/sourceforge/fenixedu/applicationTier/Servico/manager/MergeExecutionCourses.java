@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
@@ -94,12 +96,22 @@ public class MergeExecutionCourses extends Service {
         removeEvaluations(executionCourseFrom, executionCourseTo);
         copyForuns(executionCourseFrom, executionCourseTo);
         copyBoard(executionCourseFrom, executionCourseTo);
+        copyInquiries(executionCourseFrom, executionCourseTo);
 
         executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
         executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
         
         executionCourseFrom.delete();
+    }
+
+    private void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+	for (final InquiriesCourse inquiriesCourse : executionCourseFrom.getAssociatedInquiriesCoursesSet()) {
+	    inquiriesCourse.setExecutionCourse(executionCourseTo);
+	}
+	for (final InquiriesRegistry inquiriesRegistry : executionCourseFrom.getAssociatedInquiriesRegistries()) {
+	    inquiriesRegistry.setExecutionCourse(executionCourseTo);
+	}
     }
 
     private void copyBoard(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
@@ -281,6 +293,12 @@ public class MergeExecutionCourses extends Service {
                     ;
                 for (; !professorship.getSupportLessons().isEmpty(); otherProfessorship
                         .addSupportLessons(professorship.getSupportLessons().get(0)))
+                    ;
+                for (; !professorship.getDegreeTeachingServices().isEmpty(); otherProfessorship
+                	.addDegreeTeachingServices(professorship.getDegreeTeachingServices().get(0)))
+                    ;
+                for (; !professorship.getTeacherMasterDegreeServices().isEmpty(); otherProfessorship
+                	.addTeacherMasterDegreeServices(professorship.getTeacherMasterDegreeServices().get(0)))
                     ;
                 professorship.delete();
             }
