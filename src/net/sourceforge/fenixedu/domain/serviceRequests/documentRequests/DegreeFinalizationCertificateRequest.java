@@ -17,38 +17,36 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean average, Boolean detailed) {
+    public DegreeFinalizationCertificateRequest(final Registration registration,
+	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
+	    final Boolean urgentRequest, final Boolean average, final Boolean detailed) {
 	this();
 
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
 		average, detailed);
     }
 
-    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
-	    Boolean detailed) {
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+    final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
+	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
+	    final Boolean detailed) {
+	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	checkParameters(average, detailed);
 	super.setAverage(average);
 	super.setDetailed(detailed);
     }
 
-    private void checkParameters(Boolean average, Boolean detailed) {
+    final private void checkParameters(Boolean average, Boolean detailed) {
 	if (average == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.average.cannot.be.null");
+	    throw new DomainException("DegreeFinalizationCertificateRequest.average.cannot.be.null");
 	}
 	if (detailed == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
+	    throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
 	}
     }
 
     @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
+    final public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
 	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
 
 	result.add(AdministrativeOfficeType.DEGREE);
@@ -57,51 +55,50 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+    final protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().hasDiplomaRequest()) {
-		throw new DomainException(
-		    "DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
+	    if (!getRegistration().isConcluded()) {
+		throw new DomainException("DegreeFinalizationCertificateRequest.registration.is.not.concluded");
+	    } else if (!getRegistration().hasDiplomaRequest()) {
+		throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
 	    }
 	}
     }
     
     @Override
-    public DocumentRequestType getDocumentRequestType() {
+    final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
     }
 
     @Override
-    public String getDocumentTemplateKey() {
+    final public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
 
     @Override
-    public void setAverage(Boolean average) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.cannot.modify.average");
+    final public void setAverage(final Boolean average) {
+	throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.average");
     }
 
     @Override
-    public void setDetailed(Boolean detailed) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.cannot.modify.detailed");
+    final public void setDetailed(final Boolean detailed) {
+	throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.detailed");
     }
 
     @Override
-    public EventType getEventType() {
+    final public EventType getEventType() {
 	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
     }
 
     @Override
-    public ExecutionYear getExecutionYear() {
+    final public ExecutionYear getExecutionYear() {
 	return null;
     }
 
     @Override
-    public Integer getNumberOfUnits() {
+    final public Integer getNumberOfUnits() {
 	return getDetailed() ? getRegistration().getApprovedEnrolments().size() : 0;
     }
 
