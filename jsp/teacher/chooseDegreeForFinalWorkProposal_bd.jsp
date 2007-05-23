@@ -278,6 +278,14 @@
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:write name="student" property="infoPerson.telefone"/>
 											</td>
+											<td bgcolor="<%= bgColor %>" align="center">
+												<logic:notEmpty name="groupStudent" property="finalDegreeWorkProposalConfirmation">
+													<bean:define id="proposalID" name="finalDegreeWorkProposalHeader" property="idInternal"/>
+													<logic:equal name="groupStudent" property="finalDegreeWorkProposalConfirmation.idInternal" value="<%= proposalID.toString() %>">
+														<bean:message key="label.attribution.confirmed"/>
+													</logic:equal>
+												</logic:notEmpty>
+											</td>
 										</tr>
 									</logic:iterate>					
 								</logic:notEmpty>
