@@ -32,12 +32,12 @@ public enum DegreeType {
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
 	}
-
+	
     },
 
     MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
-
+	
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
@@ -47,7 +47,7 @@ public enum DegreeType {
 
     BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, true, false, false) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.FIRST_CYCLE);
@@ -57,7 +57,7 @@ public enum DegreeType {
 
     BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, false, true, false) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.SECOND_CYCLE);
@@ -67,13 +67,13 @@ public enum DegreeType {
 
     BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
 	    AdministrativeOfficeType.DEGREE, true, true, false) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    final Collection<CycleType> result = new HashSet<CycleType>();
 	    result.add(CycleType.FIRST_CYCLE);
 	    result.add(CycleType.SECOND_CYCLE);
-
+	    
 	    return result;
 	}
 
@@ -81,7 +81,7 @@ public enum DegreeType {
 
     BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.THIRD_CYCLE);
@@ -91,7 +91,7 @@ public enum DegreeType {
 
     BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.singleton(CycleType.THIRD_CYCLE);
@@ -101,13 +101,14 @@ public enum DegreeType {
 
     BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false) {
-
+		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
 	    return Collections.emptySet();
 	}
 
     };
+
 
     private GradeScale gradeScale;
 
@@ -118,13 +119,13 @@ public enum DegreeType {
     private boolean canCreateStudentOnlyWithCandidacy;
 
     private AdministrativeOfficeType administrativeOfficeType;
-
+    
     private boolean isFirstCycle;
-
+    
     private boolean isSecondCycle;
-
+    
     private boolean isThirdCycle;
-
+    
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType,
 	    boolean canCreateStudent, boolean canCreateStudentOnlyWithCandidacy,
 	    AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle,
@@ -206,7 +207,7 @@ public enum DegreeType {
     final public String getFilteredName() {
 	final StringBuilder result = new StringBuilder(getLocalizedName());
 	final String toRemove;
-
+	
 	if (isBolonhaType()) {
 	    toRemove = " Bolonha";
 	} else if (this == DegreeType.DEGREE) {
@@ -216,11 +217,11 @@ public enum DegreeType {
 	} else {
 	    toRemove = "";
 	}
-
+	
 	if (result.toString().contains(toRemove)) {
 	    result.replace(result.indexOf(toRemove), result.indexOf(toRemove) + toRemove.length(), "");
 	}
-
+	
 	return result.toString();
     }
 
@@ -229,7 +230,7 @@ public enum DegreeType {
 		.getString(getQualifiedName() + ".senior.title");
     }
 
-    public static List<DegreeType> getBolonhaDegreeTypes() {
+   public static List<DegreeType> getBolonhaDegreeTypes() {
 	final List<DegreeType> result = new ArrayList<DegreeType>();
 
 	for (final DegreeType degreeType : values()) {
@@ -241,30 +242,34 @@ public enum DegreeType {
 	return result;
     }
 
-    public boolean isFirstCycle() {
-	return isFirstCycle;
-    }
+   public boolean isFirstCycle() {
+       return isFirstCycle;
+   }
 
-    public boolean isSecondCycle() {
-	return isSecondCycle;
-    }
+   public boolean isSecondCycle() {
+       return isSecondCycle;
+   }
 
-    public boolean isThirdCycle() {
-	return isThirdCycle;
-    }
+   public boolean isThirdCycle() {
+       return isThirdCycle;
+   }
+   
+   abstract public Collection<CycleType> getCycleTypes();
 
-    abstract public Collection<CycleType> getCycleTypes();
-
-    final public boolean isStrictlyFirstCycle() {
-	return getCycleTypes().size() == 1 && getCycleTypes().contains(CycleType.FIRST_CYCLE);
-    }
-
-    public CycleType getFirstCycleType() {
+   final public boolean isStrictlyFirstCycle() {
+       return getCycleTypes().size() == 1 && getCycleTypes().contains(CycleType.FIRST_CYCLE);
+   }
+   
+   public CycleType getFirstCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
 	if (cycleTypes.isEmpty()) {
 	    return null;
 	}
 	return Collections.min(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
     }
-
+   
+   final public boolean isComposite() {
+       return getCycleTypes().size() > 1;
+   }
+    
 }
