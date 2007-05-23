@@ -21,7 +21,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="personalInfo" property="idInternal" />
 <bean:define id="studentNumber" name="studentNumber" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<!-- Dados Pessoais -->
 	<tr>
 	    <td class="infoop" width="25"><span class="emphasis-box">1</span></td>
@@ -126,7 +126,7 @@
     </tr>
 </table>
 <br />
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
    <!-- Filiação -->
   	<tr>
 	   <td class="infoop" width="25"><span class="emphasis-box">2</span></td>
@@ -185,7 +185,7 @@
     </tr>
 </table>
 <br />
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<!-- Dados de Residencia -->
 	<tr>
 	    <td class="infoop" width="25"><span class="emphasis-box">3</span></td>
@@ -232,7 +232,7 @@
     </tr>
 </table>
 <br />
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<!-- Contactos -->
 	<tr>
 	    <td class="infoop" width="25"><span class="emphasis-box">4</span></td>
@@ -240,7 +240,7 @@
 	</tr>
 	</table>
 <br />
-<table width="100%">
+<table width="98%">
 	<!-- telefone -->
 	<tr>
 	     <td><bean:message key="label.person.telephone"  /></td>

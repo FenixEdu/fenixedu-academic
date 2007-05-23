@@ -27,7 +27,7 @@
 	</html:link>
 </p>
 
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="<bean:message key="number_1" bundle="IMAGE_RESOURCES" />" />
 		</td>
@@ -72,7 +72,7 @@
 
 
 
-<table class="mtop2" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop2" width="98%" cellpadding="0" cellspacing="0">
 <tr>
 	<td class="infoop">
 		<img src="<%= request.getContextPath() %>/images/number_2.gif" alt="<bean:message key="number_2" bundle="IMAGE_RESOURCES" />" />
@@ -97,7 +97,7 @@
 </table>
 
 
-<table class="mtop2" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop2" width="98%" cellpadding="0" cellspacing="0">
 <tr>
 	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="<bean:message key="number_3" bundle="IMAGE_RESOURCES" />" />
 	</td>

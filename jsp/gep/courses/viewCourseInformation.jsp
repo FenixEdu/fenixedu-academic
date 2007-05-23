@@ -26,7 +26,7 @@
 	</table>
 	</logic:present>
 	<br />
-	<table class="infoselected" width="100%">
+	<table class="infoselected" width="98%">
 		<tr>
 		<td>
 		<b><bean:message key="message.courseInformation.courseName" /></b>&nbsp;
@@ -111,7 +111,7 @@
 	</table>
 	<p class="infoop"><span class="emphasis-box">1</span>
 	<bean:message key="message.courseInformation.timeTable" /></p>
-	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
+	<table width="98%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 		    <th class="listClasses-header" width="200px"><bean:message key="message.courseInformation.classType"/></th>
 		    <th class="listClasses-header"><bean:message key="message.courseInformation.numberOfClasses"/></th>
@@ -163,7 +163,7 @@
 	<bean:message key="message.courseInformation.numberOfStudents"/>:
 	<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/>
 	<p><bean:message key="message.courseInformation.specialTeacherWarning"/></p>
-	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
+	<table width="98%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<th class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></th>
 			<th class="listClasses-header"> <bean:message key="message.courseInformation.categoryOfTeacher"/></th>
@@ -312,7 +312,7 @@
 	<br />
 	<p class="infoop"><span class="emphasis-box">6</span>
 	<bean:message key="message.courseInformation.courseBibliographicReference" /></p>
-	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
+	<table border="0" cellspacing="1" style="margin-top:10px" width="98%">
 		<tr>
 			<th class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></th>
 		</tr>
@@ -327,7 +327,7 @@
 		</logic:equal>
 		</logic:iterate>
 	</table>
-	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
+	<table border="0" cellspacing="1" style="margin-top:10px" width="98%">
 		<tr>
 			<th class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></th>
 		</tr>
@@ -362,7 +362,7 @@
 	<p class="infoop"><span class="emphasis-box">9</span>
 	<bean:message key="message.courseInformation.courseReport" /></p>
 	<br />
-	<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">
+	<table width="98%" cellpadding="0" cellspacing="0" style="margin-top:10px">
 		<tr>
 			<td>
 				<logic:present name="infoSiteCourseInformation" property="infoCourseReport">

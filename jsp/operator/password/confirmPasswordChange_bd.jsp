@@ -33,14 +33,14 @@
 		<bean:define id="personID" name="personalInfo" property="idInternal"/>
 		<bean:define id="username" name="personalInfo" property="username" />
 	
-	  	<table width="100%" cellpadding="0" cellspacing="0">
+	  	<table width="98%" cellpadding="0" cellspacing="0">
 		  <!-- Nome -->
 		  <tr>
             	<td class="infoop" width="25"><span class="emphasis-box"><%= String.valueOf(personIndex.intValue() + 1) %></span></td>
 		    	<td class="infoop"><strong><bean:write name="personalInfo" property="name"/></strong></td>
           </tr>
 	 	</table>
-		<table width="100%">
+		<table width="98%">
 		  <!-- Role -->
 		  <tr>
 	      	<td width="30%" colspan="2">

@@ -9,7 +9,7 @@
 	<bean:define id="evaluation" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>
 	<h2><bean:message key="title.evaluation.enrollment.period" arg0="<%= evaluation.getEvaluationType().toString() %>"/></h2>
 	<br />
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop"><bean:message key="label.period.information" /></td>
 		</tr>

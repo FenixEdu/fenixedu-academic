@@ -26,7 +26,7 @@
  
 	<h2><bean:message key="title.NewProjectProposals"/></h2>
 	
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.teacher.newProjectProposals.description" />
@@ -42,7 +42,7 @@
     	<bean:message key="link.backToProjectsAndLink"/></html:link>
 <br/>
 <br/>
-<table width="100%" border="0" style="text-align: left;">
+<table width="98%" border="0" style="text-align: left;">
         <tbody>
     	 <tr>
 			<th class="listClasses-header" width="25%" ><bean:message key="label.projectName" />

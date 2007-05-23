@@ -8,7 +8,7 @@
 <%@ page import="java.util.Date" %>
  
  <html:errors />
- <table width="100%">
+ <table width="98%">
  	<tr valign="bottom">
  		<td><h2><bean:message bundle="APPLICATION_RESOURCES" key="label.person.title.personalConsult"  /></h2></td>
  		<td align="right">
@@ -28,7 +28,7 @@
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">Editar dados</html:submit>
 -->
 		</html:form>
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">1</span></td>
@@ -36,7 +36,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Nome -->
           <tr>
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.name"  /></td>
@@ -107,7 +107,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Filiação -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
@@ -115,7 +115,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Data de Nascimento -->
           <tr>
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.birth"  /></td>
@@ -161,7 +161,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Dados de Residencia -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">3</span></td>
@@ -169,7 +169,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Morada -->
           <tr>
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.address"  /></td>
@@ -207,7 +207,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Contactos -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">4</span></td>
@@ -215,7 +215,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Telefone -->
           <tr>
             <td width="30%"><bean:message bundle="APPLICATION_RESOURCES" key="label.person.telephone"  /></td>

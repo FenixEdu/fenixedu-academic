@@ -7,7 +7,7 @@
 <h2><bean:message key="message.publishment" /></h2>
 <br />
 <logic:present name="siteView">
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop"><bean:message key="label.publish.information" /></td>
 		</tr>

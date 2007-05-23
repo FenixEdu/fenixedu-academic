@@ -10,7 +10,7 @@
 
 <logic:present name="infoSiteStudentsAndGroups">
 
-<table align="left" width="100%">
+<table align="left" width="98%">
 <tbody>
 <tr>
 <td>
@@ -22,7 +22,7 @@
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 		
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
 					<bean:message key="label.student.viewStudentsAndGroupsWithoutShift.description" />
@@ -36,7 +36,7 @@
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 	
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
 					<bean:message key="label.student.viewStudentsAndGroupsWithoutShift.description" />

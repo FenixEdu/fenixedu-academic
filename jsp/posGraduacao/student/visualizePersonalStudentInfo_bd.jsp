@@ -8,7 +8,7 @@
  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
  <br />
         <logic:present name="infoPerson">
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">1</span></td>
@@ -16,7 +16,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Nome -->
           <tr>
             <td width="30%"><bean:message key="label.person.name" /></td>
@@ -86,7 +86,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Filiação -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
@@ -94,7 +94,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Data de Nascimento -->
           <tr>
             <td width="30%"><bean:message key="label.person.birth" /></td>
@@ -145,7 +145,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Dados de Residencia -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">3</span></td>
@@ -153,7 +153,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Morada -->
           <tr>
             <td width="30%"><bean:message key="label.person.address" /></td>
@@ -191,7 +191,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="98%" cellpadding="0" cellspacing="0">
           <!-- Contactos -->
           <tr>
             <td class="infoop" width="25"><span class="emphasis-box">4</span></td>
@@ -199,7 +199,7 @@
           </tr>
 		</table>
 		<br />
-		<table width="100%">
+		<table width="98%">
           <!-- Telefone -->
           <tr>
             <td width="30%"><bean:message key="label.person.telephone" /></td>

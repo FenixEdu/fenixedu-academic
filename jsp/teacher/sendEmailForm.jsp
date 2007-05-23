@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="message.label.Hints"/>

@@ -64,7 +64,7 @@ function cleanSelect(checkboxes) {
     <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="infoAttends"/>
 
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="message.students.explanation"/>

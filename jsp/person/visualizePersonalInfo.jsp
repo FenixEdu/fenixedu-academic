@@ -20,7 +20,7 @@
 
 
 <!-- Contactos -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactInfo" /></strong></td>
@@ -211,7 +211,7 @@
 
 
 <!-- Autorizações de Disponibilização de Informação -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.information.to.publish" /></strong></td>
@@ -232,7 +232,7 @@
 
 
 <!-- Dados Pessoais -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">3</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
@@ -259,7 +259,7 @@
 
 
 <!-- Informação de Utilizador -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
@@ -273,7 +273,7 @@
 
 
 <!-- Filiação -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
@@ -287,7 +287,7 @@
 
 
 <!-- Residência -->
-<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">6</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>

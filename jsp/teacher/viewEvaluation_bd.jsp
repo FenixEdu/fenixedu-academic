@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
 <h2><bean:message key="title.evaluation"/></h2>
 <br />
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop"><bean:message key="label.exams.information" /></td>
 	</tr>

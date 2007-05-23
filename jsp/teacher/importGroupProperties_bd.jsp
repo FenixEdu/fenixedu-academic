@@ -14,7 +14,7 @@
 <bean:define id="infoGrouping" name="infoSiteGroupProperties" property="infoGrouping"/>
 
 <br/>
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.teacher.importGroupProperties.description" />
@@ -26,7 +26,7 @@
 <h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>
 <br/>
 
-<table width="100%" border="0" style="text-align: left;">
+<table width="98%" border="0" style="text-align: left;">
         <tbody>
         <tr>
 		</tr>

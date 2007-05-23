@@ -8,7 +8,7 @@
 <br />
 <br/>
 
-	<table width="100%" cellpadding="0" cellspacing="0">
+	<table width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop">
 				<bean:message key="label.teacher.exportGroupProperties.executionCourse.description" />
@@ -26,14 +26,14 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" name="chooseSearchContextForm" property="curYear"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.index" name="chooseSearchContextForm" property="index"/>
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-    <table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
+    <table width="98%" align="center" border="0" cellpadding='0' cellspacing='0'>
     	<tr>
     		<td class="infoop"><bean:message key="message.choose.discipline" />
        		</td>
     	</tr>
     </table>
     <br />
-    <table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
+    <table width="98%" align="center" border="0" cellpadding='0' cellspacing='0'>
     	<tr valign='center'>
         	<td class="formTD">
             	<bean:message key="property.course"/>
