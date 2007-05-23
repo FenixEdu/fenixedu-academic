@@ -5,9 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
@@ -78,6 +81,11 @@ public abstract class FenixAction extends Action {
     
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {
         this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+    }
+
+    protected Object executeService(final HttpServletRequest request, final String serviceName,
+	    final Object[] serviceArgs) throws FenixFilterException, FenixServiceException {
+	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
 }

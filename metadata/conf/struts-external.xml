@@ -74,6 +74,13 @@
 			validate="true">
     	</action>
 
+    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ConsultRoles"
+            path="/consultRoles"
+	        scope="request"
+	        parameter="method"
+			validate="true">
+    	</action>
+
 		<action path="/announcementsRSS"
     		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.AnnouncementRSS"
     		parameter="method"

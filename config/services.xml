@@ -10505,7 +10505,14 @@
         <filterChains>
         </filterChains>     
     </service>      
-
+    <service>
+    	<name>ConsultRoles</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ConsultRoles</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>
     <service>
     	<name>SetEmail</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail</implementationClass>

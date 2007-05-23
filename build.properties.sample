@@ -438,6 +438,8 @@ validateExpirationDate=false
 #
 email.admin.allowed.hosts=
 email.admin.password=xPtO!)&#.
+consult.roles.admin.allowed.hosts=127.0.0.1,localhost,192.168.1.101
+consult.roles.admin.password=xPtO
 externalServices.StudentInfoByUsername.externalAppPassword=xpto
 
 
