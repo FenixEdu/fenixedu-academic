@@ -46,7 +46,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
     @Override
     public void setLessonHours(Integer lessonHours) {
-	if(lessonHours == null) {
+	if(lessonHours == null && !isEndSituation()) {
 	    throw new DomainException("error.LegalRegimen.no.lesson.hours");
 	}
 	super.setLessonHours(lessonHours);
@@ -54,7 +54,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     
     @Override
     public void setTotalHours(Double totalHours) {
-	if(totalHours == null) {
+	if(totalHours == null && !isEndSituation()) {
 	    throw new DomainException("error.LegalRegimen.no.total.hours");
 	}
 	super.setTotalHours(totalHours);
@@ -62,7 +62,7 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
     
     @Override
     public void setRegimenType(RegimenType regimenType) {
-	if (regimenType == null) {
+	if (regimenType == null && !isEndSituation()) {
 	    throw new DomainException("error.LegalRegimen.no.regimenType");
 	}
 	super.setRegimenType(regimenType);
