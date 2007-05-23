@@ -45,7 +45,7 @@
     that you upgrade your browser to enjoy a better user experience of this website.
     More informations on <a href="http://www.webstandards.org/upgrade/">webstandards.org</a>.</p>
 </div>
-<!-- END BROWSER UPGRADE MESSAGE -->
+0<!-- END BROWSER UPGRADE MESSAGE -->
 
 <!-- SYMBOLSROW -->
 <div id="header">

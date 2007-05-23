@@ -1335,6 +1335,7 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String realName;
+	String realNameEn;
 	String name;
 	Integer keyDepartmentUnit;
 	Group competenceCourseMembersGroup;
@@ -4751,6 +4752,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		
 		MultiLanguageString description;
 		Boolean personalizedLogo;
+		Boolean showInstitutionLogo;
 		Boolean showBanner;
 		Boolean showIntroduction;
 		Boolean showAnnouncements;

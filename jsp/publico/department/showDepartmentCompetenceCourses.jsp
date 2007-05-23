@@ -23,7 +23,7 @@
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
 		<h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
-			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
+			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
 		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
@@ -33,7 +33,7 @@
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:outputText value="<h1>#{publicDepartmentBundle['department.courses']} #{publicDepartmentBundle['from.masculine']} " escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h1>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}</h1>" escape="false"/>
 
 	<h:form>
 

@@ -19,6 +19,7 @@ public abstract class UnitSite extends UnitSite_Base {
     public UnitSite() {
         super();
         
+        setShowInstitutionLogo(true);
         setShowFlags(true);
         setPersonalizedLogo(false);
         setShowIntroduction(true);
@@ -190,6 +191,17 @@ public abstract class UnitSite extends UnitSite_Base {
         }
         
         return null;
+    }
+    
+    /**
+     * Utility method to allow the user of an intenationalized name for the
+     * site. Normally units, as a Party, don't have and internacionalized name
+     * but some subclasses may override this behaviour. 
+     * 
+     * @return an internacionalized name
+     */
+    public MultiLanguageString getUnitNameWithAcronym() {
+    	return new MultiLanguageString(getUnit().getNameWithAcronym());
     }
     
     /**

@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.messaging;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
+import java.util.Locale;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -15,7 +15,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.MonthAnnouncementArchiveEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.YearAnnouncementArchiveEntry;
-import net.sourceforge.fenixedu.util.Mes;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.taglib.TagUtils;
 
@@ -27,7 +27,9 @@ import org.apache.struts.taglib.TagUtils;
  */
 public class ArchiveTag extends TagSupport {
 
-    private String property;
+	private static final long serialVersionUID = 1L;
+	
+	private String property;
     private String name;
     private String scope;
     private String locale;
@@ -108,7 +110,6 @@ public class ArchiveTag extends TagSupport {
         AnnouncementArchive archive = (AnnouncementArchive) value;
         StringBuffer buffer = new StringBuffer();
 
-        Collection<Integer> availableYears = new ArrayList<Integer>();
         for (YearAnnouncementArchiveEntry year : archive.getEntries().values()) {
             buffer.append("<p><span>").append(year.getYear()).append("</span> ");
             buffer.append(this.renderYear(archive.getEntries().get(year.getYear())));
@@ -135,7 +136,11 @@ public class ArchiveTag extends TagSupport {
                 buffer.append("\">");
             }
             if (month != null) {
-                buffer.append(new Mes(i).toAbbreviationString());
+            	Locale locale = LanguageUtils.getLocale();
+            	Calendar calendar = Calendar.getInstance();
+            	calendar.set(Calendar.MONTH, i - 1);
+            	
+                buffer.append(String.format(locale, "%tb.", calendar.getTime()));
                 buffer.append(" (");
                 buffer.append(month.getAnnouncementCount());
                 buffer.append(")");

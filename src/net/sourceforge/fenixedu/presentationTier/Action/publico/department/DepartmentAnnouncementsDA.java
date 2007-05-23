@@ -17,6 +17,8 @@ public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
         String path = "/department/announcements.do";
         
         request.setAttribute("announcementActionVariable", path);
+        request.setAttribute("showingAnnouncements", true);
+        
         return path;
     }
 

@@ -380,6 +380,12 @@
     <definition name="department-degrees" extends="definition.public.department">
         <put name="body" value="/publico/department/department-degrees.jsp"/>
     </definition>
+    <definition name="department-teachers-category" extends="definition.public.department">
+        <put name="body" value="/publico/department/department-teachers-category.jsp"/>
+    </definition>
+    <definition name="department-teachers-area" extends="definition.public.department">
+        <put name="body" value="/publico/department/department-teachers-area.jsp"/>
+    </definition>
 
     <definition name="definition.public.department.site" extends="definition.public.department">
         <put name="body-context" value="/publico/department/site-context.jsp"/>

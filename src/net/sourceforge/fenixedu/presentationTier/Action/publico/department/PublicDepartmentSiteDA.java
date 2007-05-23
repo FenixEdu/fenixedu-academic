@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
 import java.net.MalformedURLException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -17,18 +16,23 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import org.joda.time.YearMonthDay;
 
 public class PublicDepartmentSiteDA extends SiteVisualizationDA {
 
@@ -121,16 +125,40 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
     public ActionForward employees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         Unit unit = getUnit(request);
         
-        List<Employee> employees = unit.getAllCurrentNonTeacherEmployees();
-        Collections.sort(employees, new Comparator<Employee>() {
-
-            public int compare(Employee o1, Employee o2) {
-                return o1.getPerson().getNickname().compareTo(o2.getPerson().getNickname());
-            }
-            
-        });
+        BeanComparator employeeComparator = new BeanComparator("person", Party.COMPARATOR_BY_NAME_AND_ID);
         
-        request.setAttribute("employees", employees);
+        SortedSet<Unit> areas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+		SortedSet<Employee> employeesNoArea = new TreeSet<Employee>(employeeComparator);
+        Map<String, SortedSet<Employee>> employeesMap = new Hashtable<String, SortedSet<Employee>>();
+        
+        for (Employee employee : unit.getAllCurrentNonTeacherEmployees()) {
+        	Unit area = employee.getCurrentSectionOrScientificArea();
+        	
+        	if (area != null) {
+        		areas.add(area);
+        		
+        		String areaKey = area.getIdInternal().toString();
+				SortedSet<Employee> employees = employeesMap.get(areaKey);
+        		if (employees == null) {
+        			employees = new TreeSet<Employee>(employeeComparator);
+        			employeesMap.put(areaKey, employees);
+        		}
+        		
+        		employees.add(employee);
+        	}
+        	else {
+        		employeesNoArea.add(employee);
+        	}
+        }
+        
+        if (areas.isEmpty()) {
+        	request.setAttribute("ignoreAreas", true);
+        }
+        
+        request.setAttribute("areas", areas);
+        request.setAttribute("employees", employeesMap);
+        request.setAttribute("employeesNoArea", employeesNoArea);
+        
         return mapping.findForward("department-employees");
     }
 
@@ -166,4 +194,91 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
         return mapping.findForward("department-degrees");
     }
     
+    public ActionForward teachers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        Unit unit = getUnit(request);
+        
+        Department department = unit.getDepartment();
+        if (department == null) {
+            return presentation(mapping, actionForm, request, response);
+        }
+
+        String mode = getTeachersMode(request.getParameter("viewBy"));
+        
+        if (mode.equals("category")) {
+        	setupTeachersCategories(request, department);
+        }
+        else if (mode.equals("area")) {
+        	setupTeachersAreas(request, department);
+        }
+        
+        return mapping.findForward("department-teachers-" + mode);
+    }
+
+	private String getTeachersMode(String parameter) {
+		if (parameter == null) {
+			return "category";
+		}
+		
+		if (parameter.equals("category") || parameter.equals("area")) {
+			return parameter;
+		}
+		
+		return "category";
+	}
+
+	private void setupTeachersCategories(HttpServletRequest request, Department department) {
+		YearMonthDay today = new YearMonthDay();
+		YearMonthDay tomorrow = today.plusDays(1);
+		
+		SortedSet<Category> categories = new TreeSet<Category>();
+		Map<String, SortedSet<Teacher>> teachers = new Hashtable<String, SortedSet<Teacher>>();
+		
+		for (Teacher teacher : department.getAllTeachers(today, tomorrow)) {
+			categories.add(teacher.getCategory());
+			addListTeacher(teachers, teacher.getCategory().getCode(), teacher);
+		}
+		
+		request.setAttribute("categories", categories);
+		request.setAttribute("teachers", teachers);
+	}
+
+	private void setupTeachersAreas(HttpServletRequest request, Department department) {
+		YearMonthDay today = new YearMonthDay();
+		YearMonthDay tomorrow = today.plusDays(1);
+		
+		SortedSet<Unit> areas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+		SortedSet<Teacher> teachersNoArea = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+		Map<String, SortedSet<Teacher>> teachers = new Hashtable<String, SortedSet<Teacher>>();
+		
+		for (Teacher teacher : department.getAllTeachers(today, tomorrow)) {
+			Unit area = teacher.getCurrentSectionOrScientificArea();
+			
+			if (area != null) {
+				areas.add(area);
+				addListTeacher(teachers, area.getIdInternal().toString(), teacher);
+			}
+			else {
+				teachersNoArea.add(teacher);
+			}
+		}
+
+		if (areas.isEmpty()) {
+			request.setAttribute("ignoreAreas", true);
+		}
+		
+		request.setAttribute("areas", areas);
+		request.setAttribute("teachers", teachers);
+		request.setAttribute("teachersNoArea", teachersNoArea);
+	}
+	
+	private void addListTeacher(Map<String, SortedSet<Teacher>> teachersMap, String key, Teacher teacher) {
+		SortedSet<Teacher> teachers = teachersMap.get(key);
+		
+		if (teachers == null) {
+			teachers = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+			teachersMap.put(key, teachers);
+		}
+		
+		teachers.add(teacher);
+	}
 }

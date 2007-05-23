@@ -12,6 +12,40 @@
 
 <h2><bean:message key="title.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
+<div class="mtop15 mbottom05">
+    <strong><bean:message key="title.site.logo.ist" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
+</div>
+
+<div class="infoop2 mbottom15">
+    <p class="mvert0">
+        <bean:message key="label.site.institutionallogo.message" bundle="WEBSITEMANAGER_RESOURCES"/>
+    </p>
+</div>
+
+<logic:present name="institutionLogoChanged">
+    <p class="mbottom05">
+        <span class="success0">
+            <bean:message key="message.site.logo.ist.changed" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </span>
+    </p>
+</logic:present>
+
+<fr:form action="<%= String.format("%s?method=updateInstitutionLogo&amp;%s", actionName, context) %>">
+	<fr:edit id="institutionLogo" name="site" schema="custom.unitSite.istLogo">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+		</fr:layout>
+	</fr:edit>
+	
+	<html:submit>
+		<bean:message key="button.save"/>
+	</html:submit>
+</fr:form>
+
+<div class="mtop15 mbottom05">
+    <strong><bean:message key="title.site.logo.unit" bundle="WEBSITEMANAGER_RESOURCES"/>:</strong>
+</div>
+
 <div class="infoop2 mbottom15">
     <p class="mvert0">
         <bean:message key="label.site.logo.message" bundle="WEBSITEMANAGER_RESOURCES"/>

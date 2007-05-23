@@ -2278,7 +2278,7 @@ public class Person extends Person_Base {
 	// Currently, a Person can only have one WorkPhone (so use get(0) -
 	// after
 	// interface updates remove these methods)
-	private Phone getPersonWorkPhone() {
+	public Phone getPersonWorkPhone() {
 		final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class,
 				PartyContactType.WORK);
 		// actually exists only one
@@ -2439,5 +2439,33 @@ public class Person extends Person_Base {
 	
 	public boolean isExternalPerson() {
 	    return hasExternalContract() || hasExternalResearchContract();
+	}
+	
+	public boolean isPhotoPubliclyAvailable() {
+		Boolean availablePhoto = getAvailablePhoto();
+		if (availablePhoto == null || !availablePhoto) {
+			return false;
+		}
+		
+		if (! isHomePageAvailable()) {
+			return false;
+		}
+		
+		Boolean showPhotoInHomepage = getHomepage().getShowPhoto();
+		return showPhotoInHomepage != null && showPhotoInHomepage;
+	}
+	
+	public boolean isEmailPubliclyAvailable() {
+		Boolean availableEmail = getAvailableEmail();
+		if (availableEmail == null || !availableEmail) {
+			return false;
+		}
+
+		if (! isHomePageAvailable()) {
+			return false;
+		}
+		
+		Boolean showEmailInHomepage = getHomepage().getShowEmail();
+		return showEmailInHomepage != null && showEmailInHomepage;
 	}
 }

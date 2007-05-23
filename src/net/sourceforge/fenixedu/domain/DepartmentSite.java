@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
     
@@ -97,6 +98,16 @@ public class DepartmentSite extends DepartmentSite_Base {
         groups.add(new DepartmentEmployeesGroup(getDepartment()));
         
         return groups;
+    }
+
+    /**
+     * The department already has the an internacionalized name.
+     * 
+     * @see Department#getNameI18n()
+     */
+    @Override
+    public MultiLanguageString getUnitNameWithAcronym() {
+    	return getDepartment().getNameI18n();
     }
     
 }

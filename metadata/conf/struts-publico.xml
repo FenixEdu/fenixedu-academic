@@ -916,6 +916,8 @@
             <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="department-site-front-page-intro-float"/>
             <forward name="department-employees" path="department-employees"/>
             <forward name="department-degrees" path="department-degrees"/>
+            <forward name="department-teachers-category" path="department-teachers-category"/>
+            <forward name="department-teachers-area" path="department-teachers-area"/>
             <forward name="site-section" path="department-section"/>
             <forward name="site-section-deny" path="department-section-deny"/>
             <forward name="site-section-adviseLogin" path="department-section-adviseLogin"/>
@@ -926,6 +928,7 @@
 
         <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
         <action path="/department/degrees" forward="/department/departmentSite.do?method=degrees"/>
+        <action path="/department/teachers" forward="/department/departmentSite.do?method=teachers"/>
 
         <action path="/department/announcements"
                 parameter="method"
@@ -973,14 +976,14 @@
 			<forward name="listEvents" path="show-research-unit-board-events"/>
             <forward name="listAnnouncements" path="show-research-unit-board-announcements"/>
       </action>
-
+      
         <action path="/loginRequest"
 	   type="net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement"
 	   parameter="method">
             <forward name="startRequestLoginProcess" path="start-request-login-process"/>
             <forward name="requestLoginFinished" path="request-login-finish-process"/>
       </action>
-            
+
      </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

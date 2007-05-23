@@ -32,40 +32,31 @@
         <fr:view name="department" property="nameI18n"/>
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:message key="label.employees" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
+    <bean:message key="department.faculty" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
 </div>
 
 <h1>
-    <bean:message key="label.employees" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
+    <bean:message key="department.faculty" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     <bean:message key="of.masculine" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     <fr:view name="department" property="nameI18n"/>
 </h1>
 
-<logic:iterate id="area" name="areas" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+<div class="mtop2">
+	<bean:message key="link.teacher.byCategories" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
+	|
+	<html:link page="<%= "/department/teachers.do?viewBy=area&amp;selectedDepartmentUnitID=" + unitId %>">
+		<bean:message key="link.teacher.byAreas" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>
+	</html:link>
+</div>
+
+<logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.teacher.Category">
 	<h2 class="greytxt mtop2">
-		<fr:view name="area" property="name"/>
+		<fr:view name="category" property="name"/>
 	</h2>
 
-	<logic:iterate id="_e" name="employees" property="<%= area.getIdInternal().toString() %>" type="net.sourceforge.fenixedu.domain.Employee">
-		<bean:define id="employee" name="_e" toScope="request"/>
-		
-		<jsp:include page="department-employee-card.jsp"/>
+	<bean:define id="byCategory" value="true" toScope="request"/>
+	<logic:iterate id="t" name="teachers" property="<%= category.getCode() %>" type="net.sourceforge.fenixedu.domain.Teacher">
+		<bean:define id="teacher" name="t" toScope="request"/>
+		<jsp:include page="department-teachers-card.jsp"/>
 	</logic:iterate>
 </logic:iterate>
-
-<logic:notEmpty name="employeesNoArea">
-	<logic:notPresent name="ignoreAreas">
-		<h2 class="greytxt mtop2">
-			<bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>
-		</h2>
-	</logic:notPresent>
-
-	<logic:present name="ignoreAreas">
-		<div class="mtop2"></div>
-	</logic:present>
-	
-	<logic:iterate id="_e" name="employeesNoArea" type="net.sourceforge.fenixedu.domain.Employee">
-		<bean:define id="employee" name="_e" toScope="request"/>
-		<jsp:include page="department-employee-card.jsp"/>
-	</logic:iterate>
-</logic:notEmpty>

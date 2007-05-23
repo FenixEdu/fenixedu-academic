@@ -1197,4 +1197,9 @@ public class Teacher extends Teacher_Base {
 	}
 	return false;
     }
+    
+    public Unit getCurrentSectionOrScientificArea() {
+    	return getPerson().getEmployee().getCurrentSectionOrScientificArea();
+    }
+
 }

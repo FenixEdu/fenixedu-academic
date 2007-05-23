@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 
-<h1 class="mbottom03 cnone"><fr:view name="site" property="unit.nameWithAcronym"/></h1>
+<h1 class="mbottom03 cnone"><fr:view name="site" property="unitNameWithAcronym"/></h1>
 
 <h2 class="mtop15"><bean:message key="label.messaging.events.title" bundle="MESSAGING_RESOURCES"/></h2>
 

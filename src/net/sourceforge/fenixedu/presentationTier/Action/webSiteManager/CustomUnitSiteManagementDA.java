@@ -89,6 +89,17 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		return mapping.findForward("editConfiguration");
 	}
 
+	public ActionForward updateInstitutionLogo(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState("institutionLogo");
+		if (viewState != null && viewState.isValid()) {
+			request.setAttribute("institutionLogoChanged", true);
+		}
+		
+		request.setAttribute("bean", new SimpleFileBean());
+		return mapping.findForward("editLogo");
+	}
+	
 	public ActionForward updateI18n(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		IViewState viewState = RenderUtils.getViewState("i18n");
@@ -115,7 +126,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		String layoutParamenter = request.getParameter("layout");
 
 		if (layoutParamenter == null) {
-			return mapping.findForward("editLogo");
+			return prepare(mapping, actionForm, request, response);
 		}
 
 		UnitSiteLayoutType layout = UnitSiteLayoutType.valueOf(layoutParamenter);

@@ -239,3 +239,30 @@ table.noborder { padding-left: 1em; padding-bottom: 1em; }
 table.noborder tr td { border: none; }
 table.noborder tr td { padding: 0; margin: 0; }
 td.noborder { border: none; }
+
+/** temporary place for teachers and employees presentation */
+.personInfo tr td {
+vertical-align: top;
+}
+td.personInfo_photo {
+width: 115px;
+text-align: center;
+}
+td.personInfo_photo div {
+width: 105px;
+border: 1px solid #ccc;
+background: #fafafa;
+padding: 0.5em;
+}
+td.personInfo_info {
+padding-left: 0.5em;
+}
+
+table.personInfo2 tr {
+margin: 0;
+padding: 0;
+}
+table.personInfo2 tr td {
+margin: 0;
+padding: 0;
+}

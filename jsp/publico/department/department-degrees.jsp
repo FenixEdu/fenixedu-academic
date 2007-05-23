@@ -29,7 +29,7 @@
     &nbsp;&gt;&nbsp;
     <bean:define id="unitId" name="unit" property="idInternal"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
-        <fr:view name="department" property="realName"/>
+        <fr:view name="department" property="nameI18n"/>
     </html:link>
     &nbsp;&gt;&nbsp;
     <bean:message key="label.degrees" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
@@ -38,7 +38,7 @@
 <h1>
     <bean:message key="label.degrees" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     <bean:message key="of.masculine" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
-    <fr:view name="department" property="realName"/>
+    <fr:view name="department" property="nameI18n"/>
 </h1>
 
 <logic:notEmpty name="types">

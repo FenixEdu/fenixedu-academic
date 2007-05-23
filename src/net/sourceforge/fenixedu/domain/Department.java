@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
@@ -245,5 +246,20 @@ public class Department extends Department_Base {
         removeDepartmentUnit();
         removeRootDomainObject();
         deleteDomainObject();
+    }
+    
+    /**
+	 * Joins the portuguese and english version of the department's name in a
+	 * MultiLanguageString for an easier handling of the name in a
+	 * internacionalized context.
+	 * 
+	 * @return a MultiLanguageString with the portuguese and english versions of
+	 *         the department's name
+	 */
+    public MultiLanguageString getNameI18n() {
+    	return MultiLanguageString.i18n()
+    		.add("pt", getRealName())
+    		.add("en", getRealNameEn())
+    		.finish();
     }
 }

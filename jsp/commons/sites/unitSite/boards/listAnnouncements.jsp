@@ -8,7 +8,7 @@
 
 <html:xhtml/>
 
-<h1 class="mbottom03 cnone"><fr:view name="site" property="unit.nameWithAcronym"/></h1>
+<h1 class="mbottom03 cnone"><fr:view name="site" property="unitNameWithAcronym"/></h1>
 
 <h2 class="mtop15"><bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/></h2>
 
@@ -61,8 +61,13 @@
 		<p>
 			<em class="color888 smalltxt">
 				<bean:message key="label.messaging.author" bundle="MESSAGING_RESOURCES"/>: 
-				<bean:define id="userName" name="announcement" property="creator.username"/>
-				<html:link target="blank" href="<%= request.getContextPath() + "/homepage/" + userName %>"><fr:view name="announcement" property="creator.nickname"/></html:link>
+				<logic:equal name="announcement" property="creator.homePageAvailable" value="true">
+					<bean:define id="userName" name="announcement" property="creator.username"/>
+					<html:link target="blank" href="<%= request.getContextPath() + "/homepage/" + userName %>"><fr:view name="announcement" property="creator.nickname"/></html:link>
+				</logic:equal>
+				<logic:notEqual name="announcement" property="creator.homePageAvailable" value="true">
+					<fr:view name="announcement" property="creator.nickname"/>
+				</logic:notEqual>
 			</em>
 		</p>
 	</div>

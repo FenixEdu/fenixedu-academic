@@ -37,7 +37,7 @@
                     <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
-                <html:link page="<%= "/publico/department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>" module="">
+                <html:link page="<%= "/publico/department/teachers.do?selectedDepartmentUnitID=" + departmentUnitID %>" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;

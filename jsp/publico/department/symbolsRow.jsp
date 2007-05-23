@@ -7,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
+
 <%
     Integer departmentUnitId;
     Unit unit = (Unit) request.getAttribute("unit");
@@ -21,8 +23,9 @@
     request.setAttribute("site", site);
 	
     if (site != null && site.isDefaultLogoUsed()) {
+    	String finalLanguage = language == null ? "pt" : String.valueOf(language);
         request.setAttribute("siteDefaultLogo", 
-        	String.format("%s/images/departments/%s.gif", request.getContextPath(), unit.getAcronym()));
+        	String.format("%s/images/departments/%s_%s.gif", request.getContextPath(), unit.getAcronym(), finalLanguage));
     }
 %>
 

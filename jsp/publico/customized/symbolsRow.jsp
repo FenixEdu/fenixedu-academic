@@ -13,9 +13,11 @@
 
 <div id="logoist">
 
-	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<%= request.getContextPath() + "/images/ist_logo.gif"%>"/>
-	</a>
+	<logic:equal name="site" property="showInstitutionLogo" value="true">
+		<a href="<%= institutionUrl %>">
+			<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<%= request.getContextPath() + "/images/ist_logo.gif"%>"/>
+		</a>
+	</logic:equal>
 
 	<logic:equal name="site" property="defaultLogoUsed" value="false">
 		<logic:present name="site" property="logo">

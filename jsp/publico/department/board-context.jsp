@@ -2,6 +2,7 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <div class="breadcumbs mvert0">
@@ -26,8 +27,13 @@
     &nbsp;&gt;&nbsp;
     <bean:define id="unitId" name="unit" property="idInternal"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
-        <fr:view name="department" property="realName"/>
+        <fr:view name="department" property="nameI18n"/>
     </html:link>
     &nbsp;&gt;&nbsp;
-    <fr:view name="announcementBoard" property="name"/>
+    <logic:present name="showingAnnouncements"> <%-- hack: set in action --%>
+		<bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/>
+    </logic:present>
+    <logic:present name="showingEvents">
+    	<bean:message key="label.messaging.events.title" bundle="MESSAGING_RESOURCES"/>
+    </logic:present>
 </div>

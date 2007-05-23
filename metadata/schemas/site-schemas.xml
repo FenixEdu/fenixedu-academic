@@ -168,6 +168,12 @@
     </slot>
 </schema>
 
+<schema name="custom.unitSite.istLogo" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
+    <slot name="showInstitutionLogo" layout="radio" key="label.site.showInstitutionLogo">
+        <property name="classes" value="liinline nobullet"/>
+    </slot>
+</schema>
+
 <schema name="create.researchContract.internal" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
 <!--  	<slot name="externalPerson" layout="radio-postback" key="label.person">
 		<property name="classes" value="liinline nobullet"/>
