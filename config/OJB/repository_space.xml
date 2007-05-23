@@ -65,3 +65,6 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Blueprint" table="BLUEPRINT">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers " table="PERSISTENT_GROUP_MEMBERS">
+</class-descriptor>

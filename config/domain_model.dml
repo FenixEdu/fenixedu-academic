@@ -192,6 +192,7 @@ valueType net.sourceforge.fenixedu.domain.Language																as Language;
 valueType net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                              as UnitSiteLayoutType;
 valueType net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                              as UnitSiteBannerRepeatType;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                             as CycleType;
+valueType net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType								as PersistentGroupMembersType;
 
 /*
 *
@@ -2907,6 +2908,11 @@ class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sour
 
 class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
+}
+
+class net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	PersistentGroupMembersType type;
 }
 
 class net.sourceforge.fenixedu.domain.resource.Resource extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -13048,4 +13054,18 @@ relation RootDomainObjectInquiriesStudentExecutionPeriod {
 	}
 }
 
+relation RootDomainObjectPersistentGroupMembers {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
+		multiplicity *;
+	}
+}
 
+relation PersistentGroupMembersPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole persons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers playsRole persistentGroups {
+		multiplicity *;
+	}
+}
