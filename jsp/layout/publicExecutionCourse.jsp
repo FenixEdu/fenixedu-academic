@@ -49,7 +49,7 @@
 
 		<div id="holder">
 			<logic:present name="executionCourse">
-				<table id="bigtable" width="98%" border="0" cellpadding="0" cellspacing="0">
+				<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td id="latnav_container" width="155" nowrap="nowrap">
 							<div id="latnav">
