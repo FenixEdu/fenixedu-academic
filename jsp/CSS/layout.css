@@ -123,6 +123,9 @@ float: left;
 font: 0.85em Tahoma, Verdana, Sans-Serif;
 line-height: 1.5em;
 }
+#navlateral {
+padding-top: 1em;
+}
 #navlateral ul li {
 list-style: none;
 }
@@ -142,8 +145,9 @@ text-decoration: none;
 #navlateral ul li.navheader {
 display: block;
 width: 12.45em;
+	width: 13.45em;
 margin-top: 1em;
-padding: 0.7ex 1em 0.7ex 1.5em;
+padding: 0.7ex 1em 0.7ex 0.5em;
 font-weight: bold;
 }
 #navlateral ul li ul {
@@ -170,7 +174,7 @@ padding-left: 0em;
 
 
 
-/* --- new nav --- */
+/* --- new nav / renderer generated --- */
 
 /* reset properties */
 #navlateral div.newnav ul li ul {
@@ -192,7 +196,7 @@ width: auto;
 #navlateral div.newnav ul li > a {
 display: block;
 width: 12.45em;
-padding: 0.8ex 1em 0.8ex 1.5em;
+padding: 0.7ex 1em 0.7ex 1.5em;
 text-decoration: none;
 }
 #navlateral div.newnav ul li > span {
@@ -217,10 +221,12 @@ width: 10.95em;
 /* navheader specific */
 #navlateral div.newnav ul li.navheader > a { font-weight: bold; }
 #navlateral div.newnav ul li.navheader > span { font-weight: bold; }
-#navlateral div.newnav ul li.navheader { padding-top: 1em; }
+#navlateral div.newnav ul li.navheader { margin-top: 1.0em; }
 	#navlateral div.newnav ul li.navheader ul li.navheader { padding-top: 0; }
 	#navlateral div.newnav ul li.navheader ul li.navheader a { font-weight: normal; }
-	
+
+#navlateral div.newnav ul li.navheader span { width: 13.45em; }
+#navlateral div.newnav ul li.navheader span, #navlateral div.newnav ul li.navheader span { padding: 0.7ex 1em 0.7ex 0.5em; }
 	
 
 
@@ -234,7 +240,7 @@ border-bottom: 12px solid #ebe6d6;
 #container {
 width: 100%;
 float: left;
-padding-top: 1em;
+/*padding-top: 1em;*/
 background: #fff url(../images/latnavgrad_200px.gif) left top repeat-y;
 border-top: 12px solid #f6f4ed;
 }
@@ -252,7 +258,7 @@ background: #fff !important;
 #content {
 margin: 0 0 1.0em 200px;
 line-height: 1.5em;
-padding: 0em 2em 1em 2em;
+padding: 1em 2em 1em 2em;
 font-size: 0.85em;
 }
 .content_2col_photo {

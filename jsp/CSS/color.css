@@ -47,7 +47,7 @@ background-color: #1a343d;
 
 
 
-/* >>> */ #navlateral { }
+/* >>> */ #navlateral { background: #f6f4ed !important; }
 /* >>> */ #container { }
 /* >>> */ #content { background-color: #fff; margin-right: 8px; }
 #footer { background-color: #0b4f64;	}
