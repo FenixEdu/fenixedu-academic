@@ -107,11 +107,7 @@ public class Dismissal extends Dismissal_Base {
     }
     
     private Double getEnrolmentsEcts() {
-	Double result = 0d;
-	for (final IEnrolment enrolment : getCredits().getIEnrolments()) {
-	    result = result + enrolment.getEctsCredits();
-	}
-	return result;
+	return getCredits().getEnrolmentsEcts();
     }
     
     @Override

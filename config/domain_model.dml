@@ -1525,6 +1525,15 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
 		String givenGrade;
 	}
+	
+		class net.sourceforge.fenixedu.domain.studentCurriculum.Substitution extends net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence {
+			
+		}
+	
+			class net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution extends net.sourceforge.fenixedu.domain.studentCurriculum.Substitution {
+			
+			}
+	
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper extends net.sourceforge.fenixedu.domain.DomainObject {
 	String className;

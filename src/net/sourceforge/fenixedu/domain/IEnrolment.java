@@ -10,8 +10,12 @@ public interface IEnrolment {
     
     String getGrade();
     
+    Integer getFinalGrade();
+    
     String getDescription();
     
     Double getEctsCredits();
+    
+    Double getWeigth();
     
 }

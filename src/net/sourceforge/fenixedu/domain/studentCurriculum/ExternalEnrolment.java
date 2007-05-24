@@ -84,4 +84,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return Double.valueOf(0d);
     }
 
+    public Integer getFinalGrade() {
+	final String grade = getGrade();
+	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
+		: Integer.valueOf(grade);
+    }
+
+    public Double getWeigth() {
+	return getEctsCredits();
+    }
+
 }

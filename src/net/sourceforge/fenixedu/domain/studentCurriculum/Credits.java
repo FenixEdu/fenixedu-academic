@@ -128,4 +128,13 @@ public class Credits extends Credits_Base {
 	super.deleteDomainObject();
     }
     
+    public Double getEnrolmentsEcts() {
+	Double result = 0d;
+	for (final IEnrolment enrolment : getIEnrolments()) {
+	    result = result + enrolment.getEctsCredits();
+	}
+	return result;
+    }
+
+    
 }
