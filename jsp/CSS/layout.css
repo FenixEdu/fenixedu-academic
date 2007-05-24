@@ -260,6 +260,7 @@ margin: 0 0 1.0em 200px;
 line-height: 1.5em;
 padding: 1em 2em 1em 2em;
 font-size: 0.85em;
+height: 1%; /* fixes unwanted margin in IE for 100% width elements inside content */
 }
 .content_2col_photo {
 margin: 0 0 1.0em 350px !important;
