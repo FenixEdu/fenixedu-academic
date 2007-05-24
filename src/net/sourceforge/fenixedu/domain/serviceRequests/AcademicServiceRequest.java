@@ -115,6 +115,10 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return !hasEvent() || getEvent().isPayed();
     }
 
+    final public boolean getIsPayed() {
+	return isPayed();
+    }
+
     abstract public EventType getEventType();
 
     abstract public String getDescription();
