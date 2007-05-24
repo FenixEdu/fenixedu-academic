@@ -10,12 +10,7 @@ public abstract class Transaction extends jvstm.Transaction {
     private static final long REPORT_LONG_TRANSACTION_THRESHOLD = 180 * 1000;
 
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
-
-    static {
-        new StatisticsThread().start();
-    }
-
-    private static final FenixCache cache = new FenixCache();
+    private final static FenixCache cache = new FenixCache();
 
     static {
 	jvstm.Transaction.setTransactionFactory(new jvstm.TransactionFactory() {
@@ -27,10 +22,8 @@ public abstract class Transaction extends jvstm.Transaction {
 		    return new ReadOnlyTopLevelTransaction(txNumber);
                 }
 	    });
-    }
 
-    // initialize transaction system
-    static {
+        // initialize transaction system
         int maxTx = TransactionChangeLogs.initializeTransactionSystem();
         if (maxTx >= 0) {
             System.out.println("Setting the last committed TX number to " + maxTx);

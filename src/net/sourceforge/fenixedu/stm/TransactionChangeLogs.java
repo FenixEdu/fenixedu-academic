@@ -264,8 +264,11 @@ public class TransactionChangeLogs {
 	    int maxTx = (rs.next() ? rs.getInt(1) : -1);
 
 	    broker.commitTransaction();
+            broker.close();
+            broker = null;
 
-	    new CleanThread().start();
+            new CleanThread().start();
+            new StatisticsThread().start();
 
 	    return maxTx;
 	} catch (Exception e) {
