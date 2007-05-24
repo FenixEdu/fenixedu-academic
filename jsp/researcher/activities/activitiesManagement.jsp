@@ -24,9 +24,6 @@
 	}
 	</script>
 
-	<%--
-	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>
-	--%>
 
 	<script>
 		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
@@ -44,7 +41,7 @@
 		</li>
 		<li>
 			<div class="dblock" id="instructionsButton">
-			Tipos de actividades científicas no sistema: <a href="#" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
+				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>: <a href="#" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
 			</div>
 		</li>
 	</ul>
