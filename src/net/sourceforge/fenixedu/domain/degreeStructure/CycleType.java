@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -38,4 +41,10 @@ public enum CycleType {
 		.getString(name());
     }
 
+    static final public Collection<CycleType> getSortedValues() {
+	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+	result.addAll(Arrays.asList(values()));
+	return result;
+    }
+    
 }
