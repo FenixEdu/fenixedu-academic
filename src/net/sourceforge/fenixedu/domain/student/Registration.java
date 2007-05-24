@@ -1456,6 +1456,17 @@ public class Registration extends Registration_Base {
 	return true;
     }
     
+    final public List<CycleType> getConcludedCycles() {
+	final List<CycleType> result = new ArrayList<CycleType>();
+	for (final CycleType cycleType : CycleType.getSortedValues()) {
+	    if (hasConcludedCycle(cycleType)) {
+		result.add(cycleType);
+	    }
+	}
+	
+	return result;
+    }
+    
     public int getCurricularYear(ExecutionYear executionYear) {
 	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
