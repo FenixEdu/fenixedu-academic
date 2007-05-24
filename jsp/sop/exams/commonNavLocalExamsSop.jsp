@@ -8,8 +8,7 @@
 	<li><html:link page="/principalSalas.do"><bean:message key="link.management" bundle="SOP_RESOURCES"/></html:link></li>
 	
 	<li class="navheader"><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></li>  
-	<li><html:link page="/mainExamsNew.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link></li>	 
-	<li class="sub">
+	<li><html:link page="/mainExamsNew.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link>
 		<ul>
 			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"	+ SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.writtenEvaluation.map"/></html:link></li>
 			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationsByRoom.faces?" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.writtenEvaluation.by.room"/></html:link></li>
@@ -26,7 +25,7 @@
 	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.visualize" bundle="SOP_RESOURCES"/></html:link></li>
 </ul>
 
-<%--
+	<%--
 	<li>
 		<html:link page="<%= "/chooseDegreeAndYearContext.do?method=prepare&amp;"
  							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -35,7 +34,7 @@
 			<bean:message key="link.exams.examsManagement"/>
 		</html:link>
 	</li>
---%>
+	--%>
 	<%--
 	<li>
 		<html:link page="<%= "/roomExamSearch.do?method=prepare&amp;nextPage=viewExams&amp;"

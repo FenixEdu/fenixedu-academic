@@ -7,8 +7,7 @@
 
 <ul>
 	<li class="navheader"><bean:message key="link.schedules.management" bundle="SOP_RESOURCES"/></li>
-	<li><html:link page="/chooseExecutionPeriod.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link></li>
-	<li class="sub">
+	<li><html:link page="/chooseExecutionPeriod.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link>
 		<ul>	
 			<li><html:link page="<%= "/chooseContext.do?method=prepare&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.chooseContext"/></html:link></li>	
 			<logic:notEmpty name="curricularYearOID">
@@ -36,4 +35,5 @@
 	<li><html:link page="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"><bean:message key="link.management" bundle="SOP_RESOURCES"/></html:link></li>
 		
 	<li class="navheader"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></li>
-	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.visualize" bundle="SOP_RESOURCES"/></html:link></li></ul>
+	<li><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.visualize" bundle="SOP_RESOURCES"/></html:link></li>
+</ul>

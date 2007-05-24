@@ -28,22 +28,20 @@
 	<li><html:link page="/studentEnrollmentManagement.do?method=prepare" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
 	<li><html:link page="/viewEnroledExecutionCourses.do?method=prepare" titleKey="link.title.groupEnrolment"><bean:message key="link.groupEnrolment" /></html:link></li>	
-	<li><html:link page="/enrollment/evaluations/showEvaluations.faces" titleKey="link.title.evaluations.enrolment" ><bean:message key="link.evaluations.enrolment"/></html:link></li>
-	<li class="sub">
+	<li><html:link page="/enrollment/evaluations/showEvaluations.faces" titleKey="link.title.evaluations.enrolment" ><bean:message key="link.evaluations.enrolment"/></html:link>
 		<ul>
-		<li><html:link page="/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1" titleKey="link.title.exams.enrolment" ><bean:message key="link.exams.enrolment"/></html:link></li>
-		<li><html:link page="/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2" titleKey="link.title.writtenTests.enrolment" ><bean:message key="link.writtenTests.enrolment"/></html:link></li>
+			<li><html:link page="/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1" titleKey="link.title.exams.enrolment" ><bean:message key="link.exams.enrolment"/></html:link></li>
+			<li><html:link page="/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2" titleKey="link.title.writtenTests.enrolment" ><bean:message key="link.writtenTests.enrolment"/></html:link></li>
 		</ul>
 	</li>
 	<li><html:link page="/listAllSeminaries.do" titleKey="link.title.seminaries.enrolment" ><bean:message key="link.seminaries.enrolment"/></html:link>	<a href="<bean:message key="link.seminaries.rules"/>" title="<bean:message key="link.title.seminaries.rules"/>" target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li> 
 	<li class="navheader"><bean:message key="link.student.seniorTitle"/></li>
 	<li><html:link page="/seniorInformation.do?method=prepare&amp;page=0" ><bean:message key="link.senior.info"/></html:link></li>			  	
-	<li><span title="<bean:message key="link.title.finalWorkTitle"/>"><bean:message key="link.student.finalWorkTitle"/></span></li>
-	<li class="sub">
+	<li><span title="<bean:message key="link.title.finalWorkTitle"/>"><bean:message key="link.student.finalWorkTitle"/></span>
 		<ul>
-		<li><html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'><bean:message key="link.finalDegreeWork.proposal.listings"/></html:link></li>
-		<li><html:link page="/finalDegreeWorkCandidacy.do?method=prepareCandidacy&amp;page=0"><bean:message key="link.finalDegreeWork.candidacy"/></html:link></li>
-		<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
+			<li><html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'><bean:message key="link.finalDegreeWork.proposal.listings"/></html:link></li>
+			<li><html:link page="/finalDegreeWorkCandidacy.do?method=prepareCandidacy&amp;page=0"><bean:message key="link.finalDegreeWork.candidacy"/></html:link></li>
+			<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
 		</ul>
 	</li>
 </ul>
