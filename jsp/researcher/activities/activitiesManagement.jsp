@@ -24,8 +24,31 @@
 	}
 	</script>
 
+	<%--
+	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>
+	--%>
 
-	<p class="dblock" id="instructionsButton"><a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/></a></p>
+	<script>
+		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+		document.getElementById('instructionsButton').className="dblock";
+	</script>
+		
+	<ul class="mtop15 mbottom1 list5">
+		<li>
+			<bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
+			<%-- <html:link page="/activities/createEvent.do?method=prepareEventSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.events" /></html:link>,  --%>
+			<html:link page="/activities/createEventEdition.do?method=prepareEventEditionSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></html:link>, 
+			<html:link page="/activities/createScientificJournal.do?method=prepareJournalSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></html:link>,
+			<html:link page="/activities/createJournalIssue.do?method=prepareJournalIssueSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></html:link>,
+			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
+		</li>
+		<li>
+			<div class="dblock" id="instructionsButton">
+			Tipos de actividades científicas no sistema: <a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
+			</div>
+		</li>
+	</ul>
+
 	<div id="instructions" class="dblock">
 		<div class="mtop025">
 			<table class="tstyle1 thlight mtop05">
@@ -48,26 +71,9 @@
 				</tr>
 			</table>
 		</div>
-
 	</div>
 
-	<script>
-		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-		document.getElementById('instructionsButton').className="dblock";
-	</script>
 
-
-
-
-	<ul class="mtop15 mbottom1 list5">
-		<li> <bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
-			<%-- <html:link page="/activities/createEvent.do?method=prepareEventSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.events" /></html:link>,  --%>
-			<html:link page="/activities/createEventEdition.do?method=prepareEventEditionSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></html:link>, 
-			<html:link page="/activities/createScientificJournal.do?method=prepareJournalSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></html:link>,
-			<html:link page="/activities/createJournalIssue.do?method=prepareJournalIssueSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></html:link>,
-			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
-		</li>
-	</ul>
 	
 	<logic:notEmpty name="international-events">
 		<p id='events' class="mtop3 mbottom0">

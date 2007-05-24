@@ -255,11 +255,7 @@
 
 						<p class="mbottom05"><strong><bean:message key="label.articleEvent" bundle="RESEARCHER_RESOURCES"/></strong></p>
 						
-						<%--
-						<p class="color888 mvert05"><bean:message key="label.chooseEvent.instructions" bundle="RESEARCHER_RESOURCES"/></p>
-						--%>
-
-						<p class="color888 mvert05"><bean:message key="label.chooseEvent.instructions" bundle="RESEARCHER_RESOURCES"/></p>
+						<p class="color888 mvert05"><bean:message key="label.chooseEvent.firstInstructions" bundle="RESEARCHER_RESOURCES"/></p>
 
 						<logic:present name="eventEditionBean" property="eventName">
 							<div class="warning0">
