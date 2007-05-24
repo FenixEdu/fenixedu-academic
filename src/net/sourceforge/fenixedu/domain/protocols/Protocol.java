@@ -282,10 +282,17 @@ public class Protocol extends Protocol_Base {
 		    }
 		}
 	    }
-	}
+	}        
 	return null;
     }
 
+    public List<Person> getAllResponsibles(){
+        List<Person> allResponsibles = new ArrayList<Person>();
+        allResponsibles.addAll(getResponsibles());
+        allResponsibles.addAll(getPartnerResponsibles());
+        return allResponsibles;
+    }
+    
     public boolean isActive() {
 	if (getActive()) {
 	    return true;

@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.protocols;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
+import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -34,7 +38,15 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
         ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
         request.setAttribute("protocolFactory", protocolFactory);
         if (isCancelled(request)) {
-            request.setAttribute("protocols", rootDomainObject.getProtocols());
+            List<Protocol> protocolList = new ArrayList<Protocol>();
+            ProtocolSearch protocolSearch = new ProtocolSearch();
+            for (Protocol protocol : rootDomainObject.getProtocols()) {
+                if (protocolSearch.satisfiedActivity(protocol)) {
+                    protocolList.add(protocol);
+                }
+            }
+            request.setAttribute("protocolSearch", protocolSearch);
+            request.setAttribute("protocols", protocolList);
             return mapping.findForward("show-protocols");
         }
         if (isProtocolNumberValid(protocolFactory)) {

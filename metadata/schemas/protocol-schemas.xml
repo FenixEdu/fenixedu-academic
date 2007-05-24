@@ -1,8 +1,13 @@
 <schema name="show.protocol.toList"	type="net.sourceforge.fenixedu.domain.protocols.Protocol">
 	<slot name="protocolNumber" key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<slot name="protocolAction.text" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>		
+	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.toList" layout="flow"/>
+	<slot name="partners" key="label.protocol.partnerUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="view.unitName" layout="values-dash">
+		<property name="htmlSeparator" value=","/>
+	</slot>
+	<slot name="allResponsibles" key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="view.personName" layout="values-dash">
+		<property name="htmlSeparator" value=","/>
+	</slot>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 
 <schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
@@ -313,6 +318,15 @@
 	</slot>
 </schema>
 
+<schema name="show.protocolHistories.toList" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
+	<slot name="beginDate" key="label.protocol.begin" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="endDate" key="label.protocol.end" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
 <schema name="show.protocolHistories.formatted" type="net.sourceforge.fenixedu.domain.protocols.ProtocolHistory">
 	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label"/>
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="null-as-label">
@@ -375,6 +389,14 @@
 	<slot name="observations" key="label.protocol.observations" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 
+<schema name="view.personName" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name"/>
+</schema>
+	
+<schema name="view.unitName" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="name"/>
+</schema>
+	
 <!-- Search Protocol -->
 <schema name="edit.protocolSearch.number" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
 	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
