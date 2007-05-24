@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,34 +12,46 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * 
  * @author cfgi
  */
-public class RoleGroup extends DomainBackedGroup<Role> {
+public class RoleGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    public RoleGroup(Role role) {
-        super(role);
+    private RoleType roleType;
+
+    public RoleGroup(RoleType roleType) {
+	super();
+
+	if (roleType == null) {
+            throw new DomainException("accessControl.group.domainBacked.null");
+        }
+
+	this.roleType = roleType;
     }
 
+    public RoleGroup(Role role) {
+	this(role == null ? null : role.getRoleType());
+    }
+    
     public Role getRole() {
-        return getObject();
+        return Role.getRoleByRoleType(roleType);
     }
 
     @Override
     public int getElementsCount() {
-        return this.getRole().getAssociatedPersonsCount();
+        return getRole().getAssociatedPersonsCount();
     }
 
     @Override
     public Set<Person> getElements() {
         Set<Person> elements = new HashSet<Person>();
-        elements.addAll(this.getRole().getAssociatedPersons());
-
+        elements.addAll(getRole().getAssociatedPersons());
         return elements;
     }
 
@@ -57,36 +68,18 @@ public class RoleGroup extends DomainBackedGroup<Role> {
      */
     @Override
     public boolean allows(IUserView userView) {
-        if (userView == null || userView.isPublicRequester()) {
-            return false;
-        }
-        
-        Collection<RoleType> roleTypes = userView.getRoleTypes();
-
-        if (roleTypes == null) {
-            return false;
-        }
-
-        if (roleTypes.contains(getRole().getRoleType())) {
-            return true;
-        } else {
-            return false;
-        }
+	return userView != null && !userView.isPublicRequester() && userView.hasRoleType(roleType);
     }
 
     @Override
     public boolean isMember(Person person) {
-        if (person != null && getRole() != null) {
-            return person.hasRole(getRole().getRoleType());
-        }
-
-        return false;
+	return person != null && person.hasRole(roleType);
     }
 
     @Override
     protected Argument[] getExpressionArguments() {
         return new Argument[] {
-                new StaticArgument(getRole().getRoleType().getName())
+                new StaticArgument(roleType.getName())
         };
     }
     
@@ -105,14 +98,14 @@ public class RoleGroup extends DomainBackedGroup<Role> {
 
             try {
                 String roleName = (String) arguments[0];
-                Role role = Role.getRoleByRoleType(RoleType.valueOf(roleName));
+                RoleType roleType = RoleType.valueOf(roleName);
 
-                if (role == null) {
+                if (roleType == null) {
                     throw new GroupDynamicExpressionException(
                             "accessControl.group.builder.role.type.notAvailable", roleName);
                 }
 
-                return new RoleGroup(role);
+                return new RoleGroup(roleType);
             } catch (ClassCastException e) {
                 throw new WrongTypeOfArgumentException(1, String.class, arguments[0].getClass());
             } catch (IllegalArgumentException e) {
