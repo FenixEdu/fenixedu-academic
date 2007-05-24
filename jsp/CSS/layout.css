@@ -283,6 +283,10 @@ padding: 1.5em 2em;
 border-top: 12px solid #f6f4ed;
 height: 1%; /* IE margin fix */
 }
+#footer p {
+margin: 0;
+padding: 0;
+}
 
 #bar {
 height: 10px;
