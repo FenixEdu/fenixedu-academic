@@ -35,6 +35,7 @@
 	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -53,7 +54,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="673"  isSplitAllowed="true" >
+			<band height="772"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="59"
@@ -208,7 +209,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["o curso de " + $P{registration}.getDegreeType().getFilteredName() + " em " + $P{registration}.getDegree().getFilteredName() + " no"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["o " + $P{conclusionStatus} + " de " + $P{registration}.getDegreeType().getFilteredName() + " em " + $P{registration}.getDegree().getFilteredName() + " no"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -247,7 +248,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getDegree().getSeniorTitle()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Licenciado em " + $P{registration}.getDegree().getFilteredName()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -314,6 +315,94 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityName} + ", em " + $P{day}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="158"
+						y="701"
+						width="72"
+						height="16"
+						key="staticText-19"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O Administrador]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="109"
+						y="697"
+						width="156"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="109"
+						y="749"
+						width="156"
+						height="0"
+						key="line-2"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="144"
+						y="753"
+						width="100"
+						height="16"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[A Coordenadora de Núcleo]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="327"
+						y="697"
+						width="156"
+						height="0"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="386"
+						y="701"
+						width="36"
+						height="16"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O Reitor]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="327"
+						y="749"
+						width="156"
+						height="0"
+						key="line-4"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="338"
+						y="753"
+						width="139"
+						height="16"
+						key="staticText-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>
