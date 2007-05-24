@@ -44,6 +44,7 @@
 								</html:submit>
 							</form>
 						</td>
+<!--
 						<td>
 							<form action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
 								<html:hidden property="method" value="registerStudentResponseDontWantToRespond"/>
@@ -52,6 +53,7 @@
 								</html:submit>
 							</form>
 						</td>
+-->
 					</tr>
 				</table>
 			</div>

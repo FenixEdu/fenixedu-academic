@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -74,9 +73,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    if (student != null) {
-		if (student.doesNotWantToRespondToInquiries()) {
-		    return false;
-		}
+//		if (student.doesNotWantToRespondToInquiries()) {
+//		    return false;
+//		}
 		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		if (executionPeriod != null && executionPeriod.getInquiryResponsePeriod() != null && executionPeriod.getInquiryResponsePeriod().insidePeriod()) {
 		    for (final Registration reistration : student.getRegistrationsSet()) {
