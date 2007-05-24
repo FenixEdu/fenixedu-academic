@@ -64,7 +64,7 @@ public enum DocumentRequestType {
     }
 
     final public boolean getHasAdditionalInformation(final DegreeType degreeType) {
-	return hasAdditionalInformation && (this != DIPLOMA_REQUEST || (this == DIPLOMA_REQUEST && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	return hasAdditionalInformation && (this != DIPLOMA_REQUEST || (this == DIPLOMA_REQUEST && degreeType.isComposite()));
     }
 
     public boolean isAllowedToQuickDeliver() {
