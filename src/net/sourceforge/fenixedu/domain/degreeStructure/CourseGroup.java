@@ -391,8 +391,8 @@ public class CourseGroup extends CourseGroup_Base {
     private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(
 	    final Collection<CurricularRule> curricularRules) {
 	for (final CurricularRule curricularRule : curricularRules) {
-	    if (curricularRule.getCurricularRuleType().equals(
-		    CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+	    if (curricularRule.getCurricularRuleType() ==
+		    CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT) {
 		return (DegreeModulesSelectionLimit) curricularRule;
 	    }
 	}
