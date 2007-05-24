@@ -32,3 +32,4 @@ execute "Ensure that deparment's site is up-to-date 1" changeDepartmentSectionNa
 execute "Ensure that deparment's site is up-to-date 2" changeDepartmentTeachersPath.sql
 execute "Add english name to departments" addEnglishNameToDepartments.sql
 execute "Add option to hide/show institution logo to UnitSite" addUnitSiteOption.sql
+execute "Add requestedCycle to AcademicServiceRequest table" addRequestedCycleToAcademicServiceRequestTable.sql

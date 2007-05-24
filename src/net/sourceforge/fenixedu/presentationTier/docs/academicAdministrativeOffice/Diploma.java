@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.util.Iterator;
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -20,10 +24,9 @@ public class Diploma extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-	// TODO talk to Manel, change this into call to University Unit
-	parameters.put("universityName", "Universidade Técnica de Lisboa");
-	parameters.put("universityPrincipalName", "José Dias Lopes da Silva");
+	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
+	parameters.put("universityName", institutionsUniversityUnit.getName());
+	parameters.put("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal().getName());
 	
 	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
 	parameters.put("documentRequest", diplomaRequest);
@@ -38,15 +41,37 @@ public class Diploma extends AdministrativeOfficeDocument {
 	parameters.put("birthLocale", person.getDistrictOfBirth());
 
 	parameters.put("conclusionDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	parameters.put("institutionName", institutionUnit.getName());
+	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
-	if (registration.getDegreeType().isDegree()) {
+	if (diplomaRequest.hasFinalAverageDescription()) {
 	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
-	} else {
-	    parameters.put("dissertationTitle", "A E-mpresa e o trabalhador Inteligente nas Indústrias Tradicionais na Nova Economia ou na Economia baseada no conhecimento");
+	} else if (diplomaRequest.hasDissertationTitle()) {
+	    parameters.put("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle().getContent());
 	}
-    
+	
+	setConclusionStatus(diplomaRequest, registration);
+    }
+
+    private void setConclusionStatus(final DiplomaRequest diplomaRequest, final Registration registration) {
+	final ResourceBundle applicationResources = ResourceBundle.getBundle("resources/ApplicationResources");
+	String conclusionStatus = "";
+	
+	if (registration.getDegreeType().isComposite()) {
+	    final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources");
+	    
+	    for (final Iterator<CycleType> iter = registration.getConcludedCycles().iterator(); iter.hasNext();) {
+		final CycleType cycleType = iter.next();
+		conclusionStatus += enumerationResources.getString(cycleType.getQualifiedName());
+		if (iter.hasNext()) {
+		    conclusionStatus += " e ";
+		}
+	    }
+	} else {
+	    conclusionStatus = applicationResources.getString("label.degree");
+	}
+	
+	parameters.put("conclusionStatus",  conclusionStatus);
     }
 
 }

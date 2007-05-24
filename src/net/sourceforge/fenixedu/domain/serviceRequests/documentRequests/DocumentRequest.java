@@ -20,7 +20,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     }
 
     @Override
-    final public String getDescription() {
+    public String getDescription() {
 	return getDescription("AcademicServiceRequestType.DOCUMENT", getDocumentRequestType().getQualifiedName());
     }
 
@@ -64,7 +64,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 			getAverage(), getDetailed(), getYear(), getFreeProcessed());
 
 	    } else if (getChosenDocumentRequestType().isDiploma()) {
-		return new DiplomaRequest(getRegistration());
+		return new DiplomaRequest(getRegistration(), getRequestedCycle());
 
 	    }
 	    
