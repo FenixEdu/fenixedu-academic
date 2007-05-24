@@ -33,3 +33,5 @@ execute "Ensure that deparment's site is up-to-date 2" changeDepartmentTeachersP
 execute "Add english name to departments" addEnglishNameToDepartments.sql
 execute "Add option to hide/show institution logo to UnitSite" addUnitSiteOption.sql
 execute "Add requestedCycle to AcademicServiceRequest table" addRequestedCycleToAcademicServiceRequestTable.sql
+executeWithTempFile "Alter Table LegalRegimen" alterTableLegalRegimen.sql
+execute "Alter table Professional SItuation" alterTableProfessionalSituation.sql
