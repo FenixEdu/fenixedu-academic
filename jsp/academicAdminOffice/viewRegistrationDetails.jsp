@@ -251,7 +251,7 @@
 
 				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 				<fr:property name="key(payments)" value="payments"/>
-				<fr:property name="visibleIfNot(payments)" value="payed"/>
+				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 
 				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(deliver)" value="deliver"/>
