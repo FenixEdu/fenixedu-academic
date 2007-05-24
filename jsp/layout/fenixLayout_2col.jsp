@@ -20,17 +20,22 @@
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
+
+<!--[if IE]><style>
+#wrap {
+margin-right: -3000px;
+position: relative;
+}
+</style><![endif]-->
 </head>
 
 <body>
 
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
 
-
 <!-- Context -->
 <tiles:insert attribute="context" ignore="true"/>
 <!--End Context -->
-
 
 <!-- Header -->
 <div id="top">
@@ -72,17 +77,17 @@
 	</div>
 	<!-- End NavLateral -->
 	
-
-
+	<!-- Wrap -->
+	<div id="wrap">
 	<!-- Content -->
 	<div id="content">
-	
 	  	<tiles:insert attribute="body-context" ignore="true"/>
 	  	<tiles:insert attribute="body" ignore="true"/>
 	  	<tiles:getAsString name="body-inline" ignore="true"/>
-	  	
 	</div>
 	<!-- End Content -->
+	</div>
+	<!-- End Wrap -->
 
 	<!-- Footer -->
 	<div id="footer">
