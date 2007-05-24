@@ -115,7 +115,6 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		<fr:property name="groupLinks" value="false"/>
-		
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
@@ -167,7 +166,7 @@
 	</html:link>	
 </p>
 
-<p>
+<p class="mtop1">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 	<html:link action="/academicServiceRequestsManagement.do?method=viewRegistrationAcademicServiceRequestsHistoric" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="requests.historic"/>
@@ -242,17 +241,26 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
 				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
-				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-				<fr:property name="key(deliver)" value="deliver"/>
-				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
+
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+
 				<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
 				<fr:property name="key(print)" value="print"/>
 				<fr:property name="visibleIf(print)" value="documentRequestPrintedInFenix"/>
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-				<fr:property name="key(view)" value="view"/>
+
+				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
+				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="visibleIfNot(payments)" value="payed"/>
+
+				<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(deliver)" value="deliver"/>
+				<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
+
 				<fr:property name="order(view)" value="1"/>
 				<fr:property name="order(print)" value="2"/>
-				<fr:property name="order(deliver)" value="3"/>
+				<fr:property name="order(payments)" value="3"/>
+				<fr:property name="order(deliver)" value="4"/>
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>

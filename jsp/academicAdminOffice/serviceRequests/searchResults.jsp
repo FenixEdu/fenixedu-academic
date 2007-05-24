@@ -30,6 +30,12 @@
 <bean:define id="processRequestUrl">
 	/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
 </bean:define>
+<bean:define id="deliveredRequestUrl">
+	/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest
+</bean:define>
+<bean:define id="paymentsUrl">
+	/payments.do?method=showOperations
+</bean:define>
 
 <%
 	String sortCriteria = request.getParameter("sortBy");
@@ -62,14 +68,21 @@
 					<fr:property name="groupLinks" value="true" />
 					<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
 					
-					<logic:notEqual name="academicSituationType" value="CONCLUDED">
-						<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-						<fr:property name="key(processing)" value="processing"/>
-						<fr:property name="visibleIf(processing)" value="newRequest"/>
-						<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-						<fr:property name="key(concluded)" value="conclude"/>
-						<fr:property name="visibleIf(concluded)" value="processing"/>
-					</logic:notEqual>
+					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+					<fr:property name="key(processing)" value="processing"/>
+					<fr:property name="visibleIf(processing)" value="newRequest"/>
+
+					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+					<fr:property name="key(concluded)" value="conclude"/>
+					<fr:property name="visibleIf(concluded)" value="processing"/>
+
+					<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+					<fr:property name="key(delivered)" value="conclude"/>
+					<fr:property name="visibleIf(delivered)" value="concluded"/>
+
+					<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
+					<fr:property name="key(payments)" value="payments"/>
+					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 					
 					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
 					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
@@ -98,14 +111,21 @@
 				<fr:property name="groupLinks" value="true" />
 				<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
 
-				<logic:notEqual name="academicSituationType" value="CONCLUDED">
-					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(processing)" value="processing"/>
-					<fr:property name="visibleIf(processing)" value="newRequest"/>
-					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(concluded)" value="conclude"/>
-					<fr:property name="visibleIf(concluded)" value="processing"/>
-				</logic:notEqual>
+				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(processing)" value="processing"/>
+				<fr:property name="visibleIf(processing)" value="newRequest"/>
+
+				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(concluded)" value="conclude"/>
+				<fr:property name="visibleIf(concluded)" value="processing"/>
+
+				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(delivered)" value="conclude"/>
+				<fr:property name="visibleIf(delivered)" value="concluded"/>
+
+				<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
+				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
 				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
