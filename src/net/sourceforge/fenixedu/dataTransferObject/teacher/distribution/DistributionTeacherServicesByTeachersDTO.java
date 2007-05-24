@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 
 /**
  * amak, jpmsit
@@ -137,13 +137,13 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     }
 
     public class TeacherCreditsInfoDTO {
-	private List<ServiceExemptionType> exemptionTypes;
+	private List<ProfessionalSituationType> exemptionTypes;
 	
 	private String functionName;
 
 	private Double credits;
 
-	TeacherCreditsInfoDTO(List<ServiceExemptionType> exemptionTypes, Double credits) {
+	TeacherCreditsInfoDTO(List<ProfessionalSituationType> exemptionTypes, Double credits) {
 	    this.exemptionTypes = exemptionTypes;
 	    this.credits = credits;
 	}
@@ -157,7 +157,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    return credits;
 	}
 
-	public List<ServiceExemptionType> getExemptionTypes() {
+	public List<ProfessionalSituationType> getExemptionTypes() {
 	    return exemptionTypes;
 	}
 
@@ -302,7 +302,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    managementFunctionList.add(new TeacherCreditsInfoDTO(function, credits));
 	}
 
-	public void addToExemptionSituation(List<ServiceExemptionType> exemptionType, Double credits) {
+	public void addToExemptionSituation(List<ProfessionalSituationType> exemptionType, Double credits) {
 	    exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
 	}
 
@@ -364,7 +364,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	}
     }
 
-    public void addExemptionSituationToTeacher(Integer keyTeacher, List<ServiceExemptionType> exemptionTypes, Double credits) {
+    public void addExemptionSituationToTeacher(Integer keyTeacher, List<ProfessionalSituationType> exemptionTypes, Double credits) {
 	TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
 	if (teacher != null) {

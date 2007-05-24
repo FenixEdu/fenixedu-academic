@@ -1,31 +1,23 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LegalRegimenType;
-import net.sourceforge.fenixedu.util.RegimenType;
+import net.sourceforge.fenixedu.util.RegimeType;
 
 import org.joda.time.YearMonthDay;
 
-public class LegalRegimen extends LegalRegimen_Base {
+public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     
-    public LegalRegimen() {
+    public ProfessionalSituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public void init(YearMonthDay beginDate, YearMonthDay endDate, LegalRegimenType legalRegimenType, RegimenType regimenType) {
+    public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType, Employee employee) {
 	setOccupationInterval(beginDate, endDate);
-	setLegalRegimenType(legalRegimenType);
-	setRegimenType(regimenType);
-    }
-    
-    @Override
-    public void setLegalRegimenType(LegalRegimenType legalRegimenType) {
-	if (legalRegimenType == null) {
-	    throw new DomainException("error.LegalRegimen.no.legalRegimenType");
-	}
-	super.setLegalRegimenType(legalRegimenType);
+	setSituationType(type);
+	setRegimeType(regimenType);
+	setEmployee(employee);
     }
     
     @Override
@@ -55,17 +47,46 @@ public class LegalRegimen extends LegalRegimen_Base {
 	super.setEndDateYearMonthDay(endDate);
     }
     
+    @Override
+    public void setSituationType(ProfessionalSituationType situationType) {
+	if(situationType == null) {
+	    throw new DomainException("error.ProfessionalSituation.empty.situationType");
+	}
+	super.setSituationType(situationType);
+    }
+    
+    @Override
+    public void setEmployee(Employee employee) {
+        if(employee == null) {
+            throw new DomainException("error.ProfessionalSituation.empty.employee");
+        }
+	super.setEmployee(employee);
+    }
+    
     public void delete() {
+	super.setEmployee(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
     
     private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
 	if (beginDate == null) {
-	    throw new DomainException("error.LegalRegimen.no.beginDate");
+	    throw new DomainException("error.ProfessionalSituation.no.beginDate");
 	}
 	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.LegalRegimen.endDateBeforeBeginDate");
+	    throw new DomainException("error.ProfessionalSituation.endDateBeforeBeginDate");
 	}
-    }       
+    }
+    
+    public boolean isTeacherProfessionalSituation() {
+	return false;
+    }
+    
+    public boolean isTeacherServiceExemption() {
+	return false;
+    }
+    
+    public boolean isEmployeeProfessionalSituation() {
+	return false;
+    }
 }

@@ -19,7 +19,7 @@ public class SQL2JavaConverters {
     public static FieldConversion CorrectionFormula2EnumCorrectionFormulaFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion();
     public static FieldConversion PartyType2SQLPartyTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartyType2SQLPartyTypeFieldConversion();
     public static FieldConversion JavaBranchType2SqlBranchTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBranchType2SqlBranchTypeFieldConversion();
-    public static FieldConversion LegalRegimenType2SqlLegalRegimenTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.LegalRegimenType2SqlLegalRegimenTypeConversion();
+    public static FieldConversion ProfessionalSituationType2SqlProfessionalSituationTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ProfessionalSituationType2SqlProfessionalSituationTypeConversion();
     public static FieldConversion JavaLogicOperators2SqlLogicOperatorsFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaLogicOperators2SqlLogicOperatorsFieldConversion();
     public static FieldConversion JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion();
     public static FieldConversion JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularCourseType2SqlCurricularCourseTypeFieldConversion();
@@ -44,14 +44,13 @@ public class SQL2JavaConverters {
     public static FieldConversion AdviseType2SqlAdviseTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AdviseType2SqlAdviseTypeFieldConversion();
     public static FieldConversion JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion();    
     public static FieldConversion DelegateYearTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.DelegateYearTypeFieldConversion();
-    public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();
-    public static FieldConversion ServiceExemptionTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion();
+    public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();    
     public static FieldConversion ResearchEventType2SqlResearchEventTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion();
     public static FieldConversion JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion();
     public static FieldConversion EntryPhase2SqlEntryPhaseFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EntryPhase2SqlEntryPhaseFieldConversion();
     public static FieldConversion JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion();
     public static FieldConversion OldPublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OldPublicationTypeFieldConversion();
-    public static FieldConversion RegimenType2SqlRegimenTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.RegimenType2SqlRegimenTypeConversion();
+    public static FieldConversion RegimeType2SqlRegimeTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.RegimeType2SqlRegimeTypeConversion();
     public static FieldConversion JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion();
     public static FieldConversion JavaSex2SqlSexFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSex2SqlSexFieldConversion();
     public static FieldConversion JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion();

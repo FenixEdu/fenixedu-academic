@@ -70,7 +70,6 @@ valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState      
 valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                      						as RegimeType;
 valueType net.sourceforge.fenixedu.util.Season                                                  				as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         				as SecretaryEnrolmentStudentReason; 
-valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          				as ServiceExemptionType;
 valueType net.sourceforge.fenixedu.domain.ShiftType                                             				as ShiftType; 
 valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                            				as SibsPaymentStatus; 
 valueType net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                              				as SibsPaymentType;
@@ -97,8 +96,7 @@ valueType net.sourceforge.fenixedu.util.ByteArray																as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                          				    as ContentType;
 valueType net.sourceforge.fenixedu.domain.GradeScale															as GradeScale;
 valueType net.sourceforge.fenixedu.util.EvaluationType															as EvaluationType;
-valueType net.sourceforge.fenixedu.util.RegimenType                      			        				    as RegimenType;
-valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                            				    as LegalRegimenType;
+valueType net.sourceforge.fenixedu.util.RegimeType                      			        				    as RegimeTypeToProfessionalSituation;
 valueType net.sourceforge.fenixedu.util.WeekDay																	as WeekDay;
 valueType net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType									as CurricularPeriodType;
 valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   				as Group;
@@ -192,8 +190,9 @@ valueType net.sourceforge.fenixedu.domain.contacts.PartyContactType												a
 valueType net.sourceforge.fenixedu.domain.Language																as Language;
 valueType net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                              as UnitSiteLayoutType;
 valueType net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                              as UnitSiteBannerRepeatType;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                             as CycleType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                             as CycleType;
 valueType net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType								as PersistentGroupMembersType;
+valueType net.sourceforge.fenixedu.domain.ProfessionalSituationType												as ProfessionalSituationType;
 
 /*
 *
@@ -3407,41 +3406,29 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyWeeklyOcupation;
 }
 
-class net.sourceforge.fenixedu.domain.LegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;	
-	LegalRegimenType legalRegimenType;
-	RegimenType regimenType;
+class net.sourceforge.fenixedu.domain.ProfessionalSituation extends net.sourceforge.fenixedu.domain.DomainObject {	
+	String ojbConcreteClass;			
+	Integer keyEmployee;
+	RegimeTypeToProfessionalSituation regimeType;		
+	ProfessionalSituationType situationType;		
 	YearMonthDay beginDateYearMonthDay;
 	YearMonthDay endDateYearMonthDay;
 }
 
-class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.LegalRegimen {
-	Integer keyTeacher;
-	Integer keyCategory;
-	Integer percentage;
-	Integer lessonHours;
-	Double totalHours;		
-}
-
-class net.sourceforge.fenixedu.domain.EmployeeLegalRegimen extends net.sourceforge.fenixedu.domain.LegalRegimen {
-	Integer keyEmployee;	
-}
-
-class net.sourceforge.fenixedu.domain.ServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	ServiceExemptionType type;
-	String institution;
-	YearMonthDay startYearMonthDay;
-	YearMonthDay endYearMonthDay;	
-}
-
-class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.ServiceExemption {
-	Integer keyTeacher;		
-}
-
-class net.sourceforge.fenixedu.domain.EmployeeServiceExemption extends net.sourceforge.fenixedu.domain.ServiceExemption {
-	Integer keyEmployee;		
-}
+	class net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation extends net.sourceforge.fenixedu.domain.ProfessionalSituation {		
+		Integer keyCategory;
+		Integer percentage;
+		Integer weeklyLessonHours;
+		Double monthlyHours;		
+	}
+	
+	class net.sourceforge.fenixedu.domain.EmployeeProfessionalSituation extends net.sourceforge.fenixedu.domain.ProfessionalSituation {		
+	}
+	
+	class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.ProfessionalSituation {				
+		String institution;			
+	}
+		
 
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
@@ -8332,17 +8319,9 @@ relation TeacherProfessorship {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
-
-relation TeacherTeacherServiceExemption {
-    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-    net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption playsRole serviceExemptionSituations {
-        multiplicity *;
-    }
-}
-
-relation EmployeeEmployeeServiceExemption {
+relation EmployeeProfessionalSituation {
     net.sourceforge.fenixedu.domain.Employee playsRole employee;
-    net.sourceforge.fenixedu.domain.EmployeeServiceExemption playsRole serviceExemptionSituations {
+    net.sourceforge.fenixedu.domain.ProfessionalSituation playsRole professionalSituations {
         multiplicity *;
     }
 }
@@ -8621,25 +8600,11 @@ relation DegreeUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit playsRole unit;
 }
 
-relation TeacherLegalRegimenCategory {
-	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole teacherLegalRegimens {
+relation TeacherProfessionalSituationCategory {
+	net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation playsRole teacherProfessionalSituations {
 		multiplicity *;
     }
     net.sourceforge.fenixedu.domain.teacher.Category playsRole category;    
-}
-
-relation TeacherLegalRegimenTeacher {
-	net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen playsRole legalRegimens {
-		multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;    
-}
-
-relation EmployeeLegalRegimenEmployee {
-	net.sourceforge.fenixedu.domain.EmployeeLegalRegimen playsRole legalRegimens {
-		multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Employee playsRole employee;    
 }
 
 relation UnitFunction {
@@ -10706,13 +10671,6 @@ relation RootDomainObjectProjectSubmissionLog {
 	}
 }
 
-relation RootDomainObjectServiceExemption {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.ServiceExemption playsRole serviceExemptions {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectScientificArea {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreas {
@@ -10811,9 +10769,9 @@ relation RootDomainObjectDepartment {
 	}
 }
 
-relation RootDomainObjectLegalRegimen {
+relation RootDomainObjectProfessionalSituation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.LegalRegimen playsRole legalRegimens {
+	net.sourceforge.fenixedu.domain.ProfessionalSituation playsRole professionalSituations {
 		multiplicity *;
 	}
 }

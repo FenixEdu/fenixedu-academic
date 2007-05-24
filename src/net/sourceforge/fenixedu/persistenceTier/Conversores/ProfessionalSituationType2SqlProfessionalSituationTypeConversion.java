@@ -4,16 +4,16 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.RegimenType;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class RegimenType2SqlRegimenTypeConversion implements FieldConversion{
+public class ProfessionalSituationType2SqlProfessionalSituationTypeConversion implements FieldConversion  {
 
     public Object javaToSql(Object source) throws ConversionException {
-        if (source instanceof RegimenType) {
-            RegimenType s = (RegimenType) source;
+        if (source instanceof ProfessionalSituationType) {
+            ProfessionalSituationType s = (ProfessionalSituationType) source;
             return s.name();
         }
         return source;
@@ -22,7 +22,7 @@ public class RegimenType2SqlRegimenTypeConversion implements FieldConversion{
     public Object sqlToJava(Object source) throws ConversionException {
         if (source instanceof String) {            
             String src = (String) source;            
-            return RegimenType.valueOf(src);
+            return ProfessionalSituationType.valueOf(src);
         }
         return source;
     }

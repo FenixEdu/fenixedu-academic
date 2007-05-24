@@ -4,19 +4,19 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 /**
  * @author jpvl
  */
 public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine {
-    private ServiceExemptionType type;
+    private ProfessionalSituationType type;
 
     /**
      * @return Returns the type.
      */
-    public ServiceExemptionType getType() {
+    public ProfessionalSituationType getType() {
         return type;
     }
 
@@ -24,22 +24,22 @@ public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine
      * @param type
      *            The type to set.
      */
-    public void setType(ServiceExemptionType type) {
+    public void setType(ProfessionalSituationType type) {
         this.type = type;
     }
 
     public void populateDomainObject(TeacherServiceExemption serviceExemptionCreditLine) {
         super.populateDomainObject(serviceExemptionCreditLine);
-        serviceExemptionCreditLine.setType(getType());
+        serviceExemptionCreditLine.setSituationType(getType());
     }
 
     public static InfoServiceExemptionCreditLine newInfoFromDomain(TeacherServiceExemption serviceExemptionCreditLine) {
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(serviceExemptionCreditLine.getTeacher());
 
         InfoServiceExemptionCreditLine infoCreditLine = new InfoServiceExemptionCreditLine();
-        infoCreditLine.setEnd(serviceExemptionCreditLine.getEnd());
+        infoCreditLine.setEnd(serviceExemptionCreditLine.getEndDate());
         infoCreditLine.setIdInternal(serviceExemptionCreditLine.getIdInternal());
-        infoCreditLine.setStart(serviceExemptionCreditLine.getStart());
+        infoCreditLine.setStart(serviceExemptionCreditLine.getBeginDate());
         infoCreditLine.setType(serviceExemptionCreditLine.getType());
 
         infoCreditLine.setInfoTeacher(infoTeacher);

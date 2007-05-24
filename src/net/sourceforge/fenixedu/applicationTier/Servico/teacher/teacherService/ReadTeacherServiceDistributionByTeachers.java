@@ -20,15 +20,13 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * 
@@ -126,7 +124,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		    List<TeacherServiceExemption> serviceExemptions = teacher
 			    .getValidTeacherServiceExemptionsToCountInCredits(executionPeriodEntry);
 
-		    List<ServiceExemptionType> exemptionTypes = new ArrayList<ServiceExemptionType>();
+		    List<ProfessionalSituationType> exemptionTypes = new ArrayList<ProfessionalSituationType>();
 		    for (TeacherServiceExemption exemption : serviceExemptions) {
 			exemptionTypes.add(exemption.getType());
 		    }

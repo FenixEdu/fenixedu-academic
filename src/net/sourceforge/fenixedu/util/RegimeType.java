@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.util;
 
-public enum RegimenType {
+public enum RegimeType {
 
     INTEGRAL_TIME,
     PARTIAL_TIME,

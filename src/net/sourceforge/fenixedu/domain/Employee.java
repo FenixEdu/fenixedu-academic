@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -62,6 +61,16 @@ public class Employee extends Employee_Base {
 	if (employee != null && !employee.equals(this)) {
 	    throw new DomainException("error.employee.already.exists.one.employee.with.same.number");
 	}
+    }
+    
+    public List<EmployeeProfessionalSituation> getEmployeeProfessionalSituations() {
+	List<EmployeeProfessionalSituation> result = new ArrayList<EmployeeProfessionalSituation>();
+	for (ProfessionalSituation professionalSituation : getProfessionalSituations()) {
+	    if(professionalSituation.isEmployeeProfessionalSituation()) {
+		result.add((EmployeeProfessionalSituation) professionalSituation);
+	    }
+	}	
+	return result;
     }
 
     public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {

@@ -4,16 +4,16 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.LegalRegimenType;
+import net.sourceforge.fenixedu.util.RegimeType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class LegalRegimenType2SqlLegalRegimenTypeConversion implements FieldConversion  {
+public class RegimeType2SqlRegimeTypeConversion implements FieldConversion{
 
     public Object javaToSql(Object source) throws ConversionException {
-        if (source instanceof LegalRegimenType) {
-            LegalRegimenType s = (LegalRegimenType) source;
+        if (source instanceof RegimeType) {
+            RegimeType s = (RegimeType) source;
             return s.name();
         }
         return source;
@@ -22,7 +22,7 @@ public class LegalRegimenType2SqlLegalRegimenTypeConversion implements FieldConv
     public Object sqlToJava(Object source) throws ConversionException {
         if (source instanceof String) {            
             String src = (String) source;            
-            return LegalRegimenType.valueOf(src);
+            return RegimeType.valueOf(src);
         }
         return source;
     }

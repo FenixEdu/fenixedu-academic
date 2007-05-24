@@ -61,11 +61,10 @@
 <!ENTITY inquiries SYSTEM "repository_inquiries.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
-<!ENTITY teacherServiceExemption SYSTEM "repository_teacher_service_exemption.xml">
 <!ENTITY qualification SYSTEM "repository_qualification.xml">
 <!ENTITY fileEntry SYSTEM "repository_fileEntry.xml">
 <!ENTITY degreeStructure SYSTEM "repository_degree_structure.xml">
-<!ENTITY teacherLegalRegimen SYSTEM "repository_teacher_legal_regimen.xml">
+<!ENTITY professionalSituation SYSTEM "repository_professional_situation.xml">
 <!ENTITY curricularPeriod SYSTEM "repository_curricularPeriod.xml">
 <!ENTITY groups SYSTEM "repository_groups.xml">
 <!ENTITY research SYSTEM "repository_research.xml">
@@ -164,11 +163,10 @@
 	&inquiries;
 	&managementAssiduousness;
 	&projectsManagement;
-	&teacherServiceExemption;
 	&qualification;
 	&fileEntry;
 	&degreeStructure;
-	&teacherLegalRegimen;
+	&professionalSituation;
 	&curricularPeriod;
     &groups;
     &result;

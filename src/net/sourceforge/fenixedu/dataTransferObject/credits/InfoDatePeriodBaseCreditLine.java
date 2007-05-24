@@ -46,8 +46,8 @@ public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
     }
 
     public void populateDomainObject(TeacherServiceExemption serviceExemptionCreditLine) {
-        serviceExemptionCreditLine.setEnd(getEnd());
-        serviceExemptionCreditLine.setStart(getStart());
+        serviceExemptionCreditLine.setEndDate(getEnd());
+        serviceExemptionCreditLine.setBeginDate(getStart());
     }
 
 }
