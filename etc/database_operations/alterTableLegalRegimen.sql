@@ -6,6 +6,7 @@ alter table PROFESSIONAL_SITUATION change column LEGAL_REGIMEN_TYPE SITUATION_TY
 alter table PROFESSIONAL_SITUATION change column REGIMEN_TYPE REGIME_TYPE varchar(100) default NULL;
 alter table PROFESSIONAL_SITUATION change column LESSON_HOURS WEEKLY_LESSON_HOURS int(11) default NULL;
 alter table PROFESSIONAL_SITUATION change column TOTAL_HOURS MONTHLY_HOURS double default NULL;
+alter table PROFESSIONAL_SITUATION add KEY KEY_EMPLOYEE (KEY_EMPLOYEE);
 
 update PROFESSIONAL_SITUATION set OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation' where OJB_CONCRETE_CLASS like '%TeacherLegalRegimen%';
 update PROFESSIONAL_SITUATION set OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.EmployeeProfessionalSituation' where OJB_CONCRETE_CLASS like '%EmployeeLegalRegimen%';
