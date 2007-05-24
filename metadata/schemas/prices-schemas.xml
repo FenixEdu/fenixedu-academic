@@ -24,6 +24,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
 </schema>
 
+<schema name="DiplomaRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
 <schema name="FixedAmountWithPenaltyPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
