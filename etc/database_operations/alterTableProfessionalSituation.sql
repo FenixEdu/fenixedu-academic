@@ -1,0 +1,2 @@
+drop table SERVICE_EXEMPTION;
+alter table PROFESSIONAL_SITUATION drop column KEY_TEACHER;
