@@ -44,7 +44,7 @@
 		</li>
 		<li>
 			<div class="dblock" id="instructionsButton">
-			Tipos de actividades científicas no sistema: <a href="#"  onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
+			Tipos de actividades científicas no sistema: <a href="#" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
 			</div>
 		</li>
 	</ul>
@@ -52,14 +52,35 @@
 	<div id="instructions" class="dblock">
 		<div class="mtop025">
 			<table class="tstyle1 thlight mtop05">
-				<tr><th class="width12em">Actividades</th><th>Tipos</th><th>Papéis</th></tr>
-				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td></tr>
-				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td><td style="text-align: center;">-</th><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td></tr>
-				<tr><td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td><td style="text-align: center;">-</td><td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td></tr>
 				<tr>
-					<td  class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
+					<th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.activities" /></th>
+					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th>
+					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roles" /></th>
+					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roleMessage" /></th>
+				</tr>
+				<tr>
+					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.event.additionalInformation" /></td>
+				</tr>
+				<tr>
+					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td>
+					<td style="text-align: center;">-</td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.magazine.additionalInformation" /></td>
+				</tr>
+				<tr>
+					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td>
+					<td style="text-align: center;">-</td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td>
+					<td class="acenter">-</td>
+				</tr>
+				<tr>
+					<td class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
+					<td class="acenter" rowspan="3">-</td>
 				</tr>
 				<tr>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
@@ -73,7 +94,10 @@
 		</div>
 	</div>
 
-
+	<script>
+		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+		document.getElementById('instructionsButton').className="dblock";
+	</script>
 	
 	<logic:notEmpty name="international-events">
 		<p id='events' class="mtop3 mbottom0">
