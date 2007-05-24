@@ -39,7 +39,7 @@ class StatisticsThread extends Thread {
             Connection conn = broker.serviceConnectionManager().getConnection();
             Statement stmt = conn.createStatement();
 
-            TransactionStatistics stats = Transaction.STATISTICS.cloneAndReset();
+            TransactionStatistics.Report stats = Transaction.STATISTICS.getReportAndReset();
             numReport++;
             
             // insert statistics for this server
@@ -48,13 +48,13 @@ class StatisticsThread extends Thread {
                                + "',"
                                + numReport
                                + ","
-                               + stats.getNumReads()
+                               + stats.numReads
                                + ","
-                               + stats.getNumWrites()
+                               + stats.numWrites
                                + ","
-                               + stats.getNumAborts()
+                               + stats.numAborts
                                + ","
-                               + stats.getNumConflicts()
+                               + stats.numConflicts
                                + ","
                                + SECONDS_BETWEEN_REPORTS
                                // this last null is the timestamp

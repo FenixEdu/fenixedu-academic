@@ -16,7 +16,6 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     private static final FenixCache cache = new FenixCache();
-    private static boolean initialized = false;
 
     static {
 	jvstm.Transaction.setTransactionFactory(new jvstm.TransactionFactory() {
@@ -28,6 +27,17 @@ public abstract class Transaction extends jvstm.Transaction {
 		    return new ReadOnlyTopLevelTransaction(txNumber);
                 }
 	    });
+    }
+
+    // initialize transaction system
+    static {
+        int maxTx = TransactionChangeLogs.initializeTransactionSystem();
+        if (maxTx >= 0) {
+            System.out.println("Setting the last committed TX number to " + maxTx);
+            setCommitted(maxTx);
+        } else {
+            throw new Error("Couldn't determine the last transaction number");
+        }
     }
 
 
@@ -48,19 +58,6 @@ public abstract class Transaction extends jvstm.Transaction {
 
     public static void startMonitoringTransactions() {
         ACTIVE_TXS.startMonitoringQueue(MONITORING_SLEEP_INTERVAL, REPORT_LONG_TRANSACTION_THRESHOLD);
-    }
-
-    static synchronized void initializeIfNeeded() {
-	if (! initialized) {
-	    int maxTx = TransactionChangeLogs.initializeTransactionSystem();
-	    if (maxTx >= 0) {
-		System.out.println("Setting the last committed TX number to " + maxTx);
-		setCommitted(maxTx);
-	    } else {
-		throw new Error("Couldn't determine the last transaction number");
-	    }
-	    initialized = true;
-	}
     }
 
 
@@ -84,7 +81,6 @@ public abstract class Transaction extends jvstm.Transaction {
     }
 
     public static jvstm.Transaction begin(boolean readOnly) {
-	initializeIfNeeded();	
 	return jvstm.Transaction.begin(readOnly);
     }
 
@@ -121,6 +117,7 @@ public abstract class Transaction extends jvstm.Transaction {
 
     public static void storeNewObject(DomainObject obj) {
 	currentDBChanges().storeNewObject(obj);
+        ((jvstm.cps.ConsistentTransaction)current()).registerNewObject(obj);
     }
 
     public static void storeObject(DomainObject obj, String attrName) {

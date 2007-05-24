@@ -19,7 +19,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
     }
 
     public E get(Object obj, String attrName) {
-        return Transaction.currentFenixTransaction().getBodyForRead(this, obj, attrName).value;
+        return Transaction.currentFenixTransaction().getBoxValue(this, obj, attrName);
     }
 
     public void put(Object obj, String attrName, E newValue) {
@@ -32,11 +32,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
     }
     
     public boolean hasValue() {
-	VBoxBody<E> body = Transaction.currentFenixTransaction().getBodyInTx(this);
-	if (body == null) {
-	    body = this.body;
-	}
-	return (body.value != NOT_LOADED_VALUE);
+	return Transaction.currentFenixTransaction().isBoxValueLoaded(this);
     }
 
     public void putNotLoadedValue() {
@@ -48,7 +44,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
         persistentLoad(value, txNumber);
     }
 
-    public synchronized void persistentLoad(Object value, int txNumber) {
+    public void persistentLoad(Object value, int txNumber) {
 	// find appropriate body
 	VBoxBody<E> body = this.body.getBody(txNumber);
 	if (body.value == NOT_LOADED_VALUE) {
@@ -63,11 +59,11 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
     // This version of the addNewVersion method exists only because the special needs of
     // a RelationList which holds a SoftReference to its VBox.
     // For further explanations see the comment on the class SpecialBody at the end of this file
-    synchronized VBoxBody addNewVersion(String attr, int txNumber, boolean specialBody) {
+    VBoxBody addNewVersion(String attr, int txNumber, boolean specialBody) {
 	if (body.version < txNumber) {
-            VBoxBody newBody = (VBoxBody)allocateBody(txNumber, specialBody, this);
-	    commit(newBody);
-            return newBody;
+            return specialBody 
+                ? commitSpecial((E)NOT_LOADED_VALUE, txNumber) 
+                : commit((E)NOT_LOADED_VALUE, txNumber);
 	} else {
             // when adding a new version to a box it may happen that a
 	    // version with the same number exists already, if we are
@@ -83,13 +79,6 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	}
     }
 
-    // override this method just to make it synchronized, because
-    // bodies may be changed in other places besides the commit of a
-    // write transaction.  E.g., when reading a non-loaded body
-    public synchronized void commit(VBoxBody<E> newBody) {
-	super.commit(newBody);
-    }
-
     boolean reload(Object obj, String attr) {
 	try {
 	    doReload(obj, attr);
@@ -102,24 +91,15 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	}
     }
 
+    // see comment on the class SpecialBody at the end of this file
+    private VBoxBody commitSpecial(E newValue, int txNumber) {
+        VBoxBody<E> newBody = new SpecialBody(newValue, txNumber, this.body, this);
+	this.body = newBody;
+        return newBody;
+    }
+
     protected void doReload(Object obj, String attr) {
 	throw new Error("Can't reload a simple VBox.  Use a PrimitiveBox or a ReferenceBox instead.");
-    }
-
-    public void initKnownVersions(Object obj, String attr) {
-        // remove this when the DML compiler no longer generates the initKnownVersions calls
-    }    
-
-    public static <T> VBoxBody<T> allocateBody(int txNumber) {
-        return allocateBody(txNumber, false, null);
-    }
-
-    // see comment on the class SpecialBody at the end of this file
-    private static <T> VBoxBody<T> allocateBody(int txNumber, boolean specialBody, VBox owner) {
-	VBoxBody<T> body = (specialBody ? new SpecialBody(owner) : VBoxBody.makeNewBody());
-	body.version = txNumber;
-	body.value = (T)NOT_LOADED_VALUE;
-	return body;
     }
 
     public static <T> VBox<T> makeNew(boolean allocateOnly, boolean isReference) {
@@ -127,7 +107,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	    if (allocateOnly) {
                 // when a box is allocated, it is safe 
                 // to say that the version number is 0
-		return new ReferenceBox<T>((VBoxBody)allocateBody(0));
+		return new ReferenceBox<T>(makeNewBody((T)NOT_LOADED_VALUE, 0, null));
 	    } else {
 		return new ReferenceBox<T>();
 	    }
@@ -135,7 +115,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	    if (allocateOnly) {
                 // when a box is allocated, it is safe 
                 // to say that the version number is 0
-		return new PrimitiveBox<T>((VBoxBody)allocateBody(0));
+		return new PrimitiveBox<T>(makeNewBody((T)NOT_LOADED_VALUE, 0, null));
 	    } else {
 		return new PrimitiveBox<T>();
 	    }
@@ -169,10 +149,11 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
      *
      * It's a *little* bit confusing, I know, but...
      */
-    private static class SpecialBody extends jvstm.MultiVersionBoxBody {
+    private static class SpecialBody<E> extends VBoxBody<E> {
         private VBox owner;
 
-        SpecialBody(VBox owner) {
+        SpecialBody(E value, int version, VBoxBody<E> next, VBox owner) {
+            super(value, version, next);
             this.owner = owner;
         }
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.stm;
 
-class TransactionStatistics {
+public class TransactionStatistics {
     private int numReadTxs = 0;
     private int numWriteTxs = 0;
     private int numAborts = 0;
@@ -11,13 +11,6 @@ class TransactionStatistics {
         numWriteTxs = 0;
         numAborts = 0;
         numConflicts = 0;
-    }
-
-    private TransactionStatistics(int reads, int writes, int aborts, int conflicts) {
-        numReadTxs = reads;
-        numWriteTxs = writes;
-        numAborts = aborts;
-        numConflicts = conflicts;
     }
 
     public synchronized void incReads() {
@@ -36,29 +29,27 @@ class TransactionStatistics {
         numConflicts++;
     }
 
-    public synchronized TransactionStatistics cloneAndReset() {
-        TransactionStatistics stats = new TransactionStatistics(numReadTxs, numWriteTxs, numAborts, numConflicts);
+    public synchronized Report getReportAndReset() {
+        Report report = new Report(numReadTxs, numWriteTxs, numAborts, numConflicts);
         numReadTxs = 0;
         numWriteTxs = 0;
         numAborts = 0;
         numConflicts = 0;
 
-        return stats;
+        return report;
     }
 
-    public int getNumReads() {
-        return numReadTxs;
-    }
+    public static class Report {
+        public final int numReads;
+        public final int numWrites;
+        public final int numAborts;
+        public final int numConflicts;
 
-    public int getNumWrites() {
-        return numWriteTxs;
-    }
-
-    public int getNumAborts() {
-        return numAborts;
-    }
-
-    public int getNumConflicts() {
-        return numConflicts;
+        public Report(int numReads, int numWrites, int numAborts, int numConflicts) {
+            this.numReads = numReads;
+            this.numWrites = numWrites;
+            this.numAborts = numAborts;
+            this.numConflicts = numConflicts;
+        }
     }
 }

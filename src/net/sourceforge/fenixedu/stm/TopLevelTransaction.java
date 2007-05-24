@@ -1,28 +1,37 @@
 package net.sourceforge.fenixedu.stm;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import jvstm.CommitException;
 import jvstm.VBoxBody;
+
+import jvstm.util.Cons;
+
+import jvstm.cps.ConsistencyCheckTransaction;
+import jvstm.cps.ConsistentTopLevelTransaction;
+import jvstm.cps.DependenceRecord;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
-public class TopLevelTransaction extends jvstm.TopLevelTransaction implements FenixTransaction {
+public class TopLevelTransaction extends ConsistentTopLevelTransaction implements FenixTransaction {
 
-    private static final ArrayList<CommitListener> COMMIT_LISTENERS = new ArrayList<CommitListener>();
+    private static final Object COMMIT_LISTENERS_LOCK = new Object();
+    private static volatile Cons<CommitListener> COMMIT_LISTENERS = Cons.empty();
 
     public static void addCommitListener(CommitListener listener) {
-        synchronized (COMMIT_LISTENERS) {
-            COMMIT_LISTENERS.add(listener);
+        synchronized (COMMIT_LISTENERS_LOCK) {
+            COMMIT_LISTENERS = COMMIT_LISTENERS.cons(listener);
         }
     }
 
     public static void removeCommitListener(CommitListener listener) {
-        synchronized (COMMIT_LISTENERS) {
-            COMMIT_LISTENERS.remove(listener);
+        synchronized (COMMIT_LISTENERS_LOCK) {
+            COMMIT_LISTENERS = COMMIT_LISTENERS.removeFirst(listener);
         }
     }
 
@@ -46,8 +55,6 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     private ServiceInfo serviceInfo = ServiceInfo.getCurrentServiceInfo();
 
     private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-
-    private Thread executingThread = Thread.currentThread();
 
     TopLevelTransaction(int number) {
         super(number);
@@ -73,7 +80,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         this.dbChanges = null;
     }
 
-    protected Transaction makeNestedTransaction() {
+    public Transaction makeNestedTransaction() {
         throw new Error("Nested transactions not supported yet...");
     }
 
@@ -92,7 +99,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         // + ", args = " + serviceInfo.getArgumentsAsString()
                 );
         System.out.println("Currently executing:");
-        StackTraceElement[] txStack = executingThread.getStackTrace();
+        StackTraceElement[] txStack = getThread().getStackTrace();
         for (int i = 0; (i < txStack.length) && (i < 5); i++) {
             System.out.println("-----> " + txStack[i]);
         }
@@ -133,15 +140,15 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         return new ReadSet(bodiesRead);
     }
 
-    protected <T> jvstm.VBoxBody<T> getBodyForWrite(jvstm.VBox<T> vbox) {
+    public <T> void setBoxValue(jvstm.VBox<T> vbox, T value) {
         if (dbChanges == null) {
             throw new IllegalWriteException();
         } else {
-            return super.getBodyForWrite(vbox);
+            super.setBoxValue(vbox, value);
         }
     }
 
-    protected <T> void setPerTxValue(jvstm.PerTxBox<T> box, T value) {
+    public <T> void setPerTxValue(jvstm.PerTxBox<T> box, T value) {
         if (dbChanges == null) {
             throw new IllegalWriteException();
         } else {
@@ -149,33 +156,42 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
         }
     }
 
-    public <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr) {
-        VBoxBody<T> body = getBodyInTx(vbox);
+    public <T> T getBoxValue(VBox<T> vbox, Object obj, String attr) {
+        T value = getLocalValue(vbox);
 
-        if (body == null) {
-            body = vbox.body.getBody(number);
-            if (body.value == VBox.NOT_LOADED_VALUE) {
-                vbox.reload(obj, attr);
-                // after the reload, the same body should have a new value
-                // if not, then something gone wrong and its better to abort
+        if (value == null) {
+            // no local value for the box
+            VBoxBody<T> body = getBodyRead(vbox);
+
+            if (body == null) {
+                body = vbox.body.getBody(number);
                 if (body.value == VBox.NOT_LOADED_VALUE) {
-                    System.out.println("Couldn't load the attribute " + attr + " for class "
-                            + obj.getClass());
-                    throw new VersionNotAvailableException();
+                    vbox.reload(obj, attr);
+                    // after the reload, the same body should have a new value
+                    // if not, then something gone wrong and its better to abort
+                    if (body.value == VBox.NOT_LOADED_VALUE) {
+                        System.out.println("Couldn't load the attribute " + attr + " for class "
+                                           + obj.getClass());
+                        throw new VersionNotAvailableException();
+                    }
                 }
+
+                bodiesRead.put(vbox, body);
             }
 
-            bodiesRead.put(vbox, body);
+            value = body.value;
         }
-        return body;
+
+        return value;
     }
 
-    public <T> VBoxBody<T> getBodyInTx(VBox<T> vbox) {
-        VBoxBody<T> body = getBodyWritten(vbox);
-        if (body == null) {
-            body = getBodyRead(vbox);
+    public boolean isBoxValueLoaded(VBox vbox) {
+        if (getLocalValue(vbox) != null) {
+            return true;
         }
-        return body;
+
+        VBoxBody body = vbox.body.getBody(number);
+        return (body.value != VBox.NOT_LOADED_VALUE);
     }
 
     public DBChanges getDBChanges() {
@@ -313,5 +329,26 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
                                + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
                                );
         }
+    }
+
+
+    // consistency-predicates-system methods
+
+    protected void checkConsistencyPredicates() {
+        // check all the consistency predicates for the objects modified in this transaction
+        for (Object obj : getDBChanges().getModifiedObjects()) {
+            checkConsistencyPredicates(obj);
+        }
+
+        super.checkConsistencyPredicates();
+    }
+
+    protected ConsistencyCheckTransaction makeConsistencyCheckTransaction(Object obj) {
+        return new FenixConsistencyCheckTransaction(this, obj);
+    }
+
+    protected Iterator<DependenceRecord> getDependenceRecordsToRecheck() {
+        // for now, just return an empty iterator
+        return Util.emptyIterator();
     }
 }

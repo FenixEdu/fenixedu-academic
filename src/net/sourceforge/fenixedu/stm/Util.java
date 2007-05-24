@@ -4,12 +4,26 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.server.UID;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 
 class Util {
+
+    private static final Iterator EMPTY_ITER = new Iterator() {
+        public boolean hasNext() { return false; }
+        public Object next() { throw new NoSuchElementException(); }
+        public void remove() { throw new UnsupportedOperationException(); }
+    };
+
+    public static <T> Iterator<T> emptyIterator() {
+        return (Iterator<T>)EMPTY_ITER;
+    }
+
 
     private static final String uidString = (new UID()).toString();
 

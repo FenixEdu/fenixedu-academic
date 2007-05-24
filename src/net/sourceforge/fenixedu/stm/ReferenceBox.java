@@ -17,7 +17,7 @@ class ReferenceBox<E> extends VBox<E> {
     }
 
     public ReferenceBox(E value) {
-    super(value);
+        super(value);
     }
 
     protected void doReload(Object obj, String attr) {

@@ -42,6 +42,11 @@ class DBChanges {
     private Set objsToDelete = null;
     private Map<RelationTupleInfo,RelationTupleInfo> mToNTuples = null;
 
+
+    public Set getModifiedObjects() {
+        return objsToStore;
+    }
+
     public boolean needsWrite() {
 	return ((newObjs != null) && (! newObjs.isEmpty()))
 	    || ((objsToStore != null) && (! objsToStore.isEmpty()))

@@ -17,7 +17,7 @@ class ReadOnlyTopLevelTransaction extends TopLevelTransaction {
         throw new Error("ReadOnly txs don't record their read sets...");
     }
 
-    public <T> VBoxBody<T> getBodyForRead(VBox<T> vbox, Object obj, String attr) {
+    public <T> T getBoxValue(VBox<T> vbox, Object obj, String attr) {
         VBoxBody<T> body = vbox.body.getBody(number);
         if (body.value == VBox.NOT_LOADED_VALUE) {
             vbox.reload(obj, attr);
@@ -29,7 +29,7 @@ class ReadOnlyTopLevelTransaction extends TopLevelTransaction {
             }
         }
 
-        return body;
+        return body.value;
     }
     
     protected boolean isWriteTransaction() {

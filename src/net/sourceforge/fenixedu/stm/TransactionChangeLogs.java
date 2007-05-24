@@ -37,7 +37,7 @@ public class TransactionChangeLogs {
 	}
     }
 
-    private static Map<String,ClassInfo> CLASS_INFOS = new ConcurrentHashMap<String,ClassInfo>();
+    private static final Map<String,ClassInfo> CLASS_INFOS = new ConcurrentHashMap<String,ClassInfo>();
 
     static DomainObject getDomainObject(PersistenceBroker pb, String className, int idInternal) {
 	ClassInfo info = CLASS_INFOS.get(className);
@@ -59,7 +59,7 @@ public class TransactionChangeLogs {
             obj = (DomainObject)ClassHelper.buildNewObjectInstance(info.classDescriptor);
             obj.setIdInternal(idInternal);
                 
-            // cache object
+            // cache object and return the canonical object
             obj = (DomainObject)Transaction.getCache().cache(obj);
         }
 
@@ -78,7 +78,8 @@ public class TransactionChangeLogs {
         // transaction in the current VM may need to access it
 	private Map<DomainObject,List<String>> objectAttrChanges = new HashMap<DomainObject,List<String>>();
 
-        private List<VBoxBody> newBodies = new ArrayList<VBoxBody>();
+        // this field is volatile because it may be accessed by more than one thread
+        private volatile List<VBoxBody> newBodies;
 
 	AlienTransaction(int txNumber) {
 	    this.txNumber = txNumber;
@@ -96,6 +97,8 @@ public class TransactionChangeLogs {
         }
 
         void commit() {
+            List<VBoxBody> newBodies = new ArrayList<VBoxBody>();
+
             for (Map.Entry<DomainObject,List<String>> entry : objectAttrChanges.entrySet()) {
                 DomainObject obj = entry.getKey();
                 List<String> allAttrs = entry.getValue();
@@ -104,6 +107,10 @@ public class TransactionChangeLogs {
                     newBodies.add(obj.addNewVersion(attr, txNumber));
                 }
             }
+
+            objectAttrChanges = null;  // help gc
+
+            this.newBodies = newBodies;
         }
 
         void freeResources() {
@@ -116,8 +123,7 @@ public class TransactionChangeLogs {
                 }
 	    }
 	    
-            newBodies = null;
-            objectAttrChanges = null;
+            newBodies = null;  // help gc
         }
     }
 
