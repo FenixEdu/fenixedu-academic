@@ -50,18 +50,11 @@ div.announcement h3 a { text-decoration: none; }
 .greytxt2 { color: #999; }
 
 
-
-/* ----------------------
- ---- Tables -----------
------------------------ */
-
-.tstyle5 {
-border-collapse: collapse;
-margin: 1em 0;
+div.announcement div.ann_body * { /* overrides user defined font-family and font-size */
+font-size: 1.0em !important;
+font-family: Verdana, Arial, Helvetica, sans-serif !important;
 }
-.tstyle5 { }
-.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
-.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+
 
 
 /* ----------------------
@@ -87,7 +80,6 @@ margin-top: 5px;
 }
 
 
-
 /* -----------------------------------
 --- General.css shared properties ---
 ------------------------------------ */
@@ -111,10 +103,8 @@ padding: 0.5em;
 
 
 
-
-
 /***********************************************************
-	General
+	General - Fenix
 ***********************************************************/
 
 .altJavaScriptSubmitButton { display:block; }
@@ -266,3 +256,187 @@ table.personInfo2 tr td {
 margin: 0;
 padding: 0;
 }
+
+/* ----------------------
+------- Tables ---------
+----------------------- */
+
+table caption {
+padding: 0.5em 1em 0.1em 1em;
+font-style: italic;
+}
+
+.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7, .tstyle8 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+
+table.tstylenone { margin: 0; padding: 0; }
+table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em; }
+table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em; }
+
+/* --------------------- */
+/* General table classes */
+
+/* vertical aligment */
+table.thtop th { vertical-align: top; }
+table.thmiddle th { vertical-align: middle; }
+table.tdtop td { vertical-align: top; }
+table.vamiddle td, table.vamiddle th { vertical-align: middle; }
+
+/* font-weight */
+table.thlight th { font-weight: normal; }
+table.thbold th { font-weight: bold; }
+.tdbold td { font-weight: bold; }
+
+/* text-align */
+table.taleft th, table.taleft td { text-align: left; }
+table.taright th, table.taright td { text-align: right; }
+table.tacenter th, table.tacenter td { text-align: center; }
+table.thleft th { text-align: left; }
+table.thright th { text-align: right; }
+table.thcenter th { text-align: center; }
+.tdleft td { text-align: left; }
+.tdright td { text-align: right; } /* take table from all, to work with tr ? */
+.tdcenter td { text-align: center; }
+
+/* background-color */
+table.thbgnone th { background: none; }
+
+/* delete? */
+table .aleft  { text-align: left; }
+table .aright  { text-align: right; }
+
+/* paddings */
+.tpadding01 th, .tpadding01 td {
+padding: 4px 1px;
+}
+table.tdpright2 td {
+padding-right: 4em;
+}
+/*
+table.cellpadding3 tr th, table.cellpadding3 tr td {
+padding: 3px;
+}
+*/
+
+/* nostyle */
+.tstylenone th, .tstylenone td {
+border: none;
+background: none;
+}
+/* noborder */
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
+
+/* txt */
+table.smalltxt tr td { font-size: 0.85em;}
+
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
+
+/* -------------------- */
+/* General cell classes */
+
+/* corners */
+table th.cornerleft { background: none; border-left: none; border-top: none; }
+table th.cornerleft2 { background: none; border-left: none; border-top: none; border-bottom: none; }
+table td.cornerright { }
+
+/* error , warning */
+.tderror1 { color: #c00; }
+.tderror1 span { background-color: #ffeadd; }
+
+.nowrap { white-space: nowrap; }
+.breakword { word-wrap: break-word; }
+
+
+/* ------------------------- */
+/* Table classes definitions */
+
+/* table classes - general properties */
+.tstyle1 { }
+.tstyle2 { }
+.tstyle3 { border: 2px solid #ccc; }
+.tstyle4 { }
+.tstyle5 { }
+.tstyle7 { }
+.tstyle8 { }
+
+
+/* table classes - th properties */
+
+.tstyle1 th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
+padding: 5px; /* different top/bottom padding affect left/right padding rendering in different tables with same dimensions (?) */
+text-align: center;
+}
+
+
+.tstyle1 th { border: 1px solid #ccc; background: #f8f8f8;}
+.tstyle2 th { border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #f5f5f5; }
+.tstyle3 th { border: 1px solid #ccc; background: #eee; }
+.tstyle4 th { border: 1px solid #ccc; background: #eee; }
+.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
+.tstyle7 th { border: 1px solid #eee; background: #eee; }
+.tstyle8 th { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+
+
+/* table classes - td properties */
+
+.tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
+padding: 5px; /*padding em "em" tem problemas de rendering no firefox, faz arredondamentos incoerentes */
+}
+
+/*
+fa - fbfaf8
+f8 - faf9f5
+f5 - f8f6f1
+ee - f3f0e7
+cc - dad3ba
+*/
+
+.tstyle1 td { border: 1px solid #ccc; background-color: #fff; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; background-color: #fff; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+.tstyle7 td { border: 1px solid #eee; background: #eee; }
+.tstyle8 td { padding: 4px; background-color: #fff; }
+
+
+/* table classes - tr properties */
+
+table tr.bgwhite td {
+background: #fff;	
+}
+
+
+/* ------------ */
+/* Miscelaneous */
+
+.leftcol { text-align: right; vertical-align: top; }
+td.tdclear {  /* used in renderers column dedicated to feedback messages*/
+border-right: none;
+border-bottom: none;
+border-top: none;
+background: none;
+}
+td.tdwarning span {
+background-color: #fff8bb; color: #664400;
+}
+
+table.ulnomargin tr td ul { margin: 0; padding: 0; }
+table.ulnomargin tr td ul li { margin: 0; padding: 0; }
+
+
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+	/* n�o funcionava com indent ou padding normal? testar*/
+td.pleft1 { padding-left: 1em; }
+td.pleft2 { padding-left: 2em; }
+td.pleft3 { padding-left: 3em; }
+td.pleft4 { padding-left: 4em; }
+td.pleft5 { padding-left: 5em; }
+td.pleft6 { padding-left: 6em; }
+
