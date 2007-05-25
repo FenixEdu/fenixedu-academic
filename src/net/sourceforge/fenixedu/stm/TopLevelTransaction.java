@@ -1,18 +1,15 @@
 package net.sourceforge.fenixedu.stm;
 
 import java.sql.SQLException;
-
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Set;
 
 import jvstm.CommitException;
 import jvstm.VBoxBody;
-
-import jvstm.util.Cons;
-
 import jvstm.cps.ConsistencyCheckTransaction;
 import jvstm.cps.ConsistentTopLevelTransaction;
 import jvstm.cps.DependenceRecord;
+import jvstm.util.Cons;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -336,9 +333,13 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     protected void checkConsistencyPredicates() {
         // check all the consistency predicates for the objects modified in this transaction
-        for (Object obj : getDBChanges().getModifiedObjects()) {
-            checkConsistencyPredicates(obj);
-        }
+	DBChanges changes = getDBChanges();
+	Set modifiedObjects = changes.getModifiedObjects();
+	if (modifiedObjects != null) {
+	    for (Object obj : modifiedObjects) {
+		checkConsistencyPredicates(obj);
+	    }
+	}
 
         super.checkConsistencyPredicates();
     }
