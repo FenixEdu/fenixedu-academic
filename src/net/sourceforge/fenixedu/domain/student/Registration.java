@@ -447,11 +447,6 @@ public class Registration extends Registration_Base {
 		&& (isConcluded() || (isActive() && isInFinalDegreeYear()));
     }
 
-    public YearMonthDay getConclusionDate() {
-	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay()
-		: getLastApprovedEnrolmentEvaluationDate().toYearMonthDay();
-    }
-
     public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
 	int enrollmentsNumber = 0;
@@ -1443,6 +1438,14 @@ public class Registration extends Registration_Base {
 
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
+    }
+
+    final public YearMonthDay getConclusionDate() {
+	if (isConcluded()) {
+	    getActiveState().getStateDate().toYearMonthDay();
+	}
+	
+	throw new DomainException("Registration.is.not.concluded");
     }
 
     final public boolean hasConcludedCycle(final CycleType cycleType) {
