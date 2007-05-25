@@ -56,6 +56,8 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
 
     private boolean contextRelative;
     
+    private String sortableSlots;
+    
     public OrderableCollectionRenderer() {
         setContextRelative(true);
     }
@@ -160,6 +162,23 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
         this.contextRelative = contextRelative;
     }
 
+	public String getSortableSlots() {
+		return sortableSlots;
+	}
+
+	/**
+	 * Colon separated values of slot names. If this property is not specified then
+	 * all slots are considered sortable. If this property is sent then only the slots 
+	 * indicated are sortable.
+	 * <p>
+	 * Example: <code>"a, b, c"</code>
+	 * 
+	 * @property
+	 */
+	public void setSortableSlots(String sortableSlots) {
+		this.sortableSlots = sortableSlots;
+	}
+    
     private String getImagePath(String path) {
         if (isContextRelative()) {
             return getContext().getViewState().getRequest().getContextPath() + path;    
@@ -181,7 +200,12 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
                     return new HtmlText();
                 }
                 else if (columnIndex < getNumberOfColumns() - getNumberOfLinkColumns()) {
+                    HtmlComponent component = super.getHeaderComponent(columnIndex);
                     String slotName = getObject(0).getSlots().get(columnIndex - (isCheckable() ? 1 : 0)).getName();
+
+                    if (! isSortable(slotName)) {
+                    	return component;
+                    }
                     
                     HtmlLink link = new HtmlLink();
                     
@@ -195,7 +219,6 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
                         link.setUrl(destination.getPath());
                     }
                     
-                    HtmlComponent component = super.getHeaderComponent(columnIndex);
                     link.setBody(component);
 
                     if (getSortBy() != null && getSortBy().contains(slotName)) {
@@ -221,7 +244,30 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
                 
             }
 
-            private HtmlComponent wrapComponent(HtmlComponent component, boolean ascending) {
+            private boolean isSortable(String slotName) {
+            	String sortableSlots = getSortableSlots();
+            	
+            	if (sortableSlots == null) {
+            		return true;
+            	}
+            	
+            	String[] slots = sortableSlots.split(",");
+            	for (int i = 0; i < slots.length; i++) {
+					String trimmed = slots[i].trim();
+					
+					if (trimmed.length() == 0) {
+						continue;
+					}
+					
+					if (trimmed.equals(slotName)) {
+						return true;
+					}
+				}
+            	
+				return false;
+			}
+
+			private HtmlComponent wrapComponent(HtmlComponent component, boolean ascending) {
                 String image = null;
                 
                 if (ascending) {
@@ -256,5 +302,5 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
 
         };
     }
-    
+
 }
