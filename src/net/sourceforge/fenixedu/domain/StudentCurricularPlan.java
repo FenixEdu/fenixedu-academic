@@ -2347,14 +2347,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final public Enrolment getDissertationEnrolment() {
+    final public Collection<Enrolment> getDissertationEnrolments() {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getCurricularCourse().isDissertation()) {
-		return enrolment;
+		result.add(enrolment);
 	    }
 	}
 
-	return null;
+	return result;
+    }
+
+    final public Enrolment getLatestDissertationEnrolment() {
+	final TreeSet<Enrolment> result = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	return result.last();
     }
 
 }
