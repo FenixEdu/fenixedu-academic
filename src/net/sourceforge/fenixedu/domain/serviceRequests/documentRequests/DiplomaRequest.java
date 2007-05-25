@@ -102,8 +102,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     final protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING && !getRegistration().hasConcludedCycle(getRequestedCycle())) {
-	    throw new DomainException("DiplomaRequest.registration.hasnt.concluded.requested.cycle");
+	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	    if (!getRegistration().hasConcludedCycle(getRequestedCycle())) {
+		throw new DomainException("DiplomaRequest.registration.hasnt.concluded.requested.cycle");
+	    }
+	    
+	    if (hasDissertationTitle() && !getRegistration().hasDissertationThesis()) {
+		throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
+	    }
+	    
 	} else if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED && !isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
