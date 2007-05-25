@@ -43,16 +43,10 @@
 	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 mtop15" />
-			<fr:property name="sortBy" value="year=desc,number=desc"/>
+			<fr:property name="sortBy" value="year=desc,numberWithSeries=desc"/>
 			<fr:property name="linkFormat(view)" value="<%="/receipts.do?method=prepareShowReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId+ "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId %>"/>
 			<fr:property name="key(view)" value="label.view"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
-			<%--
-			<fr:property name="linkFormat(cancel)" value="<%="/payments.do?receiptID=${idInternal}&amp;method=prepareCancelReceipt&amp;personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId + "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId %>"/>
-			<fr:property name="visibleIf(cancel)" value="active" />
-			<fr:property name="key(cancel)" value="label.cancel"/>
-			<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES"/>
-			--%>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

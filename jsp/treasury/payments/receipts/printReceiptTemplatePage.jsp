@@ -1,6 +1,7 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="org.joda.time.DateTime"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -33,9 +34,21 @@
 </tr>
 <tr>
 	<td style="text-align: right;">
+		<bean:define id="original" name="original" />
+		<logic:equal name="original" value="true">
+			<strong><bean:message  key="label.payments.printTemplates.original" bundle="TREASURY_RESOURCES"/></strong>
+		</logic:equal>
+		<logic:notEqual name="original" value="true">
+			<strong><bean:message  key="label.payments.printTemplates.duplicate" bundle="TREASURY_RESOURCES"/></strong>
+		</logic:notEqual>
+		<br/>
+		<logic:equal name="receipt" property="annulled" value="true">
+			<strong><bean:message  key="label.payments.printTemplates.annulledDocument" bundle="TREASURY_RESOURCES"/>
+			<br/>
+		</logic:equal>
 		<b>
 			<bean:message bundle="TREASURY_RESOURCES" key="label.payments.printTemplates.receipt.receiptNumber"/>
-			<bean:write name="receipt" property="number" />/<bean:write name="receipt" property="year" />
+			<bean:write name="receipt" property="numberWithSeries" />/<bean:write name="receipt" property="year" />
 		</b>
 		<logic:greaterEqual name="receipt" property="receiptsVersionsCount" value="2">
 			<p><em><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.receipt.secondPrintVersion"/></em></p>
@@ -114,7 +127,7 @@
 	<table style="width: 95%; padding-top: 1em;">
 	<tr>
 		<td style="text-align: right;">
-			<strong><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/></strong>
+			<strong><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.totalAmountReceived"/></strong>
 		</td>
 		<td style="text-align: right; width: 190px;">
 			<strong>_______________ <bean:define id="totalAmount" name="receipt" property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%><bean:message bundle="APPLICATION_RESOURCES" key="label.currencySymbol" /></strong>
@@ -126,7 +139,8 @@
 
 
 	<p style="text-align: left; margin-top: 4em; font-size: 10pt;">
-		<bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()).format(new java.util.Date()) %>
+		<bean:define id="receiptCreationDate" name="receipt" property="whenCreated" />
+		<bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)receiptCreationDate).toString("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()) %>
 	</p>
 
 	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">

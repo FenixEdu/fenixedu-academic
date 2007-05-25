@@ -66,7 +66,7 @@
 	</tr>
 </table>
 <bean:define id="personId" name="receipt" property="person.idInternal"/>
-<logic:equal name="receipt" property="active" value="true">
+
 <table>
 		<tr>
 			<td>
@@ -77,16 +77,18 @@
 				</html:form>
 			</td>
 
- <%--
+<%--
 			<td>
+				<logic:equal name="receipt" property="active" value="true">
 				<html:form action="<%="/creditNotes.do?method=showCreditNotes&amp;personId=" + personId%>">
 					<fr:edit id="receipt" name="receipt" visible="false" />
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.creditNotes"/>
 					</html:submit>
 				</html:form>
+				</logic:equal>
 			</td>
---%>
+ --%>
 			<td>
 				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -98,20 +100,4 @@
 			</td>
 		</tr>
 	</table>
-</logic:equal>
-<logic:notEqual name="receipt" property="active" value="true">
-	<table>
-		<tr>
-			<td>
-				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
-					</html:submit>
-				</html:form>	
-			</td>
-			<td>
-			</td>
-		</tr>
-	</table>
-</logic:notEqual>
 </logic:present>

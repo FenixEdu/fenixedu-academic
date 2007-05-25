@@ -7,7 +7,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <bean:define id="receiptYear" name="receipt" property="year"/>
-<bean:define id="receiptNumber" name="receipt" property="number"/>
+<bean:define id="receiptNumber" name="receipt" property="numberWithSeries"/>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.creditNotes" arg0="<%=receiptNumber.toString()%>" arg1="<%=receiptYear.toString()%>" /></h2>
 
 

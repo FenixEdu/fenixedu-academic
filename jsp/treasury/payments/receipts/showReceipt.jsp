@@ -70,7 +70,6 @@
 <bean:define id="personId" name="receipt" property="person.idInternal"/>
 <bean:define id="administrativeOfficeId" name="administrativeOffice" property="idInternal" />
 <bean:define id="administrativeOfficeUnitId" name="administrativeOfficeUnit" property="idInternal" />
-<logic:equal name="receipt" property="active" value="true">
 <table>
 		<tr>
 			<td>
@@ -89,7 +88,7 @@
 					</html:submit>
 				</html:form>
 			</td>
-			 --%>
+			--%>
 			<td>
 				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId + "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -100,21 +99,6 @@
 			<td>
 			</td>
 		</tr>
-	</table>
-</logic:equal>
-<logic:notEqual name="receipt" property="active" value="true">
-	<table>
-		<tr>
-			<td>
-				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId + "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId%>">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message bundle="TREASURY_RESOURCES" key="label.back"/>
-					</html:submit>
-				</html:form>	
-			</td>
-			<td>
-			</td>
-		</tr>
-	</table>
-</logic:notEqual>
+</table>
+
 </logic:present>

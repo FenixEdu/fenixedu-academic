@@ -5,9 +5,11 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+	<% request.setAttribute("original", true); %>
 	<%-- The Original CreditNote --%>
 	<jsp:include page="./printCreditNoteTemplate.jsp" flush="true" />
 
+	<% request.setAttribute("original", false); %>
 	<%-- Copy of CreditNote --%>
 	<jsp:include page="./printCreditNoteTemplate.jsp" flush="true" />
 

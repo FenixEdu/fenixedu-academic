@@ -10,7 +10,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<bean:define id="receiptYear" name="creditNote" property="receipt.year" />
-	<bean:define id="receiptNumber" name="creditNote" property="receipt.number" />
+	<bean:define id="receiptNumber" name="creditNote" property="receipt.numberWithSeries" />
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.creditNotes"
 		arg0="<%=receiptNumber.toString()%>" arg1="<%=receiptYear.toString()%>" /></h2>
 
@@ -72,55 +72,25 @@
 				</tr>
 			</table>
 		</html:form>
-
-		<table>
-			<tr>
-				<td>
-					<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
-						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
-						<fr:edit id="creditNote" name="creditNote" visible="false" /><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.print" />
-						</html:submit>
-					</html:form>
-				</td>
-				<td>
-					<html:form action="/creditNotes.do?method=showCreditNotes">
-						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back" />
-						</html:submit>
-					</html:form>
-				</td>
-			</tr>
-		</table>
 	</logic:equal>
-	
-	
-	<logic:equal name="creditNote" property="allowedToChangeState" value="false">
-		<table>
-		  <tr>
-		    <td>
-		    	<logic:notEqual name="creditNote" property="cancelled" value="true">
-					<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
-						<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
-						<fr:edit id="creditNote" name="creditNote" visible="false" />
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.print" />
-						</html:submit>
-					</html:form>
-			</logic:notEqual>
-		    </td>
-		    <td>
+	<table>
+		<tr>
+			<td>
+				<html:form action="/creditNotes.do?method=printCreditNote" target="_blank">
+					<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
+					<fr:edit id="creditNote" name="creditNote" visible="false" /><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.print" />
+					</html:submit>
+				</html:form>
+			</td>
+			<td>
 				<html:form action="/creditNotes.do?method=showCreditNotes">
 					<fr:edit id="receipt" name="creditNote" property="receipt" visible="false" />
-					<fr:edit id="creditNote" name="creditNote" visible="false" />
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back" />
 					</html:submit>
 				</html:form>
 			</td>
-		  </tr>
-		</table>
-	</logic:equal>
-	
+		</tr>
+	</table>	
 </logic:present>

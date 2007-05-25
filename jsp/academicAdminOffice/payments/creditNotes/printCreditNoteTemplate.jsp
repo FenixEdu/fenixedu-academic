@@ -1,6 +1,7 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="org.joda.time.DateTime"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -44,9 +45,19 @@
 								<td align="right" valign="top">
 									<bean:define id="creditNoteNumber" name="creditNote" property="number" />
 									<bean:define id="creditNoteYear" name="creditNote" property="year" />
-									<bean:define id="receiptNumber" name="creditNote" property="receipt.number" />
-									<bean:define id="receiptYear" name="creditNote" property="receipt.year" />
-									<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.creditNote.receiptInformation" arg0="<%=creditNoteNumber.toString()%>" arg1="<%=creditNoteYear.toString()%>" arg2="<%=receiptNumber.toString()%>" arg3="<%=receiptYear.toString()%>"/> </b>
+									<bean:define id="original" name="original" />
+									<logic:equal name="original" value="true">
+										<strong><bean:message  key="label.payments.printTemplates.original" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong>
+									</logic:equal>
+									<logic:notEqual name="original" value="true">
+										<strong><bean:message  key="label.payments.printTemplates.duplicate" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong>
+									</logic:notEqual>
+									<br/>
+									<logic:equal name="creditNote" property="annulled" value="true">
+										<strong><bean:message  key="label.payments.printTemplates.annulledDocument" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+										<br/>
+									</logic:equal>
+									<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.creditNote.numberInformation" arg0="<%=creditNoteNumber.toString()%>" arg1="<%=creditNoteYear.toString()%>"/> </b>
 								<br />
 							</td>
 							</tr>
@@ -65,6 +76,13 @@
 			<tr>
 				<td>
 				<table width="100%" border="0">
+					<tr>
+						<td colspan="2">
+							<bean:define id="receiptNumber" name="creditNote" property="receipt.numberWithSeries" />
+							<bean:define id="receiptYear" name="creditNote" property="receipt.year" />
+							<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.creditNote.receiptInformation" arg0="<%=receiptNumber.toString()%>" arg1="<%=receiptYear.toString()%>"/></strong>
+						</td>
+					</tr>
 					<tr>
 						<td width="20%"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.processFrom"/>:</strong></td>
 						<td width="80%">&nbsp;</td>
@@ -141,7 +159,8 @@
 		<table valign="bottom" width="100%" border="0">
 			<tr>
 				<td>
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+					<bean:define id="creditNoteCreationDate" name="creditNote" property="whenCreated" />
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)creditNoteCreationDate).toString("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()) %>
 				</td>
 			</tr>
 

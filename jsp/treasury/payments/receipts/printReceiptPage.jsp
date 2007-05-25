@@ -13,11 +13,13 @@
 </head>
 <logic:present role="TREASURY">
 
+	<% request.setAttribute("original", true); %>
 	<%-- The Original Payment-Receipt --%>
 	<jsp:include page="./printReceiptTemplatePage.jsp" flush="true" />
 
 	<div class="breakafter"></div>
 	
+	<% request.setAttribute("original", false); %>
 	<%-- Copy of Payment-Receipt --%>
 	<jsp:include page="./printReceiptTemplatePage.jsp" flush="true" />
 
