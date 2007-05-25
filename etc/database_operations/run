@@ -35,3 +35,9 @@ execute "Add option to hide/show institution logo to UnitSite" addUnitSiteOption
 execute "Add requestedCycle to AcademicServiceRequest table" addRequestedCycleToAcademicServiceRequestTable.sql
 executeWithTempFile "Alter Table LegalRegimen" alterTableLegalRegimen.sql
 execute "Alter table Professional SItuation" alterTableProfessionalSituation.sql
+
+execute "Alter table Receipt" AlterTableReceipt.sql
+execute "Creating EquivalencePlan tables" CreateEquivalencePlanTables.sql
+execute "Alter Table DegreeCurricularPlan" AlterTableDegreeCurricularPlan.sql
+execute "Alter table StudentCurricularPlan" AlterTableStudentCurricularPlan.sql
+
