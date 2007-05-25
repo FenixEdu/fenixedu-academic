@@ -16,7 +16,7 @@
 	<fr:edit id="boardSearchBean.searchExecutionCourseBoards" action="/announcements/boards.do?method=search"
 			name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.searchExecutionCourseBoards">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			<fr:destination name="search" path="/announcements/boards.do?method=search"/>
 	   	</fr:layout>	    	
@@ -27,7 +27,7 @@
 		<fr:edit id="boardSearchBean.executionCourse" action="/announcements/boards.do?method=search"
 				name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.executionCourse">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+				<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
 	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	  			<fr:destination name="search" path="/announcements/boards.do?method=search"/>
 		   	</fr:layout>
@@ -37,7 +37,7 @@
 		<fr:edit id="boardSearchBean.unit" action="/announcements/boards.do?method=search"
 				name="boardSearchBean" schema="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.unit">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+				<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop05 mbottom1"/>
 	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		   	</fr:layout>	    	
 		</fr:edit>

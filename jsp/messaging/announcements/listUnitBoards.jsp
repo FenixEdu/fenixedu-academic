@@ -19,7 +19,7 @@
 		<th>
 			<bean:message key="label.type" bundle="MESSAGING_RESOURCES"/>
 		</th>
-		<th>
+		<th style="width: 100px;">
 			<bean:message key="label.favorites" bundle="MESSAGING_RESOURCES"/>
 		</th>
 		<th>
