@@ -179,7 +179,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
             value = body.value;
         }
 
-        return value;
+        return (value == NULL_VALUE) ? null : value;
     }
 
     public boolean isBoxValueLoaded(VBox vbox) {
