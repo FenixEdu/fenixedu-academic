@@ -21,12 +21,9 @@
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
 
-<!--[if IE]><style>
-#wrap {
-margin-right: -3000px;
-position: relative;
-}
-</style><![endif]-->
+<!-- IE Float Drop Fix -->
+<!--[if IE]><style>#wrap { margin-right: -3000px; position: relative; }</style><![endif]-->
+
 </head>
 
 <body>
