@@ -71,21 +71,23 @@
 					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td>
 					<td style="text-align: center;">-</td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td>
-					<td class="acenter">-</td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.journalIssues.additionalInformation" /></td>
 				</tr>
 				<tr>
 					<td class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
-					<td class="acenter" rowspan="3">-</td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.networks.additionalInformation" /></td>
 				</tr>
 				<tr>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.bilateral.additionalInformation" /></td>
 				</tr>
 				<tr>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission" /></td>
 					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
+					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.comission.additionalInformation" /></td>
 				</tr>
 			</table>
 		</div>
