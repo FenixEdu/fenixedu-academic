@@ -69,6 +69,10 @@ public enum ProfessionalSituationType {
     private boolean isServiceExemption;
     
     
+    
+    
+    
+    
     private ProfessionalSituationType(boolean isServiceExemption) {
 	this.isServiceExemption = isServiceExemption;
     }    
