@@ -1932,6 +1932,28 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasDissertationThesis() {
+	return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
+    }
+    
+    final public Enrolment getDissertationEnrolment() {
+	return getDissertationEnrolment(null);
+    }
+    
+    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	if (lastStudentCurricularPlan == null) {
+	    return null;
+	}
+
+	if (degreeCurricularPlan != null
+		&& lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+	    return null;
+	}
+
+	return lastStudentCurricularPlan.getLatestDissertationEnrolment();
+    }
+
     public Proposal getDissertationProposal(final ExecutionYear executionYear) {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
@@ -1950,6 +1972,7 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
+    
     private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
 	final Scheduleing scheduleing = proposal.getScheduleing();
 	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
@@ -1995,24 +2018,6 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return false;
-    }
-
-    final public Enrolment getDissertationEnrolment() {
-	return getDissertationEnrolment(null);
-    }
-    
-    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
-	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	if (lastStudentCurricularPlan == null) {
-	    return null;
-	}
-
-	if (degreeCurricularPlan != null
-		&& lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-	    return null;
-	}
-
-	return lastStudentCurricularPlan.getDissertationEnrolment();
     }
 
 }
