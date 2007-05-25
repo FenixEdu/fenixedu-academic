@@ -1,0 +1,19 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.EquivalencePlan" table="EQUIVALENCE_PLAN">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularEquivalencePlan"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan"/>
+</class-descriptor>
+
+	<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan" table="EQUIVALENCE_PLAN">
+		
+	</class-descriptor>
+	
+	<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan" table="EQUIVALENCE_PLAN">
+		
+	</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" table="EQUIVALENCE_PLAN_ENTRY">
+	
+</class-descriptor>
+
+

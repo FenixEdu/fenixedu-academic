@@ -464,6 +464,7 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
 	Integer keyEmployee;
 	ReceiptState state;
 	DateTime whenUpdated;
+	String numberSeries;
 	Integer keyCreatorUnit;
 	Integer keyOwnerUnit;
 }
@@ -1065,6 +1066,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
    	Group curricularPlanMembersGroup;
    	Integer keyDegreeStructure;
     Integer keyServiceAgreementTemplate;
+    Integer keyEquivalencePlan;
 }
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
@@ -3326,6 +3328,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     StudentCurricularPlanState currentState;
     Specialization specialization;
     Integer keyAssociatedTutor;
+    Integer keyEquivalencePlan;
 }
 
 
@@ -5324,6 +5327,25 @@ class net.sourceforge.fenixedu.domain.ScientificCommission extends net.sourcefor
 	Integer keyPerson;
 	Boolean contact;
 }
+
+class net.sourceforge.fenixedu.domain.EquivalencePlan extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+}
+
+	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan extends net.sourceforge.fenixedu.domain.EquivalencePlan {
+		Integer keyDegreeCurricularPlan;
+		Integer keySourceDegreeCurricularPlan;
+	}
+	
+	class net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan extends net.sourceforge.fenixedu.domain.EquivalencePlan {
+		Integer keyStudentCurricularPlan;
+	} 
+
+class net.sourceforge.fenixedu.domain.EquivalencePlanEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyEquivalencePlan;
+	Integer keyNewCurricularCourse;
+}
+
 
 /*
  * Relations definitions
@@ -13050,3 +13072,60 @@ relation PersistentGroupMembersPerson {
 		multiplicity *;
 	}
 }
+
+
+relation RootDomainObjectEquivalencePlan {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EquivalencePlan playsRole equivalencePlans {
+		multiplicity *;
+	}	
+}
+
+relation RootDomainObjectEquivalencePlanEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole equivalencePlanEntries {
+		multiplicity *;
+	}	
+}
+
+relation EquivalencePlanEquivalencePlanEntry {
+	net.sourceforge.fenixedu.domain.EquivalencePlan playsRole equivalencePlan;
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation DegreeCurricularPlanEquivalencePlanDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan playsRole equivalencePlan;
+}
+
+relation DegreeCurricularPlanEquivalencePlanSourceDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole sourceDegreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan playsRole targetEquivalencePlans {
+		multiplicity *;
+	}
+}
+
+relation StudentCurricularPlanEquivalencePlanStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan playsRole equivalencePlan;
+}
+
+relation EquivalencePlanEntryNewCurricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole newCurricularCourse;
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole newEquivalencePlanEntries {
+		multiplicity *;
+	}
+}
+
+relation EquivalencePlanEntryOldCurricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole oldEquivalencePlanEntries {
+		multiplicity *;
+	}
+}
+

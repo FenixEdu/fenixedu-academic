@@ -9670,8 +9670,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateReceiptPrintVersion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptPrintVersion</implementationClass>
+		<name>RegisterReceiptPrint</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -11237,17 +11237,7 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-
-    <service>
-    	<name>CancelReceipt</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelReceipt</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
-        </filterChains>     
-    </service>
-    
+   
     <service>
     	<name>CreateOtherPartyPayment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment</implementationClass>

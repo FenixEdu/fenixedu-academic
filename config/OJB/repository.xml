@@ -97,6 +97,7 @@
 <!ENTITY printers SYSTEM "repository_printers.xml">
 <!ENTITY protocols SYSTEM "repository_protocols.xml">
 <!ENTITY contacts SYSTEM "repository_contacts.xml">
+<!ENTITY equivalencePlan SYSTEM "repository_equivalence_plan.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -198,5 +199,6 @@
     &printers;
 	&protocols;
     &contacts;
+    &equivalencePlan;
     
 </descriptor-repository>
