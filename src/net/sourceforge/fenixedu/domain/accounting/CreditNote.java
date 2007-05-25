@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -17,22 +18,21 @@ import org.joda.time.DateTime;
 
 public class CreditNote extends CreditNote_Base {
 
-    public static Comparator<CreditNote> COMPARATOR_BY_YEAR_AND_NUMBER = new Comparator<CreditNote>() {
-	public int compare(CreditNote creditNote, CreditNote otherCreditNote) {
-	    Integer yearComparationResult = creditNote.getYear().compareTo(otherCreditNote.getYear());
-	    if (yearComparationResult == 0) {
-		return creditNote.getNumber().compareTo(otherCreditNote.getNumber());
-	    }
-	    return yearComparationResult;
+    public static Comparator<CreditNote> COMPARATOR_BY_NUMBER = new Comparator<CreditNote>() {
+	public int compare(CreditNote leftCreditNote, CreditNote rightCreditNote) {
+	    int comparationResult = leftCreditNote.getNumber().compareTo(rightCreditNote.getNumber());
+	    return (comparationResult == 0) ? leftCreditNote.getIdInternal().compareTo(
+		    rightCreditNote.getIdInternal()) : comparationResult;
 	}
     };
 
     private CreditNote() {
 	super();
-	super.setNumber(generateCreditNoteNumber());
+	final Integer year = new DateTime().getYear();
+	super.setNumber(generateCreditNoteNumber(year));
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
-	super.setYear(new DateTime().getYear());
+	super.setYear(year);
     }
 
     private CreditNote(final Receipt receipt, final Employee employee) {
@@ -48,11 +48,11 @@ public class CreditNote extends CreditNote_Base {
     }
 
     private void checkRulesToCreate(Receipt receipt) {
-	if (receipt.isCancelled()){
+	if (receipt.isAnnulled()) {
 	    throw new DomainException(
-		    "error.accounting.CreditNote.cannot.be.created.for.cancelled.receipts");
+		    "error.accounting.CreditNote.cannot.be.created.for.annulled.receipts");
 	}
-	
+
     }
 
     private void checkParameters(Receipt receipt, Employee employee) {
@@ -65,10 +65,21 @@ public class CreditNote extends CreditNote_Base {
 	}
     }
 
-    private Integer generateCreditNoteNumber() {
-	final List<CreditNote> creditNotes = RootDomainObject.getInstance().getCreditNotes();
+    private Integer generateCreditNoteNumber(final Integer year) {
+	final List<CreditNote> creditNotes = getCreditNotesForYear(year);
 	return creditNotes.isEmpty() ? Integer.valueOf(1) : Collections.max(creditNotes,
-		CreditNote.COMPARATOR_BY_YEAR_AND_NUMBER).getNumber() + 1;
+		CreditNote.COMPARATOR_BY_NUMBER).getNumber() + 1;
+    }
+
+    private List<CreditNote> getCreditNotesForYear(final Integer year) {
+	final List<CreditNote> result = new ArrayList<CreditNote>();
+	for (final CreditNote creditNote : RootDomainObject.getInstance().getCreditNotes()) {
+	    if (creditNote.getYear().equals(year)) {
+		result.add(creditNote);
+	    }
+	}
+
+	return result;
     }
 
     @Override
@@ -152,8 +163,8 @@ public class CreditNote extends CreditNote_Base {
 
     }
 
-    public void cancel(final Employee employee) {
-	internalChangeState(employee, CreditNoteState.CANCELLED);
+    public void annul(final Employee employee) {
+	internalChangeState(employee, CreditNoteState.ANNULLED);
     }
 
     public void changeState(final Employee employee, final PaymentMode paymentMode,
@@ -163,8 +174,8 @@ public class CreditNote extends CreditNote_Base {
 	    return;
 	}
 
-	if (state == CreditNoteState.CANCELLED) {
-	    cancel(employee);
+	if (state == CreditNoteState.ANNULLED) {
+	    annul(employee);
 	} else if (state == CreditNoteState.PAYED) {
 	    confirm(employee, paymentMode);
 	} else {
@@ -200,8 +211,8 @@ public class CreditNote extends CreditNote_Base {
 	return getState() == CreditNoteState.EMITTED;
     }
 
-    public boolean isCancelled() {
-	return getState() == CreditNoteState.CANCELLED;
+    public boolean isAnnulled() {
+	return getState() == CreditNoteState.ANNULLED;
     }
 
     public boolean isPayed() {

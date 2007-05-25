@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 public enum CreditNoteState {
-    EMITTED, PAYED, CANCELLED;
+    EMITTED, PAYED, ANNULLED;
 
     public String getName() {
 	return name();

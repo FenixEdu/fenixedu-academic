@@ -20,37 +20,32 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class Receipt extends Receipt_Base {
 
-    public static Comparator<Receipt> COMPARATOR_BY_YEAR_AND_NUMBER = new Comparator<Receipt>() {
-	public int compare(Receipt receipt, Receipt otherReceipt) {
-	    Integer yearComparationResult = receipt.getYear().compareTo(otherReceipt.getYear());
-	    if (yearComparationResult == 0) {
-		return receipt.getNumber().compareTo(otherReceipt.getNumber());
-	    }
-	    return yearComparationResult;
-	}
-    };
-
     public static Comparator<Receipt> COMPARATOR_BY_NUMBER = new Comparator<Receipt>() {
 	public int compare(Receipt leftReceipt, Receipt rightReceipt) {
-	    int comparationResult = leftReceipt.getNumber().compareTo(rightReceipt.getNumber());
+	    int comparationResult = leftReceipt.getReceiptNumber().compareTo(
+		    rightReceipt.getReceiptNumber());
 	    return (comparationResult == 0) ? leftReceipt.getIdInternal().compareTo(
 		    rightReceipt.getIdInternal()) : comparationResult;
 	}
     };
 
     private Receipt() {
+	this(new DateTime().getYear(), new DateTime(), null);
+    }
+
+    private Receipt(final Integer year, final DateTime whenCreated, final String numberSeries) {
 	super();
 
-	// Generate number before adding to root domain object
-	final int year = new DateTime().getYear();
 	super.setNumber(generateReceiptNumber(year));
 	super.setYear(year);
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setWhenCreated(new DateTime());
+	super.setWhenCreated(whenCreated);
+	super.setNumberSeries(numberSeries);
     }
 
     public Receipt(Employee employee, Person person, Party contributor, Unit creatorUnit,
@@ -71,6 +66,38 @@ public class Receipt extends Receipt_Base {
 
 	for (final Entry entry : entries) {
 	    entry.setActiveReceipt(this);
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public Receipt(final Employee employee, final Person person, final Party contributor,
+	    final Unit creatorUnit, final Unit ownerUnit, final List<Entry> entries, final Integer year,
+	    final String numberSeries, final DateTime whenCreated) {
+	this(year, whenCreated, numberSeries);
+	init(employee, person, contributor, creatorUnit, ownerUnit, entries, year, numberSeries,
+		whenCreated);
+    }
+
+    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit,
+	    Unit ownerUnit, List<Entry> entries, Integer year, String numberSeries, DateTime whenCreated) {
+	checkParameters(year, whenCreated, numberSeries);
+	init(employee, person, contributor, creatorUnit, ownerUnit, entries);
+    }
+
+    private void checkParameters(Integer year, DateTime whenCreated, String numberSeries) {
+	if (year == null) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.year.cannot.be.null");
+	}
+
+	if (whenCreated == null) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.whenCreated.cannot.be.null");
+	}
+
+	if (numberSeries == null) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.numberSeries.cannot.be.null");
 	}
     }
 
@@ -230,7 +257,7 @@ public class Receipt extends Receipt_Base {
     private Integer generateReceiptNumber(int year) {
 	final List<Receipt> receipts = getReceiptsFor(year);
 	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER)
-		.getNumber() + 1;
+		.getReceiptNumber() + 1;
     }
 
     public static List<Receipt> getReceiptsFor(int year) {
@@ -244,8 +271,10 @@ public class Receipt extends Receipt_Base {
 	return result;
     }
 
-    public ReceiptPrintVersion createReceiptPrintVersion(Employee employee) {
-	return new ReceiptPrintVersion(this, employee);
+    public void registerReceiptPrint(Employee employee) {
+	if (getState().isToRegisterPrint()) {
+	    new ReceiptPrintVersion(this, employee);
+	}
     }
 
     public ReceiptPrintVersion getMostRecentReceiptPrintVersion() {
@@ -283,15 +312,14 @@ public class Receipt extends Receipt_Base {
 	return CreditNote.create(this, employee, creditNoteEntryDTOs);
     }
 
-    public void cancel(final Employee employee) {
-	checkRulesToCancel();
-	changeState(employee, ReceiptState.CANCELLED);
+    public void annul(final Employee employee) {
+	checkRulesToAnnul();
+	changeState(employee, ReceiptState.ANNULLED);
     }
 
-    private void checkRulesToCancel() {
+    private void checkRulesToAnnul() {
 	if (hasAnyCreditNotes()) {
-	    throw new DomainException(
-		    "error.accounting.Receipt.cannot.cancel.receipts.with.credit.notes");
+	    throw new DomainException("error.accounting.Receipt.cannot.annul.receipts.with.credit.notes");
 	}
 
     }
@@ -300,8 +328,8 @@ public class Receipt extends Receipt_Base {
 	return getState() == ReceiptState.ACTIVE;
     }
 
-    public boolean isCancelled() {
-	return getState() == ReceiptState.CANCELLED;
+    public boolean isAnnulled() {
+	return getState() == ReceiptState.ANNULLED;
     }
 
     public Set<Entry> getReimbursableEntries() {
@@ -346,6 +374,26 @@ public class Receipt extends Receipt_Base {
 
     private boolean canBeDeleted() {
 	return !hasAnyCreditNotes();
+    }
+
+    public boolean isNumberSeriesDefined() {
+	return !StringUtils.isEmpty(getNumberSeries());
+    }
+
+    public String getNumberWithSeries() {
+	return !isNumberSeriesDefined() ? String.valueOf(super.getNumber()) : super.getNumber()
+		+ getNumberSeries();
+    }
+
+    @Override
+    @Deprecated
+    public Integer getNumber() {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.use.getNumberWithSeries.instead");
+    }
+
+    private Integer getReceiptNumber() {
+	return super.getNumber();
     }
 
 }
