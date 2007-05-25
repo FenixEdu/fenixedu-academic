@@ -44,7 +44,13 @@ class DBChanges {
 
 
     public Set getModifiedObjects() {
-        return objsToStore;
+        Set modified = new HashSet();
+
+        for (AttrChangeLog log : attrChangeLogs) {
+            modified.add(log.obj);
+        }
+
+        return modified;
     }
 
     public boolean needsWrite() {

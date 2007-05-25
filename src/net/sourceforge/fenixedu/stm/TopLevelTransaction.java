@@ -183,7 +183,13 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
     }
 
     public boolean isBoxValueLoaded(VBox vbox) {
-        if (getLocalValue(vbox) != null) {
+        Object localValue = getLocalValue(vbox);
+
+        if (localValue == VBox.NOT_LOADED_VALUE)  {
+            return false;
+        }
+
+        if (localValue != null)  {
             return true;
         }
 
@@ -333,12 +339,8 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     protected void checkConsistencyPredicates() {
         // check all the consistency predicates for the objects modified in this transaction
-	DBChanges changes = getDBChanges();
-	Set modifiedObjects = changes.getModifiedObjects();
-	if (modifiedObjects != null) {
-	    for (Object obj : modifiedObjects) {
-		checkConsistencyPredicates(obj);
-	    }
+        for (Object obj : getDBChanges().getModifiedObjects()) {
+            checkConsistencyPredicates(obj);
 	}
 
         super.checkConsistencyPredicates();
