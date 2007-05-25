@@ -139,7 +139,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	try {
 
-	    ServiceUtils.executeService(getUserView(request), "CreateReceiptPrintVersion", new Object[] {
+	    ServiceUtils.executeService(getUserView(request), "RegisterReceiptPrint", new Object[] {
 		    receipt, getUserView(request).getPerson().getEmployee() });
 
 	    return mapping.findForward("printReceipt");
@@ -194,41 +194,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptID"));
     }
 
-    public ActionForward prepareCancelReceipt(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final Receipt receipt = getReceipt(request);
-	request.setAttribute("receipt", receipt);
-	request.setAttribute("person", receipt.getPerson());
-
-	return mapping.findForward("confirmCancelReceipt");
-    }
-
     protected Receipt getReceiptFromViewState(String viewStateName) {
-	return (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject()
-		.getObject();
-    }
-
-    public ActionForward cancelReceipt(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
-
-	final Receipt receipt = getReceiptFromViewState("receiptToCancel");
-	try {
-	    executeService(request, "CancelReceipt", new Object[] {
-		    getUserView(request).getPerson().getEmployee(), receipt });
-
-	} catch (DomainException ex) {
-	    addActionMessage(request, ex.getKey(), ex.getArgs());
-	    request.setAttribute("receipt", receipt);
-	    request.setAttribute("person", receipt.getPerson());
-
-	    return mapping.findForward("confirmCancelReceipt");
-	}
-
-	request.setAttribute("personId", receipt.getPerson().getIdInternal());
-
-	return showReceipts(mapping, form, request, response);
+	return (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject().getObject();
     }
 
     abstract protected Unit getReceiptOwnerUnit(HttpServletRequest request);
