@@ -77,7 +77,6 @@
 		 		scope="request">
 
 		 	    <forward name="showPaymentsWithoutReceipt" path="payments.management.receipts.showPaymentsWithoutReceipt"/>
-   		 	    <forward name="confirmCancelReceipt" path="payments.management.receipts.confirmCancelReceipt"/>
    		 	    <forward name="confirmCreateReceipt" path="payments.management.receipts.confirmCreateReceipt"/>
 		 	    <forward name="showReceipts" path="payments.management.receipts.showReceipts"/>
 		 	    <forward name="showReceipt" path="payments.management.receipts.showReceipt"/>

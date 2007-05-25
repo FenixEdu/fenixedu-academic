@@ -177,12 +177,7 @@
 	<definition name="payments.management.confirmCreateReceipt" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"/>
 	</definition>
-	
-	<definition name="payments.management.confirmCancelReceipt" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCancelReceipt.jsp"/>
-	</definition>
-	
-	
+		
 	<definition name="payments.management.preparePayment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/preparePayment.jsp"/>
 	</definition>

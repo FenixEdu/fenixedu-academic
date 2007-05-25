@@ -40,9 +40,6 @@
     <definition name="payments.management.receipts.showPaymentsWithoutReceipt" extends="treasury.masterPage">
 		<put name="body" value="/treasury/payments/receipts/showPaymentsWithoutReceipt.jsp"/>
 	</definition>
-    <definition name="payments.management.receipts.confirmCancelReceipt" extends="treasury.masterPage">
-		<put name="body" value="/treasury/payments/receipts/confirmCancelReceipt.jsp"/>
-	</definition>
     <definition name="payments.management.receipts.confirmCreateReceipt" extends="treasury.masterPage">
 		<put name="body" value="/treasury/payments/receipts/confirmCreateReceipt.jsp"/>
 	</definition>

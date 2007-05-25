@@ -48,7 +48,7 @@
 </schema>
 
 <schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
-	<slot name="number"/>
+	<slot name="numberWithSeries" key="label.net.sourceforge.fenixedu.domain.accounting.Receipt.number"/>
 	<slot name="year"/>
 	<slot name="whenCreated"/>
 	<slot name="state" />
@@ -56,8 +56,10 @@
 </schema>
 
 <schema name="receipt.view-with-number-and-year" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
-	<slot name="number"/>
+	<slot name="numberWithSeries" key="label.net.sourceforge.fenixedu.domain.accounting.Receipt.number"/>
 	<slot name="year"/>
+	<slot name="whenCreated"/>
+	<slot name="state"/>
 </schema>
 
 <schema name="contributor.view" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="APPLICATION_RESOURCES">
