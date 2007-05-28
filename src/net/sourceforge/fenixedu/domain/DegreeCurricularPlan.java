@@ -1513,4 +1513,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return new DegreeCurricularPlanEquivalencePlan(this, sourceDegreeCurricularPlan);
     }
 
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
+	return hasRoot() ? getRoot().hasDegreeModule(degreeModule) : false;
+    }
+
 }
