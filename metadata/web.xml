@@ -193,10 +193,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>CheckPathByRoleFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>I18NFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
@@ -241,6 +237,10 @@
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CheckPathByRoleFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
