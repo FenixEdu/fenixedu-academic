@@ -1032,11 +1032,13 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
 	for (AssiduousnessRecord record : clockings) {
 	    YearMonthDay clockDay = record.getDate().toYearMonthDay();
-	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {
+	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) == 0) {
 		if (clockingsMap.get(clockDay.minusDays(1)) != null
 			&& clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
 		    clockDay = clockDay.minusDays(1);
 		}
+	    } else if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) < 0) {
+		clockDay = clockDay.minusDays(1);
 	    }
 
 	    List<AssiduousnessRecord> clocks = clockingsMap.get(clockDay);
