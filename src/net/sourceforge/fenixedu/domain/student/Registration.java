@@ -555,8 +555,12 @@ public class Registration extends Registration_Base {
 
     final public DateTime getLastApprovedEnrolmentEvaluationDate() {
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
-	enrolments.addAll(getLastStudentCurricularPlanExceptPast().getAprovedEnrolments());
+	enrolments.addAll(getApprovedEnrolments());
 
+	if (enrolments.isEmpty()) {
+	    throw new DomainException("Registration.no.approved.enrolments");
+	}
+	
 	return enrolments.last().getLatestEnrolmentEvaluation().getWhenDateTime();
     }
 
