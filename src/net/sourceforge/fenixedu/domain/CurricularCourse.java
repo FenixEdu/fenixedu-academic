@@ -1503,7 +1503,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 		if (enrolment.getExecutionPeriod() == executionPeriod
 			&& markSheetType.getEnrolmentEvaluationType() == enrolment
 				.getEnrolmentEvaluationType()) {
-		    if (!enrolment.hasAssociatedMarkSheet(markSheetType)) {
+		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(markSheetType)) {
 			result.add(enrolment);
 		    }
 		} else if (markSheetType == MarkSheetType.IMPROVEMENT) {
@@ -1524,7 +1524,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 		if (enrolment.getExecutionPeriod() == executionPeriod
 			&& enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
-		    if (!enrolment.hasAssociatedMarkSheet(MarkSheetType.NORMAL)) {
+		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
 			return true;
 		    }
 		}
