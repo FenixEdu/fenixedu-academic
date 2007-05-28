@@ -88,27 +88,27 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
     
     public double getParticipationCredits() {
-		Thesis thesis = this.getThesis();
-		
-		if (!thesis.hasCredits()) {
-			return (double)0.0;
-		}
-		
 		return Thesis.getCredits() * getCreditsDistribution() / 100;
     }
     
     public double getCreditsDistribution() {
-    	ThesisParticipationType type = this.getType();
+    	Thesis thesis = getThesis();
     	
-    	if (type.equals(ThesisParticipationType.ORIENTATOR)) {
-			return this.getThesis().getOrientatorCreditsDistribution();
+		if (!thesis.hasCredits()) {
+			return (double) 0.0;
+		}
+
+		ThesisParticipationType type = this.getType();
+
+		if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+			return thesis.getOrientatorCreditsDistribution();
 		}
 		
 		if (type.equals(ThesisParticipationType.COORIENTATOR)) {
-			return this.getThesis().getCoorientatorCreditsDistribution();
+			return thesis.getCoorientatorCreditsDistribution();
 		}
 		
-		return (double)0.0;
+		return (double) 0.0;
     }
     
     public void delete() {
