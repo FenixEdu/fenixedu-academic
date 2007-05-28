@@ -65,6 +65,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return !(this.getBeginDate().after(day) || this.getEndDate().before(day));
     }
 
+    final public boolean containsDay(final DateTime dateTime) {
+	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay(); 
+	return !(this.getBeginDateYearMonthDay().isAfter(yearMonthDay) || this.getEndDateYearMonthDay().isBefore(yearMonthDay));
+    }
+
     public boolean containsDay(YearMonthDay date) {
 	return !(this.getBeginDateYearMonthDay().isAfter(date) || this.getEndDateYearMonthDay()
 		.isBefore(date));
