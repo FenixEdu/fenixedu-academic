@@ -1,0 +1,43 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "Create Persistent Group Members Table" persistentGroupMembers.sql
+execute "Ensure that deparment's site is up-to-date 1" changeDepartmentSectionNames.sql
+execute "Ensure that deparment's site is up-to-date 2" changeDepartmentTeachersPath.sql
+execute "Add english name to departments" addEnglishNameToDepartments.sql
+execute "Add option to hide/show institution logo to UnitSite" addUnitSiteOption.sql
+execute "Add requestedCycle to AcademicServiceRequest table" addRequestedCycleToAcademicServiceRequestTable.sql
+executeWithTempFile "Alter Table LegalRegimen" alterTableLegalRegimen.sql
+execute "Alter table Professional SItuation" alterTableProfessionalSituation.sql
+
+execute "Alter table Receipt" AlterTableReceipt.sql
+execute "Creating EquivalencePlan tables" CreateEquivalencePlanTables.sql
+execute "Alter Table DegreeCurricularPlan" AlterTableDegreeCurricularPlan.sql
+execute "Alter table StudentCurricularPlan" AlterTableStudentCurricularPlan.sql
+
