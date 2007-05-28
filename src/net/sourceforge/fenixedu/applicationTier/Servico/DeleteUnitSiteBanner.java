@@ -9,21 +9,24 @@ import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 
 public class DeleteUnitSiteBanner extends Service {
 
-    public void run(UnitSite site, UnitSiteBanner banner) {
-    	UnitSiteBannerFile mainImage = banner.getMainImage();
-    	UnitSiteBannerFile backgroundImage = banner.getBackgroundImage();
-    	
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+	public void run(UnitSite site, UnitSiteBanner banner) {
+		UnitSiteBannerFile mainImage = banner.getMainImage();
+		UnitSiteBannerFile backgroundImage = banner.getBackgroundImage();
 
-        if (mainImage != null) {
-        	fileManager.deleteFile(mainImage.getExternalStorageIdentification());
-        }
-        
-        if (backgroundImage != null) {
-        	fileManager.deleteFile(backgroundImage.getExternalStorageIdentification());
-        }
-        
-        banner.delete();
-    }
+		String mainImageId = mainImage.getExternalStorageIdentification();
+		String backgroundImageId = backgroundImage.getExternalStorageIdentification();
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+
+		banner.delete();
+
+		if (mainImage != null) {
+			fileManager.deleteFile(mainImageId);
+		}
+
+		if (backgroundImage != null) {
+			fileManager.deleteFile(backgroundImageId);
+		}
+
+	}
 
 }
