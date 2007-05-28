@@ -4,46 +4,34 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
+public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     protected EquivalencePlanEntry() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
+	super.setOjbConcreteClass(this.getClass().getName());
     }
 
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan,
 	    final List<CurricularCourse> oldCurricularCourses, final CurricularCourse newCurricularCourse) {
 	this();
 
-	init(equivalencePlan, oldCurricularCourses, newCurricularCourse);
+	init(equivalencePlan);
     }
 
-    private void init(EquivalencePlan equivalencePlan, List<CurricularCourse> oldCurricularCourses,
-	    CurricularCourse newCurricularCourse) {
-	checkParameters(equivalencePlan, oldCurricularCourses, newCurricularCourse);
+    protected void init(EquivalencePlan equivalencePlan) {
+	checkParameters(equivalencePlan);
 
 	super.setEquivalencePlan(equivalencePlan);
-	super.getOldCurricularCourses().addAll(oldCurricularCourses);
-	super.setNewCurricularCourse(newCurricularCourse);
 
     }
 
-    private void checkParameters(EquivalencePlan equivalencePlan,
-	    List<CurricularCourse> oldCurricularCourses, CurricularCourse newCurricularCourse) {
+    private void checkParameters(EquivalencePlan equivalencePlan) {
 	if (equivalencePlan == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
 	}
 
-	if (oldCurricularCourses.isEmpty()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.oldCurricularCourses.cannot.be.empty");
-	}
-
-	if (newCurricularCourse == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.newCurricularCourse.cannot.be.null");
-	}
     }
 
 }
