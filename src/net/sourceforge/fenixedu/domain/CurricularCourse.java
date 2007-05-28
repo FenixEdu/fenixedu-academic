@@ -141,7 +141,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-	//FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans
+	//FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans?
 	if (isBolonha()) {
 	    return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
 	} else {
@@ -181,6 +181,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public void delete() {
 	super.delete();
+	removeUniversity();
+	removeScientificArea();
 	removeDegreeCurricularPlan();
 	removeCompetenceCourse();
 	removeRootDomainObject();
@@ -1794,6 +1796,16 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
 	curricularCourses.add(this);
+    }
+
+    public List<CurricularCourseEquivalence> getOldCurricularCourseEquivalences(final DegreeCurricularPlan degreeCurricularPlan) {
+	final List<CurricularCourseEquivalence> result = new ArrayList<CurricularCourseEquivalence>();
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : getOldCurricularCourseEquivalences()) {
+	    if (curricularCourseEquivalence.isFrom(degreeCurricularPlan)) {
+		result.add(curricularCourseEquivalence);
+	    }
+	}
+	return result;
     }
 
 }
