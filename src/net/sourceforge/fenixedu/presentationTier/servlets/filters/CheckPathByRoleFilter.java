@@ -39,7 +39,7 @@ public class CheckPathByRoleFilter implements Filter {
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         final IUserView userView = getUserView(request);
-        if (RequestUtils.isPrivateURI(request)) {
+        if (RequestUtils.isPrivateURI(request) && userView != null) {
             final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
             if (!validUserView(userView) || !hasRoleForSubApplication(uri, userView)) {
         	System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador() + " to uri: " + uri);
