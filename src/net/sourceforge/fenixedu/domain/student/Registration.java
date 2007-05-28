@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -69,6 +70,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -529,6 +531,14 @@ public class Registration extends Registration_Base {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    result.addAll(studentCurricularPlan.getAprovedEnrolments());
 	}
+
+	return result;
+    }
+
+    final public Collection<IEnrolment> getApprovedIEnrolments() {
+	final Collection<IEnrolment> result = new HashSet<IEnrolment>();
+	result.addAll(getApprovedEnrolments());
+	result.addAll(getExternalEnrolments());
 
 	return result;
     }
@@ -1432,10 +1442,115 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.MOBILITY;
     }
 
+    public RegistrationState getStateInDate(DateTime dateTime) {
+
+	List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iterator = sortedRegistrationStates
+		.listIterator(sortedRegistrationStates.size()); iterator.hasPrevious();) {
+
+	    RegistrationState registrationState = iterator.previous();
+	    if (!dateTime.isBefore(registrationState.getStateDate())) {
+		return registrationState;
+	    }
+	}
+
+	return null;
+    }
+
+    public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
+	final Set<RegistrationState> result = new HashSet<RegistrationState>();
+
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
+		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	    RegistrationState state = (RegistrationState) iter.previous();
+
+	    if (state.getStateDate().isAfter(
+		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		continue;
+	    }
+
+	    result.add(state);
+
+	    if (state.getStateDate().isBefore(
+		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
+		break;
+	    }
+
+	}
+
+	return result;
+    }
+
+    public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
+		getRegistrationStates());
+	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
+		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	    RegistrationState state = (RegistrationState) iter.previous();
+	    if (state.getStateDate().isAfter(
+		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		continue;
+	    }
+	    return state;
+	}
+
+	return null;
+    }
+
+    public boolean hasState(final RegistrationStateType stateType) {
+	for (final RegistrationState registrationState : getRegistrationStates()) {
+	    if (registrationState.getStateType() == stateType) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    final public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
+	final Collection<RegistrationState> result = new HashSet<RegistrationState>();
+	
+	for (final RegistrationState registrationState : getRegistrationStates()) {
+	    if (registrationState.getStateType() == registrationStateType) {
+		result.add(registrationState);
+	    }
+	}
+
+	return result;
+    }
+
+    final public Collection<ExternalEnrolment> getExternalEnrolments() {
+	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
+	if (mobilityStates.isEmpty()) {
+	    return null;
+	}
+	
+	final Collection<ExternalEnrolment> result = new HashSet<ExternalEnrolment>();
+	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
+	    for (final RegistrationState mobilityState : mobilityStates) {
+		final DateTime mobilityDate = mobilityState.getStateDate();
+		if (externalEnrolment.hasExecutionPeriod() && externalEnrolment.getExecutionYear().containsDate(mobilityDate)) {
+		    result.add(externalEnrolment);
+		}
+	    }
+	}
+	
+	return result;
+    }
+    
     public double getEctsCredits() {
 	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
-
+    
     public int getCurricularYear() {
 	return new StudentCurriculum(this).calculateCurricularYear(null);
     }
@@ -1719,70 +1834,6 @@ public class Registration extends Registration_Base {
 		: getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
-    public RegistrationState getStateInDate(DateTime dateTime) {
-
-	List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(
-		getRegistrationStates());
-	Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
-
-	for (ListIterator<RegistrationState> iterator = sortedRegistrationStates
-		.listIterator(sortedRegistrationStates.size()); iterator.hasPrevious();) {
-
-	    RegistrationState registrationState = iterator.previous();
-	    if (!dateTime.isBefore(registrationState.getStateDate())) {
-		return registrationState;
-	    }
-	}
-
-	return null;
-    }
-
-    public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
-	final Set<RegistrationState> result = new HashSet<RegistrationState>();
-
-	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
-		getRegistrationStates());
-	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
-
-	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
-		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
-	    RegistrationState state = (RegistrationState) iter.previous();
-
-	    if (state.getStateDate().isAfter(
-		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
-		continue;
-	    }
-
-	    result.add(state);
-
-	    if (state.getStateDate().isBefore(
-		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
-		break;
-	    }
-
-	}
-
-	return result;
-    }
-
-    public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
-	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
-		getRegistrationStates());
-	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
-
-	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
-		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
-	    RegistrationState state = (RegistrationState) iter.previous();
-	    if (state.getStateDate().isAfter(
-		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
-		continue;
-	    }
-	    return state;
-	}
-
-	return null;
-    }
-
     public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
 	    DocumentRequestType documentRequestType, boolean collectDocumentsMarkedAsFreeProcessed) {
 
@@ -1987,16 +2038,6 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
-	return false;
-    }
-
-    public boolean hasState(final RegistrationStateType stateType) {
-	for (final RegistrationState registrationState : getRegistrationStates()) {
-	    if (registrationState.getStateType() == stateType) {
-		return true;
-	    }
-	}
-
 	return false;
     }
 
