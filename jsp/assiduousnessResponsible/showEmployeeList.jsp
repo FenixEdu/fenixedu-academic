@@ -17,7 +17,7 @@
 <logic:present name="yearMonth">
 	<div class="mvert1 invisible">
 	<fr:form action="/assiduousnessResponsible.do?method=showEmployeeList">
-		<fr:edit name="yearMonth" schema="choose.date">
+		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 			<fr:layout>
 		        <fr:property name="classes" value="thlight thright mtop1"/>
 			</fr:layout>

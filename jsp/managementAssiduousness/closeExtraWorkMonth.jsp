@@ -7,6 +7,14 @@
 <em><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.closeExtraMonth" /></h2>
 
+<p class="mtop2">
+	<span class="error0 mtop0">
+		<html:messages id="message" message="true" property="message">
+			<bean:write name="message" filter="false"/>
+		</html:messages>
+	</span>
+</p>	
+
 <logic:present name="yearMonthToExport">
 	<h3><fr:view name="yearMonthToExport" schema="show.date">
 		<fr:layout name="flow">

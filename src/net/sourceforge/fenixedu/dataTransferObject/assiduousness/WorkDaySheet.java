@@ -394,4 +394,21 @@ public class WorkDaySheet implements Serializable {
 	return false;
     }
 
+    public void discountHalfOccurrence() {
+	if (workSchedule.getWorkScheduleType().hasFixedWorkPeriod()) {
+	    Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(
+		    workSchedule.getWorkScheduleType().getFixedWorkPeriod().getHalfWorkPeriodDuration());
+	    if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {
+		setUnjustifiedTime(Duration.ZERO);
+	    } else {
+		setUnjustifiedTime(newFixedPeriodAbsence);
+	    }
+	}
+	Duration currentBalance = getBalanceTime().toDurationFrom(
+		new YearMonthDay().toDateTimeAtMidnight());
+	setBalanceTime(currentBalance.plus(
+		workSchedule.getWorkScheduleType().getNormalWorkPeriod().getHalfWorkPeriodDuration())
+		.toPeriod());
+    }
+
 }

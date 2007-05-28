@@ -79,6 +79,16 @@
 						</fr:layout>
 					</fr:edit>
 				</logic:equal>
+				<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.HALF_OCCURRENCE_TIME.toString()%>">
+					<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+						type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+						schema="edit.employeeHalfOccurrenceTimeJustificationMotive">
+						<fr:layout>
+							<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+							<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+						</fr:layout>
+					</fr:edit>
+				</logic:equal>
 				<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.HALF_OCCURRENCE.toString()%>">
 					<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
 						type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"

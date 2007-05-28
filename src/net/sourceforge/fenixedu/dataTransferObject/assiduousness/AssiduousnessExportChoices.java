@@ -79,7 +79,7 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private boolean satisfiedJustification(
 	    HashMap<Assiduousness, List<Justification>> justificationsMap, Assiduousness assiduousness) {
-	if (getJustificationMotive() != null) {
+	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
 	    if (justificationsMap.values().isEmpty()) {
 		return false;
 	    }

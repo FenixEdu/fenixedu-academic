@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

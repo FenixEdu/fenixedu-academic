@@ -18,32 +18,42 @@
 	</span>
 	</p>
 
-	<bean:define id="isUsed" name="justificationMotive" property="isUsed"/>
-	<logic:equal name="isUsed" value="false">
-		<fr:edit id="editJustificationMotive" name="justificationMotive"
-			type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-			schema="edit.justificationMotives"
-			action="viewAssiduousness.do?method=showJustificationMotives">
-			<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
-			<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
-			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
-			</fr:layout>
-		</fr:edit>
+	<logic:equal name="justificationMotive" property="active" value="true">
+		<bean:define id="isUsed" name="justificationMotive" property="isUsed"/>
+		<logic:equal name="isUsed" value="false">
+			<fr:edit id="editJustificationMotive" name="justificationMotive"
+				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
+				schema="edit.justificationMotives"
+				action="viewAssiduousness.do?method=showJustificationMotives">
+				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+		<logic:notEqual name="isUsed" value="false">
+			<fr:edit id="editJustificationMotive" name="justificationMotive"
+				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
+				schema="edit.regularizationMotives"
+				action="viewAssiduousness.do?method=showJustificationMotives">
+				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:notEqual>
 	</logic:equal>
-	<logic:notEqual name="isUsed" value="false">
-		<fr:edit id="editJustificationMotive" name="justificationMotive"
-			type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-			schema="edit.regularizationMotives"
-			action="viewAssiduousness.do?method=showJustificationMotives">
-			<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
-			<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
-			<fr:layout>
+	<logic:equal name="justificationMotive" property="active" value="false">
+		<fr:view name="justificationMotive" schema="edit.justificationMotives">
+			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
-		</fr:edit>
-	</logic:notEqual>
+		</fr:view>
+	</logic:equal>
 </logic:present>
 
 <logic:notPresent name="justificationMotive">

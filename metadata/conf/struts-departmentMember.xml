@@ -378,6 +378,10 @@
 			validate="true" input="show-employee-list">
 			<forward name="show-employee-list" path="show-employee-list" />
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
+			<forward name="show-clockings" path="show-clockings" />
+			<forward name="show-justifications" path="show-justifications" />
+			<forward name="show-schedule" path="show-schedule" />
+			<forward name="show-vacations" path="show-vacations" />
 		</action>
 
 <!-- Teacher Service Distribution -->

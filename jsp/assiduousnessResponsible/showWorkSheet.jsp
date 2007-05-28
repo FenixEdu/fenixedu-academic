@@ -16,13 +16,18 @@
 </logic:messagesPresent>
 
 <logic:present name="employeeWorkSheet">
-	<span class="toprint"><br/></span>
-	<fr:view name="employeeWorkSheet" property="employee" schema="show.employeeInformation">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="showinfo1 thbold" />
-		</fr:layout>
-	</fr:view>
-	<br/>
+	<bean:define id="yearMonth" name="yearMonth"/>
+	<bean:define id="month" name="yearMonth" property="month" />
+	<bean:define id="year" name="yearMonth" property="year" />
+	<bean:define id="employee" name="employeeWorkSheet" property="employee"/>
+	<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
+	<%request.setAttribute("employee", employee);
+	request.setAttribute("yearMonth", yearMonth);%>
+	<jsp:include page="common/employeeAssiduousnessMenu.jsp">
+		<jsp:param name="month" value="<%=month.toString() %>" />
+		<jsp:param name="year" value="<%=year.toString() %>" />
+	</jsp:include>
+		
 	<!-- escrever mes ano -->
 	
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">

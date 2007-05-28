@@ -318,15 +318,17 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	actionMessages.add("message", new ActionMessage(message));
 	saveMessages(request, actionMessages);
 	request.setAttribute("yearMonth", yearMonth);
-	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-	employeeWorkSheet.setEmployee(employee);
-	request.setAttribute("employee", employee);
-	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
 		yearMonth.getMonth().ordinal() + 1, 01);
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
 		beginDate.dayOfMonth().getMaximumValue());
-	setEmployeeStatus(request, employee, beginDate, endDate);
+	if (employee != null) {
+	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+	    employeeWorkSheet.setEmployee(employee);
+	    request.setAttribute("employee", employee);
+	    request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+	    setEmployeeStatus(request, employee, beginDate, endDate);
+	}
     }
 
     private void setEmployeeStatus(HttpServletRequest request, final Employee employee,

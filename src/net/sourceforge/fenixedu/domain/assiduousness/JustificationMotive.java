@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -122,17 +123,29 @@ public class JustificationMotive extends JustificationMotive_Base {
     public Integer getGiafCode(Assiduousness assiduousness, YearMonthDay day) {
 	if (assiduousness.getStatusBetween(day, day).get(0).getAssiduousnessStatus().getDescription()
 		.equalsIgnoreCase("Contrato a termo certo")) {
-	    return getGiafCodeContractedStatus() == null ? 0 : getGiafCodeContractedStatus();
+	    if (getGiafCodeContractedStatus() == null) {
+		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(),
+			assiduousness.getEmployee().getEmployeeNumber().toString());
+	    }
+	    return getGiafCodeContractedStatus();
 	}
-	return getGiafCodeOtherStatus() == null ? 0 : getGiafCodeOtherStatus();
+	if (getGiafCodeOtherStatus() == null) {
+	    throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(),
+		    assiduousness.getEmployee().getEmployeeNumber().toString());
+	}
+	return getGiafCodeOtherStatus();
     }
 
     public static JustificationMotive getJustificationMotiveByGiafCode(Integer code,
 	    Assiduousness assiduousness, YearMonthDay day) {
 	for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
 		.getJustificationMotives()) {
-	    if (justificationMotive.getGiafCode(assiduousness, day).equals(code)) {
-		return justificationMotive;
+	    try {
+		if (justificationMotive.getGiafCode(assiduousness, day).equals(code)) {
+		    return justificationMotive;
+		}
+	    } catch (InvalidGiafCodeException e) {
+
 	    }
 	}
 	return null;

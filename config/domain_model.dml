@@ -4155,6 +4155,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends 
 		Integer giafCodeContractedStatus;
 		Integer giafCodeOtherStatus;
 		Boolean accumulate;
+		Boolean active;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends net.sourceforge.fenixedu.domain.DomainObject {

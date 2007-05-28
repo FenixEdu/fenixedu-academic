@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum JustificationType {
-    TIME, OCCURRENCE, BALANCE, MULTIPLE_MONTH_BALANCE, ANULATION, HALF_OCCURRENCE, HALF_MULTIPLE_MONTH_BALANCE;
+    TIME, OCCURRENCE, BALANCE, MULTIPLE_MONTH_BALANCE, ANULATION, HALF_OCCURRENCE_TIME, HALF_MULTIPLE_MONTH_BALANCE, HALF_OCCURRENCE;
 
     public static List<JustificationType> getJustificationTypesForJustificationMotives() {
 	List<JustificationType> justificationTypes = new ArrayList<JustificationType>();
 	justificationTypes.add(JustificationType.TIME);
 	justificationTypes.add(JustificationType.OCCURRENCE);
+	justificationTypes.add(JustificationType.HALF_OCCURRENCE_TIME);
 	justificationTypes.add(JustificationType.HALF_OCCURRENCE);
 	justificationTypes.add(JustificationType.BALANCE);
 	justificationTypes.add(JustificationType.MULTIPLE_MONTH_BALANCE);
@@ -26,6 +27,7 @@ public enum JustificationType {
 
     public static List<JustificationType> getHalfDayJustificationTypes() {
 	List<JustificationType> justificationTypes = new ArrayList<JustificationType>();
+	justificationTypes.add(JustificationType.HALF_OCCURRENCE_TIME);
 	justificationTypes.add(JustificationType.HALF_OCCURRENCE);
 	justificationTypes.add(JustificationType.HALF_MULTIPLE_MONTH_BALANCE);
 	return justificationTypes;

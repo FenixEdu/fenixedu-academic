@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.joda.time.DateTimeFieldType;
@@ -54,7 +55,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 			    .getClosedYearMonth().get(DateTimeFieldType.year()),
 			    assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
 				    DateTimeFieldType.monthOfYear()), 1);
-		    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
+		    Integer code = 0;
+		    code = closedMonthJustification.getJustificationMotive().getGiafCode(
 			    assiduousnessClosedMonth.getAssiduousness(), day);
 		    Duration duration = pastJustificationsDurations.get(code);
 		    if (duration == null) {

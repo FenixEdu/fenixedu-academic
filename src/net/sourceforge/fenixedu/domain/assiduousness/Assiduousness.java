@@ -129,11 +129,13 @@ public class Assiduousness extends Assiduousness_Base {
 	Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	for (AssiduousnessRecord record : clockings) {
 	    YearMonthDay clockDay = record.getDate().toYearMonthDay();
-	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap)) {
+	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) == 0) {
 		if (clockingsMap.get(clockDay.minusDays(1)) != null
 			&& clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
 		    clockDay = clockDay.minusDays(1);
 		}
+	    } else if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) < 0) {
+		clockDay = clockDay.minusDays(1);
 	    }
 
 	    List<AssiduousnessRecord> clocks = clockingsMap.get(clockDay);
@@ -196,14 +198,16 @@ public class Assiduousness extends Assiduousness_Base {
 	    if (dayOccurrences.isEmpty() || !workDaySheet.getAssiduousnessRecords().isEmpty()) {
 		List<Leave> timeLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.TIME);
-		List<Leave> halfOccurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
-			JustificationType.HALF_OCCURRENCE);
+		List<Leave> halfOccurrenceTimeLeaves = getLeavesByType(workDaySheet.getLeaves(),
+			JustificationType.HALF_OCCURRENCE_TIME);
 		List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.BALANCE);
 		balanceLeaves.addAll(getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.HALF_MULTIPLE_MONTH_BALANCE));
 		List<Leave> balanceOcurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
 			JustificationType.MULTIPLE_MONTH_BALANCE);
+		List<Leave> halfOccurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
+			JustificationType.HALF_OCCURRENCE);
 		if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
 		    workDaySheet.setTimeline(getTimeline(workDaySheet, timeLeaves));
 		    workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
@@ -220,13 +224,18 @@ public class Assiduousness extends Assiduousness_Base {
 				.getWorkScheduleType().getFixedWorkPeriod().getWorkPeriodDuration());
 		    }
 		    if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty()
-			    && halfOccurrenceLeaves.isEmpty()) {
+			    && halfOccurrenceTimeLeaves.isEmpty()) {
 			workDaySheet.addNote("FALTA");
 		    }
 		}
 		workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
 		workDaySheet.discountBalanceOcurrenceLeaveInFixedPeriod(balanceOcurrenceLeaves);
-		workDaySheet.discountBalance(halfOccurrenceLeaves);
+		workDaySheet.discountBalance(halfOccurrenceTimeLeaves);
+
+		if (!halfOccurrenceLeaves.isEmpty()) {
+		    workDaySheet.discountHalfOccurrence();
+		}
+
 	    }
 	} else {
 	    if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
@@ -563,17 +572,17 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public int getLeavesNumberOfWorkDays(YearMonthDay beginDate, YearMonthDay endDate,
-            String justificationAcronym) {
-        int countWorkDays = 0;
-        for (Leave leave : getLeaves(beginDate, endDate)) {
-            if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
-                countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
-                        endDate.toDateTimeAtMidnight()));
-            }
-        }
-        return countWorkDays;
+	    String justificationAcronym) {
+	int countWorkDays = 0;
+	for (Leave leave : getLeaves(beginDate, endDate)) {
+	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
+		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
+			endDate.toDateTimeAtMidnight()));
+	    }
+	}
+	return countWorkDays;
     }
-    
+
     public AssiduousnessVacations getAssiduousnessVacationsByYear(Integer year) {
 	for (AssiduousnessVacations assiduousnessVacations : getAssiduousnessVacations()) {
 	    if (assiduousnessVacations.getYear().equals(year)) {

@@ -15,18 +15,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -42,9 +38,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Duration;
-import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
@@ -248,8 +241,9 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward(returnPath);
 	} else {
 
-	    if (yearMonth.getYear() == firstMonth.getYear()
-		    && yearMonth.getMonth().getNumberOfMonth() < firstMonth.getMonthOfYear()) {
+	    if ((yearMonth.getYear() < firstMonth.getYear())
+		    || (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth()
+			    .getNumberOfMonth() < firstMonth.getMonthOfYear())) {
 		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources",
 			LanguageUtils.getLocale());
 
