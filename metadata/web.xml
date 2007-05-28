@@ -35,6 +35,10 @@
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CheckUserViewFilter</filter-class>
 	</filter>
 	<filter>
+	    <filter-name>CheckPathByRoleFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CheckPathByRoleFilter</filter-class>
+	</filter>
+	<filter>
 	    <filter-name>indexFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
@@ -186,6 +190,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CloseTxFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CheckPathByRoleFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
@@ -528,6 +536,10 @@
 			<session-timeout>120</session-timeout>
 	</session-config>
 
+	<error-page>
+	    <exception-type>net.sourceforge.fenixedu.presentationTier.servlets.filters.CheckPathByRoleFilter$NotAuthorizedAccessException</exception-type>
+	    <location>/exception/notAuthorizedForward.jsp</location>
+	</error-page>
 	<error-page>
 	    <exception-type>net.sourceforge.fenixedu.accessControl.IllegalDataAccessException</exception-type>
 	    <location>/exception/notAuthorizedForward.jsp</location>

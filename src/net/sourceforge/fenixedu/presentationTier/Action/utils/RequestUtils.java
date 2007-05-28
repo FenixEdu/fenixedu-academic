@@ -42,7 +42,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class RequestUtils {
 
-    private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
+    public static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);
