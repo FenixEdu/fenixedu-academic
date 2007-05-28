@@ -1791,4 +1791,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return competenceCourse == null ? false : competenceCourse.isDissertation();
     }
 
+    @Override
+    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
+	curricularCourses.add(this);
+    }
+
 }

@@ -97,6 +97,10 @@
             />
 		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
 	</definition>
+	<definition name="show-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
+		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+	</definition>
 	<definition name="view-course-information" extends="definition.coordinator.two-column">
 		<put name="body" value="/gesdis/viewCourseInformation.jsp">
 		</put>

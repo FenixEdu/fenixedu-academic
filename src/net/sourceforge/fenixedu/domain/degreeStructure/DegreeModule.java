@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -271,4 +272,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
     abstract protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final Context context);
     abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
     abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+
+    abstract public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses);
 }

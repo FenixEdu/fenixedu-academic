@@ -825,6 +825,16 @@
 			scope="request"
 			validate="true"
 			>
+			<exception 
+				type="net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddExecutionDegreeToScheduling$SchedulingContainsProposalsException" 
+				key="error.final.degree.work.scheduling.has.proposals"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" 
+				/>
+			<exception 
+				type="net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveExecutionDegreeToScheduling$SchedulingContainsProposalsException" 
+				key="error.final.degree.work.scheduling.has.proposals"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" 
+				/>
 		<forward name="error" path="/indexCoordinator.jsp"/>
 		<forward name="show-choose-execution-degree-page" path="df.page.showFinalDegreeChooseExecutionDegree"/>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
@@ -924,6 +934,12 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ScientificCommissionTeamDA"
             parameter="method">
             <forward name="viewScientificCommission" path="scientificCommission-view"/>
+        </action>
+
+        <action path="/degreeCurricularPlan/equivalencyPlan"
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA"
+            parameter="method">
+            <forward name="showPlan" path="show-equivalency.plan"/>
         </action>
 
     </action-mappings>

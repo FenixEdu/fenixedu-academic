@@ -22,15 +22,16 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
     private void checkParameters(DegreeCurricularPlan degreeCurricularPlan,
 	    DegreeCurricularPlan sourceDegreeCurricularPlan) {
 	if (degreeCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.DegreeCurricularPlanEquivalencePlan.degreeCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.degreeCurricularPlan.cannot.be.null");
 	}
 
 	if (sourceDegreeCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.DegreeCurricularPlanEquivalencePlan.sourceDegreeCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.sourceDegreeCurricularPlan.cannot.be.null");
 	}
 
+	if (degreeCurricularPlan == sourceDegreeCurricularPlan) {
+	    throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.source.and.target.cannot.be.the.same");
+	}
     }
 
 }

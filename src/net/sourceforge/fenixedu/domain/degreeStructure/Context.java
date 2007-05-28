@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -288,6 +290,11 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public Integer getCurricularYear() {
 	return getCurricularPeriod().getParent().getAbsoluteOrderOfChild();
+    }
+
+    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
+	final DegreeModule degreeModule = getChildDegreeModule();
+	degreeModule.getAllCurricularCourses(curricularCourses);
     }
 
 }

@@ -54,9 +54,16 @@ import net.sourceforge.fenixedu.util.SituationName;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
+
+    public static final Comparator<DegreeCurricularPlan> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("presentationName"));
+	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(COMPARATOR_BY_ID);
+    }
 
     /**
      * This might look a strange comparator, but the idea is to show a list of
@@ -489,6 +496,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	return result;
+    }
+
+    public Set<CurricularCourse> getAllCurricularCourses() {
+	final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+	curricularCourses.addAll(super.getCurricularCoursesSet());
+	if (hasRoot()) {
+	    getRoot().getAllCurricularCourses(curricularCourses);
+	}
+	return curricularCourses;
     }
 
     public List<CurricularCourse> getCurricularCoursesWithExecutionIn(ExecutionYear executionYear) {
@@ -1482,6 +1498,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	return result;
+    }
+
+    // this slot is a hack to allow renderers to call the setter. Don't delete it.
+    private DegreeCurricularPlan sourceDegreeCurricularPlan = null;
+    public DegreeCurricularPlan getSourceDegreeCurricularPlan() {
+        return sourceDegreeCurricularPlan;
+    }
+    public void setSourceDegreeCurricularPlan(DegreeCurricularPlan sourceDegreeCurricularPlan) {
+        this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
+    }
+
+    public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
+	return new DegreeCurricularPlanEquivalencePlan(this, sourceDegreeCurricularPlan);
     }
 
 }

@@ -20,10 +20,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -579,6 +576,13 @@ public class CourseGroup extends CourseGroup_Base {
 	    final CurricularCourse curricularCourse, final ExecutionPeriod start,
 	    final ExecutionPeriod end) {
 	return curricularCourse.addContext(this, curricularPeriod, start, end);
+    }
+
+    @Override
+    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
+	for (Context context : getChildContexts()) {
+	    context.getAllCurricularCourses(curricularCourses);
+	}
     }
     
 }
