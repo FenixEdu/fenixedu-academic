@@ -27,5 +27,13 @@ public class EnrolmentLog extends EnrolmentLog_Base {
         this.setExecutionPeriod(executionPeriod);
         this.setWho(who);
     }
+    
+    public void delete() {
+	removeRootDomainObject();
+	removeStudent();
+	removeCurricularCourse();
+	removeExecutionPeriod();
+	super.deleteDomainObject();
+    }
 
 }
