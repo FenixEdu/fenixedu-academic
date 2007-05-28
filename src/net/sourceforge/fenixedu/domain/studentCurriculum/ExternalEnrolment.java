@@ -3,10 +3,12 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -92,6 +94,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public Double getWeigth() {
 	return getEctsCredits();
+    }
+
+    final public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
+    }
+
+    public Unit getAcademicUnit() {
+	return getExternalCurricularCourse().getAcademicUnit();
     }
 
 }

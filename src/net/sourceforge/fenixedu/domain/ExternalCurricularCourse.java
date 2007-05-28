@@ -7,8 +7,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -89,6 +91,25 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	return UnitUtils.getUnitFullPathName(getUnit(), validAccountabilityTypes).toString() + " > " + getName();
     }
 
+    final public Unit getAcademicUnit() {
+	final List<AccountabilityTypeEnum> validAccountabilityTypes = Arrays.asList(new AccountabilityTypeEnum[] {
+		AccountabilityTypeEnum.GEOGRAPHIC,
+		AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
+	
+	UniversityUnit universityUnit = null;
+	SchoolUnit schoolUnit = null;
+	for (final Unit unit : UnitUtils.getUnitFullPath(getUnit(), validAccountabilityTypes)) {
+	    if (unit.isUniversityUnit()) {
+		universityUnit = (UniversityUnit) unit;
+	    } else if (unit.isSchoolUnit()) {
+		schoolUnit = (SchoolUnit) unit;
+	    }
+	}
+
+	return (schoolUnit != null) ? schoolUnit : (universityUnit != null) ? universityUnit : null;
+    }
+
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name,
 	    String code) {
 	for (final ExternalCurricularCourse externalCurricularCourse : unit
@@ -144,4 +165,5 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	}
 	return result;
     }
+
 }
