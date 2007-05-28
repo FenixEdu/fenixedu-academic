@@ -21,6 +21,14 @@
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
 
+<!--[if IE 5]><style>
+#navlateral { margin: 0 -3px; }
+#bigdiv { width: 300px; }
+</style><![endif]-->
+<!--[if IE]><style>
+#wrap {	margin-right: -3000px; position: relative; width: 100%; }
+#clear { _height: 0; zoom: 1; }
+</style><![endif]-->
 
 </head>
 
@@ -72,15 +80,17 @@
 	</div>
 	<!-- End NavLateral -->
 	
-
 	<!-- Content -->
 	<div id="content">
-	  	<tiles:insert attribute="body-context" ignore="true"/>
-	  	<tiles:insert attribute="body" ignore="true"/>
-	  	<tiles:getAsString name="body-inline" ignore="true"/>
+		<!-- Wrap -->
+		<div id="wrap">
+		  	<tiles:insert attribute="body-context" ignore="true"/>
+		  	<tiles:insert attribute="body" ignore="true"/>
+		  	<tiles:getAsString name="body-inline" ignore="true"/>
+		</div>
+		<!-- End Wrap -->
 	</div>
 	<!-- End Content -->
-
 
 	<!-- Footer -->
 	<div id="footer">
