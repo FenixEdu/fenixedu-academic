@@ -705,20 +705,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public List<Integer> buildFullCurricularYearList() {
-	List<Integer> result = new ArrayList<Integer>();
-
-	if (this.isBolonhaDegree()) {
-	    for (int i = 1; i <= this.getDegreeType().getYears(); i++) {
-		result.add(i);
-	    }
-	} else if (this.getDegreeType().equals(DegreeType.DEGREE)) {
-	    for (int i = 1; i <= 5; i++) {
-		result.add(i);
-	    }
-	} else if (this.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-	    for (int i = 1; i <= 2; i++) {
-		result.add(i);
-	    }
+	final List<Integer> result = new ArrayList<Integer>();
+	for (int i = 1; i <= this.getDegreeType().getYears(); i++) {
+	    result.add(i);
 	}
 	return result;
     }
