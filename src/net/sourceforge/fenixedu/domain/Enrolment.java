@@ -24,9 +24,10 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -50,23 +51,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private static final Logger logger = Logger.getLogger(Enrolment.class);
     
-    static final private Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
-	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
-        }
-    };
-
-    static final private Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
-            return o1.getExecutionYear().compareTo(o2.getExecutionYear());
-        }
-    };
-    
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
         public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-            comparatorChain.addComparator(DomainObject.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
             
             return comparatorChain.compare(o1, o2);
         }
@@ -81,8 +70,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID = new Comparator<Enrolment>() {
         public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
             
             return comparatorChain.compare(o1, o2);
         }
@@ -91,8 +80,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID = new Comparator<Enrolment>() {
         public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR);
-            comparatorChain.addComparator(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME);
+            comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
             
             return comparatorChain.compare(o1, o2);
         }
@@ -1268,5 +1257,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		}
 		
 		return getRegistration().getDissertationProposal(previousExecutionYear);
-	}
+    }
+
+    public Unit getAcademicUnit() {
+	return RootDomainObject.getInstance().getInstitutionUnit();
+    }
+
 }
