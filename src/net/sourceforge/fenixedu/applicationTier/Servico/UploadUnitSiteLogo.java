@@ -26,7 +26,12 @@ public class UploadUnitSiteLogo extends Service {
 	public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
 		if (site.hasLogo()) {
-			site.getLogo().delete();
+			UnitSiteFile logo = site.getLogo();
+
+			IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+			fileManager.deleteFile(logo.getExternalStorageIdentification());
+
+			logo.delete();
 		}
 
 		if (fileToUpload == null || name == null) {

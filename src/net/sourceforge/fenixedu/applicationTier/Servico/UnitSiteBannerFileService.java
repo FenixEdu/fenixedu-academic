@@ -107,4 +107,14 @@ public class UnitSiteBannerFileService extends Service {
 		banner.setWeight(weight);
 	}
 
+	protected void deleteFile(UnitSiteBannerFile bannerFile) {
+		if (bannerFile == null) {
+			return;
+		}
+		
+		bannerFile.delete();
+		
+        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+        fileManager.deleteFile(bannerFile.getExternalStorageIdentification());
+	}
 }

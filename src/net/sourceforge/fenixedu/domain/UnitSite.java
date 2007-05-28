@@ -193,6 +193,23 @@ public abstract class UnitSite extends UnitSite_Base {
         return null;
     }
     
+    @Override
+    public boolean canBeDeleted() {
+    	if (! super.canBeDeleted()) {
+    		return false;
+    	}
+    	
+    	if (hasAnyBanners()) {
+    		return false;
+    	}
+    	
+    	if (hasLogo()) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
     /**
      * Utility method to allow the user of an intenationalized name for the
      * site. Normally units, as a Party, don't have and internacionalized name
