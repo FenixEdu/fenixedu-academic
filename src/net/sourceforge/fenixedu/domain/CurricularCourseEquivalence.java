@@ -57,5 +57,8 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 	
 	return result;
     }
-    
+
+    public boolean isFrom(DegreeCurricularPlan degreeCurricularPlan) {
+	return getDegreeCurricularPlan() == degreeCurricularPlan;
+    }
 }
