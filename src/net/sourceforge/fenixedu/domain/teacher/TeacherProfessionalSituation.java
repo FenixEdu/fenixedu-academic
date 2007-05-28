@@ -46,7 +46,7 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     @Override
     public void setRegimeType(RegimeType regimeType) {
 	if (regimeType == null && !isEndSituation()) {
-	    throw new DomainException("error.TeacherProfessionalSituation.no.regimenType");
+	    throw new DomainException("error.TeacherProfessionalSituation.no.regimeType");
 	}
 	super.setRegimeType(regimeType);
     }     

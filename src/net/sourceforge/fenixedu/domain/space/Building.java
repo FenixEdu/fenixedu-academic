@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -70,6 +71,16 @@ public class Building extends Building_Base {
 	return null;
     }
 
+    public Floor readFloorByLevel(Integer floorNumber) {
+	List<Space> containedSpaces = getContainedSpaces();
+	for (Space space : containedSpaces) {
+	    if(space.isFloor() && ((Floor)space).getSpaceInformation().getLevel().equals(floorNumber)) {
+		return (Floor) space;
+	    }
+	}
+	return null;
+    }
+      
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
 

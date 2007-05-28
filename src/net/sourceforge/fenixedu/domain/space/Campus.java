@@ -71,7 +71,17 @@ public class Campus extends Campus_Base {
 	}	
 	return result;
     }
-
+    
+    public static Campus readCampusByName(String name) {
+	for (Campus campus : Space.getAllCampus()) {
+	    if(campus.getName().equalsIgnoreCase(name)) {
+		return campus;
+	    }
+	}
+	return null;
+    }
+    
+    
     @Override
     public boolean isCampus() {
 	return true;
