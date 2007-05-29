@@ -38,6 +38,10 @@ public abstract class RSSAction extends InformaRSSAction {
         final ChannelIF channel = builder.createChannel(getFeedTitle(request));
         channel.setDescription(getFeedDescription(request));
         channel.setLocation(new URL(getFeedLink(request)));
+        String siteLocation = getSiteLocation(request);
+        if(siteLocation != null) {
+            channel.setSite(new URL(siteLocation));
+        }
 
         for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
             final ItemIF item = new Item();
@@ -65,5 +69,7 @@ public abstract class RSSAction extends InformaRSSAction {
     protected abstract String getFeedDescription(HttpServletRequest request) throws Exception;
 
     protected abstract String getFeedLink(HttpServletRequest request) throws Exception;
+    
+    protected abstract String getSiteLocation(HttpServletRequest request) throws Exception;
 
 }

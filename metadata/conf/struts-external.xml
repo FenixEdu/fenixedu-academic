@@ -87,6 +87,20 @@
 			scope="request"
 			validate="false"
     	/>
+
+		<action path="/newsAnnouncementsRSS"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.ISTNewsAnnouncementRSS"
+    		parameter="method"
+			scope="request"
+			validate="false"
+    	/>
+
+		<action path="/eventsAnnouncementsRSS"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.ISTEventsAnnouncementRSS"
+    		parameter="method"
+			scope="request"
+			validate="false"
+    	/>
     	
     	<action path="/exportAnnouncementBoard"
     		type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport"

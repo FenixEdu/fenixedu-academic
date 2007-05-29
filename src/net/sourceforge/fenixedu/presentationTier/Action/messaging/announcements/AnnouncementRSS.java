@@ -178,4 +178,9 @@ public class AnnouncementRSS extends RSSAction {
         return rootDomainObject.readAnnouncementBoardByOID(Integer.valueOf(id));
     }
 
+    @Override
+    protected String getSiteLocation(HttpServletRequest request) throws Exception {
+	return null;
+    }
+
 }
