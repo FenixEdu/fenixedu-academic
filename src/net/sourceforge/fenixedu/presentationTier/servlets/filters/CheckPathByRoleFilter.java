@@ -23,7 +23,7 @@ public class CheckPathByRoleFilter implements Filter {
     private class NotAuthorizedAccessException extends RuntimeException {
 	public NotAuthorizedAccessException(String string) {
 	    super(string);
-	}	
+	}
     }
 
     public void init(FilterConfig config) {
@@ -32,21 +32,28 @@ public class CheckPathByRoleFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+	    FilterChain filterChain) throws IOException, ServletException {
 
-        final HttpServletRequest request = (HttpServletRequest) servletRequest;
-        final HttpServletResponse response = (HttpServletResponse) servletResponse;
+	final HttpServletRequest request = (HttpServletRequest) servletRequest;
+	final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        final IUserView userView = getUserView(request);
-        if (RequestUtils.isPrivateURI(request) && userView != null) {
-            final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
-            if (!validUserView(userView) || !hasRoleForSubApplication(uri, userView)) {
-        	System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador() + " to uri: " + uri);
-        	throw new NotAuthorizedAccessException("error.not.authorized.access.attempt.has.been.logged");
-            }
-        }
-        filterChain.doFilter(request, response);
+	final IUserView userView = getUserView(request);
+	final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
+	if (RequestUtils.isPrivateURI(request) && !isJavascript(uri) && userView != null) {
+	    if (!validUserView(userView) || !hasRoleForSubApplication(uri, userView)) {
+		System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador()
+			+ " to uri: " + uri);
+		throw new NotAuthorizedAccessException(
+			"error.not.authorized.access.attempt.has.been.logged");
+	    }
+	}
+	filterChain.doFilter(request, response);
+    }
+
+    private boolean isJavascript(final String uri) {
+	return uri.startsWith("/javaScript/") || uri.startsWith("javaScript/")
+		|| uri.startsWith("/ajax/") || uri.startsWith("ajax/");
     }
 
     private boolean hasRoleForSubApplication(final String uri, final IUserView userView) {
@@ -81,12 +88,12 @@ public class CheckPathByRoleFilter implements Filter {
     }
 
     private IUserView getUserView(final HttpServletRequest request) {
-        final HttpSession session = request.getSession(false);
-        return (IUserView) ((session != null) ? session.getAttribute(SessionConstants.U_VIEW) : null);
+	final HttpSession session = request.getSession(false);
+	return (IUserView) ((session != null) ? session.getAttribute(SessionConstants.U_VIEW) : null);
     }
 
     private boolean validUserView(final IUserView userView) {
-        return userView != null && !userView.isPublicRequester();
+	return userView != null && !userView.isPublicRequester();
     }
 
 }
