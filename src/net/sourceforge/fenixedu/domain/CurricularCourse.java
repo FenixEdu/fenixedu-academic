@@ -1430,6 +1430,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return isOptionalCurricularCourse() ? RegimeType.SEMESTRIAL : null;
     }
+    
+    public boolean hasRegime() {
+	return getRegime() != null;
+    }
 
     @Override
     public boolean isOptional() {
