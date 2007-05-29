@@ -585,5 +585,9 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
     
+    public boolean allowChildWith(final ExecutionPeriod executionPeriod) {
+	return getMinimumExecutionPeriod().isBeforeOrEquals(executionPeriod);
+    }
+    
 }
 

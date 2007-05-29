@@ -6,7 +6,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -84,12 +87,16 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         
-        if (this.isRoot()) {
+        if (isRoot()) {
             throw new DomainException("degreeModule.cannot.add.context.to.root");
+        }
+        if (!parentCourseGroup.allowChildWith(beginExecutionPeriod)) {
+            throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period");
         }
         
         checkContextsFor(parentCourseGroup, curricularPeriod, null);
         checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+        
         return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
     
@@ -257,6 +264,24 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return this.equals(degreeModule);
+    }
+    
+    public ExecutionPeriod getMinimumExecutionPeriod() {
+	if (isRoot()) {
+	    return getBeginBolonhaExecutionPeriod();
+	}
+	
+	final SortedSet<ExecutionPeriod> executionPeriods = new TreeSet<ExecutionPeriod>();
+	for (final Context context : getParentContextsSet()) {
+	    executionPeriods.add(context.getBeginExecutionPeriod());
+	}
+	return executionPeriods.first();
+    }
+    
+    private ExecutionPeriod getBeginBolonhaExecutionPeriod() {
+	final String year = PropertiesManager.getProperty("start.year.for.bolonha.degrees");
+	final Integer semester = Integer.valueOf(PropertiesManager.getProperty("start.semester.for.bolonha.degrees"));
+	return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
     }
     
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
