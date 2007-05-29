@@ -9,27 +9,51 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
   	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.mainTitle"/></h2>
 
+	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>:
+	<table class="tstyle1 thlight mtop05">
+		<tr>
+			<th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.activities" /></th>
+			<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th>
+			<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roles" /></th>
+			<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roleMessage" /></th>
+		</tr>
+		<tr>
+			<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.event.additionalInformation" /></td>
+		</tr>
+		<tr>
+			<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td>
+			<td style="text-align: center;">-</td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.magazine.additionalInformation" /></td>
+		</tr>
+		<tr>
+			<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td>
+			<td style="text-align: center;">-</td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.journalIssues.additionalInformation" /></td>
+		</tr>
+		<tr>
+			<td class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.networks.additionalInformation" /></td>
+		</tr>
+		<tr>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.bilateral.additionalInformation" /></td>
+		</tr>
+		<tr>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
+			<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.comission.additionalInformation" /></td>
+		</tr>
+	</table>
 
-	<script language="JavaScript">	
-	function check(e,v){
-		if (e.className == "dnone")
-	  	{
-		  e.className = "dblock";
-		  v.value = "-";
-		}
-		else {
-		  e.className = "dnone";
-	  	  v.value = "+";
-		}
-	}
-	</script>
 
-
-	<script>
-		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-		document.getElementById('instructionsButton').className="dblock";
-	</script>
-		
 	<ul class="mtop15 mbottom1 list5">
 		<li>
 			<bean:message key="researcher.activity.activitiesManagement.createParticipation" bundle="RESEARCHER_RESOURCES"/>: 
@@ -39,64 +63,8 @@
 			<html:link page="/activities/createJournalIssue.do?method=prepareJournalIssueSearch"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></html:link>,
 			<html:link page="/activities/createCooperation.do?method=prepareCreateCooperationParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></html:link>
 		</li>
-		<li>
-			<div class="dblock" id="instructionsButton">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>: <a href="#" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Ver</a>
-			</div>
-		</li>
 	</ul>
-
-	<div id="instructions" class="dblock">
-		<div class="mtop025">
-			<table class="tstyle1 thlight mtop05">
-				<tr>
-					<th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.activities" /></th>
-					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th>
-					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roles" /></th>
-					<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.roleMessage" /></th>
-				</tr>
-				<tr>
-					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.types" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.eventEditions.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.event.additionalInformation" /></td>
-				</tr>
-				<tr>
-					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals" /></td>
-					<td style="text-align: center;">-</td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.scientificJournals.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.magazine.additionalInformation" /></td>
-				</tr>
-				<tr>
-					<td class="aright bold"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues" /></td>
-					<td style="text-align: center;">-</td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.journalIssues.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.journalIssues.additionalInformation" /></td>
-				</tr>
-				<tr>
-					<td class="aright bold" rowspan="3"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperations" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.scientificOrganizationsAndNetworksRoles.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.networks.additionalInformation" /></td>
-				</tr>
-				<tr>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.bilateralCooperationRoles.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.bilateral.additionalInformation" /></td>
-				</tr>
-				<tr>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.comission.roles" /></td>
-					<td><bean:message bundle="RESEARCHER_RESOURCES" key="label.cooperations.comission.additionalInformation" /></td>
-				</tr>
-			</table>
-		</div>
-	</div>
-
-	<script>
-		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-		document.getElementById('instructionsButton').className="dblock";
-	</script>
+	
 	
 	<logic:notEmpty name="international-events">
 		<p id='events' class="mtop3 mbottom0">
