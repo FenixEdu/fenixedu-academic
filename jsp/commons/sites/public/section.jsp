@@ -75,7 +75,6 @@
               	  <logic:notEmpty name="item" property="information">
             			<fr:view name="item" property="information">
             				<fr:layout>
-            					<fr:property name="classes" value="coutput1" />
             					<fr:property name="escaped" value="false" />
             					<fr:property name="newlineAware" value="false" />
             				</fr:layout>
@@ -85,7 +84,6 @@
             		<logic:notEmpty name="item" property="sortedVisibleFileItems">
                     <fr:view name="item" property="sortedVisibleFileItems">
                         <fr:layout name="list">
-                            <fr:property name="classes" value="coutput1 mvert025" />
                             <fr:property name="eachSchema" value="site.item.file.basic"/>
                             <fr:property name="eachLayout" value="values"/>
                             <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
