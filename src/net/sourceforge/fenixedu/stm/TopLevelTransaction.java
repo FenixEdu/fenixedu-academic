@@ -337,6 +337,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     // consistency-predicates-system methods
 
+    @Override
     protected void checkConsistencyPredicates() {
         // check all the consistency predicates for the objects modified in this transaction
         for (Object obj : getDBChanges().getModifiedObjects()) {
@@ -346,10 +347,22 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         super.checkConsistencyPredicates();
     }
 
+    @Override
+    protected void checkConsistencyPredicates(Object obj) {
+        if (getDBChanges().isDeleted(obj)) {
+            // don't check deleted objects
+            return;
+        } else {
+            super.checkConsistencyPredicates(obj);
+        }
+    }
+
+    @Override
     protected ConsistencyCheckTransaction makeConsistencyCheckTransaction(Object obj) {
         return new FenixConsistencyCheckTransaction(this, obj);
     }
 
+    @Override
     protected Iterator<DependenceRecord> getDependenceRecordsToRecheck() {
         // for now, just return an empty iterator
         return Util.emptyIterator();

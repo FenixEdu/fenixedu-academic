@@ -53,6 +53,10 @@ class DBChanges {
         return modified;
     }
 
+    public boolean isDeleted(Object obj) {
+        return (objsToDelete != null) && objsToDelete.contains(obj);
+    }
+
     public boolean needsWrite() {
 	return ((newObjs != null) && (! newObjs.isEmpty()))
 	    || ((objsToStore != null) && (! objsToStore.isEmpty()))
