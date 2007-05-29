@@ -132,7 +132,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeRegime() throws IOException {
         writer.startElement("td", this);
-        if (!this.curricularCourse.isOptional()) {
+        if (!this.curricularCourse.isOptional() && this.curricularCourse.hasRegime()) {
             writer.writeAttribute("class", "highlight2 smalltxt", null);
             writer.writeAttribute("align", "center", null);
             writer.writeAttribute("style", "width: 1em;", null);
