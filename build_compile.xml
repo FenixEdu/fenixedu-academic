@@ -377,6 +377,10 @@
 						   property="webServices.external.urls"/>
 				<replacefilter token="@merge.units.emails@"
 						   property="merge.units.emails"/>
+				<replacefilter token="@start.year.for.bolonha.degrees@"
+						   property="start.year.for.bolonha.degrees"/>
+				<replacefilter token="@start.semester.for.bolonha.degrees@"
+						   property="start.semester.for.bolonha.degrees"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

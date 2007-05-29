@@ -549,6 +549,12 @@ error.if.changing.deleted.object=false
 object.id.execution.period.for.from.mark.sheet.managment=84
 
 
+#----------------------------------------------------------------
+# Bolonha configuration
+#----------------------------------------------------------------
+start.year.for.bolonha.degrees=2006/2007
+start.semester.for.bolonha.degrees=1
+
 #
 #
 #
