@@ -1217,24 +1217,6 @@ background: url(../images/external_icon.gif) right center no-repeat;
 tr.vigilancyHeaderColumns th { background: #fcfcfc; }
 
 
-table .tab_lay {
-width: 100%;
-margin-bottom: 1em;
-}
-table .tab_lay th {
-font-size: 130%;
-}
-table .tab_lay th center {
-vertical-align: middle;
-padding: 0;
-margin: 0;
-font-size: 80%;
-text-decoration: underline;
-}
-
-
-
-
 
 table.tgluetop tr td, table.tgluetop tr th { 
 border-top: none; 
