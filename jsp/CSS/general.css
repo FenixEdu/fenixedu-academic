@@ -1,22 +1,6 @@
 /* general.css - 01.2006 by João Alfaiate @ Fenix */
 
-/*
-File sections:
-- Headings
-- Anchors
-- Show Info
-- Info Blocks
-- Lists
-- Tables
-- Tree
-- Feedback
-- Forms
-- Misc Classes
-- Specific
-- To Replace
-- To Organize
-- Old (general properties waiting to be merged)
-*/
+/* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
 
 /* ----------------------
 ------ Headings --------
@@ -1293,8 +1277,8 @@ text-align: center;
 }
 .usiteintro {
 text-align: left;
-margin: 1em;
 padding: 1em;
+background: #f8f8f8;
 }
 .usiteintrofloated {
 text-align: left;
@@ -1396,22 +1380,6 @@ padding-left: 10px;
 #perfnav ul ul {
 display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
