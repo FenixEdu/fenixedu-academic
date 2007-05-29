@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Registration Agreement" updateRegistrationAgreement.sql
+execute "Update ojb concrete class for LEIC and LEEC StudentCurricularPlans" updateStudentCurricularPlans.sql
