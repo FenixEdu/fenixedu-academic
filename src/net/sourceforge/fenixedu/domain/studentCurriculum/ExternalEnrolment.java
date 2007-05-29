@@ -82,6 +82,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	super.deleteDomainObject();
     }
 
+    final public boolean isExternalEnrolment() {
+	return true;
+    }
+
     public Double getEctsCredits() {
 	return Double.valueOf(0d);
     }

@@ -52,5 +52,7 @@ public interface IEnrolment {
     ExecutionYear getExecutionYear();
 
     Unit getAcademicUnit();
+
+    boolean isExternalEnrolment();
     
 }

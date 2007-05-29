@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -848,7 +847,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return false;
     }
-    
+
     public boolean hasAssociatedMarkSheetOrFinalGrade(MarkSheetType markSheetType) {
 	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
 	    if (enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType
@@ -1152,6 +1151,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public boolean isExtraCurricular() {
 	return getIsExtraCurricular() != null && getIsExtraCurricular();
+    }
+
+    final public boolean isExternalEnrolment() {
+	return false;
     }
 
     @Override
