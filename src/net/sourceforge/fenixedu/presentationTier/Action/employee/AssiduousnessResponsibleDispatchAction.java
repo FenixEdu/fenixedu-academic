@@ -51,6 +51,8 @@ import org.joda.time.YearMonthDay;
 
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
 
+    private final YearMonthDay firstMonth = new YearMonthDay(2006, 9, 1);
+
     public ActionForward showEmployeeList(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
@@ -312,9 +314,14 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	    yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
 	    request.setAttribute("yearMonth", yearMonth);
 	    return null;
-	} else if (yearMonth.getYear() < 2006
-		|| (yearMonth.getYear() == 2006 && yearMonth.getMonth().compareTo(Month.SEPTEMBER) < 0)) {
-	    saveErrors(request, "error.invalidPastDate");
+	} else if (yearMonth.getYear() < firstMonth.getYear()
+		|| (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth()
+			.getNumberOfMonth() < firstMonth.getMonthOfYear())) {
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources",
+		    LanguageUtils.getLocale());
+	    saveErrors(request, "error.invalidDateBefore", new Object[] {
+		    bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
+		    new Integer(firstMonth.getYear()).toString() });
 	    request.setAttribute("yearMonth", yearMonth);
 	    return null;
 	}
@@ -336,6 +343,12 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
     private void saveErrors(HttpServletRequest request, String message) {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("message", new ActionMessage(message));
+	saveMessages(request, actionMessages);
+    }
+
+    private void saveErrors(HttpServletRequest request, String message, Object[] args) {
+	ActionMessages actionMessages = new ActionMessages();
+	actionMessages.add("message", new ActionMessage(message, args));
 	saveMessages(request, actionMessages);
     }
 
