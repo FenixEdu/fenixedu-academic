@@ -285,7 +285,15 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries.ExecutionCourseInquiriesDA"
 				scope="request">
 			<forward name="showExecutionCoursesForInquiries" path="show-execution-courses-for-inquiries"/>
-		</action>		
+		</action>	
+		
+		<action path="/protocols"
+	      	scope="request"
+	      	parameter="method"  
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction"> 	                   
+   	       <forward name="search-protocols" path="search-protocols"/>
+	    </action>
+			
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
@@ -312,6 +320,7 @@
    	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />     
 	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/> 
    	<message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false" />
+   	<message-resources parameter="resources.ScientificCouncilResources"	key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

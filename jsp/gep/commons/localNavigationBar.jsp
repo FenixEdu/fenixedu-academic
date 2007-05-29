@@ -64,7 +64,14 @@
 			<bean:message key="button.createClassifications" bundle="INQUIRIES_RESOURCES" />
 		</html:link>
 	</li>
-	
+	<li class="navheader">
+		<bean:message key="label.protocols.navigation.header" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	</li>
+	<li>
+		<html:link page="/protocols.do?method=searchProtocols">
+	  		<bean:message key="link.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	  	</html:link>
+	</li>	
 </ul>
 <%--
 Devido ï¿?s inscriï¿?ï¿?es, as funcionalidades do portal GEP estï¿?o temporariamente desactivadas para não causar sobrecarga no servidor.
