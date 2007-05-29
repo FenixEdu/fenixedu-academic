@@ -13,8 +13,16 @@ public class DeleteUnitSiteBanner extends Service {
 		UnitSiteBannerFile mainImage = banner.getMainImage();
 		UnitSiteBannerFile backgroundImage = banner.getBackgroundImage();
 
-		String mainImageId = mainImage.getExternalStorageIdentification();
-		String backgroundImageId = backgroundImage.getExternalStorageIdentification();
+		String mainImageId = null;
+		String backgroundImageId = null;
+
+		if (mainImage != null) {
+			mainImageId = mainImage.getExternalStorageIdentification();
+		}
+		if (backgroundImage != null) {
+			backgroundImageId = backgroundImage.getExternalStorageIdentification();
+		}
+
 		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 
 		banner.delete();
