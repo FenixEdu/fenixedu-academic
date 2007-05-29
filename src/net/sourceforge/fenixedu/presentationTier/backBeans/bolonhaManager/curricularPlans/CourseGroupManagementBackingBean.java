@@ -12,8 +12,8 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
     
@@ -51,14 +50,6 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;    
     }
     
-    /*public String getCourseGroupTypeValue() {
-        return (courseGroupTypeValue == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getCourseGroupType().name() : courseGroupTypeValue;    
-    }*/
-    
-    /*private DegreeType getCourseGroupType() {
-	return StringUtils.isEmpty(getCourseGroupTypeValue()) ? null : DegreeType.valueOf(getCourseGroupTypeValue());
-    }*/
-    
     public String getParentName() {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
     }
@@ -85,6 +76,15 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
         }
         return resultLabels;
+    }
+    
+    @Override
+    protected ExecutionPeriod getMinimumExecutionPeriod() {
+	CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());
+	if (courseGroup == null) {
+	    courseGroup = getCourseGroup(getCourseGroupID());
+	}
+	return (courseGroup == null) ? null : courseGroup.getMinimumExecutionPeriod();
     }
     
     public String createCourseGroup() {

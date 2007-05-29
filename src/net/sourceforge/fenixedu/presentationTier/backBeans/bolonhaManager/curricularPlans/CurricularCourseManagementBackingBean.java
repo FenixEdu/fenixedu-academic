@@ -409,17 +409,23 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
    
     protected List<SelectItem> readExecutionPeriodItems() {
-        final List<SelectItem> result = new ArrayList<SelectItem>();
-        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
-        Collections.sort(notClosedExecutionPeriods);
+	
+	final ExecutionPeriod minimumExecutionPeriod = getMinimumExecutionPeriod();
+	final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
+	Collections.sort(notClosedExecutionPeriods);
+	
+	final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionPeriod notClosedExecutionPeriod : notClosedExecutionPeriods) {
-            if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {                
-                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(),
-                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
-            }
-        }
+	    if (minimumExecutionPeriod == null || notClosedExecutionPeriod.isAfterOrEquals(minimumExecutionPeriod)) {
+		result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(),
+			notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
+	    }
+	}
         return result;
+    }
+
+    protected ExecutionPeriod getMinimumExecutionPeriod() {
+	return (getCourseGroup() == null) ? null : getCourseGroup().getMinimumExecutionPeriod();
     }
     
     public List<Context> getCurricularCourseParentContexts() {
