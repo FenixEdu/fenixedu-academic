@@ -27,6 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "update JustificationMotive" updateJustificationMotive.sql
-execute "fix file bug" fixFileBug.sql
-execute "Fixing EquivalencePlan Tables" FixEquivalencePlanTables.sql
