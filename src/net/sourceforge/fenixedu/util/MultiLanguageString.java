@@ -35,10 +35,6 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 	return contentsMap.keySet();
     }
 
-    public String getContent() {
-	return getContent(getContentLanguage());
-    }
-
     public boolean isRequestedLanguage() {
 	Language userLanguage = LanguageUtils.getUserLanguage();
 
@@ -74,6 +70,10 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 	}
     }
 
+    public String getContent() {
+	return getContent(getContentLanguage());
+    }
+
     public String getContent(Language language) {
 	return contentsMap.get(language);
     }
@@ -89,10 +89,14 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 	return contentsMap.remove(language);
     }
 
+    public String toUpperCase() {
+	return hasContent() ? getContent().toUpperCase() : null;
+    }
+    
     public boolean hasContent() {
 	return getContent() != null;
     }
-
+    
     public boolean hasContent(Language language) {
 	return getContent(language) != null;
     }
@@ -190,4 +194,5 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     public static I18N i18n() {
         return new MultiLanguageString().new I18N();
     }
+
 }
