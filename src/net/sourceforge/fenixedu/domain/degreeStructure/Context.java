@@ -169,7 +169,16 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     public boolean isOpen(final ExecutionPeriod executionPeriod) {
 	return getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod)
-		&& (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod));
+		&& (!hasEndExecutionPeriod() || getEndExecutionPeriod().isAfterOrEquals(executionPeriod));
+    }
+    
+    public boolean isOpen(final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+	    if (isOpen(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Deprecated
