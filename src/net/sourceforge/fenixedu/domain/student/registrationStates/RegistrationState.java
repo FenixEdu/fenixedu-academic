@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.dataTransferObject.ISmsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.IdInternalBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
@@ -200,6 +202,15 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public boolean isActive() {
 	return false;
+    }
+
+    public boolean includes(final ExternalEnrolment externalEnrolment) {
+	if (getStateType() == RegistrationStateType.MOBILITY) {
+	    final DateTime mobilityDate = getStateDate();
+	    return externalEnrolment.hasExecutionPeriod() && externalEnrolment.getExecutionYear().containsDate(mobilityDate);
+	}
+	
+	throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
     }
 
 }
