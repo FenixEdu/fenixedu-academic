@@ -23,7 +23,11 @@ import org.joda.time.format.DateTimeFormat;
 
 public class AdministrativeOfficeDocument extends FenixReport {
     
-    protected int LINE_LENGTH = 64;
+    static final protected int LINE_LENGTH = 64;
+    
+    static final protected int SUFFIX_LENGTH = 11;
+    
+    static final protected String[] identifiers = {"*", "#", "+", "**", "***"};
     
     protected DomainReference<DocumentRequest> documentRequestDomainReference;
 
@@ -134,4 +138,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
 
+    final protected String generateEndLine() {
+	return StringUtils.multipleLineRightPad(
+		org.apache.commons.lang.StringUtils.EMPTY,
+		LINE_LENGTH, 
+		'-') + "\n";
+    }
+    
 }
