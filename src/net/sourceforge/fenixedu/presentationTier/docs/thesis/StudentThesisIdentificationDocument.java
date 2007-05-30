@@ -83,8 +83,7 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
             return "";
         }
         
-        ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", new Locale("pt"));
-        return enumResourceBundle.getString(language.name());
+        return enumerationBundle.getString(language.name());
     }
 
     private List<String> splitKeywords(String keywords) {
