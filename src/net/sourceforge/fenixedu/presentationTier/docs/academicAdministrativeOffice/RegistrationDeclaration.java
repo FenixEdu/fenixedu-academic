@@ -72,9 +72,6 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         this.executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
     }
 
-    public static final ResourceBundle enumResourceBundle = ResourceBundle.getBundle(
-	    "resources.EnumerationResources", LanguageUtils.getLocale());
-
     private static final DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendMonthOfYearText()
 	    .toFormatter();
 
@@ -121,7 +118,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.document.id.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(enumResourceBundle.getString(student.getIdDocumentType().getName()));
+	    stringBuilder.append(enumerationBundle.getString(student.getIdDocumentType().getName()));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(student.getDocumentIdNumber());
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
@@ -158,7 +155,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.degree.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(enumResourceBundle.getString(studentCurricularPlan
+	    stringBuilder.append(enumerationBundle.getString(studentCurricularPlan
 		    .getDegreeCurricularPlan().getDegree().getTipoCurso().getName()));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle.getString("label.in"));
