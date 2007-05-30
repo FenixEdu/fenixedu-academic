@@ -174,7 +174,11 @@
             <param-value>/publico/notFound.do</param-value>
         </init-param>
     </filter>
-    	
+   	<filter>
+	    <filter-name>RequestChecksumFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter</filter-class>
+	</filter>
+
 	<!-- Filter Mapping -->
 	<filter-mapping>
  		 <filter-name>LoginPageFilter</filter-name>
@@ -250,18 +254,20 @@
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/loginPage.jsp</url-pattern>
     </filter-mapping>
-
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/login.do</url-pattern>
     </filter-mapping>
-    
     <filter-mapping>
         <filter-name>FunctionalityAccessFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
+	<filter-mapping>
+		<filter-name>RequestChecksumFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
     <!-- Listeners -->
 	<listener>

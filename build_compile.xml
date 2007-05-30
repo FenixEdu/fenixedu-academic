@@ -381,6 +381,8 @@
 						   property="start.year.for.bolonha.degrees"/>
 				<replacefilter token="@start.semester.for.bolonha.degrees@"
 						   property="start.semester.for.bolonha.degrees"/>
+				<replacefilter token="@filter.request.with.digest@"
+						   property="filter.request.with.digest"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"

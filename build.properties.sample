@@ -146,7 +146,7 @@ script.isAlive.check.slide=false
 #
 #
 #------------------------------------------------------------------------------
-# Allowed Roles Configuration
+# Security Configuration
 #------------------------------------------------------------------------------
 #
 #  filter.hostnames: comma seperated list of hostnames. The specified hostname
@@ -154,6 +154,12 @@ script.isAlive.check.slide=false
 #                    string.
 #  filter.hostname.<hostname>: comma seperated list of RoleTypes that are to
 #                              be provided by the server <hostname>.
+#
+#  filter.request.with.digest: if set to true, will rewrite all generated html
+#                              and add a digest to every link and form. For 
+#                              every request, the digest will be calculated and
+#                              checked against the provided checksum.  
+#
 #
 filter.hostnames=localhost,localhost.localdomain,salad21,salad21.ist.utl.pt
 filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
@@ -184,6 +190,8 @@ filter.hostname.salad21.ist.utl.pt=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MAS
     SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
     GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER,BOLONHA_MANAGER,CMS_MANAGER, \
     SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING
+
+filter.request.with.digest=true
 #
 #
 #------------------------------------------------------------------------------
