@@ -2361,7 +2361,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Enrolment getLatestDissertationEnrolment() {
 	final TreeSet<Enrolment> result = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-	return result.last();
+	result.addAll(getDissertationEnrolments());
+	return result.isEmpty() ? null : result.last();
     }
 
 }
