@@ -173,8 +173,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(courseGroup.getName()));
 
-	    final List<Context> childCourseGroupContexts = courseGroup.getChildContexts(CourseGroup.class, studentOptionalEnrolmentBean.getExecutionPeriod());
-	    final List<Context> childCurricularCourseContexts = courseGroup.getChildContexts(CurricularCourse.class, studentOptionalEnrolmentBean.getExecutionPeriod());
+	    final List<Context> childCourseGroupContexts = courseGroup.getValidChildContexts(CourseGroup.class, studentOptionalEnrolmentBean.getExecutionPeriod());
+	    final List<Context> childCurricularCourseContexts = courseGroup.getValidChildContexts(CurricularCourse.class, studentOptionalEnrolmentBean.getExecutionPeriod());
 
 	    Collections.sort(childCourseGroupContexts, new BeanComparator("childOrder"));
 	    Collections.sort(childCurricularCourseContexts, new BeanComparator("childOrder"));

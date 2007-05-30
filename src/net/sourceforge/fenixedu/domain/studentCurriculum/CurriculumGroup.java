@@ -179,7 +179,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     // alterar isto, colocar as regras
     private Collection<Context> getDegreeModulesFor(ExecutionPeriod executionPeriod) {
 	Collection<Context> result = new HashSet<Context>();
-	for (Context context : this.getDegreeModule().getChildContexts(executionPeriod)) {
+	for (Context context : this.getDegreeModule().getValidChildContexts(executionPeriod)) {
 	    if (context.getCurricularPeriod() == null
 		    || context.getCurricularPeriod().contains(CurricularPeriodType.SEMESTER,
 			    executionPeriod.getSemester()) != null) {
@@ -219,7 +219,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
 	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (Context context : this.getDegreeModule().getChildContexts(CurricularCourse.class,
+	for (Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class,
 		(ExecutionPeriod) null)) {
 	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    if (!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
@@ -358,7 +358,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     protected Integer searchChildOrderForChild(final CurriculumGroup child,
 	    final ExecutionPeriod executionPeriod) {
-	for (final Context context : getDegreeModule().getChildContexts(executionPeriod)) {
+	for (final Context context : getDegreeModule().getValidChildContexts(executionPeriod)) {
 	    if (context.getChildDegreeModule() == child.getDegreeModule()) {
 		return context.getChildOrder();
 	    }

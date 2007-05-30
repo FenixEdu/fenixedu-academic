@@ -70,7 +70,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
     private int countNumberOfDegreeModulesToEnrol(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
 	int result = 0;
-	for (final Context context : courseGroup.getChildContexts(enrolmentContext.getExecutionPeriod())) {
+	for (final Context context : courseGroup.getValidChildContexts(enrolmentContext.getExecutionPeriod())) {
 	    if (isEnrolling(enrolmentContext, context.getChildDegreeModule())) {
 		result++;
 	    }

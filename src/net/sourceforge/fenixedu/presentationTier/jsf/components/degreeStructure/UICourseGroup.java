@@ -135,7 +135,7 @@ public class UICourseGroup extends UIDegreeModule {
                 }
                 writer.endElement("table");
 
-                if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear).size() > 0) {
+                if (!this.hideCourses && this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).size() > 0) {
                     encodeChildCurricularCourses(70, (this.depth + 1) * 3);
                     //encodeSumsFooter(sums);
                 }
@@ -157,7 +157,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeChildCourseGroups() throws IOException {
-        for (Context context : this.courseGroup.getSortedChildContextsWithCourseGroupsByExecutionYear(this.executionYear)) {
+        for (Context context : this.courseGroup.getSortedOpenChildContextsWithCourseGroups(this.executionYear)) {
             new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear).encodeBegin(facesContext);
         }
     }
@@ -184,7 +184,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.endElement("table");
             writer.endElement("div");
             
-            if (!this.hideCourses && this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear).size() > 0) {
+            if (!this.hideCourses && this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
                 //encodeSumsFooter(sums);
             } else {
@@ -316,7 +316,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "showinfo3 mvert0", null);
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
-        for (Context context : this.courseGroup.getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear)) {
+        for (Context context : this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear)) {
             new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t", this.executionYear).encodeBegin(facesContext);
         }
         

@@ -131,41 +131,74 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
-	return getChildContexts(clazz, (ExecutionYear) null);
+	return getValidChildContexts(clazz, (ExecutionYear) null);
     }
 
-    public List<Context> getChildContexts(ExecutionYear executionYear) {
-	return getChildContexts(null, executionYear);
+    public List<Context> getValidChildContexts(final ExecutionYear executionYear) {
+	return getValidChildContexts(null, executionYear);
+    }
+    
+    public List<Context> getValidChildContexts(final ExecutionPeriod executionPeriod) {
+	return getValidChildContexts(null, executionPeriod);
     }
 
-    public List<Context> getChildContexts(Class<? extends DegreeModule> clazz,
-	    ExecutionYear executionYear) {
-	List<Context> result = new ArrayList<Context>();
+    // Valid means that is open to execution year, and if is CurricularCourse the context must have same semester of any ExecutionPeriod of ExecutionYear
+    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : this.getChildContexts()) {
+	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isValid(executionYear)))) {
+		result.add(context);
+	    }
+	}
+	return result;
+    }
+
+    // Valid means that is open to execution period, and if is CurricularCourse the context must have same semester than executionPeriod
+    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+	final List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getChildContexts()) {
-	    if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
-		    && ((executionYear == null || context.isValid(executionYear)))) {
+	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionPeriod == null || context.isValid(executionPeriod)))) {
 		result.add(context);
 	    }
 	}
 
 	return result;
     }
-
-    public List<Context> getChildContexts(ExecutionPeriod executionPeriod) {
-	return getChildContexts(null, executionPeriod);
+    
+    public List<Context> getSortedOpenChildContextsWithCurricularCourses(final ExecutionYear executionYear) {
+	final List<Context> result = getOpenChildContexts(CurricularCourse.class, executionYear);
+	Collections.sort(result);
+	return result;
     }
-
-    public List<Context> getChildContexts(Class<? extends DegreeModule> clazz,
-	    ExecutionPeriod executionPeriod) {
-	List<Context> result = new ArrayList<Context>();
-	for (Context context : this.getChildContexts()) {
-	    if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
-		    && ((executionPeriod == null || context.isValid(executionPeriod)))) {
+    
+    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionYear executionYear) {
+	final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionYear);
+	Collections.sort(result);
+	return result;
+    }
+    
+    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : getChildContexts()) {
+	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionPeriod == null || context.isOpen(executionPeriod)))) {
 		result.add(context);
 	    }
 	}
-
 	return result;
+    }
+    
+    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : getChildContexts()) {
+	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isOpen(executionYear)))) {
+		result.add(context);
+	    }
+	}
+	return result;
+    }
+
+    private boolean hasClass(final Class<? extends DegreeModule> clazz, final DegreeModule degreeModule) {
+	return clazz == null || clazz.isAssignableFrom(degreeModule.getClass());
     }
 
     public List<Context> getSortedChildContextsWithCurricularCourses() {
@@ -176,7 +209,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public List<Context> getSortedChildContextsWithCurricularCoursesByExecutionYear(
 	    ExecutionYear executionYear) {
-	List<Context> result = this.getChildContexts(CurricularCourse.class, executionYear);
+	List<Context> result = this.getValidChildContexts(CurricularCourse.class, executionYear);
 	Collections.sort(result);
 	return result;
     }
@@ -189,7 +222,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public List<Context> getSortedChildContextsWithCourseGroupsByExecutionYear(
 	    ExecutionYear executionYear) {
-	List<Context> result = this.getChildContexts(CourseGroup.class, executionYear);
+	List<Context> result = this.getValidChildContexts(CourseGroup.class, executionYear);
 	Collections.sort(result);
 	return result;
     }
@@ -295,7 +328,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
 	    final ExecutionYear executionYear) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
-	for (final Context context : this.getChildContexts(executionYear)) {
+	for (final Context context : this.getValidChildContexts(executionYear)) {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
 	    if (clazz.isAssignableFrom(degreeModule.getClass())) {
 		result.add(degreeModule);
@@ -311,7 +344,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
 	    final ExecutionPeriod executionPeriod) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
-	for (final Context context : getChildContexts(executionPeriod)) {
+	for (final Context context : getValidChildContexts(executionPeriod)) {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
 	    if (clazz.isAssignableFrom(degreeModule.getClass())) {
 		result.add(degreeModule);
@@ -328,7 +361,7 @@ public class CourseGroup extends CourseGroup_Base {
 	    List<List<DegreeModule>> result, List<DegreeModule> previousDegreeModulesPath,
 	    ExecutionYear executionYear) {
 	final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
-	for (final Context context : this.getChildContexts(executionYear)) {
+	for (final Context context : this.getValidChildContexts(executionYear)) {
 	    List<DegreeModule> newDegreeModulesPath = null;
 	    if (clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) {
 		newDegreeModulesPath = initNewDegreeModulesPath(newDegreeModulesPath,

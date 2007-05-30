@@ -232,8 +232,8 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(courseGroup.getName()));
 
-	    final List<Context> childCourseGroupContexts = courseGroup.getChildContexts(CourseGroup.class, bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
-	    final List<Context> childCurricularCourseContexts = courseGroup.getChildContexts(CurricularCourse.class, bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
+	    final List<Context> childCourseGroupContexts = courseGroup.getValidChildContexts(CourseGroup.class, bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
+	    final List<Context> childCurricularCourseContexts = courseGroup.getValidChildContexts(CurricularCourse.class, bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
 
 	    Collections.sort(childCourseGroupContexts, new BeanComparator("childOrder"));
 	    Collections.sort(childCurricularCourseContexts, new BeanComparator("childOrder"));
