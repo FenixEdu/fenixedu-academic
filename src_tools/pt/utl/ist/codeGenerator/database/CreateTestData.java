@@ -1218,6 +1218,10 @@ public class CreateTestData {
 	public boolean isPublicRequester() {
 	    return false;
 	}	
+
+	public String getPrivateConstantForDigestCalculation() {
+	    return null;
+	}
     }
 
 }

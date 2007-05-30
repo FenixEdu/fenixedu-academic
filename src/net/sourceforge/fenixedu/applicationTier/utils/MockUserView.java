@@ -79,4 +79,8 @@ public class MockUserView implements IUserView {
 	return null;
     }
 
+    public String getPrivateConstantForDigestCalculation() {
+	return null;
+    }
+
 }

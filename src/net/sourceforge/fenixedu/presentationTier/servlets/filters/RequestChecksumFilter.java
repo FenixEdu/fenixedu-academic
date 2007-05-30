@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -277,7 +279,7 @@ public class RequestChecksumFilter implements Filter {
 
 	final TreeSet<String> strings = new TreeSet<String>();
 	for (final String part : parts) {
-	    if (part.length() > 0 && !part.startsWith("page=") && !part.startsWith(CHECKSUM_ATTRIBUTE_NAME)) {
+	    if (isRelevantPart(part)) {
 		final int indexOfEquals = part.indexOf('=');
 		if (indexOfEquals >= 0) {
 		    strings.add(part.substring(0, indexOfEquals));
@@ -290,12 +292,22 @@ public class RequestChecksumFilter implements Filter {
 	return calculateChecksum(strings);
     }
 
+    private static boolean isRelevantPart(final String part) {
+	return part.length() > 0
+		&& !part.startsWith(CHECKSUM_ATTRIBUTE_NAME)
+		&& !part.startsWith("page=")
+		&& !part.startsWith("org.apache.struts.action.LOCALE")
+		&& !part.startsWith("javax.servlet.request.")
+		&& !part.startsWith("ok");
+    }
 
     private static String calculateChecksum(final TreeSet<String> strings) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final String string : strings) {
 	    stringBuilder.append(string);
 	}
+	final IUserView userView = AccessControl.getUserView();
+	stringBuilder.append(userView.getPrivateConstantForDigestCalculation());
 	final String checksum = new String(DigestUtils.shaHex(stringBuilder.toString()));
 //	System.out.println("Generating checksum for: " + stringBuilder.toString() + " --> " + checksum);
 	return checksum;
@@ -326,7 +338,11 @@ public class RequestChecksumFilter implements Filter {
 	final ResponseWrapper responseWrapper = new ResponseWrapper(httpServletResponse);
 
 	final long start1 = System.currentTimeMillis();
-	filterChain.doFilter(servletRequest, responseWrapper);
+	if (isRedirectRequest(httpServletRequest)) {
+	    filterChain.doFilter(servletRequest, servletResponse);
+	} else {
+	    filterChain.doFilter(servletRequest, responseWrapper);
+	}
 	final long end1 = System.currentTimeMillis();
 
 	final long start2 = System.currentTimeMillis();
@@ -339,12 +355,23 @@ public class RequestChecksumFilter implements Filter {
 	System.out.println("Actual response took: " + time1 + " ms. Parse and replace took: " + time2 + " ms. Performance loss: " + percent + " %.");
     }
 
+    private boolean isRedirectRequest(final HttpServletRequest httpServletRequest) {
+	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
+	return uri.indexOf("redirect.do") >= 0;
+    }
+
     private boolean shoudFilterReques(final HttpServletRequest httpServletRequest) {
 	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
 	if (uri.indexOf("javaScript/") >= 0) {
 	    return false;
 	}
 	if (uri.indexOf("ajax/") >= 0) {
+	    return false;
+	}
+	if (uri.indexOf("redirect.do") >= 0) {
+	    return false;
+	}
+	if (uri.indexOf("home.do") >= 0) {
 	    return false;
 	}
 	return RequestUtils.isPrivateURI(httpServletRequest);

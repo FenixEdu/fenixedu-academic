@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
@@ -35,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
 import edu.yale.its.tp.cas.client.ProxyTicketValidator;
@@ -52,6 +55,8 @@ public class Authenticate extends Service implements Serializable {
     protected static final Map allowedRolesByHostname = new HashMap();
     
     protected static final boolean validateExpirationDate;
+
+    private static String buildVersion = null;
 
     static {
 	validateExpirationDate = PropertiesManager.getBooleanProperty("validateExpirationDate");
@@ -75,6 +80,9 @@ public class Authenticate extends Service implements Serializable {
 		}
 		allowedRolesByHostname.put(hostname, rolesSet);
 	    }
+
+	    final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
+	    buildVersion = FileUtils.readFile(inputStream);
 	} catch (IOException e) {
 	    throw new RuntimeException("Unable to load " + propertiesFilename
 		    + ". User authentication is therefor not possible.");
@@ -90,6 +98,8 @@ public class Authenticate extends Service implements Serializable {
 	private DateTime expirationDate;
 
 	private transient Collection<Role> roles;
+
+	private transient String privateConstantForDigestCalculation;
 
 	private UserView(final Person person, final Set allowedRoles) {
 	    this.personRef = new DomainReference<Person>((Person) person);
@@ -158,6 +168,16 @@ public class Authenticate extends Service implements Serializable {
     @Override
     public int hashCode() {
         return this.personRef.hashCode() + this.roleTypes.hashCode();
+    }
+
+    public String getPrivateConstantForDigestCalculation() {
+	if (privateConstantForDigestCalculation == null) {
+	    final Person person = getPerson();
+	    final User user = person.getUser();
+	    final Login login = user.readUserLoginIdentification();
+	    privateConstantForDigestCalculation = user.getUserUId() + login.getPassword() + buildVersion;
+	}
+	return privateConstantForDigestCalculation;
     }
     }
 

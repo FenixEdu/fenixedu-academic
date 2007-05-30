@@ -72,6 +72,11 @@ public class CloseTransactionFilter implements Filter {
         public int hashCode() {
             return 0;
         }
+
+        public String getPrivateConstantForDigestCalculation() {
+    	return null;
+        }
+
 	}
 
 	public void init(FilterConfig config) {

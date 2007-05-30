@@ -27,4 +27,6 @@ public interface IUserView extends Serializable {
     
     boolean isPublicRequester();
 
+    public String getPrivateConstantForDigestCalculation();
+
 }
