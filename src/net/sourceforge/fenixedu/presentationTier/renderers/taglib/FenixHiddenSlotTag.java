@@ -89,7 +89,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
         }
         else if (value instanceof Enum) {
             String enumConverterName = EnumConverter.class.getName();
-            addHiddenSlot(slot, value, enumConverterName);
+            addHiddenSlot(slot, ((Enum) value).name(), enumConverterName);
         }
         else {
             super.addHiddenSlot(slot, value, converterName);
