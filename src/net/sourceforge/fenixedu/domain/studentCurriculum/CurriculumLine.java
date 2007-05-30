@@ -85,7 +85,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
     
     @Override
