@@ -26,7 +26,6 @@ public class BoardSearchBean implements Serializable {
 
     public BoardSearchBean() {
 	super();
-	System.out.println("Creating new bean object.");
     }
 
     public Boolean getSearchExecutionCourseBoards() {
