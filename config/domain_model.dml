@@ -1497,15 +1497,15 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
             	Integer keyOptionalCurricularCourse;
 		    }
-        
+		    
+		    class net.sourceforge.fenixedu.domain.ExternalDegreeEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
+		    }
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
 		Integer keyCredits;
 	}
-	
-	
 
-	// Isto ï¿½ da estrutura antiga, faz sentido ainda?
+	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 
