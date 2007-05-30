@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.fileupload.FileUpload;
 
 public class RequestChecksumFilter implements Filter {
 
@@ -372,6 +373,9 @@ public class RequestChecksumFilter implements Filter {
 	    return false;
 	}
 	if (uri.indexOf("home.do") >= 0) {
+	    return false;
+	}
+	if (FileUpload.isMultipartContent(httpServletRequest)) {
 	    return false;
 	}
 	return RequestUtils.isPrivateURI(httpServletRequest);
