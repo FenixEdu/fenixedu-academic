@@ -29,3 +29,6 @@ function executeWithTempFile() {
 
 execute "Update Registration Agreement" updateRegistrationAgreement.sql
 execute "Update ojb concrete class for LEIC and LEEC StudentCurricularPlans" updateStudentCurricularPlans.sql
+execute "Add Year Month Day To Scientific Journal Participation" addYearMonthDayToScientificJournalParticipation.sql
+execute "Alter File Table" alterFileTable.sql
+execute "Modify Persistent Group Members" modifyPersistentGroupMembers.sql

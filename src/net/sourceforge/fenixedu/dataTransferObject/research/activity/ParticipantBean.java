@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 import java.io.Serializable;
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,7 +35,27 @@ public abstract class ParticipantBean implements Serializable {
 
     private MultiLanguageString roleMessage;
     
-    public MultiLanguageString getRoleMessage() {
+    private YearMonthDay beginDate;
+    
+    private YearMonthDay endDate;
+    
+    public YearMonthDay getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(YearMonthDay beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public YearMonthDay getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(YearMonthDay endDate) {
+		this.endDate = endDate;
+	}
+
+	public MultiLanguageString getRoleMessage() {
 		return roleMessage;
 	}
 

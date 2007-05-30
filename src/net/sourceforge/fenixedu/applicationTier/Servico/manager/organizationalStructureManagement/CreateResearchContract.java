@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.AddPersonRole;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -29,11 +29,14 @@ public class CreateResearchContract extends Service {
 				.getFunctionType(), bean.getExternalPerson());
 		
 		Login loginIdentification = person.getLoginIdentification();
+		if (person.getPersonRole(RoleType.RESEARCHER) == null) {
+			person.addPersonRoleByRoleType(RoleType.RESEARCHER);			
+		}
+		
 		if (loginIdentification.getPassword() == null) {
 			person.addPersonRoleByRoleType(RoleType.PERSON);
-			person.addPersonRoleByRoleType(RoleType.RESEARCHER);
 			
-			new LoginPeriod(bean.getBegin(), bean.getEnd(), loginIdentification);
+			new LoginPeriod(bean.getBegin(), (bean.getEnd()!=null ? bean.getEnd() : new YearMonthDay().plusYears(1)), loginIdentification);
 			LoginRequest request = new LoginRequest(person.getUser());
 
 			String subject = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES",

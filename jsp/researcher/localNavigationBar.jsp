@@ -1,8 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<html:xhtml/>
 
 <logic:present role="RESEARCHER">
 	<ul>
@@ -25,5 +27,21 @@
 		<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
 		--%>
 	</ul>
+
+	<bean:define id="workingResearchUnits" name="UserView" property="person.workingResearchUnits" type="java.util.List"/>
+
+	<logic:notEmpty name="workingResearchUnits">
+	<ul>
+		<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
+		<logic:iterate id="unit" name="workingResearchUnits">
+			<bean:define id="unitID" name="unit" property="idInternal"/>
+			<li> 
+				<html:link page="<%= "/researchUnitFunctionalities.do?method=prepare&unitId=" + unitID %>">
+							<fr:view name="unit" property="name"/>
+				</html:link>
+			</li>
+		</logic:iterate>
+	</ul>
+	</logic:notEmpty>	
 	
 </logic:present>

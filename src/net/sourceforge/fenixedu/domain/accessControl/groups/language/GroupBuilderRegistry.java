@@ -27,14 +27,17 @@ import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.groups.ResearchersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
 
@@ -164,6 +167,9 @@ public class GroupBuilderRegistry {
         register("thesisFileReaders", ThesisFileReadersGroup.class, new ThesisFileReadersGroup.Builder());
         register("researchers", ResearchersGroup.class, new ResearchersGroup.Builder());
         register("unitSiteManagers", WebSiteManagersGroup.class, new WebSiteManagersGroup.Builder());
+        register("researchUnitMembers",ResearchUnitMembersGroup.class, new ResearchUnitMembersGroup.Builder());
+        register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
+        register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
         registerGroupsWithNoArguments();
     }
 

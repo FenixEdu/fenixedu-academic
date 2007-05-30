@@ -10,11 +10,6 @@ public class WrongTypeOfArgumentException extends GroupDynamicExpressionExceptio
 
     private static final String MESSAGE = "accessControl.group.expression.wrong.argumentType";
 
-    /**
-     * @param given the number of arguments given
-     * @param min the minimum number of arguments accepted
-     * @param max the maximum number of arguments accepted
-     */
     public WrongTypeOfArgumentException(int position, Class expected, Class given) {
         super(MESSAGE, String.valueOf(position), expected.getName(), given.getName());
     }

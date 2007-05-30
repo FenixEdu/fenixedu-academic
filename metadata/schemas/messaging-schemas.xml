@@ -153,3 +153,34 @@
     </slot>
 </schema>
 
+<schema name="MailBean.compose.for.researchUnits" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
+	    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
+        <property name="eachSchema" value="researchUnitGroupDescription"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="name"/>
+    </slot>
+    <slot name="receiversOfCopy">
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="copyToSenderRequested"/>
+    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="message" layout="longText">
+        <property name="columns" value="70"/>
+        <property name="rows" value="15"/>
+    </slot>    
+</schema>
+
+<schema name="researchUnitGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
+	<slot name="name"/>
+</schema>

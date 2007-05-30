@@ -23,8 +23,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
@@ -952,5 +954,15 @@ public class Unit extends Unit_Base {
 			}
 		}
 		return new ArrayList<ResearchResultPatent>(patents);
+	}
+	
+	public List<UnitFile> getAccessibileFiles(Person person) {
+		List<UnitFile> files = new ArrayList<UnitFile>();
+		for(UnitFile file : getFiles()) {
+			if(file.isPersonAllowedToAccess(person)) {
+				files.add(file);
+			}
+		}
+		return files;
 	}
 }

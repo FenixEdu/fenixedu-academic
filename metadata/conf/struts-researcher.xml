@@ -265,9 +265,28 @@
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ResearchEventManagement">
 		    <forward name="showEvent" path="show.event"/>
 		</action>
-	
+
+		<action path="/researchUnitFunctionalities"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.ResearchUnitFunctionalities">
+				    <forward name="ShowUnitFunctionalities" path="show-unit-functionalities"/>
+				    <forward name="managePersistedGroups" path="manage-persisted-groups"/>
+				    <forward name="createPersistedGroup" path="create-persisted-group"/>
+				    <forward name="editPersistedGroup" path="edit-persisted-group"/>
+				    <forward name="uploadFile" path="research-unit-upload-file"/>
+				    <forward name="manageFiles" path="research-unit-manage-files"/>
+				    <forward name="editFile" path="research-unit-edit-file"/>
+		</action>
+
+		<action path="/sendEmailToResearchUnitGroups"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.SendEmailToResearchUnitGroups">
+			     <forward name="compose-mail" path="sendMail"/>
+	            <forward name="success" path="sendMail"/>
+    	        <forward name="problem" path="sendMail"/>	    
+		</action>
 	</action-mappings>
-    
+
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     

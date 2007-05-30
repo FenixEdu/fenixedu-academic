@@ -6,11 +6,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResearchUnitSite;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
+import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -85,7 +90,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 		return (Collection<Accountability>) getChildAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	}
 
-	private Collection<Accountability> getActiveResearchContracts(ResearchFunctionType type) {
+	public Collection<Accountability> getActiveResearchContracts(ResearchFunctionType type) {
 		AccountabilityType accountabilityType = ResearchFunction
 				.readAccountabilityTypeByResearchFunctionType(type);
 		YearMonthDay today = new YearMonthDay();
@@ -100,6 +105,22 @@ public class ResearchUnit extends ResearchUnit_Base {
 		return accountabilities;
 	}
 
+	public Collection<Person> getAssociatedPeople() {
+		List<Person> people = new ArrayList<Person> ();
+		YearMonthDay today = new YearMonthDay();
+		for (Accountability accountability : getChildsSet()) {
+			if (accountability instanceof ResearchContract && (accountability.getEndDate() == null || accountability.getEndDate()
+							.isAfter(today))) {
+				people.add(((ResearchContract)accountability).getPerson());
+			}
+		}
+		return people;
+	}
+	
+	public Collection<Unit> getAllCurrentActiveSubUnits() {
+		return this.getAllActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+	}
+	
 	public Collection<Accountability> getPermanentResearchContracts() {
 		return getActiveResearchContracts(ResearchFunctionType.PERMANENT_RESEARCHER);
 	}
@@ -128,4 +149,41 @@ public class ResearchUnit extends ResearchUnit_Base {
 		return getActiveResearchContracts(ResearchFunctionType.PHD_STUDENT);
 	}
 	
+	public List<IGroup> getDefaultGroups() {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.COLLABORATORS));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.INVITED_RESEARCHER));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.MSC_STUDENT));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.OTHER_STAFF));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.PERMANENT_RESEARCHER));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.PHD_STUDENT));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.POST_DOC_STUDENT));
+		groups.add(new ResearchUnitMembersGroup(this,ResearchFunctionType.TECHNICAL_STAFF));
+		groups.add(new ResearchUnitElementGroup(this));
+		return groups;
+	}
+	
+	public List<IGroup> getUserDefinedGroups() {
+		List<IGroup> groups = new ArrayList<IGroup> ();
+		for(PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
+			groups.add(new PersistentGroup(persistentMembers));
+		}
+		return groups;
+	}
+	
+	public List<IGroup> getGroups() {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		groups.addAll(getDefaultGroups());
+		groups.addAll(getUserDefinedGroups());
+		return groups;
+	}
+	
+	public boolean isUserAbleToDefineGroups(Person person) {
+		ResearchUnitSite site = (ResearchUnitSite) this.getSite();
+		return (site == null) ? false : site.getManagers().contains(person); 
+	}
+	
+	public boolean isCurrentUserAbleToDefineGroups() {
+		return isUserAbleToDefineGroups(AccessControl.getPerson());
+	}
 }

@@ -23,4 +23,6 @@ public interface IGroup {
     public Set<Person> getElements();
     
     public String getExpression();
+    
+    public String getName();
 }

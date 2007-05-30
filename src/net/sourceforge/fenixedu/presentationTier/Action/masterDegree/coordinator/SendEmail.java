@@ -56,7 +56,7 @@ public class SendEmail extends SimpleMailSenderAction {
             if (degreeCurricularPlan != null) {
                 Degree degree = degreeCurricularPlan.getDegree();
                 
-                mailBean.setReceiversGroup(new DegreeStudentsGroup(degree));
+                mailBean.addReceiversGroup(new DegreeStudentsGroup(degree));
             }
         }
         

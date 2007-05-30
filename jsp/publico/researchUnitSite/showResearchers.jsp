@@ -10,82 +10,36 @@
 </h1>
 
 <h2 class="mtop15"><bean:message key="label.members" bundle="SITE_RESOURCES"/></h2>
+	<bean:define id="researchUnit" name="researchUnit" toScope="request"/>
+	<jsp:include flush="true" page="viewMembersFromUnit.jsp"></jsp:include>
 
-<logic:notEmpty name="researchUnit" property="permanentResearchContracts">
-<em><bean:message key="label.permanentResearchers" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="permanentResearchContracts">
-		<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
 
-<logic:notEmpty name="researchUnit" property="invitedResearchContracts">
-<em><bean:message key="label.invitedResearchers" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="invitedResearchContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
+<logic:notEmpty name="researchUnit" property="allCurrentActiveSubUnits"> 
+<bean:define id="unitName" name="researchUnit" property="name" type="java.lang.String"/>
+	<logic:iterate id="unit" name="researchUnit" property="allCurrentActiveSubUnits"> 
 
-<logic:notEmpty name="researchUnit" property="otherStaffContracts">
-<em><bean:message key="label.otherStaff" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="otherStaffContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
 
-<logic:notEmpty name="researchUnit" property="technicalStaffContracts">
-<em><bean:message key="label.technicalStaff" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="technicalStaffContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
+		<fr:view name="unit">
+			<fr:layout name="unit-link">
+				<fr:property name="style" value="font-weight: bold; font-size: 12px; color: #333;"/>
+				<fr:property name="unitLayout" value="values"/>
+				<fr:property name="unitSchema" value="unit.name"/>
+				<fr:property name="targetBlank" value="true"/>
+				<fr:property name="parenteShown" value="false"/>
+			</fr:layout>
+		</fr:view>
 
-<logic:notEmpty name="researchUnit" property="collaboratorsContracts">
-<em><bean:message key="label.colaborators" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="collaboratorsContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
+		<logic:equal name="unit" property="siteAvailable" value="true">
+			<bean:define id="researchUnit" name="unit" toScope="request"/>
+			<jsp:include flush="true" page="viewMembersFromUnit.jsp"></jsp:include>
+		</logic:equal>
 
-<logic:notEmpty name="researchUnit" property="msCStudentsContracts">
-<em><bean:message key="label.mscStudents" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="msCStudentsContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
+		<logic:equal name="unit" property="siteAvailable" value="false">
+			<p><em><bean:message key="label.noMembersDefined" bundle="SITE_RESOURCES"/></em></p>
+		</logic:equal>	
 
-<logic:notEmpty name="researchUnit" property="phDStudentsContracts">
-<em><bean:message key="label.phdStudents" bundle="SITE_RESOURCES"/></em>
-	<fr:view name="researchUnit" property="phDStudentsContracts">
-	<fr:layout>
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="person.in.contract"/>
-			<fr:property name="sortBy" value="person.nickname"/>
-		</fr:layout>
-	</fr:view>
+	</logic:iterate>
+
 </logic:notEmpty>
 
 

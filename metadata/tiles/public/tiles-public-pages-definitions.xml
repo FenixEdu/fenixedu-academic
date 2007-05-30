@@ -509,11 +509,15 @@
 	</definition>		
 
 	<definition name="start-request-login-process" path="/layout/istLayout.jsp">
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
+	  	<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>		
 
 	<definition name="request-login-finish-process" path="/layout/istLayout.jsp">
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
+	  	<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>		
 
 	

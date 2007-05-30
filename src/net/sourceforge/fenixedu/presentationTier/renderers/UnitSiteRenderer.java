@@ -46,6 +46,8 @@ public class UnitSiteRenderer extends OutputRenderer {
 
 	private String separator;
 	
+	private String style;
+	
 	public boolean isContextRelative() {
 		return contextRelative;
 	}
@@ -187,6 +189,14 @@ public class UnitSiteRenderer extends OutputRenderer {
 
 	public void setSeparator(String separator) {
 		this.separator = separator;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 }

@@ -24,6 +24,12 @@
 		<fr:property name="bundle(remove)" value="WEBSITEMANAGER_RESOURCES" />
 		<fr:property name="link(remove)" value="<%= "/manageResearchUnitSite.do?method=removePerson&oid=" + siteID %>"/>
 		<fr:property name="param(remove)" value="idInternal/cid" />
+		<fr:property name="order(remove)" value="2"/>
+		<fr:property name="key(edit)" value="label.edit" />
+		<fr:property name="bundle(edit)" value="DEFAULT" />
+		<fr:property name="link(edit)" value="<%= "/manageResearchUnitSite.do?method=editContract&oid=" + siteID %>"/>
+		<fr:property name="param(edit)" value="idInternal/cid" />
+		<fr:property name="order(edit)" value="1"/>
 	</fr:layout>
 </fr:view>
 

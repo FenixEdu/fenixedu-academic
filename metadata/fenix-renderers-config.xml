@@ -121,6 +121,10 @@ Documentation:
   
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
     
+    <renderer type="java.lang.String" layout="short" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+   		<property name="length" value="40"/>  
+    </renderer>
+    
     <renderer type="java.lang.String" layout="text-link" class="net.sourceforge.fenixedu.renderers.StringRenderer">
     	<property name="link" value="true"/>
     </renderer>
@@ -259,6 +263,9 @@ Documentation:
         	<property name="linkGroupSeparator" value=", "/>
     </renderer>
     
+    
+    <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
+    <renderer type="net.sourceforge.fenixedu.domain.accessControl.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
     
     <!--@ Renders a table with a given schema for a domain object but doesn't render fields that are null or empty
      -->

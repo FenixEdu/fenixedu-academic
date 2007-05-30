@@ -2468,4 +2468,14 @@ public class Person extends Person_Base {
 		Boolean showEmailInHomepage = getHomepage().getShowEmail();
 		return showEmailInHomepage != null && showEmailInHomepage;
 	}
+	
+	public List<UnitFile> getUploadedFiles(Unit unit) {
+		List<UnitFile> files = new ArrayList<UnitFile>();
+		for(UnitFile file : getUploadedFiles()) {
+			if(file.getUnit().equals(unit)) {
+				files.add(file);
+			}
+		}
+		return files;
+	}
 }

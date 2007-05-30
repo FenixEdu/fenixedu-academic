@@ -189,7 +189,8 @@
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -246,7 +247,8 @@
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -272,7 +274,8 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -516,7 +519,8 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -538,12 +542,15 @@ extends="eventCreation">
 
 <schema name="journalCreation.existentJournal" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="scientificJournal.name" key="label.scientificJournal.name" read-only="true" />
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -557,12 +564,15 @@ extends="eventCreation">
 	<slot name="issn" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator" layout="input-with-comment"/>
 	<slot name="publisher"/>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -575,7 +585,8 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -698,7 +709,8 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>	
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -735,7 +747,24 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.roleMessage.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+	</slot>
+</schema>
+
+<schema name="researchctivityParticipation.newRoleCreation.scientificJournal" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean">
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="role" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
+		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="roleMessage" layout="input-with-comment">
+		<property name="columns" value="60"/>
+		<property name="rows" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -2589,4 +2618,75 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="label" value="-"/>
 		<property name="subLayout" value="text-link"/>
 	</slot>
+</schema>
+
+<schema name="view.persistent.group" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="RESEARCHER_RESOURCES">
+	<slot name="name" key="label.groupName"/>
+	<slot name="persons" key="label.members">	
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="showNickName"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+</schema>
+
+<schema name="create.persistent.group" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="name" key="label.groupName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="people" layout="option-select" key="label.members" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="classes" value="nobullet"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+			<property name="saveOptions" value="true"/>
+			<property name="eachLayout" value="values"/>
+			<property name="eachSchema" value="showNickName"/>
+			<property name="sortBy" value="name"/>
+	</slot>
+</schema>	
+
+<schema name="view.genericFileUpload" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileUploadBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="displayName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="description" layout="longText" key="label.fileDescription">
+		<property name="columns" value="69"/>
+		<property name="rows" value="3"/>
+	</slot>
+	<slot name="file" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.filename">
+		<property name="fileNameSlot" value="fileName"/>
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="permittedGroups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="classes" value="nobullet"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
+        <property name="eachSchema" value="researchUnitGroupDescription"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+		</slot>
+</schema>
+
+<schema name="edit.unit.files" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="description" layout="longText" key="label.fileDescription">
+		<property name="columns" value="69"/>
+		<property name="rows" value="3"/>
+	</slot>
+	<slot name="groups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="classes" value="nobullet"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
+        <property name="eachSchema" value="researchUnitGroupDescription"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+	</slot>
+</schema>
+
+<schema name="show.unit.files" type="net.sourceforge.fenixedu.domain.UnitFile" bundle="RESEARCHER_RESOURCES">
+	<slot name="displayName" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="${downloadUrl}"/>
+		<property name="contextRelative" value="false"/>
+	</slot>
+	<slot name="description" layout="short" key="label.fileDescription"/>
+	<slot name="uploadTime"/>
+	<slot name="permittedGroup" layout="show-groups" key="label.permission"/>
+	<slot name="uploader.firstAndLastName" key="label.uploader"/>
 </schema>

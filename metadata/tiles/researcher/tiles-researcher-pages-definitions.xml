@@ -163,4 +163,46 @@
 	<definition name="edit-event" extends="researcher.masterPage">
        <put name="body" value="/researcher/result/publications/editEvent.jsp"/>  
     </definition>
+
+
+	<definition name="researcher.unit.functionalities" extends="researcher.masterPage">
+		<put name="body-context" value="/researcher/researchUnit/context.jsp"/>
+	</definition>
+
+	<definition name="show-unit-functionalities" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/showUnitFunctionalities.jsp"/>  
+    </definition>
+	
+	<definition name="sendMail" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/sendEmail.jsp"/>  
+    </definition>      
+
+	<definition name="manage-persisted-groups" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="research-unit-upload-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+   	<definition name="research-unit-upload-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="research-unit-manage-files" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="research-unit-edit-file" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+    
 </tiles-definitions>

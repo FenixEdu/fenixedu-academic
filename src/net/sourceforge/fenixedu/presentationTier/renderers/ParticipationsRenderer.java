@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
@@ -148,7 +149,17 @@ public class ParticipationsRenderer extends OutputRenderer {
 							container.addChild(new HtmlText(participation
 									.getRoleMessage().getContent()));
 						}
-
+						
+						if(participation instanceof ScientificJournalParticipation) {
+							ScientificJournalParticipation journalParticipation = (ScientificJournalParticipation) participation;
+							
+							container.addChild(new HtmlText(" - "));
+							container.addChild(new HtmlText(" " + RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.from") + " "));
+							container.addChild(new HtmlText(journalParticipation.getBeginDate().toString("dd-MM-yyyy")));
+							container.addChild(new HtmlText(" " + RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.to") + " "));
+							container.addChild(new HtmlText(journalParticipation.getEndDate().toString("dd-MM-yyyy")));
+						}
+						
 						if (size > 1) {
 							container.addChild(new HtmlText(", "));
 							size--;

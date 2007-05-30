@@ -20,7 +20,7 @@ public class LoginRequest extends LoginRequest_Base {
 	}
 
 	public void delete() {
-		removeUser();
+		super.setUser(null);
 		removeRootDomainObject();
 		super.deleteDomainObject();
 	}

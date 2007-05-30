@@ -16,6 +16,10 @@ public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 	super(object);	
     }
 
+    public String getName() {
+    	return getObject().getName();
+    }
+    
     @Override
     public Set<Person> getElements() {	
 	PersistentGroupMembers groupMembers = getObject();

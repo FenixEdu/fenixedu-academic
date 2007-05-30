@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -9,7 +11,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ScientificJournalParticipation extends ScientificJournalParticipation_Base {
     
-    public  ScientificJournalParticipation(Party party,ResearchActivityParticipationRole role, ScientificJournal journal, MultiLanguageString roleMessage) {
+    public  ScientificJournalParticipation(Party party,ResearchActivityParticipationRole role, ScientificJournal journal, MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end) {
 	super();
 	if(alreadyHasParticipation(party, role, journal)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
@@ -18,6 +20,8 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
 	super.setRole(role);
 	super.setScientificJournal(journal);
 	super.setRoleMessage(roleMessage);
+	super.setBeginDate(begin);
+	super.setEndDate(end);
     }
     
     private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ScientificJournal journal) {

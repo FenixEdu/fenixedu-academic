@@ -20,6 +20,11 @@ public class PersonGroup extends DomainBackedGroup<Person> {
     }
 
     @Override
+    public String getName() {
+    	return getPerson().getFirstAndLastName();
+    }
+    
+    @Override
     public Set<Person> getElements() {
         Set<Person> elements = super.buildSet();
 

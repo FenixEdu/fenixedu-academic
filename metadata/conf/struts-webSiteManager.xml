@@ -76,6 +76,7 @@
         <forward name="organizeFooterLinks" path="researchSite-edit-organizeFooterLinks"/>
         <forward name="managePeople" path="researchSite-manage-people"/>
         <forward name="externalPersonExtraInfo" path="researchSite-external-person-extra-info"/>
+        <forward name="editContract" path="researchSite-edit-contract"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"

@@ -70,7 +70,7 @@ public abstract class ThesisServiceWithMailNotification extends Service {
             }
         }
         
-        bean.setReceiversGroup(new FixedSetGroup(receivers));
+        bean.addReceiversGroup(new FixedSetGroup(receivers));
     }
 
     protected abstract Collection<Person> getReceivers(Thesis thesis);

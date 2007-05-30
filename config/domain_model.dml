@@ -2228,6 +2228,12 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		Integer keyUnitSite;
 	}
 	
+	class net.sourceforge.fenixedu.domain.UnitFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyUnit;
+		Integer keyUploader;
+		String description;
+	}
+	
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
     ByteArray content;
@@ -2937,6 +2943,7 @@ class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fen
 class net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	PersistentGroupMembersType type;
+	Integer keyUnit;
 }
 
 class net.sourceforge.fenixedu.domain.resource.Resource extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4314,6 +4321,8 @@ class net.sourceforge.fenixedu.domain.research.activity.Participation extends ne
 
 class net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
 	Integer keyScientificJournal;
+	YearMonthDay beginDate;
+	YearMonthDay endDate;
 }
 
 class net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation extends net.sourceforge.fenixedu.domain.research.activity.Participation {
@@ -13084,7 +13093,6 @@ relation PersistentGroupMembersPerson {
 	}
 }
 
-
 relation RootDomainObjectEquivalencePlan {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EquivalencePlan playsRole equivalencePlans {
@@ -13174,3 +13182,23 @@ relation CourseGroupEquivalencePlanEntryCurricularCourseEquivalencePlanEntry {
 	net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry playsRole courseGroupEquivalencePlanEntry;
 }
 
+relation PersistentGroupMembersUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers playsRole persistentGroups {
+		multiplicity *;
+	}
+}
+
+relation UnitFileUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.UnitFile playsRole files {
+		multiplicity *;
+	}
+}
+
+relation UnitFilePerson {
+	net.sourceforge.fenixedu.domain.Person playsRole uploader;
+	net.sourceforge.fenixedu.domain.UnitFile playsRole uploadedFiles {
+		multiplicity *;
+	}
+}

@@ -31,7 +31,7 @@ public class UsernameUtils extends FenixUtil {
 	if (loginIdentification != null) {
 	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
 		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER)
-		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation();
+		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation() || person.hasExternalResearchContract();
 	}
 	return false;
     }
@@ -105,7 +105,7 @@ public class UsernameUtils extends FenixUtil {
 			istUsername = ist + sumNumber(person.getStudent().getNumber(), 60000);
 		    }
 		}
-	    } else if (person.hasAnyInvitation()) {
+	    } else if (person.hasAnyInvitation() || person.hasExternalResearchContract()) {
 		istUsername = ist + Invitation.nextUserIDForInvitedPerson();
 	    }
 

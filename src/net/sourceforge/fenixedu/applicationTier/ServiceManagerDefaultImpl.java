@@ -98,7 +98,8 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             // Object serviceResult = manager.execute(id, service, method,
             // args);
 
-            ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
+            final String username = id != null && !id.isPublicRequester() ? id.getUtilizador() : null;
+            ServiceInfo.setCurrentServiceInfo(username, service, args);
 
             // try read-only transaction first, but only for non-public sessions...
             Transaction.setDefaultReadOnly(! KNOWN_WRITE_SERVICES.containsKey(service));

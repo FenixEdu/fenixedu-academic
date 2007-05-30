@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accessControl.groups;
+package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collections;
 import java.util.Set;

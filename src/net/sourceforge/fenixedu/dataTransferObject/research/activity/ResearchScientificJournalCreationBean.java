@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
@@ -23,6 +25,26 @@ public class ResearchScientificJournalCreationBean implements Serializable {
 	private String publisher;
 
 	private MultiLanguageString roleMessage;
+
+	private YearMonthDay beginDate;
+	
+	private YearMonthDay endDate;
+	
+	public YearMonthDay getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(YearMonthDay beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public YearMonthDay getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(YearMonthDay endDate) {
+		this.endDate = endDate;
+	}
 
 	public MultiLanguageString getRoleMessage() {
 		return roleMessage;

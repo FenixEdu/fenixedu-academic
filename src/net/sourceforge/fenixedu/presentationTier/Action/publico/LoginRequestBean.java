@@ -26,6 +26,16 @@ public class LoginRequestBean implements Serializable {
 
 	private String password;
 
+	private String passwordConfirmation;
+	
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
+
 	public LoginRequestBean(LoginRequest request) {
 		setPerson(request.getUser().getPerson());
 	}

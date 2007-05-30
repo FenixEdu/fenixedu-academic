@@ -32,8 +32,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		String documentID= (String) RenderUtils.getViewState("documentID").getMetaObject()
-				.getObject();
+		String documentID = (String) RenderUtils.getViewState("documentID").getMetaObject().getObject();
 
 		String requestID = request.getParameter("oid");
 		LoginRequest loginRequest = (LoginRequest) RootDomainObject.readDomainObjectByOID(
@@ -50,23 +49,38 @@ public class LoginRequestManagement extends FenixDispatchAction {
 		return mapping.findForward("startRequestLoginProcess");
 	}
 
-	public ActionForward finish(ActionMapping mapping, ActionForm actionForm,
+	public ActionForward cycleLoginScreen(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 		
-		LoginRequestBean bean = (LoginRequestBean) RenderUtils.getViewState("edit.loginBean").getMetaObject().getObject();
+		LoginRequestBean bean = (LoginRequestBean) RenderUtils.getViewState("edit.loginBean")
+		.getMetaObject().getObject();
+		request.setAttribute("loginBean", bean);
+		return mapping.findForward("startRequestLoginProcess");
+	}
+	
+	public ActionForward finish(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+
+		LoginRequestBean bean = (LoginRequestBean) RenderUtils.getViewState("edit.loginBean")
+				.getMetaObject().getObject();
+		if (!bean.getPassword().equals(bean.getPasswordConfirmation())) {
+			addActionMessage(request, "error.password.not.match");
+			return cycleLoginScreen(mapping, actionForm, request, response);
+		}
 		try {
-		executeService("EnableExternalLogin", new Object[] { bean } );
-		}catch(DomainException e) {
+			executeService("EnableExternalLogin", new Object[] { bean });
+		} catch (DomainException e) {
 			addActionMessage(request, "invalid.document.id");
 			return mapping.findForward("startRequestLoginProcess");
 		}
 		return mapping.findForward("requestLoginFinished");
 	}
-	
+
 	public static String getRequestURL(HttpServletRequest request) {
-		return "https://" + request.getServerName() + "/" + request.getContextPath()
-				+ "/publico/loginRequest.do?method=start&request=";
+		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath() + "/publico/loginRequest.do?method=start&request=";
 	}
 
 }

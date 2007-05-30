@@ -923,4 +923,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>ManageResearchUnitPersistentGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManageResearchUnitPersistentGroup</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

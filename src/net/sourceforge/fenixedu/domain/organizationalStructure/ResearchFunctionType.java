@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
 public enum ResearchFunctionType {
 
 	PERMANENT_RESEARCHER,
@@ -12,4 +14,7 @@ public enum ResearchFunctionType {
 	POST_DOC_STUDENT
 	;
 	
+	public String getName() {
+		return RenderUtils.getEnumString(this);
+	}
 }

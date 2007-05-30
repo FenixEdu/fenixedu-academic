@@ -11900,4 +11900,58 @@
         <isTransactional>true</isTransactional>  
 		<filterChains/>
     </service>
+        <service>
+    	<name>CreatePersistentGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreatePersistentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManageResearchUnitPersistentGroup"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>DeletePersistentGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersistentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManageResearchUnitPersistentGroup"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>EditPersistentGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManageResearchUnitPersistentGroup"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>CreateUnitFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearcherAuthorization"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>DeleteUnitFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearcherAuthorization"/>
+		</filterChains>
+    </service>    
+    <service>
+    	<name>EditUnitFile</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearcherAuthorization"/>
+		</filterChains>
+    </service>      
 </serviceDefinitions>

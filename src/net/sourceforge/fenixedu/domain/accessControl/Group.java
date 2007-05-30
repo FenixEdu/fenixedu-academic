@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.collections.set.UnmodifiableSet;
+import org.apache.velocity.runtime.parser.node.GetExecutor;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a
@@ -137,6 +138,10 @@ public abstract class Group implements Serializable, IGroup {
         return argumentList;
     }
 
+    public String getName() {
+    	return getExpression();
+    }
+    
     /**
      * @return the arguments required to define this group in the group
      *         expression

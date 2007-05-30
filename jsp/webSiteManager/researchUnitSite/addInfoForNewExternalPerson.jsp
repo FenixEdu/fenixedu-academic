@@ -13,5 +13,8 @@
 <fr:edit id="extraInfo" name="bean" schema="research.contract.extraInformation.for.externalPerson" action="<%= "/manageResearchUnitSite.do?method=addNewPerson&oid=" + siteID %>" >
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:destination name="invalid" path="<%= "/manageResearchUnitSite.do?method=prepareAddNewPerson&oid=" + siteID %>"/>
 	</fr:layout>
 </fr:edit>
+

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
@@ -28,17 +30,17 @@ public class CreateResearchActivityParticipation extends Service {
 		new EventParticipation(person, role, event, roleMessage);
 	}
 
-	public void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
+	public void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end)
 			throws ExcepcaoPersistencia, FenixServiceException {
 
-		new ScientificJournalParticipation(person, role, journal,roleMessage);
+		new ScientificJournalParticipation(person, role, journal,roleMessage, begin, end);
 	}
 
 	public void run(ScientificJournal journal, ParticipantBean bean)
 			throws FenixServiceException {
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
 		
-		new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage());
+		new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
 	}
 	
 	public void run(Event event, ParticipantBean bean) throws ExcepcaoPersistencia,

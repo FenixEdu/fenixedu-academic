@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -97,7 +96,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	public ActionForward prepareAddNewPerson(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
-		IViewState viewState = RenderUtils.getViewState("createPersonContract");
+		IViewState viewState = RenderUtils.getViewState();
 		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
 			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
 			request.setAttribute("bean",bean);
@@ -171,6 +170,21 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		return mapping.findForward("editConfiguration");
 	}
 
+	public ActionForward editContract(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String contractID = request.getParameter("cid");
+		
+		if(contractID!=null) {
+			ResearchContract contract = (ResearchContract) RootDomainObject.readDomainObjectByOID(ResearchContract.class, Integer.valueOf(contractID));
+			request.setAttribute("contract", contract);
+			return mapping.findForward("editContract");
+		}
+		
+		return managePeople(mapping, actionForm, request, response);
+	}
+
+	
 	@Override
 	protected ResearchUnitSite getSite(HttpServletRequest request) {
 		String siteID = request.getParameter("oid");
