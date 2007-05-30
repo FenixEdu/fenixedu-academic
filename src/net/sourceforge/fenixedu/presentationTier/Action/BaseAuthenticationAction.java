@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
@@ -54,6 +55,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    }
 
 	    final HttpSession session = request.getSession(false);
+
+	    AccessControl.setUserView(userView);
 
 	    if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
