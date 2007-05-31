@@ -53,7 +53,8 @@ public class CheckPathByRoleFilter implements Filter {
 
     private boolean isJavascript(final String uri) {
 	return uri.startsWith("/javaScript/") || uri.startsWith("javaScript/")
-		|| uri.startsWith("/ajax/") || uri.startsWith("ajax/");
+		|| uri.startsWith("/ajax/") || uri.startsWith("ajax/")
+		|| uri.startsWith("/script/") || uri.startsWith("script/");
     }
 
     private boolean hasRoleForSubApplication(final String uri, final IUserView userView) {
