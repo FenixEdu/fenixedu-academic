@@ -77,7 +77,7 @@
 					<fr:property name="visibleIf(concluded)" value="processing"/>
 
 					<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(delivered)" value="conclude"/>
+					<fr:property name="key(delivered)" value="delivered"/>
 					<fr:property name="visibleIf(delivered)" value="concluded"/>
 
 					<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
