@@ -406,7 +406,7 @@ public class RequestChecksumFilter implements Filter {
 //		}
 //	    }
 //	}
-	final String request = uri + '?' + queryString;
+	final String request = queryString != null ? uri + '?' + queryString : uri;
 	final String calculatedChecksum = calculateChecksum(request);
 	return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
     }
