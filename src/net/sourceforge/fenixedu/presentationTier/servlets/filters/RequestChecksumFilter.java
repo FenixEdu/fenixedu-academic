@@ -123,9 +123,14 @@ public class RequestChecksumFilter implements Filter {
 	}
 
 	private void rewrite(final StringBuilder response, final StringBuilder source, final int iOffset) {
+//		<img src="/SpaceManager/manageBlueprints.do?method=view&blueprintId=527&viewBlueprintNumbers=false&viewDoorNumbers=false&viewSpaceIdentifications=true&suroundingSpaceBlueprint=false&viewOriginalSpaceBlueprint=false&spaceInformationID=1" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;" alt="???pt_PT.clip_image002???" />
+//		<map id ="roomLinksMap" name="roomLinksMap">
+
 	    final int indexOfAopen = source.indexOf("<a ", iOffset);
 	    final int indexOfFormOpen = source.indexOf("<form ", iOffset);
-	    if (indexOfAopen >= 0 && (indexOfFormOpen < 0 || indexOfAopen < indexOfFormOpen)) {
+	    final int indexOfImgOpen = source.indexOf("<img ");
+	    if (indexOfAopen >= 0 && (indexOfFormOpen < 0 || indexOfAopen < indexOfFormOpen)
+		    && (indexOfImgOpen < 0 || indexOfAopen < indexOfImgOpen)) {
 		final int indexOfAclose = source.indexOf(">", indexOfAopen);
 		if (indexOfAclose >= 0) {
 		    final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
@@ -162,7 +167,7 @@ public class RequestChecksumFilter implements Filter {
 			}
 		    }
 		}
-	    } else if (indexOfFormOpen >= 0) {
+	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)) {
 		final int indexOfFormClose = source.indexOf(">", indexOfFormOpen);
 		if (indexOfFormClose >= 0) {
 		    final int indexOfFormActionBodyStart = findFormActionBodyStart(source, indexOfFormOpen, indexOfFormClose);
@@ -177,6 +182,33 @@ public class RequestChecksumFilter implements Filter {
 			    response.append("\" value=\"");
 			    response.append(checksum);
 			    response.append("\"/>");
+			    rewrite(response, source, nextChar);
+			    return;
+			}
+		    }
+		}
+	    } else if (indexOfImgOpen >= 0) {
+		final int indexOfImgClose = source.indexOf(">", indexOfImgOpen);
+		if (indexOfImgClose >= 0) {
+		    final int indexOfSrcBodyStart = findSrcBodyStart(source, indexOfImgOpen, indexOfImgClose);
+		    if (indexOfSrcBodyStart >= 0) {
+			final int indexOfSrcBodyEnd = findHrefBodyEnd(source, indexOfSrcBodyStart);
+			if (indexOfSrcBodyEnd >= 0) {
+			    response.append(source, iOffset, indexOfSrcBodyEnd);
+
+			    final String checksum = calculateChecksum(source, indexOfSrcBodyStart, indexOfSrcBodyEnd);
+			    final int indexOfQmark = source.indexOf("?", indexOfSrcBodyStart);
+			    if (indexOfQmark == -1 || indexOfQmark > indexOfSrcBodyEnd) {
+				response.append('?');
+			    } else {
+				response.append("&amp;");
+			    }
+			    response.append(CHECKSUM_ATTRIBUTE_NAME);
+			    response.append("=");
+			    response.append(checksum);
+
+			    final int nextChar = indexOfImgClose + 1;
+			    response.append(source, indexOfSrcBodyEnd, nextChar);
 			    rewrite(response, source, nextChar);
 			    return;
 			}
@@ -217,6 +249,15 @@ public class RequestChecksumFilter implements Filter {
 
 	private int findHrefBodyStart(final StringBuilder source, final int offset, int limit) {
 	    final int indexOfHref = source.indexOf("href=", offset);
+	    if (indexOfHref >= limit) {
+		return -1;
+	    }
+	    final int nextChar = indexOfHref + 5;
+	    return source.charAt(nextChar) == '"' || source.charAt(nextChar) == '\'' ? nextChar + 1 : nextChar;
+	}
+
+	private int findSrcBodyStart(final StringBuilder source, final int offset, int limit) {
+	    final int indexOfHref = source.indexOf("src=", offset);
 	    if (indexOfHref >= limit) {
 		return -1;
 	    }
@@ -364,6 +405,9 @@ public class RequestChecksumFilter implements Filter {
     private boolean shoudFilterReques(final HttpServletRequest httpServletRequest) {
 	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
 	if (uri.indexOf("javaScript/") >= 0) {
+	    return false;
+	}
+	if (uri.indexOf("script/") >= 0) {
 	    return false;
 	}
 	if (uri.indexOf("ajax/") >= 0) {
