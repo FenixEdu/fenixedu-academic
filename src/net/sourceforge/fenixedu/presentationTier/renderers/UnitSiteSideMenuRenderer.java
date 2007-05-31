@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -34,7 +38,33 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
 
     @Override
     protected List<Section> getBaseSections(Site site) {
-        return site.getOrderedTemplateSections();
+    	UnitSite unitSite = (UnitSite) site;
+    	
+    	TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+    	treeSet.addAll(unitSite.getIntroductionSections());
+    	
+    	List<Section> sections = new ArrayList<Section>();
+
+    	sections.addAll(treeSet);
+        sections.addAll(site.getOrderedTemplateSections());
+        
+        return sections;
+    }
+    
+    @Override
+    protected SortedSet<Section> getTargetSubSections(Section section) {
+    	UnitSite unitSite = (UnitSite) section.getSite();
+    	TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+
+    	for (Section subSection : section.getAssociatedSections()) {
+    		if (unitSite.hasIntroductionSections(subSection)) {
+    			continue;
+    		}
+    		
+    		treeSet.add(subSection);
+    	}
+    	
+    	return treeSet;
     }
     
 }

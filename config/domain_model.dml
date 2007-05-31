@@ -4843,6 +4843,7 @@ class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fen
 			Integer keySuperiorSection;
 			Integer sectionOrder;
 			Integer keySite;
+			Integer keyIntroductionUnitSite;
 			YearMonthDay lastModifiedDateYearMonthDay;
 		}
 
@@ -8630,6 +8631,13 @@ relation UnitSiteManagers {
     net.sourceforge.fenixedu.domain.UnitSite playsRole unitSites {
 	    	multiplicity *;
     }
+}
+
+relation UnitSiteHasIntroductionSections {
+	net.sourceforge.fenixedu.domain.Section playsRole introductionSections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.UnitSite playsRole introductionUnitSite;
 }
 
 relation DepartmentUnit {

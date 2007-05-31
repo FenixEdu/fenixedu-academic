@@ -77,6 +77,7 @@
         <forward name="managePeople" path="researchSite-manage-people"/>
         <forward name="externalPersonExtraInfo" path="researchSite-external-person-extra-info"/>
         <forward name="editContract" path="researchSite-edit-contract"/>
+        <forward name="chooseIntroductionSections" path="researchSite-chooseIntroductionSections"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -131,6 +132,7 @@
         <forward name="editSectionPermissions" path="departmentSite-editSectionPermissions"/>
         <forward name="editItemPermissions" path="departmentSite-editItemPermissions"/>
         <forward name="editFile" path="departmentSite-editFile"/>
+        <forward name="chooseIntroductionSections" path="departmentSite-chooseIntroductionSections"/>
     </action>
 
     <action path="/manageDepartmentSiteAnnouncements"

@@ -30,12 +30,12 @@
     &nbsp;&gt;&nbsp;
     <bean:define id="unitId" name="unit" property="idInternal"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
-        <fr:view name="department" property="realName"/>
+        <fr:view name="department" property="nameI18n"/>
     </html:link>
     
     <jsp:include page="/commons/sites/public/section-crumbs.jsp"/>
 </div>
 
 <h1 class="mbottom1">
-    <fr:view name="department" property="realName"/>
+	<fr:view name="department" property="nameI18n"/>
 </h1>

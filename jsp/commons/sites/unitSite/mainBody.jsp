@@ -65,6 +65,12 @@
 				<bean:define id="siteID" name="site" property="idInternal"/>
 				<p class="mtop025 mbottom15">
 					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>				</p>
+
+				<p>
+					<html:link page="<%= announcementAction + "?method=viewAnnouncements&amp;" + context %>">
+						<bean:message key="label.announcements.view.all" bundle="MESSAGING_RESOURCES"/>
+					</html:link>
+				</p>
 			</logic:iterate>
 			</logic:notEmpty>
 			
@@ -107,7 +113,7 @@
                     <bean:define id="length" name="textLength"/>
 					<fr:view name="announcement" property="body">
 	   					<fr:layout name="short-html">
-    		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/>
+   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/>
 								<fr:property name="tooltipShown" value="false"/>
 							</fr:layout>
 					</fr:view>
@@ -117,6 +123,13 @@
 				<p class="mtop025 mbottom15">
 					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>
 				</p>
+
+				<p>
+					<html:link page="<%= eventAction + "?method=viewEvents&amp;" + context %>">
+						<bean:message key="label.events.view.all" bundle="MESSAGING_RESOURCES"/>
+					</html:link>
+				</p>
+
 			</logic:iterate>
 			
 			</logic:notEmpty>

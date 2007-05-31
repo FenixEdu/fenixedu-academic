@@ -62,13 +62,17 @@
 </logic:iterate>
 
 <logic:notEmpty name="teachersNoArea">
-	<h2 class="greytxt mtop2">
-		<bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>
-	</h2>
-	
-	<bean:define id="byArea" value="true" toScope="request"/>
-	<logic:iterate id="t" name="teachersNoArea" type="net.sourceforge.fenixedu.domain.Teacher">
-		<bean:define id="teacher" name="t" toScope="request"/>
-		<jsp:include page="department-teachers-card.jsp"/>
-	</logic:iterate>
+	<div class="mtop2">
+		<logic:notPresent name="ignoreAreas">
+			<h2 class="greytxt">
+				<bean:message key="link.teacher.area.noArea" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>
+			</h2>
+		</logic:notPresent>	
+		
+		<bean:define id="byArea" value="true" toScope="request"/>
+		<logic:iterate id="t" name="teachersNoArea" type="net.sourceforge.fenixedu.domain.Teacher">
+			<bean:define id="teacher" name="t" toScope="request"/>
+			<jsp:include page="department-teachers-card.jsp"/>
+		</logic:iterate>
+	</div>
 </logic:notEmpty>

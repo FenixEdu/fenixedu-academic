@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
@@ -21,13 +22,13 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
         
         Section section = getTargetSection(site);
         if (section != null) {
-            sections.addAll(section.getOrderedSubSections());
+            sections.addAll(getTargetSubSections(section));
         }
         
         return sections;
     }
 
-    private Section getTargetSection(Site site) {
+    protected Section getTargetSection(Site site) {
         MultiLanguageString name = getTargetSectionName();
         
         for (Section section : site.getTopLevelSections()) {
@@ -38,6 +39,10 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
         
         return null;
     }
+
+    protected SortedSet<Section> getTargetSubSections(Section section) {
+		return section.getOrderedSubSections();
+	}
 
     protected abstract List<Section> getBaseSections(Site site);
     protected abstract MultiLanguageString getTargetSectionName();

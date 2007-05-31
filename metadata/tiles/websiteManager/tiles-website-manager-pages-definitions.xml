@@ -201,8 +201,11 @@
     <definition name="researchSite-edit-contract" extends="definition.researchUnitSite.masterPage">
         <put name="body" value="/webSiteManager/researchUnitSite/editContract.jsp"/>
     </definition>        
-        
-    
+       
+    <definition name="researchSite-chooseIntroductionSections" extends="definition.researchUnitSite.masterPage">
+        <put name="body" value="/webSiteManager/commons/chooseIntroductionSections.jsp"/>
+    </definition>
+
 	<!-- ======  -->
 
    <!-- ==== Department Site === -->
@@ -283,6 +286,9 @@
     </definition>   
     <definition name="departmentSite-editFile" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>
+    <definition name="departmentSite-chooseIntroductionSections" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/chooseIntroductionSections.jsp"/>
     </definition>
         <!-- announcements -->
 

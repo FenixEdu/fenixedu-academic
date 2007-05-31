@@ -402,4 +402,20 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 				orderedLinks);
 	}
 
+	public ActionForward chooseIntroductionSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IViewState viewState = RenderUtils.getViewState();
+		if (viewState != null && viewState.isValid() && !viewState.skipUpdate()) {
+			request.setAttribute("successful", true);
+		}
+
+		UnitSite site = getSite(request);
+		Section sideSection = site.getSideSection();
+		
+		if (sideSection != null && sideSection.hasAnyAssociatedSections()) {
+			request.setAttribute("canChoose", true);
+		}
+		
+		return mapping.findForward("chooseIntroductionSections");
+	}
+	
 }

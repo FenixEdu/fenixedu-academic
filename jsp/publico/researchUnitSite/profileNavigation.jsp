@@ -8,18 +8,19 @@
 
 	<logic:present name="site">
 
+		<ul>
+			<li>
+				<bean:define id="siteId" name="site" property="idInternal"/>
+				<html:link page="<%= "/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=" + siteId %>">
+					<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
+				</html:link>
+			</li>
+		</ul>
+		
         <fr:view name="site" layout="unit-top-menu">
             <fr:layout>
                 <fr:property name="sectionUrl" value="/researchSite/viewResearchUnitSite.do?method=section"/>
                 <fr:property name="contextParam" value="siteID"/>
-                
-                <fr:property name="empty">
-                	<ul>
-                		<li>
-                			<a href="#" style="visibility: hidden;">&nbps;</a>
-                		</li>
-                	</ul>
-                </fr:property>
             </fr:layout>
         </fr:view>
                

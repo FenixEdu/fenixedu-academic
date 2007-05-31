@@ -15,21 +15,24 @@
         
         request.setAttribute("unit", unit);
     }
+    else {
+    	departmentUnitId = unit.getIdInternal();
+    }
 %>
 
+
+<ul>
+	<li>
+		<html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + departmentUnitId %>">
+			<bean:message key="label.department.section.start" bundle="MESSAGING_RESOURCES"/>
+		</html:link>
+	</li>
+</ul>
 
 <fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-top-menu">
     <fr:layout>
         <fr:property name="sectionUrl" value="<%= request.getContextPath() + "/publico/department/departmentSite.do?method=section" %>"/>
         <fr:property name="contextParam" value="selectedDepartmentUnitID"/>
         <fr:property name="contextRelative" value="false"/>
-                
-        <fr:property name="empty">
-            <ul>
-                <li>
-                    <a href="#" style="visibility: hidden;">&nbps;</a>
-                </li>
-            </ul>
-        </fr:property>
     </fr:layout>
 </fr:view>

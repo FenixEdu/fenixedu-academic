@@ -5,6 +5,10 @@
     </slot>
 </schema>
 
+<schema name="site.section.name.plain" type="net.sourceforge.fenixedu.domain.Section">
+    <slot name="name"/>
+</schema>
+
 <schema name="site.functionalitySection.name" type="net.sourceforge.fenixedu.domain.FunctionalitySection">
     <slot name="name" layout="link">
         <property name="useParent" value="true"/>
@@ -271,3 +275,11 @@
 	<slot name="password" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="passwordConfirmation" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
+
+<schema name="unitSite.choose.introductionSections" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
+	<slot name="introductionSection" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitSiteIntroductionSectionsProvider"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="site.section.name.plain"/>
+	</slot>
+</schema>

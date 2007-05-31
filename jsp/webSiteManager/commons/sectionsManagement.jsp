@@ -31,6 +31,13 @@
 			<bean:message key="link.createSection"/>
 		</html:link>
 	</span>
+	
+	<span class="pleft1">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		<html:link page="<%= actionName + "?method=chooseIntroductionSections&amp;" + context %>">
+			<bean:message key="link.introductionSections.choose" bundle="WEBSITEMANAGER_RESOURCES"/>
+		</html:link>
+	</span>
 </p>
 
 <logic:empty name="site" property="orderedTopLevelSections">

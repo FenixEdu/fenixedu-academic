@@ -210,6 +210,23 @@ public abstract class UnitSite extends UnitSite_Base {
     	return true;
     }
     
+    public Section getSideSection() {
+		for (Section section : getAssociatedSections()) {
+			if (isSideSection(section)) {
+				return section;
+			}
+		}
+		
+		return null;
+	}
+
+	private boolean isSideSection(Section section) {
+		String pt = section.getName().getContent(Language.pt);
+		String en = section.getName().getContent(Language.en);
+		
+		return (pt != null && pt.equalsIgnoreCase("lateral")) || (en != null && en.equalsIgnoreCase("side"));
+	}
+    
     /**
      * Utility method to allow the user of an intenationalized name for the
      * site. Normally units, as a Party, don't have and internacionalized name
@@ -219,6 +236,19 @@ public abstract class UnitSite extends UnitSite_Base {
      */
     public MultiLanguageString getUnitNameWithAcronym() {
     	return new MultiLanguageString(getUnit().getNameWithAcronym());
+    }
+
+    public Section getIntroductionSection() {
+    	if (!hasAnyIntroductionSections()) {
+    		return null;
+    	}
+    	else {
+    		return getIntroductionSections().iterator().next();
+    	}
+    }
+    
+    public void setIntroductionSection(Section section) {
+    	addIntroductionSections(section);
     }
     
     /**
