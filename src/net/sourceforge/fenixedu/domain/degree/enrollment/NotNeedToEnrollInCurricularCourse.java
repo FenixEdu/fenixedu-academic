@@ -42,8 +42,22 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     private boolean isDueToEquivalence() {
+	return isDueToOtherEnrolmentEquivalence() || isDueToGlobalEquivalence();
+    }
+
+    private boolean isDueToGlobalEquivalence() {
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse().getCurricularCourseEquivalencesSet()) {
 	    if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+
+    private boolean isDueToOtherEnrolmentEquivalence() {
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (getRegistration().hasEnrolments(enrolment)) {
 		return true;
 	    }
 	}
