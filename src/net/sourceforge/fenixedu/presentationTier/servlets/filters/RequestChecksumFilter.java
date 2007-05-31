@@ -123,12 +123,9 @@ public class RequestChecksumFilter implements Filter {
 	}
 
 	private void rewrite(final StringBuilder response, final StringBuilder source, final int iOffset) {
-//		<img src="/SpaceManager/manageBlueprints.do?method=view&blueprintId=527&viewBlueprintNumbers=false&viewDoorNumbers=false&viewSpaceIdentifications=true&suroundingSpaceBlueprint=false&viewOriginalSpaceBlueprint=false&spaceInformationID=1" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;" alt="???pt_PT.clip_image002???" />
-//		<map id ="roomLinksMap" name="roomLinksMap">
-
 	    final int indexOfAopen = source.indexOf("<a ", iOffset);
 	    final int indexOfFormOpen = source.indexOf("<form ", iOffset);
-	    final int indexOfImgOpen = source.indexOf("<img ");
+	    final int indexOfImgOpen = source.indexOf("<img ", iOffset);
 	    if (indexOfAopen >= 0 && (indexOfFormOpen < 0 || indexOfAopen < indexOfFormOpen)
 		    && (indexOfImgOpen < 0 || indexOfAopen < indexOfImgOpen)) {
 		final int indexOfAclose = source.indexOf(">", indexOfAopen);
