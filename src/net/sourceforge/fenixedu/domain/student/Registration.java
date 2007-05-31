@@ -516,13 +516,39 @@ public class Registration extends Registration_Base {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
+    public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
+	return getStudentCurricularPlan(executionYear).getLatestCurricularCoursesEnrolments(
+		executionYear);
+    }
+
+    public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
+	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
+
+	for (final Enrolment enrolment : getApprovedEnrolments()) {
+	    result.add(enrolment.getCurricularCourse());
+	}
+
+	return result;
+    }
+
+    final public boolean hasEnrolments(final Enrolment enrolment) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasEnrolments(enrolment)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+    
     public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
 
-    public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
-	return getStudentCurricularPlan(executionYear).getLatestCurricularCoursesEnrolments(
-		executionYear);
+    public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    studentCurricularPlan.addApprovedEnrolments(enrolments);
+	}
     }
 
     public Collection<Enrolment> getApprovedEnrolments() {
@@ -543,16 +569,6 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
-	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
-
-	for (final Enrolment enrolment : getApprovedEnrolments()) {
-	    result.add(enrolment.getCurricularCourse());
-	}
-
-	return result;
-    }
-
     public boolean hasAnyApprovedEnrolment() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyApprovedEnrolment()) {
@@ -561,6 +577,106 @@ public class Registration extends Registration_Base {
 	}
 
 	return false;
+    }
+
+    public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+
+    }
+
+    final public Collection<ExternalEnrolment> getExternalEnrolments() {
+	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
+	if (mobilityStates.isEmpty()) {
+	    return Collections.emptySet();
+	}
+	
+	final Collection<ExternalEnrolment> result = new HashSet<ExternalEnrolment>();
+	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
+	    for (final RegistrationState mobilityState : mobilityStates) {
+		if (mobilityState.includes(externalEnrolment)) {
+		    result.add(externalEnrolment);
+		}
+	    }
+	}
+	
+	return result;
+    }
+    
+    final public boolean hasAnyExternalEnrolments() {
+	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
+	if (mobilityStates.isEmpty()) {
+	    return false;
+	}
+	
+	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
+	    for (final RegistrationState mobilityState : mobilityStates) {
+		if (mobilityState.includes(externalEnrolment)) {
+		    return true;
+		}
+	    }
+	}
+	
+	return false;
+    }
+    
+    final public boolean getHasExternalEnrolments() {
+	return hasAnyExternalEnrolments();
+    }
+    
+    public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
+	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		result.add(enrolment.getExecutionPeriod().getExecutionYear());
+	    }
+	}
+
+	return result;
+    }
+
+    public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
+	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
+		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+	result.addAll(getEnrolmentsExecutionYears());
+
+	return result;
+    }
+
+    public ExecutionYear getFirstEnrolmentExecutionYear() {
+	final SortedSet<ExecutionYear> sortedEnrolmentsExecutionYears = getSortedEnrolmentsExecutionYears();
+	return sortedEnrolmentsExecutionYears.isEmpty() ? null : sortedEnrolmentsExecutionYears.first();
+    }
+
+    public ExecutionYear getLastEnrolmentExecutionYear() {
+	return getSortedEnrolmentsExecutionYears().last();
+    }
+
+    public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
+	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		result.add(enrolment.getExecutionPeriod());
+	    }
+	}
+
+	return result;
+    }
+
+    public SortedSet<ExecutionPeriod> getSortedEnrolmentsExecutionPeriods() {
+	final SortedSet<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
+		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	result.addAll(getEnrolmentsExecutionPeriods());
+
+	return result;
     }
 
     final public DateTime getLastApprovedEnrolmentEvaluationDate() {
@@ -1229,18 +1345,6 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		if (enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
-		    return true;
-		}
-	    }
-	}
-	return false;
-
-    }
-
     public Tutor getAssociatedTutor() {
 
 	StudentCurricularPlan activeStudentCurricularPlan = this
@@ -1528,45 +1632,6 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public Collection<ExternalEnrolment> getExternalEnrolments() {
-	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
-	if (mobilityStates.isEmpty()) {
-	    return Collections.emptySet();
-	}
-	
-	final Collection<ExternalEnrolment> result = new HashSet<ExternalEnrolment>();
-	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
-	    for (final RegistrationState mobilityState : mobilityStates) {
-		if (mobilityState.includes(externalEnrolment)) {
-		    result.add(externalEnrolment);
-		}
-	    }
-	}
-	
-	return result;
-    }
-    
-    final public boolean hasAnyExternalEnrolments() {
-	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
-	if (mobilityStates.isEmpty()) {
-	    return false;
-	}
-	
-	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
-	    for (final RegistrationState mobilityState : mobilityStates) {
-		if (mobilityState.includes(externalEnrolment)) {
-		    return true;
-		}
-	    }
-	}
-	
-	return false;
-    }
-    
-    final public boolean getHasExternalEnrolments() {
-	return hasAnyExternalEnrolments();
-    }
-    
     public double getEctsCredits() {
 	return new StudentCurriculum(this).getTotalEctsCredits(null);
     }
@@ -1675,55 +1740,6 @@ public class Registration extends Registration_Base {
 
     public boolean isFirstTime() {
 	return isFirstTime(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
-	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		result.add(enrolment.getExecutionPeriod().getExecutionYear());
-	    }
-	}
-
-	return result;
-    }
-
-    public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
-	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
-		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
-	result.addAll(getEnrolmentsExecutionYears());
-
-	return result;
-    }
-
-    public ExecutionYear getFirstEnrolmentExecutionYear() {
-	final SortedSet<ExecutionYear> sortedEnrolmentsExecutionYears = getSortedEnrolmentsExecutionYears();
-	return sortedEnrolmentsExecutionYears.isEmpty() ? null : sortedEnrolmentsExecutionYears.first();
-    }
-
-    public ExecutionYear getLastEnrolmentExecutionYear() {
-	return getSortedEnrolmentsExecutionYears().last();
-    }
-
-    public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
-	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		result.add(enrolment.getExecutionPeriod());
-	    }
-	}
-
-	return result;
-    }
-
-    public SortedSet<ExecutionPeriod> getSortedEnrolmentsExecutionPeriods() {
-	final SortedSet<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-	result.addAll(getEnrolmentsExecutionPeriods());
-
-	return result;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
@@ -1929,12 +1945,6 @@ public class Registration extends Registration_Base {
 
     public boolean isInactive() {
 	return getActiveStateType().isInactive();
-    }
-
-    public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    studentCurricularPlan.addApprovedEnrolments(enrolments);
-	}
     }
 
     public Campus getCampus() {
