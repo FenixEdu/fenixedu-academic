@@ -2194,6 +2194,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
+    @Override
+    final public boolean hasEnrolments(final Enrolment enrolment) {
+        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
+    }
+    
     public boolean hasEnrolments(final ExecutionYear executionYear) {
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
