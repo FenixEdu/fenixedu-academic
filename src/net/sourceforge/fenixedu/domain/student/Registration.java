@@ -1531,20 +1531,40 @@ public class Registration extends Registration_Base {
     final public Collection<ExternalEnrolment> getExternalEnrolments() {
 	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
 	if (mobilityStates.isEmpty()) {
-	    return null;
+	    return Collections.emptySet();
 	}
 	
 	final Collection<ExternalEnrolment> result = new HashSet<ExternalEnrolment>();
 	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
 	    for (final RegistrationState mobilityState : mobilityStates) {
-		final DateTime mobilityDate = mobilityState.getStateDate();
-		if (externalEnrolment.hasExecutionPeriod() && externalEnrolment.getExecutionYear().containsDate(mobilityDate)) {
+		if (mobilityState.includes(externalEnrolment)) {
 		    result.add(externalEnrolment);
 		}
 	    }
 	}
 	
 	return result;
+    }
+    
+    final public boolean hasAnyExternalEnrolments() {
+	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
+	if (mobilityStates.isEmpty()) {
+	    return false;
+	}
+	
+	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
+	    for (final RegistrationState mobilityState : mobilityStates) {
+		if (mobilityState.includes(externalEnrolment)) {
+		    return true;
+		}
+	    }
+	}
+	
+	return false;
+    }
+    
+    final public boolean getHasExternalEnrolments() {
+	return hasAnyExternalEnrolments();
     }
     
     public double getEctsCredits() {
