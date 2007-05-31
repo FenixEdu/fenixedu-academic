@@ -471,6 +471,7 @@
 	</slot>
 </schema>
 
-<schema name="showPersonName" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">
+<schema name="person.alias.name" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">
+	<slot name="mostImportantAlias" key="label.alias"/>
 	<slot name="name"/>
 </schema>

@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/></em>
 <h2><bean:message key="label.editManagers.title" bundle="MANAGER_RESOURCES"/></h2>
 
 <div class="infoop2">
@@ -17,7 +16,7 @@
 
 <logic:notEmpty name="site" property="managers">
 	
-	<fr:view name="site" property="managers" schema="showPersonName">
+	<fr:view name="site" property="managers" schema="person.alias.name">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="key(removeManager)" value="label.remove"/>

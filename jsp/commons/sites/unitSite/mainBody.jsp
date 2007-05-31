@@ -66,12 +66,13 @@
 				<p class="mtop025 mbottom15">
 					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>				</p>
 
+			</logic:iterate>
+
 				<p>
 					<html:link page="<%= announcementAction + "?method=viewAnnouncements&amp;" + context %>">
 						<bean:message key="label.announcements.view.all" bundle="MESSAGING_RESOURCES"/>
 					</html:link>
 				</p>
-			</logic:iterate>
 			</logic:notEmpty>
 			
 			<logic:empty name="announcements">
@@ -124,14 +125,13 @@
 					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>
 				</p>
 
+			</logic:iterate>
+
 				<p>
 					<html:link page="<%= eventAction + "?method=viewEvents&amp;" + context %>">
 						<bean:message key="label.events.view.all" bundle="MESSAGING_RESOURCES"/>
 					</html:link>
 				</p>
-
-			</logic:iterate>
-			
 			</logic:notEmpty>
 			<logic:empty name="eventAnnouncements">
                 <div class="mbottom05">

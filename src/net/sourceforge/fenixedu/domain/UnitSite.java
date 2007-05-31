@@ -248,7 +248,12 @@ public abstract class UnitSite extends UnitSite_Base {
     }
     
     public void setIntroductionSection(Section section) {
-    	addIntroductionSections(section);
+    	if (section == null) {
+    		getIntroductionSections().clear();
+    	}
+    	else {
+    		addIntroductionSections(section);
+    	}
     }
     
     /**

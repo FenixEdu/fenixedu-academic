@@ -89,6 +89,7 @@ public class ManageResearchUnitAnnouncementsDA extends AnnouncementManagement {
 	protected String getExtraRequestParameters(HttpServletRequest request) {
 		StringBuilder builder = new StringBuilder();
 
+        addExtraParameter(request, builder, "tabularVersion");
 		addExtraParameter(request, builder, "oid");
 
 		return builder.toString();

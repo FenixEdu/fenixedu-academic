@@ -71,7 +71,7 @@
 		</html:link>
 	</li>
 	<li>
-		<html:link page="<%= "/manageResearchUnitAnnouncements.do?method=editAnnouncementBoards&amp;oid=" + siteID %>">
+		<html:link page="<%= "/manageResearchUnitAnnouncements.do?method=editAnnouncementBoards&amp;tabularVersion=true&amp;oid=" + siteID %>">
 			<bean:message bundle="WEBSITEMANAGER_RESOURCES" key="link.site.announcements"/>
 		</html:link>
 	</li>

@@ -281,5 +281,8 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitSiteIntroductionSectionsProvider"/>
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="site.section.name.plain"/>
+		<property name="defaultText" value="label.unitSite.choose.introductionSections.none"/>
+		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
+		<property name="key" value="true"/>
 	</slot>
 </schema>

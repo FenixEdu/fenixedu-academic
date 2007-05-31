@@ -24,7 +24,7 @@
 <ul>
 	<li>
 		<html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + departmentUnitId %>">
-			<bean:message key="label.department.section.start" bundle="MESSAGING_RESOURCES"/>
+			<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>

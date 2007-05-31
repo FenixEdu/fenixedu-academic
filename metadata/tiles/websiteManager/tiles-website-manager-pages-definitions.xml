@@ -74,7 +74,7 @@
 
 	<definition name="manage-researchSite-sectionsManagement" extends="definition.researchUnitSite.masterPage">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-		<put name="body" value="/commons/sites/sectionsManagement.jsp" />
+		<put name="body" value="/webSiteManager/commons/sectionsManagement.jsp" />
 	</definition>
 	
 	<definition name="manage-researchSite-section" extends="definition.researchUnitSite.masterPage">
@@ -200,7 +200,7 @@
 
     <definition name="researchSite-edit-contract" extends="definition.researchUnitSite.masterPage">
         <put name="body" value="/webSiteManager/researchUnitSite/editContract.jsp"/>
-    </definition>        
+    </definition>
        
     <definition name="researchSite-chooseIntroductionSections" extends="definition.researchUnitSite.masterPage">
         <put name="body" value="/webSiteManager/commons/chooseIntroductionSections.jsp"/>

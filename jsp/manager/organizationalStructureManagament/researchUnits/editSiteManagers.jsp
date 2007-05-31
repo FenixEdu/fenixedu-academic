@@ -15,7 +15,7 @@
 <p>
 <logic:notEmpty name="unit" property="site.managers">
 	<bean:message key="label.webSiteManagers" bundle="MANAGER_RESOURCES"/>:<br/>
-	<fr:view name="unit" property="site.managers" schema="showPersonName">
+	<fr:view name="unit" property="site.managers" schema="person.alias.name">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2"/>
 			<fr:property name="key(removeManager)" value="label.remove"/>
