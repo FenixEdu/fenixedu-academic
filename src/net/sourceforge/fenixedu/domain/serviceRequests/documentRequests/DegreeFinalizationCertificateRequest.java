@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
@@ -19,29 +20,33 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     public DegreeFinalizationCertificateRequest(final Registration registration,
 	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Boolean urgentRequest, final Boolean average, final Boolean detailed) {
+	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, MobilityProgram mobilityProgram) {
 	this();
 
 	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		average, detailed);
+		average, detailed, mobilityProgram);
     }
 
     final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed) {
+	    final Boolean detailed, final MobilityProgram mobilityProgram) {
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
-	checkParameters(average, detailed);
+	this.checkParameters(average, detailed, mobilityProgram);
 	super.setAverage(average);
 	super.setDetailed(detailed);
+	super.setMobilityProgram(mobilityProgram);
     }
 
-    final private void checkParameters(Boolean average, Boolean detailed) {
+    final private void checkParameters(final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram) {
 	if (average == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.average.cannot.be.null");
 	}
 	if (detailed == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
+	}
+	if (mobilityProgram == null && getRegistration().hasAnyExternalEnrolments()) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null.for.registration.with.external.enrolments");
 	}
     }
 

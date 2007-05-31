@@ -80,6 +80,7 @@ valueType net.sourceforge.fenixedu.util.State                                   
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState     					as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState                                            				as StudentState;
 valueType net.sourceforge.fenixedu.domain.student.RegistrationAgreement											as RegistrationAgreement;
+valueType net.sourceforge.fenixedu.domain.student.MobilityProgram												as MobilityProgram;
 valueType net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice									as StudentPersonalDataAuthorizationChoice;
 valueType net.sourceforge.fenixedu.util.TipoAula                                                				as TipoAula;
 valueType net.sourceforge.fenixedu.util.TipoSala                                                				as TipoSala; 
@@ -1497,14 +1498,14 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends
             class net.sourceforge.fenixedu.domain.OptionalEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
             	Integer keyOptionalCurricularCourse;
 		    }
-		    
+        
 		    class net.sourceforge.fenixedu.domain.ExternalDegreeEnrolment extends net.sourceforge.fenixedu.domain.Enrolment {
 		    }
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
 		Integer keyCredits;
 	}
-
+	
 	// Isto é da estrutura antiga, faz sentido ainda?
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
@@ -4588,11 +4589,13 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 				}
 				
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+					MobilityProgram mobilityProgram;
 				}
 				
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 					Boolean average;
-					Boolean detailed;				
+					Boolean detailed;
+					MobilityProgram mobilityProgram;
 				}
 			
 
@@ -13101,6 +13104,7 @@ relation PersistentGroupMembersPerson {
 	}
 }
 
+
 relation RootDomainObjectEquivalencePlan {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EquivalencePlan playsRole equivalencePlans {
@@ -13196,7 +13200,6 @@ relation PersistentGroupMembersUnit {
 		multiplicity *;
 	}
 }
-
 relation UnitFileUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 	net.sourceforge.fenixedu.domain.UnitFile playsRole files {

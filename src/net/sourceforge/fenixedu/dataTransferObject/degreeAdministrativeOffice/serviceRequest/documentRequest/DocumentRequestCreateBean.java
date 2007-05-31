@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBean {
@@ -35,7 +36,9 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Integer year;
     
     private CycleType requestedCycle;
-
+    
+    private MobilityProgram mobilityProgram;
+    
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
     }
@@ -177,6 +180,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     final public boolean getHasAdditionalInformation() {
 	return getChosenDocumentRequestType().getHasAdditionalInformation(getRegistration().getDegreeType());
+    }
+
+    final public MobilityProgram getMobilityProgram() {
+        return mobilityProgram;
+    }
+
+    final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
+        this.mobilityProgram = mobilityProgram;
     }
 
 }

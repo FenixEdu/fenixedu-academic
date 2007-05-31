@@ -156,6 +156,9 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+	<slot name="mobilityProgram" key="label.mobilityProgram" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="visibleIf" value="registration.hasExtraEnrolments"/>
+	</slot>
 </schema>
 
 
@@ -164,6 +167,9 @@
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+	<slot name="mobilityProgram" key="label.mobilityProgram" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="visibleIf" value="registration.hasExtraEnrolments"/>
+	</slot>
 </schema>
 
 
