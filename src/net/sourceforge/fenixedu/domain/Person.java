@@ -71,18 +71,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -991,18 +980,21 @@ public class Person extends Person_Base {
 		super.delete();
 	}
 
-	private boolean canBeDeleted() {
-		return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
-				&& !hasAnySentSms() && !hasAnyExportGroupingReceivers()
-				&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
-				&& !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
-				&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-				&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
-				&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
-				&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
-				&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-				&& !hasAnyPersonFunctions() && !hasAnyStudents()
-				&& (!hasHomepage() || getHomepage().canBeDeleted());
+	private boolean canBeDeleted() {	    	 
+	    return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
+	    && !hasAnySentSms() && !hasAnyExportGroupingReceivers() 				
+	    && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
+	    && !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
+	    && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()				
+	    && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
+	    && !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
+	    && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
+	    && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
+	    && !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
+	    && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
+	    && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
+	    && !hasAnyPersonFunctions() && !hasAnyStudents()
+	    && (!hasHomepage() || getHomepage().canBeDeleted());
 	}
 
 	private boolean hasParking() {
