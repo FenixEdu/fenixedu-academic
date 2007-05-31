@@ -64,7 +64,6 @@
 </fr:view>
 
 <!-- ExternalEnrolments -->
-<%-- 
 <h3 class="mbottom025"><bean:message key="label.student.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -72,7 +71,6 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.manageExternalEnrolments" />
 	</html:link>
 </p>
---%>
 
 <!-- Student Statues -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
