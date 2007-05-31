@@ -16,14 +16,30 @@
 
 <schema name="view.parkingParty.personalInfo"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
-	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" />
-	<slot name="parkingGroupToDisplay" key="label.parkingGroup" bundle="PARKING_RESOURCES" />
-	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES"/>	
-	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES"/>	
-	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" />
-	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" />
-	<slot name="party.mobile" key="label.mobile" bundle="PARKING_RESOURCES" />
-	<slot name="party.email" key="label.email" bundle="PARKING_RESOURCES" />
+	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="parkingGroupToDisplay" key="label.parkingGroup" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES" layout="null-as-label">	
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="party.mobile" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="party.email" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 </schema>
 
 <schema name="viewRequestPersonInfo"

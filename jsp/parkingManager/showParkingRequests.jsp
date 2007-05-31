@@ -5,19 +5,29 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="label.requestList" /></h2>
+
 <logic:present name="parkingRequestSearch">
 	<fr:form action="/parking.do?method=showParkingRequests">
-		<fr:edit id="parkingRequestSearch" name="parkingRequestSearch" schema="input.parkingRequestSearch" />
-		<p><html:submit>
-			<bean:message key="button.submit" />
-		</html:submit></p>
+		<fr:edit id="parkingRequestSearch" name="parkingRequestSearch" schema="input.parkingRequestSearch">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
+				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+			</fr:layout>
+		</fr:edit>
+		<p>
+			<html:submit>
+				<bean:message key="button.submit" />
+			</html:submit>
+		</p>
 	</fr:form>
+
 	<bean:define id="parkingRequests" name="parkingRequestSearch" property="search" />
 	<bean:size id="parkingRequestsNumber" name="parkingRequests"/>
-	<br/>
-	<p class="infoop2"><bean:message key="message.requestsNumber" bundle="PARKING_RESOURCES" arg0="<%= parkingRequestsNumber.toString() %>"/></p>
-	<br/>
-	
+
+	<p class="mtop15">
+		<span class="warning0"><bean:message key="message.requestsNumber" bundle="PARKING_RESOURCES" arg0="<%= parkingRequestsNumber.toString() %>"/></span>
+	</p>
+
 	<bean:define id="query" value=""/>
 	<logic:notEmpty name="parkingRequestSearch" property="parkingRequestState">
 		<bean:define id="parkingRequestState" name="parkingRequestSearch" property="parkingRequestState"/>
@@ -48,6 +58,7 @@
 		<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1" />
+				<fr:property name="columnClasses" value="acenter,,,," />
 				<fr:property name="link(viewUser)" value="/parking.do?method=showParkingPartyRequests" />
 				<fr:property name="key(viewUser)" value="link.viewUser" />
 				<fr:property name="param(viewUser)" value="parkingParty.party.idInternal/partyID" />
@@ -62,6 +73,7 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 	<logic:empty name="parkingRequests">
 		<bean:message key="message.no.parkingRequests" />
 	</logic:empty>

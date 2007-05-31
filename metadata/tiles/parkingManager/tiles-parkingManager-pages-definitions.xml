@@ -25,9 +25,6 @@
 	<definition name="df.create.external.person" extends="definition.parkingManager.masterPage" >
 		<put name="body" value="/parkingManager/createExternalPerson.jsp" />
 	</definition>
-	<definition name="df.show.created.external.person" extends="definition.parkingManager.masterPage" >
-		<put name="body" value="/parkingManager/showCreateExternalPerson.jsp" />
-	</definition>
 	<definition name="export-file" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/exportFile.jsp" />
 	</definition>	

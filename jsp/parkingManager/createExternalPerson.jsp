@@ -6,28 +6,29 @@
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <html:xhtml/>
 
-<br/>
-<h2><strong><bean:message key="link.create.external.person"/></strong></h2>
-<br/>
+<em><bean:message key="label.parking"/></em>
+<h2><bean:message key="link.create.external.person"/></h2>
 
-<span class="error"><!-- Error messages go here --><html:errors/><br /></span>
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors/></span>
+</p>
 
 <fr:form action="/externalPerson.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createExternalPersonAndParkingParty"/>
 
-	<h2><strong><bean:message key="label.person.unit.info" bundle="MANAGER_RESOURCES" /></strong></h2>
+	<h3 class="mtop2 mbottom05"><bean:message key="label.person.unit.info" bundle="MANAGER_RESOURCES" /></h3>
 	<fr:edit id="unitData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.allUnits" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle1"/>
-	        <fr:property name="columnClasses" value=",,noborder"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05 mbottom05 thmiddle"/>
+	        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 		</fr:layout>
 	</fr:edit>
 
-	<h2><strong><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></strong></h2>
+	<h3 class="mtop15 mbottom05"><bean:message key="label.person.title.personal.info" bundle="MANAGER_RESOURCES" /></h3>
 	<fr:edit id="personData" name="externalPersonBean" schema="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle1"/>
-	        <fr:property name="columnClasses" value=",,noborder"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05 thmiddle"/>
+	        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 		</fr:layout>
 	</fr:edit>
 

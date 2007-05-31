@@ -34,6 +34,7 @@ function hideCardValidPeriod(toShow){
 // -->
 </script>
 
+
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="label.request" /></h2>
 
@@ -43,15 +44,24 @@ function hideCardValidPeriod(toShow){
 	<bean:define id="parkingParty" name="parkingRequest" property="parkingParty" toScope="request"/>	
 	<bean:define id="personID" name="parkingParty" property="party.idInternal" />
 	
+	
 	<h3><bean:message key="label.parkUserInfo" /></h3>
-	<p><html:img src="<%= request.getContextPath() +"/parkingManager/parking.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
+	<p>
+		<html:img src="<%= request.getContextPath() +"/parkingManager/parking.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+	</p>
 	<logic:iterate id="occupation" name="parkingParty" property="occupations">
 		<p><bean:write name="occupation" filter="false"/></p>
 	</logic:iterate>
+	
 	<logic:notEmpty name="parkingRequest" property="requestedAs">
-		<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/> 
-		<strong><bean:message name="parkingRequest" property="requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong></span></p>
+		<p>
+			<span class="warning0">
+				<bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/>
+				<strong><bean:message name="parkingRequest" property="requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong>
+			</span>
+		</p>
 	</logic:notEmpty>
+	
 	<bean:define id="person" name="parkingParty" property="party" type="net.sourceforge.fenixedu.domain.Person"/>
 	<logic:notEqual name="person" property="partyClassification" value="TEACHER">
 	<logic:notEqual name="person" property="partyClassification" value="EMPLOYEE">
@@ -61,8 +71,12 @@ function hideCardValidPeriod(toShow){
 		<logic:equal name="parkingRequest" property="limitlessAccessCard" value="true">
 			<bean:define id="cardTypeRequest"><bean:message key="label.limitlessCard" bundle="PARKING_RESOURCES"></bean:message></bean:define>
 		</logic:equal>
-		<p><span class="infoop2"><bean:message key="message.userRequestedCardType" bundle="PARKING_RESOURCES"/>
-		<strong><bean:write name="cardTypeRequest"/></strong></span></p>
+		<p>
+			<span class="warning0">
+				<bean:message key="message.userRequestedCardType" bundle="PARKING_RESOURCES"/>
+				<strong><bean:write name="cardTypeRequest"/></strong>
+			</span>
+		</p>
 	</logic:notEqual>
 	</logic:notEqual>
 	<logic:present name="monitor">
@@ -75,7 +89,7 @@ function hideCardValidPeriod(toShow){
 		<p><span class="infoop2"><bean:message key="message.userRequestedCardType" bundle="PARKING_RESOURCES"/>
 		<strong><bean:write name="cardTypeRequest"/></strong></span></p>
 	</logic:present>
-	
+
 	<logic:notEqual name="parkingRequest" property="parkingRequestState" value="PENDING">		
 		<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 	</logic:notEqual>
@@ -93,59 +107,87 @@ function hideCardValidPeriod(toShow){
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.accepted" property="accepted" value=""/>	
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingPartyID" property="parkingPartyID" value="<%= parkingPartyIdint.toString() %>" />		
 			
-			<span class="error"><!-- Error messages go here --><html:errors /></span>		
-			<p class="mbottom025"><strong><bean:message key="label.cardNumber"/></strong></p>
-			<html:text bundle="HTMLALT_RESOURCES" altKey="text.cardNumber" size="12" property="cardNumber"/>
-			<span class="error0 mtop0"><html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES">
-				<bean:write name="message"/><br/>
-			</html:messages></span>
+			<p>
+				<span class="error0"><!-- Error messages go here --><html:errors /></span>		
+			</p>
+
+			<table class="tstyle5 thlight thright thmiddle">
+				<tr>
+					<th><bean:message key="label.cardNumber"/>:</th>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.cardNumber" size="12" property="cardNumber"/></td>
+					<td class="tderror1 tdclear">
+						<html:messages id="message" property="cardNumber" message="true" bundle="PARKING_RESOURCES">
+							<bean:write name="message"/>
+						</html:messages>
+					</td>
+				</tr>
+				<tr>
+					<th><bean:message key="label.group"/>:</th>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="groupID">
+							<html:option value="0">
+								<bean:message key="label.choose"/>
+							</html:option>
+							<logic:iterate id="groupIt" name="groups" type="net.sourceforge.fenixedu.domain.parking.ParkingGroup">
+								<bean:define id="groupId" name="groupIt" property="idInternal"/>					
+								<html:option value="<%=groupId.toString()%>">
+									<bean:write name="groupIt" property="groupName"/>
+								</html:option>
+							</logic:iterate>
+						</html:select>
+					</td>
+					<td class="tderror1 tdclear">
+						<html:messages id="message" property="group" message="true" bundle="PARKING_RESOURCES">
+							<bean:write name="message"/>
+						</html:messages>
+					</td>
+				</tr>
+			</table>
+
+
+			<p>
+				<bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">Sim</html:radio>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">Não</html:radio>
+			</p>
+
+			<p>
+				<html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
+				<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
+			</p>
 			
-					<p class="mbottom025"><strong><bean:message key="label.group"/></strong></p>
-			
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="groupID">
-				<html:option value="0">
-					<bean:message key="label.choose" />
-				</html:option>
-				<logic:iterate id="groupIt" name="groups" type="net.sourceforge.fenixedu.domain.parking.ParkingGroup">
-					<bean:define id="groupId" name="groupIt" property="idInternal"/>					
-					<html:option value="<%=groupId.toString()%>">
-						<bean:write name="groupIt" property="groupName"/>
-					</html:option>
-				</logic:iterate>
-			</html:select>
-			<span class="error0 mtop0"><html:messages id="message" property="group" message="true" bundle="PARKING_RESOURCES">
-				<bean:write name="message"/><br/>
-			</html:messages></span>	
-			
-			<br/><br/><bean:message key="label.cardValidPeriod" bundle="PARKING_RESOURCES"/>	
-			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdYes" name="parkingForm" property="cardAlwaysValid" value="yes" onclick="displayCardValidPeriod(false)">sim</html:radio>
-			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardAlwaysValid" styleId="cardValidPeriodIdNo" name="parkingForm" property="cardAlwaysValid" value="no" onclick="displayCardValidPeriod(true)">não</html:radio>	
-			<br/><html:messages id="message" property="mustFillInDates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/><br/></span></html:messages>
-			<html:messages id="message" property="invalidPeriod" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>				
 			<div id="cardValidPeriodDivId" style="display:block">
-			<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingPartyBean.cardValidPeriod">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle8 thright thlight"/>
-					<fr:property name="columnClasses" value=",,noborder"/>
-				</fr:layout>
-			</fr:edit>
+				<fr:edit id="cardValidPeriod" name="parkingPartyBean" schema="edit.parkingPartyBean.cardValidPeriod">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+				</fr:edit>
 			</div>		
 			
 			<jsp:include page="viewParkingPartyAndRequest.jsp"/>
 			
-			<span class="error0 mtop0"><html:messages id="message" property="note" message="true" bundle="PARKING_RESOURCES">
-				<bean:write name="message"/><br/>
-			</html:messages></span>
-			<p class="mbottom025"><strong><bean:message key="label.note"/></strong></p>
+			<p>
+				<span class="error0 mtop0">
+					<html:messages id="message" property="note" message="true" bundle="PARKING_RESOURCES">
+						<bean:write name="message"/>
+					</html:messages>
+				</span>
+			</p>
+			
+			<p class="mtop15 mbottom025"><strong><bean:message key="label.note"/>:</strong></p>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.note" rows="7" cols="45" property="note"/>
-			<p class="mtop2">
-			<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
+			<p class="mtop05">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="accept" onclick="confirmation();"><bean:message key="button.accept"/></html:button>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="notify"><bean:message key="button.notify"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>	
-								
-		<html:link target="printFrame" href="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
-		<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/></html:link>
+			
+			<p class="mtop15">
+				<html:link target="printFrame" href="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
+					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/>
+				</html:link>
+			</p>
 		</html:form>
 	</logic:equal>
 </logic:present>

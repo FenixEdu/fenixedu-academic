@@ -69,8 +69,6 @@
 				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
        		<forward name="showSearch" path="df.search.external.person.before.create"/>
        		<forward name="showCreateForm" path="df.create.external.person"/>
-       		<forward name="showCreatedPerson" path="df.show.created.external.person"/>
-       		<forward name="showParkingParty" path="df.show.created.external.person"/>
        	</action>
 
 		<action path="/exportParkingDB"
