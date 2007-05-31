@@ -144,6 +144,7 @@ public class SQL2JavaConverters {
     public static FieldConversion RequestState2SQLRequestStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.RequestState2SQLRequestStateFieldConversion();
     public static FieldConversion ResearchActivityParticipationRole2SqlResearchActivityParticipationRoleConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchActivityParticipationRole2SqlResearchActivityParticipationRoleConversion();
     public static FieldConversion JavaRegistrationAgreement2SqlRegistrationAgreementFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRegistrationAgreement2SqlRegistrationAgreementFieldConversion();
+    public static FieldConversion JavaMobilityProgram2SqlMobilityProgramFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMobilityProgram2SqlMobilityProgramFieldConversion();
     public static FieldConversion ScheduleClockingType2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.ScheduleClockingType2SqlVarcharConverter();
     public static FieldConversion accounting$JavaPenaltyExemptionJustificationType2SqlPenaltyExemptionJustificationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.accounting.JavaPenaltyExemptionJustificationType2SqlPenaltyExemptionJustificationTypeFieldConversion();
     public static FieldConversion FrequencyType2SQLFrequencyTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.FrequencyType2SQLFrequencyTypeFieldConversion();
