@@ -17,6 +17,16 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 	<title><bean:message key="title.teaching"/></title>
     <tiles:insert attribute="head" ignore="true"/>
+    
+<!--[if IE 5]><style>
+#navlateral { margin: 0 -3px; }
+#bigdiv { width: 300px; }
+</style><![endif]-->
+<!--[if IE]><style>
+#wrap {	margin-right: -3000px; position: relative; width: 100%; }
+#clear { _height: 0; zoom: 1; }
+</style><![endif]-->
+    
 </head>
 
 <body>
@@ -66,11 +76,13 @@
 
 	<!-- Content -->
 	<div id="content">
-	
-      	 <tiles:insert attribute="executionCourseName"  ignore="true"/>
-	  	<tiles:insert attribute="body-context" ignore="true"/>
-	  	<tiles:insert attribute="body" ignore="true"/>
-	  	
+		<!-- Wrap -->
+		<div id="wrap">
+			<tiles:insert attribute="executionCourseName"  ignore="true"/>
+			<tiles:insert attribute="body-context" ignore="true"/>
+			<tiles:insert attribute="body" ignore="true"/>
+		</div>
+		<!-- End Wrap -->
 	</div>
 	<!-- End Content -->
 
