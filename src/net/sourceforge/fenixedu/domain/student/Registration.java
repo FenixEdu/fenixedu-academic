@@ -679,7 +679,7 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public DateTime getLastApprovedEnrolmentEvaluationDate() {
+    final public YearMonthDay getLastApprovedEnrolmentEvaluationDate() {
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
 	enrolments.addAll(getApprovedEnrolments());
 
@@ -687,7 +687,7 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("Registration.no.approved.enrolments");
 	}
 	
-	return enrolments.last().getLatestEnrolmentEvaluation().getWhenDateTime();
+	return enrolments.last().getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
     }
 
     public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
