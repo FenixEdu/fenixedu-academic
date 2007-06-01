@@ -17,7 +17,6 @@
 		<bean:define id="employee" name="employee"/>
 		<bean:define id="employeeStatusList" name="employeeStatusList"/>
 		<bean:define id="yearMonth" name="yearMonth"/>
-		<br/>
 		<%request.setAttribute("employee", employee);
 		request.setAttribute("employeeStatusList", employeeStatusList);
 		request.setAttribute("yearMonth", yearMonth);%>

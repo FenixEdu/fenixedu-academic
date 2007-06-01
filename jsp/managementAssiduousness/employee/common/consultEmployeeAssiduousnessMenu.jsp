@@ -30,6 +30,21 @@
 		page="<%="/viewEmployeeAssiduousness.do?method=showVacations&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.vacations" />
 	</html:link></p>
+	
+	<logic:present name="showJustificationsLinks">
+	<%
+	net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+	if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
+		<logic:notPresent name="employeeJustificationFactory">
+			<p><bean:message key="link.insert" />: 
+			<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=JUSTIFICATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="label.justification" /></html:link>,
+			<bean:message key="label.regularization" /> (<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.dayRegularization" /></html:link>, 
+											 			 <html:link page="<%="/employeeAssiduousness.do?method=prepareCreateMissingClockingMonth&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.monthRegularization" /></html:link>)
+			</p>
+		</logic:notPresent>
+	<%}%>
+	</logic:present>
+	
 		
 	<span class="toprint"><br />
 	</span>

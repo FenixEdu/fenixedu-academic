@@ -16,45 +16,36 @@
 	<logic:present name="employee">
 		<bean:define id="employee" name="employee"/>
 		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
-		<% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-		<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
-			<logic:present name="employeeJustificationFactory">
-				<p class="mtop2">
-					<span class="error0 mtop0">
-						<html:messages id="errorMessage" message="true" property="errorMessage">
-							<bean:write name="errorMessage" />
-						</html:messages>
-					</span>
-				</p>
-				<%request.setAttribute("employee", employee);%>
-				<jsp:include page="common/insertEmployeeJustification.jsp">
-					<jsp:param name="month" value="<%=month.toString() %>" />
-					<jsp:param name="year" value="<%=year.toString() %>" />
-				</jsp:include>
-			</logic:present>
-		</logic:equal>
-
-		<logic:notPresent name="employeeJustificationFactory">
-			<p><bean:message key="link.insert" />: 
-			<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=JUSTIFICATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="label.justification" /></html:link>,
-			<bean:message key="label.regularization" /> (<html:link page="<%="/employeeAssiduousness.do?method=prepareCreateEmployeeJustification&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.dayRegularization" /></html:link>, 
-											 			 <html:link page="<%="/employeeAssiduousness.do?method=prepareCreateMissingClockingMonth&correction=REGULARIZATION&employeeNumber="+employeeNumber.toString()+"&month="+month.toString()+"&year="+year.toString()%>"><bean:message key="link.monthRegularization" /></html:link>)
-			</p>
-		</logic:notPresent>
-
 		
-		<%}%>
-
 		<bean:define id="employeeStatusList" name="employeeStatusList"/>
 		<%request.setAttribute("employee", employee);
 		request.setAttribute("employeeStatusList", employeeStatusList);
-		request.setAttribute("yearMonth", yearMonth);%>
+		request.setAttribute("yearMonth", yearMonth);
+		request.setAttribute("showJustificationsLinks", "showJustificationsLinks");%>
 		<jsp:include page="common/consultEmployeeAssiduousnessMenu.jsp">
 			<jsp:param name="month" value="<%=month.toString() %>" />
 			<jsp:param name="year" value="<%=year.toString() %>" />
 			<jsp:param name="yearMonthSchema" value="choose.date" />
 			<jsp:param name="method" value="showJustifications" />
 		</jsp:include>
+		<% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
+			<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
+				<logic:present name="employeeJustificationFactory">
+					<p class="mtop2">
+						<span class="error0 mtop0">
+							<html:messages id="errorMessage" message="true" property="errorMessage">
+								<bean:write name="errorMessage" />
+							</html:messages>
+						</span>
+					</p>
+					<%request.setAttribute("employee", employee);%>
+					<jsp:include page="common/insertEmployeeJustification.jsp">
+						<jsp:param name="month" value="<%=month.toString() %>" />
+						<jsp:param name="year" value="<%=year.toString() %>" />
+					</jsp:include>
+				</logic:present>
+			</logic:equal>
+		<%}%>
 	</logic:present>
 
 	<logic:messagesPresent message="true">

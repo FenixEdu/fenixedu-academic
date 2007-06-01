@@ -16,6 +16,17 @@
 		<bean:define id="employee" name="employeeWorkSheet" property="employee"/>
 		<bean:define id="employeeNumber" name="employeeWorkSheet" property="employee.employeeNumber" />
 		<bean:define id="yearMonth" name="yearMonth"/>
+			
+		<bean:define id="employeeStatusList" name="employeeStatusList"/>
+		<%request.setAttribute("employee", employee);
+		request.setAttribute("employeeStatusList", employeeStatusList);
+		request.setAttribute("yearMonth", yearMonth);%>
+		<jsp:include page="common/consultEmployeeAssiduousnessMenu.jsp">
+			<jsp:param name="month" value="<%=month.toString() %>" />
+			<jsp:param name="year" value="<%=year.toString() %>" />
+			<jsp:param name="yearMonthSchema" value="choose.date" />
+			<jsp:param name="method" value="showWorkSheet" />
+		</jsp:include>
 
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
@@ -34,20 +45,8 @@
 				</jsp:include>
 			</logic:present>
 		</logic:equal>
-	 	<%}%>			
-			
-		<bean:define id="employeeStatusList" name="employeeStatusList"/>
-		<br/>
-		<%request.setAttribute("employee", employee);
-		request.setAttribute("employeeStatusList", employeeStatusList);
-		request.setAttribute("yearMonth", yearMonth);%>
-		<jsp:include page="common/consultEmployeeAssiduousnessMenu.jsp">
-			<jsp:param name="month" value="<%=month.toString() %>" />
-			<jsp:param name="year" value="<%=year.toString() %>" />
-			<jsp:param name="yearMonthSchema" value="choose.date" />
-			<jsp:param name="method" value="showWorkSheet" />
-		</jsp:include>
-
+	 	<%}%>	
+	 	
 		<logic:messagesPresent message="true">
 			<html:messages id="message" message="true" property="message">
 				<p><span class="error0"><bean:write name="message" /></span></p>
