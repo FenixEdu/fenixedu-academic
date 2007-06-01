@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
     
-    protected ExternalDegreeEnrolment() {
+    public ExternalDegreeEnrolment() {
         super();
     }
     
@@ -53,7 +53,6 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 	builder.append(tabs);
 	builder.append("[E ").append(getDegreeModule().getName()).append(" (");
 	builder.append(getDegreeCurricularPlanOfDegreeModule().getName()).append(") ]\n");
-
 	return builder;
     }
 
