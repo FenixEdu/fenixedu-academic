@@ -132,7 +132,8 @@ public class RequestChecksumFilter implements Filter {
 		if (indexOfAclose >= 0) {
 		    final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
 		    if (indexOfHrefBodyStart >= 0) {
-			final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart);
+			final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
+			final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			if (indexOfHrefBodyEnd >= 0) {
 			    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 			    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
@@ -189,7 +190,7 @@ public class RequestChecksumFilter implements Filter {
 		if (indexOfImgClose >= 0) {
 		    final int indexOfSrcBodyStart = findSrcBodyStart(source, indexOfImgOpen, indexOfImgClose);
 		    if (indexOfSrcBodyStart >= 0) {
-			final int indexOfSrcBodyEnd = findHrefBodyEnd(source, indexOfSrcBodyStart);
+			final int indexOfSrcBodyEnd = findSrcBodyEnd(source, indexOfSrcBodyStart);
 			if (indexOfSrcBodyEnd >= 0) {
 			    response.append(source, iOffset, indexOfSrcBodyEnd);
 
@@ -234,7 +235,25 @@ public class RequestChecksumFilter implements Filter {
 	    return source.charAt(nextChar) == '"' || source.charAt(nextChar) == '\'' ? nextChar + 1 : nextChar;
 	}
 
-	private int findHrefBodyEnd(final StringBuilder source, final int offset) {
+	private int findHrefBodyEnd(final StringBuilder source, final int offset, final char hrefBodyStartChar) {
+	    int i = offset;
+	    if (hrefBodyStartChar == '=') {
+		for (char c = source.charAt(i); c != ' ' && c != '>'; c = source.charAt(i)) {
+		    if (++i == source.length()) {
+			return -1;
+		    }
+		}
+	    } else {
+		for (char c = source.charAt(i); c != hrefBodyStartChar; c = source.charAt(i)) {
+		    if (++i == source.length()) {
+			return -1;
+		    }
+		}		
+	    }
+	    return i;
+	}
+
+	private int findSrcBodyEnd(final StringBuilder source, final int offset) {
 	    int i = offset;
 	    for (char c = source.charAt(i); c != '"' && c != '\'' && c != ' ' && c != '>'; c = source.charAt(i)) {
 		if (++i == source.length()) {
