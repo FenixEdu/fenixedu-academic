@@ -34,3 +34,4 @@ execute "Alter File Table" alterFileTable.sql
 execute "Modify Persistent Group Members" modifyPersistentGroupMembers.sql
 execute "Disable Presentation, Announcements and Events in Department and Research Site" makeSomeUnitSiteSectionsInvisible.sql
 execute "Add key to unit site as an introduction section" alterSection.sql
+execute "Add Mobility Program To Academic Service Request" addMobilityProgramToAcademicServiceRequestTable.sql
