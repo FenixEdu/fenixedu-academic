@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.UnitFile;
+import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -21,23 +22,44 @@ public class UnitFileBean implements Serializable {
 
 	private List<IGroup> groups;
 
+	private String tags;
+
 	public UnitFileBean(UnitFile file) {
 		this.file = new DomainReference<UnitFile>(file);
-		groups = new ArrayList<IGroup>();
 		this.name = file.getDisplayName();
 		this.description = file.getDescription();
 		setupGroups(file.getPermittedGroup());
+		setupTags(file.getUnitFileTags());
+	}
+
+	private void setupTags(List<UnitFileTag> unitFileTags) {
+		String tags = "";
+		for (UnitFileTag tag : unitFileTags) {
+			tags += tag.getName() + " ";
+		}
+		setTags(tags);
 	}
 
 	private void setupGroups(Group permittedGroup) {
 		if (permittedGroup instanceof GroupUnion) {
-			GroupUnion group = (GroupUnion) permittedGroup;
-			groups.addAll(group.getChildren());
+			groups = flatten((GroupUnion) permittedGroup);
 		} else {
+			groups = new ArrayList<IGroup>();
 			groups.add(permittedGroup);
 		}
-		
 
+	}
+
+	private List<IGroup> flatten(GroupUnion group) {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		for (IGroup children : group.getChildren()) {
+			if (children instanceof GroupUnion) {
+				groups.addAll(flatten((GroupUnion) children));
+			} else {
+				groups.add(children);
+			}
+		}
+		return groups;
 	}
 
 	public UnitFile getFile() {
@@ -75,4 +97,13 @@ public class UnitFileBean implements Serializable {
 	public Unit getUnit() {
 		return getFile().getUnit();
 	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
 }

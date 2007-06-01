@@ -21,7 +21,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class CreateUnitFile extends Service {
 
 	public void run(java.io.File file, String originalFilename, String displayName, String description,
-			Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
+			String tags, Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
 		InputStream is = null;
 		try {
@@ -34,7 +34,7 @@ public class CreateUnitFile extends Service {
 				.getSimpleFileManager().saveFile(getVirtualPath(unit), originalFilename,
 						!isPublic(permittedGroup), person.getName(), displayName, is);
 
-		new UnitFile(unit, person, description, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
+		new UnitFile(unit, person, description, tags, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
 				.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor
 				.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
 				fileDescriptor.getUniqueId(), !isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);

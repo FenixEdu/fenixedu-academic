@@ -345,12 +345,12 @@ public class RenderUtils {
      * @param criteria the used criteria
      * @return the a new collection with the elements sorted by the criteria
      */
-    public static List<Object> sortCollectionWithCriteria(Collection<? extends Object> collection, String criteria) {
+    public static <T> List<T> sortCollectionWithCriteria(Collection<? extends T> collection, String criteria) {
         if (collection == null) {
             return null;
         }
 
-        List<Object> result = new ArrayList<Object>(collection);
+        List<T> result = new ArrayList<T>(collection);
 
         if (criteria == null) {
             return result; 

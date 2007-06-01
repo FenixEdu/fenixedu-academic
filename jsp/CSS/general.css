@@ -1912,3 +1912,28 @@ ul.autoCompleteItems li.selected { background-color:  #cef; }
 .altJavaScriptSubmitButton { display:block; }
 
 .showHideDetailsButton { display:none; }
+
+
+
+ul.tcloud {
+background: #f2faec;
+padding: 0.5em 1em;
+}
+ul.tcloud li {
+display: inline;
+padding-right: 0.5em;
+line-height: 2em;
+}
+
+ul.tcloud li a { border: none !important; }
+
+.tcloudlevel6-0 { font-size: 0.5em; color: #88a859 !important; }
+.tcloudlevel6-1 { font-size: 0.8em; color: #88a859 !important; }
+.tcloudlevel6-2 { font-size: 1.0em; color: #88a859 !important; }
+.tcloudlevel6-3 { font-size: 1.2em; color: #88a859 !important; }
+.tcloudlevel6-4 { font-size: 1.4em; color: #88a859 !important; }
+.tcloudlevel6-5 { font-size: 1.7em; color: #88a859 !important; }
+.tcloudlevel6-6 { font-size: 2.0em; color: #88a859 !important; }
+.tcloudlevel6-7 { font-size: 3.0em; color: #88a859 !important; }
+.tcloudlevel6-8 { font-size: 4.0em; color: #88a859 !important; }
+

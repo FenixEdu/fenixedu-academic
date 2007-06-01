@@ -2649,6 +2649,9 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="columns" value="69"/>
 		<property name="rows" value="3"/>
 	</slot>
+	<slot name="tags" key="label.unitFileTags">
+		<property name="size" value="60"/>
+	</slot>
 	<slot name="file" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.filename">
 		<property name="fileNameSlot" value="fileName"/>
 		<property name="size" value="60"/>
@@ -2670,6 +2673,9 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="columns" value="69"/>
 		<property name="rows" value="3"/>
 	</slot>
+	<slot name="tags" key="label.unitFileTags">
+			<property name="size" value="60"/>
+	</slot>
 	<slot name="groups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
@@ -2687,6 +2693,16 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="description" layout="short" key="label.fileDescription"/>
 	<slot name="uploadTime"/>
+	<slot name="unitFileTags" layout="flowLayout">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="unitFileTag.name"/>
+		<property name="emptyMessageKey" value="label.null"/>
+		<property name="emptyMessageBundle" value="APPLICATION_RESOURCES"/>
+	</slot>
 	<slot name="permittedGroup" layout="show-groups" key="label.permission"/>
 	<slot name="uploader.firstAndLastName" key="label.uploader"/>
+</schema>
+
+<schema name="unitFileTag.name" type="net.sourceforge.fenixedu.domain.UnitFileTag" bundle="RESEARCHER_RESOURCES">
+	<slot name="name"/>
 </schema>

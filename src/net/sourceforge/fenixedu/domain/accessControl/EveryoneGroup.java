@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This groups represents the group of everyone. All person belong to this group
@@ -20,6 +21,11 @@ public class EveryoneGroup extends Group {
      */
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String getName() {
+    	return RenderUtils.getResourceString("SITE_RESOURCES", "label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup");
+    }
+    
     @Override
     public Set<Person> getElements() {
         return new HashSet<Person>(Person.readAllPersons());

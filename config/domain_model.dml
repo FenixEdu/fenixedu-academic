@@ -2236,7 +2236,14 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.UnitFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyUnit;
 		Integer keyUploader;
+		Integer keyUnitFileTag;
 		String description;
+		
+	}
+	
+	class net.sourceforge.fenixedu.domain.UnitFileTag extends net.sourceforge.fenixedu.domain.DomainObject {
+		String name;
+		Integer keyUnit;
 	}
 	
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -13211,9 +13218,32 @@ relation UnitFileUnit {
 	}
 }
 
+relation FileTagging {
+	net.sourceforge.fenixedu.domain.UnitFileTag playsRole unitFileTags {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.UnitFile playsRole taggedFiles {
+		multiplicity *;
+	}
+}
+
 relation UnitFilePerson {
 	net.sourceforge.fenixedu.domain.Person playsRole uploader;
 	net.sourceforge.fenixedu.domain.UnitFile playsRole uploadedFiles {
 		multiplicity *;
 	}
+}
+
+relation UnitFileTagRootDomainObject {
+	net.sourceforge.fenixedu.domain.UnitFileTag playsRole unitFileTags {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+}
+
+relation UnitUnitFileTag {
+	net.sourceforge.fenixedu.domain.UnitFileTag playsRole unitFileTags {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }

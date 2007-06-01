@@ -27,6 +27,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
+import net.sourceforge.fenixedu.domain.UnitFileTag;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
@@ -944,7 +947,7 @@ public class Unit extends Unit_Base {
 		}
 		return new ArrayList<ResearchResultPublication>(publications);
 	}
-	
+
 	public List<ResearchResultPatent> getAssociatedPatents() {
 		Set<ResearchResultPatent> patents = new HashSet<ResearchResultPatent>();
 
@@ -955,14 +958,43 @@ public class Unit extends Unit_Base {
 		}
 		return new ArrayList<ResearchResultPatent>(patents);
 	}
-	
+
 	public List<UnitFile> getAccessibileFiles(Person person) {
 		List<UnitFile> files = new ArrayList<UnitFile>();
-		for(UnitFile file : getFiles()) {
-			if(file.isPersonAllowedToAccess(person)) {
+		for (UnitFile file : getFiles()) {
+			if (file.isPersonAllowedToAccess(person)) {
 				files.add(file);
 			}
 		}
 		return files;
+	}
+
+	public List<UnitFile> getAccessibileFiles(Person person, String tagName) {
+		List<UnitFile> files = new ArrayList<UnitFile>();
+		UnitFileTag tag = getUnitFileTag(tagName);
+		if (tag != null) {
+			for (UnitFile file : tag.getTaggedFiles()) {
+				if (file.isPersonAllowedToAccess(person)) {
+					files.add(file);
+				}
+			}
+		}
+		return files;
+	}
+
+	public UnitFileTag getUnitFileTag(String name) {
+		for (UnitFileTag tag : getUnitFileTags()) {
+			if (tag.getName().equalsIgnoreCase(name)) {
+				return tag;
+			}
+		}
+		return null;
+	}
+
+	public void removeGroupFromUnitFiles(PersistentGroupMembers members) {
+		PersistentGroup group = new PersistentGroup(members);
+		for (UnitFile file : getFiles()) {
+			file.updatePermissions(group);
+		}
 	}
 }

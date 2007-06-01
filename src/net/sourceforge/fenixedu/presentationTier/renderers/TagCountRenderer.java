@@ -1,0 +1,153 @@
+package net.sourceforge.fenixedu.presentationTier.renderers;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.UnitFileTag;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.renderers.OutputRenderer;
+import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+public class TagCountRenderer extends OutputRenderer {
+
+	private String linkFormat;
+
+	private String classes;
+
+	private String styles;
+
+	private boolean moduleRelative;
+
+	private boolean contextRelative;
+
+	private String separator;
+
+	private String showAllUrl;
+	
+	private String sortBy;
+	
+	
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	public String getShowAllUrl() {
+		return showAllUrl;
+	}
+
+	public void setShowAllUrl(String showAllUrl) {
+		this.showAllUrl = showAllUrl;
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
+	public boolean isContextRelative() {
+		return contextRelative;
+	}
+
+	public void setContextRelative(boolean contextRelative) {
+		this.contextRelative = contextRelative;
+	}
+
+	public boolean isModuleRelative() {
+		return moduleRelative;
+	}
+
+	public void setModuleRelative(boolean moduleRelative) {
+		this.moduleRelative = moduleRelative;
+	}
+
+	public String getClasses() {
+		return classes;
+	}
+
+	public void setClasses(String classes) {
+		this.classes = classes;
+	}
+
+	public String getLinkFormat() {
+		return linkFormat;
+	}
+
+	public void setLinkFormat(String linkFormat) {
+		this.linkFormat = linkFormat;
+	}
+
+	public String getStyles() {
+		return styles;
+	}
+
+	public void setStyles(String styles) {
+		this.styles = styles;
+	}
+
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		return new Layout() {
+
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
+				List<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
+						(List<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
+						(List<UnitFileTag>) object);
+				
+				HtmlInlineContainer container = new HtmlInlineContainer();
+				int i = 0;
+				for (UnitFileTag tag : tags) {
+					if (tag.isTagAccessibleToUser(AccessControl.getPerson())) {
+						if (i > 0) {
+							container.addChild(new HtmlText(" " + getSeparator() + " "));
+						}
+						
+						HtmlComponent component = null;
+						if (getLinkFormat() != null) {
+							HtmlLink link = new HtmlLink();
+							link.setModuleRelative(isModuleRelative());
+							link.setContextRelative(isContextRelative());
+							link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
+							link.setBody(getText(tag));
+							component = link;
+						} else {
+							component = getText(tag);
+						}
+						container.addChild(component);
+						i++;
+					}
+				}
+				if (getShowAllUrl() != null) {
+					HtmlLink link = new HtmlLink();
+					link.setModuleRelative(isModuleRelative());
+					link.setContextRelative(isContextRelative());
+					link.setUrl(getShowAllUrl());
+					link.setBody(new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES", "renderers.show.all")));
+					container.addChild(new HtmlText(" " + getSeparator() + " "));
+					container.addChild(link);
+				}
+				return container;
+			}
+
+			private HtmlComponent getText(UnitFileTag tag) {
+				return new HtmlText(tag.getName() + "(" + tag.getFileTagCount(AccessControl.getPerson())
+						+ ") ");
+			}
+
+		};
+	}
+}

@@ -28,11 +28,11 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		request.setAttribute("unit", getUnit(request));
 		return super.execute(mapping, form, request, response);
 	}
-	
+
 	public ActionForward configureGroups(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -44,53 +44,56 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
 	public ActionForward prepareCreatePersistedGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		request.setAttribute("bean", getNewPersistentGroupBean(request));
 		return mapping.findForward("createPersistedGroup");
 	}
 
-	
 	public ActionForward createPersistedGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		IViewState viewState = RenderUtils.getViewState("createGroup");
-		if(viewState!=null) {
-			PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject().getObject();
-			executeService("CreatePersistentGroup", new Object[] {bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType()});
+		if (viewState != null) {
+			PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject()
+					.getObject();
+			executeService("CreatePersistentGroup", new Object[] { bean.getUnit(), bean.getName(),
+					bean.getPeople(), bean.getType() });
 		}
-		
+
 		return configureGroups(mapping, form, request, response);
 	}
- 	
+
 	public ActionForward deletePersistedGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PersistentGroupMembers group = getGroup(request);
 		if (group != null) {
 			try {
-				executeService("DeletePersistentGroup", new Object[] {group});
-			}catch(DomainException e) {
+				executeService("DeletePersistentGroup", new Object[] { group });
+			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage());
 			}
 		}
 		return configureGroups(mapping, form, request, response);
 	}
-	
+
 	public ActionForward prepareEditPersistedGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		request.setAttribute("bean",new PersistentGroupMembersBean(getGroup(request)));
+
+		request.setAttribute("bean", new PersistentGroupMembersBean(getGroup(request)));
 		return mapping.findForward("editPersistedGroup");
 	}
-	
+
 	public ActionForward editPersistedGroup(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 		IViewState viewState = RenderUtils.getViewState("editGroup");
-		if(viewState!=null) {
+		if (viewState != null) {
 			try {
-				PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject().getObject();
-				executeService("EditPersistentGroup", new Object[] {bean.getGroup(), bean.getName(), bean.getPeople(), bean.getUnit()});
-			}catch(DomainException e) {
+				PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject()
+						.getObject();
+				executeService("EditPersistentGroup", new Object[] { bean.getGroup(), bean.getName(),
+						bean.getPeople(), bean.getUnit() });
+			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage());
 			}
 		}
@@ -124,8 +127,8 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 			formFileInputStream = bean.getFile();
 			file = FileUtils.copyToTemporaryFile(formFileInputStream);
 			executeService("CreateUnitFile", new Object[] { file, bean.getFileName(),
-					bean.getDisplayName(), bean.getDescription(), bean.getPermittedGroup(),
-					getUnit(request), getLoggedPerson(request) });
+					bean.getDisplayName(), bean.getDescription(), bean.getTags(),
+					bean.getPermittedGroup(), getUnit(request), getLoggedPerson(request) });
 		} catch (DomainException e) {
 			addActionMessage(request, e.getMessage());
 		} finally {
@@ -144,10 +147,9 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		return manageFiles(mapping, form, request, response);
 	}
 
-	public ActionForward manageFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		List<UnitFile> files = getUnit(request).getAccessibileFiles(getLoggedPerson(request));
+	private ActionForward putFilesOnRequest(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response, List<UnitFile> files)
+			throws Exception {
 		int numberOfPages = files.size() / getPageSize();
 		numberOfPages += (files.size() % getPageSize() != 0) ? 1 : 0;
 		request.setAttribute("numberOfPages", numberOfPages);
@@ -158,8 +160,31 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		}
 		request.setAttribute("page", pageNumber);
 		int start = (pageNumber - 1) * getPageSize();
-		request.setAttribute("files", files.subList(start, Math.min(start + getPageSize(), files.size())));
+		request.setAttribute("files", files
+				.subList(start, Math.min(start + getPageSize(), files.size())));
 		return mapping.findForward("manageFiles");
+	}
+
+	public ActionForward manageFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		return putFilesOnRequest(mapping, form, request, response, getUnit(request).getAccessibileFiles(
+				getLoggedPerson(request)));
+
+	}
+
+	public ActionForward viewFilesByTag(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String tagName = request.getParameter("tagName");
+		if (tagName != null) {
+			request.setAttribute("tagName", tagName);
+			return putFilesOnRequest(mapping, form, request, response, getUnit(request)
+					.getAccessibileFiles(getLoggedPerson(request), tagName));
+		} else {
+			return manageFiles(mapping, form, request, response);
+		}
+
 	}
 
 	public ActionForward prepareEditFile(ActionMapping mapping, ActionForm form,
@@ -179,14 +204,18 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		if (viewState != null) {
 			UnitFileBean bean = (UnitFileBean) viewState.getMetaObject().getObject();
 			executeService("EditUnitFile", bean.getFile(), bean.getName(), bean.getDescription(), bean
-					.getGroup());
+					.getTags(), bean.getGroup());
 		}
 		return manageFiles(mapping, form, request, response);
 	}
 
 	protected abstract Integer getPageSize();
+
 	protected abstract UnitFile getUnitFile(HttpServletRequest request);
+
 	protected abstract Unit getUnit(HttpServletRequest request);
+
 	protected abstract PersistentGroupMembers getGroup(HttpServletRequest request);
+
 	protected abstract PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request);
 }

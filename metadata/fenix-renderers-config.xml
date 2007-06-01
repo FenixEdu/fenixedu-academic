@@ -219,6 +219,20 @@ Documentation:
         <property name="format" value="${class.simpleName}:${idInternal}"/>
     </renderer>
     
+    <!--@ Tag Renderers -->
+    
+    <renderer type="java.util.List" layout="tag-count" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCountRenderer">
+    	<property name="moduleRelative" value="true"/>
+    	<property name="contextRelative" value="true"/>
+    	<property name="separator" value="|"/>
+    </renderer>
+
+    <renderer type="java.util.List" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCloudRenderer">
+    	<property name="moduleRelative" value="true"/>
+    	<property name="contextRelative" value="true"/>
+    	<property name="numberOfLevels" value="6"/>
+    </renderer>
+    
     <!--@ The default layout for the a parser report.  -->
     <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
     

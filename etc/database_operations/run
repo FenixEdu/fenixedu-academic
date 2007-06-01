@@ -28,4 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Add Grade Columns" addGradeColumns.sql
-
+execute "Add Tag to File Table" addTagToFileTable.sql
+execute "Create Unit File Tag" createUnitFileTag.sql

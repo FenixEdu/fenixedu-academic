@@ -1,0 +1,15 @@
+CREATE TABLE `UNIT_FILE_TAG` (
+  `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
+  `NAME` varchar(255),
+  `KEY_UNIT` int(11) NOT NULL,
+  `KEY_ROOT_DOMAIN_OBJECT` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`ID_INTERNAL`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `FILE_TAGGING` (
+  `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
+  `KEY_UNIT_FILE_TAG` int(11) NOT NULL,
+  `KEY_UNIT_FILE` int(11) not NULL,
+  PRIMARY KEY  (`ID_INTERNAL`)
+) ENGINE=InnoDB;
+

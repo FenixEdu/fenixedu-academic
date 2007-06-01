@@ -26,8 +26,17 @@ public class UnitFileUploadBean implements Serializable {
 	    transient private InputStream file;
 	    private String authorsName;
 	    private String description;
+	    private String tags;
 	    
-	    public String getDescription() {
+	    public String getTags() {
+			return tags;
+		}
+
+		public void setTags(String tags) {
+			this.tags = tags;
+		}
+
+		public String getDescription() {
 			return description;
 		}
 
