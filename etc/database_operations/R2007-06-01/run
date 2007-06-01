@@ -27,5 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add Tag to File Table" addTagToFileTable.sql
-execute "Create Unit File Tag" createUnitFileTag.sql
+execute "Add Grade Columns" addGradeColumns.sql
