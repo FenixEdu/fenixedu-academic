@@ -59,7 +59,7 @@
                     </dt:format>
 				</td>
 				<td>
-					<bean:write name="enrolmentEvaluation" property="grade"/>
+					<bean:write name="enrolmentEvaluation" property="gradeValue"/>
 				</td>
 				<td>
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>

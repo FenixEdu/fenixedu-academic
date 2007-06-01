@@ -265,14 +265,14 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 	}
 	
 	@Override
-	public Grade getFinalGrade() {
+	public TestsGrade getFinalGrade() {
 		return this.getFinalGrade(this.getPerson());
 	}
 	
 	@Override
-	public Grade getFinalGrade(Person person) {
+	public TestsGrade getFinalGrade(Person person) {
 		if(!this.isAnswered(person)) {
-			return new Grade(0, this.getTest().getScale());
+			return new TestsGrade(0, this.getTest().getScale());
 		}
 		
 		if(this.getCorrectorsCount() > 0) {
@@ -280,13 +280,13 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 		}
 		
 		if(this.getAnswer(person).getPercentage() == null) {
-			return new Grade(0, this.getTest().getScale());
+			return new TestsGrade(0, this.getTest().getScale());
 		}
 		
 		return this.getGrade().multiply(this.getAnswer(person).getPercentage() / 100);
 	}
 
-	private Grade getFinalGradeByCorrector(Person person) {
+	private TestsGrade getFinalGradeByCorrector(Person person) {
 		NewAnswer answer = this.getAnswer(person);
 		
 		for(NewCorrector corrector : this.getOrderedCorrectors()) {
@@ -295,7 +295,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 			}
 		}
 
-		return new Grade(0, this.getTest().getScale());
+		return new TestsGrade(0, this.getTest().getScale());
 	}
 
 }

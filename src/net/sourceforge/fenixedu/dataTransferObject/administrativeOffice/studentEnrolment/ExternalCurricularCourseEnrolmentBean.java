@@ -11,7 +11,7 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     
     private ExternalCurricularCourseResultBean externalCurricularCourseResultBean;
     private DomainReference<ExecutionPeriod> executionPeriod;
-    private String grade;
+    private String gradeValue;
     
     public ExternalCurricularCourseEnrolmentBean(final ExternalCurricularCourse externalCurricularCourse) {
 	setExternalCurricularCourseResultBean(new ExternalCurricularCourseResultBean(externalCurricularCourse));
@@ -33,12 +33,12 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setGradeValue(String grade) {
+        this.gradeValue = grade;
     }
     
     public ExternalCurricularCourse getExternalCurricularCourse() {

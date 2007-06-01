@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 public class InfoEnrollmentGrade extends DataTranferObject {
     private InfoEnrolment infoEnrollment;
 
-    private String grade;
+    private String gradeValue;
 
     public InfoEnrollmentGrade() {
     }
@@ -14,21 +14,21 @@ public class InfoEnrollmentGrade extends DataTranferObject {
     /**
      * @return
      */
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
     /**
      * @param string
      */
-    public void setGrade(String string) {
-        grade = string;
+    public void setGradeValue(String string) {
+        gradeValue = string;
     }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "infoEnrollment = " + this.infoEnrollment + "; ";
-        result += "grade = " + this.grade + "]\n";
+        result += "grade = " + this.gradeValue + "]\n";
         return result;
     }
 

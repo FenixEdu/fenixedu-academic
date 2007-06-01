@@ -226,12 +226,12 @@ public class InfoEnrolmentEditor extends InfoObject {
 	this.changeDegreeOperation = changeDegreeOperation;
     }
 
-    public String getGrade() {
+    public String getGradeValue() {
 	final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance()
 		.readCurriculumModuleByOID(getIdInternal());
 	final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrolment
 		.getEvaluationsSet());
-	return enrolmentEvaluation == null ? null : enrolmentEvaluation.getGrade();
+	return enrolmentEvaluation == null ? null : enrolmentEvaluation.getGradeValue();
     }
 
     public boolean equals(Object obj) {

@@ -71,10 +71,10 @@
 					</dt:format>
 				</td>											
 				<td>
-					<logic:notEmpty name="enrolmentEvaluation" property="grade">
-						<bean:write name="enrolmentEvaluation" property="grade" />
+					<logic:notEmpty name="enrolmentEvaluation" property="gradeValue">
+						<bean:write name="enrolmentEvaluation" property="gradeValue" />
 					</logic:notEmpty>
-					<logic:empty name="enrolmentEvaluation" property="grade">
+					<logic:empty name="enrolmentEvaluation" property="gradeValue">
 						&nbsp;
 					</logic:empty>
 				</td>

@@ -15,7 +15,7 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
     private DomainReference<Attends> attends;
     private EnrolmentEvaluationType enrolmentEvaluationType;
     private Date evaluationDate;
-    private String grade;
+    private String gradeValue;
     private boolean toSubmitMark;
     
     public MarkSheetTeacherMarkBean() {}
@@ -23,7 +23,7 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
     public MarkSheetTeacherMarkBean(Attends attends, Date evaluationDate, String grade, EnrolmentEvaluationType enrolmentEvaluationType, boolean sendMark) {
         setAttends(attends);
         setEvaluationDate(evaluationDate);
-        setGrade(grade);
+        setGradeValue(grade);
         setEnrolmentEvaluationType(enrolmentEvaluationType);
         setToSubmitMark(sendMark);
     }
@@ -44,12 +44,12 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
         this.toSubmitMark = markToSubmit;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setGradeValue(String grade) {
+        this.gradeValue = grade;
     }
 
     public Date getEvaluationDate() {

@@ -102,8 +102,8 @@ public class InfoEnrolment extends InfoObject {
 	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
     }
 
-    public String getGrade() {
-        return enrolment.getGrade();
+    public String getGradeValue() {
+        return enrolment.getGradeValue();
     }
     
     public boolean equals(Object obj) {

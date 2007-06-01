@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.tests.Grade;
+import net.sourceforge.fenixedu.domain.tests.TestsGrade;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
@@ -69,7 +69,7 @@ public class GradeInputRenderer extends InputRenderer {
 						double value = Double.parseDouble(parts[0]);
 						double scale = Double.parseDouble(parts[1]);
 
-						return new Grade(value, scale);
+						return new TestsGrade(value, scale);
 					} catch (NumberFormatException e) {
 						throw new ConversionException("fenix.renderers.converter.grade.invalid", e);
 					} catch (IndexOutOfBoundsException e) {

@@ -123,7 +123,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToEdit = new HashSet<MarkSheetEnrolmentEvaluationBean>();
         for (EnrolmentEvaluation enrolmentEvaluation : markSheet.getEnrolmentEvaluationsSet()) {
             MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean = new MarkSheetEnrolmentEvaluationBean();
-            enrolmentEvaluationBean.setGrade(enrolmentEvaluation.getGrade());
+            enrolmentEvaluationBean.setGradeValue(enrolmentEvaluation.getGradeValue());
             enrolmentEvaluationBean.setEvaluationDate(enrolmentEvaluation.getExamDate());
             enrolmentEvaluationBean.setEnrolment(enrolmentEvaluation.getEnrolment());
             enrolmentEvaluationBean.setEnrolmentEvaluation(enrolmentEvaluation);

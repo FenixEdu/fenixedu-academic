@@ -72,7 +72,7 @@
 						<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 					</logic:notEqual>	
 				<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
+					<bean:write name="enrolment" property="infoEnrolmentEvaluation.gradeValue"/>
 				</logic:equal>
 	
 			  </td>

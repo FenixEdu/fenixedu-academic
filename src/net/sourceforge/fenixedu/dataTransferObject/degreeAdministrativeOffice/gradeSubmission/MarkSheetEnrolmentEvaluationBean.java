@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     
-    private String grade;
+    private String gradeValue;
     private Date evaluationDate;    
     private DomainReference<Enrolment> enrolment;
 
@@ -22,7 +22,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, Date evaluationDate, String grade) {
         setEnrolment(enrolment);
         setEvaluationDate(evaluationDate);
-        setGrade(grade);
+        setGradeValue(grade);
     }
 
     public Date getEvaluationDate() {
@@ -41,12 +41,12 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
         this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setGradeValue(String grade) {
+        this.gradeValue = grade;
     }
     
     public EnrolmentEvaluation getEnrolmentEvaluation() {

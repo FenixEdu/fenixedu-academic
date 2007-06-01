@@ -228,7 +228,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         } else {
             studentNumberForm.set("gradeAvailableDateDay", "");
         }
-        studentNumberForm.set("grade", newEnrolmentEvaluation.getGrade());
+        studentNumberForm.set("grade", newEnrolmentEvaluation.getGradeValue());
         studentNumberForm.set("observation", newEnrolmentEvaluation.getObservation());
         studentNumberForm.set("enrolmentEvaluationType", String.valueOf(newEnrolmentEvaluation
                 .getEnrolmentEvaluationType().toString()));
@@ -353,7 +353,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
-        infoEnrolmentEvaluation.setGrade(grade);
+        infoEnrolmentEvaluation.setGradeValue(grade);
         infoEnrolmentEvaluation.setObservation(observation);
         infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment()));
 
@@ -395,7 +395,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
                         .next();
 
                 actionErrors.add("invalidGrade", new ActionError("errors.invalidMark",
-                        infoEnrolmentEvaluation.getGrade(), String.valueOf(infoEnrolmentEvaluation
+                        infoEnrolmentEvaluation.getGradeValue(), String.valueOf(infoEnrolmentEvaluation
                                 .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
                                 .getNumber().intValue())));
             }

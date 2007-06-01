@@ -2,17 +2,17 @@ package net.sourceforge.fenixedu.domain.tests;
 
 import java.io.Serializable;
 
-public class Grade implements Serializable {
+public class TestsGrade implements Serializable {
 
 	double value;
 
 	double scale;
 
-	public Grade() {
+	public TestsGrade() {
 		super();
 	}
 
-	public Grade(double value, double scale) {
+	public TestsGrade(double value, double scale) {
 		this();
 
 		this.setValue(value);
@@ -39,13 +39,13 @@ public class Grade implements Serializable {
 		return this.getValue() / this.getScale() * 100;
 	}
 
-	public Grade add(Grade gradeToAdd) {
+	public TestsGrade add(TestsGrade gradeToAdd) {
 		double convertedValue = gradeToAdd.getValue() * this.getScale() / gradeToAdd.getScale();
 
-		return new Grade(convertedValue + this.getValue(), this.getScale());
+		return new TestsGrade(convertedValue + this.getValue(), this.getScale());
 	}
 
-	public Grade multiply(Double factor) {
-		return new Grade(factor * this.getValue(), this.getScale());
+	public TestsGrade multiply(Double factor) {
+		return new TestsGrade(factor * this.getValue(), this.getScale());
 	}
 }

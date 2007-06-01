@@ -74,7 +74,7 @@ public class SelectCandidaciesService extends Service {
 
 			String stringGrade;
 			if (enrollmentEvaluation != null) {
-				stringGrade = enrollmentEvaluation.getGrade();
+				stringGrade = enrollmentEvaluation.getGradeValue();
 			} else {
 				stringGrade = GradeScale.NA;
 			}

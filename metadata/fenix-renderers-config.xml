@@ -623,7 +623,7 @@ Documentation:
 	<renderer mode="input" type="boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
 	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
     
-    <renderer type="net.sourceforge.fenixedu.domain.tests.Grade"
+    <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
               class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
               mode="input" />
 
@@ -772,7 +772,7 @@ Documentation:
               class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
     </renderer>
     
-    <renderer type="net.sourceforge.fenixedu.domain.tests.Grade"
+    <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
               class="net.sourceforge.fenixedu.renderers.FormatRenderer"
               layout="format">
 		<property name="format" value="${percentage,.2f}%% (${value,.2f}/${scale,.2f})" />

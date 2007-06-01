@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.tests.Grade;
+import net.sourceforge.fenixedu.domain.tests.TestsGrade;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 
 public class CorrectTestBean implements Serializable {
@@ -30,7 +30,7 @@ public class CorrectTestBean implements Serializable {
 		return test.getAllUncorrectedQuestionsCount(person);
 	}
 	
-	public Grade getFinalGrade() {
+	public TestsGrade getFinalGrade() {
 		return test.getFinalGrade(person);
 	}
 

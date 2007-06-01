@@ -50,12 +50,12 @@ public class NewAnswer extends NewAnswer_Base {
 		}
 	}
 
-	public Grade getCalculatedGrade() {
+	public TestsGrade getCalculatedGrade() {
 		if (this.getPercentage() == null) {
-			return new Grade(0, this.getAtomicQuestion().getGrade().getScale());
+			return new TestsGrade(0, this.getAtomicQuestion().getGrade().getScale());
 		}
 
-		return new Grade((this.getPercentage().doubleValue() / ((double) 100)) * this.getAtomicQuestion().getGrade().getValue(),
+		return new TestsGrade((this.getPercentage().doubleValue() / ((double) 100)) * this.getAtomicQuestion().getGrade().getValue(),
 				this.getAtomicQuestion().getGrade().getScale());
 	}
 	

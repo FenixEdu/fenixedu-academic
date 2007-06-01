@@ -12,6 +12,6 @@ public class CreateExternalEnrolment extends Service {
 	if (student == null) {
 	    throw new FenixServiceException("error.CreateExternalEnrolment.student.cannot.be.null");
 	}
-	return new ExternalEnrolment(student, bean.getExternalCurricularCourse(), bean.getGrade(), bean.getExecutionPeriod());
+	return new ExternalEnrolment(student, bean.getExternalCurricularCourse(), bean.getGradeValue(), bean.getExecutionPeriod());
     }
 }

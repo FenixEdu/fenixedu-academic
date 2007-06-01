@@ -105,11 +105,11 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final StringBuilder result = new StringBuilder();
 
 	result.append(" ").append(resourceBundle.getString("label.with"));
-	result.append(" ").append(approvedIEnrolment.getGrade());
+	result.append(" ").append(approvedIEnrolment.getGradeValue());
 	result.append(
 		StringUtils.rightPad(
 			"("
-			+ enumerationBundle.getString(approvedIEnrolment.getGrade()) 
+			+ enumerationBundle.getString(approvedIEnrolment.getGradeValue()) 
 			+ ")", 
 			SUFFIX_LENGTH, 
 			' '));

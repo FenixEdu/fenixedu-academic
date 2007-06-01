@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  * 22/Abr/2003
  */
 public class InfoEnrolmentEvaluation extends InfoObject {
-    private String grade;
+    private String gradeValue;
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
@@ -50,7 +50,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
-        result += "grade = " + this.grade + "; ";
+        result += "grade = " + this.gradeValue + "; ";
         result += "evaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "examDate = " + this.examDate + "; ";
         result += "infoPersonResponsibleForGrade = " + this.infoPersonResponsibleForGrade + "; ";
@@ -70,8 +70,8 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         return examDate;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getGradeValue() {
+        return gradeValue;
     }
 
     public Date getGradeAvailableDate() {
@@ -90,8 +90,8 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         examDate = date;
     }
 
-    public void setGrade(String string) {
-        grade = string;
+    public void setGradeValue(String string) {
+        gradeValue = string;
     }
 
     public void setGradeAvailableDate(Date date) {
@@ -165,7 +165,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         if (enrolmentEvaluation != null) {
             setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
             setState(enrolmentEvaluation.getEnrolmentEvaluationState());
-            setGrade(enrolmentEvaluation.getGrade());
+            setGradeValue(enrolmentEvaluation.getGradeValue());
             setExamDate(enrolmentEvaluation.getExamDate());
             setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
             setObservation(enrolmentEvaluation.getObservation());

@@ -90,11 +90,11 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private String getGradeInfo(final IEnrolment approvedIEnrolment, final ExecutionYear executionYear) {
 	final StringBuilder result = new StringBuilder();
 	
-	result.append(" ").append(approvedIEnrolment.getGrade());
+	result.append(" ").append(approvedIEnrolment.getGradeValue());
 	result.append(
 	    StringUtils.rightPad(
 		    "(" 
-		    + enumerationBundle.getString(approvedIEnrolment.getGrade()) 
+		    + enumerationBundle.getString(approvedIEnrolment.getGradeValue()) 
 		    + ")",
 		    SUFFIX_LENGTH,
 		    ' '));

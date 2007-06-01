@@ -138,7 +138,7 @@ public class MarkSheet extends MarkSheet_Base {
             final EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment()
                     .addNewEnrolmentEvaluation(enrolmentEvaluationState,
                             getMarkSheetType().getEnrolmentEvaluationType(),
-                            responsibleTeacher.getPerson(), evaluationBean.getGrade(),
+                            responsibleTeacher.getPerson(), evaluationBean.getGradeValue(),
                             getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
             
             addEnrolmentEvaluations(enrolmentEvaluation);
@@ -179,11 +179,11 @@ public class MarkSheet extends MarkSheet_Base {
             enrolmentEvaluation = evaluationBean.getEnrolment()
                     .addNewEnrolmentEvaluation(enrolmentEvaluationState,
                             getMarkSheetType().getEnrolmentEvaluationType(),
-                            responsibleTeacher.getPerson(), evaluationBean.getGrade(),
+                            responsibleTeacher.getPerson(), evaluationBean.getGradeValue(),
                             getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
         } else {
             enrolmentEvaluation
-                    .edit(responsibleTeacher.getPerson(), evaluationBean.getGrade(),
+                    .edit(responsibleTeacher.getPerson(), evaluationBean.getGradeValue(),
                             getCreationDate(), evaluationBean.getEvaluationDate());
         }
         addEnrolmentEvaluations(enrolmentEvaluation);
@@ -305,7 +305,7 @@ public class MarkSheet extends MarkSheet_Base {
                 
                 final EnrolmentEvaluation enrolmentEvaluation = enrolmentEvaluationBean.getEnrolmentEvaluation();
                 enrolmentEvaluation.edit(getResponsibleTeacher().getPerson(),
-                        enrolmentEvaluationBean.getGrade(), new Date(),
+                        enrolmentEvaluationBean.getGradeValue(), new Date(),
                         enrolmentEvaluationBean.getEvaluationDate());
             } else {
                 // TODO:
@@ -317,7 +317,7 @@ public class MarkSheet extends MarkSheet_Base {
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
             enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
-            enrolmentEvaluationBean.getEnrolmentEvaluation().setGrade(null);
+            enrolmentEvaluationBean.getEnrolmentEvaluation().setGradeValue(null);
         }
     }
 

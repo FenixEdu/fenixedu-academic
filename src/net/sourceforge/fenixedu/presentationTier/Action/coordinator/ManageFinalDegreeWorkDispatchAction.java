@@ -1406,7 +1406,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	for (final Enrolment enrolment : enrolments) {
     		final EnrolmentEvaluation enrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
     		if (enrolmentEvaluation != null && enrolmentEvaluation.isApproved()) {
-    			final String grade = enrolmentEvaluation.getGrade();
+    			final String grade = enrolmentEvaluation.getGradeValue();
     			return grade == null || grade.length() == 0 ? null : grade;
     		}
     	}

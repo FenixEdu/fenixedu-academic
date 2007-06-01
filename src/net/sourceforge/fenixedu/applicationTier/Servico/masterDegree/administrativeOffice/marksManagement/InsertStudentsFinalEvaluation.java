@@ -35,7 +35,7 @@ public class InsertStudentsFinalEvaluation extends Service {
 			final EnrolmentEvaluation enrolmentEvaluationFromDb = findEnrolmentEvaluationByIDForStudent(registration, infoEnrolmentEvaluation.getIdInternal());
 			try {
 				enrolmentEvaluationFromDb.insertStudentFinalEvaluationForMasterDegree(
-						infoEnrolmentEvaluation.getGrade(), teacher.getPerson(), evaluationDate);
+						infoEnrolmentEvaluation.getGradeValue(), teacher.getPerson(), evaluationDate);
 			}
 			catch (DomainException e) {
 				infoEvaluationsWithError.add(infoEnrolmentEvaluation);

@@ -48,7 +48,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         checkIfCanCreateExternalEnrolment(student, externalCurricularCourse);
         setStudent(student);
         setExternalCurricularCourse(externalCurricularCourse);
-        setGrade(grade);
+        setGradeValue(grade);
         setExecutionPeriod(executionPeriod);
     }
 
@@ -91,7 +91,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     public Integer getFinalGrade() {
-	final String grade = getGrade();
+	final String grade = getGradeValue();
 	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
 		: Integer.valueOf(grade);
     }

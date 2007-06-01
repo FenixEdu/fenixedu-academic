@@ -79,7 +79,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
         setEnrolmentEvaluationState(enrolmentEvaluationState);
         setPersonResponsibleForGrade(responsibleFor);
-        setGrade(grade);
+        setGradeValue(grade);
         setGradeAvailableDate(availableDate);
         setExamDate(examDate);
 
@@ -128,10 +128,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    if(enrolmentEvaluation.isRectification()) {
 		return -1;
 	    }
-	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
+	    return compareByGrade(this.getGradeValue(), enrolmentEvaluation.getGradeValue());
 	    
 	} else {
-	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
+	    return compareByGrade(this.getGradeValue(), enrolmentEvaluation.getGradeValue());
 	}
     }
 
@@ -203,10 +203,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     private int compareMyGradeToAnotherGrade(String grade) {
         Integer myGrade = null;
         Integer otherGrade = null;
-        if (this.getGrade() == null) {
+        if (this.getGradeValue() == null) {
             myGrade = new Integer(0);
         } else {
-            myGrade = Integer.valueOf(this.getGrade());
+            myGrade = Integer.valueOf(this.getGradeValue());
         }
         if (grade == null) {
             otherGrade = new Integer(0);
@@ -248,7 +248,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
-        return getEnrollmentStateByGrade(getGrade());
+        return getEnrollmentStateByGrade(getGradeValue());
     }
 
     public GradeScale getGradeScale() {
@@ -296,7 +296,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (responsibleFor == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
-        setGrade(grade);
+        setGradeValue(grade);
         setGradeAvailableDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
         setPersonResponsibleForGrade(responsibleFor);
 
@@ -327,9 +327,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;        
         if(!this.isImprovment()) {
-            if (MarkType.getRepMarks().contains(getGrade())) {
+            if (MarkType.getRepMarks().contains(getGradeValue())) {
         	newEnrolmentState = EnrollmentState.NOT_APROVED;
-            } else if (MarkType.getNaMarks().contains(getGrade())) {
+            } else if (MarkType.getNaMarks().contains(getGradeValue())) {
         	newEnrolmentState = EnrollmentState.NOT_EVALUATED;
             }
         }
@@ -452,24 +452,24 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public IGrade getGradeWrapper() {
-        return GradeFactory.getInstance().getGrade(getGrade());
+        return GradeFactory.getInstance().getGrade(getGradeValue());
     }
 
     protected void generateCheckSum() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getExamDateYearMonthDay().toString()).append(getGrade());
+        stringBuilder.append(getExamDateYearMonthDay().toString()).append(getGradeValue());
         stringBuilder.append(getEnrolmentEvaluationType());
         stringBuilder.append(getEnrolment().getStudentCurricularPlan().getRegistration().getNumber());
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
     
     @Override
-    public void setGrade(String grade) {
+    public void setGradeValue(String grade) {
         if (isPayable() && !isPayed()) {
             throw new DomainException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", getRegistration().getNumber().toString());
         }
 	
-        super.setGrade((grade == null) ? null : grade.toUpperCase());
+        super.setGradeValue((grade == null) ? null : grade.toUpperCase());
     }
     
     @Deprecated
@@ -498,7 +498,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public boolean hasGrade() {
-	return getGrade() != null && getGrade().length() > 0;
+	return getGradeValue() != null && getGradeValue().length() > 0;
     }
 
     public boolean isPayable() {

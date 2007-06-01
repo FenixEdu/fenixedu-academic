@@ -99,8 +99,8 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		    public boolean evaluate(Object input) {
 			// see if there are evaluations without grade
 			EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
-			if (enrolmentEvaluationInput.getGrade() == null
-				|| enrolmentEvaluationInput.getGrade().length() == 0)
+			if (enrolmentEvaluationInput.getGradeValue() == null
+				|| enrolmentEvaluationInput.getGradeValue().length() == 0)
 			    return true;
 			return false;
 		    }

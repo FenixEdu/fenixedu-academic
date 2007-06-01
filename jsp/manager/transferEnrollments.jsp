@@ -135,7 +135,7 @@
 							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoCurricularCourse.name"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="grade"/>
+							<bean:write name="infoEnrollmentGrade" property="gradeValue"/>
 						</td>
 					</tr>
 

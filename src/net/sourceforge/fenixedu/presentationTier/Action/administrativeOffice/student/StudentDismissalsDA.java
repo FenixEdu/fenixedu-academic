@@ -156,7 +156,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	}
 
 	try {
-	    if (StringUtils.isEmpty(dismissalBean.getGrade())) {
+	    if (StringUtils.isEmpty(dismissalBean.getGradeValue())) {
 
 		executeService("CreateNewCreditsDismissal", new Object[] { dismissalBean.getStudentCurricularPlan(),
 			dismissalBean.getCourseGroup(), dismissalBean.getDismissals(),
@@ -167,7 +167,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 		executeService("CreateNewEquivalenceDismissal", new Object[] { dismissalBean.getStudentCurricularPlan(),
 			dismissalBean.getCourseGroup(), dismissalBean.getDismissals(),
 			dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
-			dismissalBean.getGrade() });
+			dismissalBean.getGradeValue() });
 	    }
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());

@@ -48,7 +48,7 @@
 					<bean:write name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 				</td>											
 				<td class="listClasses">
-					<bean:write name="enrolmentEvaluation" property="grade" />
+					<bean:write name="enrolmentEvaluation" property="gradeValue" />
 				</td>
 			</tr>
     	</logic:iterate>

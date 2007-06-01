@@ -165,7 +165,7 @@ public class ReadStudentExternalInformation extends Service {
 			InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade
 				.run(enrollment);
 			if (infoEnrollmentEvaluation != null) {
-			    info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
+			    info.setFinalGrade(infoEnrollmentEvaluation.getGradeValue());
 			}
 			enrollments.add(info);
 		    }

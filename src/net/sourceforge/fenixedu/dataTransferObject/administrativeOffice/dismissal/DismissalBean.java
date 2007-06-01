@@ -63,7 +63,7 @@ public class DismissalBean implements Serializable {
         this.dismissalType = dismissalType;
     }
 
-    public String getGrade() {
+    public String getGradeValue() {
         return grade;
     }
 

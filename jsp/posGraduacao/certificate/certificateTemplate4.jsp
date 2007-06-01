@@ -32,7 +32,7 @@
 		<bean:write name="itr" property="infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
-  		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
+  		<bean:write name="itr" property="infoEnrolmentEvaluation.gradeValue" />
  		valores
  		<logic:equal name="itr" property="infoCurricularCourse.type.name" value="P_TYPE_COURSE">
 	 		 (<bean:message key="label.curricularCourse.pType" />)
@@ -46,7 +46,7 @@
  		<bean:write name="itr" property="infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
- 		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
+ 		<bean:write name="itr" property="infoEnrolmentEvaluation.gradeValue" />
 		 valores
 	</logic:iterate>
 		</logic:present>

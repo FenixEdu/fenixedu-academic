@@ -43,7 +43,7 @@ public class AlterStudentEnrolmentEvaluation extends Service {
 
         try {
             enrolmentEvaluationCopy.alterStudentEnrolmentEvaluationForMasterDegree(
-                    infoEnrolmentEvaluation.getGrade(), employee, teacher.getPerson(),
+                    infoEnrolmentEvaluation.getGradeValue(), employee, teacher.getPerson(),
                     infoEnrolmentEvaluation.getEnrolmentEvaluationType(), infoEnrolmentEvaluation
                             .getGradeAvailableDate(), infoEnrolmentEvaluation.getExamDate(),
                     infoEnrolmentEvaluation.getObservation());

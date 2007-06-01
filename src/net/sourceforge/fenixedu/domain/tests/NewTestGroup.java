@@ -196,7 +196,7 @@ public class NewTestGroup extends NewTestGroup_Base {
 		}
 	}
 
-	public Grade getGrade() {
+	public TestsGrade getGrade() {
 		return this.getTest().getFinalGrade();
 	}
 

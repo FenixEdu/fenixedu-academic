@@ -12,7 +12,7 @@
  		<str:upperCase><bean:write name="itr" property="infoCurricularCourse.name" /></str:upperCase>
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com
- 		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
+ 		<bean:write name="itr" property="infoEnrolmentEvaluation.gradeValue" />
  		valores 		
 	</logic:iterate>
 	<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>

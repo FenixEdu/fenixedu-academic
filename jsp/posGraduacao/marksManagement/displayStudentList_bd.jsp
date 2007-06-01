@@ -52,14 +52,14 @@
 						<td class="listClasses">
 		    	        	<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 		    	    	</td>
-			    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.grade" >
+			    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.gradeValue" >
 				    	   	 <td  class="listClasses" >
 								&nbsp;	
 							 </td> 	 
 						</logic:empty>
-						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.grade" >
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.gradeValue" >
 				            <td class="listClasses">
-				  				<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>			
+				  				<bean:write name="enrolment" property="infoEnrolmentEvaluation.gradeValue"/>			
 				    	    </td>
 			    	    </logic:notEmpty>
 				    	<logic:empty name="enrolment" property="infoEnrolmentEvaluation.examDate" >

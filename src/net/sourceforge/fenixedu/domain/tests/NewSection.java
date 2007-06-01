@@ -249,13 +249,13 @@ public class NewSection extends NewSection_Base {
 	}
 	
 	@Override
-	public Grade getFinalGrade() {
+	public TestsGrade getFinalGrade() {
 		return this.getFinalGrade(this.getPerson());
 	}
 	
 	@Override
-	public Grade getFinalGrade(Person person) {
-		Grade grade = new Grade(0, this.getTest().getScale());
+	public TestsGrade getFinalGrade(Person person) {
+		TestsGrade grade = new TestsGrade(0, this.getTest().getScale());
 		
 		for(NewTestElement testElement : this.getVisibleOrderedTestElements(person)) {
 			grade = grade.add(testElement.getFinalGrade(person));

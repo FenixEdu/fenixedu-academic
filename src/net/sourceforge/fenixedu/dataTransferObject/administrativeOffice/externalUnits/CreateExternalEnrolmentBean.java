@@ -36,7 +36,7 @@ public class CreateExternalEnrolmentBean implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    public String getGrade() {
+    public String getGradeValue() {
         return grade;
     }
 

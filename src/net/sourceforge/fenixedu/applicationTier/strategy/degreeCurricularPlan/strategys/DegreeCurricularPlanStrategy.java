@@ -81,7 +81,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
 
 		    try {
-			Integer enrolmentMark = Integer.valueOf(evaluation.getGrade());
+			Integer enrolmentMark = Integer.valueOf(evaluation.getGradeValue());
 
 			if (enrolmentMark > 0) {
 			    marks += enrolmentMark;
@@ -117,7 +117,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
 
 		    try {
-			int enrolmentMark = Integer.valueOf(evaluation.getGrade());
+			int enrolmentMark = Integer.valueOf(evaluation.getGradeValue());
 			double enrolmentWeight = enrolment.getCurricularCourse().getCredits();
 
 			if (enrolmentMark > 0) {

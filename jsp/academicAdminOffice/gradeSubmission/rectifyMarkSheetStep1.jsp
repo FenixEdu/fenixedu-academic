@@ -124,7 +124,7 @@
 					</dt:format>
 				</td>
 				<td>
-					<bean:write name="evaluation" property="grade"/>
+					<bean:write name="evaluation" property="gradeValue"/>
 				</td>
 				<td>				
 					<logic:equal name="evaluation" property="enrolmentEvaluationState" value="<%= EnrolmentEvaluationState.RECTIFIED_OBJ.toString() %>">

@@ -78,6 +78,7 @@
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
 	    		<bean:define id="idInternal" name="enrolmentEvaluation" property="idInternal" />
+	    		<bean:define id="gradeValue" name="enrolmentEvaluation" property="gradeValue" />
 	    		
 	    		<tr>
 					<td class="listClasses">
@@ -87,7 +88,7 @@
 						<bean:write name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 					</td>											
 					<td class="listClasses">
-						<html:text bundle="HTMLALT_RESOURCES" altKey="text.grade" name="enrolmentEvaluation" property="grade" size="4" indexed="true" />
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.grade" name="enrolmentEvaluation" property="grade" value="<%= gradeValue.toString() %>" size="4" indexed="true" />
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" name="enrolmentEvaluation" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrolmentCode" name="enrolmentEvaluation" property="enrolmentCode" value="<%= enrolmentCode.toString() %>" indexed="true" />
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="enrolmentEvaluation" property="idInternal" value="<%= idInternal.toString() %>" indexed="true" />

@@ -25,7 +25,7 @@ public class GradeRenderer extends OutputRenderer {
 				case GRADERE:
 				case GRADEAP: return new HtmlText(RenderUtils.getResourceString("ENUMERATION_RESOURCES", grade.getGradeType().toString()));
 				case GRADEFIVE:
-				case GRADETWENTY: return new HtmlText(((Integer)grade.getGrade()).toString());
+				case GRADETWENTY: return new HtmlText(((Integer)grade.getGradeValue()).toString());
 				}
 
 				return new HtmlText("");

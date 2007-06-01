@@ -93,7 +93,7 @@ public class ChangeDegreeDA extends FenixDispatchAction {
                 
                 String grade = null;
                 if(infoEnrolmentEvaluation != null) {
-                    grade = infoEnrolmentEvaluation.getGrade();
+                    grade = infoEnrolmentEvaluation.getGradeValue();
                 }
                 
                 if (!infoExecutionYear.getState().equals(PeriodState.CURRENT)) {

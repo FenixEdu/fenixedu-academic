@@ -28,13 +28,13 @@
 	<table class="tstyle4">
 	  <tr>
 	    <td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.original.grade"/></td>
-	    <td><bean:write name="enrolmentEvaluation" property="grade"/> (<dt:format pattern="dd/MM/yyyy"><bean:write name="enrolmentEvaluation" property="examDate.time"/></dt:format>)</td>
+	    <td><bean:write name="enrolmentEvaluation" property="gradeValue"/> (<dt:format pattern="dd/MM/yyyy"><bean:write name="enrolmentEvaluation" property="examDate.time"/></dt:format>)</td>
 	  </tr>
 	  <logic:iterate id="evaluation" name="rectificationEvaluations">
 		  <tr>
 		    <td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.rectification"/></td>
 		    <td>
-		    	<bean:write name="evaluation" property="grade"/> (<dt:format pattern="dd/MM/yyyy"><bean:write name="evaluation" property="examDate.time"/></dt:format>)<br/>
+		    	<bean:write name="evaluation" property="gradeValue"/> (<dt:format pattern="dd/MM/yyyy"><bean:write name="evaluation" property="examDate.time"/></dt:format>)<br/>
   			    	<logic:notEmpty name="evaluation" property="markSheet.reason">
 	 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.reason"/>:
 			    	<bean:write name="evaluation" property="markSheet.reason"/>

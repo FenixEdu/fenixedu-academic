@@ -160,7 +160,7 @@ valueType net.sourceforge.fenixedu.domain.parking.ParkingDocumentState										
 valueType java.util.UUID 																						as UUID;
 valueType net.sourceforge.fenixedu.domain.tests.NewPermission													as Permission;
 valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate											as Predicate;
-valueType net.sourceforge.fenixedu.domain.tests.Grade															as Grade;
+valueType net.sourceforge.fenixedu.domain.tests.TestsGrade															as TestsGrade;
 valueType net.sourceforge.fenixedu.domain.tests.TestGroupStatus													as TestGroupStatus;
 valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer											as ConcreteAnswer;
 valueType net.sourceforge.fenixedu.domain.LoginAliasType														as LoginAliasType;
@@ -194,6 +194,7 @@ valueType net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType              
 valueType net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                             as CycleType;
 valueType net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType								as PersistentGroupMembersType;
 valueType net.sourceforge.fenixedu.domain.ProfessionalSituationType												as ProfessionalSituationType;
+valueType net.sourceforge.fenixedu.domain.Grade																	as Grade;
 
 /*
 *
@@ -1523,7 +1524,8 @@ class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixed
 }
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
-	String grade;
+	String gradeValue;
+	Grade grade (REQUIRED);
     String createdBy;
 	DateTime creationDateDateTime;
 	Integer keyExternalCurricularCourse;
@@ -1539,6 +1541,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
 		String givenGrade;
+		Grade grade (REQUIRED);
 	}
 
 		class net.sourceforge.fenixedu.domain.studentCurriculum.Substitution extends net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence {
@@ -1588,7 +1591,8 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     Integer keyEnrolment;
 	YearMonthDay gradeAvailableDateYearMonthDay;
 	YearMonthDay examDateYearMonthDay;
-    String grade;
+    String gradeValue;
+    Grade grade (REQUIRED);
     EnrolmentEvaluationType enrolmentEvaluationType;
     EnrolmentEvaluationState enrolmentEvaluationState;
     Integer keyMarkSheet;
@@ -5172,7 +5176,7 @@ class net.sourceforge.fenixedu.domain.tests.NewTestElement extends net.sourcefor
 	class net.sourceforge.fenixedu.domain.tests.NewQuestion extends net.sourceforge.fenixedu.domain.tests.NewTestElement {
 		Predicate preCondition;
 		Integer timesUsed;
-		Grade grade;
+		TestsGrade grade;
 	}
 	
 		class net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion extends net.sourceforge.fenixedu.domain.tests.NewQuestion {

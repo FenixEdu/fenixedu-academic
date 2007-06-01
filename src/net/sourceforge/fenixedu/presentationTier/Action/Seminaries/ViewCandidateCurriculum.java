@@ -77,7 +77,7 @@ public class ViewCandidateCurriculum extends FenixAction {
             String stringGrade;
             if (ie.getInfoEnrolmentEvaluation() != null) {
 
-                stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
+                stringGrade = ie.getInfoEnrolmentEvaluation().getGradeValue();
             } else {
                 stringGrade = GradeScale.NA;
             }

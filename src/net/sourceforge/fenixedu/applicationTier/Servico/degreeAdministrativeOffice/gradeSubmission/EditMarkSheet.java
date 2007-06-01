@@ -77,8 +77,8 @@ public class EditMarkSheet extends Service {
         return CollectionUtils.select(enrolmentEvaluationBeans, new Predicate() {
             public boolean evaluate(Object arg0) {
                 MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = (MarkSheetEnrolmentEvaluationBean) arg0;
-                return markSheetEnrolmentEvaluationBean.getGrade() != null
-                        && markSheetEnrolmentEvaluationBean.getGrade().length() != 0;
+                return markSheetEnrolmentEvaluationBean.getGradeValue() != null
+                        && markSheetEnrolmentEvaluationBean.getGradeValue().length() != 0;
             }
         });
     }

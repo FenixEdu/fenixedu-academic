@@ -48,7 +48,7 @@ public enum GradeType {
         long sum = 0;
 
         for (IGrade grade : grades) {
-            sum += ((Integer) grade.getGrade()).intValue();
+            sum += ((Integer) grade.getGradeValue()).intValue();
         }
 
         return sum;

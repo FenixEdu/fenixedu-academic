@@ -259,7 +259,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    if (eval.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)
 		    && eval.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)
-		    && (eval.getGrade() == null || eval.getGrade().equals(""))) {
+		    && (eval.getGradeValue() == null || eval.getGradeValue().equals(""))) {
 		continue;
 	    }
 	    else {
@@ -392,7 +392,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
-		String evaluationGrade = enrolmentEvaluation.getGrade();
+		String evaluationGrade = enrolmentEvaluation.getGradeValue();
 
 		return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType)
 			&& ((grade == null && evaluationGrade == null) || (evaluationGrade != null && evaluationGrade
@@ -457,7 +457,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	else
 	    grade = publishedMark.getMark().toUpperCase();
 
-	enrolmentEvaluation.setGrade(grade);
+	enrolmentEvaluation.setGradeValue(grade);
 
 	enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -960,13 +960,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
-    public String getGrade() {
+    public String getGradeValue() {
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGrade();
+	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGradeValue();
     }
 
     public Integer getFinalGrade() {
-	final String grade = getGrade();
+	final String grade = getGradeValue();
 	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
 		: Integer.valueOf(grade);
     }

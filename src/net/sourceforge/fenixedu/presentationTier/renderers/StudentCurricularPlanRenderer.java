@@ -448,10 +448,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		final HtmlComponent enrolmentState = enrolment.isEnrolmentStateApproved() ? null : new HtmlText(enumerationResources.getString(enrolment.getEnrollmentState().getQualifiedName()));
 		generateEnrolmentSmallInfoCell(lineRow, enrolmentState, getEnrolmentClasses()[4], null);
 		
-		// Enrolment Grade
+		// Enrolment TestsGrade
 		final HtmlTableCell enrolmentEvaluationCell = lineRow.createCell();
 		enrolmentEvaluationCell.setClasses(getEnrolmentClasses()[5]);
-		final String grade = enrolment.getGrade();
+		final String grade = enrolment.getGradeValue();
 		enrolmentEvaluationCell.setBody(new HtmlText(grade == null ? "-" : grade));
 		
 		// Enrolment Weight
@@ -498,7 +498,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 			    "Data da Avaliação");
 
 		    // Latest Enrolment Evaluation Person Responsible For
-                        // Grade
+                        // TestsGrade
 		    if (latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
 			final Person person = latestEnrolmentEvaluation.getPersonResponsibleForGrade();
 			generateEnrolmentSmallInfoCell(
@@ -529,7 +529,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 //		    final HtmlTableRow enrolmentEvaluationsRow = enrolmentEvaluationsTable.createRow();
 //		    enrolmentEvaluationsRow.setStyle("color: #888;");
 //		    
-//		    // Grade
+//		    // TestsGrade
 //		    generateEnrolmentSmallInfoCell(
 //			    enrolmentEvaluationsRow, 
 //			    new HtmlText(enrolmentEvaluation.getGrade()), 

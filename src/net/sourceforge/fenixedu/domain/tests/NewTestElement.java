@@ -114,11 +114,11 @@ public abstract class NewTestElement extends NewTestElement_Base {
 	public void publishGrades() {
 	}
 	
-	public Grade getFinalGrade() {
+	public TestsGrade getFinalGrade() {
 		return null;
 	}
 	
-	public Grade getFinalGrade(Person person) {
+	public TestsGrade getFinalGrade(Person person) {
 		return null;
 	}
 

@@ -76,7 +76,7 @@ public class RowMarksFile {
         setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
         setCurricularSeason(translateSeason(enrolmentEvaluation));
         setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());
-        setMark(enrolmentEvaluation.getGrade());
+        setMark(enrolmentEvaluation.getGradeValue());
         setEvaluationDate(enrolmentEvaluation.getExamDate());
         setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getRegistration()
                 .getNumber());

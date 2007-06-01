@@ -158,10 +158,10 @@ public class CreateMarkSheetByTeacher extends Service {
 
         FinalMark finalMark = attends.getFinalMark();
         if (finalMark != null) {
-            finalMark.setSubmitedMark(markBean.getGrade());
+            finalMark.setSubmitedMark(markBean.getGradeValue());
             finalMark.setSubmitDateYearMonthDay(YearMonthDay.fromDateFields(evaluationDate));
             finalMark.setWhenSubmitedYearMonthDay(YearMonthDay.fromDateFields(nowDate));
-            grade = markBean.getGrade();
+            grade = markBean.getGradeValue();
         }
         return grade;
     }

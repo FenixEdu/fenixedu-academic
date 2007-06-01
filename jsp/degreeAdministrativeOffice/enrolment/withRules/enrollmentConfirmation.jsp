@@ -147,7 +147,7 @@
 				</logic:notEqual>
 				
 				<logic:equal name="curriculumElem" property="enrollmentState.name" value="APROVED">
-					<bean:write name="curriculumElem" property="latestEnrolmentEvaluation.grade"/>
+					<bean:write name="curriculumElem" property="latestEnrolmentEvaluation.gradeValue"/>
 				</logic:equal>
 			  </td>
 			</tr>

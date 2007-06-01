@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.lang.StringUtils;
 
 class Grade implements IGrade {
-    private Object grade;
+    private Object gradeValue;
 
     private GradeType gradeType;
 
@@ -16,22 +16,22 @@ class Grade implements IGrade {
 
     public Grade(String grade) {
         if (grade == null || grade.equals("") || grade.equals(GradeScale.NA)) {
-            this.grade = GradeScale.NA;
+            this.gradeValue = GradeScale.NA;
             this.gradeType = GradeType.GRADENA;
         } else if (StringUtils.isNumeric(grade)) {
             Integer numericGrade = Integer.parseInt((String) grade);
             initNumeric(numericGrade);
         } else if (grade.equals(GradeScale.AP)) {
-            this.grade = grade;
+            this.gradeValue = grade;
             this.gradeType = GradeType.GRADEAP;
         } else {
-            this.grade = GradeScale.RE;
+            this.gradeValue = GradeScale.RE;
             this.gradeType = GradeType.GRADERE;
         }
     }
 
     protected void initNumeric(int grade) {
-        this.grade = grade;
+        this.gradeValue = grade;
 
         if (grade <= 5) {
             this.gradeType = GradeType.GRADEFIVE;
@@ -40,8 +40,8 @@ class Grade implements IGrade {
         }
     }
 
-    public Object getGrade() {
-        return grade;
+    public Object getGradeValue() {
+        return gradeValue;
     }
 
     public GradeType getGradeType() {
@@ -53,8 +53,8 @@ class Grade implements IGrade {
     public int compareTo(IGrade o) {
         if(this.getGradeType() == o.getGradeType()) {
             if(this.getGradeType() == GradeType.GRADEFIVE || this.getGradeType() == GradeType.GRADETWENTY) {
-                Integer grade1 = (Integer) this.getGrade();
-                Integer grade2 = (Integer) o.getGrade();
+                Integer grade1 = (Integer) this.getGradeValue();
+                Integer grade2 = (Integer) o.getGradeValue();
                 return grade1.compareTo(grade2);
             } else {
                 return 0;

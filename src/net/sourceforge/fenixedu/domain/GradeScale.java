@@ -103,6 +103,23 @@ public enum GradeScale {
 	    }
 	}
 	
+	@Override
+	public boolean belongsTo(String grade) {
+	    if (grade.equals(NA) || grade.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Double markValue = Double.valueOf(grade);
+		if ((markValue >= 0) && (markValue <= 20)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
+	
     },
 
     TYPE5 {
@@ -193,6 +210,24 @@ public enum GradeScale {
 	    }
 	}
 	
+	@Override
+	public boolean belongsTo(final String grade) {
+	    if (grade.equals(NA) || grade.equals(RE)) {
+		return true;
+	    }
+	    try {
+		Double markValue = Double.valueOf(grade);
+		if ((markValue >= 0) && (markValue <= 5)) {
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (NumberFormatException e) {
+		return false;
+	    }
+	}
+
+	
     },
 
     TYPEAP {
@@ -246,6 +281,14 @@ public enum GradeScale {
 	    return grade.equals(GradeScale.AP);
 	}
 	
+	@Override
+	public boolean belongsTo(final String grade) {
+	    if (grade.equals(NA) || grade.equals(RE) || grade.equals(AP)) {
+		return true;
+	    }
+	    return false;
+	}
+	
     };
 
     static final public String NA = "NA";
@@ -277,6 +320,8 @@ public enum GradeScale {
     abstract protected boolean isNotApproved(final String grade);
 
     abstract protected boolean isApproved(final String grade);
+    
+    abstract public boolean belongsTo(final String grade);
 
     final public String getQualifiedName(final String grade) {
 	if (isApproved(grade)) {

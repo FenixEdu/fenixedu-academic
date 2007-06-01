@@ -60,7 +60,7 @@
        		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" /> 
     			<tr>
 	    			<td class="listClasses" >	
-		    			<bean:write name="enrolmentEvaluation" property="grade"/>
+		    			<bean:write name="enrolmentEvaluation" property="gradeValue"/>
 		    		</td>
 		    		<td class="listClasses" >
 		    			<logic:present name="enrolmentEvaluation" property="examDate" >	

@@ -181,7 +181,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
             final InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
             infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolment));
 
-            infoEnrolmentEvaluation.setGrade(evaluation);
+            infoEnrolmentEvaluation.setGradeValue(evaluation);
             infoEnrolmentEvaluation.setIdInternal(evaluationId);
             return infoEnrolmentEvaluation;
         }
@@ -199,7 +199,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
                         .next();
 
                 actionErrors.add("invalidGrade", new ActionError("errors.invalidMark",
-                        infoEnrolmentEvaluation.getGrade(), String.valueOf(infoEnrolmentEvaluation
+                        infoEnrolmentEvaluation.getGradeValue(), String.valueOf(infoEnrolmentEvaluation
                                 .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
                                 .getNumber().intValue())));
             }

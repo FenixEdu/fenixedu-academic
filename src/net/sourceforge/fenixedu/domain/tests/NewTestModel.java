@@ -40,8 +40,8 @@ public class NewTestModel extends NewTestModel_Base {
 		super.delete();
 	}
 
-	public Grade getGrade() {
-		return new Grade(this.getValue(), this.getScale());
+	public TestsGrade getGrade() {
+		return new TestsGrade(this.getValue(), this.getScale());
 	}
 
 	@Override
@@ -221,18 +221,18 @@ public class NewTestModel extends NewTestModel_Base {
 
 	private NewTestElement transform(NewQuestion choosenQuestion, NewSection parentSection,
 			HashMap<Object, Object> transformationMap, Double value) {
-		Grade grade = null;
+		TestsGrade grade = null;
 
 		if (choosenQuestion.isBelongsToAllGroup() && choosenQuestion.belongsToGradeCompleteGroup()) {
 			double factor = choosenQuestion.getGrade().getValue()
 					/ choosenQuestion.getGrade().getScale();
-			grade = new Grade(value * factor, this.getScale());
+			grade = new TestsGrade(value * factor, this.getScale());
 		} else if (choosenQuestion.isBelongsToAllGroup()) {
-			grade = new Grade(
+			grade = new TestsGrade(
 					value / choosenQuestion.getParentAllGroup().getChildAtomicQuestionsCount(), this
 							.getScale());
 		} else {
-			grade = new Grade(value, this.getScale());
+			grade = new TestsGrade(value, this.getScale());
 		}
 
 		if (choosenQuestion instanceof NewAtomicQuestion) {

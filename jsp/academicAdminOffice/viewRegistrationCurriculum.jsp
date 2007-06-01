@@ -234,7 +234,7 @@
 						</td>
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>
+						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.gradeValue"/></td>
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
 						<td class="acenter">
@@ -271,7 +271,7 @@
 								</td>
 								<td><bean:write name="simpleEntry" property="enrolment.curricularCourse.code"/></td>
 								<td><bean:write name="simpleEntry" property="enrolment.curricularCourse.name"/></td>
-								<td class="acenter"><bean:write name="simpleEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>
+								<td class="acenter"><bean:write name="simpleEntry" property="enrolment.latestEnrolmentEvaluation.gradeValue"/></td>
 								<td class="acenter"><bean:write name="simpleEntry" property="weigth"/></td>
 								<logic:equal name="index" value="0">
 									<td rowspan="<%= numberEntries %>" class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>			
@@ -451,7 +451,7 @@
 						</td>
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.code"/></td>
 						<td><bean:write name="curriculumEntry" property="enrolment.curricularCourse.name"/></td>
-						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.grade"/></td>						
+						<td class="acenter"><bean:write name="curriculumEntry" property="enrolment.latestEnrolmentEvaluation.gradeValue"/></td>						
 						<td class="acenter">-</td>
 						<td class="acenter"><bean:write name="curriculumEntry" property="weigth"/></td>
 						<td class="acenter">
