@@ -11,7 +11,7 @@
 	<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
 	<bean:define id="personID" name="employee" property="person.idInternal" />
 	
-	<p><bean:message key="label.show"/>: <html:link
+	<p class="invisible"><bean:message key="label.show"/>: <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.workSheet" />
 	</html:link>, <html:link
@@ -23,6 +23,9 @@
 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.justifications" />
+<%-- 	</html:link>, <html:link
+		page="<%="/viewEmployeeAssiduousness.do?method=showBalanceResume&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+		<bean:message key="link.balanceResume" /> --%>
 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showVacations&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.vacations" />

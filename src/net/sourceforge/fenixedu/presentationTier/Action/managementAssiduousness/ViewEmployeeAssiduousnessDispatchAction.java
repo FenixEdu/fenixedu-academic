@@ -13,12 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
@@ -255,6 +257,51 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	    }
 	}
 	return null;
+    }
+
+    public ActionForward showBalanceResume(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(employee);
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth == null) {
+	    request.setAttribute("employeeBalanceResume", employeeBalanceResume);
+	    return mapping.findForward("show-balance-resume");
+	}
+
+	if (employee.getAssiduousness() != null) {
+	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth()
+		    .ordinal() + 1, 01);
+	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(),
+		    yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth().getMaximumValue());
+	    final IUserView userView = SessionUtils.getUserView(request);
+
+	    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+
+	    if (closedMonth != null) {
+		AssiduousnessClosedMonth assiduosunessClosedMonth = employee.getAssiduousness()
+			.getAssiduousnessClosedMonth(closedMonth);
+		employeeBalanceResume.setEmployeeBalanceResume(assiduosunessClosedMonth.getBalance(),
+			assiduosunessClosedMonth.getBalanceToDiscount(), yearMonth.getPartial());
+	    } else {
+
+		Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+		EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
+			userView, "ReadEmployeeWorkSheet", args);
+		employeeBalanceResume.setEmployeeBalanceResume(employeeWorkSheet.getTotalBalance(),
+			employeeWorkSheet.getBalanceToCompensate(), yearMonth.getPartial());
+		request.setAttribute("employeeBalanceResume", employeeBalanceResume);
+	    }
+	    request.setAttribute("employeeBalanceResume", employeeBalanceResume);
+	    setEmployeeStatus(request, employee, beginDate, endDate);
+	}
+	request.setAttribute("yearMonth", yearMonth);
+	return mapping.findForward("show-balance-resume");
     }
 
     private ActionForward validateEmployee(ActionMapping mapping, HttpServletRequest request,

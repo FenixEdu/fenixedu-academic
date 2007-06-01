@@ -56,9 +56,12 @@ public class WorkDaySheet implements Serializable {
 
     Boolean irregular;
 
+    Duration balanceToCompensate;
+
     public WorkDaySheet() {
 	setBalanceTime(Duration.ZERO.toPeriod());
 	setUnjustifiedTime(Duration.ZERO);
+	setBalanceToCompensate(Duration.ZERO);
     }
 
     public WorkDaySheet(YearMonthDay day, WorkSchedule workSchedule,
@@ -133,6 +136,14 @@ public class WorkDaySheet implements Serializable {
 	    return "";
 	}
 	return getDate().toString("dd/MM/yyyy");
+    }
+
+    public Duration getBalanceToCompensate() {
+	return balanceToCompensate;
+    }
+
+    public void setBalanceToCompensate(Duration balanceToCompensate) {
+	this.balanceToCompensate = balanceToCompensate;
     }
 
     public String getBalanceTimeFormatted() {
@@ -284,6 +295,9 @@ public class WorkDaySheet implements Serializable {
 	Duration balance = Duration.ZERO;
 	for (Leave balanceLeave : balanceLeaveList) {
 	    balance = balance.plus(balanceLeave.getDuration());
+	    if (balanceLeave.getJustificationMotive().getJustificationType() == JustificationType.HALF_MULTIPLE_MONTH_BALANCE) {
+		balanceToCompensate = balanceToCompensate.plus(balanceLeave.getDuration());
+	    }
 	}
 	Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
 	if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {
@@ -298,6 +312,7 @@ public class WorkDaySheet implements Serializable {
 	if (!balanceOcurrenceLeaveList.isEmpty()) {
 	    balance = balance.plus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
 		    .getWorkPeriodDuration());
+	    balanceToCompensate = balanceToCompensate.plus(balance);
 	}
 	Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
 	if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {

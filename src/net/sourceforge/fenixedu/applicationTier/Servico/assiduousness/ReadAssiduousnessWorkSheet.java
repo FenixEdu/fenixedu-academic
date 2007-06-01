@@ -97,9 +97,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
 	final List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
 	Duration totalBalance = Duration.ZERO;
 	Duration totalUnjustified = Duration.ZERO;
-	// TODO remove comment in 2007
-	// Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
-	// Duration totalWeeklyRestBalance = Duration.ZERO;
+
+	Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
+	Duration totalWeeklyRestBalance = Duration.ZERO;
+	Duration totalBalanceToCompensate = Duration.ZERO;
 
 	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
 		.plusDays(1)) {
@@ -149,14 +150,13 @@ public class ReadAssiduousnessWorkSheet extends Service {
 		    workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
 		    workSheet.add(workDaySheet);
 		} else {
-		    // TODO remove comment in 2007
-		    // if (!thisDay.equals(today)) {
-		    // workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
-		    // // totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
-		    // // .plus(workDaySheet.getComplementaryWeeklyRest());
-		    // // totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
-		    // // .getWeeklyRest());
-		    // }
+		    if (!thisDay.equals(today)) {
+			workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
+			totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
+				.plus(workDaySheet.getComplementaryWeeklyRest());
+			totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
+				.getWeeklyRest());
+		    }
 		    for (final Leave leave : leavesList) {
 			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
 				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
@@ -177,6 +177,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
 		    workDaySheet.setUnjustifiedTime(Duration.ZERO);
 		    workSheet.add(workDaySheet);
 		}
+		totalBalanceToCompensate = totalBalanceToCompensate.plus(workDaySheet
+			.getBalanceToCompensate());
 	    }
 	}
 	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
@@ -197,9 +199,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
 	employeeWorkSheet.setTotalBalance(totalBalance);
 	employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
 
-	// TODO remove comment in 2007
-	// employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
-	// employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
+	employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
+	employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
+
+	employeeWorkSheet.setBalanceToCompensate(totalBalanceToCompensate);
 	return employeeWorkSheet;
     }
 

@@ -7,6 +7,7 @@
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showSchedule"+yearMonthUrl%>"><bean:message key="label.schedule" /></html:link></li>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showClockings"+yearMonthUrl%>"><bean:message key="link.clockings" /></html:link></li>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showJustifications"+yearMonthUrl%>"><bean:message key="link.justifications" /></html:link></li>
+<%-- 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showBalanceResume"+yearMonthUrl%>"><bean:message key="link.balanceResume" /></html:link></li>--%>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showVacations"+yearMonthUrl%>"><bean:message key="link.vacations" /></html:link></li>
 	<% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
 	<li class="navheader"><bean:message key="link.allEmployee" /></li>

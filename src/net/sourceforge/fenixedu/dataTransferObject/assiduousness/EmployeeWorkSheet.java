@@ -38,13 +38,16 @@ public class EmployeeWorkSheet implements Serializable {
 
     Duration nextHoursExtraWork;
 
+    Duration balanceToCompensate;
+
     public EmployeeWorkSheet() {
     }
 
     public EmployeeWorkSheet(Employee employee, List<WorkDaySheet> workDaySheetList,
 	    Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
 	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration nightWork,
-	    Duration firstHourExtraWork, Duration nextHoursExtraWork, Duration unjustified) {
+	    Duration firstHourExtraWork, Duration nextHoursExtraWork, Duration unjustified,
+	    Duration balanceToCompensate) {
 	setEmployee(employee);
 	setWorkDaySheetList(workDaySheetList);
 	setTotalBalance(totalBalance);
@@ -55,6 +58,7 @@ public class EmployeeWorkSheet implements Serializable {
 	setNightWork(nightWork);
 	setFirstHourExtraWork(firstHourExtraWork);
 	setNextHoursExtraWork(nextHoursExtraWork);
+	setBalanceToCompensate(balanceToCompensate);
     }
 
     public String getTotalBalanceString() {
@@ -193,4 +197,11 @@ public class EmployeeWorkSheet implements Serializable {
 	this.nextHoursExtraWork = nextHoursExtraWork;
     }
 
+    public Duration getBalanceToCompensate() {
+	return balanceToCompensate;
+    }
+
+    public void setBalanceToCompensate(Duration balanceToCompensate) {
+	this.balanceToCompensate = balanceToCompensate;
+    }
 }

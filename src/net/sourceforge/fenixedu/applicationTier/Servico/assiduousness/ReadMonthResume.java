@@ -115,8 +115,8 @@ public class ReadMonthResume extends Service {
 	}
 
 	AssiduousnessMonthlyResume assiduousnessMonthlyResume = new AssiduousnessMonthlyResume(
-		assiduousness.getEmployee(), totalBalance, totalComplementaryWeeklyRestBalance,
-		totalWeeklyRestBalance, holidayRest, nightWork, unjustified);
+		assiduousness.getEmployee(), totalBalance, totalWeeklyRestBalance,
+		totalComplementaryWeeklyRestBalance, holidayRest, nightWork, unjustified);
 	return assiduousnessMonthlyResume;
     }
 

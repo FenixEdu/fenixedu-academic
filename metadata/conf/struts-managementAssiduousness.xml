@@ -50,6 +50,7 @@
 			<forward name="show-justifications" path="show-justifications"/>
 			<forward name="show-vacations" path="show-vacations"/>
 			<forward name="show-all-schedules" path="show-all-schedules"/>
+			<forward name="show-balance-resume" path="show-balance-resume"/>
 		</action>
 		<action path="/viewAssiduousness"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewAssiduousnessDispatchAction" 

@@ -64,6 +64,7 @@ public class AssiduousnessExportChoices implements Serializable {
     }
 
     public List<Assiduousness> getAssiduousnesses() {
+	setYearMonth();
 	HashMap<Assiduousness, List<Justification>> justificationsMap = setJustificationMap();
 	List<Assiduousness> result = new ArrayList<Assiduousness>();
 	for (Assiduousness assiduousness : RootDomainObject.getInstance().getAssiduousnesss()) {
@@ -262,13 +263,19 @@ public class AssiduousnessExportChoices implements Serializable {
     }
 
     public void setYearMonth() {
-	this.beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	int endDay = beginDate.dayOfMonth().getMaximumValue();
-	if (yearMonth.getYear() == new YearMonthDay().getYear()
-		&& yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-	    endDay = new YearMonthDay().getDayOfMonth();
+	if (assiduousnessExportChoicesDatesType.equals(AssiduousnessExportChoicesDatesType.MONTHS)) {
+	    this.beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
+		    01);
+	    int endDay = beginDate.dayOfMonth().getMaximumValue();
+	    if (yearMonth.getYear() == new YearMonthDay().getYear()
+		    && yearMonth.getMonth().getNumberOfMonth() == new YearMonthDay().getMonthOfYear()) {
+		endDay = new YearMonthDay().getDayOfMonth();
+	    }
+	    this.endDate = new YearMonthDay(yearMonth.getYear(),
+		    yearMonth.getMonth().getNumberOfMonth(), endDay);
+	} else {
+	    yearMonth = new YearMonth(beginDate);
 	}
-	this.endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
     }
 
     public AssiduousnessExportChoicesDatesType getAssiduousnessExportChoicesDatesType() {
