@@ -1812,4 +1812,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    public Set<CurricularCourseEquivalencePlanEntry> getNewCurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan) {
+	final Set<CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = new HashSet<CurricularCourseEquivalencePlanEntry>();
+	for (final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry : getNewEquivalencePlanEntries()) {
+	    if (curricularCourseEquivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
+		curricularCourseEquivalencePlanEntries.add(curricularCourseEquivalencePlanEntry);
+	    }
+	}
+	return curricularCourseEquivalencePlanEntries;
+    }
+
 }

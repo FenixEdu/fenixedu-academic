@@ -272,3 +272,21 @@
     </slot>
 	<setter signature="createEquivalencePlan(sourceDegreeCurricularPlan)"/>
 </schema>
+
+<schema name="CurricularCourseEquivalencePlanEntry.Creator.addCurricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
+	<slot name="equivalencePlan" hidden="true"/>
+	<slot name="curricularCourse" hidden="true"/>
+    <slot name="curricularCourseToAdd" type="net.sourceforge.fenixedu.domain.CurricularCourse"
+    		layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCourseForEquivalencePlanEntryProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.CurricularCourse" />
+		<property name="format" value="${name}" />
+    </slot>
+    <setter signature="add(curricularCourseToAdd)"/>
+</schema>
+
+<schema name="CurricularCourseEquivalencePlanEntry.Creator.create" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
+	<slot name="equivalencePlan" hidden="true"/>
+	<slot name="curricularCourse" hidden="true"/>
+    <setter signature="execute()"/>
+</schema>

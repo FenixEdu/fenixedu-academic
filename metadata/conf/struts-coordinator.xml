@@ -940,6 +940,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA"
             parameter="method">
             <forward name="showPlan" path="show-equivalency.plan"/>
+            <forward name="addEquivalency" path="add-equivalency"/>
         </action>
 
     </action-mappings>

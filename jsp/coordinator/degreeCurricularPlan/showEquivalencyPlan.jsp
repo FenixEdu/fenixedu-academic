@@ -8,6 +8,8 @@
 <br/>
 <h2><bean:message key="title.equivalency.plan"/></h2>
 
+<h3><bean:message key="title.equivalency.plan.for.degree"/> <bean:write name="degreeCurricularPlan" property="presentationName"/></h3>
+
 <div class='simpleblock4'>
 	<logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
 		<bean:message key="message.no.equivalency.table.exists"/>
@@ -24,52 +26,15 @@
 	<logic:present name="degreeCurricularPlan" property="equivalencePlan">
 		<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
 		<br/>
-		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan"/>
+		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 	</logic:present>
 </div>
 
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
-	<logic:iterate id="curricularCourse" name="degreeCurricularPlan" property="allCurricularCourses">
-
-		<table class="showinfo3 mvert0" style="width: 64em;">
-			<tr class="bgcolor2">
-				<th class="aleft" colspan="5">
-					<bean:write name="curricularCourse" property="name"/>
-				</th>
-			</tr>
-		</table>
-
-		<div class="indent3">
-			<table class="showinfo3 mvert0" style="width: 61em;">
-				<tr>
-					<td>
-						Abc 1
-					</td>
-					<td class="smalltxt" align="center">
-						Abc 2
-					</td>
-					<td class="highlight2 smalltxt" align="center" style="width: 1em;">
-						Abc 3
-					</td>
-					<td class="smalltxt" align="right">
-						<span style="color: #888">
-							Abc 4
-						</span>
-						Abc 5
-						<span style="color: #888">
-							Abc 6
-						</span>
-						Abc 7
-						<span style="color: #888">
-							Abc 8
-						</span>
-						Abc 9
-					</td>
-					<td class="smalltxt" align="right">
-						Abc 10
-					</td>
-				</tr>
-			</table>
-		</div>
-	</logic:iterate>
+	<logic:present name="degreeCurricularPlan" property="root">
+		<bean:define id="degreeModule" name="degreeCurricularPlan" property="root" toScope="request"/>
+		<bean:define id="indentLevel" type="java.lang.String" value="0" toScope="request"/>
+		<bean:define id="width" type="java.lang.String" value="70" toScope="request"/>
+		<jsp:include page="showEquivalencyPlanForDegreeModule.jsp"/>
+	</logic:present>
 </logic:present>
