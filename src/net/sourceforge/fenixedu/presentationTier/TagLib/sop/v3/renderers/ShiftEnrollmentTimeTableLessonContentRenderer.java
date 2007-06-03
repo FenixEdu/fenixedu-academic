@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
@@ -33,7 +35,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         setAction(action);
     }
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {

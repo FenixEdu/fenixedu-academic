@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -14,7 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         // InfoLesson lesson =
         // lessonSlot.getInfoLessonWrapper().getInfoLesson();
@@ -26,7 +28,9 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");
             
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=");
+                strBuffer.append("<a href='");
+                strBuffer.append(context);
+                strBuffer.append("/siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                         "&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()

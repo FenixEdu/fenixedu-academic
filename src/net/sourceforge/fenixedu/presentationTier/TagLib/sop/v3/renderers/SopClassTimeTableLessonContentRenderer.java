@@ -28,7 +28,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
         this.infoExecutionDegree = infoExecutionDegree;
     }
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
 
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
@@ -41,8 +41,10 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
             final InfoShift infoShift = lesson.getInfoShift();
             InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
             
-            strBuffer.append("&nbsp;(").append(
-            "<a href='manageShift.do?method=prepareEditShift&amp;page=0").append(
+            strBuffer.append("&nbsp;(");
+            strBuffer.append("<a href='");
+            strBuffer.append(context).append(
+            "/manageShift.do?method=prepareEditShift&amp;page=0").append(
             "&amp;shift_oid=").append(infoShift.getIdInternal()).append(
             "&amp;execution_course_oid=").append(infoExecutionCourse.getIdInternal())
             .append("&amp;executionPeriodOID=").append(
@@ -53,7 +55,9 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
             						lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append(" <a href='pesquisarSala.do?name=").append(
+                strBuffer.append(" <a href='");
+                strBuffer.append(context);
+                strBuffer.append("/pesquisarSala.do?name=").append(
                         lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
                         lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
             }

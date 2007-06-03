@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -123,7 +124,10 @@ public class TimeTableRenderer {
 
                         if ((infoLessonWrapper != null)
                                 && (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex)) {
-                            strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
+                            final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
+                            final String uri = httpServletRequest.getRequestURI();
+                            final String context = uri.substring(0, uri.lastIndexOf('/'));
+                            strBuffer.append(this.lessonSlotContentRenderer.render(context, infoLessonWrapper
                                     .getLessonSlot()));
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
                                 if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase(
@@ -148,7 +152,10 @@ public class TimeTableRenderer {
                             } else {
                                 if (infoLessonWrapper != null
                                         && this.lessonSlotContentRenderer instanceof ClassTimeTableWithoutLinksLessonContentRenderer) {
-                                    strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
+                                    final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
+                                    final String uri = httpServletRequest.getRequestURI();
+                                    final String context = uri.substring(0, uri.lastIndexOf('/'));
+                                    strBuffer.append(this.lessonSlotContentRenderer.render(context, infoLessonWrapper
                                             .getLessonSlot()));
                                 }
 

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         //InfoLesson lesson =
         // lessonSlot.getInfoLessonWrapper().getInfoLesson();
@@ -24,7 +24,9 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-            strBuffer.append("<a href='manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
+            strBuffer.append("<a href='");
+            strBuffer.append(context);
+            strBuffer.append("/manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
             strBuffer.append(SessionConstants.EXECUTION_PERIOD_OID + "=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                             .getIdInternal());
@@ -78,7 +80,9 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;            
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
             if(infoGenericEvent.getGenericEvent().isActive()) {
-        	strBuffer.append("<a href=\"roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
+                strBuffer.append("<a href=\"");
+                strBuffer.append(context);
+        	strBuffer.append("/roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
         	strBuffer.append(infoGenericEvent.getTitle());
         	strBuffer.append("</a>");            
             } else {

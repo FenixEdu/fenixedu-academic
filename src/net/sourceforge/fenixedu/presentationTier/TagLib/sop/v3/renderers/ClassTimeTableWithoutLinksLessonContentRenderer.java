@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -14,7 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSlotContentRenderer {
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 

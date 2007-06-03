@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -13,7 +15,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         //InfoLesson lesson =
         // lessonSlot.getInfoLessonWrapper().getInfoLesson();
@@ -27,7 +29,9 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("(");
             strBuffer.append(lesson.getTipo()).append(")");
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
+                strBuffer.append("<a href='");
+                strBuffer.append(context);
+                strBuffer.append("/siteViewer.do?method=roomViewer&amp;roomName=")
                         .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
                                 lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
             }

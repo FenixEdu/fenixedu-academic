@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 
@@ -23,7 +25,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
         setApplication(application);
     }
 
-    public StringBuilder render(LessonSlot lessonSlot) {
+    public StringBuilder render(String context, LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
