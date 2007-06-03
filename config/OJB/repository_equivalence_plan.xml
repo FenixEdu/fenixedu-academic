@@ -1,5 +1,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.EquivalencePlan" table="EQUIVALENCE_PLAN">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularEquivalencePlan"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan"/>
 </class-descriptor>
 
