@@ -27,4 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "alter user IST_Username" alterIST_Username.sql
 execute "Update Special Season Code Situation" updateSpecialSeasonCodeSituation.sql
