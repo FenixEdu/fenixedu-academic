@@ -7,14 +7,14 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
 
 public class ExecutionCourseTest extends DomainTestBase {
 
@@ -101,26 +101,26 @@ public class ExecutionCourseTest extends DomainTestBase {
         
         /* Setup enrollment evaluations */
         EnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        numericFirstEnrolmentEvaluation.setGrade("10");
+        numericFirstEnrolmentEvaluation.setGradeValue("10");
         
         EnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
-        numericSecondEnrolmentEvaluation.setGrade("11");
+        numericSecondEnrolmentEvaluation.setGradeValue("11");
         
         numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
         EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        apFirstEnrolmentEvaluation.setGrade(GradeScale.AP);
+        apFirstEnrolmentEvaluation.setGradeValue(GradeScale.AP);
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
         EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
-        reprovedEnrollmentEvaluation.setGrade(GradeScale.RE);
+        reprovedEnrollmentEvaluation.setGradeValue(GradeScale.RE);
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
         EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
-        notEvaluatedEnrollmentEvaluation.setGrade(GradeScale.NA);
+        notEvaluatedEnrollmentEvaluation.setGradeValue(GradeScale.NA);
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         

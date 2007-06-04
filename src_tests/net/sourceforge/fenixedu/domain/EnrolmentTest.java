@@ -272,7 +272,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		ee4.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 		ee4.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-		ee4.setGrade("20");
+		ee4.setGradeValue("20");
 		
 		enrolmentE.addEvaluations(ee3);
 		enrolmentF.addEvaluations(ee4);
@@ -590,7 +590,7 @@ public class EnrolmentTest extends DomainTestBase {
 		Date after = new Date();
 
 		assertTrue("Newly created EnrolmentEvaluation should be related to Enrolment", enrolmentToSubmitWithoutTemporaryEvaluation.getEvaluations().contains(newEvaluation));
-		assertEquals("Assigned grade does not match expected", newEvaluation.getGrade().toUpperCase(),realMark.getMark().toUpperCase());
+		assertEquals("Assigned grade does not match expected", newEvaluation.getGrade().toString(),realMark.getMark().toUpperCase());
 		assertEquals("Assigned EnrolmentEvaluationType does not match expected", newEvaluation.getEnrolmentEvaluationType(),notExistingEnrolmentEvaluationType);
 		assertEquals("Newly created EnrolmentEvaluation should have TEMPORARY state", newEvaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
 		assertEquals("Assigned observation does not match expected", newEvaluation.getObservation(),observation);
@@ -684,7 +684,7 @@ public class EnrolmentTest extends DomainTestBase {
 	private EnrolmentEvaluation createEnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type, String grade) {
 		EnrolmentEvaluation ee = new EnrolmentEvaluation();
 		ee.setEnrolmentEvaluationType(type);
-		ee.setGrade(grade);
+		ee.setGradeValue(grade);
 		ee.setEnrolment(enrolment);
 		return ee;
 	}

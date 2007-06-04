@@ -69,31 +69,31 @@ public class CompetenceCourseTest extends DomainTestBase {
         
         /* Setup enrollment evaluations */
         EnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        numericFirstEnrolmentEvaluation.setGrade("10");
+        numericFirstEnrolmentEvaluation.setGradeValue("10");
         
         EnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
-        numericSecondEnrolmentEvaluation.setGrade("11");
+        numericSecondEnrolmentEvaluation.setGradeValue("11");
         
         numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
         EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
-        apFirstEnrolmentEvaluation.setGrade(GradeScale.AP);
+        apFirstEnrolmentEvaluation.setGradeValue(GradeScale.AP);
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
         EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
-        reprovedEnrollmentEvaluation.setGrade(GradeScale.RE);
+        reprovedEnrollmentEvaluation.setGradeValue(GradeScale.RE);
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
         EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
-        notEvaluatedEnrollmentEvaluation.setGrade(GradeScale.NA);
+        notEvaluatedEnrollmentEvaluation.setGradeValue(GradeScale.NA);
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         
         EnrolmentEvaluation otherExecutionPeriodEnrollmentEvaluation = new EnrolmentEvaluation();
-        otherExecutionPeriodEnrollmentEvaluation.setGrade("12");
+        otherExecutionPeriodEnrollmentEvaluation.setGradeValue("12");
         
         otherExecutionPeriodEnrollmentEvaluation.setEnrolment(otherExecutionPeriodEnrollment);
         
