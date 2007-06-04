@@ -37,6 +37,8 @@ public interface IEnrolment {
     
     MultiLanguageString getName();
     
+    String getCode();
+    
     String getGradeValue();
     
     Integer getFinalGrade();

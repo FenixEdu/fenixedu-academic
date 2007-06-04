@@ -1266,4 +1266,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
 
+    public String getCode() {
+	if(hasDegreeModule()) {
+	    return getDegreeModule().getCode();
+	}
+	return null;
+    }
+
 }
