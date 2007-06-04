@@ -17,6 +17,7 @@
 <br />
 
 <logic:present name="executionDegree" property="scheduling">
+<logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
 	<strong>
 		<bean:message key="message.final.degree.work.other.execution.degrees"/>
 	</strong>
@@ -28,6 +29,7 @@
 					<td class="listClasses">
 						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
 					</td>
+<!--
 					<td class="listClasses">
 						<html:form action="/manageFinalDegreeWork">
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeExecutionDegree"/>
@@ -39,9 +41,11 @@
 							<html:submit><bean:message key="label.remove"/></html:submit>
 						</html:form>
 					</td>
+-->
 				</tr>
 			</logic:notEqual>
 		</logic:iterate>
+<!--
 		<html:form action="/manageFinalDegreeWork">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addExecutionDegree"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
@@ -62,9 +66,11 @@
 				</td>
 			</tr>
 		</html:form>
+-->
 	</table>
 	<br />
 	<br />
+</logic:notEqual>
 </logic:present>
 
 <span class="error"><!-- Error messages go here --><html:errors /><br /><br /></span>

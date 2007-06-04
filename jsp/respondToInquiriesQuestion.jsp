@@ -29,7 +29,7 @@
 				<table>
 					<tr>
 						<td>
-							<form action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
+							<form method="post" action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
 								<html:hidden property="method" value="respondNow"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.now" property="ok">
 									<bean:message key="button.inquiries.respond.now" />
@@ -37,7 +37,7 @@
 							</form>
 						</td>
 						<td>
-							<form action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
+							<form method="post" action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
 								<html:hidden property="method" value="registerStudentResponseRespondLater"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 									<bean:message key="button.inquiries.respond.later" />
@@ -46,7 +46,7 @@
 						</td>
 <!--
 						<td>
-							<form action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
+							<form method="post" action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
 								<html:hidden property="method" value="registerStudentResponseDontWantToRespond"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.dont.respond" property="ok">
 									<bean:message key="button.inquiries.respond.dont.respond" />

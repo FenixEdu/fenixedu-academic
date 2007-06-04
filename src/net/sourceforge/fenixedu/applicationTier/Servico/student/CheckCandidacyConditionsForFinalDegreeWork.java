@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -39,6 +40,10 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
                 || scheduleing.getEndOfCandidacyPeriod() == null) {
             throw new CandidacyPeriodNotDefinedException();
+        }
+
+        if (!isStudentOfScheduling(userView, scheduleing)) {
+            throw new CandidacyInOtherExecutionDegreesNotAllowed();
         }
 
         Calendar now = Calendar.getInstance();
@@ -120,6 +125,20 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         return true;
     }
 
+    private boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
+        for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+            final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
+            final Student student = userView.getPerson().getStudent();
+            for (final Registration registration : student.getActiveRegistrations()) {
+        	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+        	if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
+        	    return true;
+        	}
+            }
+        }
+        return false;
+    }
+
     private Registration findStudent(final Person person) {
     	if (person != null) {
     	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
@@ -129,6 +148,12 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
     	    }
     	}
 	return null;
+    }
+
+    public class CandidacyInOtherExecutionDegreesNotAllowed extends FenixServiceException {
+        public CandidacyInOtherExecutionDegreesNotAllowed() {
+            super();
+        }
     }
 
 	public class CandidacyPeriodNotDefinedException extends FenixServiceException {

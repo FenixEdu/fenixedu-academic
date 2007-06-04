@@ -476,6 +476,9 @@ public class RequestChecksumFilter implements Filter {
 	if (uri.indexOf("home.do") >= 0) {
 	    return false;
 	}
+	if (uri.indexOf("/student/fillInquiries.do") >= 0) {
+	    return false;
+	}
 	if (FileUpload.isMultipartContent(httpServletRequest)) {
 	    return false;
 	}

@@ -2080,7 +2080,8 @@ public class Registration extends Registration_Base {
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	    if (executionPeriod.getState().equals(PeriodState.CURRENT)
+	    if (executionCourse.getAvailableForInquiries().booleanValue()
+		    && executionPeriod.getState().equals(PeriodState.CURRENT)
 		    && !hasInquiryResponseFor(executionCourse)) {
 		return true;
 	    }
