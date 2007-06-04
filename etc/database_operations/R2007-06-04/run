@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add Tag to File Table" addTagToFileTable.sql
+execute "Create Unit File Tag" createUnitFileTag.sql
