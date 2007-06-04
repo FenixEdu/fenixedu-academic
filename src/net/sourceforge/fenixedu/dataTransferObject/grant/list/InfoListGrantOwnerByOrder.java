@@ -45,13 +45,13 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
 
     private String designation;
 
-    private Double totalInsurance;
+    private Double totalInsurance = 0.0;
 
     private long totalOfDays;
 
-    private Double totalOfGrantPayment;
+    private Double totalOfGrantPayment = 0.0;
 
-    private Double valueOfGrantPayment;
+    private Double valueOfGrantPayment = 0.0;
 
     public Double getTotalOfGrantPayment() {
 	return totalOfGrantPayment;
