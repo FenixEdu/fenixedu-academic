@@ -178,7 +178,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits) {
         
         int totalTeachersSize = 0, totalCareerTeachersSize = 0, totalNotCareerTeachersSize = 0;
-        SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = new TreeMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);        
+        SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = new TreeMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>(ExecutionYear.COMPARATOR_BY_YEAR);        
         for (Department department : departmentTotalCredits.keySet()) {            
             for (ExecutionYear executionYear : departmentTotalCredits.get(department).keySet()) {
                 if(!executionYearTotals.containsKey(executionYear)) {                                       

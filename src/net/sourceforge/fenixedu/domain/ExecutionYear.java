@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
@@ -28,9 +26,18 @@ import org.joda.time.YearMonthDay;
  */
 public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
-    public static final Comparator<ExecutionYear> EXECUTION_YEAR_COMPARATOR_BY_YEAR = new BeanComparator(
-	    "year", Collator.getInstance());
+    static final public Comparator<ExecutionYear> COMPARATOR_BY_YEAR = new Comparator<ExecutionYear>() {
+        public int compare(ExecutionYear o1, ExecutionYear o2) {
+	    return o1.getYear().compareTo(o2.getYear());
+        }
+    };
 
+    static final public Comparator<ExecutionYear> REVERSE_COMPARATOR_BY_YEAR = new Comparator<ExecutionYear>() {
+	public int compare(ExecutionYear o1, ExecutionYear o2) {
+	    return -COMPARATOR_BY_YEAR.compare(o1, o2);
+	}
+    };
+    
     public ExecutionYear() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());

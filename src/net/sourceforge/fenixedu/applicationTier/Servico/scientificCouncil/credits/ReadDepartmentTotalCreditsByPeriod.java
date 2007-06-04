@@ -26,7 +26,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
                 untilExecutionPeriod.getEndDateYearMonthDay());
         
-        SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+        SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(ExecutionYear.COMPARATOR_BY_YEAR);
                 
         ExecutionPeriod lasExecutionPeriod = (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween.get(executionPeriodsBetween.size() - 1) : null;
         for (Teacher teacher : teachers) {            

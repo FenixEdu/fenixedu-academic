@@ -643,8 +643,7 @@ public class Registration extends Registration_Base {
     }
 
     public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
-	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(
-		ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 	result.addAll(getEnrolmentsExecutionYears());
 
 	return result;
