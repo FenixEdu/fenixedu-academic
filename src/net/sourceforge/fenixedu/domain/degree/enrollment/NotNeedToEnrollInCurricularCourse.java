@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,6 +35,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 	removeCurricularCourse();
 	removeRootDomainObject();
 	getEnrolments().clear();
+	getExternalEnrolments().clear();
 	deleteDomainObject();
     }
 
@@ -67,6 +73,12 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 
     public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
+    }
+    
+    public Collection<IEnrolment> getIEnrolments() {
+	Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
+	res.addAll(getExternalEnrolmentsSet());
+	return res;
     }
     
 }

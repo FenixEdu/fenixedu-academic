@@ -8146,6 +8146,16 @@ relation EnrolmentNotNeedToEnrollInCurricularCourse {
     }
 }
 
+relation ExternalEnrolmentNotNeedToEnrollInCurricularCourse {
+    net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
+    	multiplicity *;
+    }
+
+    net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
+        multiplicity *;
+    }
+}
+
 relation StudentPerson {
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
     net.sourceforge.fenixedu.domain.Person playsRole person;

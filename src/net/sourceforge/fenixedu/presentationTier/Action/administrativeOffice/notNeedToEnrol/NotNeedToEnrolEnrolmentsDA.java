@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.notNeedToEnrol;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,19 +11,19 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean.SelectedAprovedEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean.SelectedExternalEnrolment;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.tests.Render;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 
@@ -61,6 +60,14 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	}
 	bean.setAprovedEnrolments(aprovedEnrolments);
 	
+	if(bean.getStudent().hasAnyExternalEnrolments()) {
+	    Collection<SelectedExternalEnrolment> externalEnrolments = new ArrayList<SelectedExternalEnrolment>();
+	    for (ExternalEnrolment enrolment : bean.getStudent().getExternalEnrolmentsSet()) {
+		externalEnrolments.add(new SelectedExternalEnrolment(enrolment, notNeedToEnrollInCurricularCourse.getExternalEnrolmentsSet().contains(enrolment)));
+	    }
+	    bean.setExternalEnrolments(externalEnrolments);
+	}
+	
 	request.setAttribute("bean", bean);
 	
 	return mapping.findForward("showAprovedEnrolments");
@@ -71,7 +78,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject("notNeedToEnrolBean");
 	
 	executeService(request, "AssociateEnrolmentsToNotNeedToEnrol", 
-		new Object[] {bean.getStudent(), bean.getSelected(), bean.getSelectedAprovedEnrolments()});
+		new Object[] {bean.getStudent(), bean.getSelected(), bean.getSelectedAprovedEnrolments(), bean.getSelectedExternalEnrolments()});
 	
 	return readNotNeedToEnrol(mapping, form, request, response, bean);
     }

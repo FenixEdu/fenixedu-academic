@@ -884,7 +884,7 @@
 	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code.withbreak"/>	
 	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
-	<slot name="enrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
+	<slot name="IEnrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
 		<property name="classes" value="list5 mvert0"/>
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="notNeedToEnroll.view.enrolment" />
@@ -892,9 +892,9 @@
 </schema>
 
 <schema name="notNeedToEnroll.view.enrolment" 
-	type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="curricularCourse.name" />
-	<slot name="curricularCourse.code" />
+	type="net.sourceforge.fenixedu.domain.IEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name" />
+	<slot name="code" />
 </schema>
 
 <schema name="notNeedToEnroll.view.aproved.enrolment" 
@@ -903,6 +903,13 @@
 	<slot name="aprovedEnrolment.studentCurricularPlan.name" read-only="true" key="label.degreeCurricularPlan"/>
 	<slot name="aprovedEnrolment.curricularCourse.name" read-only="true" key="label.curricularCourse.name"/>
 	<slot name="aprovedEnrolment.curricularCourse.code" read-only="true" key="label.curricularCourse.code"/>
+</schema>
+
+<schema name="notNeedToEnroll.view.external.enrolment" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean$SelectedExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selected" key="label.empty"/>
+	<slot name="externalEnrolment.externalCurricularCourse.fullPathName" read-only="true" key="label.curricularCourse.name"/>
+	<slot name="externalEnrolment.externalCurricularCourse.code" read-only="true" key="label.curricularCourse.code"/>
 </schema>
 
 <schema name="notNeedToEnroll.student.info" 

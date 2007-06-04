@@ -68,6 +68,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return multiLanguageString;
     }
     
+    public String getCode() {
+        return getExternalCurricularCourse().getCode();
+    }
+    
     public String getFullPathName() {
 	return getExternalCurricularCourse().getFullPathName();
     }
@@ -81,6 +85,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	removeExternalCurricularCourse();
 	removeStudent();
 	removeRootDomainObject();
+	getNotNeedToEnrollCurricularCourses().clear();
 	super.deleteDomainObject();
     }
 
