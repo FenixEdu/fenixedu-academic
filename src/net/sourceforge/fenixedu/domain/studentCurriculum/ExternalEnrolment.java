@@ -5,6 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,6 +33,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	if(AccessControl.getPerson() != null){
 	    setCreatedBy(AccessControl.getPerson().getUsername());
 	}
+	setGrade(Grade.createEmptyGrade());
     }
     
     public ExternalEnrolment(Student student, ExternalCurricularCourse externalCurricularCourse, String grade, ExecutionPeriod executionPeriod) {

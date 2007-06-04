@@ -57,6 +57,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     public EnrolmentEvaluation() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setGrade(Grade.createEmptyGrade());
     }
 
     public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {

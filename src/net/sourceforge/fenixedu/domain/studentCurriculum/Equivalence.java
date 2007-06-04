@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -14,6 +15,7 @@ public class Equivalence extends Equivalence_Base {
 
     protected Equivalence() {
 	super();
+	setGrade(Grade.createEmptyGrade());
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan,
