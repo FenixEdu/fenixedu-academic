@@ -175,6 +175,9 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
         } catch (ServiceManagerException e) {
             throw new ExceptionWrapper(e);
         } catch (Throwable t) {
+            if (t.getMessage().indexOf("JVSTM:") >= 0) {
+        	t.printStackTrace();
+            }
             throw new ExceptionWrapper(t);
         }
     }
