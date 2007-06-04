@@ -17,7 +17,7 @@ public class Grade2SqlGradeStringConversion implements FieldConversion {
 
     public Object sqlToJava(Object source) throws ConversionException {
 	if(source == null) {
-	    Grade.createEmptyGrade();
+	    return Grade.createEmptyGrade();
 	}
 	if(source instanceof String) {
 	    return Grade.importFromString((String) source);
