@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {

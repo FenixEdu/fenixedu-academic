@@ -49,8 +49,33 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     }
 
     public void delete() {
+	if (!getCanBeDeleted()) {
+	    throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
+	}
+	removeChildDegreeModules();
 	removeParentDegreeCurricularPlan();
 	super.delete();
+    }
+    
+    private void removeChildDegreeModules() {
+	for (final DegreeModule degreeModule : getChildDegreeModules()) {
+	    degreeModule.delete();
+	}
+    }
+
+    @Override
+    public Boolean getCanBeDeleted() {
+	return !hasAnyCurriculumModules() && childsCanBeDeleted();
+    }
+
+    private boolean childsCanBeDeleted() {
+	for (final Context context : getChildContexts()) {
+	    final DegreeModule degreeModule = context.getChildDegreeModule();
+	    if (!degreeModule.getCanBeDeleted()) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     static public RootCourseGroup createRoot(final DegreeCurricularPlan degreeCurricularPlan,

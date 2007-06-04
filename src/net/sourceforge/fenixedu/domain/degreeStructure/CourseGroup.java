@@ -621,12 +621,19 @@ public class CourseGroup extends CourseGroup_Base {
     public boolean allowChildWith(final ExecutionPeriod executionPeriod) {
 	return getMinimumExecutionPeriod().isBeforeOrEquals(executionPeriod);
     }
-
+    
     public Set<Context> getChildContextsSortedByDegreeModuleName() {
 	final Set<Context> contexts = new TreeSet<Context>(Context.COMPARATOR_BY_DEGREE_MODULE_NAME);
 	contexts.addAll(getChildContextsSet());
 	return contexts;
     }
-
+    
+    public List<DegreeModule> getChildDegreeModules() {
+	final List<DegreeModule> result = new ArrayList<DegreeModule>();
+	for (final Context context : getChildContexts()) {
+	    result.add(context.getChildDegreeModule());
+	}
+	return result;
+    }
 }
 
