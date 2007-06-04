@@ -1645,7 +1645,7 @@ public class Registration extends Registration_Base {
 
     final public YearMonthDay getConclusionDate() {
 	if (isConcluded()) {
-	    getActiveState().getStateDate().toYearMonthDay();
+	    return getActiveState().getStateDate().toYearMonthDay();
 	}
 	
 	throw new DomainException("Registration.is.not.concluded");
