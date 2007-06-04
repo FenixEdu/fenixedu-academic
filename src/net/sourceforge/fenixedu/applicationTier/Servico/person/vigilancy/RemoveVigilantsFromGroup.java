@@ -16,17 +16,6 @@ public class RemoveVigilantsFromGroup extends Service {
     public List<Vigilant> run(Map<VigilantGroup,List<Vigilant>> vigilantsToRemove) throws ExcepcaoPersistencia {
 
         List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
-//        for (Vigilant vigilant : vigilants) {
-//            if (vigilant.getVigilantGroupsCount() == 1) {
-//                try {
-//                    vigilant.delete();
-//                } catch (DomainException e) {
-//                    unableToRemove.add(vigilant);
-//                }
-//            } else {
-//                group.removeVigilants(vigilant);
-//            }
-//        }
 
         Set<VigilantGroup> groups = vigilantsToRemove.keySet();
 		for (VigilantGroup group : groups) {
