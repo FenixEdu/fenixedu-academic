@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,7 +24,7 @@ public class CreateConvokes extends Service {
         group.convokeVigilants(vigilants, writtenEvaluation);
         if (emailMessage.length() != 0) {
         	Person person = coordinator.getPerson();
-            final ArrayList<String> tos = new ArrayList<String>();
+            final Set<String> tos = new HashSet<String>();
         	for (Vigilant vigilant : vigilants) {
                 String emailTo = vigilant.getEmail();
                 tos.add(emailTo);
