@@ -28,6 +28,3 @@ function executeWithTempFile() {
 }
 
 
-execute "alter user IST_Username and clean up forum stuff" alterIST_UsernameAndOtherStuff.sql
-execute "Update Special Season Code Situation" updateSpecialSeasonCodeSituation.sql
-execute "Create Table ExternalEnrolmentNotNeedToEnrol" createTableExternalEnrolmentNotNeedToEnrol.sql

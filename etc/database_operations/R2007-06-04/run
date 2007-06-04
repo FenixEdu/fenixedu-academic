@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Add Tag to File Table" addTagToFileTable.sql
 execute "Create Unit File Tag" createUnitFileTag.sql
+execute "Create Table ExternalEnrolmentNotNeedToEnrol" createTableExternalEnrolmentNotNeedToEnrol.sql
