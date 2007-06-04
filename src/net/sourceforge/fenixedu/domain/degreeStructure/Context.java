@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -10,10 +12,20 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 import dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
-    
+
+    public static final Comparator<Context> COMPARATOR_BY_DEGREE_MODULE_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("childDegreeModule.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_DEGREE_MODULE_NAME).addComparator(new BeanComparator("childDegreeModule.idInternal"));
+    }
+
     static {
 	CourseGroupContext.addListener(new RelationAdapter<Context, CourseGroup>() {
 	    

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -43,6 +44,19 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	request.setAttribute("curricularCourse", curricularCourse);
 	request.setAttribute("curricularCourseEquivalencePlanEntryCreator", courseEquivalencePlanEntryCreator);
         return mapping.findForward("addEquivalency");
+    }
+
+    public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry = getCurricularCourseEquivalencePlanEntry(request);
+	final Object[] args = { curricularCourseEquivalencePlanEntry };
+	executeService(request, "DeleteCurricularCourseEquivalencePlanEntry", args);
+        return mapping.findForward("showPlan");
+    }
+
+    private CurricularCourseEquivalencePlanEntry getCurricularCourseEquivalencePlanEntry(HttpServletRequest request) {
+	final String curricularCourseEquivalencePlanEntryIDString = request.getParameter("curricularCourseEquivalencePlanEntryID");
+	final Integer curricularCourseEquivalencePlanEntryID = getInteger(curricularCourseEquivalencePlanEntryIDString);
+	return curricularCourseEquivalencePlanEntryID == null ? null : (CurricularCourseEquivalencePlanEntry) RootDomainObject.getInstance().readEquivalencePlanEntryByOID(curricularCourseEquivalencePlanEntryID);
     }
 
     private CurricularCourse getCurricularCourse(HttpServletRequest request) {

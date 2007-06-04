@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -1813,7 +1814,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Set<CurricularCourseEquivalencePlanEntry> getNewCurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan) {
-	final Set<CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = new HashSet<CurricularCourseEquivalencePlanEntry>();
+	final Set<CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = new TreeSet<CurricularCourseEquivalencePlanEntry>(CurricularCourseEquivalencePlanEntry.COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES);
 	for (final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry : getNewEquivalencePlanEntries()) {
 	    if (curricularCourseEquivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
 		curricularCourseEquivalencePlanEntries.add(curricularCourseEquivalencePlanEntry);

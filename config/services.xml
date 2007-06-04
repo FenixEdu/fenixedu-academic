@@ -11954,4 +11954,13 @@
 			<chain name="ResearcherAuthorization"/>
 		</filterChains>
     </service>      
+    <service>
+    	<name>DeleteCurricularCourseEquivalencePlanEntry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteCurricularCourseEquivalencePlanEntry</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+    </service>      
 </serviceDefinitions>

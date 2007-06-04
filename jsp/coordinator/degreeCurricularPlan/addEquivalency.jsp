@@ -49,14 +49,18 @@
 	<h4>
 		<bean:message key="label.equivalency.to.create"/>:
 	</h4>
-	<logic:iterate id="curricularCourseFromList" indexId="i" name="curricularCourses">
-		<logic:notEqual name="i" value="0">
-			+
-		</logic:notEqual>
-		<bean:write name="curricularCourseFromList" property="name"/>
-	</logic:iterate>
-	==>
-	<bean:write name="curricularCourse" property="name"/>	
+	<div class='simpleblock4'>
+		<p>
+			<logic:iterate id="curricularCourseFromList" indexId="i" name="curricularCourses">
+				<logic:notEqual name="i" value="0">
+					+
+				</logic:notEqual>
+				<bean:write name="curricularCourseFromList" property="name"/>
+			</logic:iterate>
+			==>
+			<bean:write name="curricularCourse" property="name"/>
+		</p>
+	</div>
 
 	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
 		<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.create" name="curricularCourseEquivalencePlanEntryCreator" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"

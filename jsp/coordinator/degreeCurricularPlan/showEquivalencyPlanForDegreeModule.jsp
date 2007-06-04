@@ -46,13 +46,19 @@
 					</logic:equal>
 					<logic:iterate id="curricularCourseEquivalencePlanEntry" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry" name="curricularCourseEquivalencePlanEntries">
 						(
-						<logic:iterate id="oldCurricularCourse" indexId="i" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="curricularCourseEquivalencePlanEntry" property="oldCurricularCourses">
+						<logic:iterate id="oldCurricularCourse" indexId="i" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="curricularCourseEquivalencePlanEntry" property="oldCurricularCoursesSortedByName">
 							<logic:notEqual name="i" value="0">
 								+
 							</logic:notEqual>
 							<bean:write name="oldCurricularCourse" property="name"/>
 						</logic:iterate>
 						)
+						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
+								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getIdInternal() + "&amp;curricularCourseEquivalencePlanEntryID="
+								+ curricularCourseEquivalencePlanEntry.getIdInternal() %>">
+							<bean:message key="link.delete"/>
+						</html:link>
 						<br/>
 					</logic:iterate>
 				</td>
@@ -75,7 +81,7 @@
 		</table>
 	</div>
 
-	<logic:iterate id="context" name="degreeModule" property="childContexts">
+	<logic:iterate id="context" name="degreeModule" property="childContextsSortedByDegreeModuleName">
 		<bean:define id="degreeModule" name="context" property="childDegreeModule" toScope="request"/>
 		<% 
 			Integer newIndentLevel = Integer.valueOf(Integer.parseInt(indentLevel) + 3);

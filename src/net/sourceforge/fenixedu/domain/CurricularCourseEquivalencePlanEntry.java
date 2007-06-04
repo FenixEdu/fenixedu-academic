@@ -1,14 +1,36 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquivalencePlanEntry_Base {
+
+    public static Comparator<CurricularCourseEquivalencePlanEntry> COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES = new Comparator<CurricularCourseEquivalencePlanEntry>() {
+
+	public int compare(final CurricularCourseEquivalencePlanEntry o1, final CurricularCourseEquivalencePlanEntry o2) {
+	    final String o1String = getCompareString(o1);
+	    final String o2String = getCompareString(o2);
+	    return Collator.getInstance().compare(o1String, o2String);
+	}
+
+	private String getCompareString(final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry) {
+	    final StringBuilder stringBuilder = new StringBuilder();
+	    for (final CurricularCourse curricularCourse : curricularCourseEquivalencePlanEntry.getOldCurricularCoursesSet()) {
+		stringBuilder.append(curricularCourse.getName());
+	    }
+	    stringBuilder.append(curricularCourseEquivalencePlanEntry.getIdInternal());
+	    return stringBuilder.toString();
+	}	
+    };
 
     public static class CurricularCourseEquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
 	private DomainReference<EquivalencePlan> equivalencePlan;
@@ -42,7 +64,7 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public Set<CurricularCourse> getCurricularCourses() {
-	    final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
+	    final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
 	    for (final DomainReference<CurricularCourse> curricularCourse : this.curricularCourses) {
 		curricularCourses.add(curricularCourse.getObject());
 	    }
@@ -72,6 +94,12 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	    final Collection<CurricularCourse> oldCurricularCourses, final CurricularCourse newCurricularCourse) {
 	this();
 	init(equivalencePlan, oldCurricularCourses, newCurricularCourse);
+	checkPermisionsForConstructor();
+    }
+
+    @Checked("EquivalencePlanPredicates.isCoordinator")
+    private void checkPermisionsForConstructor() {
+	// The annotation cannot be called before constructor because the sets have to be done first.
     }
 
     private void init(final EquivalencePlan equivalencePlan,
@@ -94,6 +122,35 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.newCurricularCourse.cannot.be.null");
 	}
 
+    }
+
+    public Set<CurricularCourse> getOldCurricularCoursesSortedByName() {
+	final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+	curricularCourses.addAll(getOldCurricularCourses());
+	return curricularCourses;
+    }
+
+    @Checked("EquivalencePlanPredicates.isCoordinator")
+    public void delete() {
+	removeCourseGroupEquivalencePlanEntry();
+	removeEquivalencePlan();
+	getEquivalencePlansSet().clear();
+	removeNewCurricularCourse();
+	getOldCurricularCoursesSet().clear();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    public void checkPermissions(final Person person) {
+	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) getEquivalencePlan();
+	final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
+	for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+	    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+		return;
+	    }
+	}
+	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
 }
