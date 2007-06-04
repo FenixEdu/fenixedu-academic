@@ -19,6 +19,7 @@
 <fr:view name="site" property="unit.researchContracts" schema="view.researchContract">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1"/>
+		<fr:property name="columnClasses" value=",,acenter,,"/>
 		<fr:property name="sortBy" value="beginDate"/>
 		<fr:property name="key(remove)" value="label.remove" />
 		<fr:property name="bundle(remove)" value="WEBSITEMANAGER_RESOURCES" />

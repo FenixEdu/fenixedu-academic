@@ -2630,9 +2630,11 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 </schema>
 
 <schema name="create.persistent.group" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" key="label.groupName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="name" key="label.groupName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
 	<slot name="people" layout="option-select" key="label.members" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-			<property name="classes" value="nobullet"/>
+			<property name="classes" value="nobullet noindent"/>
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
 			<property name="saveOptions" value="true"/>
 			<property name="eachLayout" value="values"/>
@@ -2659,7 +2661,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="size" value="60"/>
 	</slot>
 	<slot name="permittedGroups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="classes" value="nobullet"/>
+		<property name="classes" value="nobullet noindent"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>

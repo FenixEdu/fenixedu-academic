@@ -10,7 +10,7 @@
 
 <fr:edit id="upload" name="fileBean" schema="view.genericFileUpload" action="<%= "/researchUnitFunctionalities.do?method=uploadFile&unitId=" + unitID %>">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="cancel" path="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"/>

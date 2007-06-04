@@ -5,14 +5,18 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="label.managePeople.title" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
+<h2><bean:message key="label.inviteExternalPerson" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 <bean:define id="siteID" name="site" property="idInternal"/>
 
-<fr:view name="bean" schema="research.contract.information"/>
+<fr:view name="bean" schema="research.contract.information">
+	<fr:layout>
+		<fr:property name="classes" value="tstyle1 thlight thright"/>
+	</fr:layout>
+</fr:view>
 
 <fr:edit id="extraInfo" name="bean" schema="research.contract.extraInformation.for.externalPerson" action="<%= "/manageResearchUnitSite.do?method=addNewPerson&oid=" + siteID %>" >
 	<fr:layout>
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		<fr:destination name="invalid" path="<%= "/manageResearchUnitSite.do?method=prepareAddNewPerson&oid=" + siteID %>"/>
 	</fr:layout>

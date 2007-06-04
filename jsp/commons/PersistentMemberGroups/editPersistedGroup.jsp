@@ -12,7 +12,7 @@
 
 <fr:edit id="editGroup" name="bean" schema="create.persistent.group" action="<%= "/researchUnitFunctionalities.do?method=editPersistedGroup&unitId=" + unitID %>">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
