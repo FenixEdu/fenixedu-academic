@@ -12,38 +12,19 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
-public class UnitFileUploadBean implements Serializable {
+public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
 		private DomainReference<Unit> unit;
 		
 	  	private String fileName;
 	    private Long fileSize;
 	    
-	    private String displayName;
 	    private List<IGroup> permittedGroups;
 	    private Group permittedGroup;
 
-	    transient private InputStream file;
+	    transient private InputStream uploadFile;
 	    private String authorsName;
-	    private String description;
-	    private String tags;
 	    
-	    public String getTags() {
-			return tags;
-		}
-
-		public void setTags(String tags) {
-			this.tags = tags;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
-
 		public UnitFileUploadBean(Unit unit) {
 	    	this.unit = new DomainReference<Unit>(unit);
 	    	permittedGroups = new ArrayList<IGroup> ();
@@ -61,20 +42,12 @@ public class UnitFileUploadBean implements Serializable {
 			this.authorsName = authorsName;
 		}
 		
-		public String getDisplayName() {
-			return displayName;
+		public InputStream getUploadFile() {
+			return uploadFile;
 		}
 		
-		public void setDisplayName(String displayName) {
-			this.displayName = displayName;
-		}
-		
-		public InputStream getFile() {
-			return file;
-		}
-		
-		public void setFile(InputStream file) {
-			this.file = file;
+		public void setUploadFile(InputStream file) {
+			this.uploadFile = file;
 		}
 		
 		public String getFileName() {

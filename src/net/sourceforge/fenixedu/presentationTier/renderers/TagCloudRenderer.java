@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -35,6 +34,27 @@ public class TagCloudRenderer extends OutputRenderer {
 	private float minimumLevel = 0.4f;
 
 	private String sortBy;
+
+	private String onClick;
+	
+	private String onDblClick;
+	
+	
+	public String getOnClick() {
+		return onClick;
+	}
+
+	public void setOnClick(String onClick) {
+		this.onClick = onClick;
+	}
+
+	public String getOnDblClick() {
+		return onDblClick;
+	}
+
+	public void setOnDblClick(String onDoubleClick) {
+		this.onDblClick = onDoubleClick;
+	}
 
 	public String getSortBy() {
 		return sortBy;
@@ -129,6 +149,12 @@ public class TagCloudRenderer extends OutputRenderer {
 						link.setModuleRelative(isModuleRelative());
 						link.setContextRelative(isContextRelative());
 						link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), tag));
+						if (getOnClick() != null) {
+							link.setOnClick(RenderUtils.getFormattedProperties(getOnClick(),tag));
+						}
+						if (getOnDblClick() != null) {
+							link.setOnDblClick(RenderUtils.getFormattedProperties(getOnDblClick(),tag));
+						}
 						HtmlText text = new HtmlText(tag.getName());
 						text.setClasses(getHtmlClass(maximum, tag, person));
 						link.setBody(text);

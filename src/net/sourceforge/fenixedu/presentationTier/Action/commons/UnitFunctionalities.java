@@ -124,10 +124,10 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		InputStream formFileInputStream = null;
 		File file = null;
 		try {
-			formFileInputStream = bean.getFile();
+			formFileInputStream = bean.getUploadFile();
 			file = FileUtils.copyToTemporaryFile(formFileInputStream);
 			executeService("CreateUnitFile", new Object[] { file, bean.getFileName(),
-					bean.getDisplayName(), bean.getDescription(), bean.getTags(),
+					bean.getName(), bean.getDescription(), bean.getTags(),
 					bean.getPermittedGroup(), getUnit(request), getLoggedPerson(request) });
 		} catch (DomainException e) {
 			addActionMessage(request, e.getMessage());

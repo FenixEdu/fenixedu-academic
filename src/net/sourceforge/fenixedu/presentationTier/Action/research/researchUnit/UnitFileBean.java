@@ -24,6 +24,11 @@ public class UnitFileBean implements Serializable {
 
 	private String tags;
 
+	protected UnitFileBean() {
+		this.file = new DomainReference<UnitFile>(null);
+		groups = new ArrayList<IGroup>();
+	}
+	
 	public UnitFileBean(UnitFile file) {
 		this.file = new DomainReference<UnitFile>(file);
 		this.name = file.getDisplayName();
@@ -34,8 +39,12 @@ public class UnitFileBean implements Serializable {
 
 	private void setupTags(List<UnitFileTag> unitFileTags) {
 		String tags = "";
+		int i = unitFileTags.size();
 		for (UnitFileTag tag : unitFileTags) {
-			tags += tag.getName() + " ";
+			tags += tag.getName();
+			if (--i > 0) {
+				tags += " ";
+			}
 		}
 		setTags(tags);
 	}
