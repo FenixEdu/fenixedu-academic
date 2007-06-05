@@ -990,7 +990,7 @@ tr.trhighlight2 td { background: #fafacc; }
 
 
 div.announcement {
-width: 500px;
+/*width: 500px;*/
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }

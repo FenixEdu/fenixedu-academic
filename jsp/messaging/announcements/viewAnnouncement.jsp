@@ -19,7 +19,7 @@
 	%>
 	
 
-<div class="mvert2" style="width: 550px;">
+<div class="mvert2 announcement">
 
 	<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
@@ -55,8 +55,9 @@
 
 
 <%-- Body --%>
-
-	<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+	<div class="ann_body">
+		<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+	</div>
 
 <p class="mvert025">
 	<em class="smalltxt" style="color: #888;">
