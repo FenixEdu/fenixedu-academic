@@ -39,20 +39,54 @@ public class SQLCleaner {
         	stringBuilder.append("alter table ");
         	stringBuilder.append(tableName);
         	stringBuilder.append(" drop column ACK_OPT_LOCK;\n");
+        	stringBuilder.append("alter table ");
+        	stringBuilder.append(tableName);
+        	stringBuilder.append(" drop column ack_opt_lock;\n");
 
                 for (final Iterator iterator = classDescriptor.getCollectionDescriptors().iterator(); iterator.hasNext();) {
                     final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
                     final String indirectionTablename = collectionDescriptor.getIndirectionTable();
                     if (indirectionTablename != null) {
-                	stringBuilder.append("alter table ");
+                	stringBuilder.append("rename table ");
                 	stringBuilder.append(indirectionTablename);
-                	stringBuilder.append(" drop primary key");
-                	stringBuilder.append(", add primary key (");
+                	stringBuilder.append(" to ");
+                	stringBuilder.append(getTempTableName(indirectionTablename));
+                	stringBuilder.append(";\n");
+
+                	stringBuilder.append("create table ");
+                	stringBuilder.append(indirectionTablename);
+                	stringBuilder.append(" (");
+                	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+                	stringBuilder.append(" int(11) not null, ");
+                	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+                	stringBuilder.append(" int(11) not null, ");
+                	stringBuilder.append(" primary key (");
                 	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
                 	stringBuilder.append(", ");
                 	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+                	stringBuilder.append("), key(");
+                	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+                	stringBuilder.append("), key(");
+                	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
                 	stringBuilder.append(")");
-                	stringBuilder.append(", drop column ID_INTERNAL");
+                	stringBuilder.append(") type=InnoDB;\n");
+
+                	stringBuilder.append("insert into ");
+                	stringBuilder.append(indirectionTablename);
+                	stringBuilder.append(" (");
+                	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+                	stringBuilder.append(", ");
+                	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+                	stringBuilder.append(") select ");
+                	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+                	stringBuilder.append(", ");
+                	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+                	stringBuilder.append(" from ");
+                	stringBuilder.append(getTempTableName(indirectionTablename));
+                	stringBuilder.append(";\n");
+
+                	stringBuilder.append("drop table ");
+                	stringBuilder.append(getTempTableName(indirectionTablename));
                 	stringBuilder.append(";\n");
                     }
                 }
@@ -62,6 +96,10 @@ public class SQLCleaner {
         }
 
 	writeFile(destinationFilename, stringBuilder.toString());
+    }
+
+    private static String getTempTableName(String indirectionTablename) {
+	return "_" + indirectionTablename + "_";
     }
 
     public static void writeFile(final String filename, final String fileContents) throws IOException {
