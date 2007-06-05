@@ -33,6 +33,21 @@
 		</java>
     </target>
 
+    <target name="SQLCleaner"
+    		description="Generate sql cleanup instructions for ACK_OPT_LOCK and useless stuff in indirection tables."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.SQLCleaner" fork="true">
+			<arg value="etc/cleanup.sql"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
     <target name="initialize-database"
     		description="Generate sql schema for fenix database."
     		depends="compile">
