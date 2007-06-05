@@ -68,7 +68,10 @@ public class UsernameUtils extends FenixUtil {
 		    
 		} else if (person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
 		    istUsername = ist + sumNumber(person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
-
+		    
+		} else if (person.getStudentByType(DegreeType.BOLONHA_PHD_PROGRAM) != null) {
+		    istUsername = ist + sumNumber(person.getStudentByType(DegreeType.BOLONHA_PHD_PROGRAM).getNumber(), 100000);
+		    
 		} else {
 		    Registration registration = person.getStudentByType(DegreeType.DEGREE);
 		    if (registration == null) {
