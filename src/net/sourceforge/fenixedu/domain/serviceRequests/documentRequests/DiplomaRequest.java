@@ -1,13 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
     
-    public DiplomaRequest() {
+    private DiplomaRequest() {
         super();
     }
 
@@ -40,16 +36,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     final public void setRequestedCycle(final CycleType requestedCycle) {
 	throw new DomainException("DiplomaRequest.cannot.modify.requestedCycle");
-    }
-
-    @Override
-    final public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	result.add(AdministrativeOfficeType.MASTER_DEGREE);
-	
-	return result;
     }
 
     @Override

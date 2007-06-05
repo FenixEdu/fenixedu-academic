@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -48,37 +44,28 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     }
 
     @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-
-	result.add(AdministrativeOfficeType.DEGREE);
-
-	return result;
-    }
-
-    @Override
-    public DocumentRequestType getDocumentRequestType() {
+    final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE;
     }
 
     @Override
-    public String getDocumentTemplateKey() {
+    final public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
 
     @Override
-    public void setExecutionYear(ExecutionYear executionYear) {
+    final public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.cannot.modify.executionYear");
     }
 
     @Override
-    public EventType getEventType() {
+    final public EventType getEventType() {
 	return EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST;
     }
 
     @Override
-    public Integer getNumberOfUnits() {
+    final public Integer getNumberOfUnits() {
 	return 0;
     }
 

@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -15,7 +11,7 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     
     static final private int FIRST_VALID_YEAR = 2006;
     
-    public  IRSDeclarationRequest() {
+    private IRSDeclarationRequest() {
         super();
     }
 
@@ -56,36 +52,28 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     }
 
     @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-	
-	result.add(AdministrativeOfficeType.DEGREE);
-	
-	return result;
-    }
-
-    @Override
-    public DocumentRequestType getDocumentRequestType() {
+    final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.IRS_DECLARATION;
     }
 
     @Override
-    public String getDocumentTemplateKey() {
+    final public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
     
     @Override
-    public void setYear(Integer year) {
+    final public void setYear(Integer year) {
 	throw new DomainException(
 		"error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
     }
 
     @Override
-    public ExecutionYear getExecutionYear() {
+    final public ExecutionYear getExecutionYear() {
 	return null;
     }
     
-    public EventType getEventType() {
+    @Override
+    final public EventType getEventType() {
 	return null;
     }
 

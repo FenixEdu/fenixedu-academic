@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
@@ -14,7 +10,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
-    protected DegreeFinalizationCertificateRequest() {
+    private DegreeFinalizationCertificateRequest() {
 	super();
     }
 
@@ -48,15 +44,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	if (mobilityProgram == null && getRegistration().hasAnyExternalEnrolments()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null.for.registration.with.external.enrolments");
 	}
-    }
-
-    @Override
-    final public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-
-	result.add(AdministrativeOfficeType.DEGREE);
-
-	return result;
     }
 
     @Override

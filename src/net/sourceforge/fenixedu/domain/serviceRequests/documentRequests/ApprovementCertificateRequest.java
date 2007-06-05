@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
@@ -43,15 +39,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	final Set<AdministrativeOfficeType> result = new HashSet<AdministrativeOfficeType>();
-
-	result.add(AdministrativeOfficeType.DEGREE);
-
-	return result;
-    }
-
-    @Override
     protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
@@ -79,27 +66,27 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    public DocumentRequestType getDocumentRequestType() {
+    final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.APPROVEMENT_CERTIFICATE;
     }
 
     @Override
-    public String getDocumentTemplateKey() {
+    final public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
 
     @Override
-    public EventType getEventType() {
+    final public EventType getEventType() {
 	return EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override
-    public ExecutionYear getExecutionYear() {
+    final public ExecutionYear getExecutionYear() {
 	return null;
     }
 
     @Override
-    public Integer getNumberOfUnits() {
+    final public Integer getNumberOfUnits() {
 	return getRegistration().getApprovedEnrolments().size();
     }
 
