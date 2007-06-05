@@ -35,7 +35,7 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 	if (administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null) {
-	    return new YearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent
+	    return when.toYearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent
 		    .getPaymentEndDate());
 	}
 
