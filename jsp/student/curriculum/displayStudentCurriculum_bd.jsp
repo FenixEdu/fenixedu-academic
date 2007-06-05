@@ -66,86 +66,107 @@
 </logic:present>
 
 <%-- Registration Average and Curricular Year calculations --%>
+
 <logic:notPresent role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<logic:equal name="registration" property="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree" value="true">
 
-		<script language="JavaScript">	
-		function check(e,v){
-			if (e.className == "dnone")
-		  	{
-			  e.className = "dblock";
-			  v.value = "-";
-			}
-			else {
-			  e.className = "dnone";
-		  	  v.value = "+";
-			}
-		}
-		</script>
-
-	<div class="mtop1 mbottom15">
-
-	<p class="mbottom05">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Consultar Média</a>
-	</p>
-
-	<div id="instructions" class="dblock mvert0">
-
-	<div class="infoop3">
-	
-		<logic:equal name="registration" property="concluded" value="true">
+	<logic:equal name="registration" property="concluded" value="true">
+		<div class="infoop5 mvert2">
 			<p class="mvert05"><strong><bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="registration" property="average"/></p>
-		</logic:equal>
+			<p class="mvert05"><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="registration" property="average"/></b></p>
+		</div>
+	</logic:equal>
+
+	<logic:equal name="registration" property="concluded" value="false">
+
+		<logic:equal name="registration" property="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree" value="true">
+
+<%-- 
+			<p class="mtop1 mbottom1">
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+				<html:link target="_blank" page="/registration.do?method=viewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+					<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</p>
+--%>
+
+
+			<script language="JavaScript">	
+			function check(e,v){
+				if (e.className == "dnone")
+			  	{
+				  e.className = "dblock";
+				  v.value = "-";
+				}
+				else {
+				  e.className = "dnone";
+			  	  v.value = "+";
+				}
+			}
+			</script>
+	
+			<div class="mtop1 mbottom15">
 		
-		<logic:equal name="registration" property="concluded" value="false">
-			<%
-				final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-				request.setAttribute("studentCurriculum", studentCurriculum);
+				<p class="mbottom05">
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Consultar Média</a>
+				</p>
 			
-				// average
-				final double average = studentCurriculum.getRoundedAverage(null, true);
-				request.setAttribute("average", average);
-
-				final double sumPiCi = studentCurriculum.getSumPiCi(null);
-				request.setAttribute("sumPiCi", sumPiCi);
+				<div id="instructions" class="dblock mvert0">
 			
-				final double sumPi = studentCurriculum.getSumPi(null);
-				request.setAttribute("sumPi", sumPi);
+					<div class="infoop3">
+					
+							<%
+								final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+								request.setAttribute("studentCurriculum", studentCurriculum);
+							
+								// average
+								final double average = studentCurriculum.getRoundedAverage(null, true);
+								request.setAttribute("average", average);
+				
+								final double sumPiCi = studentCurriculum.getSumPiCi(null);
+								request.setAttribute("sumPiCi", sumPiCi);
+							
+								final double sumPi = studentCurriculum.getSumPi(null);
+								request.setAttribute("sumPi", sumPi);
+				
+								// curricular year
+								final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+								final int curricularYear = studentCurriculum.calculateCurricularYear(currentExecutionYear);
+								request.setAttribute("curricularYear", curricularYear);
+				
+								final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(currentExecutionYear);
+								request.setAttribute("totalEctsCredits", totalEctsCredits);
+							%>
 
-				// curricular year
-				final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-				final int curricularYear = studentCurriculum.calculateCurricularYear(currentExecutionYear);
-				request.setAttribute("curricularYear", curricularYear);
+							<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+							<p class="mvert05"><strong><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+							<p class="mvert05"><strong><bean:message key="bolonha.special.case.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>			
+							<p class="mtop1 mbottom05"><strong><bean:message key="degree.average.is.current.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+							<p class="mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="average"/></b></p>
+							<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+							<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
+							<p class="mtop1 mbottom05"><strong><bean:message key="curricular.year.in.begin.of.execution.year.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+							<p class="mvert05"><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="curricularYear"/></b></p>
+							<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+							<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</p>
+	
+					</div>
+	
+				</div>
+	
+			</div>
+	
+			<script>
+				check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
+				document.getElementById('instructionsButton').className="dinline";
+			</script>
 
-				final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(currentExecutionYear);
-				request.setAttribute("totalEctsCredits", totalEctsCredits);
-			%>
-			<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><strong><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><strong><bean:message key="bolonha.special.case.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>			
-			<p class="mtop1 mbottom05"><strong><bean:message key="degree.average.is.current.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="average"/></b></p>
-			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></p>
-			<p class="mtop1 mbottom05"><strong><bean:message key="curricular.year.in.begin.of.execution.year.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<p class="mvert05"><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="curricularYear"/></b></p>
-			<p class="mvert05"><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-			<p class="mvert05"><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</p>
+
 		</logic:equal>
-	</div>
-	</div>
-	</div>
-
-	<script>
-		check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-		document.getElementById('instructionsButton').className="dinline";
-	</script>
 
 	</logic:equal>
-</logic:notPresent>
 
+</logic:notPresent>
 
 
 <%-- Choose Student Curricular Plan form --%>
