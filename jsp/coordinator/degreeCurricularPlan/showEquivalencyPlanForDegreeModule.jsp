@@ -21,7 +21,7 @@
 				<td>
 					<bean:write name="degreeModule" property="name"/>
 				</td>
-				<td class="highlight2 smalltxt" align="center" style="width: 10em;">
+				<td class="highlight2 smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 							+ equivalencePlan.getIdInternal() + "&amp;curricularCourseID="
@@ -29,11 +29,7 @@
 						<bean:message key="link.equivalency.add"/>
 					</html:link>
 				</td>
-				<td class="smalltxt" align="right">
-				</td>
-				<td class="smalltxt" align="right">
-				</td>
-				<td class="smalltxt" align="right">
+				<td class="smalltxt" align="right" style="width: 22em;">
 					<%
 						java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = curricularCourse.getNewCurricularCourseEquivalencePlanEntry(equivalencePlan);
 						request.setAttribute("curricularCourseEquivalencePlanEntries", curricularCourseEquivalencePlanEntries);
@@ -74,7 +70,7 @@
 	<div style="padding-left: <%= indentLevel %>em;">
 		<table class="showinfo3 mvert0" style="width: <%= width %>em;">
 			<tr class="bgcolor2">
-				<th class="aleft" colspan="5">
+				<th class="aleft" colspan="3">
 					<bean:write name="degreeModule" property="name"/>
 				</th>
 			</tr>

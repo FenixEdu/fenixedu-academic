@@ -8,10 +8,8 @@
 <br/>
 <h2><bean:message key="title.equivalency.plan"/></h2>
 
-<h3><bean:message key="title.equivalency.plan.for.degree"/> <bean:write name="degreeCurricularPlan" property="presentationName"/></h3>
-
-<div class='simpleblock4'>
-	<logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
+<logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
+	<div class='simpleblock4'>
 		<bean:message key="message.no.equivalency.table.exists"/>
 		<br/>
 		<bean:message key="label.create.equivalency.table.for.degree.curricular.plan"/>
@@ -22,13 +20,16 @@
 	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
 		    </fr:layout>
 		</fr:edit>
-	</logic:notPresent>
-	<logic:present name="degreeCurricularPlan" property="equivalencePlan">
-		<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
-		<br/>
-		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
-	</logic:present>
-</div>
+	</div>
+</logic:notPresent>
+<logic:present name="degreeCurricularPlan" property="equivalencePlan">
+	<p class="mvert15">
+		<strong>
+			<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
+			<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
+		</strong>
+	</p>
+</logic:present>
 
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
 	<logic:present name="degreeCurricularPlan" property="root">

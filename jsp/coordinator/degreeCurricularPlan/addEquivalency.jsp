@@ -7,24 +7,21 @@
 
 <bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 
-<br/>
-<h2><bean:message key="title.equivalency.plan"/></h2>
+<h2><bean:message key="link.equivalency.plan.create.equivalence"/></h2>
 
-<h3><bean:message key="title.equivalency.plan.for.degree"/> <bean:write name="degreeCurricularPlan" property="presentationName"/></h3>
+<p class="mvert15">
+	<strong>
+		<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
+		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
+	</strong>
+</p>
 
-<div class='simpleblock4'>
-	<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
-	<br/>
-	<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
-</div>
+<p class="mtop2"><bean:message key="message.equivalency.create.for.curricular.course"/>: <strong class="highlight5"><bean:write name="curricularCourse" property="name"/></strong></p>
 
-<h4>
-	<bean:message key="message.equivalency.create.for.curricular.course"/>:
-	<bean:write name="curricularCourse" property="name"/>
-</h4>
-
-<div class="dinline forminline">
-	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
+<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
+<table class="mtop0 tdmiddle">
+	<tr>
+	<td>
 		<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.addCurricularCourse" name="curricularCourseEquivalencePlanEntryCreator" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"
 				schema="CurricularCourseEquivalencePlanEntry.Creator.addCurricularCourse">
 			<fr:layout name="tabular">
@@ -34,32 +31,33 @@
 			   	<fr:hidden slot="curricularCourse" name="curricularCourse"/>
 		    </fr:layout>
 		</fr:edit>
-		<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
-	</fr:form>
-</div>
+		</td>
+		<td>
+			<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
+		</td>
+	</tr>
+</table>
+</fr:form>
 
-<br/>
-<br/>
-<br/>
 
 <bean:define id="curricularCourses" name="curricularCourseEquivalencePlanEntryCreator" property="curricularCourses"/>
 
 <logic:notEmpty name="curricularCourses">
 
-	<h4>
-		<bean:message key="label.equivalency.to.create"/>:
-	</h4>
-	<div class='simpleblock4'>
-		<p>
-			<logic:iterate id="curricularCourseFromList" indexId="i" name="curricularCourses">
+	<p class="mtop2"><bean:message key="label.equivalency.to.create"/></p>	
+	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
+		<logic:iterate id="curricularCourseFromList" indexId="i" name="curricularCourses">
+			<span style="border-bottom: 1px dotted #aaa;">
 				<logic:notEqual name="i" value="0">
 					+
 				</logic:notEqual>
 				<bean:write name="curricularCourseFromList" property="name"/>
-			</logic:iterate>
-			==>
-			<bean:write name="curricularCourse" property="name"/>
-		</p>
+			</span>
+		</logic:iterate>
+		==>
+		<span style="border-bottom: 1px dotted #aaa;">
+			<bean:write name="curricularCourse" property="name"/>		
+		</span>
 	</div>
 
 	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
@@ -72,7 +70,8 @@
 			   	<fr:hidden slot="curricularCourse" name="curricularCourse"/>
 		    </fr:layout>
 		</fr:edit>
-		<br/>
-		<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+		<p class="mtop2 mbottom0">
+			<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+		</p>
 	</fr:form>
 </logic:notEmpty>
