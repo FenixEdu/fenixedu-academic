@@ -87,7 +87,9 @@ public enum RoleType {
 
     ACADEMIC_ADMINISTRATIVE_OFFICE("Academic Administrative Office"),
 
-    PARKING_MANAGER("Parking Manager");
+    PARKING_MANAGER("Parking Manager"),
+    
+    LIBRARY("Library");
 
     public String getName() {
 	return name();

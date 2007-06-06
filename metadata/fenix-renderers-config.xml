@@ -67,7 +67,9 @@ Documentation:
     		<property name="labelTerminator" value=":"/>
     </renderer>
 
-    <renderer type="java.lang.Object" layout="null-as-label" class="net.sourceforge.fenixedu.renderers.NullAsLabelRenderer"/>
+    <renderer type="java.lang.Object" layout="null-as-label" class="net.sourceforge.fenixedu.renderers.NullAsLabelRenderer">
+    	<property name="label" value="-"/>
+    </renderer>
 
     <!--@ A tabular presentation for an object. This consist of a table were each row presents one
           of the object's slots. The slot's name is shown in the left column and the corresponding 
@@ -159,6 +161,7 @@ Documentation:
     	<property name="languageShown" value="false"/>
     </renderer>
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">
+       	<property name="length" value="40"/>
        	<property name="languageShown" value="false"/>
     </renderer>
 

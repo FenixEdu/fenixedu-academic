@@ -77,7 +77,7 @@
     <span class="switchInline">
         <span class="pleft1">
             <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-            <html:link href="<%= String.format("javascript:showElement('%s');", deleteSectionId) %>">
+            <html:link href="#" onclick="<%= String.format("showElement('%s');", deleteSectionId) %>">
                 <bean:message key="button.deleteSection"/>
             </html:link>
         </span>

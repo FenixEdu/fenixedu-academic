@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.HtmlText.Face;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -163,6 +164,17 @@ public class MenuRenderer extends OutputRenderer {
 
                     if (functionality instanceof Module) {
                         Module module = (Module) functionality;
+
+                        HtmlComponent child = item.getChildren().get(0);
+                        HtmlText text;
+                        if (child instanceof HtmlText) {
+                        	text = (HtmlText) child;
+                        }
+                        else {
+                        	text = (HtmlText) ((HtmlLink) child).getBody();
+                        }
+                        
+                        text.setFace(Face.STRONG);
                         
                         item.setClasses(getModuleClasses());
                         item.setStyle(getModuleStyle());
@@ -174,11 +186,11 @@ public class MenuRenderer extends OutputRenderer {
                     }
 
                     if (context.getSelectedFunctionality().equals(functionality)) {
-                	String existingClasses = item.getClasses() == null ? "" : item.getClasses();
-                	String existingStyle = item.getStyle() == null ? "" : item.getStyle();
-                	
-                	item.setClasses(existingClasses + getSelectedClasses());
-                	item.setStyle(getSelectedStyle());
+	                	String existingClasses = item.getClasses() == null ? "" : item.getClasses();
+	                	String existingStyle = item.getStyle() == null ? "" : item.getStyle();
+	                	
+	                	item.setClasses(existingClasses + getSelectedClasses());
+	                	item.setStyle(getSelectedStyle());
                     }
 
             	}
@@ -195,10 +207,7 @@ public class MenuRenderer extends OutputRenderer {
      * If the fuctionality is parameterized then the required parameters are appended to the link. 
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
-	HtmlContainer container = new HtmlInlineContainer();
-	container.addChild(new HtmlText(functionality.getName().getContent()));
-	
-        HtmlComponent component = container;
+		HtmlComponent component = new HtmlText(functionality.getName().getContent());
         
         String path = functionality.getPublicPath();
         if (path != null && canMakeLink && functionality.isAvailable(context)) {

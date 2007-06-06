@@ -39,7 +39,7 @@
     <!ENTITY partyContacts SYSTEM "partyContacts-schemas.xml">
     <!ENTITY boardSchemas SYSTEM "board-schemas.xml">
     <!ENTITY inquirySchemas SYSTEM "inquiry-schemas.xml">
-
+    <!ENTITY librarySchemas SYSTEM "library-schemas.xml">
 ]>
 
 <schemas>
@@ -715,4 +715,5 @@
     &partyContacts;
     &boardSchemas;
     &inquirySchemas;
+    &librarySchemas;
 </schemas>

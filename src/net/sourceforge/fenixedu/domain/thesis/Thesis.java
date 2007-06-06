@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -96,6 +97,7 @@ public class Thesis extends Thesis_Base {
         
         setRootDomainObject(RootDomainObject.getInstance());
         setDeclarationAccepted(false);
+        setLibraryConfirmation(false);
         
         create();
     }
@@ -149,8 +151,26 @@ public class Thesis extends Thesis_Base {
             return null;
         }
         else {
-            return new MultiLanguageString(dissertation.getLanguage(), dissertation.getSubTitle());
+        	
+            String subTitle = dissertation.getSubTitle();
+            
+            if (subTitle == null) {
+            	return null;
+            }
+            
+			return new MultiLanguageString(dissertation.getLanguage(), subTitle);
         }
+    }
+
+    public Language getLanguage() {
+    	ThesisFile dissertation = getDissertation();
+    	
+    	if (dissertation == null) {
+    		return null;
+    	}
+    	else {
+    		return dissertation.getLanguage();
+    	}
     }
     
     final public MultiLanguageString getFinalFullTitle() {
@@ -554,7 +574,7 @@ public class Thesis extends Thesis_Base {
     }
 
     /**
-	 * Indicates if thesis thesis is the last one that can be created for this
+	 * Indicates if this thesis is the last one that can be created for this
 	 * enrolment, that is, if the student can have any other thesis after this
 	 * one for the same enrolment. A student can present up to two thesis in a
 	 * single enrolment. This corresponds to 2 distinct evaluation chances:
@@ -1215,4 +1235,30 @@ public class Thesis extends Thesis_Base {
         setOrientatorCreditsDistribution(percent != null ? 100 - percent : null);
     }
 
+    @Override
+    public String getScientificArea() {
+    	String customArea = super.getScientificArea();
+    	
+    	if (customArea != null) {
+    		return customArea;
+    	}
+
+    	ScientificArea scientificArea = getEnrolment().getCurricularCourse().getScientificArea();
+    	if (scientificArea != null) {
+    		return scientificArea.getName();
+    	}
+        	
+    	return null;
+    }
+
+	public boolean isLibraryDetailsConfirmed() {
+		Boolean confirmation = getLibraryConfirmation();
+		return confirmation != null && confirmation;
+	}
+
+	public boolean isLibraryDetailsExported() {
+		Boolean exported = getLibraryExported();
+		return exported != null && exported;
+	}
+    
 }

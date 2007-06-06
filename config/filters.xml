@@ -929,4 +929,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>LibraryAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.library.LibraryAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

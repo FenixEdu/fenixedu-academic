@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
@@ -331,6 +333,42 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected Object getObjectFromViewState(final String viewStateId) {
 	return RenderUtils.getViewState(viewStateId).getMetaObject().getObject();
+    }
+
+    protected Integer getIdInternal(HttpServletRequest request, String param) {
+    	String id = request.getParameter(param);
+    	
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    protected List<Integer> getIdInternals(HttpServletRequest request, String param) {
+    	String[] ids = request.getParameterValues(param);
+    	
+        if (ids == null) {
+            return null;
+        }
+
+        try {
+        	List<Integer> idNumbers = new ArrayList<Integer>(ids.length);
+        	
+        	for (int i = 0; i < ids.length; i++) {
+				idNumbers.add(new Integer(ids[i]));
+			}
+        	
+            return idNumbers;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

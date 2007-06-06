@@ -6,9 +6,17 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
 public class HtmlText extends HtmlComponent {
 
+	public static enum Face {
+		STANDARD,
+		STRONG,
+		EMPHASIS,
+		MONOSPACED
+	}
+	
     private String text;
     private boolean escaped;
     private boolean newLineAware;
+    private Face face = Face.STANDARD;
     
     public HtmlText(String text, boolean escaped) {
         this.text = text;
@@ -48,12 +56,20 @@ public class HtmlText extends HtmlComponent {
         this.escaped = escaped;
     }
 
+    public void setFace(Face face) {
+    	this.face = face;
+    }
+
+    public Face getTextFace() {
+    	return this.face;
+    }
+    
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         	HtmlTag tag = super.getOwnTag(context);
         
-        	if (tag.hasVisibleAttributes()) {
-        	    tag.setName("span");
+        	if (tag.hasVisibleAttributes() || hasEffect()) {
+        	    tag.setName(getTagName());
         	} else {
         	    tag.setName(null);
         	}
@@ -70,7 +86,21 @@ public class HtmlText extends HtmlComponent {
         	return tag;
     }
 
-    private String replaceNewlines(String string) {
+	private boolean hasEffect() {
+		return getTextFace() != null;
+	}
+
+    private String getTagName() {
+    	switch (getTextFace()) {
+	    	case EMPHASIS:   return "em";
+	    	case STRONG:     return "strong";
+	    	case MONOSPACED: return "tt";
+	    	default:
+	    		return "span";
+    	}
+	}
+
+	private String replaceNewlines(String string) {
         StringBuilder result = new StringBuilder();
         
         String[] lines = string.split("\\r\\n|\\n|\\r", -1);

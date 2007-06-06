@@ -371,7 +371,7 @@ public class RequestChecksumFilter implements Filter {
 	return calculateChecksum(source.substring(start, end));
     }
 
-    private static String calculateChecksum(final String requestString) {
+    public static String calculateChecksum(final String requestString) {
 	final int indexLastCardinal = requestString.lastIndexOf('#');
 	final String string = indexLastCardinal >= 0 ? requestString.substring(0, indexLastCardinal) : requestString;
 	final String[] parts = string.split("\\?|&amp;|&");
@@ -498,19 +498,21 @@ public class RequestChecksumFilter implements Filter {
 
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
 	final String uri = httpServletRequest.getRequestURI();
-	return isValidChecksum(uri, httpServletRequest, checksum) || isValidChecksum(getContextRelativeURI(uri), httpServletRequest, checksum);
-    }
-
-    private boolean isValidChecksum(final String uri, final HttpServletRequest httpServletRequest, final String checksum) {
 	final String queryString = httpServletRequest.getQueryString();
+//	final TreeSet<String> strings = new TreeSet<String>();
+//	strings.add(uri);
+//	for (final Enumeration enumeration = httpServletRequest.getParameterNames(); enumeration.hasMoreElements(); ) {
+//	    final String name = (String) enumeration.nextElement();
+//	    if (!name.equals(CHECKSUM_ATTRIBUTE_NAME) && !name.equals("part")) {
+//		for (final String value : httpServletRequest.getParameterValues(name)) {
+//		    strings.add(name);
+//		    strings.add(value);
+//		}
+//	    }
+//	}
 	final String request = queryString != null ? uri + '?' + queryString : uri;
 	final String calculatedChecksum = calculateChecksum(request);
 	return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
-    }
-
-    private String getContextRelativeURI(final String uri) {
-	final int indexOfLastSlash = uri.lastIndexOf('/');
-	return indexOfLastSlash >= 0 ? uri.substring(indexOfLastSlash + 1) : uri;
     }
 
 }

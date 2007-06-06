@@ -11955,6 +11955,24 @@
 		</filterChains>
     </service>      
     <service>
+    	<name>ChangeThesesLibraryConfirmation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.ChangeThesesLibraryConfirmation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="LibraryAuthorization"/>
+		</filterChains>
+    </service>      
+    <service>
+    	<name>MarkExportedTheses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.MarkExportedTheses</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="LibraryAuthorization"/>
+		</filterChains>
+    </service>
+    <service>
     	<name>DeleteCurricularCourseEquivalencePlanEntry</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteCurricularCourseEquivalencePlanEntry</implementationClass>
         <description/>

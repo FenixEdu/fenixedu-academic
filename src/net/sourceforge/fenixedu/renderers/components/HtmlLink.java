@@ -92,10 +92,23 @@ public class HtmlLink extends HtmlComponent {
                     for (int i = 0; i < parameresParts.length; i++) {
                         String part = parameresParts[i];
                         
-                        String[] paramParts = part.split("=", -1);
-                        if (paramParts.length == 2) {
-                            addParameter(paramParts[0], paramParts[1]);
+                        int equalPos = part.indexOf('=');
+						if (equalPos == -1) {
+                        	addParameter(part, "");
                         }
+						else {
+							String name = part.substring(0, equalPos);
+							
+							String value;
+							if (part.length() == equalPos + 1) {
+								value = "";
+							}
+							else {
+								value = part.substring(equalPos + 1);
+							}
+							
+							addParameter(name, value);
+						}
                     }
                 }
             }

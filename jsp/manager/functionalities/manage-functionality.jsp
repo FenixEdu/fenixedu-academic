@@ -106,7 +106,9 @@
 <logic:messagesPresent property="expression" message="true">
     <div>
         <html:messages id="confirmationMessage" property="expression" message="true" bundle="FUNCTIONALITY_RESOURCES">
-            <bean:write name="confirmationMessage"/>
+        	<span class="success0">
+	            <bean:write name="confirmationMessage"/>
+            </span>
         </html:messages>
     </div>
 </logic:messagesPresent>

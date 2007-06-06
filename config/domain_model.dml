@@ -5321,6 +5321,10 @@ class net.sourceforge.fenixedu.domain.thesis.Thesis extends net.sourceforge.feni
 	DateTime documentsAvailableAfter;
 	Boolean declarationAccepted;
 	DateTime declarationAcceptedTime;
+	
+	String scientificArea;
+	Boolean libraryConfirmation;
+	Boolean libraryExported;
 }
 
 class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends net.sourceforge.fenixedu.domain.DomainObject {

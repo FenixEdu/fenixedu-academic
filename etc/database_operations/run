@@ -27,5 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Create Domain Class Info table" createDomainClassInfoTable.sql
+execute "Add 'Library' role" addLibraryRole.sql
+execute "Add more attributes to Thesis" alterThesis.sql
