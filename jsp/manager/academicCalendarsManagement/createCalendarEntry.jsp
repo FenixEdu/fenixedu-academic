@@ -24,7 +24,7 @@
 									
 			<p class="mtop05"><b><bean:message key="label.create.academic.entry" bundle="MANAGER_RESOURCES"/></b></p>												
 			<bean:define id="goBackToPrepareCreateEntryURL">/academicCalendarsManagement.do?method=chooseCalendarEntryTypePostBack</bean:define>
-			<fr:form>
+			<fr:form action="<%= goBackToPrepareCreateEntryURL %>">
 				<fr:edit id="calendarEntryBeanWithType" name="calendarEntryBean" schema="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean">
 					<fr:destination name="postBack" path="<%= goBackToPrepareCreateEntryURL %>"/>
 					<fr:layout name="tabular">      										  

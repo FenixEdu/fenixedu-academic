@@ -89,7 +89,7 @@ function check(e,v){
 			<td class="aright"><bean:message key="label.shift"/>:</td>
 			<td>
 				<%-- Shift --%>						
-				<fr:form>
+				<fr:form action="/summariesManagement.do?method=chooseShift">
 					<fr:edit id="summariesManagementBeanWithShifts" name="summariesManagementBean" schema="ListShiftsToCreateSummary" nested="true">
 						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseShift"/>				
 						<fr:layout name="flow">
@@ -105,7 +105,7 @@ function check(e,v){
 				<td class="aright"><bean:message key="label.lesson" />:</td>
 				<td>
 					<%-- Lesson --%>
-					<fr:form>
+					<fr:form action="/summariesManagement.do?method=chooseLesson">
 						<fr:edit id="summariesManagementBeanWithLessons" name="summariesManagementBean" schema="ListShiftLessonsToCreateSummary" nested="true">
 							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLesson"/>				
 							<fr:layout name="flow">
@@ -120,7 +120,7 @@ function check(e,v){
 				<td class="aright"><bean:message key="label.date" />:</td>
 				<td>
 					<%-- Date --%>
-					<fr:form>
+					<fr:form action="/summariesManagement.do?method=chooseDate">
 						<fr:edit id="summariesManagementBeanWithDate" name="summariesManagementBean" schema="LisPossibleDatesToCreateSummary" nested="true">
 							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseDate"/>	
 							<fr:layout name="flow">
@@ -141,7 +141,7 @@ function check(e,v){
 		<tr>
 			<td class="aright"><bean:message key="label.lessonPlanning" />:</td>
 			<td>				
-				<fr:form>
+				<fr:form action="/summariesManagement.do?method=chooseLessonPlanning">
 					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonPlanning"/>	
 							<fr:layout name="flow">
@@ -156,7 +156,7 @@ function check(e,v){
 		<tr>
 			<td class="aright"><bean:message key="message.summaryText.last"/>:</td>
 			<td>				
-				<fr:form>
+				<fr:form action="/summariesManagement.do?method=chooseLastSummary">
 					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLastSummary"/>	
 							<fr:layout name="flow">

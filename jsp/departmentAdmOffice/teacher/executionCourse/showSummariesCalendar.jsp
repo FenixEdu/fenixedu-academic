@@ -38,7 +38,7 @@
 	
 	<h3 class="mtop2 mbottom05"><bean:message key="label.visualization.options" bundle="DEFAULT"/></h3>	
 	<bean:define id="postBackURL">/summariesManagement.do?method=showSummariesCalendarPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-	<fr:form>
+	<fr:form action="<%= postBackURL %>">
 		<fr:edit id="showSummariesCalendar" name="showSummariesCalendarBean" schema="ShowSummariesCalendar" nested="true">
 			<fr:destination name="postBack" path="<%= postBackURL %>"/>		
 			<fr:layout name="tabular">

@@ -87,7 +87,7 @@
 	<logic:notEmpty name="ganttDiagram">		
 		<logic:notEmpty name="ganttDiagram" property="events">
 		
-			<fr:form>
+			<fr:form action="/roomsPunctualScheduling.do?method=prepare">
 				<fr:edit name="roomsPunctualSchedulingBean" schema="GanttDiagramAvailable">
 					<fr:destination name="postBack" path="/roomsPunctualScheduling.do?method=prepare"/>
 					<fr:layout name="tabular">

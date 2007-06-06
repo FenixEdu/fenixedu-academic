@@ -23,7 +23,7 @@
 
 	<logic:notEmpty name="executionYearBean">
 	
-		<fr:form>
+		<fr:form action="/evaluateExpectations.do?method=chooseTeacherInSelectedExecutionYear">
 			<div class="mtop2 mbottom1">
 			<bean:message key="label.common.executionYear"/>:
 			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 

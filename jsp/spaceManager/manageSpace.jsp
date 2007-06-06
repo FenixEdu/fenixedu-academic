@@ -207,7 +207,7 @@
 		<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="title.subspaces"/></h3>
 						
 		<bean:define id="ViewSubSpacesStateURL">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>		
-		<fr:form>
+		<fr:form action="<%= ViewSubSpacesStateURL %>">
 			<fr:edit id="subSpacesStateBeanID" name="subSpacesStateBean" schema="ViewSubSpacesState" nested="true">
 				<fr:destination name="postBack" path="<%= ViewSubSpacesStateURL %>"/>
 				<fr:layout name="tabular">

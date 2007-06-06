@@ -23,7 +23,7 @@
 
 
 	<logic:notEmpty name="teacherPersonalExpectationBean">
-		<fr:form>
+		<fr:form action="/personalExpectationManagement.do?method=viewTeacherPersonalExpectationInSelectedExecutionYear">
 			<div class="mtop2 mbottom1">
 			<fr:edit id="teacherPersonalExpectationInSelectedExecutionYear" name="teacherPersonalExpectationBean" schema="ChooseExecutionYearToViewTeacherPersonalExpectations">
 				<fr:destination name="postBack" path="/personalExpectationManagement.do?method=viewTeacherPersonalExpectationInSelectedExecutionYear"/>

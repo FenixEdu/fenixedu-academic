@@ -61,7 +61,7 @@ function check(e,v){
 			<tr>
 				<td><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
 				<td>				
-					<fr:form>
+					<fr:form action="<%= chooseLessonPlanningURL %>">
 						<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanningToCreateComplexSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 						<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
 							<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
@@ -77,7 +77,7 @@ function check(e,v){
 			<tr>
 				<td><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
 				<td>				
-					<fr:form>
+					<fr:form action="<%= chooseLastSummaryURL %>">
 						<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummaryToCreateComplexSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 						<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
 							<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	

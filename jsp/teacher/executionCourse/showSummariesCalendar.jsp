@@ -36,7 +36,7 @@
 	</ul>
 	
 	<h3 class="mtop15 mbottom05"><bean:message key="label.visualization.options"/></h3>
-	<fr:form>
+	<fr:form action="/summariesManagement.do?method=showSummariesCalendarPostBack">
 		<fr:edit id="showSummariesCalendar" name="showSummariesCalendarBean" schema="ShowSummariesCalendar" nested="true">
 			<fr:destination name="postBack" path="/summariesManagement.do?method=showSummariesCalendarPostBack"/>		
 			<fr:layout name="tabular">

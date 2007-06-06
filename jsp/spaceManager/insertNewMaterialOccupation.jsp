@@ -24,7 +24,7 @@
 	</logic:messagesPresent>
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="title.choose.material.type" bundle="SPACE_RESOURCES"/></strong></p>
-	<fr:form>
+	<fr:form action="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterial&page=0">
 		<fr:edit nested="true" name="materialTypeBean" id="materialTypeWithMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" schema="ChooseMaterialType">						
 			<fr:destination name="postBack" path="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterial&page=0"/>
 			<fr:layout name="tabular">      										  

@@ -22,7 +22,7 @@
 
 	<logic:notEmpty name="bean">
 		
-		<fr:form>
+		<fr:form action="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriodWithSelectedYear">
 			<div class="mtop2 mbottom1">
 			<bean:message key="label.common.executionYear"/>:
 			<fr:edit id="executionYear" name="bean" slot="executionYear"> 

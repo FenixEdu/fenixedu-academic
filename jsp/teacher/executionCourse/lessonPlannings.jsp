@@ -30,7 +30,7 @@
 	<bean:define id="uri" toScope="page" type="java.lang.String">/manageExecutionCourse.do?method=lessonPlannings&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 
 	
-	<fr:form>
+	<fr:form action="<%= uri %>">
 		<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true">
 			<fr:destination name="postBack" path="<%= uri %>"/>
 			<fr:layout name="tabular">

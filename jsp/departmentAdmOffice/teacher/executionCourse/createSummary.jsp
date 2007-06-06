@@ -74,7 +74,7 @@ function check(e,v){
 			<td class="aright"><bean:message key="label.type"/></td>
 			<td>
 				<div style="display: inline;">
-					<fr:form>
+					<fr:form action="<%= chooseSummaryTypeUrl %>">
 						<bean:define id="chooseSummaryTypeUrl">/summariesManagement.do?method=chooseSummaryType&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 						<fr:edit id="summariesManagementBeanWithSummaryType" name="summariesManagementBean" schema="ChooseSummaryType" nested="true">
 							<fr:destination name="postBack" path="<%= chooseSummaryTypeUrl %>"/>
@@ -91,7 +91,7 @@ function check(e,v){
 			<td class="aright"><bean:message key="label.shift"/>:</td>
 			<td>
 				<%-- Shift --%>						
-				<fr:form>
+				<fr:form action="<%= chooseShiftUrl %>">
 					<bean:define id="chooseShiftUrl">/summariesManagement.do?method=chooseShift&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithShifts" name="summariesManagementBean" schema="ListShiftsToCreateSummary" nested="true">
 						<fr:destination name="postBack" path="<%= chooseShiftUrl %>"/>				
@@ -108,7 +108,7 @@ function check(e,v){
 				<td class="aright"><bean:message key="label.lesson" bundle="DEFAULT"/>:</td>
 				<td>
 					<%-- Lesson --%>
-					<fr:form>
+					<fr:form action="<%= chooseLessonUrl %>">
 						<bean:define id="chooseLessonUrl">/summariesManagement.do?method=chooseLesson&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 						<fr:edit id="summariesManagementBeanWithLessons" name="summariesManagementBean" schema="ListShiftLessonsToCreateSummary" nested="true">
 							<fr:destination name="postBack" path="<%= chooseLessonUrl %>"/>				
@@ -124,7 +124,7 @@ function check(e,v){
 				<td class="aright"><bean:message key="label.date" bundle="DEFAULT"/>:</td>
 				<td>
 					<%-- Date --%>
-					<fr:form>		
+					<fr:form action="<%= chooseDateUrl %>">		
 						<bean:define id="chooseDateUrl">/summariesManagement.do?method=chooseDate&teacherNumber__=<bean:write name="teacherNumber"/></bean:define>				
 						<fr:edit id="summariesManagementBeanWithDate" name="summariesManagementBean" schema="LisPossibleDatesToCreateSummary" nested="true">
 							<fr:destination name="postBack" path="<%= chooseDateUrl %>"/>	
@@ -146,7 +146,7 @@ function check(e,v){
 		<tr>
 			<td class="aright"><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
 			<td>				
-				<fr:form>
+				<fr:form action="<%= chooseLessonPlanningURL %>">
 					<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
@@ -162,7 +162,7 @@ function check(e,v){
 		<tr>
 			<td class="aright"><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
 			<td>				
-				<fr:form>
+				<fr:form action="<%= chooseLastSummaryURL %>">
 					<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
 					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
 						<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	

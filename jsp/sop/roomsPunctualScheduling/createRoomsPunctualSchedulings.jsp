@@ -41,7 +41,7 @@
 			</ul>			
 		</div>
 
-		<fr:form>
+		<fr:form action="/roomsPunctualScheduling.do?method=prepareCreate">
 			<fr:edit nested="true" id="roomsPunctualSchedulingWithPeriodType" name="roomsPunctualSchedulingBean" schema="ChooseRoomsPunctualSchedulingPeriodType">
 				<fr:destination name="postBack" path="/roomsPunctualScheduling.do?method=prepareCreate"/>
 				<fr:layout name="tabular">

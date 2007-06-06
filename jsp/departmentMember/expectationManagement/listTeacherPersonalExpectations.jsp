@@ -11,7 +11,7 @@
 <logic:present role="DEPARTMENT_MEMBER">
 
 	<logic:notEmpty name="executionYearBean">
-		<fr:form>
+		<fr:form action="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsForSelectedExecutionYear">
 			<div class="mtop2 mbottom1">
 			<bean:message key="label.common.executionYear"/>:
 			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 

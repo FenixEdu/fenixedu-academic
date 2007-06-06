@@ -60,7 +60,7 @@ function check(e,v){
 			<tr>
 				<td><bean:message key="label.lessonPlanning" />:</td>
 				<td>				
-					<fr:form>
+					<fr:form action="/summariesManagement.do?method=chooseLessonPlanningToCreateComplexSummary">
 						<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
 							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonPlanningToCreateComplexSummary"/>								
 							<fr:layout name="flow">
@@ -75,7 +75,7 @@ function check(e,v){
 			<tr>
 				<td><bean:message key="message.summaryText.last"/>:</td>
 				<td>				
-					<fr:form>
+					<fr:form action="/summariesManagement.do?method=chooseLastSummaryToCreateComplexSummary">
 						<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
 							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLastSummaryToCreateComplexSummary"/>								
 							<fr:layout name="flow">

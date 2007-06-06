@@ -71,7 +71,7 @@
 			</li>		
 		</ul>
 		
-		<fr:form>
+		<fr:form action="/roomsPunctualScheduling.do?method=seeRoomsPunctualSchedulingHistory">
 			<fr:edit id="roomsPunctualSchedulingHistoryWithYearAndMonth" name="roomsPunctualSchedulingHistoryBean" schema="RoomsPunctualSchedulingHistory">
 				<fr:destination name="postback" path="/roomsPunctualScheduling.do?method=seeRoomsPunctualSchedulingHistory"/>
 				<fr:layout name="tabular">

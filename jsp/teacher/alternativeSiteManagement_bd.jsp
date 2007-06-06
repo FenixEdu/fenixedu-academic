@@ -13,7 +13,7 @@
 
 <h2><bean:message key="title.personalizationOptions"/></h2>
 <logic:present name="siteView"> 
-<html:form action="/alternativeSite" method="get">
+<html:form action="/alternativeSite" method="post">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCustomizationOptions"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

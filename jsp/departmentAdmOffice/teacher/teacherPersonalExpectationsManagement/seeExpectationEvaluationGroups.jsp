@@ -12,7 +12,7 @@
 
 	<logic:notEmpty name="executionYearBean">
 		
-		<fr:form>
+		<fr:form action="/defineExpectationEvaluationGroups.do?method=listGroupsWithSelectedExecutionYear">
 			<div class="mtop2 mbottom1">
 			<bean:message key="label.common.executionYear" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>:
 			<fr:edit id="executionYear" name="executionYearBean" slot="executionYear"> 

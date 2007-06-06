@@ -58,7 +58,7 @@
 
 	<h3 class="mtop2 mbottom05"><bean:message key="label.show.summaries" bundle="DEFAULT"/></h3>
 	<bean:define id="showSummariesPostBackUrl">/summariesManagement.do?method=showSummariesPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
-	<fr:form>
+	<fr:form action="<%= showSummariesPostBackUrl %>">
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagementToDepartmentAdmOffice" nested="true">
 			<fr:destination name="postBack" path="<%= showSummariesPostBackUrl %>"/>		
 			<fr:layout name="tabular">
