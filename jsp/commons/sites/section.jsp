@@ -196,9 +196,11 @@
 
 <h3 class="mtop15 separator2"><bean:message key="title.section.items" bundle="SITE_RESOURCES"/></h3>
 
-<span class="error">
-    <html:errors property="items" bundle="SITE_RESOURCES"/>
-</span>
+<p>
+	<span class="error0">
+	    <html:errors property="items" bundle="SITE_RESOURCES"/>
+	</span>
+</p>
 
 <ul class="mbottom2">
     <logic:equal name="section" property="itemAllowed" value="true">
@@ -233,117 +235,120 @@
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
 
         <bean:define id="itemId" name="item" property="idInternal"/>
-
-		<div class="separator1 mtop15 mbottom0"></div>
 		
-		<p class="mtop0 mbottom05">
-			<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
-			<strong><fr:view name="item" property="name"/></strong>
-            <logic:present name="directLinkContext">
-                <bean:define id="directLinkContext" name="directLinkContext"/>
-                (<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.item.directLink" bundle="SITE_RESOURCES"/></a>)
-            </logic:present>
-            
-            <span style="color: #888; padding-left: 1em;">
-                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-                    <fr:layout>
-                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-                        <fr:property name="key" value="true"/>
-                        <fr:property name="bundle" value="SITE_RESOURCES"/>
-                        <fr:property name="subLayout" value="values"/>
-                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
-                    </fr:layout>
-                </fr:view>
-            </span>
-		</p>
-        
-        <span>
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="<%= String.format("%s?method=editItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-				<bean:message key="link.editItem" bundle="SITE_RESOURCES"/>
-			</html:link>
-		</span>
-
-        <bean:define id="deleteUrl" type="java.lang.String" value="<%= String.format("%s?method=deleteItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>"/>
-        <bean:define id="deleteId" value="<%= "deleteForm" + item.getIdInternal() %>"/>
-
-        <span class="switchNoneStyle">
-        	   <span class="pleft1">
-	       		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	       		<html:link page="<%= deleteUrl %>">
-	       			<bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
-	       		</html:link>
-	       	</span>
-        </span>
-
-        <span class="switchInline">
-	     	<span class="pleft1">
-	            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	            <html:link href="<%= String.format("javascript:showElement('%s');", deleteId) %>">
-	                <bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
-	            </html:link>
+		<div>
+		<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
+		
+			<p class="mtop0 mbottom05">
+				<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
+				<strong><fr:view name="item" property="name"/></strong>
+	            <logic:present name="directLinkContext">
+	                <bean:define id="directLinkContext" name="directLinkContext"/>
+	                (<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.item.directLink" bundle="SITE_RESOURCES"/></a>)
+	            </logic:present>
+	            
+	            <span style="color: #888; padding-left: 1em;">
+	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
+	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                    <fr:layout>
+	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="key" value="true"/>
+	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                        <fr:property name="subLayout" value="values"/>
+	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                    </fr:layout>
+	                </fr:view>
+	            </span>
+			</p>
+	        
+	        <span>
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+				<html:link page="<%= String.format("%s?method=editItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
+					<bean:message key="link.editItem" bundle="SITE_RESOURCES"/>
+				</html:link>
 			</span>
-        </span>
+	
+	        <bean:define id="deleteUrl" type="java.lang.String" value="<%= String.format("%s?method=deleteItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>"/>
+	        <bean:define id="deleteId" value="<%= "deleteForm" + item.getIdInternal() %>"/>
+	
+	        <span class="switchNoneStyle">
+	        	   <span class="pleft1">
+		       		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		       		<html:link page="<%= deleteUrl %>">
+		       			<bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
+		       		</html:link>
+		       	</span>
+	        </span>
+	
+	        <span class="switchInline">
+		     	<span class="pleft1">
+		            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		            <html:link href="<%= String.format("javascript:showElement('%s');", deleteId) %>">
+		                <bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
+		            </html:link>
+				</span>
+	        </span>
+	
+			<span class="pleft1">
+		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		        <html:link page="<%= String.format("%s?method=editItemPermissions&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
+		            <bean:message key="link.item.group.edit" bundle="SITE_RESOURCES"/>
+		        </html:link>
+	        </span>
+	
+			<span class="pleft1">
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+				<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
+					<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+				</html:link>
+			</span>
+	
+	        <logic:notEmpty name="item" property="fileItems">
+	            <bean:size id="filesCount" name="item" property="fileItems"/>
+	        
+	            <logic:greaterThan name="filesCount" value="1">
+	        			<span class="pleft1">
+	        		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+	        	            <html:link page="<%= String.format("%s?method=organizeItemFiles&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
+	        	                <bean:message key="link.item.files.organize" bundle="SITE_RESOURCES"/>
+	        	            </html:link>
+	                </span>
+	            </logic:greaterThan>
+	            
+	        </logic:notEmpty>
+	        		        
+	        <div id="<%= deleteId %>" class="dnone mvert05">
+	            <fr:form action="<%= deleteUrl %>">
+	            	<p class="width550px">
+	                <span class="warning0 mright075">
+	                    <logic:equal name="item" property="deletable" value="true">
+	                        <bean:message key="message.item.delete.confirm" bundle="SITE_RESOURCES"/>
+	                    </logic:equal>
+	                    <logic:notEqual name="item" property="deletable" value="true">
+	                        <bean:message key="message.item.delete.notAvailable" bundle="SITE_RESOURCES"/>
+	                    </logic:notEqual>
+	                </span>                
+	                
+	                <logic:equal name="item" property="deletable" value="true">
+	                    <html:submit>
+	                        <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
+	                    </html:submit>
+	                </logic:equal>
+	                <html:button bundle="HTMLALT_RESOURCES" altKey="button.hide" property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteId) %>">
+	                    <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
+	                </html:button>
+	                </p>
+	            </fr:form>
+	        </div>
+	        
+		</div>
 
-		<span class="pleft1">
-	        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	        <html:link page="<%= String.format("%s?method=editItemPermissions&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-	            <bean:message key="link.item.group.edit" bundle="SITE_RESOURCES"/>
-	        </html:link>
-        </span>
 
-		<span class="pleft1">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-				<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
-			</html:link>
-		</span>
 
-        <logic:notEmpty name="item" property="fileItems">
-            <bean:size id="filesCount" name="item" property="fileItems"/>
-        
-            <logic:greaterThan name="filesCount" value="1">
-        			<span class="pleft1">
-        		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-        	            <html:link page="<%= String.format("%s?method=organizeItemFiles&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-        	                <bean:message key="link.item.files.organize" bundle="SITE_RESOURCES"/>
-        	            </html:link>
-                </span>
-            </logic:greaterThan>
-            
-        </logic:notEmpty>
-        		        
-        <div id="<%= deleteId %>" class="dnone mvert05">
-            <fr:form action="<%= deleteUrl %>">
-            	<p class="width550px">
-                <span class="warning0 mright075">
-                    <logic:equal name="item" property="deletable" value="true">
-                        <bean:message key="message.item.delete.confirm" bundle="SITE_RESOURCES"/>
-                    </logic:equal>
-                    <logic:notEqual name="item" property="deletable" value="true">
-                        <bean:message key="message.item.delete.notAvailable" bundle="SITE_RESOURCES"/>
-                    </logic:notEqual>
-                </span>                
-                
-                <logic:equal name="item" property="deletable" value="true">
-                    <html:submit>
-                        <bean:message key="button.confirm" bundle="SITE_RESOURCES"/>
-                    </html:submit>
-                </logic:equal>
-                <html:button bundle="HTMLALT_RESOURCES" altKey="button.hide" property="hide" onclick="<%= String.format("javascript:hideElement('%s');", deleteId) %>">
-                    <bean:message key="button.cancel" bundle="SITE_RESOURCES"/>
-                </html:button>
-                </p>
-            </fr:form>
-        </div>
-        
-        <div class="mtop1 pleft2">
-        	<%--
-			<div class="separator1"></div>
-			--%>
+  
+        <div class="mtop1" style="background: #fff; border: 1px dotted #ccc; padding: 1em;">
 		
-            <div class="width550px">
+            <div>
                	<fr:view name="item" property="information" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
                	</fr:view>
             </div>
@@ -393,6 +398,7 @@
                     	</ul>
                 </div>
             </logic:notEmpty>
+        </div>
         </div>
 	</logic:iterate>
 </logic:notEmpty>

@@ -39,15 +39,21 @@
     </fr:edit>
     
     <logic:notEmpty name="item" property="fileItems">
-        <h3>
+        <h3 class="mbottom05">
             <bean:message key="title.item.files" bundle="SITE_RESOURCES"/>
         </h3>
+        
+        <div class="infoop2 mtop05 mbottom1">
+        	<bean:message key="label.item.edit.add.file.instructions" bundle="SITE_RESOURCES"/>
+        </div>
     
         <fr:edit id="edit-files" name="item" property="sortedFileItems" schema="site.item.files.visible">
             <fr:layout name="tabular-editable">
+	            <fr:property name="classes" value="tstyle5 thlight mvert0"/>
+	            <fr:property name="columnClasses" value="acenter"/>
                 <fr:property name="customLink(add)">
                     <span class="switchInline">
-                        (<a href="javascript:insertLink('${downloadUrl}', '${displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
+                        (<a href="#" onclick="insertLink('${downloadUrl}', '${displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
                     </span>
                 </fr:property>
             </fr:layout>
@@ -69,12 +75,14 @@
             }
         </script>
     </logic:notEmpty>
-    
-    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.editItemButton" property="editItemButton">
-        <bean:message key="button.item.edit.submit" bundle="SITE_RESOURCES"/>
-    </html:submit>
 
-    <html:cancel>
-        <bean:message key="button.item.edit.cancel" bundle="SITE_RESOURCES"/>
-    </html:cancel>
+    <p class="mtop15">
+	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.editItemButton" property="editItemButton">
+	        <bean:message key="button.item.edit.submit" bundle="SITE_RESOURCES"/>
+	    </html:submit>
+	
+	    <html:cancel>
+	        <bean:message key="button.item.edit.cancel" bundle="SITE_RESOURCES"/>
+	    </html:cancel>
+    </p>
 </fr:form>

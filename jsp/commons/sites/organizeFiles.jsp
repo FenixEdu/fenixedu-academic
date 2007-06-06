@@ -48,5 +48,9 @@
 		    </fr:form>
 	    </p>
     </div>
-    
+
+<p style="color: #888;">
+	<em><bean:message key="message.file.reorder.tip" bundle="SITE_RESOURCES"/></em>
+</p>
+
 </logic:notEmpty>
