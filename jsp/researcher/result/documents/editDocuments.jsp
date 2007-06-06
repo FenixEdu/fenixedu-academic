@@ -11,7 +11,11 @@
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="result" name="result"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>" toScope="request"/>
-
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
+	
 	<bean:define id="prepareEdit" value="<%="/result/resultDocumentFilesManagement.do?method=prepareEdit&" + parameters + "&forwardTo=" + request.getParameter("forwardTo")%>"/>
 
 	<fr:edit id="editDocuments" name="documents" schema="resultDocumentFile.submited.edit" action="<%= prepareEdit %>">

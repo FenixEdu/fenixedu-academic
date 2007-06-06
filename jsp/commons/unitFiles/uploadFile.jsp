@@ -8,6 +8,7 @@
 
 <bean:define id="unitID" name="unit" property="idInternal"/>
 
+<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
 <fr:edit id="upload" name="fileBean" schema="view.genericFileUpload" action="<%= "/researchUnitFunctionalities.do?method=uploadFile&unitId=" + unitID %>">
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright"/>
@@ -15,3 +16,4 @@
 	</fr:layout>
 	<fr:destination name="cancel" path="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"/>
 </fr:edit>
+</logic:equal>

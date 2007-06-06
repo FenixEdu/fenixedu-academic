@@ -10,6 +10,10 @@
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="result" name="result"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + result.getClass().getSimpleName()%>"/>
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 
 	<bean:define id="remove" value="<%="/result/resultDocumentFilesManagement.do?method=remove&" + parameters + "&forwardTo=" + request.getParameter("forwardTo")%>"/>
 

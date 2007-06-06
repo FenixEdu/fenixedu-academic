@@ -11895,7 +11895,7 @@
     </service>
     <service>
     	<name>EnableExternalLogin</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLogin</implementationClass>
+        <implementationClass>@enableExternalLoginService@</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains/>

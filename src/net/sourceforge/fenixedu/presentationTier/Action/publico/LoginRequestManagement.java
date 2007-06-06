@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -71,8 +70,8 @@ public class LoginRequestManagement extends FenixDispatchAction {
 		}
 		try {
 			executeService("EnableExternalLogin", new Object[] { bean });
-		} catch (DomainException e) {
-			addActionMessage(request, "invalid.document.id");
+		} catch (Exception e) {
+			addActionMessage(request, e.getMessage());
 			return mapping.findForward("startRequestLoginProcess");
 		}
 		return mapping.findForward("requestLoginFinished");

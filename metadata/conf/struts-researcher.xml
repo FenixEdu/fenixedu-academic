@@ -182,6 +182,8 @@
 			<forward name="ShowResult" path="show-result-loggedin"/>
 			<forward name="editJournal" path="edit-journal"/>
 			<forward name="editEvent" path="edit-event"/>
+		    <forward name="backFromDetails" path="/resultPublications/listPublications.do"/>
+		    <forward name="ListUnitPublications" path="/researchUnitFunctionalities.do?method=preparePublications"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -276,6 +278,9 @@
 				    <forward name="uploadFile" path="research-unit-upload-file"/>
 				    <forward name="manageFiles" path="research-unit-manage-files"/>
 				    <forward name="editFile" path="research-unit-edit-file"/>
+				    <forward name="editPublicationCollaborators" path="research-unit-edit-publication-collaborators"/>
+				    <forward name="publications" path="research-unit-list-publications"/>
+				    <forward name="editUploaders" path="research-unit-edit-uploaders"/>
 		</action>
 
 		<action path="/sendEmailToResearchUnitGroups"

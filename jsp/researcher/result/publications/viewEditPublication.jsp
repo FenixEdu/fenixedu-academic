@@ -11,19 +11,23 @@
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="result" name="result" type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication"/>	
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
-
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
+	
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></h2>
 
 	<ul class="mvert2 list5">
 		<li>
-			<html:link page="/resultPublications/listPublications.do">
+			<html:link page="<%= "/resultPublications/goBackFromDetails.do?" + parameters %>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
 			</html:link>
 		</li>
 		<logic:equal name="result" property="deletableByCurrentUser" value="true">
 			<li>
-			<html:link page="<%="/resultPublications/prepareDelete.do?&resultId="+ resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete" /></html:link> 
+			<html:link page="<%="/resultPublications/prepareDelete.do?"+ parameters%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete" /></html:link> 
 			</li>
 		</logic:equal>
 	</ul>
@@ -31,7 +35,7 @@
 	<logic:equal name="confirm" value="yes">
 		<div  class="mtop1 mbottom15">
 		<p><span class="warning0"><bean:message key="researcher.ResultPublication.delete.useCase.title"/></span></p>
-		<fr:form action="<%= "/resultPublications/delete.do?resultId=" + resultId %>">
+		<fr:form action="<%= "/resultPublications/delete.do?" + parameters %>">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 			</html:submit>

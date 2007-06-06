@@ -151,10 +151,10 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	@Checked("ResultPredicates.writePredicate")
 	public void delete() {
 		Person requestingPerson = AccessControl.getPerson();
-		if (!hasPersonParticipation(requestingPerson)) {
+		if (!hasPersonParticipation(requestingPerson) && !this.getCreator().equals(requestingPerson)) {
 			throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
 		}
-		
+
 		removeAssociations();
 		removeRootDomainObject();
 		deleteDomainObject();
@@ -176,7 +176,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 		return Collections.unmodifiableList(sort(super.getResultParticipations()));
 	}
 
-    private List<ResultParticipation> filterResultParticipationsByRole(ResultParticipationRole role) {
+	private List<ResultParticipation> filterResultParticipationsByRole(ResultParticipationRole role) {
 		List<ResultParticipation> authorsParticipations = new ArrayList<ResultParticipation>();
 		for (ResultParticipation participation : getResultParticipations()) {
 			if (participation.getRole().equals(role)) {
@@ -187,11 +187,13 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	public List<ResultParticipation> getOrderedAuthorsResultParticipations() {
-		return Collections.unmodifiableList(sort(filterResultParticipationsByRole(ResultParticipationRole.Author)));
+		return Collections
+				.unmodifiableList(sort(filterResultParticipationsByRole(ResultParticipationRole.Author)));
 	}
 
 	public List<ResultParticipation> getOrderedEditorsResultParticipations() {
-		return Collections.unmodifiableList(sort(filterResultParticipationsByRole(ResultParticipationRole.Editor)));
+		return Collections
+				.unmodifiableList(sort(filterResultParticipationsByRole(ResultParticipationRole.Editor)));
 	}
 
 	/**
@@ -306,21 +308,21 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	private void removeAssociations() {
 		super.setCountry(null);
 		removeCreator();
-		for (;!getAllResultDocumentFiles().isEmpty();getAllResultDocumentFiles().get(0).delete()) {
-		
+		for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().get(0).delete()) {
+
 		}
 
-		for (;!getResultUnitAssociations().isEmpty();getResultUnitAssociations().get(0).delete()) {
-			
+		for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().get(0).delete()) {
+
 		}
 
-		for(;!getResultTeachers().isEmpty();getResultTeachers().get(0).delete()) {
-			
+		for (; !getResultTeachers().isEmpty(); getResultTeachers().get(0).delete()) {
+
 		}
 		// These should be the last to remove, because of access control
 		// verifications.
-		for (;!getResultParticipations().isEmpty();getResultParticipations().get(0).delete()) {
-			
+		for (; !getResultParticipations().isEmpty(); getResultParticipations().get(0).delete()) {
+
 		}
 	}
 
@@ -454,6 +456,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
 	public boolean isEditableByCurrentUser() {
 		Person person = AccessControl.getPerson();
+		if (getCreator().equals(person)) {
+			return true;
+		}
 		for (ResultParticipation participation : this.getResultParticipations()) {
 			if (participation.getPerson().equals(person)) {
 				return true;
@@ -463,7 +468,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	public boolean isDeletableByCurrentUser() {
-		return hasPersonParticipation(AccessControl.getPerson());
+		Person person = AccessControl.getPerson();
+		return getCreator().equals(person) || hasPersonParticipation(person);
 	}
 
 	public abstract String getSchema();

@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -996,5 +997,18 @@ public class Unit extends Unit_Base {
 		for (UnitFile file : getFiles()) {
 			file.updatePermissions(group);
 		}
+	}
+	
+	public boolean isUserAllowedToUploadFiles(Person person) {
+		return getAllowedPeopleToUploadFiles().contains(person);
+	}
+	
+	public boolean isCurrentUserAllowedToUploadFiles() {
+		return isUserAllowedToUploadFiles(AccessControl.getPerson());
+	}
+	
+	public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople)  {
+		getAllowedPeopleToUploadFiles().clear();
+		getAllowedPeopleToUploadFiles().addAll(allowedPeople);
 	}
 }

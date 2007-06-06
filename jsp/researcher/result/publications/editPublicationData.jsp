@@ -9,6 +9,10 @@
 <logic:present role="RESEARCHER">		
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 	<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 	
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.edit.publicationData"/></h2>
@@ -28,7 +32,7 @@
 		</logic:equal>
 	</logic:equal>
 
-	<fr:form action="<%= action %>">
+	<fr:form action="<%= action + "?" + parameters %>">
 	
 		<logic:equal name="publicationBean" property="createEvent" value="false">
 			<!-- Present publication fields -->

@@ -18,8 +18,9 @@
 
 <logic:notPresent name="loginBean">
 	<logic:present name="loginRequest">
+		<bean:define id="unitNames" name="loginRequest" property="user.person.workingResearchUnitNames" toScope="request" type="java.lang.String"/>
 		<bean:define id="requestID" name="loginRequest" property="idInternal"/>
-		<p class="mbottom0"><bean:message key="label.loginRequest.introduction" bundle="SITE_RESOURCES"/></p>
+		<p class="mbottom0"><bean:message key="label.loginRequest.introduction" bundle="SITE_RESOURCES" arg0="<%= unitNames%>"/></p>
 		<p class="mtop0"><bean:message key="label.loginRequest.docID" bundle="SITE_RESOURCES"/></p>
 		<p class="mbottom05">
 			<fr:view name="loginRequest" property="user.person.idDocumentType"/>:
@@ -41,7 +42,7 @@
 
 
 <logic:present name="loginBean">
-	<p class="mbottom0"><bean:message key="label.loginRequest.instrutions" bundle="SITE_RESOURCES"/></p>
+	<p class="mbottom0"><bean:message key="label.loginRequest.instructions" bundle="SITE_RESOURCES"/></p>
 	<fr:form action="<%= "/loginRequest.do?method=finish"%>">
 	<fr:edit id="edit.loginBean" name="loginBean" schema="edit.loginBean"> 
 		<fr:layout>

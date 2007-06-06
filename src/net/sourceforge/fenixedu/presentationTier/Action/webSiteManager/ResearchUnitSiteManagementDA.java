@@ -99,12 +99,12 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		IViewState viewState = RenderUtils.getViewState();
 		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
 			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
-			request.setAttribute("bean",bean);
+			request.setAttribute("bean", bean);
 			return mapping.findForward("externalPersonExtraInfo");
 		}
 		return managePeople(mapping, actionForm, request, response);
 	}
-	
+
 	public ActionForward addNewPerson(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
@@ -114,6 +114,9 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 			try {
 				executeService("CreateResearchContract", new Object[] { bean, getLoggedPerson(request),
 						LoginRequestManagement.getRequestURL(request) });
+			} catch (FenixServiceException e) {
+				addActionMessage(request, e.getMessage());
+				return managePeople(mapping, actionForm, request, response);
 			} catch (DomainException e) {
 				addActionMessage(request, e.getMessage());
 				return managePeople(mapping, actionForm, request, response);
@@ -172,19 +175,19 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
 	public ActionForward editContract(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		String contractID = request.getParameter("cid");
-		
-		if(contractID!=null) {
-			ResearchContract contract = (ResearchContract) RootDomainObject.readDomainObjectByOID(ResearchContract.class, Integer.valueOf(contractID));
+
+		if (contractID != null) {
+			ResearchContract contract = (ResearchContract) RootDomainObject.readDomainObjectByOID(
+					ResearchContract.class, Integer.valueOf(contractID));
 			request.setAttribute("contract", contract);
 			return mapping.findForward("editContract");
 		}
-		
+
 		return managePeople(mapping, actionForm, request, response);
 	}
 
-	
 	@Override
 	protected ResearchUnitSite getSite(HttpServletRequest request) {
 		String siteID = request.getParameter("oid");

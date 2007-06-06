@@ -29,7 +29,7 @@ public class ResultPredicates {
 		public boolean evaluate(ResearchResult result) {
 			final IUserView userView = AccessControl.getUserView();
 			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& result.hasPersonParticipation(userView.getPerson())) {
+					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
 				return true;
 			}
 			return false;
@@ -44,7 +44,7 @@ public class ResultPredicates {
 			final ResearchResult result = association.getResult();
 			final IUserView userView = AccessControl.getUserView();
 			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& result.hasPersonParticipation(userView.getPerson())) {
+					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
 				return true;
 			}
 			return false;
@@ -59,7 +59,7 @@ public class ResultPredicates {
 			final ResearchResult result = participation.getResult();
 			final IUserView userView = AccessControl.getUserView();
 			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& result.hasPersonParticipation(userView.getPerson())) {
+					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
 				return true;
 			}
 			return false;
@@ -74,7 +74,7 @@ public class ResultPredicates {
 			final ResearchResult result = documentFile.getResult();
 			final IUserView userView = AccessControl.getUserView();
 			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& result.hasPersonParticipation(userView.getPerson())) {
+					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
 				return true;
 			}
 			return false;

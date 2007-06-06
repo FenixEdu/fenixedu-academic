@@ -10,6 +10,10 @@
 	<bean:define id="result" name="result"/>
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + result.getClass().getSimpleName()%>"/>
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 	<!-- Action paths definitions -->
 
 	<bean:define id="prepareEdit" value="<%="/resultParticipations/prepareEdit.do?" + parameters%>"/>

@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -21,7 +23,18 @@ import org.apache.struts.action.ActionMessages;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
-    public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String unitId = request.getParameter("unitId");
+		if (unitId != null) {
+			ResearchUnit unit = (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
+			request.setAttribute("unit",unit);
+		}
+		return super.execute(mapping, form, request, response);
+	}
+	
+	public ActionForward backToResult(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final ResearchResult result = getResultFromRequest(request);
 	if (result == null) {

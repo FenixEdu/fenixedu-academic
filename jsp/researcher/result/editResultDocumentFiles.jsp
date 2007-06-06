@@ -13,6 +13,10 @@
 	<bean:define id="parameters">
 		resultId=<bean:write name="resultId"/>&resultType=<bean:write name="result" property="class.simpleName"/>
 	</bean:define>
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 	
 	<bean:define id="actionPath">
 		/result/resultDocumentFilesManagement.do?method=create&<bean:write name="parameters"/>

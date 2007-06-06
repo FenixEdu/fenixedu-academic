@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.OrderChange;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -29,7 +28,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final ResearchResult result = getResultFromRequest(request);
-	if (result == null || !result.hasPersonParticipation(getLoggedPerson(request))) {
+	Person person = getLoggedPerson(request);
+	if (result == null || (!result.hasPersonParticipation(person) && !result.getCreator().equals(person))) {
 	    return backToResultList(mapping, form, request, response);
 	}
 
@@ -355,7 +355,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
     private void checkNeededWarnings(HttpServletRequest request, ResearchResult result)
 	    throws FenixFilterException, FenixServiceException {
-	if (!result.hasPersonParticipation(getLoggedPerson(request))) {
+    	Person person = getLoggedPerson(request);
+    	if (!result.hasPersonParticipation(person) && !result.getCreator().equals(person)) {
 	    addActionMessage(request, "researcher.ResultParticipation.last.participation.warning");
 	}
     }

@@ -2429,6 +2429,20 @@ public class Person extends Person_Base {
 		return units;
 	}
 	
+	public String getWorkingResearchUnitNames() {
+		
+		String names = "";
+		List<ResearchUnit> units = getWorkingResearchUnits();
+		int length = units.size();
+		for(ResearchUnit unit : units) {
+			names += unit.getName();
+			if (--length > 0) {
+				names += ", ";
+			}
+		}
+		return names;
+	}
+	
 	public boolean isExternalPerson() {
 	    return hasExternalContract() || hasExternalResearchContract();
 	}

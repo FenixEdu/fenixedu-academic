@@ -272,7 +272,9 @@
     <slot name="documentType" read-only="true"/>
 	<slot name="documentIDNumber" read-only="true"/>
 	<slot name="email" read-only="true"/>
-	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="radio">
+		<property name="classes" value="liinline"/>
+	</slot>
 	<slot name="username" read-only="true"/>
 	<slot name="password" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="passwordConfirmation" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>

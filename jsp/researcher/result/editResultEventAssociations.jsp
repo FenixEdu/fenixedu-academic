@@ -11,6 +11,10 @@
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="result" name="result"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>"/>
+		<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 	
 	<!-- Action paths definitions -->
 	<bean:define id="create" value="<%="/resultAssociations/createEventAssociation.do?" + parameters%>"/>

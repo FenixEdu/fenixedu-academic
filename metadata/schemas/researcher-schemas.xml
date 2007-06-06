@@ -942,6 +942,8 @@ extends="eventCreation">
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
 	<slot name="role"/>
 </schema>
+
+
 <schema name="resultParticipation.full" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="visualOrder" read-only="true"/>
@@ -2653,7 +2655,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="tags" key="label.unitFileTags" layout="tag-cloud">
 			<property name="size" value="60"/>
-			<property name="tagClasses" value="tcloud"/>
+			<property name="tagClasses" value="tcloudedit"/>
 			<property name="tagSort" value="name"/>
 	</slot>
 	<slot name="uploadFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.filename">
@@ -2679,11 +2681,11 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="tags" key="label.unitFileTags" layout="tag-cloud">
 			<property name="size" value="60"/>
-			<property name="tagClasses" value="tcloud"/>
+			<property name="tagClasses" value="tcloudedit"/>
 			<property name="tagSort" value="name"/>
 	</slot>
 	<slot name="groups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="classes" value="nobullet"/>
+		<property name="classes" value="nobullet noindent"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>
@@ -2711,4 +2713,37 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 
 <schema name="unitFileTag.name" type="net.sourceforge.fenixedu.domain.UnitFileTag" bundle="RESEARCHER_RESOURCES">
 	<slot name="name"/>
+</schema>
+
+<schema name="edit-publication-collaborators" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="RESEARCHER_RESOURCES">
+	<slot name="publicationCollaborators" layout="option-select">
+	<property name="classes" value="nobullet noindent"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+			<property name="saveOptions" value="true"/>
+			<property name="eachLayout" value="values"/>
+			<property name="eachSchema" value="showNickName"/>
+			<property name="sortBy" value="name"/>
+	</slot>
+</schema>
+
+<schema name="edit.research.unit.publication.bean" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
+	<slot name="person" key="label.author" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+		<property name="saveOptions" value="true"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="showNickName"/>
+		<property name="sortBy" value="name"/>
+	</slot>	
+</schema>
+
+<schema name="edit-uploaders" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="RESEARCHER_RESOURCES">
+	<slot name="allowedPeopleToUploadFiles" key="label.uploaders" layout="option-select" >  
+		<property name="classes" value="nobullet noindent"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+		<property name="saveOptions" value="true"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="showNickName"/>
+		<property name="sortBy" value="name"/>
+	</slot>
 </schema>

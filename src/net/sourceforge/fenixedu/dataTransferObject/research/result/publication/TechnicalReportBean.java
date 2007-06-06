@@ -7,103 +7,104 @@ import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalRepo
 import bibtex.dom.BibtexEntry;
 
 public class TechnicalReportBean extends ResultPublicationBean implements Serializable {
-    private String address;
+	private String address;
 
-    private Integer numberPages;
+	private Integer numberPages;
 
-    private String language;
+	private String language;
 
-    private String number;
+	private String number;
 
-    private String technicalReportType;
+	private String technicalReportType;
 
-    public TechnicalReportBean() {
-	this.setPublicationType(ResultPublicationType.TechnicalReport);
-	this.setActiveSchema("result.publication.create.TechnicalReport");
-	this.setParticipationSchema("resultParticipation.simple");
-    }
+	public TechnicalReportBean() {
+		super();
+		this.setPublicationType(ResultPublicationType.TechnicalReport);
+		this.setActiveSchema("result.publication.create.TechnicalReport");
+		this.setParticipationSchema("resultParticipation.simple");
+	}
 
-    public TechnicalReportBean(TechnicalReport report) {
-	this();
-	fillCommonFields(report);
-	fillSpecificFields(report);
-    }
+	public TechnicalReportBean(TechnicalReport report) {
+		this();
+		fillCommonFields(report);
+		fillSpecificFields(report);
+	}
 
-    public TechnicalReportBean(ResultPublicationBean bean) {
-	this();
-	fillCommonBeanFields(bean);
-    }
+	public TechnicalReportBean(ResultPublicationBean bean) {
+		this();
+		fillCommonBeanFields(bean);
+	}
 
-    public TechnicalReportBean(BibtexEntry bibtexEntry) {
-	this();
-	fillBibTeXFields(bibtexEntry);
-	this.setActiveSchema("result.publication.import.TechnicalReport");
-    }
+	public TechnicalReportBean(BibtexEntry bibtexEntry) {
+		this();
+		fillBibTeXFields(bibtexEntry);
+		this.setActiveSchema("result.publication.import.TechnicalReport");
+	}
 
-    @Override
-    protected void fillSpecificFields(ResearchResultPublication publication) {
-	this.setTechnicalReportType(((TechnicalReport) publication).getTechnicalReportType());
-	this.setNumber(((TechnicalReport) publication).getNumber());
-	this.setAddress(((TechnicalReport) publication).getAddress());
-	this.setNumberPages(((TechnicalReport) publication).getNumberPages());
-	this.setLanguage(((TechnicalReport) publication).getLanguage());
-    }
+	@Override
+	protected void fillSpecificFields(ResearchResultPublication publication) {
+		this.setTechnicalReportType(((TechnicalReport) publication).getTechnicalReportType());
+		this.setNumber(((TechnicalReport) publication).getNumber());
+		this.setAddress(((TechnicalReport) publication).getAddress());
+		this.setNumberPages(((TechnicalReport) publication).getNumberPages());
+		this.setLanguage(((TechnicalReport) publication).getLanguage());
+	}
 
-    @Override
-    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
-	//setUnitFromBibtexEntry("organization", bibtexEntry);
-	setYearFromBibtexEntry(bibtexEntry);
-	setMonthFromBibtexEntry(bibtexEntry);
+	@Override
+	protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+		// setUnitFromBibtexEntry("organization", bibtexEntry);
+		setYearFromBibtexEntry(bibtexEntry);
+		setMonthFromBibtexEntry(bibtexEntry);
 
-	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
-	setTechnicalReportType(getStringValueFromBibtexEntry("type", bibtexEntry));
-	setNumber(getStringValueFromBibtexEntry("number", bibtexEntry));
-	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
-	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
-    }
+		setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
+		setTechnicalReportType(getStringValueFromBibtexEntry("type", bibtexEntry));
+		setNumber(getStringValueFromBibtexEntry("number", bibtexEntry));
+		setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
+		setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
+	}
 
-    @Override
-    public ResultPublicationBean convertTo(ResultPublicationType type) {
-	return ResultPublicationBeanConversions.technicalReportTo(this, type);
-    }
+	@Override
+	public ResultPublicationBean convertTo(ResultPublicationType type) {
+		return ResultPublicationBeanConversions.technicalReportTo(this, type);
+	}
 
-    public String getAddress() {
-	return address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setAddress(String address) {
-	this.address = address;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getLanguage() {
-	return language;
-    }
+	public String getLanguage() {
+		return language;
+	}
 
-    public void setLanguage(String language) {
-	this.language = language;
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    public String getNumber() {
-	return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 
-    public void setNumber(String number) {
-	this.number = number;
-    }
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
-    public Integer getNumberPages() {
-	return numberPages;
-    }
+	public Integer getNumberPages() {
+		return numberPages;
+	}
 
-    public void setNumberPages(Integer numberPages) {
-	this.numberPages = numberPages;
-    }
+	public void setNumberPages(Integer numberPages) {
+		this.numberPages = numberPages;
+	}
 
-    public String getTechnicalReportType() {
-	return technicalReportType;
-    }
+	public String getTechnicalReportType() {
+		return technicalReportType;
+	}
 
-    public void setTechnicalReportType(String technicalReportType) {
-	this.technicalReportType = technicalReportType;
-    }
+	public void setTechnicalReportType(String technicalReportType) {
+		this.technicalReportType = technicalReportType;
+	}
 }

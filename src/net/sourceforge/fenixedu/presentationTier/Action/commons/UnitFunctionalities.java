@@ -209,6 +209,12 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		return manageFiles(mapping, form, request, response);
 	}
 
+	public ActionForward configureUploaders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	
+		return mapping.findForward("editUploaders");
+	}
+	
 	protected abstract Integer getPageSize();
 
 	protected abstract UnitFile getUnitFile(HttpServletRequest request);

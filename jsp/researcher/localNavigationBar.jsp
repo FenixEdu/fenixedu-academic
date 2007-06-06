@@ -33,13 +33,39 @@
 	<logic:notEmpty name="workingResearchUnits">
 	<ul>
 		<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
-		<logic:iterate id="unit" name="workingResearchUnits">
-			<bean:define id="unitID" name="unit" property="idInternal"/>
+		<logic:iterate id="unitIter" name="workingResearchUnits">
+			<bean:define id="unitID" name="unitIter" property="idInternal" type="java.lang.Integer"/>
+			<bean:define id="unitName" name="unitIter" property="name" type="java.lang.String"/>
 			<li> 
-				<html:link page="<%= "/researchUnitFunctionalities.do?method=prepare&unitId=" + unitID %>">
-							<fr:view name="unit" property="name"/>
+				<html:link title="<%= unitName %>" page="<%= "/researchUnitFunctionalities.do?method=prepare&unitId=" + unitID %>">
+							<bean:write name="unitIter" property="acronym"/>
 				</html:link>
-			</li>
+
+				<logic:present name="unit">
+					<logic:equal name="unit" property="idInternal" value="<%= unitID.toString() %>">
+				<ul>
+					<li>
+						<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitId=" + unitID %>">
+							<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+						 </html:link>
+				    </li>	
+  			    <logic:equal name="unitIter" property="currentUserAbleToInsertOthersPublications" value="true">
+					<li>
+						<html:link page="<%= "/researchUnitFunctionalities.do?method=preparePublications&unitId=" + unitID %>">
+								<bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/>
+						</html:link>
+					</li>
+				</logic:equal>
+				<logic:equal name="unitIter" property="currentUserAbleToDefineGroups" value="true">
+					<li>
+						<html:link page="<%= "/researchUnitFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+						</html:link>
+					</li>
+				</logic:equal>
+					<li><html:link page="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
+			</ul>
+				</logic:equal>
+			</logic:present>
 		</logic:iterate>
 	</ul>
 	</logic:notEmpty>	

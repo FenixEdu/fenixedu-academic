@@ -178,6 +178,10 @@ public class ResearchUnit extends ResearchUnit_Base {
 		return groups;
 	}
 	
+	public boolean isUserAbleToInsertOthersPublications(Person person) {
+		return getPublicationCollaborators().contains(person);
+	}
+	
 	public boolean isUserAbleToDefineGroups(Person person) {
 		ResearchUnitSite site = (ResearchUnitSite) this.getSite();
 		return (site == null) ? false : site.getManagers().contains(person); 
@@ -185,5 +189,14 @@ public class ResearchUnit extends ResearchUnit_Base {
 	
 	public boolean isCurrentUserAbleToDefineGroups() {
 		return isUserAbleToDefineGroups(AccessControl.getPerson());
+	}
+	
+	public boolean isCurrentUserAbleToInsertOthersPublications() {
+		return isUserAbleToInsertOthersPublications(AccessControl.getPerson());
+	}
+	
+	public void setPublicationCollaborators(List<Person> collaborators) {
+		getPublicationCollaborators().clear();
+		getPublicationCollaborators().addAll(collaborators);
 	}
 }

@@ -11,7 +11,7 @@
 <logic:present name="file">
 	<fr:edit id="editFile" name="file" schema="edit.unit.files" action="<%= "/researchUnitFunctionalities.do?method=editFile&unitId=" + unitID %>">
 		<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5"/>
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="cancel" path="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"/>

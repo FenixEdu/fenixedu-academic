@@ -232,6 +232,7 @@ table td.cornerright { }
 .tderror1 { color: #c00; }
 .tderror1 span { background-color: #ffeadd; }
 
+table.thnowrap { white-space: nowrap; }
 .nowrap { white-space: nowrap; }
 .breakword { word-wrap: break-word; }
 
@@ -1936,4 +1937,26 @@ ul.tcloud li a { border: none !important; }
 .tcloudlevel6-6 { font-size: 2.0em; color: #88a859 !important; }
 .tcloudlevel6-7 { font-size: 3.0em; color: #88a859 !important; }
 .tcloudlevel6-8 { font-size: 4.0em; color: #88a859 !important; }
+
+ul.tcloudedit {
+background: none;
+padding: 0.5em 1em;
+}
+ul.tcloudedit li {
+display: inline;
+padding-right: 0.5em;
+line-height: 2em;
+}
+
+ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
+
+.tcloudedit .tcloudlevel6-0 { font-size: 0.5em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-1 { font-size: 0.8em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-2 { font-size: 1.0em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-3 { font-size: 1.2em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-4 { font-size: 1.4em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-5 { font-size: 1.7em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-6 { font-size: 2.0em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-7 { font-size: 3.0em; color: #444 !important; }
+.tcloudedit .tcloudlevel6-8 { font-size: 4.0em; color: #444 !important; }
 

@@ -10,7 +10,11 @@
 	<bean:define id="resultId" name="result" property="idInternal"/>
 	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&amp;resultType=" + resultType%>"/>
-
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
+	
 	<!-- Action paths definitions -->
 	<bean:define id="backLink" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>
 

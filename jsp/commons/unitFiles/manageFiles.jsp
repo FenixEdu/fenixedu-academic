@@ -9,12 +9,15 @@
 
 <bean:define id="unitID" name="unit" property="idInternal"/>
 
+<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
 <ul>
 	<li>
 		<html:link page="<%= "/researchUnitFunctionalities.do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
 	</li>
 </ul>
+</logic:equal>
 
+<logic:notEmpty name="files">
 
 <fr:view name="unit" property="unitFileTags">
 	<fr:layout name="tag-cloud">
@@ -26,21 +29,25 @@
 	</fr:layout>
 </fr:view>
 
-<logic:notEmpty name="files">
-
 <bean:define id="cpURL" value="<%= "/researcher/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID%>"/>
 <logic:present name="tagName">
 	<bean:define id="tagName" name="tagName" type="java.lang.String"/>
 	<bean:define id="cpURL" value="<%= "/researcher/researchUnitFunctionalities.do?method=viewFilesByTag&tagName=" + tagName + "&unitId=" + unitID%>"/>
 </logic:present>
 
+<p>
+	<html:link page="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID%>">
+		<bean:message key="renderers.show.all" bundle="RENDERER_RESOURCES"/>
+	</html:link>
+</p>
+
 <bean:message key="label.numberPages" bundle="RESEARCHER_RESOURCES"/>: 
 <cp:collectionPages url="<%= cpURL %>" pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2"/>
-				<fr:property name="columnClasses" value=",smalltxt,smalltxt width100px,,,smalltxt color888,width100px"/>
+				<fr:property name="classes" value="tstyle2 thlight thnowrap"/>
+				<fr:property name="columnClasses" value=",smalltxt,smalltxt width100px acenter,,,smalltxt color888,width100px"/>
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />
@@ -59,8 +66,6 @@
 <bean:message key="label.numberPages" bundle="RESEARCHER_RESOURCES"/>: <cp:collectionPages url="<%= cpURL %>"
 pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 
-</logic:notEmpty>
-
 <p>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 
 	<fr:view name="unit" property="unitFileTags">
@@ -72,6 +77,7 @@ pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 	</fr:view>
 </p>
 
+</logic:notEmpty>
 
 <logic:empty name="files">
 	<bean:message key="label.noFilesAvailable" bundle="RESEARCHER_RESOURCES"/>

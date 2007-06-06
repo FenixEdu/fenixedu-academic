@@ -390,6 +390,7 @@ mailingList.host.name=
 #----------------------------------------------
 authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
 changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
+enableExternalLoginService=net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
 password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase
 
 #----------------------------------------------

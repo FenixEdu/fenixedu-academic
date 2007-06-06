@@ -13,7 +13,10 @@
 	
 	<!-- Action paths definitions -->
 	<bean:define id="parameters" value="<%="resultId=" + resultId + "&resultType=" + resultType %>" toScope="request"/>
-
+	<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+	</logic:present>
 
 
 	<bean:define id="create" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=create&" + parameters%>" />

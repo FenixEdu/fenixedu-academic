@@ -11,7 +11,11 @@
 
 <bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 <bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
-
+<logic:present name="unit">
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
+</logic:present>
+	
 <logic:messagesPresent message="true">
 	<p>
 	<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -25,7 +29,7 @@
 	<logic:present name="publicationBean" property="event">
 		<div class="infoop2"><bean:message key="label.chooseEventEdition.instructions" bundle="RESEARCHER_RESOURCES"/></div>
 		<div class="dinline forminline">	
-			<fr:form action="/resultPublications/editData.do">
+			<fr:form action="<%= "/resultPublications/editData.do?" + parameters %>">
 				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 				<fr:edit id="selectPublication" name="publicationBean" schema="result.publication.create.ConferenceArticle.selectEdition">
 				<fr:layout name="tabular">
@@ -35,11 +39,11 @@
 				</fr:edit>
 				<html:submit property="confirm"><bean:message key="label.chooseEventEditionFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>
-			<fr:form action="/resultPublications/createEventToAssociate.do">
+			<fr:form action="<%= "/resultPublications/createEventToAssociate.do?" + parameters %>">
 				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 				<html:submit property="createNewEventEdition"><bean:message key="label.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 			</fr:form>
-			<fr:form action="/resultPublications/prepareSelectEventToAssociate.do">					
+			<fr:form action="<%= "/resultPublications/prepareSelectEventToAssociate.do?" + parameters %>">					
 				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 				<html:submit property="goToNextStep"><bean:message key="label.chooseNewEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 			</fr:form>
@@ -53,7 +57,7 @@
 <!-- Create Event or Event Edition  -->			
 <logic:present name="eventEditionBean">
 	<div class="dinline forminline">	
-		<fr:form action="/resultPublications/createEventToAssociate.do">
+		<fr:form action="<%= "/resultPublications/createEventToAssociate.do?" + parameters %>">
 			<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 			<fr:edit id="eventCreationBean" name="eventEditionBean" visible="false"/>		
 			
@@ -72,7 +76,7 @@
 							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
-					<fr:destination name="invalid" path="/resultPublications/prepareCreateEventToAssociate.do"/>
+					<fr:destination name="invalid" path="<%= "/resultPublications/prepareCreateEventToAssociate.do?" + parameters %>"/>
 				</fr:edit>
 				<br/>
 				<html:submit property="goToNextStep"><bean:message key="label.chooseEventFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -90,7 +94,7 @@
 							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
-					<fr:destination name="invalid" path="/resultPublications/prepareCreateEventToAssociate.do"/>			
+					<fr:destination name="invalid" path="<%= "/resultPublications/prepareCreateEventToAssociate.do?" + parameters %>"/>			
 				</fr:edit>
 				<br/>
 				<html:submit property="goToNextStep"><bean:message key="label.chooseEventEditionFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -104,7 +108,7 @@
 						<fr:property name="classes" value="tstyle5 thright thlight thtop mtop0"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
-					<fr:destination name="invalid" path="/resultPublications/prepareCreateEventToAssociate.do"/>
+					<fr:destination name="invalid" path="<%= "/resultPublications/prepareCreateEventToAssociate.do?" + parameters %>"/>
 				</fr:edit>
 				<br/>
 				<p><strong><bean:message key="label.eventEdition" bundle="RESEARCHER_RESOURCES"/></strong>:</p>
@@ -114,7 +118,7 @@
 							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
-					<fr:destination name="invalid" path="/resultPublications/prepareCreateEventToAssociate.do"/>			
+					<fr:destination name="invalid" path="<%= "/resultPublications/prepareCreateEventToAssociate.do?" + parameters %>"/>			
 				</fr:edit>
 				<br/>
 				<html:submit property="goToNextStep"><bean:message key="label.createEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -133,7 +137,7 @@
 							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 				        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
-					<fr:destination name="invalid" path="/resultPublications/prepareCreateEventToAssociate.do"/>			
+					<fr:destination name="invalid" path="<%= "/resultPublications/prepareCreateEventToAssociate.do?" + parameters %>"/>			
 				</fr:edit>
 				<br/>
 			 	<html:submit property="goToNextStep"><bean:message key="label.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -141,14 +145,14 @@
 		</fr:form>
 		<!-- Auxiliary form to create event edition -->
 		<logic:equal name="eventEditionBean" property="selectEventEditionState" value="true">
-			<fr:form action="/resultPublications/createEventToAssociate.do">
+			<fr:form action="<%= "/resultPublications/createEventToAssociate.do?" + parameters %>">
 				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 				<fr:edit id="eventEditionBean" name="eventEditionBean" visible="false"/>
 				<html:submit property="createNewEventEdition">
 					<bean:message key="label.createEventEdition" bundle="RESEARCHER_RESOURCES"/>
 				</html:submit>
 			</fr:form>
-			<fr:form action="/resultPublications/prepareSelectEventToAssociate.do">					
+			<fr:form action="<%= "/resultPublications/prepareSelectEventToAssociate.do?" + parameters %>">					
 				<fr:edit id="publicationBean" name="publicationBean" visible="false"/>
 			<html:submit property="goToNextStep"><bean:message key="label.chooseNewEvent" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 		</fr:form>

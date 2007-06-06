@@ -7,8 +7,11 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.I
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -25,55 +28,71 @@ public class CreateResultPublication extends ResultPublicationService {
 	public Book run(BookBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Book) ResearchResultMetaDataManager.addDefaultDocument(createBookFromBean(bean));
+		return (Book) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createBookFromBean(bean)));
 	}
 
 	public BookPart run(BookPartBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (BookPart) ResearchResultMetaDataManager.addDefaultDocument(createBookPartFromBean(bean));
+		return (BookPart) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createBookPartFromBean(bean)));
 	}
 
 	public Article run(ArticleBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Article) ResearchResultMetaDataManager.addDefaultDocument(createArticleFromBean(bean));
+		return (Article) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createArticleFromBean(bean)));
 	}
 
 	public Inproceedings run(InproceedingsBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Inproceedings) ResearchResultMetaDataManager.addDefaultDocument(createInproceedingsFromBean(bean));
+		return (Inproceedings) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createInproceedingsFromBean(bean)));
 	}
 
 	public Proceedings run(ProceedingsBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Proceedings) ResearchResultMetaDataManager.addDefaultDocument(createProceedingsFromBean(bean));
+		return (Proceedings) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createProceedingsFromBean(bean)));
 	}
 
 	public Thesis run(ThesisBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Thesis) ResearchResultMetaDataManager.addDefaultDocument(createThesisFromBean(bean));
+		return (Thesis) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createThesisFromBean(bean)));
 	}
 
 	public Manual run(ManualBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (Manual) ResearchResultMetaDataManager.addDefaultDocument(createManualFromBean(bean));
+		return (Manual) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createManualFromBean(bean)));
 	}
 
 	public TechnicalReport run(TechnicalReportBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (TechnicalReport) ResearchResultMetaDataManager.addDefaultDocument(createTechnicalReportFromBean(bean));
+		return (TechnicalReport) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createTechnicalReportFromBean(bean)));
 	}
 
 	public OtherPublication run(OtherPublicationBean bean) {
 		if (bean == null)
 			throw new NullPointerException();
-		return (OtherPublication) ResearchResultMetaDataManager.addDefaultDocument(createOtherPublicationFromBean(bean));
+		return (OtherPublication) associateUnitIfNeeded(bean, ResearchResultMetaDataManager
+				.addDefaultDocument(createOtherPublicationFromBean(bean)));
+	}
+
+	private ResearchResult associateUnitIfNeeded(ResultPublicationBean bean, ResearchResult publication) {
+		if (bean.getUnit() != null) {
+			publication.addUnitAssociation(bean.getUnit(), ResultUnitAssociationRole.Participant);
+		}
+		return publication;
 	}
 
 }

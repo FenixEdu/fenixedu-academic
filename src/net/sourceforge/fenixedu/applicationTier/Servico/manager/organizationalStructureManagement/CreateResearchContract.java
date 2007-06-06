@@ -6,6 +6,7 @@ import java.util.List;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.LoginRequest;
@@ -19,9 +20,12 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class CreateResearchContract extends Service {
 
-	public void run(ResearchContractBean bean, Person creator, String url) {
+	public void run(ResearchContractBean bean, Person creator, String url) throws FenixServiceException {
 		Person person = bean.getPerson();
 		if (person == null) {
+			if (Person.readPersonByEmailAddress(bean.getEmail())!=null) {
+				throw new FenixServiceException("error.email.already.in.use"); 
+			}
 			person = Person.createExternalPerson(bean.getPersonNameString(), Gender.MALE, null, null,
 					null, null, bean.getEmail(), bean.getDocumentIDNumber(), bean.getDocumentType());
 		}
@@ -43,7 +47,7 @@ public class CreateResearchContract extends Service {
 					"email.login.subject");
 			String message = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES",
 					"email.login.message", new Object[] { bean.getPersonNameString(), creator.getName(),
-							url + request.getHash() });
+							url + request.getHash(), bean.getUnit().getName(), person.getUsername() });
 
 			List<String> tos = new ArrayList<String>();
 			tos.add(bean.getEmail());

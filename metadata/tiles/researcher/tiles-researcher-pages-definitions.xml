@@ -178,7 +178,7 @@
     </definition>      
 
 	<definition name="manage-persisted-groups" extends="researcher.unit.functionalities">
-       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+       <put name="body" value="/researcher/researchUnit/managePersistedGroups.jsp"/>  
     </definition>          
     
 	<definition name="create-persisted-group" extends="researcher.unit.functionalities">
@@ -204,5 +204,17 @@
    	<definition name="research-unit-edit-file" extends="researcher.unit.functionalities">
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
-    
+
+	<definition name="research-unit-edit-publication-collaborators" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/managePublicationCollaborators.jsp"/>  
+    </definition>      
+
+	<definition name="research-unit-list-publications" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/listPublications.jsp"/>  
+    </definition>      
+
+	<definition name="research-unit-edit-uploaders" extends="researcher.unit.functionalities">
+       <put name="body" value="/researcher/researchUnit/configureUploaders.jsp"/>  
+    </definition>      
+
 </tiles-definitions>

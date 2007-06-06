@@ -13261,3 +13261,21 @@ relation UnitUnitFileTag {
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
+
+relation PublicationCollaborators {
+	net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit playsRole collaboratorIn {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole publicationCollaborators {
+		multiplicity *;
+	}
+}
+
+relation AllowedToUploadInUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unitsWithUploadPermission {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole allowedPeopleToUploadFiles {
+		multiplicity *;
+	}
+}
