@@ -26,13 +26,19 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.AccessibleItem"
                   table="ACCESSIBLE_ITEM">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.SiteElement"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Section"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.FunctionalitySection"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Item"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Functionality"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Module"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.SiteElement"
                   table="ACCESSIBLE_ITEM">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Section"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Item"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.FunctionalitySection"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitSite" table="SITE">
