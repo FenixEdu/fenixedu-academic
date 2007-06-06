@@ -1333,9 +1333,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			for (final GroupProposal groupProposal : groupProposals) {
 				row.setCell(groupProposal.getFinalDegreeWorkProposal().getProposalNumber().toString());
 			}
+			if (group.getProposalAttributed() != null) {
+			    row.setCell(group.getProposalAttributed().getProposalNumber().toString());
+			} else if (group.getProposalAttributedByTeacher() != null) {
+			    row.setCell(group.getProposalAttributedByTeacher().getProposalNumber().toString());
+			} else {
+			    row.setCell("");
+			}
 			maxNumberGroupProposals = Math.max(maxNumberGroupProposals, groupProposals.size());
 		}
 		for (int i = 0; i < maxNumberGroupProposals; spreadsheet.setHeader("Proposta de pref. " + ++i));
+		spreadsheet.setHeader("Proposta Atribuida");
 	}
 
 	private void fillStudentsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
