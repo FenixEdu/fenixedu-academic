@@ -65,7 +65,7 @@
                                 
                                 <fr:edit id="editBannerMainImage" name="editBannerBean" slot="mainImage.file">
                                     <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
-                                        <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
+                                        <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
                                     </fr:validator>
                                     
                                     <fr:layout>
@@ -82,7 +82,7 @@
                             <td class="tdclear tderror1">
                                 <fr:hasMessages for="editBannerMainImage" type="validation">
                                 	<span>
-	                                    <bean:message key="message.site.image.type.validation"/>
+	                                    <bean:message key="message.site.image.type.validation" bundle="WEBSITEMANAGER_RESOURCES"/>
                                     </span>
                                 </fr:hasMessages>
                             </td>
@@ -100,7 +100,7 @@
                             
                                 <fr:edit id="editBannerBackgroundImage" name="editBannerBean" slot="backgroundImage.file">
                                     <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
-                                        <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
+                                        <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
                                     </fr:validator>
                                     
                                     <fr:layout>
@@ -117,7 +117,7 @@
                             <td class="tdclear tderror1">
                                 <fr:hasMessages for="editBannerBackgroundImage" type="validation">
                                 	<span>
-	                                    <bean:message key="message.site.image.type.validation"/>
+	                                    <bean:message key="message.site.image.type.validation" bundle="WEBSITEMANAGER_RESOURCES"/>
                                     </span>
                                 </fr:hasMessages>
                             </td>

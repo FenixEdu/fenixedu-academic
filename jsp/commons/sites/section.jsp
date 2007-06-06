@@ -173,6 +173,7 @@
 
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
                 <fr:property name="currentClasses" value="highlight1"/>
+                <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
         </fr:view>

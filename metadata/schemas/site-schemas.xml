@@ -80,7 +80,9 @@
     <slot name="mainImage.file" key="label.site.banner.mainImage">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
             <property name="required" value="true"/>
-            <property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
+            <property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
+            <property name="typeMessage" value="message.site.image.type.validation"/>
+            <property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
         </validator>
     
         <property name="size" value="40"/>
@@ -91,6 +93,8 @@
     <slot name="backgroundImage.file" key="label.site.banner.backgroundImage">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
             <property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
+            <property name="typeMessage" value="message.site.image.type.validation"/>
+            <property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
         </validator>
     
         <property name="size" value="40"/>

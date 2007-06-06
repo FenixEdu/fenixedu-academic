@@ -20,10 +20,20 @@ public class FileValidator extends HtmlValidator {
     private String acceptedExtensions;
     private String acceptedTypes; 
     
+    private String typeMessage;
+    private String extensionMessage;
+    private String sizeMessage;
+    
+    private String bundle;
+    
     private Object[] arguments;
     
     public FileValidator(Validatable component) {
         super(component);
+        
+        setTypeMessage("renderers.validator.file.type");
+        setExtensionMessage("renderers.validator.file.extension");
+        setSizeMessage("renderers.validator.file.size");
     }
 
     public boolean isRequired() {
@@ -74,7 +84,39 @@ public class FileValidator extends HtmlValidator {
         this.maxSize = maxSize;
     }
 
-    private long convertedMaxSize() {
+    public String getExtensionMessage() {
+		return extensionMessage;
+	}
+
+	public void setExtensionMessage(String extensionMessage) {
+		this.extensionMessage = extensionMessage;
+	}
+
+	public String getSizeMessage() {
+		return sizeMessage;
+	}
+
+	public void setSizeMessage(String sizeMessage) {
+		this.sizeMessage = sizeMessage;
+	}
+
+	public String getTypeMessage() {
+		return typeMessage;
+	}
+
+	public void setTypeMessage(String typeMessage) {
+		this.typeMessage = typeMessage;
+	}
+
+	public String getBundle() {
+		return bundle;
+	}
+
+	public void setBundle(String bundle) {
+		this.bundle = bundle;
+	}
+
+	private long convertedMaxSize() {
         String maxSize = getMaxSize().trim().toLowerCase();
         long value;
         long multiplier = 1;
@@ -107,11 +149,13 @@ public class FileValidator extends HtmlValidator {
     
     @Override
     protected String getResourceMessage(String message) {
-        if (this.arguments == null || this.arguments.length == 0) {
-            return super.getResourceMessage(message);
+    	String userMessage = RenderUtils.getResourceString(getBundle(), message);
+
+    	if (this.arguments == null || this.arguments.length == 0) {
+            return userMessage;
         }
         else {
-            return RenderUtils.getFormatedResourceString(message, this.arguments);
+            return RenderUtils.getFormatedResourceString(userMessage, this.arguments);
         }
     }
 
@@ -134,7 +178,7 @@ public class FileValidator extends HtmlValidator {
             long maxSize = convertedMaxSize();
 
             if (size > maxSize) {
-                setInvalid("renderers.validator.file.size", maxSize, getMaxSize());
+                setInvalid(getSizeMessage(), maxSize, getMaxSize());
                 return;
             }
         }
@@ -147,7 +191,7 @@ public class FileValidator extends HtmlValidator {
                 String extension = fileName.substring(index + 1).toLowerCase(); 
                 
                 if (! getAcceptedExtensions().contains(extension)) {
-                    setInvalid("renderers.validator.file.extension", getAcceptedExtensions(), extension);
+                    setInvalid(getExtensionMessage(), getAcceptedExtensions(), extension);
                     return;
                 }
                 else {
@@ -159,7 +203,8 @@ public class FileValidator extends HtmlValidator {
         
         if (getAcceptedTypes() != null) {
             if (! matchesMimeType(file.getContentType().toLowerCase())) {
-                setInvalid("renderers.validator.file.type", getAcceptedTypes(), file.getContentType());
+                String typesFormated = getAcceptedTypes().replace(",", ", ");
+				setInvalid(getTypeMessage(), typesFormated, file.getContentType());
                 return;
             }
         }

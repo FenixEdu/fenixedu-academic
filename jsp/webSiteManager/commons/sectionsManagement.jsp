@@ -65,9 +65,9 @@
                 <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
                 <fr:property name="noChildrenFor(FunctionalitySection)" value="true"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
-                <fr:property name="schemaFor(FunctionalitySection)" value="site.functionalitySection.name"/>
                 <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
-                <fr:property name="imageFor(FunctionalitySection)" value="/images/site/functionalitySection.gif"/>
+
+                <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
             <fr:destination name="functionalitySection.view" path="<%= actionName + "?method=functionalitySection&amp;sectionID=${idInternal}&amp;" + context %>"/>
