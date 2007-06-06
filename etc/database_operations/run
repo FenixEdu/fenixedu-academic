@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 
+execute "Create Domain Class Info table" createDomainClassInfoTable.sql
