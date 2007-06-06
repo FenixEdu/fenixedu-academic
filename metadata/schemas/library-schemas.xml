@@ -1,0 +1,40 @@
+<schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="discussed" key="label.thesis.discussed"/>
+    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name"/>
+    <slot name="finalFullTitle" key="label.thesis.title" layout="short">
+    	<property name="length" value="60"/>
+    </slot>
+</schema>
+
+<schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="discussed" key="label.thesis.discussed"/>
+    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name"/>
+    <slot name="finalTitle" key="label.thesis.title"/>
+    <slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label"/>
+    <slot name="language" key="label.thesis.language"/>
+    <slot name="scientificArea" key="label.thesis.scientific.area" layout="null-as-label"/>
+</schema>
+
+<schema name="library.thesis.details.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="discussed" key="label.thesis.discussed" read-only="true"/>
+    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name" read-only="true"/>
+    <slot name="finalTitle" key="label.thesis.title" read-only="true"/>
+    <slot name="finalSubtitle" key="label.thesis.subtitle"  layout="null-as-label" read-only="true"/>
+    <slot name="language" key="label.thesis.language" read-only="true"/>
+    <slot name="scientificArea" key="label.thesis.scientific.area">
+    	<property name="size" value="50"/>
+    </slot>
+</schema>
+
+<schema name="library.thesis.list.exported" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="discussed" key="label.thesis.discussed"/>
+    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name">
+    	<property name="middleNamesInicials" value="true"/>
+    </slot>
+    <slot name="finalTitle" key="label.thesis.title" layout="short"/>
+    <slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label">
+    	<property name="subLayout" value="short"/>
+    </slot>
+    <slot name="language" key="label.thesis.language"/>
+    <slot name="scientificArea" key="label.thesis.scientific.area" layout="null-as-label"/>
+</schema>

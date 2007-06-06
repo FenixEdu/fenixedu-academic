@@ -1,0 +1,31 @@
+<!DOCTYPE tiles-definitions 
+	PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+	
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="library-index" extends="definition.library.master">
+		<put name="body" value="/library/index.jsp"/>
+	</definition>	
+
+	<definition name="theses-list" extends="definition.library.master">
+		<put name="body" value="/library/theses/list.jsp"/>
+	</definition>	
+
+	<definition name="thesis-verify" extends="definition.library.master">
+		<put name="body" value="/library/theses/thesis-verify.jsp"/>
+	</definition>	
+
+	<definition name="theses-list-confirmed" extends="definition.library.master">
+		<put name="body" value="/library/theses/listConfirmed.jsp"/>
+	</definition>	
+
+	<definition name="theses-list-exported" extends="definition.library.master">
+		<put name="body" value="/library/theses/listExported.jsp"/>
+	</definition>	
+
+	<definition name="theses-export-confirm" extends="definition.library.master">
+		<put name="body" value="/library/theses/exportConfirm.jsp"/>
+	</definition>	
+
+</tiles-definitions>
