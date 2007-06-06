@@ -27,8 +27,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("<a href='");
-            strBuffer.append(context);
-            strBuffer.append("/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
                     .append("</a>");

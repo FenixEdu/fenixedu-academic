@@ -29,8 +29,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append("<a href='");
-                strBuffer.append(context);
-                strBuffer.append("/siteViewer.do?method=roomViewer&amp;roomName=");
+                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                         "&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()

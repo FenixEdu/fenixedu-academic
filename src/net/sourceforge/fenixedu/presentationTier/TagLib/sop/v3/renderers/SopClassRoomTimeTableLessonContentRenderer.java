@@ -27,8 +27,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("<a href='");
-            strBuffer.append(context);
-            strBuffer.append("/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(infoExecutionCourse.getSigla())
                     .append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")").append("</a>");

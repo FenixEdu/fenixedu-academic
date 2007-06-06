@@ -40,7 +40,7 @@ public class CheckPathByRoleFilter implements Filter {
 
 	final IUserView userView = getUserView(request);
 	final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
-	if (RequestUtils.isPrivateURI(request) && !isJavascript(uri) && !isDomainBrowser(uri) && userView != null) {
+	if (RequestUtils.isPrivateURI(request) && !isJavascript(uri) && !isDomainBrowser(uri) && !isLayout(uri) && userView != null) {
 	    if (!validUserView(userView) || !hasRoleForSubApplication(uri, userView)) {
 		System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador()
 			+ " to uri: " + uri);
@@ -49,6 +49,10 @@ public class CheckPathByRoleFilter implements Filter {
 	    }
 	}
 	filterChain.doFilter(request, response);
+    }
+
+    private boolean isLayout(final String uri) {
+	return uri.startsWith("/layout/");
     }
 
     private boolean isDomainBrowser(final String uri) {

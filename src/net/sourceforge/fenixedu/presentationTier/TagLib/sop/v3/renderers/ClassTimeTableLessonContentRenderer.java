@@ -27,8 +27,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("<a href='");
-            strBuffer.append(context);
-            strBuffer.append("/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
@@ -37,8 +36,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");
-                strBuffer.append(context);
-                strBuffer.append("/siteViewer.do?method=roomViewer&amp;roomName=")
+                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
                             .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
                             .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
                             .append("&amp;executionPeriodOID=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
