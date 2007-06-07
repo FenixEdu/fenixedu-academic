@@ -65,8 +65,11 @@
 
 <!-- AssiduousnessRecord -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord" table="ASSIDUOUSNESS_RECORD">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Justification"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Clocking"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Justification"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.MissingClocking"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Leave"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.assiduousness.Anulation"/>
 </class-descriptor>
 
 <!-- Justification -->
