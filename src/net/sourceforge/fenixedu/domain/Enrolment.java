@@ -1009,7 +1009,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return isApproved() && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(curricularCourse, executionPeriod));
+	    return isApproved() && (getCurricularCourse().isEquivalent(curricularCourse) /*|| hasCurricularCourseEquivalence(curricularCourse, executionPeriod)*/) ;
 	} else {
 	    return false;
 	}
