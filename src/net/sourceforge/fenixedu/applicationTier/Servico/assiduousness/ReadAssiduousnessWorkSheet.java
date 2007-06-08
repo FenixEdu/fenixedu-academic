@@ -161,7 +161,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
 			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
 				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
-				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS) {
+				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
+                                && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
 			    if (notes.length() != 0) {
 				notes.append(" / ");
 			    }

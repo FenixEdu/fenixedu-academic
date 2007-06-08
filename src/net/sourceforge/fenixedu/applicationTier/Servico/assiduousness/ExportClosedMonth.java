@@ -121,7 +121,8 @@ public class ExportClosedMonth extends Service {
 				    .getJustificationMotive().getJustificationType() == JustificationType.MULTIPLE_MONTH_BALANCE)
 				    && leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
-				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS) {
+				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
+                                    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
 				leaveDuration = schedule.getEqualWorkPeriodDuration();
 				showDuration = true;
 			    }

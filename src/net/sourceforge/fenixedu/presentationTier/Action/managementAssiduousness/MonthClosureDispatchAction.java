@@ -219,7 +219,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	int countWorkDays = 0;
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
 	    if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS || leave
-		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS)
+		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS|| leave
+                    .getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS)
 		    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
 		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
 			endDate.toDateTimeAtMidnight()));
