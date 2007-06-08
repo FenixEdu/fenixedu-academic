@@ -43,7 +43,7 @@
 
 <logic:iterate id="area" name="areas" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	<h2 class="greytxt mtop2">
-		<fr:view name="area" property="name"/>
+		<fr:view name="area" property="nameI18n"/>
 	</h2>
 
 	<logic:iterate id="_e" name="employees" property="<%= area.getIdInternal().toString() %>" type="net.sourceforge.fenixedu.domain.Employee">

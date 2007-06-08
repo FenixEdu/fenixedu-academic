@@ -36,7 +36,7 @@
 			<logic:present name="byCategory">
 				<logic:notEmpty name="teacher" property="currentSectionOrScientificArea">
 					<p class="mtop025 mbottom05">
-						<fr:view name="teacher" property="currentSectionOrScientificArea.name"/>
+						<fr:view name="teacher" property="currentSectionOrScientificArea.nameI18n"/>
 					</p>
 				</logic:notEmpty>
 			</logic:present>

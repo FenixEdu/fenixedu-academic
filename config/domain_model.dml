@@ -3542,6 +3542,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 	}
 
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {		
+		String nameEn;
 		String acronym;
 		Integer costCenterCode;		
 		YearMonthDay beginDateYearMonthDay;
