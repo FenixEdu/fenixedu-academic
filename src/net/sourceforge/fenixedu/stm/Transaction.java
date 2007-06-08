@@ -13,6 +13,8 @@ public abstract class Transaction extends jvstm.Transaction {
     private final static FenixCache cache = new FenixCache();
 
     static {
+        DomainClassInfo.initializeClassInfos();
+
 	jvstm.Transaction.setTransactionFactory(new jvstm.TransactionFactory() {
 		public jvstm.Transaction makeTopLevelTransaction(int txNumber) {
 		    return new TopLevelTransaction(txNumber);
@@ -37,16 +39,6 @@ public abstract class Transaction extends jvstm.Transaction {
     private Transaction() {
  	// this is never to be used!!!
  	super(0);
-    }
-
-    /** 
-     * @deprecated This method is not useful anylonger, because the default behavior 
-     *       of the JVSTM is not to report anything for long running transactions.
-     *       So, any call to this method may be safely removed.
-     */
-    @Deprecated
-    public static void setScriptMode() {
-        // empty now...
     }
 
     public static void startMonitoringTransactions() {
@@ -104,6 +96,32 @@ public abstract class Transaction extends jvstm.Transaction {
 	return currentFenixTransaction().getDBChanges();
     }
 
+    public static DomainObject getDomainObject(String classname, int oid) {
+        return currentFenixTransaction().getDomainObject(classname, oid);
+    }
+
+    public static long getOIDFor(DomainObject obj) {
+        int cid = DomainClassInfo.mapClassToId(obj.getClass());
+        return ((long)cid << 32) + obj.getIdInternal();
+    }
+
+    public static DomainObject getObjectForOID(long oid) {
+        int cid = (int)(oid >> 32);
+        int idInternal = (int)(oid & 0x7FFFFFFF);
+        String classname = DomainClassInfo.mapIdToClassname(cid);
+
+        if (classname == null) {
+            throw new MissingObjectException();
+        }
+
+        return getDomainObject(classname, idInternal);
+    }
+
+    public static String getClassnameForOID(long oid) {
+        int cid = (int)(oid >> 32);
+        return DomainClassInfo.mapIdToClassname(cid);
+    }
+    
     public static void logAttrChange(DomainObject obj, String attrName) {
 	currentDBChanges().logAttrChange(obj, attrName);
     }

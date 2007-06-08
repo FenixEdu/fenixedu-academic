@@ -127,6 +127,14 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         return super.equals(obj);
     }
 
+    public long getOID() {
+        return Transaction.getOIDFor(this);
+    }
+
+    public static DomainObject fromOID(long oid) {
+        return Transaction.getObjectForOID(oid);
+    }
+
     protected final void deleteDomainObject() {
         if (lockMode) {
             if (! checkDisconnected()) {

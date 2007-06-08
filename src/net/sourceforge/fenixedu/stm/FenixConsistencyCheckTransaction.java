@@ -13,6 +13,7 @@ import jvstm.cps.Depended;
 
 import org.apache.ojb.broker.PersistenceBroker;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 public class FenixConsistencyCheckTransaction extends ReadTransaction 
     implements ConsistencyCheckTransaction,FenixTransaction {
@@ -52,6 +53,10 @@ public class FenixConsistencyCheckTransaction extends ReadTransaction
 
     public PersistenceBroker getOJBBroker() {
         return parent.getOJBBroker();
+    }
+
+    public DomainObject getDomainObject(String classname, int oid) {
+        return parent.getDomainObject(classname, oid);
     }
 
     public <T> T getBoxValue(VBox<T> vbox, Object obj, String attr) {

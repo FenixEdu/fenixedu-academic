@@ -15,6 +15,8 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+
 public class TopLevelTransaction extends ConsistentTopLevelTransaction implements FenixTransaction {
 
     private static final Object COMMIT_LISTENERS_LOCK = new Object();
@@ -70,6 +72,10 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     public PersistenceBroker getOJBBroker() {
         return broker;
+    }
+
+    public DomainObject getDomainObject(String classname, int oid) {
+        return TransactionChangeLogs.getDomainObject(broker, classname, oid);
     }
 
     public void setReadOnly() {

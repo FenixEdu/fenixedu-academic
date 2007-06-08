@@ -135,7 +135,11 @@ public class DomainClassInfo {
     }
 
     public static String mapIdToClassname(int cid) {
-        return classInfoById[cid].domainClass.getName();
+        if ((cid < 1) || (cid >= classInfoById.length)) {
+            return null;
+        } else {
+            return classInfoById[cid].domainClass.getName();
+        }
     }
 
     

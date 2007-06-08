@@ -51,9 +51,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
+import net.sourceforge.fenixedu.stm.Transaction;
+import net.sourceforge.fenixedu.stm.MissingObjectException;
 
 import dml.DomainClass;
 import dml.DomainEntity;
@@ -90,14 +90,16 @@ public class DomainBrowserServlet extends HttpServlet {
             if ("/listAll".equals(path)) {
                 renderListAll(out, RequestParams.parse(req, "domainClass"));
             } else if ("/showObj".equals(path)) {
-                renderDomainObject(out, RequestParams.parse(req, "domainClass", "objId"));
+                renderDomainObject(out, RequestParams.parse(req, "OID"));
             } else if ("/listRole".equals(path)) {
-                renderDomainObjectRole(out, RequestParams.parse(req, "domainClass", "objId", "role"));
+                renderDomainObjectRole(out, RequestParams.parse(req, "OID", "role"));
             } else if ("/checkDomain".equals(path)) {
                 checkDomain(out);
             } else {
                 renderMainIndex(out);
             }        
+        } catch (MissingObjectException moe) {
+            out.println("<P>No such object</P>");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Error("Error: " + e.getMessage());
@@ -115,89 +117,80 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
         
-        SuportePersistenteOJB supPers = SuportePersistenteOJB.getInstance();
+        DomainObject domObj = DomainObject.fromOID(params.oid);
+        DomainClass domClass = getDomainClass(domObj);
 
-        try {
-            supPers.beginTransaction();
+        out.println("<H1>");
+        out.println(domObj.getClass().getName());
+        out.println(" Instance: ");
+        out.println(getObjectDescription(domObj));
+        out.println("</H1>\n");
 
-            DomainObject domObj = getDomainObject(supPers.getIPersistentObject().readByOID(params.javaClass, params.oid));
-            
-            if (domObj == null) {
-                out.println("<P>No such object</P>");
-                return;
-            }
-
-            out.println("<H1>");
-            out.println(params.classFullName);
-            out.println(" Instance: ");
-            out.println(getObjectDescription(domObj, params.domClass));
-            out.println("</H1>\n");
-
-            out.println("<H2>Attributes</H2>\n");
-            out.println("<TABLE>\n");
-            for (String attr : getAllAttrs(params.domClass)) {
+        out.println("<H2>Attributes</H2>\n");
+        out.println("<TABLE>\n");
+        for (String attr : getAllAttrs(domClass)) {
+            if (! isForeignKey(attr, domClass)) {
                 out.println("<TR><TD class=\"attrname\">");
                 out.println(attr);
                 out.println("</TD><TD class=\"attrvalue\">");
                 out.println(getAttributeValue(domObj, attr));
                 out.println("</TD><TR>");
             }
-            out.println("</TABLE>\n");
+        }
+        out.println("</TABLE>\n");
 
-            out.println("<H2>Relations</H2>");
-            out.println("<TABLE>\n");
-            for (Role role : getAllRoles(params.domClass)) {
-                out.println("<TR><TD class=\"rolename\">");
-                out.println(role.getName());
-                out.println("</TD><TD class=\"rolevalue\">");
-                Object roleValue = getAttributeValue(domObj, role.getName());
-                if (role.getMultiplicityUpper() == 1) {
-                    if (roleValue == null) {
-                        out.println("null");
-                    } else {
-                        DomainEntity roleType = role.getType();
-                        if (roleType instanceof DomainClass) {
-                            renderObjectId(out, getDomainObject(roleValue), (DomainClass)roleType);
-                        } else {
-                            out.println(roleValue);
-                        }
-                    }
+        out.println("<H2>Relations</H2>");
+        out.println("<TABLE>\n");
+        for (Role role : getAllRoles(domClass)) {
+            out.println("<TR><TD class=\"rolename\">");
+            out.println(role.getName());
+            out.println("</TD><TD class=\"rolevalue\">");
+            Object roleValue = getAttributeValue(domObj, role.getName());
+            if (role.getMultiplicityUpper() == 1) {
+                if (roleValue == null) {
+                    out.println("null");
                 } else {
-                    if (roleValue == null) {
-                        out.println("null collection");
+                    DomainEntity roleType = role.getType();
+                    if (roleType instanceof DomainClass) {
+                        renderObjectId(out, getDomainObject(roleValue));
                     } else {
-                        Collection col = (Collection)roleValue;
-                        int colSize = -1;
+                        out.println(roleValue);
+                    }
+                }
+            } else {
+                if (roleValue == null) {
+                    out.println("null collection");
+                } else {
+                    Collection col = (Collection)roleValue;
+                    int colSize = -1;
+
+                    if (params.showColSize) {
                         try {
                             colSize = col.size();
                         } catch (Exception e) {
                             // ignore it
                         }
-                        
-                        if (colSize == -1) {
-                            out.println("THIS IS NULL: missing from OJB mapping?");
-                        } else {
-                            out.println("<A HREF=\"listRole?domainClass=");
-                            out.println(domObj.getClass().getName());
-                            out.println("&objId=");
-                            out.println(domObj.getIdInternal());
-                            out.println("&role=");
-                            out.println(role.getName());
-                            out.println("\">");
-                            out.println(role.getType().getFullName());
-                            out.println("[");
-                            out.println(colSize);
-                            out.println("]</A>");
-                        }
                     }
+                        
+                    out.println("<A HREF=\"listRole?OID=");
+                    out.println(domObj.getOID());
+                    out.println("&role=");
+                    out.println(role.getName());
+                    out.println("\">");
+                    out.println(role.getType().getFullName());
+                    out.println("[");
+                    out.println(colSize == -1 ? "?" : colSize);
+                    out.println("]</A>");
                 }
-                
-                out.println("</TD><TR>");
             }
-            out.println("</TABLE>\n");
-        } finally {
-            supPers.abortTransaction();
+                
+            out.println("</TD><TR>");
         }
+        out.println("</TABLE>\n");
+    }
+
+    private boolean isForeignKey(String attrName, DomainClass domClass) {
+        return (attrName.startsWith("key") && (domClass.findRoleSlot(firstCharToLower(attrName.substring(3))) != null));
     }
 
     protected void renderDomainObjectRole(PrintWriter out, RequestParams params) throws IOException,Exception {
@@ -206,29 +199,16 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
 
-        SuportePersistenteOJB supPers = SuportePersistenteOJB.getInstance();
+        DomainObject domObj = DomainObject.fromOID(params.oid);
 
-        try {
-            supPers.beginTransaction();
+        out.println("<H1>");
+        renderObjectId(out, domObj);
+        out.println("'s ");
+        out.println(params.roleName);
+        out.println(":</H1>\n");
 
-            DomainObject domObj = getDomainObject(supPers.getIPersistentObject().readByOID(params.javaClass, params.oid));
-            if (domObj == null) {
-                out.println("<P>No such object</P>");
-                return;
-            }
-
-            out.println("<H1>");
-            renderObjectId(out, domObj, params.domClass);
-            out.println("'s ");
-            out.println(params.roleName);
-            out.println(":</H1>\n");
-
-            Collection insts = (Collection)getAttributeValue(domObj, params.roleName);
-            renderCollection(out, insts, (DomainClass)params.role.getType(), params);
-
-        } finally {
-            supPers.abortTransaction();
-        }
+        Collection insts = (Collection)getAttributeValue(domObj, params.roleName);
+        renderCollection(out, insts, params);
     }
 
 
@@ -242,21 +222,11 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println(params.classFullName);
         out.println(" Entities</H1>\n");
 
-        SuportePersistenteOJB supPers = SuportePersistenteOJB.getInstance();
-
-        try {
-            supPers.beginTransaction();
-
-            Collection insts = RootDomainObject.readAllDomainObjects(params.javaClass);
-            renderCollection(out, insts, params.domClass, params);
-            
-        } finally {
-            supPers.abortTransaction();
-        }
-        
+        Collection insts = RootDomainObject.readAllDomainObjects(params.javaClass);
+        renderCollection(out, insts, params);
     }
 
-    protected void renderCollection(PrintWriter out, Collection insts, DomainClass domClass, RequestParams params) throws IOException,Exception {
+    protected void renderCollection(PrintWriter out, Collection insts, RequestParams params) throws IOException,Exception {
         if (insts == null) {
             out.println("<P>Null collection</P>");
             return;
@@ -304,32 +274,33 @@ public class DomainBrowserServlet extends HttpServlet {
         // show the (eventually partial) list
         for (int count = first; count <= last; count++) {
             out.println("<LI>");
-            renderObjectId(out, getDomainObject(iter.next()), domClass);
+            renderObjectId(out, getDomainObject(iter.next()));
             out.println("</LI>\n");
         }
         out.println("</UL>\n");
     }
 
-    protected void renderObjectId(PrintWriter out, DomainObject domObj, DomainClass domClass) throws IOException {
-        out.println("<A HREF=\"showObj?domainClass=");
-        out.println(domObj.getClass().getName());
-        out.println("&objId=");
-        out.println(domObj.getIdInternal());
+    protected void renderObjectId(PrintWriter out, DomainObject domObj) throws IOException {
+        out.println("<A HREF=\"showObj?OID=");
+        out.println(domObj.getOID());
         out.println("\">");
-        out.println(getObjectDescription(domObj, domClass));
+        out.println(getObjectDescription(domObj));
         out.println("</A>");
     }
 
-    protected String getObjectDescription(DomainObject domObj, DomainClass domClass) {
+    protected String getObjectDescription(DomainObject domObj) {
         String description = getSpecializedDescription(domObj);
 
         if (description == null) {
-            String descAttribute = getDescAttribute(domClass);
+            String descAttribute = getDescAttribute(getDomainClass(domObj));
             description = getAttributeValue(domObj, descAttribute).toString();
         }
         return description;
     }
 
+    protected DomainClass getDomainClass(DomainObject obj) {
+        return domainModel.findClass(obj.getClass().getName());
+    }
 
     protected String getDescAttribute(DomainClass domClass) {
         String descAttribute = domainClassesDescAttr.get(domClass);
@@ -388,94 +359,86 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println("<H1>Domain Check</H1>\n");
 
         if (domainModel != null) {
-            SuportePersistenteOJB supPers = SuportePersistenteOJB.getInstance();
-
             for (DomainClass domClass : getAllDomainClasses()) {
                 System.out.println("CHECK DOMAIN: checking " + domClass.getFullName());
                 
                 List<Role> roles = getAllRoles(domClass);
                 if (! roles.isEmpty()) {
-                    try {
-                        supPers.beginTransaction();
-                        
-                        Collection insts = RootDomainObject.readAllDomainObjects(Class.forName(domClass.getFullName()));
-                        if (insts.size() == 0) {
-                            out.print("<P>Can't check ");
-                            out.print(domClass.getFullName());
-                            out.println(": there are no instances!</P>");
-                        } else {
-                            for (Role role : roles) {
-                                String header = 
-                                    "<P>Checking role " 
-                                    + role.getName() 
-                                    + " for class " 
-                                    + domClass.getFullName()
-                                    + "<UL>";
+                    Collection insts = RootDomainObject.readAllDomainObjects(Class.forName(domClass.getFullName()));
+                    if (insts.size() == 0) {
+                        out.print("<P>Can't check ");
+                        out.print(domClass.getFullName());
+                        out.println(": there are no instances!</P>");
+                    } else {
+                        for (Role role : roles) {
+                            String header = 
+                                "<P>Checking role " 
+                                + role.getName() 
+                                + " for class " 
+                                + domClass.getFullName()
+                                + "<UL>";
 
-                                int objsWithRoleNonEmpty = 0;
-                                int objsWithInverseOK = 0;
-                                int count = 0;
+                            int objsWithRoleNonEmpty = 0;
+                            int objsWithInverseOK = 0;
+                            int count = 0;
 
-                                for (Object instObj : insts) {
-                                    if (count > 10) {
-                                        break;
-                                    } else {
-                                        count++;
-                                    }
+                            for (Object instObj : insts) {
+                                if (count > 10) {
+                                    break;
+                                } else {
+                                    count++;
+                                }
                                     
-                                    DomainObject domObj = getDomainObject(instObj);
-                                    Object roleValue = getAttributeValue(domObj, role.getName());
-                                    if (roleValue != null) {
-                                        if (role.getMultiplicityUpper() == 1) {
+                                DomainObject domObj = getDomainObject(instObj);
+                                Object roleValue = getAttributeValue(domObj, role.getName());
+                                if (roleValue != null) {
+                                    if (role.getMultiplicityUpper() == 1) {
+                                        objsWithRoleNonEmpty++;
+                                        if (checkInverseRelation(domObj, getDomainObject(roleValue), role)) {
+                                            objsWithInverseOK++;
+                                        } else {
+                                            if (header != null) {
+                                                out.println(header);
+                                                header = null;
+                                                renderWrongRelation(out, domObj, role);
+                                            }
+                                        }                                            
+                                    } else {
+                                        for (Object targetObj : (Collection)roleValue) {
                                             objsWithRoleNonEmpty++;
-                                            if (checkInverseRelation(domObj, getDomainObject(roleValue), role)) {
+                                            if (checkInverseRelation(domObj, getDomainObject(targetObj), role)) {
                                                 objsWithInverseOK++;
                                             } else {
                                                 if (header != null) {
                                                     out.println(header);
                                                     header = null;
-                                                    renderWrongRelation(out, domObj, role, domClass);
-                                                }
-                                            }                                            
-                                        } else {
-                                            for (Object targetObj : (Collection)roleValue) {
-                                                objsWithRoleNonEmpty++;
-                                                if (checkInverseRelation(domObj, getDomainObject(targetObj), role)) {
-                                                    objsWithInverseOK++;
-                                                } else {
-                                                    if (header != null) {
-                                                        out.println(header);
-                                                        header = null;
-                                                        renderWrongRelation(out, domObj, role, domClass);
-                                                    }
+                                                    renderWrongRelation(out, domObj, role);
                                                 }
                                             }
                                         }
                                     }
                                 }
-
-                                if (objsWithRoleNonEmpty != objsWithInverseOK) {
-                                    if (header != null) {
-                                        out.println(header);
-                                        header = null;
-                                    }
-                                    out.print("<LI>Summary: ");
-                                    out.print(insts.size());
-                                    out.print("total objects, ");
-                                    out.print(objsWithRoleNonEmpty);
-                                    out.print(" relations checked, ");
-                                    out.print(objsWithInverseOK);
-                                    out.println(" relations with inverse OK</LI>");
-                                }
-
-                                if (header == null) {
-                                    out.println("</UL>");
-                                }
-
                             }
+
+                            if (objsWithRoleNonEmpty != objsWithInverseOK) {
+                                if (header != null) {
+                                    out.println(header);
+                                    header = null;
+                                }
+                                out.print("<LI>Summary: ");
+                                out.print(insts.size());
+                                out.print("total objects, ");
+                                out.print(objsWithRoleNonEmpty);
+                                out.print(" relations checked, ");
+                                out.print(objsWithInverseOK);
+                                out.println(" relations with inverse OK</LI>");
+                            }
+
+                            if (header == null) {
+                                out.println("</UL>");
+                            }
+
                         }
-                    } finally {
-                        supPers.abortTransaction();
                     }
                 }
             }
@@ -484,10 +447,10 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     }
 
-    protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role, DomainClass domClass) throws Exception {
+    protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role) throws Exception {
         System.out.println("wrong relation");
         out.println("<LI>");
-        renderObjectId(out, obj, domClass);
+        renderObjectId(out, obj);
         out.println("</LI>\n");
     }
 
@@ -595,13 +558,17 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     }
 
+    protected String firstCharToLower(String str) {
+        return Character.toLowerCase(str.charAt(0)) + str.substring(1);
+    }
+
     protected DomainObject getDomainObject(Object obj) {
-        return (DomainObject)ProxyHelper.getRealObject(obj);
+        return (DomainObject)obj;
     }
 
 
     static class RequestParams {
-        private static final String[] OPTIONAL_PARAMS = { "start", "max" };
+        private static final String[] OPTIONAL_PARAMS = { "start", "max", "showColSize" };
 
         public static final int DEFAULT_MAX = 100;
 
@@ -609,11 +576,12 @@ public class DomainBrowserServlet extends HttpServlet {
         String classFullName = null;
         DomainClass domClass = null;
         Class javaClass = null;
-        int oid = -1;
+        long oid = -1;
         String roleName = null;
         Role role = null;
         int start = 1;
         int max = DEFAULT_MAX;
+        boolean showColSize = false;
 
         String buildURL() {
             StringBuilder sb = new StringBuilder();
@@ -627,7 +595,7 @@ public class DomainBrowserServlet extends HttpServlet {
             }
             if (oid != -1) {
                 sb.append(sep);
-                sb.append("objId=");
+                sb.append("OID=");
                 sb.append(oid);
                 sep = "&";
             }
@@ -671,8 +639,9 @@ public class DomainBrowserServlet extends HttpServlet {
                         if (params.domClass == null) {
                             return null;
                         }
-                    } else if (name.equals("objId")) {
-                        params.oid = Integer.parseInt(value);
+                    } else if (name.equals("OID")) {
+                        params.oid = Long.parseLong(value);
+                        params.domClass = domainModel.findClass(Transaction.getClassnameForOID(params.oid));
                     } else if (name.equals("role")) {
                         params.roleName = value;
                         params.role = params.domClass.findRoleSlot(value);
@@ -696,6 +665,8 @@ public class DomainBrowserServlet extends HttpServlet {
                             params.start = Integer.parseInt(value);
                         } else if (name.equals("max")) {
                             params.max = Integer.parseInt(value);
+                        } else if (name.equals("showColSize")) {
+                            params.showColSize = true;
                         }
                     } catch (Exception e) {
                         // ignore it
