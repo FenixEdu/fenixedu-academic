@@ -39,4 +39,12 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     public Double getBalance() {
         return getTotal() - getSpent();
     }
+
+    public void sumSpent(Double amount) {
+        setSpent(getSpent() + amount);        
+    }
+
+    public void subtractSpent(Double amount) {
+        setSpent(getSpent() - amount);
+    }
 }

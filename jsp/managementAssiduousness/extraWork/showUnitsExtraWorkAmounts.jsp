@@ -51,7 +51,7 @@
 <fr:view name="unitExtraWorkAmountList" schema="show.unitExtraWorkAmount">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thleft thlight mtop0"/>
-		<fr:property name="link(viewExtraWorkMovements)" value="/manageUnitsExtraWorkAmounts.do?method=prepareEditUnitExtraWorkMovement&edit=false" />
+		<fr:property name="link(viewExtraWorkMovements)" value="/manageUnitsExtraWorkAmounts.do?method=prepareEditUnitExtraWorkMovement" />
 		<fr:property name="key(viewExtraWorkMovements)" value="link.details" />
 		<fr:property name="param(viewExtraWorkMovements)" value="idInternal/unitExtraWorkAmountID" />
 		<fr:property name="bundle(viewExtraWorkMovements)" value="ASSIDUOUSNESS_RESOURCES" />

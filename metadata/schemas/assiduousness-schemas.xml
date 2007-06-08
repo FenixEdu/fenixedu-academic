@@ -1,5 +1,4 @@
-<schema name="show.employeePersonalInformation.toList"
-	type="net.sourceforge.fenixedu.domain.Employee">
+<schema name="show.employeePersonalInformation.toList" type="net.sourceforge.fenixedu.domain.Employee">
 	<slot name="employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
@@ -22,8 +21,7 @@
 	<slot name="description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
-<schema name="show.employeePersonalInformation"
-	type="net.sourceforge.fenixedu.domain.Person">
+<schema name="show.employeePersonalInformation"	type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="employee.employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
@@ -666,8 +664,7 @@
 	</slot>
 	<slot name="month" layout="menu-select"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="choiceType"	value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="unitCode" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator" key="label.costCenter">
@@ -676,7 +673,21 @@
 	</slot>
 </schema>
 
-<schema name="insert.nightHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="choose.hoursDoneIn" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+	<slot name="yearMonthHoursDone.year" key="label.year"
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="yearMonthHoursDone.month" key="label.month" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+</schema>
+	
+<schema name="insert.nightHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="nightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -687,7 +698,7 @@
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
-<schema name="insert.extraNightDays" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.extraNightDays" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -704,7 +715,7 @@
 	</slot>
 </schema>
 
-<schema name="insert.saturdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.saturdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -714,7 +725,7 @@
 	</slot>
 </schema>
 
-<schema name="insert.holidayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.holidayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -724,7 +735,7 @@
 	</slot>
 </schema>
 
-<schema name="insert.sundayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.sundayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -734,7 +745,7 @@
 	</slot>
 </schema>
 
-<schema name="insert.workdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.workdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -744,18 +755,18 @@
 	</slot>
 </schema>
 
-<schema name="insert.addToVacations" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.addToVacations" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="addToVacations"  bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
-<schema name="insert.addToWeekRestTime" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
+<schema name="insert.addToWeekRestTime" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="addToWeekRestTime"  bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
-<schema name="show.extraWorkRequestHeader" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory">
-	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="month"  bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="unit" key="label.costCenter" schema="show.employeeUnit" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
+<schema name="show.extraWorkRequestHeader" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="extraWorkRequestFactory.year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="extraWorkRequestFactory.month" key="label.month" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="extraWorkRequestFactory.unit" key="label.costCenter" schema="show.employeeUnit" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="employee.person" key="label.employee" schema="show.employeePersonalInformation" layout="values-dash" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
@@ -942,9 +953,15 @@
 
 <schema name="show.unitExtraWorkAmount" type="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount">
 	<slot name="unit.presentationName" key="label.unit" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="total" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="spent" key="label.spent" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="balance" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="total" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES" layout="decimal-format">
+		<property name="format" value="0.000"/>
+	</slot>
+	<slot name="spent" key="label.spent" bundle="ASSIDUOUSNESS_RESOURCES" layout="decimal-format">
+		<property name="format" value="0.000"/>
+	</slot>
+	<slot name="balance" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES" layout="decimal-format">
+		<property name="format" value="0.000"/>
+	</slot>
 </schema>
 
 <schema name="edit.unitExtraWorkAmount" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory">	
@@ -974,4 +991,16 @@
 	<slot name="amount" validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator">
 		<property name="size" value="10" />
 	</slot>
+</schema>
+
+<schema name="view.extraWorkRequest" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">	
+	<slot name="employee.employeeNumber" key="label.number" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="employee.person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="amount" key="label.amount" bundle="ASSIDUOUSNESS_RESOURCES" layout="decimal-format">
+		<property name="format" value="0.000"/>
+	</slot>
+	<slot name="approved" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">	
+		<property name="trueLabel" value="label.approved" bundle="ASSIDUOUSNESS_RESOURCES"/>
+        <property name="falseLabel" value="label.notApproved" bundle="ASSIDUOUSNESS_RESOURCES"/>
+    </slot>
 </schema>

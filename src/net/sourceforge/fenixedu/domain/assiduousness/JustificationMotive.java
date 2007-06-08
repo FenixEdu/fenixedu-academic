@@ -40,6 +40,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setActualWorkTime(actualWorkTime);
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
+        setActive(true);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime,

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.joda.time.DateTimeFieldType;

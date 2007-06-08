@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
 <%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 
 <ul>
 	<li class="navheader"><bean:message key="title.assiduousness" /></li>
@@ -34,9 +35,9 @@
 	</html:link></li>
 	<% } %>
 	
-	<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-            if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {
+	<%
+		if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(userView.getPerson()) 
+		        && !userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
     %>
 		<li class="navheader">
 			<bean:message key="label.protocols.navigation.header" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>

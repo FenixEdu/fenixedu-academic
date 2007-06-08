@@ -5,8 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkRequestFactory;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -23,6 +25,8 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
         ExtraWorkRequestFactory extraWorkRequestFactory = (ExtraWorkRequestFactory) getRenderedObject();
         if (extraWorkRequestFactory == null) {
             extraWorkRequestFactory = new ExtraWorkRequestFactory();
+        } else {
+            extraWorkRequestFactory.reloadEmployeeExtraWorkRequest();
         }
         request.setAttribute("extraWorkRequestFactory", extraWorkRequestFactory);
         return mapping.findForward("prepare-insert-payment-request");
@@ -31,36 +35,73 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
     public ActionForward chooseEmployee(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
+        ExtraWorkRequest extraWorkRequest = null;
+        if (!request.getParameter("idInternal").equalsIgnoreCase("null")) {
+            Integer idInternal = Integer.parseInt(request.getParameter("idInternal"));
+            extraWorkRequest = (ExtraWorkRequest) rootDomainObject.readDomainObjectByOID(
+                    ExtraWorkRequest.class, idInternal);
+        }
         ExtraWorkRequestFactory extraWorkRequestFactory = new ExtraWorkRequestFactory(
                 getIntegerFromRequest(request, "year"), (String) getFromRequest(request, "month"),
-                getIntegerFromRequest(request, "unitCode"), Employee.readByNumber(getIntegerFromRequest(
-                        request, "employeeNumber")));
-        if (extraWorkRequestFactory.getExtraWorkRequest() != null) {
-            request.setAttribute("extraWorkRequestFactory", extraWorkRequestFactory
-                    .getExtraWorkRequestFactoryEditor());
+                getIntegerFromRequest(request, "unitCode"),
+                getIntegerFromRequest(request, "doneInYear"), (String) getFromRequest(request,
+                        "doneInMonth"));
+        EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = null;
+        if (extraWorkRequest != null) {
+            employeeExtraWorkRequestFactory = new EmployeeExtraWorkRequestFactory(extraWorkRequest,
+                    extraWorkRequestFactory);
         } else {
-            request.setAttribute("extraWorkRequestFactory", extraWorkRequestFactory);
+            employeeExtraWorkRequestFactory = new EmployeeExtraWorkRequestFactory(Employee
+                    .readByNumber(getIntegerFromRequest(request, "employeeNumber")),
+                    extraWorkRequestFactory);
         }
+
+        request.setAttribute("employeeExtraWorkRequestFactory", employeeExtraWorkRequestFactory);
+
         return mapping.findForward("insert-payment-request");
+    }
+
+    public ActionForward processPayments(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
+        ExtraWorkRequestFactory extraWorkRequestFactory = (ExtraWorkRequestFactory) getRenderedObject();
+        if (request.getParameter("cancelPayment") != null) {
+            extraWorkRequestFactory.setPerformPayment(false);
+        } else {
+            extraWorkRequestFactory.setPerformPayment(true);
+        }
+        Object result = executeService(request, "ExecuteFactoryMethod",
+                new Object[] { extraWorkRequestFactory });
+        if (result != null) {
+            ActionMessages actionMessages = getMessages(request);
+            actionMessages.add("message", (ActionMessage) result);
+            saveMessages(request, actionMessages);
+        }
+        extraWorkRequestFactory.reloadEmployeeExtraWorkRequest();
+
+        request.setAttribute("extraWorkRequestFactory", extraWorkRequestFactory);
+        return mapping.findForward("prepare-insert-payment-request");
     }
 
     public ActionForward insertPaymentRequest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
 
-        ExtraWorkRequestFactory extraWorkRequestFactory = (ExtraWorkRequestFactory) getRenderedObject();
-        if (extraWorkRequestFactory != null) {
-            Object result = executeService(request, "ExecuteFactoryMethod", new Object[] { extraWorkRequestFactory });
-            if (result != null) {
-                ActionMessages actionMessages = getMessages(request);
-                actionMessages.add("message", (ActionMessage)result);
-                saveMessages(request, actionMessages);
-                request.setAttribute("extraWorkRequestFactory", extraWorkRequestFactory);
-                return mapping.findForward("insert-payment-request");
-            }
-            
+        EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = (EmployeeExtraWorkRequestFactory) getRenderedObject();
+        Object result = executeService(request, "ExecuteFactoryMethod",
+                new Object[] { employeeExtraWorkRequestFactory });
+
+        if (result != null) {
+            ActionMessages actionMessages = getMessages(request);
+            actionMessages.add("message", (ActionMessage) result);
+            saveMessages(request, actionMessages);
+            request.setAttribute("employeeExtraWorkRequestFactory", employeeExtraWorkRequestFactory);
+            return mapping.findForward("insert-payment-request");
         }
-        // erro
-        return chooseUnitYearMonth(mapping, form, request, response);
+        employeeExtraWorkRequestFactory.getExtraWorkRequestFactory().reloadEmployeeExtraWorkRequest();
+        request.setAttribute("extraWorkRequestFactory", employeeExtraWorkRequestFactory
+                .getExtraWorkRequestFactory());
+        return mapping.findForward("prepare-insert-payment-request");
     }
 }

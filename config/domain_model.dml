@@ -4053,8 +4053,11 @@ class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net
 	Integer workdayHours;
 	Boolean addToVacations;
 	Boolean addToWeekRestTime;
-	Partial partialDate;
+	Partial hoursDoneInPartialDate;
+	Partial partialPayingDate;
 	DateTime lastModifiedDate;
+	Boolean approved;
+	Double amount;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount extends net.sourceforge.fenixedu.domain.DomainObject {

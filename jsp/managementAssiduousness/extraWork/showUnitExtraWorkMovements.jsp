@@ -17,6 +17,7 @@
 <fr:form action="/manageUnitsExtraWorkAmounts.do?method=prepareEditUnitExtraWorkMovement">
 <fr:edit id="editMovement" name="unitExtraWorkAmountFactory" visible="false"/>
 <bean:size id="size" name="unitExtraWorkAmountFactory" property="unitExtraWorkAmount.unitExtraWorkMovements"/>
+<p><strong><bean:message key="label.addedAmounts" bundle="ASSIDUOUSNESS_RESOURCES"/></strong></p>
 <table class="tstyle5 thleft thlight">
 	<tr>
 		<th><bean:message key="label.date" bundle="ASSIDUOUSNESS_RESOURCES"/></th>

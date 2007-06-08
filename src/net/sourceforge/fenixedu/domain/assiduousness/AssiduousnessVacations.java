@@ -44,4 +44,10 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
         setArticle17Days(article17Days);
         setLastModifiedDate(lastModifiedDate);
     }
+
+    public void delete() {
+        removeAssiduousness();
+        removeRootDomainObject();
+        deleteDomainObject();        
+    }
 }
