@@ -54,6 +54,10 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
             return prepare(mapping, actionForm, request, response);
         }
         
+        if (bean.getReceiversGroupList().isEmpty() && bean.getReceiversOfCopy() == null) {
+        	return prepare(mapping, actionForm, request, response);
+        }
+        
         SendMailReport report;
         try {
             report = (SendMailReport) ServiceUtils.executeService(getUserView(request), "SendEMail", bean.getEmailParameters());

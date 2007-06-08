@@ -81,7 +81,12 @@ public class MailBean implements Serializable {
 	}
 
 	public IGroup getReceiversGroup() {
-		return this.receiversGroup.get(0);
+		if (this.receiversGroup.isEmpty()) {
+			return null;
+		}
+		else {
+			return this.receiversGroup.get(0);
+		}
 	}
 	
 	public void addReceiversGroup(IGroup receiversGroup) {
@@ -89,6 +94,7 @@ public class MailBean implements Serializable {
 	}
 
 	public void setReceiversGroup(IGroup receiversGroup) {
+		this.receiversGroup.clear();
 		addReceiversGroup(receiversGroup);
 	}
 	
