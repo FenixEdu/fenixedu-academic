@@ -83,6 +83,20 @@ public class RoleGroup extends LeafGroup {
         };
     }
     
+    @Override
+    public boolean equals(Object obj) {
+    	if (!(obj instanceof RoleGroup)) {
+    		return false;
+    	}
+    	
+    	return this.roleType.equals(((RoleGroup) obj).roleType);
+    }
+    
+    @Override
+    public int hashCode() {
+    	return this.roleType.hashCode();
+    }
+    
     /**
      * Builder used to create a RoleGroup from a group expression.
      * 

@@ -57,7 +57,7 @@
 <div class="infoop2" style="width: 700px">
 	<p><bean:message key="label.scorm.description" bundle="SITE_RESOURCES"/></p>
 	<br/>
-	<p><a href="javascript:switchDisplay('instructions');"><bean:message key="label.instructions" bundle="SITE_RESOURCES"/></a></p>
+	<p><a href="#" onclick="javascript:switchDisplay('instructions');"><bean:message key="label.instructions" bundle="SITE_RESOURCES"/></a></p>
 	<div id="instructions" class="switchNone">
 		<p><strong><bean:message key="label.generalDescription" bundle="SITE_RESOURCES"/></strong></p>
 		<p><bean:message key="label.generalDescription.explanation" bundle="SITE_RESOURCES"/></p>

@@ -105,7 +105,7 @@
     <slot name="repeat" key="label.site.banner.repeat" layout="radio">
     	<property name="classes" value="liinline nobullet"/>
     </slot>
-    <slot name="color" key="label.site.banner.color"/>
+    <slot name="color" key="label.site.banner.color" layout="webcolor"/>
     <slot name="link" key="label.site.banner.link" layout="input-with-comment">
         <property name="size" value="40"/>
 		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>

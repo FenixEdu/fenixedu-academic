@@ -138,10 +138,6 @@ public class RenderUtils {
             return resources.getMessage(locale, key, args);
         }
         
-        if (bundle != null) {
-            return null;
-        }
-        
         // TODO: allow the name to be configured or fetch the resources in other way
         MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
         

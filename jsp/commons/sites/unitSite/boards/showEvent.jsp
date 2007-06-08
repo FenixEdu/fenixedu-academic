@@ -22,12 +22,20 @@
 
 <p class="mvert025 smalltxt greytxt2">
 	<logic:present name="announcement" property="referedSubjectBegin">
-		<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
+		<logic:present name="announcement" property="referedSubjectEnd">
+			<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
+		</logic:present>
+		<logic:notPresent name="announcement" property="referedSubjectEnd">
+			<bean:message key="label.listAnnouncements.event.occurs.at" bundle="MESSAGING_RESOURCES"/>
+		</logic:notPresent>
         <fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
 	</logic:present>
 	<logic:present name="announcement" property="referedSubjectEnd">
 		<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
 		<fr:view name="announcement" property="referedSubjectEnd" type="org.joda.time.DateTime" layout="no-time" />
+	</logic:present>
+	<logic:present name="announcement" property="place">
+	/ <fr:view name="announcement" property="place"/>
 	</logic:present>
 </p>
 	

@@ -141,7 +141,7 @@
                                 <bean:message key="label.site.banner.color" bundle="WEBSITEMANAGER_RESOURCES"/>:
                             </th>
                             <td>
-                                <fr:edit id="editBannerColor" name="editBannerBean" slot="color">
+                                <fr:edit id="editBannerColor" name="editBannerBean" slot="color" layout="webcolor">
                                     <fr:layout>
                                     </fr:layout>
                                 </fr:edit>
@@ -211,7 +211,7 @@
 <div class="infoop2" id="message">
     <p class="mbottom05">
         <bean:message key="message.site.banners.add.intro" bundle="WEBSITEMANAGER_RESOURCES"/>
-        <a class="switchInline" href="javascript:showElement('site-banners-message');"><bean:message key="link.site.banners.add.expand" bundle="WEBSITEMANAGER_RESOURCES"/>...</a>
+        <a class="switchInline" href="#" onclick="javascript:showElement('site-banners-message');"><bean:message key="link.site.banners.add.expand" bundle="WEBSITEMANAGER_RESOURCES"/>...</a>
     </p>
 
 	<div class="switchNone" id="site-banners-message">

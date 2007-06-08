@@ -838,4 +838,9 @@ Documentation:
     <renderer layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.WebcolorRenderer" />
     <renderer layout="banner-weight" type="java.lang.Integer" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteBannerWeightRenderer" />
 
+	<!--@ Creates text field with an associated color picker  -->
+	<renderer mode="input" layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.ColorInputRenderer">
+		<property name="size" value="10"/>
+	</renderer>
+
 </renderers-config>

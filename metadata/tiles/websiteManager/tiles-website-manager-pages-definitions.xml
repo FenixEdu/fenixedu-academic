@@ -165,6 +165,7 @@
     </definition>
     
     <definition name="researchSite-edit-banners" extends="definition.researchUnitSite.masterPage">
+        <put name="head" value="/webSiteManager/commons/colorPickerHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
     </definition>
     
@@ -210,7 +211,6 @@
 
    <!-- ==== Department Site === -->
     <definition name="definition.department.site.management" extends="definition.websiteManager.masterPage">
-        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body-context" value="/webSiteManager/departmentSite/siteContext.jsp"/>
         <put name="navLocalExtra" value="/webSiteManager/departmentSite/siteMenu.jsp"/>
     </definition>
@@ -231,6 +231,7 @@
         <put name="body" value="/webSiteManager/commons/edit-logo.jsp"/>
     </definition>
     <definition name="departmentSite-edit-banners" extends="definition.department.site.management">
+        <put name="head" value="/webSiteManager/commons/colorPickerHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
     </definition>
     <definition name="departmentSite-edit-top-navigation" extends="definition.department.site.management">
@@ -246,9 +247,11 @@
         <put name="body" value="/webSiteManager/commons/organize-footer-links.jsp"/>
     </definition>
     <definition name="departmentSite-sectionsManagement" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/sectionsManagement.jsp"/>
     </definition>
     <definition name="departmentSite-section" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
     <definition name="departmentSite-editSection" extends="definition.department.site.management" >
@@ -270,9 +273,11 @@
         <put name="body" value="/commons/sites/editFile.jsp"/>
     </definition>             
     <definition name="departmentSite-organizeItems" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/commons/sites/organizeItems.jsp"/>
     </definition>   
     <definition name="departmentSite-organizeFiles" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/commons/sites/organizeFiles.jsp"/>
     </definition>   
     <definition name="departmentSite-confirmSectionDelete" extends="definition.department.site.management" >

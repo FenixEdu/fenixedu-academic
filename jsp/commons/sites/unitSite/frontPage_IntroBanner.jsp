@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <bean:define id="style" type="java.lang.String" toScope="request">
-	width: 100%; float: left; background-color: #019AD7; background-image: url(<%= request.getContextPath() %>/images/bolonha_bck.gif); background-repeat: repeat-x;
+	width: 100%; float: left; background-color: #019AD7; background-image: url(<%= request.getContextPath() %>/images/site/bolonha_bck.gif); background-repeat: repeat-x;
 </bean:define>
 
 <logic:equal name="site" property="bannerAvailable" value="true">
@@ -94,16 +94,16 @@
 				<bean:define id="banner" name="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner"/>
 				
 				<logic:empty name="banner" property="link">
-					<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
+					<img src="<%= banner.getMainImage().getDownloadUrl() %>"></img>
 				</logic:empty>
 				<logic:notEmpty name="banner" property="link">
 					<a href="<bean:write name="banner" property="link"/>" target="_blank">
-						<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
+						<img src="<%= banner.getMainImage().getDownloadUrl() %>"></img>
 					</a>
 				</logic:notEmpty>
 			</logic:present>
 			<logic:notPresent name="banner">
-				<a href="http://www.bolonha.ist.eu"><img src="<%= request.getContextPath() %>/images/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150" />
+				<a href="http://www.bolonha.ist.eu"><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"></img></a>
 			</logic:notPresent>
 		</logic:equal>
 	</div>

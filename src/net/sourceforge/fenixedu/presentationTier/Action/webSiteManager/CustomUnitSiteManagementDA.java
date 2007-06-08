@@ -155,7 +155,7 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 				.getObject();
 
 		if (bean == null || bean.getFile() == null) {
-			chooseLogo(mapping, actionForm, request, response);
+			return chooseLogo(mapping, actionForm, request, response);
 		}
 
 		RenderUtils.invalidateViewState("logoUpload");

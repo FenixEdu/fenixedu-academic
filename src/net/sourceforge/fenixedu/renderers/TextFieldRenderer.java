@@ -84,7 +84,7 @@ public abstract class TextFieldRenderer extends InputRenderer {
 
     protected abstract HtmlComponent createTextField(Object object, Class type);
 
-    class TextFieldLayout extends Layout {
+    protected class TextFieldLayout extends Layout {
 
         @Override
         public HtmlComponent createComponent(Object object, Class type) {
