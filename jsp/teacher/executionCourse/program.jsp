@@ -33,7 +33,7 @@
 			name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 
-		<logic:equal name="curricularCourse" property="isBolonha" value="true">
+		<logic:equal name="curricularCourse" property="bolonhaDegree" value="true">
 			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
 			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
 				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
@@ -60,7 +60,7 @@
 			</logic:equal>
 		</logic:equal>
 
-		<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
+		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
 			<% net.sourceforge.fenixedu.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>
 			<% net.sourceforge.fenixedu.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
 			<% request.setAttribute("curriculum", curriculum); %>

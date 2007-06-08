@@ -46,7 +46,7 @@
 	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"
 			name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
-		<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
+		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
 			<% net.sourceforge.fenixedu.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>
 			<% net.sourceforge.fenixedu.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
 			<% request.setAttribute("curriculum", curriculum); %>

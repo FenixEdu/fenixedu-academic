@@ -128,7 +128,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
 	    final HtmlBlockContainer container = new HtmlBlockContainer();
 
-	    if (bolonhaStudentOptionalEnrollmentBean.getDegreeCurricularPlan().isBolonha()) {
+	    if (bolonhaStudentOptionalEnrollmentBean.getDegreeCurricularPlan().isBoxStructure()) {
 		generateCourseGroup(container, bolonhaStudentOptionalEnrollmentBean.getDegreeCurricularPlan().getRoot(), 0);
 	    } else {
 		generateDCP(container, 0);

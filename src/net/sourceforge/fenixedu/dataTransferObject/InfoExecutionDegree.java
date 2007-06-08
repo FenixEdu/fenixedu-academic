@@ -87,10 +87,6 @@ public class InfoExecutionDegree extends InfoObject {
         this.qualifiedName = qualifiedName;
     }
 
-    public boolean isBolonha() {
-        return getExecutionDegree().isBolonha();
-    }
-
     public boolean equals(Object obj) {
     	return obj != null && getExecutionDegree() == ((InfoExecutionDegree) obj).getExecutionDegree();
     }

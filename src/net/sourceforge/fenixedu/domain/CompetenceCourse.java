@@ -498,7 +498,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    return competenceCourseInformation.getEctsCredits(order);
 	}
 	
-	return 0.0;
+	return 0.0d;
     }
 
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {

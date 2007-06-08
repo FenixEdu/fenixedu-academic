@@ -97,7 +97,7 @@
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
-<logic:present name="infoCurricularCourse" property="infoScopes">
+<logic:notEmpty name="infoCurricularCourse" property="infoScopes">
 	<h2 class='arrow_bullet'>
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.scope" />	
 	</h2>
@@ -125,7 +125,24 @@
 				</logic:notEqual>
 			</logic:notEmpty>
 	</logic:iterate>
-</logic:present>
+</logic:notEmpty>
+
+<logic:notEmpty name="infoCurricularCourse" property="curricularCourse.parentContexts">
+	<h2 class='arrow_bullet'>
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.scope" />
+	</h2>
+	
+	<logic:iterate id="context" name="infoCurricularCourse" property="curricularCourse.parentContexts">
+		<p>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.group"/>: 
+			<bean:write name="context" property="parentCourseGroup.oneFullName"/>
+		</p>
+		<p>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.curricular.period"/>: 
+			<bean:write name="context" property="curricularPeriod.fullLabel"/>
+		</p>
+	</logic:iterate>
+</logic:notEmpty>
 
 <!-- CURRICULAR COURSE INFO -->
 <logic:present name="infoCurriculum" property="generalObjectives">

@@ -12,7 +12,7 @@ public class CreateNewEquivalenceDismissal extends Service {
     
     public void run(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<SelectedCurricularCourse> dismissals,
 	    Collection<IEnrolment> enrolments, Double givenCredits, String givenGrade) {
-	studentCurricularPlan.createNewEquivalenceDismissal(studentCurricularPlan, courseGroup, dismissals, enrolments, givenCredits, givenGrade);
+	studentCurricularPlan.createNewEquivalenceDismissal(courseGroup, dismissals, enrolments, givenCredits, givenGrade);
     }
     
 }

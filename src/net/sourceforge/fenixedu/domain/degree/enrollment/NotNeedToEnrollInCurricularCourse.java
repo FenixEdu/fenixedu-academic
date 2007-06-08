@@ -36,14 +36,13 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 	removeRootDomainObject();
 	getEnrolments().clear();
 	getExternalEnrolments().clear();
-	deleteDomainObject();
+	super.deleteDomainObject();
     }
 
     public Double getEctsCredits() {
 	if (isDueToEquivalence()) {
 	    return Double.valueOf(0d);
     	}
-	
 	return getCurricularCourse().getEctsCredits();
     }
 

@@ -19,7 +19,7 @@ public class DegreeCurricularPlanPredicates {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
             
-            if (!dcp.isBolonha()) {
+            if (!dcp.isBolonhaDegree()) {
                 return true;
             }
             
@@ -50,7 +50,7 @@ public class DegreeCurricularPlanPredicates {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
             final Person person = AccessControl.getPerson();
-            return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonha();
+            return person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || !dcp.isBolonhaDegree();
         }
 
     };
@@ -58,7 +58,7 @@ public class DegreeCurricularPlanPredicates {
     public static final AccessControlPredicate<DegreeCurricularPlan> curricularPlanMemberWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
-            return !dcp.isBolonha() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getPerson());
+            return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getPerson());
         }
 
     };

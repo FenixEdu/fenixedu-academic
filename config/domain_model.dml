@@ -9110,15 +9110,6 @@ relation CurriculumModuleCurriculumGroup {
 	}	 
 }
 
-relation EquivalenceCurricularCourseCurricularCourse {
-    net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses{
-    	multiplicity *;
-    }
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourses{
-		multiplicity *;
-	}
-}
-
 relation ParticipationParty{
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 	net.sourceforge.fenixedu.domain.research.activity.Participation playsRole participations {

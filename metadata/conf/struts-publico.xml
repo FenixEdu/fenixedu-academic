@@ -697,23 +697,28 @@
      </action>
  <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
      <action path="/showCourseSite"
-     type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowCourseSiteAction"
-     parameter="method"
-     name="chooseContextDegreeForm"
-     validate="false"
-     input="showCurricularCourseSite"
-     >
-     	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
-     	<forward name="showCurricularCourseSiteEnglish" path="showCurricularCourseSiteEnglish"/>
-     	<forward name="showExecutionCourseSite" path="showExecutionCourseSite" />
+	     type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowCourseSiteAction"
+	     parameter="method"
+	     name="chooseContextDegreeForm"
+	     validate="false"
+	     input="showCurricularCourseSite">
+	     	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
+	     	<forward name="showCurricularCourseSiteEnglish" path="showCurricularCourseSiteEnglish"/>
+	     	<forward name="showExecutionCourseSite" path="showExecutionCourseSite" />
      </action>
+     
+     <action path="/degreeSite/showCourseSite"
+     		type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"	        
+		    name="chooseContextDegreeForm"
+		    parameter="/publico/showCourseSite.do?method=showCurricularCourseSite"
+	/>
               
-        <action path="/searchProfessorships" name="teachersBodyForm" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.publico.teachersBody.ShowTeachersBodyDispatchAction" 
-            parameter="method" >
-            <forward name="showForm" path="searchProfessorships"/>
-            <forward name="showProfessorships" path="showProfessorships"/>
-        </action>
+     <action path="/searchProfessorships" name="teachersBodyForm" 
+         type="net.sourceforge.fenixedu.presentationTier.Action.publico.teachersBody.ShowTeachersBodyDispatchAction" 
+         parameter="method" >
+         <forward name="showForm" path="searchProfessorships"/>
+         <forward name="showProfessorships" path="showProfessorships"/>
+     </action>
 
 	<action path="/viewFinalDegreeWorkProposals" forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"/>
 

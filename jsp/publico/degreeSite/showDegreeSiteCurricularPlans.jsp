@@ -71,8 +71,7 @@
 					<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 					<bean:define id="degreeInitials" name="infoDegreeCurricularPlan" property="infoDegree.sigla"/>
 					<bean:define id="nameDegreeCurricularPlan" name="infoDegreeCurricularPlan" property="name"/>
-					<logic:equal name="degree" property="bolonhaDegree" value="false">
-					
+					<logic:equal name="infoDegreeCurricularPlan" property="degreeCurricularPlan.boxStructure" value="false">
 						<html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID="
 						+ request.getAttribute("degreeID")
 						+ "&amp;degreeCurricularPlanID="
@@ -84,7 +83,7 @@
 							<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curriculum" /></strong>
 						</html:link>
 					</logic:equal>
-					<logic:equal name="degree" property="bolonhaDegree" value="true">
+					<logic:equal name="infoDegreeCurricularPlan" property="degreeCurricularPlan.boxStructure" value="true">
 						<html:link page="<%= "/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID")
 						+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
 						+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)

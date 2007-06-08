@@ -22,7 +22,7 @@ public class ReadCPlanFromChosenMasterDegree extends Service {
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
         for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-            if (!dcp.isBolonha()) {
+            if (!dcp.isBolonhaDegree()) {
                 result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
             }
         }

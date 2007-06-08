@@ -47,7 +47,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
 
         final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get("dcp");
-        if (dcp.isBolonha()) {
+        if (dcp.isBoxStructure()) {
             this.toEdit = (this.getBooleanAttribute("toEdit") != null) ? (Boolean) this.getBooleanAttribute("toEdit") : Boolean.FALSE;
             this.showRules = (this.getBooleanAttribute("showRules") != null) ? (Boolean) this.getBooleanAttribute("showRules") : Boolean.FALSE;
             final String organizeBy = (this.getAttributes().get("organizeBy") != null) ? (String) this.getAttributes().get("organizeBy") : "groups";

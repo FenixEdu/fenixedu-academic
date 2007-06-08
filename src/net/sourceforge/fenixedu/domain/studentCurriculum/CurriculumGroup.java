@@ -218,10 +218,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
-	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class,
-		(ExecutionPeriod) null)) {
-	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class, (ExecutionPeriod) null)) {
+	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    if (!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
 		result.add(curricularCourse);
 	    }

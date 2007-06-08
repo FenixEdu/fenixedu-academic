@@ -37,7 +37,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, final Registration registration) {
 
 	request.setAttribute("registration", registration);
-	if (registration.getLastStudentCurricularPlan().isBolonha()) {
+	if (registration.getLastStudentCurricularPlan().isBolonhaDegree()) {
 	    return mapping.findForward("proceedToBolonhaEnrollment");
 	}
 

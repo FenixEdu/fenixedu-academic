@@ -232,9 +232,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    setPeriodGradeSubmissionSpecialSeason(gradeSubmissionSpecialSeason);
 	}
     }
-
-    public boolean isBolonha() {
-	return this.getDegreeCurricularPlan().isBolonha();
+    
+    public boolean isBolonhaDegree() {
+	return this.getDegreeCurricularPlan().isBolonhaDegree();
     }
 
     public int compareTo(ExecutionDegree executionDegree) {	

@@ -1098,7 +1098,7 @@ public class CreateTestData {
 
     private static void createStudentEnrolments(final StudentCurricularPlan studentCurricularPlan) {
 	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	if (studentCurricularPlan.isBolonha()) {
+	if (studentCurricularPlan.isBolonhaDegree()) {
 	    
 	} else {
 	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();

@@ -10,20 +10,20 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 
 public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
 
-	public List<CurricularCourse> run(Integer competenceID) throws Exception {
-		CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
-		if(competenceCourse == null) {
-			throw new NonExistingServiceException("error.manager.noCompetenceCourse");
-		}
-		
-        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-            if (!curricularCourse.isBolonha()) {
-                result.add(curricularCourse);
-            }
-        }
-        
-        return result;
+    public List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
+	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
+	if (competenceCourse == null) {
+	    throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 	}
+
+	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+	for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+	    if (!curricularCourse.isBolonhaDegree()) {
+		result.add(curricularCourse);
+	    }
+	}
+
+	return result;
+    }
 
 }

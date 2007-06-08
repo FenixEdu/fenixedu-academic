@@ -30,12 +30,12 @@
 					<bean:define id="executionYearID" name="component" property="executionCourse.infoExecutionPeriod.infoExecutionYear.idInternal"/>
 
 					<li>
-						<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
+						<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
 							<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
 								<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
 							</html:link>
 						</logic:notEqual>
-						<logic:equal name="curricularCourse" property="isBolonha" value="true">
+						<logic:equal name="curricularCourse" property="bolonhaDegree" value="true">
 							<html:link page="<%= "/degreeSite/viewCurricularCourse.faces?"
 							        + "&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId")
 							        + "&amp;executionYearID=" + pageContext.findAttribute("executionYearID")

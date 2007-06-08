@@ -171,7 +171,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             throw new DomainException("error.degree.has.degree.curricular.plans");  
         }
         
-        if (hasSite() && getSite().canBeDeleted()) {
+        if (hasSite() && !getSite().canBeDeleted()) {
             throw new DomainException("error.degree.has.site.undeletable");  
         }
     }
@@ -368,18 +368,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return new ArrayList<ExecutionYear>(result);
     }
 
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(ExecutionYear executionYear) {
-	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(final ExecutionYear executionYear) {
+	
+	if (isBolonhaDegree()) {
+	    return Collections.emptyList();
+	}
+	
+	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-		for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-		    if (!course.isBolonha()) {
-			for (ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
-			    if (executionCourse.getExecutionPeriod().getExecutionYear().equals(
-				    executionYear)) {
-				result.add(course);
-				break;
-			    }
+		for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+			if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+			    result.add(course);
+			    break;
 			}
 		    }
 		}
@@ -389,22 +391,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(
-	    ExecutionYear executionYear, Integer curricularYear) {
-	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    final ExecutionYear executionYear, final Integer curricularYear) {
+	
+	if (isBolonhaDegree()) {
+	    return Collections.emptyList();
+	}
+	
+	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-		for (CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-		    if (!course.isBolonha()) {
-			xpto: for (ExecutionCourse executionCourse : course
-				.getAssociatedExecutionCourses()) {
-			    if (executionCourse.getExecutionPeriod().getExecutionYear().equals(
-				    executionYear)) {
-				for (CurricularCourseScope curricularCourseScope : course.getScopes()) {
-				    if (curricularCourseScope.getCurricularSemester()
-					    .getCurricularYear().getYear().equals(curricularYear)) {
-					result.add(course);
-					break xpto;
-				    }
+		for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+			if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+			    for (final CurricularCourseScope curricularCourseScope : course.getScopes()) {
+				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
+				    result.add(course);
+				    break xpto;
 				}
 			    }
 			}

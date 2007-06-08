@@ -155,7 +155,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    
 	    linkFormatted = RenderUtils.getFormattedProperties(getLinkFormat(), studentOptionalEnrolmentBean);
 
-	    if(studentOptionalEnrolmentBean.getDegreeCurricularPlan().isBolonha()) {
+	    if(studentOptionalEnrolmentBean.getDegreeCurricularPlan().isBoxStructure()) {
 		generateCourseGroup(container, studentOptionalEnrolmentBean.getDegreeCurricularPlan().getRoot(), 0);
 	    } else {
 		generateDCP(container, 0);

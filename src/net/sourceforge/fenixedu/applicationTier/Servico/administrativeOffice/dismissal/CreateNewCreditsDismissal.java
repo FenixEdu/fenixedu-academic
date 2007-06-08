@@ -12,7 +12,7 @@ public class CreateNewCreditsDismissal extends Service {
     
     public void run(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<SelectedCurricularCourse> dismissals,
 	    Collection<IEnrolment> enrolments, Double givenCredits) {
-	studentCurricularPlan.createNewCreditsDismissal(studentCurricularPlan, courseGroup, dismissals, enrolments, givenCredits);
+	studentCurricularPlan.createNewCreditsDismissal(courseGroup, dismissals, enrolments, givenCredits);
     }
     
 }

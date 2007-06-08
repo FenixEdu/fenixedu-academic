@@ -21,7 +21,7 @@ public class CourseGroupPredicates {
         public boolean evaluate(CourseGroup cg) {
             
             final DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
-            if (!parentDegreeCurricularPlan.isBolonha()) {
+            if (!parentDegreeCurricularPlan.isBolonhaDegree()) {
                 return true;
             }
 

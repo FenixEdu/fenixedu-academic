@@ -102,7 +102,7 @@
 						height="17"
 						key="textField-2"
 						isRemoveLineWhenBlank="true">
-							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{markSheet}.getCurricularCourse().isBolonha())]]></printWhenExpression>
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{markSheet}.getCurricularCourse().isBolonhaDegree())]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>

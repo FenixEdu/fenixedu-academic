@@ -251,7 +251,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		return scpDiv;
 	    } 
 
-	    if (isOrganizedByGroups() && !studentCurricularPlan.isBolonha()) {
+	    if (isOrganizedByGroups() && !studentCurricularPlan.isBoxStructure()) {
 		scpDiv.addChild(new HtmlText(studentResources.getString("not.applicable")));
 		scpDiv.setClasses("italic");
 		return scpDiv;
@@ -323,7 +323,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setModuleRelative(false);
 	    result.setTarget("_blank");
 
-	    if (degreeCurricularPlan.isBolonha()) {
+	    if (degreeCurricularPlan.isBoxStructure()) {
 		result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
 		result.setParameter("organizeBy", "groups");
@@ -592,7 +592,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		result.setParameter("executionPeriodOID", enrolment.getExecutionPeriod().getIdInternal());
 		result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getIdInternal());
 		    
-		if (curricularCourse.isBolonha()) {
+		if (curricularCourse.isBolonhaDegree()) {
 		    result.setUrl("/publico/degreeSite/viewCurricularCourse.faces");
 
 		    result.setParameter("executionYearID", enrolment.getExecutionPeriod().getExecutionYear().getIdInternal());

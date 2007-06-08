@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -59,7 +61,7 @@ public class UICurricularCourse extends UIDegreeModule {
             encodeCurricularRules();    
         }
         
-        if (!byYears && this.curricularCourse.isAnual()) {
+        if (!byYears && this.curricularCourse.isBolonhaDegree() && this.curricularCourse.isAnual()) {
             encodeInNextPeriod(facesContext);
         }
     }
@@ -108,7 +110,11 @@ public class UICurricularCourse extends UIDegreeModule {
         
         if (linkable) {
             writer.startElement("a", this);
-            this.encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false);
+            if (this.curricularCourse.isBolonhaDegree()) {
+        	encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false);
+            } else {
+        	encodeNonBolonhaLinkHref();
+            }
             writer.append(name);
             writer.endElement("a");
         } else {
@@ -118,6 +124,26 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.endElement("td");
     }
     
+    private void encodeNonBolonhaLinkHref() throws IOException {
+
+        final StringBuilder href = new StringBuilder();
+        href.append("showCourseSite.do?method=showCurricularCourseSite");
+
+        href.append("&curricularCourseID=").append(this.curricularCourse.getIdInternal());
+        href.append("&degreeID=").append(this.curricularCourse.getDegree().getIdInternal());
+        href.append("&degreeCurricularPlanID=").append(this.curricularCourse.getDegreeCurricularPlan().getIdInternal());
+        
+        final Map requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
+        if (this.executionYear != null) {
+            final ExecutionPeriod executionPeriod = this.executionYear.getLastExecutionPeriod();
+            href.append("&executionPeriodOID=").append(executionPeriod.getIdInternal());
+        } else if (requestParameterMap.get("executionPeriodOID") != null) {
+            href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
+        }
+        
+        writer.writeAttribute("href", href.toString(), null);
+    }
+
     private void encodeContext(CurricularPeriod curricularPeriod) throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "smalltxt", null);

@@ -260,10 +260,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	return getCurricularCourse().getIdInternal();
     }
 
-    public boolean getIsBolonha() {
-	return getCurricularCourse().isBolonha();
-    }
-    
     public RegimeType getRegimeType() {
 	return getCurricularCourse().getRegimeType();
     }

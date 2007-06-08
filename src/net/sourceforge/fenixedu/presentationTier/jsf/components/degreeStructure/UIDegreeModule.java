@@ -131,6 +131,7 @@ public class UIDegreeModule extends UIInput {
         href.append("&showRules=").append(requestParameterMap.get("showRules"));
         href.append("&hideCourses=").append(requestParameterMap.get("hideCourses"));
         href.append("&action=").append(requestParameterMap.get("action"));
+        
         writer.writeAttribute("href", href.toString(), null);
         if (blank) {
             writer.writeAttribute("target", "_blank", null);

@@ -127,11 +127,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean isEnrolment() {
 	return true;
     }
-
-    public boolean isBolonha() {
-	return getStudentCurricularPlan().isBolonha();
+    
+    public boolean isBolonhaDegree() {
+	return getStudentCurricularPlan().isBolonhaDegree();
     }
     
+    /**
+     * Temporary method, after all degrees migration this is no longer necessary
+     * @return
+     */
+    public boolean isBoxStructure() {
+	return getStudentCurricularPlan().isBoxStructure();
+    }
+   
     @Deprecated
     public EnrollmentCondition getCondition() {
 	return getEnrolmentCondition();
@@ -234,7 +242,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
 	    EnrollmentCondition enrolmentCondition, String createdBy) {
 	setCurricularCourse(curricularCourse);
-	setWeigth(studentCurricularPlan.isBolonha() ? curricularCourse.getEctsCredits(executionPeriod) : curricularCourse.getWeigth());
+	setWeigth(studentCurricularPlan.isBolonhaDegree() ? curricularCourse.getEctsCredits(executionPeriod) : curricularCourse.getWeigth());
 	setEnrollmentState(EnrollmentState.ENROLLED);
 	setExecutionPeriod(executionPeriod);
 	setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
@@ -999,12 +1007,32 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     @Override
-    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	if (executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return this.isApproved() && this.getCurricularCourse().isEquivalent(curricularCourse);
+    public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+	    return isApproved() && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(curricularCourse, executionPeriod));
 	} else {
 	    return false;
 	}
+    }
+    
+    private boolean hasCurricularCourseEquivalence(final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse().getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
+	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence, final ExecutionPeriod executionPeriod) {
+	boolean result = true;
+        for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCourses()) {
+            result &= getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
+            if (!result) {
+        	return result;
+            }
+        }
+        return result;
     }
 
     @Override
@@ -1100,7 +1128,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return Double.valueOf(0d);
 	}
 	
-	if (!isBolonha()) {
+	if (!isBolonhaDegree()) {
 	    
 	    if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
 		return getEctsCredits();
@@ -1171,7 +1199,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
-	if(!isBolonha()) {
+	if(!isBolonhaDegree()) {
 	    return accumulatedEctsCredits;
 	}	
 	if(isExtraCurricular() || parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {

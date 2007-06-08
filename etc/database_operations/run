@@ -33,3 +33,5 @@ execute "Add more attributes to Thesis" alterThesis.sql
 execute "Add Library portal functionalities and correct some names" addLibraryEntries.sql
 execute "Publication Collaborators Group" createPublicationCollaborators.sql
 execute "Allowed To upload File Group" createAllowedToUploadFilesInUnit.sql
+execute "Remove unnecessary table Equivalence CurricularCourse CurricularCourse" dropEquivalenceCurricularCourseCurricularCourseTable.sql
+execute "Remove unnecessary party columns due to PartyContacts refactoring" removeUnnecessaryPartyColumns.sql
