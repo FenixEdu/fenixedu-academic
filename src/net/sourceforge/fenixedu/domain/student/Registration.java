@@ -1117,7 +1117,7 @@ public class Registration extends Registration_Base {
 
 	List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
 	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-	    if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	    if (scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
 	    }
 	}
@@ -1127,7 +1127,7 @@ public class Registration extends Registration_Base {
     public List<Enrolment> getEnroledImprovements() {
 	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
 	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-	    if (scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+	    if (scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		enroledImprovements.addAll(scp.getEnroledImprovements());
 	    }
 	}

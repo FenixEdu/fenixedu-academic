@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolment {
     
@@ -36,7 +37,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	setGrade(Grade.createEmptyGrade());
     }
     
-    public ExternalEnrolment(Student student, ExternalCurricularCourse externalCurricularCourse, String grade, ExecutionPeriod executionPeriod) {
+    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final String grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
         this();
         if(student == null) {
             throw new DomainException("error.externalEnrolment.student.cannot.be.null");
@@ -52,6 +53,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         setExternalCurricularCourse(externalCurricularCourse);
         setGradeValue(grade);
         setExecutionPeriod(executionPeriod);
+        setEvaluationDate(evaluationDate);
     }
 
     private void checkIfCanCreateExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse) {
@@ -60,6 +62,18 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 		throw new DomainException("error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse", externalCurricularCourse.getName());
 	    }
 	}
+    }
+    
+    public void edit(final Student student, final String gradeValue, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
+	
+	if (student != getStudent()) {
+	    checkIfCanCreateExternalEnrolment(student, getExternalCurricularCourse());
+	}
+	
+	setStudent(student);
+        setGradeValue(gradeValue);
+        setExecutionPeriod(executionPeriod);
+        setEvaluationDate(evaluationDate);
     }
 
     public MultiLanguageString getName() {
@@ -99,8 +113,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public Integer getFinalGrade() {
 	final String grade = getGradeValue();
-	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
-		: Integer.valueOf(grade);
+	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
     }
 
     public Double getWeigth() {

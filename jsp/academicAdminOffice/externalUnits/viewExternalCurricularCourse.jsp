@@ -22,6 +22,9 @@
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalEnrolment" + externalCurricularCourseId  %>"><bean:message key="label.externalUnits.createExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 
+<ul class="mtop15">
+	<li><html:link page="<%="/externalUnits.do?method=prepareEditExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+</ul>
 
 <table class="tstyle2">
 	<tr><td class="aright"><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</td><td><bean:size id="size" name="externalEnrolments" /> <%= size %></td></tr>
@@ -34,6 +37,10 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
 			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
+			
+			<fr:property name="linkFormat(edit)" value="/externalUnits.do?method=prepareEditExternalEnrolment&oid=${idInternal}" />
+			<fr:property name="key(edit)" value="label.edit"/>
+			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

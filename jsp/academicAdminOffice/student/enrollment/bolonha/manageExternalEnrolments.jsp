@@ -40,7 +40,7 @@
 	<html:hidden property="method" value="deleteExternalEnrolments"/>
 	
 	<logic:notEmpty name="student" property="externalEnrolments">
-		<fr:view name="student" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCours">
+		<fr:view name="student" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCourse">
 			<fr:layout name="tabular">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thlight thcenter" />
@@ -48,6 +48,10 @@
 					<fr:property name="checkable" value="true" />
 					<fr:property name="checkboxName" value="externalEnrolmentsToDelete" />
 					<fr:property name="checkboxValue" value="idInternal" />	
+					
+					<fr:property name="linkFormat(edit)" value="<%= contextInformation.toString() + "method=prepareEditExternalEnrolment&externalEnrolmentId=${idInternal}" %>" />
+					<fr:property name="key(edit)" value="label.edit"/>
+					<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				</fr:layout>
 			</fr:layout>
 		</fr:view>

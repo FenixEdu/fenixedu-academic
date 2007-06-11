@@ -49,22 +49,25 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	setName(name);
 	setCode(code);
     }
+    
+    public void edit(final String name, final String code) {
+	if (StringUtils.isEmpty(name)) {
+	    throw new DomainException("error.externalCurricularCourse.name.cannot.be.empty");
+	}
+	checkForExternalCurricularCourseWithSameNameAndCode(getUnit(), name, code);
+	setName(name);
+	setCode(code);
+    }
 
-    private void checkForExternalCurricularCourseWithSameNameAndCode(final Unit unit, final String name,
-	    String code) {
+    private void checkForExternalCurricularCourseWithSameNameAndCode(final Unit unit, final String name, final String code) {
 	final String nameToSearch = name.toLowerCase();
-	for (final ExternalCurricularCourse externalCurricularCourse : unit
-		.getExternalCurricularCourses()) {
+	for (final ExternalCurricularCourse externalCurricularCourse : unit.getExternalCurricularCourses()) {
 	    if (externalCurricularCourse.getName().toLowerCase().equals(nameToSearch)) {
-
-		if ((externalCurricularCourse.getCode() != null && externalCurricularCourse.getCode()
-			.equals(code))
+		if ((externalCurricularCourse.getCode() != null && externalCurricularCourse.getCode().equals(code))
 			|| externalCurricularCourse.getCode() == null && code == null) {
-
 		    throw new DomainException(
 			    "error.externalCurricularCourse.parent.unit.already.has.externalCurricularCourse.with.same.type");
 		}
-
 	    }
 	}
     }
@@ -165,5 +168,4 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	}
 	return result;
     }
-
 }

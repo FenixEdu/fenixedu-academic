@@ -86,6 +86,12 @@ public class Unit extends Unit_Base {
         }
         unitName.setName(name);
     }
+    
+    
+    public void edit(String name, String acronym) {
+	setName(name);
+	setAcronym(acronym);
+    }
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
@@ -1053,10 +1059,14 @@ public class Unit extends Unit_Base {
     }
     
     public List<IGroup> getUserDefinedGroups() {
-		List<IGroup> groups = new ArrayList<IGroup> ();
-		for(PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
-			groups.add(new PersistentGroup(persistentMembers));
-		}
-		return groups;
+	final List<IGroup> groups = new ArrayList<IGroup>();
+	for (final PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
+	    groups.add(new PersistentGroup(persistentMembers));
 	}
+	return groups;
+    }
+    
+    public boolean isEarth() {
+	return this.equals(RootDomainObject.getInstance().getEarthUnit());
+    }
 }

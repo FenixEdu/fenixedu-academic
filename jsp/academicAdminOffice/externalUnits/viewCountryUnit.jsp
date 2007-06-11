@@ -12,12 +12,15 @@
 
 <bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.idInternal"/></bean:define>
 
-<ul>
+<ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateUniversity" + unitId %>"><bean:message key="label.externalUnits.createUniversity" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateSchool" + unitId %>"><bean:message key="label.externalUnits.createSchool" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateDepartment" + unitId%>"><bean:message key="label.externalUnits.createDepartment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 
+<ul class="mtop15">
+	<li><html:link page="<%="/externalUnits.do?method=prepareEditUnit" + unitId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+</ul>
 
 <table class="tstyle2">
 	<tr><td class="aright"><bean:message key="label.externalUnits.universities" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</td><td><bean:size id="size" name="universities" /> <%= size %></td></tr>
@@ -33,7 +36,7 @@
 	<fr:view name="universities" schema="UniversityUnitResultBean.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
-			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
+			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>			
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

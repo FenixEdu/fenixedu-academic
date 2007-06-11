@@ -11358,6 +11358,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>EditExternalUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>CreateExternalUnitByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByName</implementationClass>
         <description></description>
@@ -11379,8 +11388,26 @@
         </filterChains>     
     </service>
     <service>
+    	<name>EditExternalCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    <service>
     	<name>CreateExternalEnrolment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalEnrolment</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditExternalEnrolment</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

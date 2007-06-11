@@ -1525,9 +1525,10 @@ class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixed
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	String gradeValue;
-	Grade grade (REQUIRED);
+	Grade grade;
     String createdBy;
 	DateTime creationDateDateTime;
+	YearMonthDay evaluationDate;
 	Integer keyExternalCurricularCourse;
 	Integer keyStudent;
 	Integer keyExecutionPeriod;

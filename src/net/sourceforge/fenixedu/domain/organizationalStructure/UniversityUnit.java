@@ -34,6 +34,12 @@ public class UniversityUnit extends UniversityUnit_Base {
 	
 	return universityUnit;
     }
+    
+    @Override
+    public void edit(String name, String acronym) {
+        super.edit(name, acronym);
+        checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(this);
+    }
   
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,

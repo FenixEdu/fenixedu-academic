@@ -13,6 +13,9 @@ public class CreateExternalUnitBean implements Serializable {
     private String unitName;
     private String unitCode;
     
+    protected CreateExternalUnitBean() {
+    }
+    
     public CreateExternalUnitBean(final Unit parentUnit, PartyTypeEnum unitType) {
 	setParentUnit(parentUnit);
 	setUnitType(unitType);

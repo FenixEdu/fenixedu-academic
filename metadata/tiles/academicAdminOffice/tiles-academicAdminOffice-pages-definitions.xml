@@ -61,6 +61,9 @@
     <definition name="student.externalEnrolment.manageExternalEnrolments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"/>
     </definition>
+    <definition name="student.externalEnrolment.editExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"/>
+    </definition>
     <definition name="student.externalEnrolment.chooseExternalUnit" extends="academicAdminOffice.masterPage">
 		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"/>
@@ -395,11 +398,20 @@
 	<definition name="externalUnits.prepareCreateUnit" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/createExternalUnit.jsp"/>
 	</definition>
+	<definition name="externalUnits.prepareEditUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalUnit.jsp"/>
+	</definition>
 	<definition name="externalUnits.prepareCreateExternalCurricularCourse" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp"/>
 	</definition>
+	<definition name="externalUnits.prepareEditExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalCurricularCourse.jsp"/>
+	</definition>
 	<definition name="externalUnits.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/createExternalEnrolment.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareEditExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalEnrolment.jsp"/>
 	</definition>
 	
 	<!-- Bolonha Student Enrollment -->

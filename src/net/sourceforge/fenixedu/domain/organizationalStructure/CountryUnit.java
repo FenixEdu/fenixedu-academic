@@ -33,6 +33,12 @@ public class CountryUnit extends CountryUnit_Base {
     }
     
     @Override
+    public void edit(String name, String acronym) {
+        super.edit(name, acronym);
+        checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
+    }
+    
+    @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
@@ -91,4 +97,5 @@ public class CountryUnit extends CountryUnit_Base {
 	    }
 	}
     }
+    
 }

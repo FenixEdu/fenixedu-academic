@@ -317,6 +317,7 @@
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.StudentExternalEnrolmentsDA">
 			    
 			<forward name="manageExternalEnrolments" path="student.externalEnrolment.manageExternalEnrolments"/>
+			<forward name="prepareEditExternalEnrolment" path="student.externalEnrolment.editExternalEnrolment"/>
 			<forward name="chooseExternalUnit" path="student.externalEnrolment.chooseExternalUnit"/>
 			<forward name="chooseExternalCurricularCourses" path="student.externalEnrolment.chooseExternalCurricularCourses"/>
 			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
@@ -680,8 +681,13 @@
       		<forward name="viewExternalCurricularCourse" path="externalUnits.viewExternalCurricularCourse"/>
       		
       		<forward name="prepareCreateUnit" path="externalUnits.prepareCreateUnit"/>
+      		<forward name="prepareEditUnit" path="externalUnits.prepareEditUnit"/>
+      		
       		<forward name="prepareCreateExternalCurricularCourse" path="externalUnits.prepareCreateExternalCurricularCourse"/>
+      		<forward name="prepareEditExternalCurricularCourse" path="externalUnits.prepareEditExternalCurricularCourse"/>
+      		
       		<forward name="prepareCreateExternalEnrolment" path="externalUnits.prepareCreateExternalEnrolment"/>
+      		<forward name="prepareEditExternalEnrolment" path="externalUnits.prepareEditExternalEnrolment"/>
       </action>
       
    		<!-- Begin : Bolonha Student Enrollment -->

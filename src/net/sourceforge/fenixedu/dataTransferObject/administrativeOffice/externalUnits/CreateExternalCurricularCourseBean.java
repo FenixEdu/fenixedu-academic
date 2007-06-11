@@ -13,6 +13,9 @@ public class CreateExternalCurricularCourseBean implements Serializable {
     private boolean enrolStudent;
     private CreateExternalEnrolmentBean externalEnrolmentBean;
     
+    protected CreateExternalCurricularCourseBean() {
+	
+    }
     
     public CreateExternalCurricularCourseBean(final Unit parentUnit) {
 	setParentUnit(parentUnit);
@@ -45,6 +48,10 @@ public class CreateExternalCurricularCourseBean implements Serializable {
 
     public boolean isEnrolStudent() {
         return enrolStudent;
+    }
+    
+    public boolean isToEnrolStudent() {
+	return isEnrolStudent();
     }
 
     public void setEnrolStudent(boolean enrolStudent) {

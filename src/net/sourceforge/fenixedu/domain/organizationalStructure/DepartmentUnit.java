@@ -44,17 +44,24 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	return departmentUnit;
     }    
     
-    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {							
+    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName, final String departmentAcronym, final Unit parentUnit) {							
 	
-	DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);
-	departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	final DepartmentUnit departmentUnit = new DepartmentUnit();
+	departmentUnit.init(departmentName, null, departmentAcronym, new YearMonthDay(), null, null, null, null);
+	if(parentUnit.isCountryUnit()) {
+	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
+	} else {
+	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	}
 	
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
-	
 	return departmentUnit;
+    }
+    
+    @Override
+    public void edit(String name, String acronym) {
+        super.edit(name, acronym);
+        checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
     }
                   
     @Override
@@ -97,10 +104,11 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
 	if (getDepartment() == null) {
-	    if(parentUnit != null && (!parentUnit.isOfficialExternal() ||
-		    (!parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
+	    if (parentUnit != null
+		    && (!parentUnit.isOfficialExternal() || (!parentUnit.isCountryUnit()
+			    && !parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
 		throw new DomainException("error.unit.invalid.parentUnit");
-	    }	    
+	    }	   
 	} else {
 	    if(parentUnit != null && !parentUnit.isInternal()) {
 		throw new DomainException("error.unit.invalid.parentUnit");
@@ -120,7 +128,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public void setDepartment(Department department) {
 	if(department == null) {
-	    throw new DomainException("erro.departmentUnit.empty.department");
+	    throw new DomainException("error.departmentUnit.empty.department");
 	}
 	super.setDepartment(department);
     }

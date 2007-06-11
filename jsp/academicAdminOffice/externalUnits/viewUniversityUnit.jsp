@@ -24,6 +24,9 @@
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalCurricularCourse" + unitId %>"><bean:message key="label.externalUnits.createExternalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 
+<ul class="mtop15">
+	<li><html:link page="<%="/externalUnits.do?method=prepareEditUnit" + unitId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+</ul>
 
 <table class="tstyle2">
 	<tr><td class="aright"><bean:message key="label.externalUnits.schools" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</td><td><bean:size id="size" name="schools" /> <%= size %></td></tr>
