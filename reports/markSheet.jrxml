@@ -26,7 +26,7 @@
 	<parameter name="markSheet" isForPrompting="false" class="net.sourceforge.fenixedu.domain.MarkSheet"/>
 	<parameter name="checkSum" isForPrompting="false" class="java.lang.String"/>
 
-	<field name="grade" class="java.lang.String"/>
+	<field name="gradeValue" class="java.lang.String"/>
 	<field name="examDate" class="java.util.Date"/>
 	<field name="enrolmentEvaluationType" class="java.lang.Object"/>
 	<field name="enrolment.studentCurricularPlan.student.person.name" class="java.lang.String"/>
@@ -290,7 +290,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{grade}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{gradeValue}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
