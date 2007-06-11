@@ -136,6 +136,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader("Saldo");
 	spreadsheet.addHeader("Inj/V");
 	spreadsheet.addHeader("A66/V");
+	spreadsheet.addHeader("A66 Prox");
 	spreadsheet.addHeader("FER.");
 	spreadsheet.addHeader("ATES");
 	spreadsheet.addHeader("NOJO");
@@ -171,6 +172,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
+	    double a66NextYearDays = getA66NextYearDays(assiduousnessClosedMonth.getAssiduousness(),
+		    beginDate, endDate);
 	    int vacationsDays = getVacationsDays(assiduousnessClosedMonth.getAssiduousness(), beginDate,
 		    endDate);
 	    int medicalIssuesDays = getMedicalIssuesDays(assiduousnessClosedMonth.getAssiduousness(),
@@ -185,10 +188,21 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		    .getLeavesNumberOfWorkDays(beginDate, endDate, "LS/V");
 	    fillInRow(spreadsheet, assiduousnessClosedMonth, thisMonthA66, thisMonthA66
 		    + previousNotCompleteA66, thisMonthUnjustified, thisMonthUnjustified
-		    + previousNotCompleteUnjustified, vacationsDays, medicalIssuesDays, familyDeathDays,
-		    weddingDays, paternityDays, leaveWithoutPayDays);
+		    + previousNotCompleteUnjustified, a66NextYearDays, vacationsDays, medicalIssuesDays,
+		    familyDeathDays, weddingDays, paternityDays, leaveWithoutPayDays);
 	}
 	return spreadsheet;
+    }
+
+    private double getA66NextYearDays(Assiduousness assiduousness, YearMonthDay beginDate,
+	    YearMonthDay endDate) {
+	double countWorkDays = assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "A 66 P.A.");
+	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
+	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("1/2 A 66 P.A.")) {
+		countWorkDays += 0.5;
+	    }
+	}
+	return countWorkDays;
     }
 
     private int getPaternityDays(Assiduousness assiduousness, YearMonthDay beginDate,
@@ -218,9 +232,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    YearMonthDay endDate) {
 	int countWorkDays = 0;
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
-	    if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS || leave
-		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS|| leave
-                    .getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS)
+	    if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS
+		    || leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS || leave
+		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS)
 		    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
 		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(),
 			endDate.toDateTimeAtMidnight()));
@@ -231,8 +245,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     private void fillInRow(StyledExcelSpreadsheet spreadsheet,
 	    AssiduousnessClosedMonth assiduousnessClosedMonth, double a66, double totalA66,
-	    double unjustified, double totalUnjustified, int vacationDays, int medicalIssuesDays,
-	    int familyDeathDays, int weddingDays, int paternityDays, int leaveWithoutPayDays) {
+	    double unjustified, double totalUnjustified, double a66NextYearDays, int vacationDays,
+	    int medicalIssuesDays, int familyDeathDays, int weddingDays, int paternityDays,
+	    int leaveWithoutPayDays) {
 	spreadsheet.newRow();
 	DecimalFormat decimalFormat = new DecimalFormat(".0");
 	String a66String = a66 == 0 ? "" : decimalFormat.format(a66);
@@ -251,6 +266,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		DurationFieldType.minutes())).toString());
 	spreadsheet.addCell(unjustifiedString + "  " + totalUnjustifiedString);
 	spreadsheet.addCell(a66String + "  " + totalA66String);
+	spreadsheet.addCell(a66NextYearDays == 0 ? "" : decimalFormat.format(a66NextYearDays));
 	spreadsheet.addCell(((Integer) vacationDays).toString());
 	spreadsheet.addCell(((Integer) medicalIssuesDays).toString());
 	spreadsheet.addCell(((Integer) familyDeathDays).toString());

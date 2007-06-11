@@ -18,33 +18,33 @@ public class NumberUtils extends FenixUtil {
      */
     public static Double formatNumber(Double numberToFormat, int decimalPlacement) {
 
-        if (decimalPlacement == 0) {
-            return new Double(Math.round(numberToFormat.floatValue()));
-        }
+	if (decimalPlacement == 0) {
+	    return new Double(Math.round(numberToFormat.floatValue()));
+	}
 
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        StringBuffer stringBuffer = new StringBuffer();
-        FieldPosition fieldPosition = new FieldPosition(0);
+	NumberFormat numberFormat = NumberFormat.getInstance();
+	StringBuffer stringBuffer = new StringBuffer();
+	FieldPosition fieldPosition = new FieldPosition(0);
 
-        numberFormat.setGroupingUsed(false);
-        numberFormat.setMaximumFractionDigits(decimalPlacement);
+	numberFormat.setGroupingUsed(false);
+	numberFormat.setMaximumFractionDigits(decimalPlacement);
 
-        numberFormat.format(numberToFormat, stringBuffer, fieldPosition);
+	numberFormat.format(numberToFormat, stringBuffer, fieldPosition);
 
-        int commaPosition = stringBuffer.indexOf(",");
+	int commaPosition = stringBuffer.indexOf(",");
 
-        if (commaPosition != -1) {
-            stringBuffer = stringBuffer.replace(commaPosition, commaPosition + 1, ".");
-        }
+	if (commaPosition != -1) {
+	    stringBuffer = stringBuffer.replace(commaPosition, commaPosition + 1, ".");
+	}
 
-        numberToFormat = new Double(stringBuffer.toString());
-        return numberToFormat;
+	numberToFormat = new Double(stringBuffer.toString());
+	return numberToFormat;
     }
 
     public static Double formatDoubleWithoutRound(Double number, int numberOfDecimalPlaces) {
-        DecimalFormat decimalFormat = new DecimalFormat("0.00000");
-        int position = decimalFormat.format(number).lastIndexOf(".");
-        return new Double(decimalFormat.format(number)
-                .substring(0, position + numberOfDecimalPlaces + 1));
+	DecimalFormat decimalFormat = new DecimalFormat("0.00000");
+	int position = decimalFormat.format(number).replaceAll(",", ".").lastIndexOf(".");
+	return new Double(decimalFormat.format(number)
+		.substring(0, position + numberOfDecimalPlaces + 1));
     }
 }
