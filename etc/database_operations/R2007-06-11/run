@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Remove unnecessary table Equivalence CurricularCourse CurricularCourse" dropEquivalenceCurricularCourseCurricularCourseTable.sql
+execute "Remove unnecessary party columns due to PartyContacts refactoring" removeUnnecessaryPartyColumns.sql
+execute "Added translations to departments and scientific areas" translateAcademicUnits.sql
+execute "Added some fields to support fully extra work" alterTableExtraWorkRequest.sql
