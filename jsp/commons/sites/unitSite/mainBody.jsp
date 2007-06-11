@@ -53,13 +53,18 @@
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;"><fr:view name="announcement" property="creationDate" layout="no-time"/></p>
 				<div class="usitebody mvert025">
-                    <bean:define id="length" name="textLength"/>
-					<fr:view name="announcement" property="body">
-						<fr:layout name="html">
-<%-- 							<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
-<%-- 							<fr:property name="tooltipShown" value="false"/> --%>
-						</fr:layout>
-					</fr:view>
+					<logic:equal name="announcement" property="excerptEmpty" value="true">
+	                    <bean:define id="length" name="textLength"/>
+						<fr:view name="announcement" property="body">
+							<fr:layout name="html">
+	<%-- 							<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
+	<%-- 							<fr:property name="tooltipShown" value="false"/> --%>
+							</fr:layout>
+						</fr:view>
+					</logic:equal>
+					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
+						<fr:view name="announcement" property="excerpt" layout="html"/>
+					</logic:notEqual>
 				</div>
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>
@@ -111,13 +116,18 @@
 					</logic:present>
 				</p>
 				<div class="usitebody mvert025">
-                    <bean:define id="length" name="textLength"/>
-					<fr:view name="announcement" property="body">
-	   					<fr:layout name="html">
-<%--   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
-<%--								<fr:property name="tooltipShown" value="false"/> --%>
-						</fr:layout>
-					</fr:view>
+					<logic:equal name="announcement" property="excerptEmpty" value="true">
+	                    <bean:define id="length" name="textLength"/>
+						<fr:view name="announcement" property="body">
+		   					<fr:layout name="html">
+	<%--   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
+	<%--								<fr:property name="tooltipShown" value="false"/> --%>
+							</fr:layout>
+						</fr:view>
+					</logic:equal>
+					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
+						<fr:view name="announcement" property="excerpt" layout="html"/>
+					</logic:notEqual>
 				</div>
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
 				<bean:define id="siteID" name="site" property="idInternal"/>

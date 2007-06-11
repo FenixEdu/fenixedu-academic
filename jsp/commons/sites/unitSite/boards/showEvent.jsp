@@ -34,9 +34,9 @@
 		<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
 		<fr:view name="announcement" property="referedSubjectEnd" type="org.joda.time.DateTime" layout="no-time" />
 	</logic:present>
-	<logic:present name="announcement" property="place">
+	<logic:notEmpty name="announcement" property="place">
 	/ <fr:view name="announcement" property="place"/>
-	</logic:present>
+	</logic:notEmpty>
 </p>
 	
 <div class="ann_body mvert05">
