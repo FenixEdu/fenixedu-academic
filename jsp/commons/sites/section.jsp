@@ -355,48 +355,59 @@
             </div>
     
             <logic:notEmpty name="item" property="fileItems">
-                <div>
-                    <span style="color: #888;"><bean:message key="label.files" bundle="SITE_RESOURCES"/>: </span>
-                    	<ul>
+                <div class="mtop2">
+                
+                    <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
+                    
+                    	<table class="tstyle2 thlight width100">
+                    		<tr>
+	                    		<th>Nome do Ficheiro</th>
+	                    		<th>Opções</th>
+	                    		<th>Disponibilidade</th>
+                    		</tr>
                         	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
-                        		<bean:define id="downloadUrl">
-                        			<bean:write name="fileItem" property="downloadUrl"/>
-                        		</bean:define>
-                        		
-                        		<li>
+							<tr>
+								<td>
+	                        		<bean:define id="downloadUrl">
+	                        			<bean:write name="fileItem" property="downloadUrl"/>
+	                        		</bean:define>
            	                		<html:link href="<%= downloadUrl %>">
            	                			<fr:view name="fileItem" property="displayName"/>
            	                		</html:link>
-            	                		
-            	    		            <bean:define id="message">
+            	    		        <bean:define id="message">
         	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
         	                        </bean:define>
-            							
+           	                	</td>
+            	                	
+            					<td class="nowrap">	
         							<span class="pleft1">
-            		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
-            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
-            			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
-            			                    </html:link>, 
-            			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
-            			 	                   <bean:message key="link.section.item.editItemFilePermissions" bundle="SITE_RESOURCES"/>
-            			    	            </html:link>)
-            		    	            </span>
-
-                                <span class="pleft1" style="color: #888;">
-                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-                                        <fr:layout>
-                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
-                                            <fr:property name="key" value="true"/>
-                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
-                                            <fr:property name="subLayout" value="values"/>
-                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
-                                        </fr:layout>
-                                    </fr:view>
-                                </span>
-        	    	                </li>
-                        	</logic:iterate>
-                    	</ul>
+           		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
+           		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
+           			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
+           			                    </html:link>, 
+           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			 	                   <bean:message key="link.section.item.editItemFilePermissions" bundle="SITE_RESOURCES"/>
+           			    	            </html:link>)
+									</span>
+								</td>
+								
+								<td>
+	                                <span class="pleft1" style="color: #888;">
+	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                        <fr:layout>
+	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="key" value="true"/>
+	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                                            <fr:property name="subLayout" value="values"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                        </fr:layout>
+	                                    </fr:view>
+	                                </span>
+       	    	                </td>
+                        	</tr>
+                       	</logic:iterate>
+                   	</table>
                 </div>
             </logic:notEmpty>
         </div>
