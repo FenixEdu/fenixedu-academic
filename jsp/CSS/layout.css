@@ -37,7 +37,7 @@ height: 1%; /* fixes unwanted margin in IE for 100% width elements inside conten
 /* --- Top Header --- */
 
 #top {
-height: 5.5em;
+height: 73px;
 position: relative;
 }
 #top ul {

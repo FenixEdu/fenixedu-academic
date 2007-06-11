@@ -10,7 +10,7 @@ body {
 background-color: #00202a;
 background-color: #1a343d;
 }
-#top, #user { background: #16576b; }
+#top { background: #16576b; }
 
 #navtop { border-top: 4px solid #277b97; background: #146b88 url(../images/0grad01.gif) bottom repeat-x; }
 #navtop li a { display: block; background: #5fa0b7 url(../images/0corner_left_01.gif) top left repeat-x;}
