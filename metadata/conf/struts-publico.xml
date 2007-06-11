@@ -866,6 +866,12 @@
         
         
      <!-- View Research Result -->  
+     <action path="/showResearchResult"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInHomePage">
+            <forward name="showResult" path="show-result"/>
+     </action>
+
      <action path="/homepage/showResearchResult"
             parameter="method"
             type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInHomePage">
