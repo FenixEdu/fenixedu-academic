@@ -271,4 +271,45 @@
     <definition name="view-protocol" extends="departmentMember.masterPage">
         <put name="body" value="/departmentMember/protocols/viewProtocol.jsp"/>
     </definition>
+    
+    <!-- Functionalities -->
+    
+    <definition name="department.intranet" extends="departmentMember.masterPage">
+    	<put name="body-context" value="/departmentMember/intranet/context.jsp"/>
+    </definition>
+	<definition name="manage-persisted-groups" extends="department.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="department.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="department.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="department-upload-file" extends="department.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="department-edit-uploaders" extends="department.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>  
+    
+   	<definition name="department-upload-file" extends="department.intranet">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="department-manage-files" extends="department.intranet">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="department-edit-file" extends="department.intranet">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+
+    <definition name="sendMail" extends="department.intranet">
+       <put name="body" value="/departmentMember/intranet/sendEmail.jsp"/>  
+    </definition>      
 </tiles-definitions>

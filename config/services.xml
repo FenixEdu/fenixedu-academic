@@ -11906,7 +11906,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ManageResearchUnitPersistentGroup"/>
+			<chain name="ManageUnitPersistentGroup"/>
 		</filterChains>
     </service>
     <service>
@@ -11915,7 +11915,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ManageResearchUnitPersistentGroup"/>
+			<chain name="ManageUnitPersistentGroup"/>
 		</filterChains>
     </service>
     <service>
@@ -11924,7 +11924,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ManageResearchUnitPersistentGroup"/>
+			<chain name="ManageUnitPersistentGroup"/>
 		</filterChains>
     </service>
     <service>

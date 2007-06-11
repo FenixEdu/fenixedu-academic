@@ -163,14 +163,6 @@ public class ResearchUnit extends ResearchUnit_Base {
 		return groups;
 	}
 	
-	public List<IGroup> getUserDefinedGroups() {
-		List<IGroup> groups = new ArrayList<IGroup> ();
-		for(PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
-			groups.add(new PersistentGroup(persistentMembers));
-		}
-		return groups;
-	}
-	
 	public List<IGroup> getGroups() {
 		List<IGroup> groups = new ArrayList<IGroup>();
 		groups.addAll(getDefaultGroups());

@@ -90,6 +90,32 @@
 		<%
 			} 
 		%>
+	
+		<%--
+		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
+		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit" toScope="request"/>
+		<bean:define id="unitID" name="unit" property="idInternal"/>
+		
+		<ul>	
+		<li class="navheader">Comunicação</li>
+			<ul>
+				<li>
+					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + unitID %>">
+						<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+					 </html:link>
+				 </li>	
+				  <logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+				  <li>
+					 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+					 </html:link>
+				  </li>
+				  </logic:equal>
+				  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
+			</ul>
+		</li>
+		</ul>
+		</logic:notEmpty>
+		--%>
 		
 		<logic:notEmpty name="UserView" property="person.protocols">
 			<ul style="margin-top: 1em">
@@ -110,5 +136,5 @@
 		</ul>
 		</logic:notEmpty>
 
-		
+
 </logic:present>

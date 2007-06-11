@@ -193,6 +193,10 @@
        <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
     </definition>        
 
+	<definition name="research-unit-edit-uploaders" extends="researcher.unit.functionalities">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>      
+
    	<definition name="research-unit-upload-file" extends="researcher.unit.functionalities">
        <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
     </definition>        
@@ -211,10 +215,6 @@
 
 	<definition name="research-unit-list-publications" extends="researcher.unit.functionalities">
        <put name="body" value="/researcher/researchUnit/listPublications.jsp"/>  
-    </definition>      
-
-	<definition name="research-unit-edit-uploaders" extends="researcher.unit.functionalities">
-       <put name="body" value="/researcher/researchUnit/configureUploaders.jsp"/>  
     </definition>      
 
 </tiles-definitions>

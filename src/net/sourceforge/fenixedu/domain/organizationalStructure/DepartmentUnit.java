@@ -8,9 +8,17 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -165,5 +173,31 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 		}
 	    }
 	}
-    }      
+    }
+    
+    public boolean isUserAbleToDefineGroups(Person person) {
+		UnitSite site = this.getSite();
+		return (site == null) ? false : site.getManagers().contains(person); 
+	}
+	
+	public boolean isCurrentUserAbleToDefineGroups() {
+		return isUserAbleToDefineGroups(AccessControl.getPerson());
+	}
+	
+	public List<IGroup> getDefaultGroups() {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+		Department department = this.getDepartment();
+		groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
+		groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear, department));
+		groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
+		return groups;
+	}
+	
+	public List<IGroup> getGroups() {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		groups.addAll(this.getUserDefinedGroups());
+		groups.addAll(this.getDefaultGroups());
+		return groups;
+	}
 }

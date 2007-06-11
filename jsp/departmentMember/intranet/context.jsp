@@ -5,5 +5,5 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <em><fr:view name="unit" property="name"/></em>
-<bean:define id="functionalityAction" value="researchUnitFunctionalities" toScope="request"/>
+<bean:define id="functionalityAction" value="departmentFunctionalities" toScope="request"/>
 

@@ -1166,8 +1166,8 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>    
    	<filterChain>
-        <name>ManageResearchUnitPersistentGroup</name>
-        <expression>ManageResearchUnitPersistentGroup</expression>
+        <name>ManageUnitPersistentGroup</name>
+        <expression>ManageUnitPersistentGroup</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

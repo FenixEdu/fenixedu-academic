@@ -2637,7 +2637,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="people" layout="option-select" key="label.members" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="classes" value="nobullet noindent"/>
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchOrDeparmentUnit"/>
 			<property name="saveOptions" value="true"/>
 			<property name="eachLayout" value="values"/>
 			<property name="eachSchema" value="showNickName"/>
@@ -2664,7 +2664,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="permittedGroups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet noindent"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForUnit"/>
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
@@ -2686,7 +2686,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="groups" layout="option-select" key="label.permission" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet noindent"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForResearchUnit"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GroupsForUnit"/>
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
@@ -2718,7 +2718,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 <schema name="edit-publication-collaborators" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="RESEARCHER_RESOURCES">
 	<slot name="publicationCollaborators" layout="option-select">
 	<property name="classes" value="nobullet noindent"/>
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchOrDeparmentUnit"/>
 			<property name="saveOptions" value="true"/>
 			<property name="eachLayout" value="values"/>
 			<property name="eachSchema" value="showNickName"/>
@@ -2729,7 +2729,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 <schema name="edit.research.unit.publication.bean" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
 	<slot name="person" key="label.author" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchOrDeparmentUnit"/>
 		<property name="saveOptions" value="true"/>
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="showNickName"/>
@@ -2737,10 +2737,10 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>	
 </schema>
 
-<schema name="edit-uploaders" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="RESEARCHER_RESOURCES">
+<schema name="edit-uploaders" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="RESEARCHER_RESOURCES">
 	<slot name="allowedPeopleToUploadFiles" key="label.uploaders" layout="option-select" >  
 		<property name="classes" value="nobullet noindent"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchUnit"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForResearchOrDeparmentUnit"/>
 		<property name="saveOptions" value="true"/>
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="showNickName"/>

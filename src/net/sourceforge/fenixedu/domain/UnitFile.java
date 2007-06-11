@@ -56,6 +56,7 @@ public class UnitFile extends UnitFile_Base {
 	public void delete() {
 		if (isEditableByCurrentUser()) {
 			removeUnit();
+			for(;!getUnitFileTags().isEmpty(); getUnitFileTags().get(0).removeTaggedFiles(this));
 			removeRootDomainObject();
 			super.deleteDomainObject();
 		} else {

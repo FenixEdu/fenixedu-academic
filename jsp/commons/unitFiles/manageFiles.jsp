@@ -8,11 +8,12 @@
 <h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></h2>
 
 <bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="actionName" name="functionalityAction"/>
 
 <logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
 <ul>
 	<li>
-		<html:link page="<%= "/researchUnitFunctionalities.do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
+		<html:link page="<%= "/" + actionName + ".do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
 	</li>
 </ul>
 </logic:equal>
@@ -21,7 +22,7 @@
 
 <fr:view name="unit" property="unitFileTags">
 	<fr:layout name="tag-cloud">
-		<fr:property name="linkFormat" value="/researchUnitFunctionalities.do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}"/>
+		<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}"%>"/>
 		<fr:property name="classes" value="tcloud"/>
 		<fr:property name="popularCount" value="10"/>
 		<fr:property name="minimumLevel" value="0.4"/>
@@ -29,14 +30,14 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="cpURL" value="<%= "/researcher/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID%>"/>
+<bean:define id="cpURL" value="<%= request.getContextPath() + "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
 <logic:present name="tagName">
 	<bean:define id="tagName" name="tagName" type="java.lang.String"/>
-	<bean:define id="cpURL" value="<%= "/researcher/researchUnitFunctionalities.do?method=viewFilesByTag&tagName=" + tagName + "&unitId=" + unitID%>"/>
+	<bean:define id="cpURL" value="<%= request.getContextPath() + "/" + actionName + ".do?method=viewFilesByTag&tagName=" + tagName + "&unitId=" + unitID%>"/>
 </logic:present>
 
 <p>
-	<html:link page="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID%>">
+	<html:link page="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>">
 		<bean:message key="renderers.show.all" bundle="RENDERER_RESOURCES"/>
 	</html:link>
 </p>
@@ -52,12 +53,12 @@
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />
 				<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
-				<fr:property name="link(delete)" value="<%= "/researchUnitFunctionalities.do?method=deleteFile&unitId=" + unitID %>"/>
+				<fr:property name="link(delete)" value="<%= "/" + actionName + ".do?method=deleteFile&unitId=" + unitID %>"/>
 				<fr:property name="param(delete)" value="idInternal/fid" />
 				<fr:property name="order(edit)" value="1"/>
 				<fr:property name="key(edit)" value="label.edit" />
 				<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
-				<fr:property name="link(edit)" value="<%= "/researchUnitFunctionalities.do?method=prepareEditFile&unitId=" + unitID %>"/>
+				<fr:property name="link(edit)" value="<%= "/" + actionName + ".do?method=prepareEditFile&unitId=" + unitID %>"/>
 				<fr:property name="param(edit)" value="idInternal/fid" />
 				<fr:property name="visibleIf(edit)" value="editableByCurrentUser"/>
 			</fr:layout>
@@ -70,8 +71,8 @@ pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 
 	<fr:view name="unit" property="unitFileTags">
 		<fr:layout name="tag-count">
-			<fr:property name="linkFormat" value="/researchUnitFunctionalities.do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}"/>
-			<fr:property name="showAllUrl" value="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID%>"/>
+			<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}" %>"/>
+			<fr:property name="showAllUrl" value="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
 			<fr:property name="sortBy" value="name"/>
 		</fr:layout>
 	</fr:view>

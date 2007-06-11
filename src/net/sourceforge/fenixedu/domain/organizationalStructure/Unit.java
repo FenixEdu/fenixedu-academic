@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -1050,4 +1051,12 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
+    
+    public List<IGroup> getUserDefinedGroups() {
+		List<IGroup> groups = new ArrayList<IGroup> ();
+		for(PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
+			groups.add(new PersistentGroup(persistentMembers));
+		}
+		return groups;
+	}
 }
