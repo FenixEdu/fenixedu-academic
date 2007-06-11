@@ -17,7 +17,7 @@ UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Materials Engineering (DEMAT)'
 	WHERE `REAL_NAME`  = 'Departamento de Engenharia de Materiais (DEMAT)';
 
-ALTER TABLE `unciapl`.`PARTY` ADD COLUMN `NAME_EN` VARCHAR(255) DEFAULT NULL AFTER `NAME`;
+ALTER TABLE `PARTY` ADD COLUMN `NAME_EN` VARCHAR(255) DEFAULT NULL AFTER `NAME`;
 
 UPDATE PARTY 
 	SET NAME_EN = 'Hydraulics and Water and Environmental Resources Section'
