@@ -165,9 +165,10 @@ Documentation:
        	<property name="languageShown" value="false"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">
+    <!-- <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">  -->
+	<renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>
-    	<property name="languageShown" value="false"/>
+<!--     	<property name="languageShown" value="false"/> -->
     </renderer>
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>

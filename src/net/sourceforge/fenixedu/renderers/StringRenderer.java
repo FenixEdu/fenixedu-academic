@@ -128,7 +128,7 @@ public class StringRenderer extends OutputRenderer {
 					if (getLength() != null && string.length() > getLength()) {
 						component = new HtmlText(string.substring(0, getLength()) + "...", isEscaped(),
 								isNewlineAware());
-						component.setTitle(string);
+						component.setTitle(HtmlText.escape(string));
 					} else {
 						component = new HtmlText(string, isEscaped(), isNewlineAware());
 					}
@@ -141,7 +141,7 @@ public class StringRenderer extends OutputRenderer {
 					String text = (getLinkText() == null) ? string : getLinkText();
 
 					if (getLength() != null && text.length() > getLength()) {
-						link.setTitle(text);
+						link.setTitle(HtmlText.escape(text));
 						text = text.substring(0, getLength()) + "...";
 					}
 

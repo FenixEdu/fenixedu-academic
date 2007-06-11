@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -74,7 +75,7 @@ public class ShortMultiLanguageStringRenderer extends MultiLanguageStringRendere
 
 		if (isTooltipShown()) {
 			if (!String.valueOf(previous).equals(String.valueOf(current))) {
-				component.setTitle(previous);
+				component.setTitle(HtmlText.escape(previous));
 			}
 		}
 

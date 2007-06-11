@@ -55,9 +55,9 @@
 				<div class="usitebody mvert025">
                     <bean:define id="length" name="textLength"/>
 					<fr:view name="announcement" property="body">
-						<fr:layout name="short-html">
-							<fr:property name="length" value="<%= String.valueOf(length) %>"/>
-							<fr:property name="tooltipShown" value="false"/>
+						<fr:layout name="html">
+<%-- 							<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
+<%-- 							<fr:property name="tooltipShown" value="false"/> --%>
 						</fr:layout>
 					</fr:view>
 				</div>
@@ -113,10 +113,10 @@
 				<div class="usitebody mvert025">
                     <bean:define id="length" name="textLength"/>
 					<fr:view name="announcement" property="body">
-	   					<fr:layout name="short-html">
-   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/>
-								<fr:property name="tooltipShown" value="false"/>
-							</fr:layout>
+	   					<fr:layout name="html">
+<%--   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
+<%--								<fr:property name="tooltipShown" value="false"/> --%>
+						</fr:layout>
 					</fr:view>
 				</div>
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
