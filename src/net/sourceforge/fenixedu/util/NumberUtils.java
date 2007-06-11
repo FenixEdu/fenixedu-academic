@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.util;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 
@@ -43,7 +44,10 @@ public class NumberUtils extends FenixUtil {
 
     public static Double formatDoubleWithoutRound(Double number, int numberOfDecimalPlaces) {
 	DecimalFormat decimalFormat = new DecimalFormat("0.00000");
-	int position = decimalFormat.format(number).replaceAll(",", ".").lastIndexOf(".");
+	DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+	decimalFormatSymbols.setDecimalSeparator('.');
+	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
+	int position = decimalFormat.format(number).lastIndexOf(".");
 	return new Double(decimalFormat.format(number)
 		.substring(0, position + numberOfDecimalPlaces + 1));
     }
