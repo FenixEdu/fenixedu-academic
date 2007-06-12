@@ -52,7 +52,7 @@
 				<bean:message key="link.coordinator.degreeSite.management"/>		
 			</html:link> 
 		</li>
-		<logic:equal name="infoExecutionDegree" property="bolonha" value="true">
+		<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="true">
 			<li>
 				<html:link page="<%="/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>">
 					<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
@@ -65,7 +65,7 @@
             </html:link>
         </li>
         
-		<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
+		<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 			<li>
 				<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
@@ -196,7 +196,7 @@
 		
 		<%-- Start of non-Master Degree Coordinator Options --%>
 		<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
-			<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
+			<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 				<li class="navheader">
 					<bean:message key="label.coordinator.degreeSite.informations"/>
 				</li>
@@ -220,7 +220,7 @@
 				    <bean:message key="list.students"/>
 				</html:link>			
 			</li>			
-			<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
+			<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 				<li>
 					<html:link page="<%= "/sendMail.do?method=prepare&amp;students=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="sendMail.students"/>

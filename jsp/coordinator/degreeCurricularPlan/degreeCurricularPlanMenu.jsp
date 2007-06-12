@@ -24,7 +24,7 @@ if (degreeCurricularPlanID == null) {
 		<li class="navheader">
 			<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 		</li>
-		<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
+		<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 			<li>
 				<html:link page="<%= "/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 				    <bean:message key="link.coordinator.degreeCurricular.viewActive" />
@@ -36,7 +36,7 @@ if (degreeCurricularPlanID == null) {
 				</html:link>
 			</li>
 		</logic:equal>
-		<logic:equal name="infoExecutionDegree" property="bolonha" value="true">
+		<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="true">
 			<li>
 				<html:link page="<%= "/degreeCurricularPlan/showAllCompetenceCourses.faces?degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 				    <bean:message key="list.competence.courses" />
