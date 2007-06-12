@@ -1460,9 +1460,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public List<Enrolment> getEnrolments(final CurricularCourse curricularCourse) {
-	List<Enrolment> results = new ArrayList<Enrolment>();
+	final List<Enrolment> results = new ArrayList<Enrolment>();
 
-	for (Enrolment enrollment : this.getEnrolments()) {
+	for (final Enrolment enrollment : this.getEnrolments()) {
 	    if (enrollment.getCurricularCourse().equals(curricularCourse)) {
 		results.add(enrollment);
 	    }
