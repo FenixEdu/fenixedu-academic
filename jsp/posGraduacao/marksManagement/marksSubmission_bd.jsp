@@ -78,7 +78,12 @@
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
 	    		<bean:define id="idInternal" name="enrolmentEvaluation" property="idInternal" />
-	    		<bean:define id="gradeValue" name="enrolmentEvaluation" property="gradeValue" />
+	    		<bean:define id="gradeValue" value=""/>	
+	    		<logic:notEmpty name="enrolmentEvaluation" property="gradeValue" >
+		    		<bean:define id="gradeValue" >
+		    			<bean:write name="enrolmentEvaluation" property="gradeValue"/>
+		    		</bean:define>
+	    		</logic:notEmpty>
 	    		
 	    		<tr>
 					<td class="listClasses">
