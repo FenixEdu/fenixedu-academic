@@ -72,15 +72,15 @@
 				
 				<h:outputText value="</td><td class=\"listClasses\">#{competenceCourse.firstEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.firstApprovedAverage.grade}</td>" escape="false" />
+				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.firstApprovedAverage.gradeValue}</td>" escape="false" />
 				
 				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.restEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.restApprovedAverage.grade}</td>" escape="false" />
+				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.restApprovedAverage.gradeValue}</td>" escape="false" />
 
 				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.totalEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.totalApprovedAverage.grade}</td>" escape="false" />
+				<h:outputText value="<td class=\"listClasses\">#{competenceCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : competenceCourse.totalApprovedAverage.gradeValue}</td>" escape="false" />
 				
 				<h:outputText value="<td class=\"listClasses\">" escape="false" />
 				<h:outputText value="#{(competenceCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (competenceCourse.totalApprovedCount / competenceCourse.totalEnrolledCount)}" escape="false">
