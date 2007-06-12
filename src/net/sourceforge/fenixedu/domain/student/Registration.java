@@ -787,6 +787,7 @@ public class Registration extends Registration_Base {
 	return attends;
     }
 
+    @Deprecated
     public static Registration readByUsername(String username) {
 	final Person person = Person.readPersonByUsername(username);
 	if (person != null) {
