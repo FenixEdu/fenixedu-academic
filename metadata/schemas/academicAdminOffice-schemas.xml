@@ -859,7 +859,8 @@
 </schema>
 
 <schema name="specialSeason.choose.special.season.code"
-	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean">
+	type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.registration.student.number" key="label.number" read-only="true"/>
 	<slot name="studentCurricularPlan.registration.student.person.name" key="label.person.name" read-only="true"/>
 	<slot name="executionPeriod.executionYear" layout="format" key="label.executionYear" read-only="true">
