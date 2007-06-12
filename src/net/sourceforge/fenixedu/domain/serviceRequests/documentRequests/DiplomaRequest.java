@@ -103,11 +103,11 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     final public boolean hasFinalAverageDescription() {
-	return getRequestedCycle() == CycleType.FIRST_CYCLE || getDegreeType().isDegree();
+	return !hasDissertationTitle();
     }
 
     final public boolean hasDissertationTitle() {
-	return getDegreeType() == DegreeType.MASTER_DEGREE || (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE && getRequestedCycle() == CycleType.SECOND_CYCLE) || getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
+	return getDegreeType() == DegreeType.MASTER_DEGREE;
     }
 
 }
