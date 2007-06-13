@@ -999,6 +999,7 @@
 	<slot name="amount" key="label.amount" bundle="ASSIDUOUSNESS_RESOURCES" layout="decimal-format">
 		<property name="format" value="0.000"/>
 	</slot>
+	<slot name="totalVacationDays" key="label.vacationDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="approved" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">	
 		<property name="trueLabel" value="label.approved" bundle="ASSIDUOUSNESS_RESOURCES"/>
         <property name="falseLabel" value="label.notApproved" bundle="ASSIDUOUSNESS_RESOURCES"/>

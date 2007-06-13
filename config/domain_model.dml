@@ -4059,6 +4059,12 @@ class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net
 	DateTime lastModifiedDate;
 	Boolean approved;
 	Double amount;
+	Integer normalVacationsDays;
+	Double normalVacationsAmount;
+	Double accumulatedNormalVacationsAmount;
+	Integer nightVacationsDays;
+	Double nightVacationsAmount;
+	Double accumulatedNightVacationsAmount;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount extends net.sourceforge.fenixedu.domain.DomainObject {

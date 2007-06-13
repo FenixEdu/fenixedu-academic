@@ -7,7 +7,7 @@
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showSchedule"+yearMonthUrl%>"><bean:message key="label.schedule" /></html:link></li>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showClockings"+yearMonthUrl%>"><bean:message key="link.clockings" /></html:link></li>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showJustifications"+yearMonthUrl%>"><bean:message key="link.justifications" /></html:link></li>
-<%-- 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showBalanceResume"+yearMonthUrl%>"><bean:message key="link.balanceResume" /></html:link></li>--%>
+<%--  	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showBalanceResume"+yearMonthUrl%>"><bean:message key="link.balanceResume" /></html:link></li>--%>
 	<li><html:link page="<%="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;action=showVacations"+yearMonthUrl%>"><bean:message key="link.vacations" /></html:link></li>
 	<% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
 	<li class="navheader"><bean:message key="link.allEmployee" /></li>
@@ -21,16 +21,12 @@
     <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportMonthResume"><bean:message key="link.exportMonthResume" /></html:link></li>
     
     <% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
- 
     <li class="navheader"><bean:message key="title.extraWork" /></li>
 	<li><html:link page="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization"><bean:message key="link.insertAuthorization" /></html:link></li>
 	<li><html:link page="/manageExtraWorkAuthorization.do?method=prepareExtraWorkAuthorizationsSearch"><bean:message key="link.showAuthorizations" /></html:link></li>	<li><html:link page="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"><bean:message key="link.paymentRequests" /></html:link></li>
 	<li><html:link page="/manageUnitsExtraWorkAmounts.do?method=chooseYear"><bean:message key="link.unitAmounts" /></html:link></li>
-	
 	<li class="navheader"><bean:message key="title.monthClosure" /></li>
     <li><html:link page="/monthClosure.do?method=prepareToCloseMonth"><bean:message key="link.closeMonth" /></html:link></li>
-    
     <li><html:link page="/monthClosure.do?method=prepareToCloseExtraWorkMonth"><bean:message key="link.closeExtraMonth" /></html:link></li>
-     
 	<%}%>
 </ul>   

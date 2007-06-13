@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -18,11 +19,11 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
     YearMonthDay beginDate;
 
     YearMonthDay endDate;
-    
+
     Integer workingCostCenterCode;
 
     Integer payingCostCenterCode;
-    
+
     DomainReference<Unit> workingUnit;
 
     DomainReference<Unit> payingUnit;
@@ -33,137 +34,157 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
 
     List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizations = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 
-    public ExtraWorkAuthorizationFactory(Employee modifiedBy, ExtraWorkAuthorization extraWorkAuthorization) {
-        setBeginDate(extraWorkAuthorization.getBeginDate());
-        setEndDate(extraWorkAuthorization.getEndDate());
-        setExtraWorkAuthorization(extraWorkAuthorization);
-        setWorkingUnit(extraWorkAuthorization.getWorkingUnit());
-        setWorkingCostCenterCode(getWorkingUnit().getCostCenterCode());
-        setPayingUnit(extraWorkAuthorization.getPayingUnit());
-        setPayingCostCenterCode(getPayingUnit().getCostCenterCode());
-        setModifiedBy(modifiedBy);
-        setEmployeesExtraWorkAuthorizations(extraWorkAuthorization.getEmployeeExtraWorkAuthorizations());
+    public ExtraWorkAuthorizationFactory(Employee modifiedBy,
+	    ExtraWorkAuthorization extraWorkAuthorization) {
+	setBeginDate(extraWorkAuthorization.getBeginDate());
+	setEndDate(extraWorkAuthorization.getEndDate());
+	setExtraWorkAuthorization(extraWorkAuthorization);
+	setWorkingUnit(extraWorkAuthorization.getWorkingUnit());
+	setWorkingCostCenterCode(getWorkingUnit().getCostCenterCode());
+	setPayingUnit(extraWorkAuthorization.getPayingUnit());
+	setPayingCostCenterCode(getPayingUnit().getCostCenterCode());
+	setModifiedBy(modifiedBy);
+	setEmployeesExtraWorkAuthorizations(extraWorkAuthorization.getEmployeeExtraWorkAuthorizations());
     }
 
     public ExtraWorkAuthorizationFactory(Employee modifiedBy) {
-        setModifiedBy(modifiedBy);
-        addEmployeeExtraWorkAuthorization();
+	setModifiedBy(modifiedBy);
+	addEmployeeExtraWorkAuthorization();
     }
 
     public ExtraWorkAuthorizationFactory(ExtraWorkAuthorization extraWorkAuthorization) {
-        setExtraWorkAuthorization(extraWorkAuthorization);
-        setEmployeesExtraWorkAuthorizations(extraWorkAuthorization.getEmployeeExtraWorkAuthorizations());
+	setExtraWorkAuthorization(extraWorkAuthorization);
+	setEmployeesExtraWorkAuthorizations(extraWorkAuthorization.getEmployeeExtraWorkAuthorizations());
     }
 
-    public void addEmployeeExtraWorkAuthorization(){
-        getEmployeesExtraWorkAuthorizations().add(new EmployeeExtraWorkAuthorizationBean(getModifiedBy()));
+    public void addEmployeeExtraWorkAuthorization() {
+	getEmployeesExtraWorkAuthorizations().add(
+		new EmployeeExtraWorkAuthorizationBean(getModifiedBy()));
     }
-    
+
     public Object execute() {
-        ExtraWorkAuthorization extraWorkAuthorization = getExtraWorkAuthorization();
-        if(extraWorkAuthorization == null) {
-            return new ExtraWorkAuthorization(this);
-        } else {
-            extraWorkAuthorization.edit(this);
-            return extraWorkAuthorization;
-        }
+	ExtraWorkAuthorization extraWorkAuthorization = getExtraWorkAuthorization();
+	if (extraWorkAuthorization == null) {
+	    extraWorkAuthorization = findEqualExtraWorkAuthorization();
+	}
+	if (extraWorkAuthorization == null) {
+	    return new ExtraWorkAuthorization(this);
+	} else {
+	    extraWorkAuthorization.edit(this);
+	    return extraWorkAuthorization;
+	}
+    }
+
+    private ExtraWorkAuthorization findEqualExtraWorkAuthorization() {
+	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance()
+		.getExtraWorkAuthorizations()) {
+	    if (extraWorkAuthorization.getWorkingUnit() == getWorkingUnit()
+		    && extraWorkAuthorization.getPayingUnit() == getPayingUnit()
+		    && extraWorkAuthorization.getBeginDate().equals(getBeginDate())
+		    && extraWorkAuthorization.getEndDate().equals(getEndDate())) {
+		return extraWorkAuthorization;
+	    }
+	}
+	return null;
     }
 
     public YearMonthDay getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public void setBeginDate(YearMonthDay beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     public List<EmployeeExtraWorkAuthorizationBean> getEmployeesExtraWorkAuthorizations() {
-        return employeesExtraWorkAuthorizations;
+	return employeesExtraWorkAuthorizations;
     }
 
     public void setEmployeesExtraWorkAuthorizations(
-            List<EmployeeExtraWorkAuthorization> employeesExtraWorkAuthorizations) {
-        if (employeesExtraWorkAuthorizations != null) {
-            List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizationsList = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
-            for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : employeesExtraWorkAuthorizations) {
-                employeesExtraWorkAuthorizationsList.add(new EmployeeExtraWorkAuthorizationBean(
-                        employeeExtraWorkAuthorization.getExtraWorkAuthorization(),
-                        employeeExtraWorkAuthorization));
-            }
-            this.employeesExtraWorkAuthorizations = employeesExtraWorkAuthorizationsList;
-        }
+	    List<EmployeeExtraWorkAuthorization> employeesExtraWorkAuthorizations) {
+	if (employeesExtraWorkAuthorizations != null) {
+	    List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizationsList = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
+	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : employeesExtraWorkAuthorizations) {
+		employeesExtraWorkAuthorizationsList.add(new EmployeeExtraWorkAuthorizationBean(
+			employeeExtraWorkAuthorization.getExtraWorkAuthorization(),
+			employeeExtraWorkAuthorization));
+	    }
+	    this.employeesExtraWorkAuthorizations = employeesExtraWorkAuthorizationsList;
+	}
     }
 
     public YearMonthDay getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public Employee getModifiedBy() {
-        return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy == null ? null : modifiedBy.getObject();
     }
 
     public void setModifiedBy(Employee modifiedBy) {
-        if (modifiedBy != null) {
-            this.modifiedBy = new DomainReference<Employee>(modifiedBy);
-        } else {
-            this.modifiedBy = null;
-        }
+	if (modifiedBy != null) {
+	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	} else {
+	    this.modifiedBy = null;
+	}
     }
 
     public Unit getPayingUnit() {
-        return payingUnit == null ? null : payingUnit.getObject();
+	return payingUnit == null ? null : payingUnit.getObject();
     }
 
     public void setPayingUnit(Unit payingUnit) {
-        if (payingUnit != null) {
-            this.payingUnit = new DomainReference<Unit>(payingUnit);
-        } else {
-            this.payingUnit = null;
-        }
+	if (payingUnit != null) {
+	    this.payingUnit = new DomainReference<Unit>(payingUnit);
+	} else {
+	    this.payingUnit = null;
+	}
     }
 
     public Unit getWorkingUnit() {
-        return workingUnit == null ? null : workingUnit.getObject();
+	return workingUnit == null ? null : workingUnit.getObject();
     }
 
     public void setWorkingUnit(Unit workingUnit) {
-        if (workingUnit != null) {
-            this.workingUnit = new DomainReference<Unit>(workingUnit);
-        } else {
-            this.workingUnit = null;
-        }
+	if (workingUnit != null) {
+	    this.workingUnit = new DomainReference<Unit>(workingUnit);
+	} else {
+	    this.workingUnit = null;
+	}
     }
 
     public ExtraWorkAuthorization getExtraWorkAuthorization() {
-        return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
+	return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
     }
 
     public void setExtraWorkAuthorization(ExtraWorkAuthorization extraWorkAuthorization) {
-        if (extraWorkAuthorization != null) {
-            this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(
-                    extraWorkAuthorization);
-        } else {
-            this.extraWorkAuthorization = null;
-        }
+	if (extraWorkAuthorization != null) {
+	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(
+		    extraWorkAuthorization);
+	} else {
+	    this.extraWorkAuthorization = null;
+	}
     }
 
     public Integer getPayingCostCenterCode() {
-        return payingCostCenterCode;
+	return payingCostCenterCode;
     }
 
     public void setPayingCostCenterCode(Integer payingCostCenterCode) {
-        this.payingCostCenterCode = payingCostCenterCode;
+	this.payingCostCenterCode = payingCostCenterCode;
+	setPayingUnit(Unit.readByCostCenterCode(payingCostCenterCode));
     }
 
     public Integer getWorkingCostCenterCode() {
-        return workingCostCenterCode;
+	return workingCostCenterCode;
     }
 
     public void setWorkingCostCenterCode(Integer workingCostCenterCode) {
-        this.workingCostCenterCode = workingCostCenterCode;
+	this.workingCostCenterCode = workingCostCenterCode;
+	setWorkingUnit(Unit.readByCostCenterCode(workingCostCenterCode));
     }
 }

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
-import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Month;
@@ -36,214 +34,216 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     private List<EmployeeExtraWorkRequestFactory> employeesExtraWorkRequests;
 
     public ExtraWorkRequestFactory() {
-        super();
-        YearMonthDay date = new YearMonthDay();
-        setYear(date.getYear());
-        setMonth(Month.values()[date.getMonthOfYear() - 2]);
-        setYearMonthHoursDone(new YearMonth(date.getYear(), Month.values()[date.getMonthOfYear() - 2]));        
+	super();
+	YearMonthDay date = new YearMonthDay();
+	setYear(date.getYear());
+	setMonth(Month.values()[date.getMonthOfYear() - 2]);
+	setYearMonthHoursDone(new YearMonth(date.getYear(), Month.values()[date.getMonthOfYear() - 2]));
     }
 
     public ExtraWorkRequestFactory(YearMonthDay date) {
-        super();
-        setYear(date.getYear());
-        setMonth(Month.values()[date.getMonthOfYear() - 1]);
-        setYearMonthHoursDone(new YearMonth(date.getYear(), Month.values()[date.getMonthOfYear() - 1]));
+	super();
+	setYear(date.getYear());
+	setMonth(Month.values()[date.getMonthOfYear() - 1]);
+	setYearMonthHoursDone(new YearMonth(date.getYear(), Month.values()[date.getMonthOfYear() - 1]));
     }
 
     public ExtraWorkRequestFactory(Integer year, String month, Integer unitCode, Integer doneInYear,
-            String doneInMonth) {
-        super();
-        setYear(year);
-        setMonth(Month.valueOf(month));
-        setYearMonthHoursDone(new YearMonth(doneInYear, Month.valueOf(doneInMonth)));
-        setUnitCode(unitCode);        
+	    String doneInMonth) {
+	super();
+	setYear(year);
+	setMonth(Month.valueOf(month));
+	setYearMonthHoursDone(new YearMonth(doneInYear, Month.valueOf(doneInMonth)));
+	setUnitCode(unitCode);
     }
 
     public Month getMonth() {
-        return month;
+	return month;
     }
 
     public void setMonth(Month month) {
-        this.month = month;
+	this.month = month;
     }
 
     public Integer getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+	this.year = year;
     }
 
     public Integer getUnitCode() {
-        return unitCode;
+	return unitCode;
     }
 
     public void setUnitCode(Integer unitCode) {
-        this.unitCode = unitCode;
-        setUnit(Unit.readByCostCenterCode(unitCode));
+	this.unitCode = unitCode;
+	setUnit(Unit.readByCostCenterCode(unitCode));
     }
 
     public Unit getUnit() {
-        return unit == null ? null : unit.getObject();
+	return unit == null ? null : unit.getObject();
     }
 
     public void setUnit(Unit unit) {
-        if (unit != null) {
-            this.unit = new DomainReference<Unit>(unit);
-            setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(
-                    getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth()));
-            addEmployeeExtraWorkRequest();
-        }
+	if (unit != null) {
+	    this.unit = new DomainReference<Unit>(unit);
+	    setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(
+		    getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth()));
+	    addEmployeeExtraWorkRequest();
+	}
     }
 
     public Object execute() {
-        ActionMessage actionMessage = null;
-        if (isPerformPayment()) {
-            actionMessage = checkUnitMoney();
-            if (actionMessage == null) {
-                for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
-                    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
-                        employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(true);
-                    }
-                }
-                getUnit().getUnitExtraWorkAmountByYear(getYear()).sumSpent(getMonthAmount());
-            }
-        } else {
-            for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
-                if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
-                    employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(false);
-                }
-            }
-            getUnit().getUnitExtraWorkAmountByYear(getYear()).subtractSpent(getMonthAmount());
-        }
-        return actionMessage;
+	ActionMessage actionMessage = null;
+	if (isPerformPayment()) {
+	    actionMessage = checkUnitMoney();
+	    if (actionMessage == null) {
+		for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
+		    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
+			employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(true);
+		    }
+		}
+		getUnit().getUnitExtraWorkAmountByYear(getYear()).sumSpent(getMonthAmount());
+	    }
+	} else {
+	    for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
+		if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
+		    employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(false);
+		}
+	    }
+	    getUnit().getUnitExtraWorkAmountByYear(getYear()).subtractSpent(getMonthAmount());
+	}
+	return actionMessage;
     }
 
     public void reloadEmployeeExtraWorkRequest() {
-        setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYearMonthHoursDone().getYear(),
-                getYearMonthHoursDone().getMonth()));
-        addEmployeeExtraWorkRequest();
+	setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYearMonthHoursDone().getYear(),
+		getYearMonthHoursDone().getMonth()));
+	addEmployeeExtraWorkRequest();
     }
 
     private void addEmployeeExtraWorkRequest() {
-        if (getUnit() != null) {
-            YearMonthDay begin = new YearMonthDay(getYearMonthHoursDone().getYear(),
-                    getYearMonthHoursDone().getMonth().ordinal() + 1, 1);
-            YearMonthDay end = new YearMonthDay(getYearMonthHoursDone().getYear(),
-                    getYearMonthHoursDone().getMonth().ordinal() + 1, begin.dayOfMonth()
-                            .getMaximumValue());
-            for (ExtraWorkAuthorization extraWorkAuthorization : getUnit()
-                    .getExtraPayingUnitAuthorizations()) {
-                if (extraWorkAuthorization.existsBetweenDates(begin, end)) {
-                    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : extraWorkAuthorization
-                            .getEmployeeExtraWorkAuthorizations()) {
-                        EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = new EmployeeExtraWorkRequestFactory(
-                                employeeExtraWorkAuthorization.getAssiduousness().getEmployee(), this);
-                        if (!getEmployeesExtraWorkRequests().contains(employeeExtraWorkRequestFactory)) {
-                            getEmployeesExtraWorkRequests().add(employeeExtraWorkRequestFactory);
-                        }
-                    }
-                }
-            }
-        }
+	if (getUnit() != null) {
+	    YearMonthDay begin = new YearMonthDay(getYearMonthHoursDone().getYear(),
+		    getYearMonthHoursDone().getMonth().ordinal() + 1, 1);
+	    YearMonthDay end = new YearMonthDay(getYearMonthHoursDone().getYear(),
+		    getYearMonthHoursDone().getMonth().ordinal() + 1, begin.dayOfMonth()
+			    .getMaximumValue());
+	    for (ExtraWorkAuthorization extraWorkAuthorization : getUnit()
+		    .getExtraPayingUnitAuthorizations()) {
+		if (extraWorkAuthorization.existsBetweenDates(begin, end)) {
+		    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : extraWorkAuthorization
+			    .getEmployeeExtraWorkAuthorizations()) {
+			EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = new EmployeeExtraWorkRequestFactory(
+				employeeExtraWorkAuthorization.getAssiduousness().getEmployee(), this);
+			if (!getEmployeesExtraWorkRequests().contains(employeeExtraWorkRequestFactory)) {
+			    getEmployeesExtraWorkRequests().add(employeeExtraWorkRequestFactory);
+			}
+		    }
+		}
+	    }
+	}
     }
 
     public Partial getPartialPayingDate() {
-        DateTimeFieldType[] types = new DateTimeFieldType[] { DateTimeFieldType.year(),
-                DateTimeFieldType.monthOfYear() };
-        int[] values = new int[] { getYear(), getMonth().ordinal() + 1 };
-        return new Partial(types, values);
+	DateTimeFieldType[] types = new DateTimeFieldType[] { DateTimeFieldType.year(),
+		DateTimeFieldType.monthOfYear() };
+	int[] values = new int[] { getYear(), getMonth().ordinal() + 1 };
+	return new Partial(types, values);
     }
 
     public Partial getHoursDoneInPartialDate() {
-        DateTimeFieldType[] types = new DateTimeFieldType[] { DateTimeFieldType.year(),
-                DateTimeFieldType.monthOfYear() };
-        int[] values = new int[] { getYearMonthHoursDone().getYear(),
-                getYearMonthHoursDone().getMonth().ordinal() + 1 };
-        return new Partial(types, values);
+	DateTimeFieldType[] types = new DateTimeFieldType[] { DateTimeFieldType.year(),
+		DateTimeFieldType.monthOfYear() };
+	int[] values = new int[] { getYearMonthHoursDone().getYear(),
+		getYearMonthHoursDone().getMonth().ordinal() + 1 };
+	return new Partial(types, values);
     }
 
     public void setPartialPayingDate(Partial partial) {
-        setYear(partial.get(DateTimeFieldType.year()));
-        setMonth(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1]);
+	setYear(partial.get(DateTimeFieldType.year()));
+	setMonth(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1]);
     }
 
     public Boolean getIsMonthClosed() {
-        return ClosedMonth.isMonthClosed(getHoursDoneInPartialDate());
+	return ClosedMonth.isMonthClosed(getHoursDoneInPartialDate());
     }
 
     public Boolean getIsMonthClosedForExtraWork() {
-        return ClosedMonth.isMonthClosedForExtraWork(getHoursDoneInPartialDate());
+	return ClosedMonth.isMonthClosedForExtraWork(getHoursDoneInPartialDate());
     }
 
     public YearMonth getYearMonthHoursDone() {
-        return yearMonthHoursDone;
+	return yearMonthHoursDone;
     }
 
     public void setYearMonthHoursDone(YearMonth yearMonthHoursDone) {
-        this.yearMonthHoursDone = yearMonthHoursDone;
+	this.yearMonthHoursDone = yearMonthHoursDone;
     }
 
     public ActionMessage checkUnitMoney() {
-        Double unitBalance = getFinalUnitBalance();
-        if (unitBalance < 0) {
-            return new ActionMessage("error.extraWorkRequest.notEnoughMoney");
-        }
-        return null;
+	Double unitBalance = getFinalUnitBalance();
+	if (unitBalance < 0) {
+	    return new ActionMessage("error.extraWorkRequest.notEnoughMoney");
+	}
+	return null;
     }
 
     public Double getFinalUnitBalance() {
-        if (isPaymentConfirmed()) {
-            return getUnit().getUnitExtraWorkAmountByYear(getYear()).getBalance();
-        } else {
-            return getInitialUnitBalance() - getMonthAmount();
-        }
+	if (isPaymentConfirmed()) {
+	    return getUnit().getUnitExtraWorkAmountByYear(getYear()) == null ? 0 : getUnit()
+		    .getUnitExtraWorkAmountByYear(getYear()).getBalance();
+	} else {
+	    return getInitialUnitBalance() - getMonthAmount();
+	}
     }
 
     public Double getInitialUnitBalance() {
-        if (isPaymentConfirmed()) {
-            return getFinalUnitBalance() + getMonthAmount();
-        } else {
-            return getUnit().getUnitExtraWorkAmountByYear(getYear()).getBalance();
-        }
+	if (isPaymentConfirmed()) {
+	    return getFinalUnitBalance() + getMonthAmount();
+	} else {
+	    return getUnit().getUnitExtraWorkAmountByYear(getYear()) == null ? 0 : getUnit()
+		    .getUnitExtraWorkAmountByYear(getYear()).getBalance();
+	}
     }
 
     public boolean isPaymentConfirmed() {
-        for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
-            if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null
-                    && employeeExtraWorkRequestFactory.getExtraWorkRequest().getApproved()) {
-                return true;
-            }
-        }
-        return false;
+	for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
+	    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null
+		    && employeeExtraWorkRequestFactory.getExtraWorkRequest().getApproved()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public Double getMonthAmount() {
-        Double monthAmount = 0.0;
-        for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests(getYear(), getMonth())) {
-            monthAmount += extraWorkRequest.getAmount();
-        }
-        return monthAmount;
+	Double monthAmount = 0.0;
+	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests(getYear(), getMonth())) {
+	    monthAmount += extraWorkRequest.getAmount();
+	}
+	return monthAmount;
     }
 
     public List<EmployeeExtraWorkRequestFactory> getEmployeesExtraWorkRequests() {
-        return employeesExtraWorkRequests;
+	return employeesExtraWorkRequests;
     }
 
     public void setEmployeesExtraWorkRequests(List<ExtraWorkRequest> extraWorkRequests) {
-        this.employeesExtraWorkRequests = new ArrayList<EmployeeExtraWorkRequestFactory>();
-        for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
-            this.employeesExtraWorkRequests.add(new EmployeeExtraWorkRequestFactory(extraWorkRequest,
-                    this));
-        }
+	this.employeesExtraWorkRequests = new ArrayList<EmployeeExtraWorkRequestFactory>();
+	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
+	    this.employeesExtraWorkRequests.add(new EmployeeExtraWorkRequestFactory(extraWorkRequest,
+		    this));
+	}
     }
 
     public boolean isPerformPayment() {
-        return performPayment;
+	return performPayment;
     }
 
     public void setPerformPayment(boolean performPayment) {
-        this.performPayment = performPayment;
+	this.performPayment = performPayment;
     }
 }

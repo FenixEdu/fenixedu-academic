@@ -26,7 +26,7 @@ function addEmployee(){
 	<fr:edit id="extraWorkAuthorization" name="extraWorkAuthorizationFactory" schema="edit.extraWorkAuthorization">
 	</fr:edit>
 	
-	<p><html:link href="javascript:addEmployee()"><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link></p>
+	<p><html:link href="#" onclick="javascript:addEmployee();"><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link></p>
 	
 	<logic:notEmpty name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations">
 		<fr:edit id="employees" name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations" 

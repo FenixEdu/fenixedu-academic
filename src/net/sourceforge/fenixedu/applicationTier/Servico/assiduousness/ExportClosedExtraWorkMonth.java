@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
@@ -54,6 +55,18 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private List<Assiduousness> maternityJustificationList;
 
+    private static String maternityMovementCode = "508";
+
+    private static String nightExtraWorkMovementCode = "130";
+
+    private static String extraWorkVacationDaysMovementCode = "209";
+
+    private static String extraWorkSundayMovementCode = "207";
+
+    private static String extraWorkSaturdayMovementCode = "210";
+
+    private static String extraWorkHolidayMovementCode = "212";
+
     public String run(ClosedMonth closedMonth) {
 	YearMonthDay beginDate = new YearMonthDay().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(
@@ -89,21 +102,17 @@ public class ExportClosedExtraWorkMonth extends Service {
 	}
 	if (endDate.getDayOfMonth() != 30) {
 	    StringBuilder maternityJustificationResult = new StringBuilder();
-	    String movementCode = "000";
-	    Integer daysNumber = Math.abs(30 - endDate.getDayOfMonth());
-	    if (endDate.getDayOfMonth() < 30) {
-		movementCode = "000";
-	    }
+	    Integer daysNumber = endDate.getDayOfMonth() - 30;
 	    for (Assiduousness assiduousness : maternityJustificationList) {
-		maternityJustificationResult.append(getMaternityJustification(assiduousness, beginDate,
-			endDate, movementCode, daysNumber));
+		maternityJustificationResult.append(getExtraWorkMovement(assiduousness, beginDate,
+			endDate, maternityMovementCode, daysNumber));
 	    }
 	    extraWorkResult.append(maternityJustificationResult);
 	}
 	return result.append(extraWorkResult).toString();
     }
 
-    private String getMaternityJustification(Assiduousness assiduousness, YearMonthDay beginDate,
+    private String getExtraWorkMovement(Assiduousness assiduousness, YearMonthDay beginDate,
 	    YearMonthDay endDate, String movementCode, Integer daysNumber) {
 	StringBuilder result = new StringBuilder();
 	result.append(beginDate.getYear()).append(fieldSeparator);
@@ -127,19 +136,35 @@ public class ExportClosedExtraWorkMonth extends Service {
 	for (WorkScheduleType workScheduleType : nightWorkByWorkScheduleType.keySet()) {
 	    Duration duration = nightWorkByWorkScheduleType.get(workScheduleType);
 	    if (workScheduleType.isNocturnal() && duration.isLongerThan(Duration.ZERO)) {
-		result.append(beginDate.getYear()).append(fieldSeparator);
-		result.append(monthFormat.format(beginDate.getMonthOfYear() + 1)).append(fieldSeparator);
-		result.append(
-			employeeNumberFormat.format(assiduousness.getEmployee().getEmployeeNumber()))
-			.append(fieldSeparator);
-		result.append("M").append(fieldSeparator).append("130").append(fieldSeparator);
-		result.append(dateFormat.print(beginDate)).append(fieldSeparator);
-		result.append(dateFormat.print(endDate)).append(fieldSeparator);
 		long hours = Math.round((double) duration.toPeriod(PeriodType.minutes()).getMinutes()
 			/ (double) 60);
-		result.append(employeeNumberFormat.format(hours)).append("00").append(fieldSeparator);
-		result.append(employeeNumberFormat.format(hours)).append("00\r\n");
+		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+			nightExtraWorkMovementCode, (int) hours));
 	    }
+	}
+
+	ExtraWorkRequest extraWorkRequest = assiduousness.getExtraWorkRequest(beginDate);
+	if (extraWorkRequest != null) {
+	    if (extraWorkRequest.getSundayHours() != null && extraWorkRequest.getSundayHours() != 0.0) {
+		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+			extraWorkSundayMovementCode, extraWorkRequest.getSundayHours()));
+	    }
+	    if (extraWorkRequest.getNightVacationsDays() != null
+		    && extraWorkRequest.getNightVacationsDays() != 0.0) {
+		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+			extraWorkVacationDaysMovementCode, extraWorkRequest.getNightVacationsDays()
+				+ extraWorkRequest.getNormalVacationsDays()));
+	    }
+	    if (extraWorkRequest.getSaturdayHours() != null
+		    && extraWorkRequest.getSaturdayHours() != 0.0) {
+		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+			extraWorkSaturdayMovementCode, extraWorkRequest.getSaturdayHours()));
+	    }
+	    if (extraWorkRequest.getHolidayHours() != null && extraWorkRequest.getHolidayHours() != 0.0) {
+		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+			extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
+	    }
+
 	}
 	return result.toString();
     }
@@ -304,7 +329,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    if (leave.getJustificationMotive() == maternityJustificationMotive
 		    && endDate.getDayOfMonth() != 30
 		    && Days.daysBetween(start, end).getDays() == endDate.getDayOfMonth()) {
-		if (!maternityJustificationList.contains(leave.getAssiduousness())) {
+		if (!maternityJustificationList.contains(leave.getAssiduousness())
+			&& !isContractedEmployee(leave.getAssiduousness(), start, end)) {
 		    maternityJustificationList.add(leave.getAssiduousness());
 		}
 	    }
@@ -412,6 +438,18 @@ public class ExportClosedExtraWorkMonth extends Service {
 		start, end)) {
 	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equals(
 		    "Contratado pela ADIST")) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private Boolean isContractedEmployee(Assiduousness assiduousness, YearMonthDay start,
+	    YearMonthDay end) {
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousness.getStatusBetween(
+		start, end)) {
+	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equals(
+		    "Contrato a termo certo")) {
 		return true;
 	    }
 	}

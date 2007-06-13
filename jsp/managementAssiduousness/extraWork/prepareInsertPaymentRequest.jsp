@@ -64,11 +64,13 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 printborder" />
 						<fr:property name="columnClasses" value="acenter,," />
+						<logic:equal name="extraWorkRequestFactory" property="isMonthClosed" value="true">
 							<fr:property name="link(view)" value="<%="/extraWorkPaymentRequest.do?method=chooseEmployee&year="+year.toString()+"&month="+month.toString()+"&unitCode="+unitCode.toString() + "&doneInYear="+doneInYear.toString()+"&doneInMonth="+doneInMonth.toString()%>" />
 							<fr:property name="key(view)" value="link.paymentRequest" />
 							<fr:property name="param(view)" value="employee.employeeNumber/employeeNumber,idInternal" />
 							<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES" />
 							<fr:property name="visibleIf(view)" value="extraWorkRequestFactory.isMonthClosed()"/>
+						</logic:equal>
 					</fr:layout>
 				</fr:view>				
 				<p>
