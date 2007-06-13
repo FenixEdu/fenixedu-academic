@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add evaluationDate column to ExternalEnrolment table" alterExternalEnrolmentTable.sql
+execute "alter table ExtraWorkRequest" alterTableExtraWorkRequest.sql
