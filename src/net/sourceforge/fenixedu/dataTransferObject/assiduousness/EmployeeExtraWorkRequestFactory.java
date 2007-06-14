@@ -365,7 +365,11 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.nightWork"));
 	    }
-	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours() < getNightHours()) {
+	    int plusHalf = 0;
+	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours() + plusHalf < getNightHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.nightWork"));
 	    }
@@ -376,7 +380,11 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.nightWork"));
 	    }
-	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours() < getExtraNightHours()) {
+	    int plusHalf = 0;
+	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours() + plusHalf < getExtraNightHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.nightWork"));
 	    }
@@ -387,7 +395,13 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.saturdayWork"));
 	    }
-	    if (assiduousnessClosedMonth.getSaturdayBalance().toPeriod(PeriodType.dayTime()).getHours() < getSaturdayHours()) {
+	    int plusHalf = 0;
+	    if (assiduousnessClosedMonth.getSaturdayBalance().toPeriod(PeriodType.dayTime())
+		    .getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (assiduousnessClosedMonth.getSaturdayBalance().toPeriod(PeriodType.dayTime()).getHours()
+		    + plusHalf < getSaturdayHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.saturdayWork"));
 	    }
@@ -398,7 +412,12 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.sundayWork"));
 	    }
-	    if (assiduousnessClosedMonth.getSundayBalance().toPeriod(PeriodType.dayTime()).getHours() < getSundayHours()) {
+	    int plusHalf = 0;
+	    if (assiduousnessClosedMonth.getSundayBalance().toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (assiduousnessClosedMonth.getSundayBalance().toPeriod(PeriodType.dayTime()).getHours()
+		    + plusHalf < getSundayHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.sundayWork"));
 	    }
@@ -409,7 +428,12 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle
 			.getString("label.holidayWork"));
 	    }
-	    if (assiduousnessClosedMonth.getHolidayBalance().toPeriod(PeriodType.dayTime()).getHours() < getHolidayHours()) {
+	    int plusHalf = 0;
+	    if (assiduousnessClosedMonth.getHolidayBalance().toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (assiduousnessClosedMonth.getHolidayBalance().toPeriod(PeriodType.dayTime()).getHours()
+		    + plusHalf < getHolidayHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.holidayWork"));
 	    }
@@ -436,7 +460,12 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		}
 	    }
 
-	    if (assiduousnessClosedMonth.getBalance().toPeriod(PeriodType.dayTime()).getHours() < getWorkdayHours()) {
+	    int plusHalf = 0;
+	    if (assiduousnessClosedMonth.getBalance().toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+		plusHalf = 1;
+	    }
+	    if (assiduousnessClosedMonth.getBalance().toPeriod(PeriodType.dayTime()).getHours()
+		    + plusHalf < getWorkdayHours()) {
 		return new ActionMessage("error.extraWorkRequest.nonWorkedHours", bundle
 			.getString("label.normalExtraWork"));
 	    }
