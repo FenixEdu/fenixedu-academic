@@ -10,6 +10,11 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreePostBack"/>
 	</slot>
+	<slot name="executionYear" layout="menu-select-postback" key="label.executionYear" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+		<property name="format" value="${year}"/>
+		<property name="destination" value="degreeCurricularPlanPostBack"/>				
+	</slot>	
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">

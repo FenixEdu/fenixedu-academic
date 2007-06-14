@@ -54,7 +54,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
 		.getObject();
 	candidacyBean.setDegreeCurricularPlan(null);
-	candidacyBean.setExecutionDegree(null);
+	candidacyBean.setExecutionYear(null);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("candidacyBean", candidacyBean);
 
@@ -66,14 +66,6 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
 	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
 		.getObject();
-
-	ExecutionDegree executionDegree = null;
-	if (candidacyBean.getDegreeCurricularPlan() != null) {
-	    executionDegree = Collections.min(candidacyBean.getDegreeCurricularPlan()
-		    .getExecutionDegrees(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-	}
-
-	candidacyBean.setExecutionDegree(executionDegree);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("candidacyBean", candidacyBean);
 
@@ -177,7 +169,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("candidacyDocuments", candidacyDocuments);
 	request.setAttribute("candidacy", candidacy);
-	
+
     }
 
     public ActionForward showCandidacyGeneratePass(ActionMapping mapping, ActionForm actionForm,

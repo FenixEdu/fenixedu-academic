@@ -46,7 +46,7 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
 		.getObject();
 	candidacyBean.setDegreeCurricularPlan(null);
-	candidacyBean.setExecutionDegree(null);
+	candidacyBean.setExecutionYear(null);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("candidacyBean", candidacyBean);
 
@@ -58,14 +58,6 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 
 	DFACandidacyBean candidacyBean = (DFACandidacyBean) RenderUtils.getViewState().getMetaObject()
 		.getObject();
-
-	ExecutionDegree executionDegree = null;
-	if (candidacyBean.getDegreeCurricularPlan() != null) {
-	    executionDegree = Collections.min(candidacyBean.getDegreeCurricularPlan()
-		    .getExecutionDegrees(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-	}
-
-	candidacyBean.setExecutionDegree(executionDegree);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("candidacyBean", candidacyBean);
 
@@ -89,10 +81,10 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 		    .getCandidacySituationType();
 	    if (candidacySituationType.equals(CandidacySituationType.STAND_BY_CONFIRMED_DATA)
 		    || candidacySituationType.equals(CandidacySituationType.SUBSTITUTE)
-            || candidacySituationType.equals(CandidacySituationType.ADMITTED)
-            || candidacySituationType.equals(CandidacySituationType.NOT_ADMITTED)) {
-            
-	        candidacies.add(new SelectDFACandidacyBean(candidacy));
+		    || candidacySituationType.equals(CandidacySituationType.ADMITTED)
+		    || candidacySituationType.equals(CandidacySituationType.NOT_ADMITTED)) {
+
+		candidacies.add(new SelectDFACandidacyBean(candidacy));
 	    }
 	}
 
@@ -177,8 +169,8 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	List<SelectDFACandidacyBean> admittedCandidacies = retrieveCandidaciesBeans("admittedCandidacies");
 	List<SelectDFACandidacyBean> substituteCandidacies = retrieveCandidaciesBeans("substituteCandidacies");
 	List<SelectDFACandidacyBean> notAdmittedCandidacies = retrieveCandidaciesBeans("notAdmittedCandidacies");
-	
-	if(substituteCandidacies != null){
+
+	if (substituteCandidacies != null) {
 	    Collections.sort(substituteCandidacies, new BeanComparator("order"));
 	}
 
