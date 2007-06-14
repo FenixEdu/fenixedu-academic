@@ -982,9 +982,18 @@ public class Unit extends Unit_Base {
         return files;
     }
 
-    public List<UnitFile> getAccessibileFiles(Person person, String tagName) {
-        List<UnitFile> files = new ArrayList<UnitFile>();
-        UnitFileTag tag = getUnitFileTag(tagName);
+    public List<UnitFile> getAccessibileFiles(Person person, Collection<UnitFileTag> tag) {
+    	List<UnitFile> files = new ArrayList<UnitFile>();
+    	for(UnitFile file : getAccessibileFiles(person)) {
+    		if(file.hasUnitFileTags(tag)) {
+    			files.add(file);
+    		}
+    	}
+    	return files;
+    }
+    
+    public List<UnitFile> getAccessibileFiles(Person person, UnitFileTag tag) {
+    	List<UnitFile> files = new ArrayList<UnitFile>();
         if (tag != null) {
             for (UnitFile file : tag.getTaggedFiles()) {
                 if (file.isPersonAllowedToAccess(person)) {
@@ -993,6 +1002,11 @@ public class Unit extends Unit_Base {
             }
         }
         return files;
+ 
+    }
+    
+    public List<UnitFile> getAccessibileFiles(Person person, String tagName) {
+        return getAccessibileFiles(person, getUnitFileTag(tagName));
     }
 
     public UnitFileTag getUnitFileTag(String name) {

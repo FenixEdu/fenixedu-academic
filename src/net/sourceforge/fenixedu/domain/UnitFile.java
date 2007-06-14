@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -45,11 +46,11 @@ public class UnitFile extends UnitFile_Base {
 
 	public void setUnitFileTags(String tag) {
 		getUnitFileTags().clear();
-		String[] tagNames = tag.split(" ");
+		String[] tagNames = tag.split("\\p{Space}+");
 		for (int i = 0; i < tagNames.length; i++) {
-			UnitFileTag unitFileTag = getUnit().getUnitFileTag(tagNames[i]);
+			UnitFileTag unitFileTag = getUnit().getUnitFileTag(tagNames[i].trim());
 			addUnitFileTags((unitFileTag != null) ? unitFileTag
-					: new UnitFileTag(getUnit(), tagNames[i]));
+					: new UnitFileTag(getUnit(), tagNames[i].trim()));
 		}
 	}
 
@@ -100,4 +101,9 @@ public class UnitFile extends UnitFile_Base {
 		}
 		return groups;
 	}
+	
+	public boolean hasUnitFileTags(Collection<UnitFileTag> tags) {
+		return getUnitFileTags().containsAll(tags);
+	}
+
 }

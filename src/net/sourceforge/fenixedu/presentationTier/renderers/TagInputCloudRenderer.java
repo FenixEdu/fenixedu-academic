@@ -102,7 +102,7 @@ public class TagInputCloudRenderer extends InputRenderer {
 				script.setScript("\n" + "function addTag(field, tag) {\n"
 						+ "var element = document.getElementById(field);\n"
 						+ "var tags = element.value;\n"
-						+ "if (!tags.match('^' + tag + '|\\\\s' + tag)) {\n" + "if (tags.length > 0) {\n"
+						+ "if (!tags.match('^' + tag + '$|\\\\s' + tag + '\\\\s|\\\\s' + tag + '$')) {\n" + "if (tags.length > 0) {\n"
 						+ "element.value = tags + ' ' + tag;\n" + "}\n" + "else {\n"
 						+ "element.value = tag;\n" + "}\n" + "}\n" + "}\n");
 				return script;

@@ -1494,6 +1494,9 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="size" value="30"/>
 		</slot>
+		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="10"/>
+		</slot>
 		<slot name="specialIssue" layout="option-select-postback"/>
 		<slot name="specialIssueComment">
 			<property name="size" value="60"/>
@@ -1502,9 +1505,6 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 			<property name="size" value="10"/>
 		</slot>		
 		<slot name="month"/>
-		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-			<property name="size" value="10"/>
-		</slot>
 	<slot name="url" layout="input-with-comment">
 		<property name="size" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -2655,7 +2655,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 	<slot name="tags" key="label.unitFileTags" layout="tag-cloud">
 			<property name="size" value="60"/>
-			<property name="tagClasses" value="tcloudedit"/>
+			<property name="tagClasses" value="tcloudedit width50em"/>
 			<property name="tagSort" value="name"/>
 	</slot>
 	<slot name="uploadFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.filename">

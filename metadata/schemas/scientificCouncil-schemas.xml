@@ -133,6 +133,9 @@
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
+	<slot name="publisher" key="label.scientific.journal.publisher"> 
+			<property name="size" value="50"/>
+	</slot>
 	<slot name="issn" key="label.scientific.journal.issn" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.ISSNValidator"> 
 		<property name="comment" value="label.issn.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>

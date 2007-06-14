@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -31,5 +34,14 @@ public class UnitFileTag extends UnitFileTag_Base {
 		}
 		removeUnit();
 		super.deleteDomainObject();
+	}
+	
+	public Set<UnitFileTag> getNeighboursTags() {
+		Set<UnitFileTag> tags = new HashSet<UnitFileTag>();
+		for(UnitFile file : getTaggedFiles()) {
+			tags.addAll(file.getUnitFileTags());
+		}
+		tags.remove(this);
+		return tags;
 	}
 }

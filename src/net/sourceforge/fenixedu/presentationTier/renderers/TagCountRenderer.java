@@ -104,9 +104,9 @@ public class TagCountRenderer extends OutputRenderer {
 
 			@Override
 			public HtmlComponent createComponent(Object object, Class type) {
-				List<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
-						(List<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
-						(List<UnitFileTag>) object);
+				Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
+						(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
+						(Collection<UnitFileTag>) object);
 				
 				HtmlInlineContainer container = new HtmlInlineContainer();
 				int i = 0;

@@ -24,6 +24,7 @@ header {
 class GroupExpressionLexer extends Lexer;
 
 options {
+	charVocabulary = '\0'..'\377';
 	k = 2; // to distinguish "$" from the operators "$I", "$P", etc
 }
 

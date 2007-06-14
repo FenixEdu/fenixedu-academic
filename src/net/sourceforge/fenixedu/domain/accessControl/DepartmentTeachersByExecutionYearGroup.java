@@ -16,6 +16,10 @@ public class DepartmentTeachersByExecutionYearGroup extends DepartmentByExecutio
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DepartmentTeachersByExecutionYearGroup(ExecutionYear executionYear, Department department) {
+    	super(executionYear, department);
+    }
+    
+    public DepartmentTeachersByExecutionYearGroup(String executionYear, String department) {
 	super(executionYear, department);
 
     }
@@ -49,7 +53,7 @@ public class DepartmentTeachersByExecutionYearGroup extends DepartmentByExecutio
     public static class Builder extends DepartmentByExecutionYearGroup.Builder {
 
         @Override
-        protected DepartmentByExecutionYearGroup buildConcreteGroup(ExecutionYear year, Department department) {
+        protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
             return new DepartmentTeachersByExecutionYearGroup(year, department);
         }
         

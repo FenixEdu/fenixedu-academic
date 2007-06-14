@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
@@ -128,15 +128,23 @@ public class TagCloudRenderer extends OutputRenderer {
 		this.styles = styles;
 	}
 
+	public String getExtraTagClasses(UnitFileTag tag) {
+		return "";
+	}
+	
+	protected void addExtraParameters(HtmlLink link, UnitFileTag tag) {
+	
+	}
+	
 	@Override
 	protected Layout getLayout(Object object, Class type) {
 		return new Layout() {
 
 			@Override
 			public HtmlComponent createComponent(Object object, Class type) {
-				List<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
-						(List<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
-						(List<UnitFileTag>) object);
+				Collection<UnitFileTag> tags = (getSortBy() != null) ? RenderUtils.sortCollectionWithCriteria(
+						(Collection<UnitFileTag>) object, getSortBy()) : new ArrayList<UnitFileTag>(
+						(Collection<UnitFileTag>) object);
 
 				Person person = AccessControl.getPerson();
 				int maximum = getMaximum(tags, person);
@@ -159,17 +167,21 @@ public class TagCloudRenderer extends OutputRenderer {
 						text.setClasses(getHtmlClass(maximum, tag, person));
 						link.setBody(text);
 						HtmlListItem item = container.createItem();
+						
+						addExtraParameters(link,tag);
+						
 						item.addChild(link);
 					}
 				}
 				return container;
 			}
 
+
 			private String getHtmlClass(Integer maximum, UnitFileTag tag, Person person) {
 				Double level = getLevel(tag, maximum);
 				Double min = Math.min(level, getNumberOfLevels() - 1);
 
-				return "tcloudlevel" + getNumberOfLevels() + "-" + (min.intValue() + 1);
+				return "tcloudlevel" + getNumberOfLevels() + "-" + (min.intValue() + 1) + " " + getExtraTagClasses(tag);
 			}
 
 			private double getLevel(UnitFileTag tag, Integer maxFrequency) {
@@ -184,7 +196,7 @@ public class TagCloudRenderer extends OutputRenderer {
 				return Math.min(value, value * getPopularCount() / maximumFrequency);
 			}
 
-			private int getMaximum(List<UnitFileTag> tags, Person person) {
+			private int getMaximum(Collection<UnitFileTag> tags, Person person) {
 				int max = -1;
 				for (UnitFileTag tag : tags) {
 					max = Math.max(max, tag.getFileTagCount(person));

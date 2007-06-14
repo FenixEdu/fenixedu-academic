@@ -114,7 +114,7 @@
 	</li>
 
 		<%-- Another Temporary solution :-( --%>	
-
+		
 		<% String deecCode = "21"; %>
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
 			<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deecCode %>">										

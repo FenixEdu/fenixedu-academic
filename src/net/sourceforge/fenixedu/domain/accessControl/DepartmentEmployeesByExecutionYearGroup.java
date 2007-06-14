@@ -16,10 +16,14 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DepartmentEmployeesByExecutionYearGroup(ExecutionYear executionYear, Department department) {
+    	super(executionYear, department);
+    }
+    
+    public DepartmentEmployeesByExecutionYearGroup(String executionYear, String department) {
 	super(executionYear, department);
 
     }
-
+ 
     @Override
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
@@ -49,7 +53,7 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
     public static class Builder extends DepartmentByExecutionYearGroup.Builder {
 
         @Override
-        protected DepartmentByExecutionYearGroup buildConcreteGroup(ExecutionYear year, Department department) {
+        protected DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department) {
             return new DepartmentEmployeesByExecutionYearGroup(year, department);
         }
         

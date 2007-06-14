@@ -91,7 +91,7 @@
 			} 
 		%>
 	
-		<%--
+		
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
 		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit" toScope="request"/>
 		<bean:define id="unitID" name="unit" property="idInternal"/>
@@ -115,7 +115,7 @@
 		</li>
 		</ul>
 		</logic:notEmpty>
-		--%>
+		
 		
 		<logic:notEmpty name="UserView" property="person.protocols">
 			<ul style="margin-top: 1em">

@@ -1922,7 +1922,8 @@ padding: 0.5em 1em;
 }
 ul.tcloud li {
 display: inline;
-padding-right: 0.5em;
+padding: 0;
+padding-right: 0.25em;
 line-height: 2em;
 }
 
@@ -1959,4 +1960,20 @@ ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
 .tcloudedit .tcloudlevel6-6 { font-size: 2.0em; color: #444 !important; }
 .tcloudedit .tcloudlevel6-7 { font-size: 3.0em; color: #444 !important; }
 .tcloudedit .tcloudlevel6-8 { font-size: 4.0em; color: #444 !important; }
+
+ul.tcloud li a span {
+padding: 0 0.125em;
+}
+
+.tcloudselected {
+color: #f2faec !important;
+background: #88a859;
+padding: 0 0.125em;
+}
+
+.tcloudnearBy {
+color: #88a859 !important;
+background: #fff;
+padding: 0 0.125em;
+}
 

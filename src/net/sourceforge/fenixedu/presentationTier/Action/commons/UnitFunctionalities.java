@@ -2,12 +2,15 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.UnitFile;
+import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -126,9 +129,9 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		try {
 			formFileInputStream = bean.getUploadFile();
 			file = FileUtils.copyToTemporaryFile(formFileInputStream);
-			executeService("CreateUnitFile", new Object[] { file, bean.getFileName(),
-					bean.getName(), bean.getDescription(), bean.getTags(),
-					bean.getPermittedGroup(), getUnit(request), getLoggedPerson(request) });
+			executeService("CreateUnitFile", new Object[] { file, bean.getFileName(), bean.getName(),
+					bean.getDescription(), bean.getTags(), bean.getPermittedGroup(), getUnit(request),
+					getLoggedPerson(request) });
 		} catch (DomainException e) {
 			addActionMessage(request, e.getMessage());
 		} finally {
@@ -176,12 +179,22 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	public ActionForward viewFilesByTag(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		String tagName = request.getParameter("tagName");
-		if (tagName != null) {
-			request.setAttribute("tagName", tagName);
+		String tagName = request.getParameter("selectedTags");
+		Set<UnitFileTag> unitFileTags = new HashSet<UnitFileTag>();
+
+		if (tagName != null && tagName.length() > 0) {
+			String[] tags = tagName.split("\\p{Space}+");
+			for (int i = 0; i < tags.length; i++) {
+				UnitFileTag tag = getUnit(request).getUnitFileTag(tags[i]);
+				if (tag != null) {
+					unitFileTags.add(tag);
+				}
+			}
 			return putFilesOnRequest(mapping, form, request, response, getUnit(request)
-					.getAccessibileFiles(getLoggedPerson(request), tagName));
-		} else {
+					.getAccessibileFiles(getLoggedPerson(request), unitFileTags));
+		}
+
+		else {
 			return manageFiles(mapping, form, request, response);
 		}
 
@@ -209,12 +222,12 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		return manageFiles(mapping, form, request, response);
 	}
 
-	public ActionForward configureUploaders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-	
+	public ActionForward configureUploaders(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		return mapping.findForward("editUploaders");
 	}
-	
+
 	protected abstract Integer getPageSize();
 
 	protected abstract UnitFile getUnitFile(HttpServletRequest request);

@@ -18,30 +18,27 @@
 </ul>
 </logic:equal>
 
-<logic:notEmpty name="files">
+<bean:define id="tags" value="<%= request.getParameter("selectedTags") != null ? request.getParameter("selectedTags") : "" %>" type="java.lang.String"/>
 
 <fr:view name="unit" property="unitFileTags">
-	<fr:layout name="tag-cloud">
-		<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}"%>"/>
+	<fr:layout name="tag-search">
 		<fr:property name="classes" value="tcloud"/>
+		<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&unitId=${unit.idInternal}"%>"/>
 		<fr:property name="popularCount" value="10"/>
 		<fr:property name="minimumLevel" value="0.4"/>
 		<fr:property name="sortBy" value="name"/>
+		<fr:property name="parameter" value="selectedTags"/>
+		<fr:property name="selectedTags" value="<%= tags %>"/>
 	</fr:layout>
 </fr:view>
 
+<logic:notEmpty name="files">
+
 <bean:define id="cpURL" value="<%= request.getContextPath() + "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
-<logic:present name="tagName">
-	<bean:define id="tagName" name="tagName" type="java.lang.String"/>
-	<bean:define id="cpURL" value="<%= request.getContextPath() + "/" + actionName + ".do?method=viewFilesByTag&tagName=" + tagName + "&unitId=" + unitID%>"/>
+<logic:present name="tag">
+	<bean:define id="cpURL" value="<%= request.getContextPath() + "/" + actionName + ".do?method=viewFilesByTag&selectedTags=" + tags + "&unitId=" + unitID%>"/>
 </logic:present>
-
-<p>
-	<html:link page="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>">
-		<bean:message key="renderers.show.all" bundle="RENDERER_RESOURCES"/>
-	</html:link>
-</p>
-
+	
 <bean:message key="label.numberPages" bundle="RESEARCHER_RESOURCES"/>: 
 <cp:collectionPages url="<%= cpURL %>" pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 
@@ -71,7 +68,7 @@ pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 
 	<fr:view name="unit" property="unitFileTags">
 		<fr:layout name="tag-count">
-			<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&tagName=${name}&unitId=${unit.idInternal}" %>"/>
+			<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&selectedTags=${name}&unitId=${unit.idInternal}" %>"/>
 			<fr:property name="showAllUrl" value="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
 			<fr:property name="sortBy" value="name"/>
 		</fr:layout>

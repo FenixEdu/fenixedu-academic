@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
@@ -15,19 +15,38 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
     private DomainReference<Department> departmentReference;
 
+    private String executionYear;
+    private String department; 
+    
     public DepartmentByExecutionYearGroup(ExecutionYear executionYear, Department department) {
+    	this.executionYearReference = new DomainReference<ExecutionYear>(executionYear);
+    	this.departmentReference = new DomainReference<Department>(department);
+    }
+    
+    public DepartmentByExecutionYearGroup(String executionYearName, String departmentName) {
 
-        this.executionYearReference = new DomainReference<ExecutionYear>(executionYear);
-        this.departmentReference = new DomainReference<Department>(department);
+        this.executionYear = executionYearName;
+        this.department = departmentName;
 
     }
 
     public Department getDepartment() {
-        return this.departmentReference.getObject();
+        if (this.departmentReference == null) {
+        	departmentReference = new DomainReference<Department>(Department.readByName(this.department));
+        }
+    	return this.departmentReference.getObject();
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.executionYearReference.getObject();
+        if (this.executionYearReference == null) {
+        	this.executionYearReference = new DomainReference<ExecutionYear>(ExecutionYear.readExecutionYearByName(this.executionYear));
+        }
+    	return this.executionYearReference.getObject();
+    }
+
+    @Override
+    public String getName() {
+    	return RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName());
     }
     
     @Override
@@ -58,20 +77,11 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
                 throw new WrongTypeOfArgumentException(1, String.class, arguments[1].getClass());
             }
             
-            ExecutionYear year = ExecutionYear.readExecutionYearByName(yearName);
-            if (year == null) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.departmentByExecutionYear.year.notFound", yearName);
-            }
             
-            Department department = Department.readByName(departmentName);
-            if (department == null) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.departmentByExecutionYear.department.notFound", yearName);
-            }
-            
-            return buildConcreteGroup(year, department);
+            return buildConcreteGroup(yearName, departmentName);
         }
 
-        protected abstract DepartmentByExecutionYearGroup buildConcreteGroup(ExecutionYear year, Department department);
+        protected abstract DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department);
 
         public int getMinArguments() {
             return 2;

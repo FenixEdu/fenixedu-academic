@@ -225,19 +225,28 @@ Documentation:
     
     <!--@ Tag Renderers -->
     
-    <renderer type="java.util.List" layout="tag-count" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCountRenderer">
+    <renderer type="java.util.Collection" layout="tag-count" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCountRenderer">
     	<property name="moduleRelative" value="true"/>
     	<property name="contextRelative" value="true"/>
     	<property name="separator" value="|"/>
     </renderer>
 
-    <renderer type="java.util.List" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCloudRenderer">
+    <renderer type="java.util.Collection" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagCloudRenderer">
     	<property name="moduleRelative" value="true"/>
     	<property name="contextRelative" value="true"/>
     	<property name="numberOfLevels" value="6"/>
     </renderer>
     
-    
+
+    <renderer type="java.util.Collection" layout="tag-search" class="net.sourceforge.fenixedu.presentationTier.renderers.AdvancedTagCloudSearchRenderer">
+    	<property name="moduleRelative" value="true"/>
+    	<property name="contextRelative" value="true"/>
+    	<property name="numberOfLevels" value="6"/>
+    	<property name="parameter" value="tags"/>
+    	<property name="selectedTagClass" value="tcloudselected"/>
+    	<property name="nearByTagClass" value="tcloudnearBy"/>
+    </renderer>
+        
     <!--@ The default layout for the a parser report.  -->
     <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
     
