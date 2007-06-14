@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix table types." fixTableTypes.sql
