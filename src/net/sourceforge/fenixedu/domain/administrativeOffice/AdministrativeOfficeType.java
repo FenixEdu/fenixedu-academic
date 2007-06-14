@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 public enum AdministrativeOfficeType {
     
     DEGREE, MASTER_DEGREE;
@@ -16,4 +20,8 @@ public enum AdministrativeOfficeType {
         return AdministrativeOfficeType.class.getName() + "." + name();
     }
 
+    public String getDescription() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+    }
+    
 }
