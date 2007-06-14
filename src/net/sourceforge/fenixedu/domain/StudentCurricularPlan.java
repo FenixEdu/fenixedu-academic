@@ -1658,7 +1658,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public DegreeType getDegreeType() {
-	return getDegree().getTipoCurso();
+	return getDegree().getDegreeType();
     }
 
     public Set<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
