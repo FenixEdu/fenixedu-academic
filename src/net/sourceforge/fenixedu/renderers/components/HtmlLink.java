@@ -133,6 +133,22 @@ public class HtmlLink extends HtmlComponent {
         this.module = module;
     }
 
+    public String getParameter(String name) {
+    	String[] values = this.parameters.get(name);
+    	
+    	if (values != null && values.length > 0) {
+    		return values[0];
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    public String[] getParameterValues(String name) {
+    	String[] values = this.parameters.get(name);
+    	return values == null ? new String[0] : values;
+    }
+
     public void setParameter(String name, String value) {
         this.parameters.put(name, new String[] { value });
     }

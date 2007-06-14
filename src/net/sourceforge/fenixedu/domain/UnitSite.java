@@ -255,6 +255,22 @@ public abstract class UnitSite extends UnitSite_Base {
     		addIntroductionSections(section);
     	}
     }
+
+    /**
+     * Actually checks that the site template has a module associated to it.
+     * 
+     * 
+     * @return getTemplate().hasModule() 
+     */
+    public boolean isContextModuleAvailable() {
+    	SiteTemplate template = (SiteTemplate) getTemplate();
+    	
+    	if (template == null) {
+    		return false;
+    	}
+    	
+    	return template.hasModule() && template.getModule().hasAnyFunctionalities();
+    }
     
     /**
      * Manage the role WEBSITE_MANAGER associated with the person. The person

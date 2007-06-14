@@ -12,10 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
@@ -418,4 +420,30 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		return mapping.findForward("chooseIntroductionSections");
 	}
 	
+	public ActionForward prepareAddInstitutionSection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Section section = selectSection(request);
+        
+        if (section == null) {
+            Site site = getSite(request);
+            
+            request.setAttribute("creator", new FunctionalitySectionCreator(site));
+        } else {
+            request.setAttribute("creator", new FunctionalitySectionCreator(section));
+        }
+
+		return mapping.findForward("addInstitutionSection");
+	}
+	
+    public ActionForward functionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        section(mapping, actionForm, request, response);
+        
+        return mapping.findForward("functionalitySection");
+    }
+
+    public ActionForward editFunctionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        selectSection(request);
+        
+        return mapping.findForward("editFunctionalitySection");
+    }
+
 }

@@ -39,12 +39,4 @@ public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
         }
     }
 
-    public ActionForward changeOptionalSections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IViewState viewState = RenderUtils.getViewState("optionalSections");
-        if (viewState != null && viewState.isValid()) {
-            request.setAttribute("optionalSectionsChanged", true);
-        }
-        
-        return mapping.findForward("editConfiguration");
-    }
 }

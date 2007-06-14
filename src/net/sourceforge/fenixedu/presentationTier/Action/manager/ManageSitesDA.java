@@ -129,5 +129,8 @@ public class ManageSitesDA extends SiteManagementDA {
             }
         }
     }
-    
+
+    public ActionForward prepareChooseBaseModule(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	return mapping.findForward("chooseBaseModule");
+    }
 }

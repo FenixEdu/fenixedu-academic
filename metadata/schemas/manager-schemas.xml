@@ -475,3 +475,13 @@
 	<slot name="mostImportantAlias" key="label.alias"/>
 	<slot name="name"/>
 </schema>
+
+<schema name="siteTemplate.choose.module"
+        type="net.sourceforge.fenixedu.domain.SiteTemplate"
+        bundle="DEFAULT">
+    <slot name="module" layout="functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="schemaFor(Module)" value="functionalities.module.tree"/>
+        <property name="moduleOnly" value="true"/>
+    </slot>
+</schema>

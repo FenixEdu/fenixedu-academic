@@ -12,8 +12,6 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 
 	public ResearchUnitSite() {
 		super();
-		this.setShowResearchMembers(Boolean.TRUE);
-		this.setShowPublications(Boolean.TRUE);
 	}
 
 	public ResearchUnitSite(ResearchUnit unit) {

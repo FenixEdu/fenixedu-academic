@@ -52,30 +52,6 @@
     </slot>
 </schema>
 
-<schema name="departmentSite.optional.sections" type="net.sourceforge.fenixedu.domain.DepartmentSite" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="showSectionTeachers" layout="radio" key="label.departmentSite.showSectionTechers">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showSectionEmployees" layout="radio" key="label.departmentSite.showSectionEmployees">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showSectionDegrees" layout="radio" key="label.departmentSite.showSectionDegrees">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-    <slot name="showSectionCourses" layout="radio" key="label.departmentSite.showSectionCourses">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-</schema>
-
-<schema name="researchSite.optional.sections" type="net.sourceforge.fenixedu.domain.ResearchUnitSite" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="showResearchMembers" layout="radio" key="label.researchUnitSite.showResearchMembers">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-     <slot name="showPublications" layout="radio" key="label.researchUnitSite.showPublications">
-        <property name="classes" value="liinline nobullet"/>
-    </slot>
-</schema>
-
 <schema name="site.banner.create" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.BannerBean" bundle="WEBSITEMANAGER_RESOURCES">
     <slot name="mainImage.file" key="label.site.banner.mainImage">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
@@ -293,4 +269,31 @@
 		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
 		<property name="key" value="true"/>
 	</slot>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.UnitSite.functionality"
+        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
+        bundle="DEFAULT">
+    <slot name="functionality" layout="unitSite-functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="schemaFor(Module)" value="unitSite.institution.section.functionalities"/>
+        <property name="schemaFor(Functionality)" value="unitSite.institution.section.functionalities"/>
+    </slot>
+    <setter signature="createSection()"/>
+</schema>
+
+<schema name="unitSite.institution.section.functionalities" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name"/>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionEditor.unitSite.functionality"
+        type="net.sourceforge.fenixedu.domain.FunctionalitySection"
+        bundle="DEFAULT">
+    <slot name="functionality" layout="unitSite-functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="schemaFor(Module)" value="functionalities.module.tree"/>
+        <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
+    </slot>
 </schema>

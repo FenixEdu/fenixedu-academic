@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer.LevelDecorator;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -99,7 +101,11 @@ public class FunctionalityInputTreeRenderer extends InputRenderer {
         return this.treeRenderer.isModuleRelative();
     }
 
-    public void setClasses(String classes) {
+	public boolean isModuleOnly() {
+		return treeRenderer.isModuleOnly();
+	}
+
+	public void setClasses(String classes) {
         this.treeRenderer.setClasses(classes);
     }
 
@@ -235,6 +241,10 @@ public class FunctionalityInputTreeRenderer extends InputRenderer {
         this.treeRenderer.setModuleEnabledImage(moduleEnabledImage);
     }
 
+    public void setModuleOnly(boolean moduleOnly) {
+		treeRenderer.setModuleOnly(moduleOnly);
+	}
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         PresentationContext context = getInputContext();
@@ -274,8 +284,7 @@ public class FunctionalityInputTreeRenderer extends InputRenderer {
                 });
 
                 HtmlComponent component = treeLayout
-                        .createComponent(Functionality
-                                .getOrderedTopLevelFunctionalities(), type);
+                        .createComponent(getFunctionalities(object), type);
                 container.addChild(component);
 
                 return container;
@@ -283,5 +292,9 @@ public class FunctionalityInputTreeRenderer extends InputRenderer {
 
         };
     }
+
+	protected List<Functionality> getFunctionalities(Object object) {
+		return Functionality.getOrderedTopLevelFunctionalities();
+	}
 
 }

@@ -17,7 +17,9 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
     }
     
     @Override
-    protected List<Section> getSections(Site site) {
+    protected List<Section> getSections(Object object) {
+    	Site site = getSite(object);
+    	
         List<Section> sections = getBaseSections(site);
         
         Section section = getTargetSection(site);

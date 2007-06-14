@@ -749,6 +749,10 @@ public class TreeRenderer extends OutputRenderer {
             }
 
             for (Object object : collection) {
+            	if (isIgnored(object)) {
+            		continue;
+            	}
+            	
                 HtmlListItem item = list.createItem();
 
                 item.setClasses(getClassFor(object));
@@ -827,7 +831,11 @@ public class TreeRenderer extends OutputRenderer {
 	                        		item.setAttribute("expanded", "true");
 	                        	}
 	                        	
-	                            item.addChild(createList(itemPath, subCollection));
+	                            HtmlList subList = createList(itemPath, subCollection);
+	                            
+	                            if (! subList.getChildren().isEmpty()) {
+	                            	item.addChild(subList);
+	                            }
                         	}
                         	finally {
                         		itemPath.remove(item);
@@ -918,6 +926,10 @@ public class TreeRenderer extends OutputRenderer {
         return value;
     }
 
+    protected boolean isIgnored(Object object) {
+    	return false;
+    }
+    
     public interface LevelDecorator {
         public HtmlComponent decorate(Object object);
     }

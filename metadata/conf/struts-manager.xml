@@ -2229,6 +2229,7 @@
                 <forward name="chooseFunctionality" path="manage-execution-course-chooseFunctionality"/>
                 <forward name="functionalitySection" path="manage-execution-course-functionalitySection"/>
                 <forward name="editFunctionalitySection" path="manage-execution-course-editFunctionalitySection"/>
+                <forward name="chooseBaseModule" path="manage-site-choose-base-module"/>
         </action>
 
        	<!-- =================== Academic Calendar Management =================== -->

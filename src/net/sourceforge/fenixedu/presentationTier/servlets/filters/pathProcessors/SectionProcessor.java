@@ -7,8 +7,11 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import net.sourceforge.fenixedu.domain.FunctionalitySection;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 
 public class SectionProcessor extends SiteElementPathProcessor {
 
@@ -58,7 +61,34 @@ public class SectionProcessor extends SiteElementPathProcessor {
             }
             
             String contextURI = ownContext.getContextURI();
-            return doForward(context, contextURI, "section", section.getIdInternal());
+            String url = String.format(contextURI, "section", section.getIdInternal());
+
+            if (section instanceof FunctionalitySection) {
+            	HtmlLink sectionLink = new HtmlLink();
+            	sectionLink.setContextRelative(false);
+            	sectionLink.setUrl(url);
+            	
+            	FunctionalitySection fSection = (FunctionalitySection) section;
+            	Functionality functionality = fSection.getFunctionality();
+            	String path = functionality.getPublicPath();
+
+                HtmlLink link = new HtmlLink();
+                link.setContextRelative(false);
+				link.setUrl(path);
+
+	            if (functionality.isParameterized()) {
+	                for (String parameter : functionality.getParameterList()) {
+	                    for (String value : sectionLink.getParameterValues(parameter)) {
+	                        link.addParameter(parameter, value);
+	                    }
+	                }
+	            }
+	            
+	            return doForward(context, link.calculateUrl());
+            }
+            else {
+            	return doForward(context, url);
+            }
         }
     }
 

@@ -32,6 +32,13 @@
             <bean:message key="link.createFunctionalitySection" bundle="SITE_RESOURCES"/>
         </html:link>
     </span>
+
+    <span class="pleft1">
+        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+        <html:link page="<%= actionName + "?method=prepareChooseBaseModule&amp;" + context %>">
+            <bean:message key="link.defineBaseModule" bundle="SITE_RESOURCES"/>
+        </html:link>
+    </span>
 </p>
 
 <logic:empty name="site" property="orderedTopLevelSections">

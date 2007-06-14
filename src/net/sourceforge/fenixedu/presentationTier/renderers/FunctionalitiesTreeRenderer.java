@@ -21,6 +21,8 @@ public class FunctionalitiesTreeRenderer extends TreeRenderer {
     private String enabledClass;
     private String disabledClass;
 
+    private boolean moduleOnly;
+    
     public FunctionalitiesTreeRenderer() {
         super();
 
@@ -76,7 +78,15 @@ public class FunctionalitiesTreeRenderer extends TreeRenderer {
         this.moduleEnabledImage = moduleEnabledImage;
     }
 
-    @Override
+    public boolean isModuleOnly() {
+		return moduleOnly;
+	}
+
+	public void setModuleOnly(boolean moduleOnly) {
+		this.moduleOnly = moduleOnly;
+	}
+
+	@Override
     public boolean isIncludeImage() {
         return super.isIncludeImage() && getModuleEnabledImage() == null
                 && getModuleDisabledImage() == null && getFunctionalityEnabledImage() == null
@@ -128,4 +138,8 @@ public class FunctionalitiesTreeRenderer extends TreeRenderer {
         }
     }
 
+    @Override
+    protected boolean isIgnored(Object object) {
+    	return isModuleOnly() && !(object instanceof Module);
+    }
 }

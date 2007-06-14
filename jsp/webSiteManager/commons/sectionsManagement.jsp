@@ -32,6 +32,15 @@
 		</html:link>
 	</span>
 	
+	<logic:equal name="site" property="contextModuleAvailable" value="true">
+		<span class="pleft1">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= actionName + "?method=prepareAddInstitutionSection&amp;" + context %>">
+				<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+			</html:link>
+		</span>
+	</logic:equal>
+	
 	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 		<html:link page="<%= actionName + "?method=chooseIntroductionSections&amp;" + context %>">
@@ -65,7 +74,9 @@
                 <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
                 <fr:property name="noChildrenFor(FunctionalitySection)" value="true"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
+                <fr:property name="schemaFor(FunctionalitySection)" value="site.functionalitySection.name"/>
                 <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
+                <fr:property name="imageFor(FunctionalitySection)" value="/images/site/institutionalSection.gif"/>
 
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>

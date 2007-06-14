@@ -81,9 +81,11 @@ public abstract class Site extends Site_Base {
         return getAssociatedSections(null);
     }
     
-    private Site getSiteTemplate() {
-        Site template = getTemplate();
-        if (template != null) {
+    @Override
+    public Site getTemplate() {
+    	Site template = super.getTemplate();
+    	
+    	if (template != null) {
             return template;
         }
 
@@ -95,7 +97,7 @@ public abstract class Site extends Site_Base {
         
         return null;
     }
-
+    
     public List<Section> getAssociatedSections(final Section parentSection) {
         final List<Section> result;
         if (parentSection != null) {
@@ -172,7 +174,7 @@ public abstract class Site extends Site_Base {
     public List<Section> getOrderedTemplateSections() {
         List<Section> sections = new ArrayList<Section>();
         
-        Site template = getSiteTemplate();
+        Site template = getTemplate();
         if (template != null) {
             sections.addAll(template.getOrderedTemplateSections());
             sections.addAll(template.getOrderedTopLevelSections());
@@ -184,7 +186,7 @@ public abstract class Site extends Site_Base {
     public List<Section> getTemplateSections() {
         List<Section> sections = new ArrayList<Section>();
         
-        Site template = getSiteTemplate();
+        Site template = getTemplate();
         if (template != null) {
             sections.addAll(template.getTemplateSections());
             sections.addAll(template.getTopLevelSections());

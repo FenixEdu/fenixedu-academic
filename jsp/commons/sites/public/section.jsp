@@ -35,23 +35,16 @@
         </p>
     </logic:present>
  
- 	<logic:notEmpty name="section" property="orderedSubSections">
-		<fr:view name="section" property="orderedSubSections" layout="list">
-		    <fr:layout>
-		        <fr:property name="eachLayout" value="values"/>
-		        <fr:property name="eachSchema" value="site.section.name"/>
-		    </fr:layout>
-		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
-		</fr:view>
-    </logic:notEmpty>
-    
-    <logic:empty name="protectedItems">
-        <logic:empty name="section" property="associatedSections">
-            <p>
-                <em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
-            </p>
-        </logic:empty>
-    </logic:empty>
+	<fr:view name="section" type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu">
+		<fr:layout>
+			<fr:property name="sectionUrl" value="<%= String.format("%s?method=section&amp;%s", actionName, context) %>"/>
+			<fr:property name="empty">
+				<p>
+					<em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
+				</p>
+			</fr:property>
+		</fr:layout>
+	</fr:view>
     
     <logic:notEmpty name="protectedItems">
        	

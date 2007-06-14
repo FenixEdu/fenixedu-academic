@@ -334,15 +334,23 @@
             </div>
     
             <logic:notEmpty name="item" property="fileItems">
-                <div>
-                    <span style="color: #888;"><bean:message key="label.files" bundle="SITE_RESOURCES"/>: </span>
-                    	<ul>
+                <div class="mtop2">
+                
+                    <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
+                    
+                    	<table class="tstyle2 thlight width100">
+                    		<tr>
+	                    		<th><bean:message key="label.section.item.file.title" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
+                    		</tr>
                         	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
                         		<bean:define id="downloadUrl">
                         			<bean:write name="fileItem" property="downloadUrl"/>
                         		</bean:define>
                         		
-                        		<li>
+							<tr>
+								<td>
            	                		<html:link href="<%= downloadUrl %>">
            	                			<fr:view name="fileItem" property="displayName"/>
            	                		</html:link>
@@ -350,7 +358,9 @@
             	    		        <bean:define id="message">
         	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
         	                        </bean:define>
+           	                	</td>
             							
+            					<td class="nowrap">	
         							<span class="pleft1">
             		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
             		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
@@ -361,6 +371,9 @@
             			    	            </html:link>)
             		    	            </span>
 
+								</td>
+								
+								<td>
                                 <span class="pleft1" style="color: #888;">
                                     <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
                                     <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
@@ -373,9 +386,10 @@
                                         </fr:layout>
                                     </fr:view>
                                 </span>
-        	    	                </li>
+       	    	                </td>
+                        	</tr>
                         	</logic:iterate>
-                    	</ul>
+                   	</table>
                 </div>
             </logic:notEmpty>
         </div>

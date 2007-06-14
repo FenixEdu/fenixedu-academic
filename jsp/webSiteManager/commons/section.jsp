@@ -106,6 +106,15 @@
     		</html:link>
     	</span>
 
+		<logic:equal name="site" property="contextModuleAvailable" value="true">
+			<span class="pleft1">
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+				<html:link page="<%= String.format("%s?method=prepareAddInstitutionSection&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
+					<bean:message key="link.institutionSubSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+				</html:link>
+			</span>
+		</logic:equal>
+	
     	<span class="pleft1">
     		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
     		<html:link page="<%= String.format("%s?method=editSectionPermissions&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
@@ -168,14 +177,19 @@
                 <fr:property name="fieldId" value="sections-order"/>
                 
                 <fr:property name="eachLayout" value="values"/>
-                <fr:property name="schemaFor(Section)" value="site.section.name"/>
                 <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
+                <fr:property name="noChildrenFor(FunctionalitySection)" value="true"/>
+                <fr:property name="schemaFor(Section)" value="site.section.name"/>
+                <fr:property name="schemaFor(FunctionalitySection)" value="site.functionalitySection.name"/>
+                <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
+                <fr:property name="imageFor(FunctionalitySection)" value="/images/site/institutionalSection.gif"/>
 
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
                 <fr:property name="currentClasses" value="highlight1"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
+            <fr:destination name="functionalitySection.view" path="<%= actionName + "?method=functionalitySection&amp;sectionID=${idInternal}&amp;" + context %>"/>
         </fr:view>
 
 		<p class="mtop15">

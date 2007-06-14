@@ -130,14 +130,13 @@ public class SiteMenuRenderer extends OutputRenderer {
                     context = new SimpleFunctionalityContext(request);
                 }
                   
-                Site site = (Site) object;
-                List<Section> sections = getSections(site);
+                List<Section> sections = getSections(object);
                 
                 if (sections.isEmpty()) {
                 	return generateEmpty();
                 }
                 else {
-                	addSiteSections(context, site, sections, list);
+                	addSiteSections(context, object, sections, list);
                     return list;
                 }
             }
@@ -147,7 +146,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 			}
 
 			private void addSiteSections(FunctionalityContext context,
-                    Site site, List<Section> sections, HtmlList list) {
+                    Object object, List<Section> sections, HtmlList list) {
 
                 for (Section section : sections) {
                     if (!section.isVisible(context)) {
@@ -155,7 +154,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                     }
 
                     HtmlListItem item = list.createItem();
-                    HtmlComponent nameComponent = createSectionComponent(context, site, section);
+                    HtmlComponent nameComponent = createSectionComponent(context, section);
 
                     // TODO: make a better design and add configuration to this renderer
                     if (! isTopSection(section)) {
@@ -165,13 +164,12 @@ public class SiteMenuRenderer extends OutputRenderer {
                     item.addChild(nameComponent);
 
                     if (isSelectedSection(section)) {
-                        List<Section> subSections = Site.getOrderedSections(site
-                                .getAssociatedSections(section));
+                        List<Section> subSections = Site.getOrderedSections(getSubSections(object, section));
 
                         if (subSections != null && !subSections.isEmpty()) {
                             HtmlList subList = new HtmlList();
 
-                            addSiteSections(context, site, subSections, subList);
+                            addSiteSections(context, object, subSections, subList);
                             item.addChild(subList);
                         }
                     }
@@ -207,7 +205,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                 }
             }
             
-            private HtmlComponent createSectionComponent(FunctionalityContext context, Site site, Section section) {
+            private HtmlComponent createSectionComponent(FunctionalityContext context, Section section) {
                 if (section instanceof FunctionalitySection) {
                    Functionality functionality = ((FunctionalitySection) section).getFunctionality();
                    return MenuRenderer.getFunctionalityNameComponent(context, functionality, true);
@@ -232,8 +230,14 @@ public class SiteMenuRenderer extends OutputRenderer {
             }
 
             private String getContextParamValue() {
+            	String contextParam = getContextParam();
+            	
+            	if (contextParam == null) {
+            		return null;
+            	}
+            	
                 HttpServletRequest request = getContext().getViewState().getRequest();;
-                return request.getParameter(getContextParam());
+				return request.getParameter(contextParam);
             }
 
         };
@@ -242,8 +246,8 @@ public class SiteMenuRenderer extends OutputRenderer {
     /**
      * @return the list of sections to render
      */
-    protected List<Section> getSections(Site site) {
-        return site.getAllOrderedTopLevelSections();
+    protected List<Section> getSections(Object object) {
+        return getSite(object).getAllOrderedTopLevelSections();
     }
 
     /**
@@ -252,5 +256,13 @@ public class SiteMenuRenderer extends OutputRenderer {
     protected boolean isTopSection(Section section) {
         return section.getSuperiorSection() == null;
     }
+
+	protected Site getSite(Object object) {
+		return (Site) object;
+	}
+
+	protected List<Section> getSubSections(Object object, Section section) {
+		return getSite(object).getAssociatedSections(section);
+	}
 
 }

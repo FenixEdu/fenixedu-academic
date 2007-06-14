@@ -817,6 +817,9 @@
     <definition name="manage-execution-course-editFunctionalitySection" extends="definition.manager.manageSiteMasterPage" >
         <put name="body" value="/manager/sites/editFunctionalitySection.jsp"/>
     </definition>  	
+    <definition name="manage-site-choose-base-module" extends="definition.manager.manageSiteMasterPage" >
+        <put name="body" value="/manager/sites/chooseBaseModule.jsp"/>
+    </definition>  	
 
 	<!--  ###################  Academic Calendar Management ####################### -->
 	<definition name="prepare-choose-calendar" extends="definition.manager.masterPage" >

@@ -4750,6 +4750,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 }
 
 	class net.sourceforge.fenixedu.domain.SiteTemplate extends net.sourceforge.fenixedu.domain.Site {
+		Integer keyModule;
 		String siteType;
 	}
 	
@@ -4806,8 +4807,6 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showAnnouncements;
 		Boolean showEvents;
 		Boolean showFlags;
-		Boolean showResearchMembers;
-		Boolean showPublications;
 		UnitSiteLayoutType layout;
 		MultiLanguageString sideBanner;
 	}
@@ -4836,10 +4835,6 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	}
 
 	class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
-		Boolean showSectionTeachers;
-		Boolean showSectionEmployees;
-		Boolean showSectionCourses;
-		Boolean showSectionDegrees;
 	}
 
 	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
@@ -8023,6 +8018,13 @@ relation SitePointsTemplate {
 	net.sourceforge.fenixedu.domain.Site playsRole templatedSites {
 		multiplicity *;
 	}
+}
+
+relation SiteTemplatePointsModule {
+	net.sourceforge.fenixedu.domain.SiteTemplate  playsRole siteTemplates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
 }
 
 relation SpaceSpace {
