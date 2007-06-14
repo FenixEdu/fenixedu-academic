@@ -221,7 +221,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class, (ExecutionPeriod) null)) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-	    if (!getStudentCurricularPlan().getRoot().isAproved(curricularCourse, null)) {
+	    if (!getStudentCurricularPlan().getRoot().isApproved(curricularCourse, null)) {
 		result.add(curricularCourse);
 	    }
 	}
@@ -229,9 +229,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
-	    if (curriculumModule.isAproved(curricularCourse, executionPeriod)) {
+	    if (curriculumModule.isApproved(curricularCourse, executionPeriod)) {
 		return true;
 	    }
 	}
@@ -288,8 +288,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    final Enrolment search = curriculumModule
 		    .findEnrolmentFor(curricularCourse, executionPeriod);
@@ -298,6 +297,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    }
 	}
 	return null;
+    }
+    
+    @Override
+    public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    final Enrolment enrolment = curriculumModule.getApprovedEnrolment(curricularCourse);
+	    if (enrolment != null) {
+		return enrolment;
+	    }
+	}
+        return null;
     }
 
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {

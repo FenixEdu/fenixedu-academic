@@ -47,16 +47,24 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	if (executionPeriod == null || this.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return (this.getCurricularCourse().isEquivalent(curricularCourse) || this
-		    .getOptionalCurricularCourse().isEquivalent(curricularCourse))
-		    && this.isApproved();
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+	    return (isCurricularCourseEquivalente(curricularCourse, executionPeriod) 
+		    || isOptionalCurricularCourseEquivalente(curricularCourse, executionPeriod))
+		    && isApproved();
 	} else {
 	    return false;
 	}
     }
-
+    
+    private boolean isCurricularCourseEquivalente(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(getCurricularCourse(), curricularCourse, executionPeriod);
+    }
+    
+    private boolean isOptionalCurricularCourseEquivalente(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return getOptionalCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(getOptionalCurricularCourse(), curricularCourse, executionPeriod);
+    }
+    
     @Override
     public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {

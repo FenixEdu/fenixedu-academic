@@ -53,7 +53,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean isAproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
         return false;
     }
     
@@ -87,6 +87,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
         return Collections.emptySet();
+    }
+    
+    @Override
+    public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+        return null;
     }
     
     @Override

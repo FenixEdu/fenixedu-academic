@@ -85,7 +85,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
     
     public boolean isAproved(final CurricularCourse curricularCourse) {
-	return isAproved(curricularCourse, null);
+	return isApproved(curricularCourse, null);
     }
     
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
@@ -123,12 +123,13 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Double getAprovedEctsCredits();
     abstract public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod);
     
-    abstract public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     
     abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
+    abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
 
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear);
     abstract public void collectDismissals(final List<Dismissal> result);

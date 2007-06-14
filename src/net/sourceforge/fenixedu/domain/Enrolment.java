@@ -1007,16 +1007,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     @Override
-    public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return isApproved() && (getCurricularCourse().isEquivalent(curricularCourse) /*|| hasCurricularCourseEquivalence(curricularCourse, executionPeriod)*/) ;
+	    return isApproved()
+		    && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(
+			    getCurricularCourse(), curricularCourse, executionPeriod));
 	} else {
 	    return false;
 	}
     }
     
-    private boolean hasCurricularCourseEquivalence(final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
-	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse().getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
+    protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
 	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
 		return true;
 	    }
@@ -1186,6 +1188,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
+    }
+    
+    @Override
+    public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+        return isAproved(curricularCourse) ? this : null;
     }
 
     @Override

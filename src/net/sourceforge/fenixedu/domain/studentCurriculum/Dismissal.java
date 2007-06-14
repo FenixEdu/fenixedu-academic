@@ -89,7 +89,7 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public boolean isAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         if(hasCurricularCourse()) {
             return getCurricularCourse().isEquivalent(curricularCourse);
         } else {

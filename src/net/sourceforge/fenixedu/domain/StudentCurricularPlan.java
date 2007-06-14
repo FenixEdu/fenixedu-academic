@@ -2106,7 +2106,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final ExecutionPeriod executionPeriod,
 	    final OptionalCurricularCourse optionalCurricularCourse,
 	    final CurricularCourse curricularCourse, final EnrollmentCondition enrollmentCondition) {
-	if (getRoot().isAproved(curricularCourse, executionPeriod)) {
+	if (getRoot().isApproved(curricularCourse, executionPeriod)) {
 	    throw new DomainException("error.already.aproved",
 		    new String[] { curricularCourse.getName() });
 	}
@@ -2122,7 +2122,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod, final NoCourseGroupCurriculumGroupType groupType) {
-	if (getRoot().isAproved(curricularCourse, executionPeriod)) {
+	if (getRoot().isApproved(curricularCourse, executionPeriod)) {
 	    throw new DomainException("error.already.aproved",
 		    new String[] { curricularCourse.getName() });
 	}
@@ -2236,6 +2236,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isBoxStructure() ? getRoot().findEnrolmentFor(curricularCourse, executionPeriod) : null;
     }
+    
+    public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+	return isBoxStructure() ? getRoot().getApprovedEnrolment(curricularCourse) : null;
+    }
 
     public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
@@ -2261,7 +2265,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return isBoxStructure() ? getRoot().isAproved(curricularCourse, executionPeriod)
+	return isBoxStructure() ? getRoot().isApproved(curricularCourse, executionPeriod)
 		: isCurricularCourseApprovedInCurrentOrPreviousPeriod(curricularCourse, executionPeriod);
     }
 
