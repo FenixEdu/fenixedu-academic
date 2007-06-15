@@ -107,7 +107,6 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("executionYear");
-		executionDegreeBean.setDegreeCurricularPlan(null);
 		executionDegreeBean.setCurricularCourse(null);
 		RenderUtils.invalidateViewState();
 		request.setAttribute("executionDegreeBean", executionDegreeBean);
@@ -169,9 +168,9 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 		} else {
 			listInformationBean.setDegreeModuleScope(degreeModuleScopes);
 			request.setAttribute("degreeModuleScopes", degreeModuleScopes);
-			request.setAttribute("executionYearID", executionDegreeBean
-					.getExecutionYear().getIdInternal());
 		}
+		request.setAttribute("executionYearID", executionDegreeBean
+				.getExecutionYear().getIdInternal());
 		request.setAttribute("listInformationBean", listInformationBean);
 		request.setAttribute("executionDegreeBean", executionDegreeBean);
 		return mapping.findForward("chooseCurricularCourse");
