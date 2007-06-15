@@ -48,6 +48,21 @@
 		</java>
     </target>
 
+    <target name="SQLUpdateGenerator"
+    		description="Generates possible sql instructions to be run on next deploy."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.SQLUpdateGenerator" fork="true">
+<!--				jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y" -->
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
     <target name="initialize-database"
     		description="Generate sql schema for fenix database."
     		depends="compile">
