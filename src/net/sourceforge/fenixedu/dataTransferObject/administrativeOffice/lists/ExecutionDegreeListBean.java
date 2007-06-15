@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ExecutionDegreeListBean implements Serializable {
 
@@ -28,6 +26,9 @@ public class ExecutionDegreeListBean implements Serializable {
 	private DomainReference<ExecutionYear> executionYear;
 
 	private DomainReference<CurricularCourse> curricularCourse;
+	
+	private DomainReference<ExecutionPeriod> executionPeriod;
+	
 
 	public ExecutionDegreeListBean() {
 		super();
@@ -108,6 +109,15 @@ public class ExecutionDegreeListBean implements Serializable {
 	public void setCurricularCourse(CurricularCourse curricularCourse) {
 		this.curricularCourse = (curricularCourse == null) ? null
 				: new DomainReference<CurricularCourse>(curricularCourse);
+	}
+
+	public ExecutionPeriod getExecutionPeriod() {
+		return (this.executionPeriod == null) ? null : this.executionPeriod.getObject();
+	}
+
+	public void setExecutionPeriod( ExecutionPeriod executionPeriod) {
+		this.executionPeriod = (executionPeriod == null) ? null
+				: new DomainReference<ExecutionPeriod>(executionPeriod);
 	}
 
 }
