@@ -973,26 +973,21 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreeCurricularPlanPostBack"/>
 	</slot>
-	<slot name="executionYear" key="label.executionYear" layout="menu-select">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.ExecutionYearsProviderForListsContextBean" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
-		<property name="format" value="${year}" />
-		<property name="sortBy" value="year=desc"/>
-	</slot>
+	
 </schema>
 
-<schema name="studentCurricularPlanList.view"
+<schema name="studentCurricularPlanList.view" 
 	type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registration.number" key="label.number" read-only="true" />     
+	<slot name="registration.number" key="label.number" read-only="true" />
 	<slot name="registration.person.istUsername" key="label.username" read-only="true"/>
 	<slot name="registration.person.name" key="label.name" read-only="true"/>
-	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />	
-	<slot name="registration.activeStateType" key="label.currentState" read-only="true"/>	
-	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
+	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />
+	<slot name="startDateYearMonthDay" key="label.startDate" />	
+  	<slot name="registrationStateType" key="label.state" layout="null-as-label" read-only="true" >
+		<property name="label" value="-"/>		
+    </slot>	
+    <slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
 </schema>
-
-
 
 <schema name="ingression.information-list" bundle="ACADEMIC_OFFICE_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean" >
@@ -1005,7 +1000,7 @@
 			<property name="key" value="true" />
 			<property name="defaultText" value="label.dropDown.all" />
 			<property name="bundle" value="ENUMERATION_RESOURCES" />	
-		</slot>	
+		</slot>			
 </schema>
 
 <schema name="choose.curricularCourses" 
@@ -1020,7 +1015,7 @@
 			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="executionYearPostBack"/>
-		
+	
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select"
@@ -1029,22 +1024,12 @@
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeCurricularPlansForExecutionYear" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
-		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />	
+		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>
+	
 </schema>
-<schema name="curricularCoursesList.view"
-	type="net.sourceforge.fenixedu.domain.DegreeModuleScope" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="curricularYear" key="label.curricularYear" read-only="true"/>
-	<slot name="curricularSemester" key="label.semester" read-only="true" />	
-	<slot name="curricularCourse.code" key="label.executionCourse" />
-	<slot name="curricularCourse.name" key="label.executionCourse" layout="link">
-		<property name="linkFormat" value="/academicAdminOffice/studentsListByDegree.do?method=searchByCurricularCourse&amp;curricularCourseId=${curricularCourse.idInternal}&amp;curricularCourseId=${curricularCourse.code}"/>
-		<property name="useParent" value="true"/>
-		<property name="contextRelative" value="true"/>	
-	</slot>
-	<slot name="branch" key="label.branch" read-only="true"/>
-	<slot name="anotation" key="label.anotation" />			
-</schema>
+
+
 <schema name="enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true" />     
 	<slot name="studentCurricularPlan.registration.person.istUsername" key="label.username" read-only="true"/>
@@ -1052,6 +1037,8 @@
 	<slot name="studentCurricularPlan.registration.registrationAgreement" key="label.registrationAgreement" read-only="true"/>	
 	<slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.degree" read-only="true"/>		
 	<slot name="enrollmentState" key="label.state"/>
-	<slot name="enrolmentEvaluationType" key="label.epoca"/>	
+	<slot name="enrolmentEvaluationType" key="label.epoca"/>
 </schema>
+
+
 
