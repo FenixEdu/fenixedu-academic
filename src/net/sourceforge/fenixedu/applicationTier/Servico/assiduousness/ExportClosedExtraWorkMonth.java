@@ -144,14 +144,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 	}
 
 	ExtraWorkRequest extraWorkRequest = assiduousness.getExtraWorkRequest(beginDate);
-
-	YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
-		DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
-		DateTimeFieldType.monthOfYear()), 1);
-	YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
-		DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
-		DateTimeFieldType.monthOfYear()), begin.dayOfMonth().getMaximumValue());
 	if (extraWorkRequest != null) {
+	    YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+		    DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+		    DateTimeFieldType.monthOfYear()), 1);
+	    YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+		    DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+		    DateTimeFieldType.monthOfYear()), begin.dayOfMonth().getMaximumValue());
+
 	    if (extraWorkRequest.getSundayHours() != null && extraWorkRequest.getSundayHours() != 0.0) {
 		result.append(getExtraWorkMovement(assiduousness, begin, end,
 			extraWorkSundayMovementCode, extraWorkRequest.getSundayHours()));
