@@ -1524,5 +1524,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return hasRoot() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
+    
+	public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
+	List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+	for (StudentCurricularPlan studentCurricularPlan : this
+			.getStudentCurricularPlans()) {
+		studentCurricularPlans.add(studentCurricularPlan.getRegistration()
+				.getLastStudentCurricularPlan());
+
+	}
+	return studentCurricularPlans;
+	}
 
 }
