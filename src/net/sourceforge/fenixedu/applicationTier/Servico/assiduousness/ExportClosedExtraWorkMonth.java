@@ -144,24 +144,31 @@ public class ExportClosedExtraWorkMonth extends Service {
 	}
 
 	ExtraWorkRequest extraWorkRequest = assiduousness.getExtraWorkRequest(beginDate);
+
+	YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+		DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+		DateTimeFieldType.monthOfYear()), 1);
+	YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+		DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+		DateTimeFieldType.monthOfYear()), begin.dayOfMonth().getMaximumValue());
 	if (extraWorkRequest != null) {
 	    if (extraWorkRequest.getSundayHours() != null && extraWorkRequest.getSundayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+		result.append(getExtraWorkMovement(assiduousness, begin, end,
 			extraWorkSundayMovementCode, extraWorkRequest.getSundayHours()));
 	    }
 	    if (extraWorkRequest.getNightVacationsDays() != null
 		    && extraWorkRequest.getNightVacationsDays() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+		result.append(getExtraWorkMovement(assiduousness, begin, end,
 			extraWorkVacationDaysMovementCode, extraWorkRequest.getNightVacationsDays()
 				+ extraWorkRequest.getNormalVacationsDays()));
 	    }
 	    if (extraWorkRequest.getSaturdayHours() != null
 		    && extraWorkRequest.getSaturdayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+		result.append(getExtraWorkMovement(assiduousness, begin, end,
 			extraWorkSaturdayMovementCode, extraWorkRequest.getSaturdayHours()));
 	    }
 	    if (extraWorkRequest.getHolidayHours() != null && extraWorkRequest.getHolidayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
+		result.append(getExtraWorkMovement(assiduousness, begin, end,
 			extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
 	    }
 

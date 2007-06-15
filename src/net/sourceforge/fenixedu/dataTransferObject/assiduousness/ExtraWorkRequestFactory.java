@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
+import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Month;
@@ -105,7 +106,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 			employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(true);
 		    }
 		}
-		getUnit().getUnitExtraWorkAmountByYear(getYear()).sumSpent(getMonthAmount());
+		getUnitExtraWorkAmountOrNew().sumSpent(getMonthAmount());
 	    }
 	} else {
 	    for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
@@ -113,9 +114,17 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 		    employeeExtraWorkRequestFactory.getExtraWorkRequest().setApproved(false);
 		}
 	    }
-	    getUnit().getUnitExtraWorkAmountByYear(getYear()).subtractSpent(getMonthAmount());
+	    getUnitExtraWorkAmountOrNew().subtractSpent(getMonthAmount());
 	}
 	return actionMessage;
+    }
+
+    private UnitExtraWorkAmount getUnitExtraWorkAmountOrNew() {
+	UnitExtraWorkAmount result = getUnit().getUnitExtraWorkAmountByYear(getYear());
+	if (result == null) {
+	    result = new UnitExtraWorkAmount(getYear(), getUnit());
+	}
+	return result;
     }
 
     public void reloadEmployeeExtraWorkRequest() {
