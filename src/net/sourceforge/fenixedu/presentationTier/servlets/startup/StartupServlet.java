@@ -48,8 +48,6 @@ public class StartupServlet extends HttpServlet {
 
         Service.init(RootDomainObject.getInstance());
 
-        Transaction.startMonitoringTransactions();
-        
         try {
             try {
                 InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils

@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 import org.apache.ojb.broker.PersistenceBroker;
 
 public abstract class Transaction extends jvstm.Transaction {
-    private static final long MONITORING_SLEEP_INTERVAL = 15 * 1000;
-    private static final long REPORT_LONG_TRANSACTION_THRESHOLD = 180 * 1000;
-
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
     private final static FenixCache cache = new FenixCache();
 
@@ -16,12 +13,12 @@ public abstract class Transaction extends jvstm.Transaction {
         DomainClassInfo.initializeClassInfos();
 
 	jvstm.Transaction.setTransactionFactory(new jvstm.TransactionFactory() {
-		public jvstm.Transaction makeTopLevelTransaction(int txNumber) {
-		    return new TopLevelTransaction(txNumber);
+		public jvstm.Transaction makeTopLevelTransaction(jvstm.ActiveTransactionsRecord record) {
+		    return new TopLevelTransaction(record);
 		}
 
-                public jvstm.Transaction makeReadOnlyTopLevelTransaction(int txNumber) {
-		    return new ReadOnlyTopLevelTransaction(txNumber);
+                public jvstm.Transaction makeReadOnlyTopLevelTransaction(jvstm.ActiveTransactionsRecord record) {
+		    return new ReadOnlyTopLevelTransaction(record);
                 }
 	    });
 
@@ -29,22 +26,20 @@ public abstract class Transaction extends jvstm.Transaction {
         int maxTx = TransactionChangeLogs.initializeTransactionSystem();
         if (maxTx >= 0) {
             System.out.println("Setting the last committed TX number to " + maxTx);
-            setCommitted(maxTx);
+            mostRecentRecord = new jvstm.ActiveTransactionsRecord(maxTx, null);
         } else {
             throw new Error("Couldn't determine the last transaction number");
         }
     }
 
+    static jvstm.ActiveTransactionsRecord getActiveRecordForNewTransaction() {
+        return mostRecentRecord.getRecordForNewTransaction();
+    }
 
     private Transaction() {
  	// this is never to be used!!!
  	super(0);
     }
-
-    public static void startMonitoringTransactions() {
-        ACTIVE_TXS.startMonitoringQueue(MONITORING_SLEEP_INTERVAL, REPORT_LONG_TRANSACTION_THRESHOLD);
-    }
-
 
     private static final ThreadLocal<Boolean> DEFAULT_READ_ONLY = new ThreadLocal<Boolean>() {
          protected Boolean initialValue() {

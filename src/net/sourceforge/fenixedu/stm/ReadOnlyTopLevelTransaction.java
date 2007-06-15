@@ -5,8 +5,8 @@ import jvstm.VBoxBody;
 
 class ReadOnlyTopLevelTransaction extends TopLevelTransaction {
 
-    ReadOnlyTopLevelTransaction(int number) {
-        super(number);
+    ReadOnlyTopLevelTransaction(jvstm.ActiveTransactionsRecord record) {
+        super(record);
     }
 
     protected void initDbChanges() {

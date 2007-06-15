@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
+import jvstm.ActiveTransactionsRecord;
 import jvstm.CommitException;
 import jvstm.VBoxBody;
 import jvstm.cps.ConsistencyCheckTransaction;
@@ -55,14 +56,23 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
-    TopLevelTransaction(int number) {
-        super(number);
+    TopLevelTransaction(ActiveTransactionsRecord record) {
+        super(record);
 
 	// open a connection to the database and set this tx number to the number that
 	// corresponds to that connection number.  The connection number should always be 
 	// greater than the current number, because the current number is obtained from
 	// Transaction.getCommitted, which is set only after the commit to the database
-	setNumber(updateFromTxLogsOnDatabase(number));
+        ActiveTransactionsRecord newRecord = updateFromTxLogsOnDatabase(record);
+        if (newRecord != record) {
+            // if a new record is returned, that means that this transaction will belong 
+            // to that new record, so we must take it off from its current record and set
+            // it properly
+            newRecord.incrementRunning();
+            this.activeTxRecord.decrementRunning();
+            this.activeTxRecord = newRecord;
+            setNumber(newRecord.transactionNumber);
+        }
         initDbChanges();
     }
 
@@ -83,13 +93,14 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         this.dbChanges = null;
     }
 
+    @Override
     public Transaction makeNestedTransaction() {
         throw new Error("Nested transactions not supported yet...");
     }
 
-    private int updateFromTxLogsOnDatabase(int currentNumber) {
+    private ActiveTransactionsRecord updateFromTxLogsOnDatabase(ActiveTransactionsRecord record) {
         try {
-            return TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker(), currentNumber);
+            return TransactionChangeLogs.updateFromTxLogsOnDatabase(getOJBBroker(), record);
         } catch (Exception sqle) {
 //            sqle.printStackTrace();
             throw new Error("Error while updating from TX_CHANGE_LOGS: Cannot proceed: " + sqle.getMessage(), sqle);
@@ -101,13 +112,14 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
                 + ", username = " + serviceInfo.username
         // + ", args = " + serviceInfo.getArgumentsAsString()
                 );
-        System.out.println("Currently executing:");
-        StackTraceElement[] txStack = getThread().getStackTrace();
-        for (int i = 0; (i < txStack.length) && (i < 5); i++) {
-            System.out.println("-----> " + txStack[i]);
-        }
+        //         System.out.println("Currently executing:");
+        //         StackTraceElement[] txStack = getThread().getStackTrace();
+        //         for (int i = 0; (i < txStack.length) && (i < 5); i++) {
+        //             System.out.println("-----> " + txStack[i]);
+        //         }
     }
 
+    @Override
     protected void finish() {
         super.finish();
         if (broker != null) {
@@ -117,6 +129,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         dbChanges = null;
     }
 
+    @Override
     protected void doCommit() {
         if (isWriteTransaction()) {
             Transaction.STATISTICS.incWrites();
@@ -129,6 +142,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         notifyAfterCommit(this);
     }
 
+    @Override
     protected boolean validateCommit() {
         boolean result = super.validateCommit();
 
@@ -143,6 +157,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         return new ReadSet(bodiesRead);
     }
 
+    @Override
     public <T> void setBoxValue(jvstm.VBox<T> vbox, T value) {
         if (dbChanges == null) {
             throw new IllegalWriteException();
@@ -151,6 +166,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         }
     }
 
+    @Override
     public <T> void setPerTxValue(jvstm.PerTxBox<T> box, T value) {
         if (dbChanges == null) {
             throw new IllegalWriteException();
@@ -164,24 +180,20 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
         if (value == null) {
             // no local value for the box
-            VBoxBody<T> body = getBodyRead(vbox);
 
-            if (body == null) {
-                body = vbox.body.getBody(number);
+            VBoxBody<T> body = vbox.body.getBody(number);
+            if (body.value == VBox.NOT_LOADED_VALUE) {
+                vbox.reload(obj, attr);
+                // after the reload, the same body should have a new value
+                // if not, then something gone wrong and its better to abort
                 if (body.value == VBox.NOT_LOADED_VALUE) {
-                    vbox.reload(obj, attr);
-                    // after the reload, the same body should have a new value
-                    // if not, then something gone wrong and its better to abort
-                    if (body.value == VBox.NOT_LOADED_VALUE) {
-                        System.out.println("Couldn't load the attribute " + attr + " for class "
-                                           + obj.getClass());
-                        throw new VersionNotAvailableException();
-                    }
+                    System.out.println("Couldn't load the attribute " + attr + " for class "
+                                       + obj.getClass());
+                    throw new VersionNotAvailableException();
                 }
-
-                bodiesRead.put(vbox, body);
             }
 
+            bodiesRead.put(vbox, body);
             value = body.value;
         }
 
@@ -217,7 +229,8 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         return ((dbChanges != null) && dbChanges.needsWrite()) || super.isWriteTransaction();
     }
 
-    protected int performValidCommit() {
+    @Override
+    protected Cons<VBoxBody> performValidCommit() {
         // in memory everything is ok, but we need to check against the db
         PersistenceBroker pb = getOJBBroker();
 
@@ -240,15 +253,14 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
                 pb.beginTransaction();
             }
             time2 = System.currentTimeMillis();
-            int txNumber = getNumber();
             try {
                 time3 = System.currentTimeMillis();
                 // the updateFromTxLogs is made with the txNumber minus 1 to ensure that the select
                 // for update will return at least a record, and, therefore, lock the record
                 // otherwise, the mysql server may allow the select for update to continue
                 // concurrently with other executing commits in other servers
-                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber - 1, true) != txNumber) {
-                    //if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
+                ActiveTransactionsRecord myRecord = this.activeTxRecord;
+                if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, myRecord, true) != myRecord) {
                     // the cache may have been updated, so perform the
                     // tx-validation again
                     time4 = System.currentTimeMillis();
@@ -266,7 +278,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
             }
 
             time6 = System.currentTimeMillis();
-            txNumber = super.performValidCommit();
+            Cons<VBoxBody> newBodies = super.performValidCommit();
             time7 = System.currentTimeMillis();
             // ensure that changes are visible to other TXs before releasing
             // lock
@@ -281,7 +293,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
                 System.exit(-1);
             }
             pb = null;
-            return txNumber;
+            return newBodies;
         } finally {
             if (pb != null) {
                 pb.abortTransaction();
@@ -306,7 +318,8 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         }
     }
 
-    protected void doCommit(int newTxNumber) {
+    @Override
+    protected Cons<VBoxBody> doCommit(int newTxNumber) {
         long time1 = System.currentTimeMillis();
         long time2 = 0;
         long time3 = 0;
@@ -326,7 +339,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         time4 = System.currentTimeMillis();
         dbChanges.cache();
         time5 = System.currentTimeMillis();
-        super.doCommit(newTxNumber);
+        Cons<VBoxBody> result = super.doCommit(newTxNumber);
         time6 = System.currentTimeMillis();
 
         if ((time6 - time1) > 500) {
@@ -338,6 +351,8 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
                                + "   ,5: " + (time5 == 0 || time6 == 0 ? "" : (time6 - time5))
                                );
         }
+
+        return result;
     }
 
 

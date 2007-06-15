@@ -14,7 +14,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+import jvstm.ActiveTransactionsRecord;
 import jvstm.VBoxBody;
+import jvstm.util.Cons;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -78,9 +81,6 @@ public class TransactionChangeLogs {
         // transaction in the current VM may need to access it
 	private Map<DomainObject,List<String>> objectAttrChanges = new HashMap<DomainObject,List<String>>();
 
-        // this field is volatile because it may be accessed by more than one thread
-        private volatile List<VBoxBody> newBodies;
-
 	AlienTransaction(int txNumber) {
 	    this.txNumber = txNumber;
 	}
@@ -96,34 +96,28 @@ public class TransactionChangeLogs {
             allAttrs.add(attrName);
         }
 
-        void commit() {
-            List<VBoxBody> newBodies = new ArrayList<VBoxBody>();
+        Cons<VBoxBody> commit() {
+            Cons<VBoxBody> newBodies = Cons.empty();
 
             for (Map.Entry<DomainObject,List<String>> entry : objectAttrChanges.entrySet()) {
                 DomainObject obj = entry.getKey();
                 List<String> allAttrs = entry.getValue();
 
                 for (String attr : allAttrs) {
-                    newBodies.add(obj.addNewVersion(attr, txNumber));
+                    VBoxBody newBody = obj.addNewVersion(attr, txNumber);
+                    // the body may be null in some cases: see the 
+                    // comment on the VBox.addNewVersion method
+                    if (newBody != null) {
+                        newBodies = newBodies.cons(newBody);
+                    }
                 }
             }
 
-            objectAttrChanges = null;  // help gc
-
-            this.newBodies = newBodies;
+            return newBodies;
         }
 
         void freeResources() {
-            // remove reference to the previous body, making it GCable
-	    for (VBoxBody body : newBodies) {
-                // the bodies may be null in some cases: see the 
-                // comment on the VBox.addNewVersion method
-                if (body != null) {
-                    body.clearPrevious();
-                }
-	    }
-	    
-            newBodies = null;  // help gc
+            objectAttrChanges = null;  // help gc
         }
     }
 
@@ -133,10 +127,8 @@ public class TransactionChangeLogs {
 
     static {
 	Transaction.addTxQueueListener(new jvstm.TxQueueListener() {
-		public void noteOldestTransaction(int previousOldest, int newOldest) {
-		    if (previousOldest != newOldest) {
-			cleanOldAlienTxs(newOldest);
-		    }
+		public void noteOldestTransaction(int newOldest) {
+                    cleanOldAlienTxs(newOldest);
 		}
 	    });
     }
@@ -148,11 +140,18 @@ public class TransactionChangeLogs {
     }
 
 
-    public static int updateFromTxLogsOnDatabase(PersistenceBroker pb, int txNumber) throws SQLException,LookupException {
-	return updateFromTxLogsOnDatabase(pb, txNumber, false);
+    public static ActiveTransactionsRecord updateFromTxLogsOnDatabase(PersistenceBroker pb, 
+                                                                      ActiveTransactionsRecord record) 
+            throws SQLException,LookupException {
+
+	return updateFromTxLogsOnDatabase(pb, record, false);
     }
 
-    public static int updateFromTxLogsOnDatabase(PersistenceBroker pb, int txNumber, boolean forUpdate) throws SQLException,LookupException {
+    public static ActiveTransactionsRecord updateFromTxLogsOnDatabase(PersistenceBroker pb, 
+                                                                      ActiveTransactionsRecord record, 
+                                                                      boolean forUpdate) 
+            throws SQLException,LookupException {
+
 	Connection conn = pb.serviceConnectionManager().getConnection();
 
 	// ensure that the connection is up-to-date
@@ -161,22 +160,24 @@ public class TransactionChangeLogs {
 	Statement stmt = conn.createStatement();
         
 	// read tx logs
-	int maxTxNumber = txNumber;
+	int maxTxNumber = record.transactionNumber;
 
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
-					 + maxTxNumber 
+					 + (forUpdate ? (maxTxNumber - 1) : maxTxNumber)
 					 + " ORDER BY TX_NUMBER"
 					 + (forUpdate ? " FOR UPDATE" : ""));
 
         // if there are any results to be processed, process them
 	if (rs.next()) {
-            maxTxNumber = processAlienTransaction(pb, rs);
-	}
-
-	return maxTxNumber;
+            return processAlienTransaction(pb, rs, record);
+	} else {
+            return record;
+        }
     }
 
-    private static int processAlienTransaction(PersistenceBroker pb, ResultSet rs) throws SQLException {
+    private static ActiveTransactionsRecord processAlienTransaction(PersistenceBroker pb, ResultSet rs, ActiveTransactionsRecord record) 
+            throws SQLException {
+
         // Acquire an exclusion lock to process the result set.
         // Even though the processing of alien transactions could be made concurrently,
         // there is no point in doing so, as they would be repeating their work
@@ -192,7 +193,7 @@ public class TransactionChangeLogs {
             // come into this method, blocking in the lock.
             // Likewise for a commit of a write transaction.
             
-            int currentCommittedNumber = Transaction.getCommitted();
+            int currentCommittedNumber = Transaction.getMostRecentCommitedNumber();
 
             int txNum = rs.getInt(4);
 
@@ -202,8 +203,10 @@ public class TransactionChangeLogs {
             }
 
             if (txNum <= currentCommittedNumber) {
-                // the records ended, so simply get out of here, with the higher number we got
-                return txNum;
+                // the records ended, so simply get out of here, with
+                // the record corresponding to the higher number that
+                // we got
+                return findActiveRecordForNumber(record, txNum);
             }
             
             // now, it's time to process the new changeLog records
@@ -225,12 +228,13 @@ public class TransactionChangeLogs {
 
                 if (nextTxNum != txNum) {
                     // finished the records for an alien transaction, so "commit" it
-                    alienTx.commit();
+                    Cons<VBoxBody> newBodies = alienTx.commit();
 
                     // add it to the queue of alienTxs to be GCed later
                     ALIEN_TRANSACTIONS.offer(alienTx);
 
-                    Transaction.setCommitted(txNum);
+                    ActiveTransactionsRecord newRecord = new ActiveTransactionsRecord(txNum, newBodies);
+                    Transaction.setMostRecentActiveRecord(newRecord);
 
                     if (nextTxNum != -1) {
                         // there are more to process, create a new alien transaction
@@ -243,12 +247,20 @@ public class TransactionChangeLogs {
                 }
             }
 
-            return txNum;
+            return findActiveRecordForNumber(record, txNum);
         } finally {
             PROCESS_ALIEN_TX_LOCK.unlock();
         }
     }
     
+    private static ActiveTransactionsRecord findActiveRecordForNumber(ActiveTransactionsRecord rec, int number) {
+        while (rec.transactionNumber < number) {
+            rec = rec.getNext();
+        }
+
+        return rec;
+    }
+
 
     public static int initializeTransactionSystem() {
 	// find the last committed transaction
@@ -313,7 +325,7 @@ public class TransactionChangeLogs {
 	}
 	
 	private void initializeServerRecord() {
-	    int currentTxNumber = Transaction.getCommitted();
+	    int currentTxNumber = Transaction.getMostRecentCommitedNumber();
 
 	    PersistenceBroker broker = null;
 	    
@@ -343,7 +355,7 @@ public class TransactionChangeLogs {
 	}
 	
 	private void updateServerRecord() {
-	    int currentTxNumber = Transaction.getCommitted();
+	    int currentTxNumber = Transaction.getMostRecentCommitedNumber();
 
 	    PersistenceBroker broker = null;
 	    
