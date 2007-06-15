@@ -2098,5 +2098,21 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
+	public StudentCurricularPlan getLastStudentDegreeCurricularPlansByDegree(
+			Degree degree) {
+		
+		final SortedSet<StudentCurricularPlan> result = new TreeSet<StudentCurricularPlan>(StudentCurricularPlan.DATE_COMPARATOR);
+		for (DegreeCurricularPlan degreeCurricularPlan : this
+				.getDegreeCurricularPlans()) {
+			if (degreeCurricularPlan.getDegree() == degree ) {
+				result.add(this.getStudentCurricularPlan(degreeCurricularPlan));
+			}
+		}
+
+		return result.last();
+				
+	}
+	
+
 
 }
