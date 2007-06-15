@@ -625,8 +625,8 @@ public class Assiduousness extends Assiduousness_Base {
 
     public ExtraWorkRequest getExtraWorkRequest(YearMonthDay begin) {
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
-	    if (request.getHoursDoneInPartialDate().get(DateTimeFieldType.year()) == begin.getYear()) {
-		if (begin.getMonthOfYear() == request.getHoursDoneInPartialDate().get(
+	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == begin.getYear()) {
+		if (begin.getMonthOfYear() == request.getPartialPayingDate().get(
 			DateTimeFieldType.monthOfYear())
 			&& request.getApproved())
 		    return request;
