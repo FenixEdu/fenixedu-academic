@@ -57,1021 +57,1036 @@ import org.joda.time.YearMonthDay;
 public class Unit extends Unit_Base {
 
     static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(
-            "resources.ApplicationResources", new Locale("pt"));
+	    "resources.ApplicationResources", new Locale("pt"));
 
     protected Unit() {
-        super();
+	super();
     }
 
     protected void init(String name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
-            YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces) {
+	    YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces) {
 
-        setName(name);
-        setAcronym(acronym);
-        setCostCenterCode(costCenterCode);
-        setBeginDateYearMonthDay(beginDate);
-        setEndDateYearMonthDay(endDate);
-        setClassification(classification);
-        setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
-        updateDefaultWebAddress(webAddress);
+	setName(name);
+	setAcronym(acronym);
+	setCostCenterCode(costCenterCode);
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
+	setClassification(classification);
+	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
+	updateDefaultWebAddress(webAddress);
     }
 
     @Override
     public void setName(String name) {
-        super.setName(name);
-        UnitName unitName = getUnitName();
-        if (unitName == null) {
-            unitName = new UnitName(this);
-        }
-        unitName.setName(name);
+	super.setName(name);
+	UnitName unitName = getUnitName();
+	if (unitName == null) {
+	    unitName = new UnitName(this);
+	}
+	unitName.setName(name);
     }
-    
-    
+
     public void edit(String name, String acronym) {
 	setName(name);
 	setAcronym(acronym);
     }
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-            YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, AdministrativeOffice administrativeOffice,
-            Boolean canBeResponsibleOfSpaces) {
+	    YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice,
+	    Boolean canBeResponsibleOfSpaces) {
 
-        init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
-                canBeResponsibleOfSpaces);
+	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces);
     }
 
     @Override
     public void setCanBeResponsibleOfSpaces(Boolean canBeResponsibleOfSpaces) {
-        super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces
-                : Boolean.FALSE);
+	super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces
+		: Boolean.FALSE);
     }
 
     @Override
     public void setCostCenterCode(Integer costCenterCode) {
-        Unit unit = readByCostCenterCode(costCenterCode);
-        if (unit != null && !unit.equals(this)) {
-            throw new DomainException("error.costCenter.alreadyExists");
-        }
-        super.setCostCenterCode(costCenterCode);
+	Unit unit = readByCostCenterCode(costCenterCode);
+	if (unit != null && !unit.equals(this)) {
+	    throw new DomainException("error.costCenter.alreadyExists");
+	}
+	super.setCostCenterCode(costCenterCode);
     }
 
     @Override
     public void setBeginDateYearMonthDay(YearMonthDay beginDateYearMonthDay) {
-        if (beginDateYearMonthDay == null) {
-            throw new DomainException("error.unit.no.beginDate");
-        }
-        super.setBeginDateYearMonthDay(beginDateYearMonthDay);
+	if (beginDateYearMonthDay == null) {
+	    throw new DomainException("error.unit.no.beginDate");
+	}
+	super.setBeginDateYearMonthDay(beginDateYearMonthDay);
     }
 
     @Override
     public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
-        if (getBeginDateYearMonthDay() == null
-                || (endDateYearMonthDay != null && endDateYearMonthDay
-                        .isBefore(getBeginDateYearMonthDay()))) {
-            throw new DomainException("error.unit.endDateBeforeBeginDate");
-        }
-        super.setEndDateYearMonthDay(endDateYearMonthDay);
+	if (getBeginDateYearMonthDay() == null
+		|| (endDateYearMonthDay != null && endDateYearMonthDay
+			.isBefore(getBeginDateYearMonthDay()))) {
+	    throw new DomainException("error.unit.endDateBeforeBeginDate");
+	}
+	super.setEndDateYearMonthDay(endDateYearMonthDay);
     }
 
     public void delete() {
-        if (!canBeDeleted()) {
-            throw new DomainException("error.unit.cannot.be.deleted");
-        }
-        if (hasAnyParentUnits()) {
-            getParents().get(0).delete();
-        }
-        if (hasSite()) {
-            getSite().delete();
-        }
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.unit.cannot.be.deleted");
+	}
+	if (hasAnyParentUnits()) {
+	    getParents().get(0).delete();
+	}
+	if (hasSite()) {
+	    getSite().delete();
+	}
 
-        getUnitName().delete();
-        super.delete();
+	getUnitName().delete();
+	super.delete();
     }
 
     private boolean canBeDeleted() {
-        return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
-                && !hasAnyChilds() && !hasAnyFunctions() && !hasAnySpaceResponsibility()
-                && !hasAnyMaterials() && !hasAnyVigilantGroups()
-                && !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
-                && !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
-                && !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
-                && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
-                && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-                && !hasAnyParticipations() && !hasAnyBoards()
-                && (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
-                && !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
+	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
+		&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnySpaceResponsibility()
+		&& !hasAnyMaterials() && !hasAnyVigilantGroups()
+		&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
+		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
+		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
+		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
+		&& !hasAnyParticipations() && !hasAnyBoards()
+		&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
+		&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
     }
 
     public boolean isInternal() {
-        if (this.equals(UnitUtils.readInstitutionUnit())) {
-            return true;
-        }
+	if (this.equals(UnitUtils.readInstitutionUnit())) {
+	    return true;
+	}
 
-        for (final Unit parentUnit : getParentUnits()) {
-            if (parentUnit.isInternal()) {
-                return true;
-            }
-        }
+	for (final Unit parentUnit : getParentUnits()) {
+	    if (parentUnit.isInternal()) {
+		return true;
+	    }
+	}
 
-        return false;
+	return false;
     }
 
     public boolean isNoOfficialExternal() {
-        if (this.equals(UnitUtils.readExternalInstitutionUnit())) {
-            return true;
-        }
-        for (final Unit parentUnit : getParentUnits()) {
-            if (parentUnit.isNoOfficialExternal()) {
-                return true;
-            }
-        }
-        return false;
+	if (this.equals(UnitUtils.readExternalInstitutionUnit())) {
+	    return true;
+	}
+	for (final Unit parentUnit : getParentUnits()) {
+	    if (parentUnit.isNoOfficialExternal()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public boolean isOfficialExternal() {
-        return !isInternal() && !isNoOfficialExternal();
+	return !isInternal() && !isNoOfficialExternal();
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-        return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
-                .getEndDateYearMonthDay().isBefore(currentDate)));
+	return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
+		.getEndDateYearMonthDay().isBefore(currentDate)));
     }
 
     @Override
     public boolean isUnit() {
-        return true;
+	return true;
     }
 
     public List<Unit> getTopUnits() {
-        Unit unit = this;
-        List<Unit> allTopUnits = new ArrayList<Unit>();
-        if (unit.hasAnyParentUnits()) {
-            for (Unit parentUnit : this.getParentUnits()) {
-                if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
-                    allTopUnits.add(parentUnit);
-                } else if (parentUnit.hasAnyParentUnits()) {
-                    for (Unit parentUnit2 : parentUnit.getTopUnits()) {
-                        if (!allTopUnits.contains(parentUnit2)) {
-                            allTopUnits.add(parentUnit2);
-                        }
-                    }
-                }
-            }
-        }
-        return allTopUnits;
+	Unit unit = this;
+	List<Unit> allTopUnits = new ArrayList<Unit>();
+	if (unit.hasAnyParentUnits()) {
+	    for (Unit parentUnit : this.getParentUnits()) {
+		if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
+		    allTopUnits.add(parentUnit);
+		} else if (parentUnit.hasAnyParentUnits()) {
+		    for (Unit parentUnit2 : parentUnit.getTopUnits()) {
+			if (!allTopUnits.contains(parentUnit2)) {
+			    allTopUnits.add(parentUnit2);
+			}
+		    }
+		}
+	    }
+	}
+	return allTopUnits;
     }
 
     public Department getDepartment() {
-        return null;
+	return null;
     }
 
     public Degree getDegree() {
-        return null;
+	return null;
     }
 
     public DepartmentUnit getDepartmentUnit() {
-        if (this.isDepartmentUnit()) {
-            return (DepartmentUnit) this;
-        } else {
-            for (Unit parentUnit : getParentUnits()) {
-                if (parentUnit.isDepartmentUnit()) {
-                    return (DepartmentUnit) parentUnit;
-                } else if (parentUnit.hasAnyParentUnits()) {
-                    Unit departmentUnit = parentUnit.getDepartmentUnit();
-                    if (departmentUnit == null) {
-                        continue;
-                    } else {
-                        return (DepartmentUnit) departmentUnit;
-                    }
-                }
-            }
-        }
-        return null;
+	if (this.isDepartmentUnit()) {
+	    return (DepartmentUnit) this;
+	} else {
+	    for (Unit parentUnit : getParentUnits()) {
+		if (parentUnit.isDepartmentUnit()) {
+		    return (DepartmentUnit) parentUnit;
+		} else if (parentUnit.hasAnyParentUnits()) {
+		    Unit departmentUnit = parentUnit.getDepartmentUnit();
+		    if (departmentUnit == null) {
+			continue;
+		    } else {
+			return (DepartmentUnit) departmentUnit;
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
-        return getSubUnitsByState(currentDate, false);
+	return getSubUnitsByState(currentDate, false);
     }
 
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
-        return getSubUnitsByState(currentDate, true);
+	return getSubUnitsByState(currentDate, true);
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate, boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits()) {
-            if (subUnit.isActive(currentDate) == state) {
-                allSubUnits.add(subUnit);
-            }
-        }
-        return allSubUnits;
+	List<Unit> allSubUnits = new ArrayList<Unit>();
+	for (Unit subUnit : this.getSubUnits()) {
+	    if (subUnit.isActive(currentDate) == state) {
+		allSubUnits.add(subUnit);
+	    }
+	}
+	return allSubUnits;
     }
 
     public List<Unit> getInactiveParentUnits(YearMonthDay currentDate) {
-        return getParentUnitsByState(currentDate, false);
+	return getParentUnitsByState(currentDate, false);
     }
 
     public List<Unit> getActiveParentUnits(YearMonthDay currentDate) {
-        return getParentUnitsByState(currentDate, true);
+	return getParentUnitsByState(currentDate, true);
     }
 
     private List<Unit> getParentUnitsByState(YearMonthDay currentDate, boolean state) {
-        List<Unit> allParentUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getParentUnits()) {
-            if (subUnit.isActive(currentDate) == state) {
-                allParentUnits.add(subUnit);
-            }
-        }
-        return allParentUnits;
+	List<Unit> allParentUnits = new ArrayList<Unit>();
+	for (Unit subUnit : this.getParentUnits()) {
+	    if (subUnit.isActive(currentDate) == state) {
+		allParentUnits.add(subUnit);
+	    }
+	}
+	return allParentUnits;
     }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate,
-            AccountabilityTypeEnum accountabilityTypeEnum) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
+	return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
     }
 
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate,
-            AccountabilityTypeEnum accountabilityTypeEnum) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
+	return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
-            AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            if (subUnit.isActive(currentDate) == state) {
-                allSubUnits.add(subUnit);
-            }
-        }
-        return allSubUnits;
+	    AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
+	List<Unit> allSubUnits = new ArrayList<Unit>();
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+	    if (subUnit.isActive(currentDate) == state) {
+		allSubUnits.add(subUnit);
+	    }
+	}
+	return allSubUnits;
     }
 
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate,
-            List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
+	    List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
     }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate,
-            List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
+	    List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate,
-            List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
-            if (subUnit.isActive(currentDate) == state) {
-                allSubUnits.add(subUnit);
-            }
-        }
-        return allSubUnits;
+	    List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
+	List<Unit> allSubUnits = new ArrayList<Unit>();
+	for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
+	    if (subUnit.isActive(currentDate) == state) {
+		allSubUnits.add(subUnit);
+	    }
+	}
+	return allSubUnits;
     }
 
     public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
-        allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
-        for (Unit subUnit : getParentUnits()) {
-            allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allInactiveParentUnits);
+	Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
+	allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
+	for (Unit subUnit : getParentUnits()) {
+	    allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allInactiveParentUnits);
     }
 
     public List<Unit> getAllActiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allActiveParentUnits = new HashSet<Unit>();
-        allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
-        for (Unit subUnit : getParentUnits()) {
-            allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allActiveParentUnits);
+	Set<Unit> allActiveParentUnits = new HashSet<Unit>();
+	allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
+	for (Unit subUnit : getParentUnits()) {
+	    allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allActiveParentUnits);
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate));
-        for (Unit subUnit : getSubUnits()) {
-            allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allInactiveSubUnits);
+	Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
+	allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate));
+	for (Unit subUnit : getSubUnits()) {
+	    allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
-        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-        allActiveSubUnits.addAll(getActiveSubUnits(currentDate));
-        for (Unit subUnit : getSubUnits()) {
-            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allActiveSubUnits);
+	Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+	allActiveSubUnits.addAll(getActiveSubUnits(currentDate));
+	for (Unit subUnit : getSubUnits()) {
+	    allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allActiveSubUnits);
     }
 
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate,
-            AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-        allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allActiveSubUnits);
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
+	Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+	allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+	    allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allActiveSubUnits);
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate,
-            AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allInactiveSubUnits);
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
+	Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
+	allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
+	for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+	    allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
+	}
+	return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
     public Collection<Unit> getAllSubUnits() {
-        Set<Unit> allSubUnits = new HashSet<Unit>();
-        Collection<Unit> subUnits = getSubUnits();
-        allSubUnits.addAll(subUnits);
-        for (Unit subUnit : subUnits) {
-            allSubUnits.addAll(subUnit.getAllSubUnits());
-        }
-        return allSubUnits;
+	Set<Unit> allSubUnits = new HashSet<Unit>();
+	Collection<Unit> subUnits = getSubUnits();
+	allSubUnits.addAll(subUnits);
+	for (Unit subUnit : subUnits) {
+	    allSubUnits.addAll(subUnit.getAllSubUnits());
+	}
+	return allSubUnits;
     }
 
     public Collection<Unit> getAllParentUnits() {
-        Set<Unit> allParentUnits = new HashSet<Unit>();
-        Collection<Unit> parentUnits = getSubUnits();
-        allParentUnits.addAll(parentUnits);
-        for (Unit subUnit : parentUnits) {
-            allParentUnits.addAll(subUnit.getAllParentUnits());
-        }
-        return allParentUnits;
+	Set<Unit> allParentUnits = new HashSet<Unit>();
+	Collection<Unit> parentUnits = getSubUnits();
+	allParentUnits.addAll(parentUnits);
+	for (Unit subUnit : parentUnits) {
+	    allParentUnits.addAll(subUnit.getAllParentUnits());
+	}
+	return allParentUnits;
     }
 
     public Collection<ExternalContract> getExternalPersons() {
-        return (Collection<ExternalContract>) getChildAccountabilities(
-                AccountabilityTypeEnum.WORKING_CONTRACT, ExternalContract.class);
+	return (Collection<ExternalContract>) getChildAccountabilities(
+		AccountabilityTypeEnum.WORKING_CONTRACT, ExternalContract.class);
     }
 
     public List<Contract> getWorkingContracts() {
-        List<Contract> contracts = new ArrayList<Contract>();
-        contracts.addAll(getEmployeeContractsByType(AccountabilityTypeEnum.WORKING_CONTRACT));
-        return contracts;
+	List<Contract> contracts = new ArrayList<Contract>();
+	contracts.addAll(getEmployeeContractsByType(AccountabilityTypeEnum.WORKING_CONTRACT));
+	return contracts;
     }
 
     private Collection<Contract> getEmployeeContractsByType(AccountabilityTypeEnum contractType) {
-        return (Collection<Contract>) getChildAccountabilities(contractType, EmployeeContract.class);
+	return (Collection<Contract>) getChildAccountabilities(contractType, EmployeeContract.class);
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
-        List<Contract> contracts = new ArrayList<Contract>();
-        for (Contract contract : getWorkingContracts()) {
-            if (contract.belongsToPeriod(begin, end)) {
-                contracts.add(contract);
-            }
-        }
-        return contracts;
+	List<Contract> contracts = new ArrayList<Contract>();
+	for (Contract contract : getWorkingContracts()) {
+	    if (contract.belongsToPeriod(begin, end)) {
+		contracts.add(contract);
+	    }
+	}
+	return contracts;
     }
 
     public List<Teacher> getAllTeachers() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllWorkingEmployees();
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations().isEmpty()) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
+	List<Teacher> teachers = new ArrayList<Teacher>();
+	List<Employee> employees = getAllWorkingEmployees();
+	for (Employee employee : employees) {
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations().isEmpty()) {
+		teachers.add(teacher);
+	    }
+	}
+	return teachers;
     }
 
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllWorkingEmployees(begin, end);
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
+	List<Teacher> teachers = new ArrayList<Teacher>();
+	List<Employee> employees = getAllWorkingEmployees(begin, end);
+	for (Employee employee : employees) {
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null
+		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
+		teachers.add(teacher);
+	    }
+	}
+	return teachers;
     }
 
     public List<Teacher> getAllCurrentTeachers() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = getAllCurrentActiveWorkingEmployees();
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
+	List<Teacher> teachers = new ArrayList<Teacher>();
+	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
+	for (Employee employee : employees) {
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
+		teachers.add(teacher);
+	    }
+	}
+	return teachers;
     }
 
     public List<Employee> getAllCurrentNonTeacherEmployees() {
-        List<Employee> employees = getAllCurrentActiveWorkingEmployees();
-        for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
-            Employee employee = iter.next();
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
-                iter.remove();
-            }
-        }
-        return employees;
+	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
+	for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
+	    Employee employee = iter.next();
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
+		iter.remove();
+	    }
+	}
+	return employees;
     }
 
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
-        for (Employee employee : getAllWorkingEmployees(begin, end)) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
-                return teacher;
-            }
-        }
-        return null;
+	for (Employee employee : getAllWorkingEmployees(begin, end)) {
+	    Teacher teacher = employee.getPerson().getTeacher();
+	    if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
+		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
+		return teacher;
+	    }
+	}
+	return null;
     }
 
     public List<Employee> getAllWorkingEmployees() {
-        Set<Employee> employees = new HashSet<Employee>();
-        for (Contract contract : getWorkingContracts()) {
-            employees.add(contract.getEmployee());
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllWorkingEmployees());
-        }
-        return new ArrayList<Employee>(employees);
+	Set<Employee> employees = new HashSet<Employee>();
+	for (Contract contract : getWorkingContracts()) {
+	    employees.add(contract.getEmployee());
+	}
+	for (Unit subUnit : getSubUnits()) {
+	    employees.addAll(subUnit.getAllWorkingEmployees());
+	}
+	return new ArrayList<Employee>(employees);
     }
 
     public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-        Set<Employee> employees = new HashSet<Employee>();
-        for (Contract contract : getWorkingContracts(begin, end)) {
-            employees.add(contract.getEmployee());
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllWorkingEmployees(begin, end));
-        }
-        return new ArrayList<Employee>(employees);
+	Set<Employee> employees = new HashSet<Employee>();
+	for (Contract contract : getWorkingContracts(begin, end)) {
+	    employees.add(contract.getEmployee());
+	}
+	for (Unit subUnit : getSubUnits()) {
+	    employees.addAll(subUnit.getAllWorkingEmployees(begin, end));
+	}
+	return new ArrayList<Employee>(employees);
     }
 
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
-        Set<Employee> employees = new HashSet<Employee>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Contract contract : getWorkingContracts()) {
-            Employee employee = contract.getEmployee();
-            if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
-                employees.add(employee);
-            }
-        }
-        for (Unit subUnit : getSubUnits()) {
-            employees.addAll(subUnit.getAllCurrentActiveWorkingEmployees());
-        }
-        return new ArrayList<Employee>(employees);
+	Set<Employee> employees = new HashSet<Employee>();
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Contract contract : getWorkingContracts()) {
+	    Employee employee = contract.getEmployee();
+	    if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
+		employees.add(employee);
+	    }
+	}
+	for (Unit subUnit : getSubUnits()) {
+	    employees.addAll(subUnit.getAllCurrentActiveWorkingEmployees());
+	}
+	return new ArrayList<Employee>(employees);
     }
 
     public Collection<Unit> getParentUnits() {
-        return (Collection<Unit>) getParentParties(Unit.class);
+	return (Collection<Unit>) getParentParties(Unit.class);
     }
 
     public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-        return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
     }
 
     public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
     }
 
     public Collection<Unit> getSubUnits() {
-        return (Collection<Unit>) getChildParties(Unit.class);
+	return (Collection<Unit>) getChildParties(Unit.class);
     }
 
     public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-        return (Collection<Unit>) getChildParties(accountabilityTypeEnum, Unit.class);
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnum, Unit.class);
     }
 
     public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return (Collection<Unit>) getChildParties(accountabilityTypeEnums, Unit.class);
+	return (Collection<Unit>) getChildParties(accountabilityTypeEnums, Unit.class);
     }
 
     public Collection<Unit> getSubUnits(final PartyTypeEnum type) {
-        return (Collection<Unit>) getChildParties(type, Unit.class);
+	return (Collection<Unit>) getChildParties(type, Unit.class);
     }
 
     public boolean hasAnyParentUnits() {
-        return !getParentUnits().isEmpty();
+	return !getParentUnits().isEmpty();
     }
 
     public boolean hasAnySubUnits() {
-        return !getSubUnits().isEmpty();
+	return !getSubUnits().isEmpty();
     }
 
     public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
-        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
-                Unit.class);
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		Unit.class);
     }
 
     public int getUnitDepth() {
-        int depth = 0;
+	int depth = 0;
 
-        for (Unit unit : getParentUnits()) {
-            depth = Math.max(depth, 1 + unit.getUnitDepth());
-        }
+	for (Unit unit : getParentUnits()) {
+	    depth = Math.max(depth, 1 + unit.getUnitDepth());
+	}
 
-        return depth;
+	return depth;
     }
 
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
-        if (this.equals(parentUnit)) {
-            throw new DomainException("error.unit.equals.parentUnit");
-        }
-        if (getParentUnits(accountabilityType.getType()).contains(parentUnit)) {
-            throw new DomainException("error.unit.parentUnit.is.already.parentUnit");
-        }
+	if (this.equals(parentUnit)) {
+	    throw new DomainException("error.unit.equals.parentUnit");
+	}
+	if (getParentUnits(accountabilityType.getType()).contains(parentUnit)) {
+	    throw new DomainException("error.unit.parentUnit.is.already.parentUnit");
+	}
 
-        YearMonthDay currentDate = new YearMonthDay();
-        List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate)
-                : getAllInactiveSubUnits(currentDate);
-        if (subUnits.contains(parentUnit)) {
-            throw new DomainException("error.unit.parentUnit.is.already.subUnit");
-        }
+	YearMonthDay currentDate = new YearMonthDay();
+	List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate)
+		: getAllInactiveSubUnits(currentDate);
+	if (subUnits.contains(parentUnit)) {
+	    throw new DomainException("error.unit.parentUnit.is.already.subUnit");
+	}
 
-        return new Accountability(parentUnit, this, accountabilityType);
+	return new Accountability(parentUnit, this, accountabilityType);
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-        for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
-            if (parentUnit.isAdministrativeOfficeUnit()) {
-                return (parentUnit).getAdministrativeOffice();
-            }
-        }
-        return null;
+	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
+	    if (parentUnit.isAdministrativeOfficeUnit()) {
+		return (parentUnit).getAdministrativeOffice();
+	    }
+	}
+	return null;
     }
 
     public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
-            if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
-                return nonAffiliatedTeacher;
-            }
-        }
-        return null;
+	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
+	    if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
+		return nonAffiliatedTeacher;
+	    }
+	}
+	return null;
     }
 
     public Unit getChildUnitByAcronym(String acronym) {
-        for (Unit subUnit : getSubUnits()) {
-            if ((subUnit.getAcronym() != null) && (subUnit.getAcronym().equals(acronym))) {
-                return subUnit;
-            }
-        }
-        return null;
+	for (Unit subUnit : getSubUnits()) {
+	    if ((subUnit.getAcronym() != null) && (subUnit.getAcronym().equals(acronym))) {
+		return subUnit;
+	    }
+	}
+	return null;
     }
 
     public static List<Unit> readAllUnits() {
-        final List<Unit> allUnits = new ArrayList<Unit>();
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
-            if (party.isUnit()) {
-                allUnits.add((Unit) party);
-            }
-        }
-        return allUnits;
+	final List<Unit> allUnits = new ArrayList<Unit>();
+	for (final Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isUnit()) {
+		allUnits.add((Unit) party);
+	    }
+	}
+	return allUnits;
     }
 
     /**
      * This method should be used only for Unit types where acronyms are unique.
      */
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
-        if (acronym != null
-                && !acronym.equals("")
-                && partyTypeEnum != null
-                && (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
-                        || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-                        || partyTypeEnum.equals(PartyTypeEnum.PLANET)
-                        || partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
-                        || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-                        || partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) || partyTypeEnum
-                        .equals(PartyTypeEnum.SCHOOL))) {
+	if (acronym != null
+		&& !acronym.equals("")
+		&& partyTypeEnum != null
+		&& (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
+			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
+			|| partyTypeEnum.equals(PartyTypeEnum.PLANET)
+			|| partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
+			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
+			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) || partyTypeEnum
+			.equals(PartyTypeEnum.SCHOOL))) {
 
-            for (Unit unit : readAllUnits()) {
-                if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
-                        && unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
-                    return unit;
-                }
-            }
-        }
-        return null;
+	    for (Unit unit : readAllUnits()) {
+		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
+			&& unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
+		    return unit;
+		}
+	    }
+	}
+	return null;
     }
 
     public static List<Unit> readUnitsByAcronym(String acronym) {
-        List<Unit> result = new ArrayList<Unit>();
-        if (!StringUtils.isEmpty(acronym.trim())) {
-            for (Party party : RootDomainObject.getInstance().getPartys()) {
-                if (party.isUnit() && ((Unit) party).getAcronym() != null
-                        && ((Unit) party).getAcronym().equals(acronym)) {
-                    result.add((Unit) party);
-                }
-            }
-        }
-        return result;
+	List<Unit> result = new ArrayList<Unit>();
+	if (!StringUtils.isEmpty(acronym.trim())) {
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+		if (party.isUnit() && ((Unit) party).getAcronym() != null
+			&& ((Unit) party).getAcronym().equals(acronym)) {
+		    result.add((Unit) party);
+		}
+	    }
+	}
+	return result;
     }
 
     public static Unit readByCostCenterCode(Integer costCenterCode) {
-        if (costCenterCode != null) {
-            for (Party party : RootDomainObject.getInstance().getPartys()) {
-                if (party.isUnit() && ((Unit) party).getCostCenterCode() != null
-                        && ((Unit) party).getCostCenterCode().equals(costCenterCode)) {
-                    return (Unit) party;
-                }
-            }
-        }
-        return null;
+	if (costCenterCode != null) {
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+		if (party.isUnit() && ((Unit) party).getCostCenterCode() != null
+			&& ((Unit) party).getCostCenterCode().equals(costCenterCode)) {
+		    return (Unit) party;
+		}
+	    }
+	}
+	return null;
     }
 
     public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
-        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
-                Unit.class);
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+		Unit.class);
     }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
-            YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-            AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces) {
+	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces) {
 
-        Unit unit = new Unit();
-        unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-                canBeResponsibleOfSpaces);
-        if (parentUnit != null && accountabilityType != null) {
-            unit.addParentUnit(parentUnit, accountabilityType);
-        }
-        return unit;
+	Unit unit = new Unit();
+	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces);
+	if (parentUnit != null && accountabilityType != null) {
+	    unit.addParentUnit(parentUnit, accountabilityType);
+	}
+	return unit;
     }
 
     public static Unit createNewNoOfficialExternalInstitution(String unitName) {
-        return createNewNoOfficialExternalInstitution(unitName, null);
+	return createNewNoOfficialExternalInstitution(unitName, null);
     }
 
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
-        Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-        Unit noOfficialExternalInstitutionUnit = new Unit();
-        noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null,
-                null, null);
-        noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
-                .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-        noOfficialExternalInstitutionUnit.setNationality(country);
-        return noOfficialExternalInstitutionUnit;
+	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+	Unit noOfficialExternalInstitutionUnit = new Unit();
+	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null,
+		null, null);
+	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
+		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	noOfficialExternalInstitutionUnit.setNationality(country);
+	return noOfficialExternalInstitutionUnit;
     }
 
     public static Party createContributor(final String contributorName, final String contributorNumber,
-            final PhysicalAddressData data) {
+	    final PhysicalAddressData data) {
 
-        if (Party.readByContributorNumber(contributorNumber) != null) {
-            throw new DomainException(
-                    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
-        }
+	if (Party.readByContributorNumber(contributorNumber) != null) {
+	    throw new DomainException(
+		    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
+	}
 
-        final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
-        contributor.setSocialSecurityNumber(contributorNumber);
-        contributor.createDefaultPhysicalAddress(data);
+	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
+	contributor.setSocialSecurityNumber(contributorNumber);
+	contributor.createDefaultPhysicalAddress(data);
 
-        return contributor;
+	return contributor;
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
-        List<VigilantGroup> vigilantGroups = this.getVigilantGroups();
-        List<VigilantGroup> vigilantGroupsInExecutionYear = new ArrayList<VigilantGroup>();
+	List<VigilantGroup> vigilantGroups = this.getVigilantGroups();
+	List<VigilantGroup> vigilantGroupsInExecutionYear = new ArrayList<VigilantGroup>();
 
-        for (VigilantGroup group : vigilantGroups) {
-            if (group.getExecutionYear().equals(executionYear)) {
-                vigilantGroupsInExecutionYear.add(group);
-            }
-        }
+	for (VigilantGroup group : vigilantGroups) {
+	    if (group.getExecutionYear().equals(executionYear)) {
+		vigilantGroupsInExecutionYear.add(group);
+	    }
+	}
 
-        return vigilantGroupsInExecutionYear;
+	return vigilantGroupsInExecutionYear;
     }
 
     public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {
-        List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
-        for (ExamCoordinator coordinator : this.getExamCoordinators()) {
-            if (coordinator.getExecutionYear().equals(executionYear)) {
-                examCoordinators.add(coordinator);
-            }
-        }
-        return examCoordinators;
+	List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
+	for (ExamCoordinator coordinator : this.getExamCoordinators()) {
+	    if (coordinator.getExecutionYear().equals(executionYear)) {
+		examCoordinators.add(coordinator);
+	    }
+	}
+	return examCoordinators;
     }
 
     @Override
     public ParkingPartyClassification getPartyClassification() {
-        return ParkingPartyClassification.UNIT;
+	return ParkingPartyClassification.UNIT;
     }
 
     public static Unit findFirstExternalUnitByName(final String unitName) {
-        if (unitName == null || unitName.length() == 0) {
-            return null;
-        }
-        for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit()
-                .getSubUnits()) {
-            if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
-                final Unit unit = (Unit) party;
-                return unit;
-            }
-        }
-        return null;
+	if (unitName == null || unitName.length() == 0) {
+	    return null;
+	}
+	for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit()
+		.getSubUnits()) {
+	    if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
+		final Unit unit = (Unit) party;
+		return unit;
+	    }
+	}
+	return null;
     }
 
     public static Unit findFirstUnitByName(final String unitName) {
-        if (StringUtils.isEmpty(unitName)) {
-            return null;
-        }
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
-            if (party.isUnit() && unitName.equalsIgnoreCase(party.getName())) {
-                final Unit unit = (Unit) party;
-                return unit;
-            }
-        }
-        return null;
+	if (StringUtils.isEmpty(unitName)) {
+	    return null;
+	}
+	for (final Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isUnit() && unitName.equalsIgnoreCase(party.getName())) {
+		final Unit unit = (Unit) party;
+		return unit;
+	    }
+	}
+	return null;
     }
 
     public String getNameWithAcronym() {
-        String name = super.getName().trim();
-        return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
-                + getAcronym().trim() + ")";
+	String name = super.getName().trim();
+	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
+		+ getAcronym().trim() + ")";
     }
 
     public String getPresentationName() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getNameWithAcronym());
-        if (getCostCenterCode() != null) {
-            builder.append(" [c.c. ").append(getCostCenterCode()).append("]");
-        }
-        return builder.toString();
+	StringBuilder builder = new StringBuilder();
+	builder.append(getNameWithAcronym());
+	if (getCostCenterCode() != null) {
+	    builder.append(" [c.c. ").append(getCostCenterCode()).append("]");
+	}
+	return builder.toString();
     }
 
     public String getPresentationNameWithParents() {
-        String parentUnits = getParentUnitsPresentationName();
-        return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName()
-                : getPresentationName();
+	String parentUnits = getParentUnitsPresentationName();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName()
+		: getPresentationName();
     }
 
     public String getPresentationNameWithParentsAndBreakLine() {
-        String parentUnits = getParentUnitsPresentationNameWithBreakLine();
-        return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits
-                + applicationResourcesBundle.getString("label.html.breakLine") + getPresentationName()
-                : getPresentationName();
+	String parentUnits = getParentUnitsPresentationNameWithBreakLine();
+	return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits
+		+ applicationResourcesBundle.getString("label.html.breakLine") + getPresentationName()
+		: getPresentationName();
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
-        return getParentUnitsPresentationName(applicationResourcesBundle
-                .getString("label.html.breakLine"));
+	return getParentUnitsPresentationName(applicationResourcesBundle
+		.getString("label.html.breakLine"));
     }
 
     public String getParentUnitsPresentationName() {
-        return getParentUnitsPresentationName(" - ");
+	return getParentUnitsPresentationName(" - ");
     }
 
     public String getDirectParentUnitsPresentationName() {
-        StringBuilder builder = new StringBuilder();
-        for (Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit()) {
-                builder.append(unit.getNameWithAcronym());
-            }
-        }
-        return builder.toString();
+	StringBuilder builder = new StringBuilder();
+	for (Unit unit : getParentUnits()) {
+	    if (!unit.isAggregateUnit()) {
+		builder.append(unit.getNameWithAcronym());
+	    }
+	}
+	return builder.toString();
     }
 
     private String getParentUnitsPresentationName(String separator) {
-        StringBuilder builder = new StringBuilder();
-        List<Unit> parentUnits = getParentUnitsPath();
-        int index = 1;
+	StringBuilder builder = new StringBuilder();
+	List<Unit> parentUnits = getParentUnitsPath();
+	int index = 1;
 
-        for (Unit unit : parentUnits) {
-            if (!unit.isAggregateUnit()) {
-                if (index == 1) {
-                    builder.append(unit.getNameWithAcronym());
-                } else {
-                    builder.append(separator + unit.getNameWithAcronym());
-                }
-            }
-            index++;
-        }
+	for (Unit unit : parentUnits) {
+	    if (!unit.isAggregateUnit()) {
+		if (index == 1) {
+		    builder.append(unit.getNameWithAcronym());
+		} else {
+		    builder.append(separator + unit.getNameWithAcronym());
+		}
+	    }
+	    index++;
+	}
 
-        return builder.toString();
+	return builder.toString();
     }
 
     public List<Unit> getParentUnitsPath() {
 
-        List<Unit> parentUnits = new ArrayList<Unit>();
-        Unit searchedUnit = this;
-        Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-        Unit institutionUnit = UnitUtils.readInstitutionUnit();
-        Unit earthUnit = UnitUtils.readEarthUnit();
+	List<Unit> parentUnits = new ArrayList<Unit>();
+	Unit searchedUnit = this;
+	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+	Unit institutionUnit = UnitUtils.readInstitutionUnit();
+	Unit earthUnit = UnitUtils.readEarthUnit();
 
-        while (searchedUnit.getParentUnits().size() == 1) {
-            Unit parentUnit = searchedUnit.getParentUnits().iterator().next();
-            parentUnits.add(0, parentUnit);
-            if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit
-                    && parentUnit != earthUnit) {
-                searchedUnit = parentUnit;
-                continue;
-            }
-            break;
-        }
+	while (searchedUnit.getParentUnits().size() == 1) {
+	    Unit parentUnit = searchedUnit.getParentUnits().iterator().next();
+	    parentUnits.add(0, parentUnit);
+	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit
+		    && parentUnit != earthUnit) {
+		searchedUnit = parentUnit;
+		continue;
+	    }
+	    break;
+	}
 
-        if (searchedUnit.getParentUnits().size() > 1) {
-            if (searchedUnit.isInternal()) {
-                parentUnits.add(0, institutionUnit);
-            } else if (searchedUnit.isNoOfficialExternal()) {
-                parentUnits.add(0, externalInstitutionUnit);
-            } else {
-                parentUnits.add(0, earthUnit);
-            }
-        }
+	if (searchedUnit.getParentUnits().size() > 1) {
+	    if (searchedUnit.isInternal()) {
+		parentUnits.add(0, institutionUnit);
+	    } else if (searchedUnit.isNoOfficialExternal()) {
+		parentUnits.add(0, externalInstitutionUnit);
+	    } else {
+		parentUnits.add(0, earthUnit);
+	    }
+	}
 
-        return parentUnits;
+	return parentUnits;
     }
 
     public String getShortPresentationName() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (final Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit() && unit != RootDomainObject.getInstance().getInstitutionUnit()) {
-                stringBuilder.append(unit.getName());
-                stringBuilder.append(" - ");
-            }
-        }
-        stringBuilder.append(getName());
-        return stringBuilder.toString();
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final Unit unit : getParentUnits()) {
+	    if (!unit.isAggregateUnit() && unit != RootDomainObject.getInstance().getInstitutionUnit()) {
+		stringBuilder.append(unit.getName());
+		stringBuilder.append(" - ");
+	    }
+	}
+	stringBuilder.append(getName());
+	return stringBuilder.toString();
     }
 
     public SortedSet<Unit> getSortedExternalChilds() {
-        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
-        for (final Unit unit : getSubUnits()) {
-            if (!unit.isInternal()) {
-                result.add(unit);
-            }
-        }
-        return result;
+	final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+	for (final Unit unit : getSubUnits()) {
+	    if (!unit.isInternal()) {
+		result.add(unit);
+	    }
+	}
+	return result;
     }
 
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
+	return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCourses());
     }
 
     public static void mergeExternalUnits(Unit fromUnit, Unit destinationUnit) {
 
-        if (fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {
-            throw new DomainException("error.merge.external.units.equals.units");
-        }
+	if (fromUnit == null || destinationUnit == null || fromUnit.equals(destinationUnit)) {
+	    throw new DomainException("error.merge.external.units.equals.units");
+	}
 
-        if (!fromUnit.isNoOfficialExternal() || destinationUnit.isInternal()) {
-            throw new DomainException("error.merge.external.units.invalid.units");
-        }
+	if (!fromUnit.isNoOfficialExternal() || destinationUnit.isInternal()) {
+	    throw new DomainException("error.merge.external.units.invalid.units");
+	}
 
-        Collection<? extends Accountability> externalContracts = fromUnit
-                .getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
-        List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();
-        List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();
-        List<Guide> payedGuides = fromUnit.getPayedGuides();
-        List<Receipt> payedReceipts = fromUnit.getPayedReceipts();
+	Collection<? extends Accountability> externalContracts = fromUnit
+		.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+	List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();
+	List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();
+	List<Guide> payedGuides = fromUnit.getPayedGuides();
+	List<Receipt> payedReceipts = fromUnit.getPayedReceipts();
 
-        destinationUnit.getPayedReceipts().addAll(payedReceipts);
-        destinationUnit.getPayedGuides().addAll(payedGuides);
-        destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
-        destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
-        destinationUnit.getChilds().addAll(externalContracts);
+	destinationUnit.getPayedReceipts().addAll(payedReceipts);
+	destinationUnit.getPayedGuides().addAll(payedGuides);
+	destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
+	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
+	destinationUnit.getChilds().addAll(externalContracts);
 
-        fromUnit.delete();
+	fromUnit.delete();
     }
 
     public String[] getPrinterNamesByFunctionalityName(final String name) {
-        for (FunctionalityPrinters functionalityPrinters : getFunctionalityPrintersSet()) {
-            if (functionalityPrinters.getFunctionality().equals(name)) {
-                return functionalityPrinters.getPrinterNames();
-            }
-        }
-        return new String[0];
+	for (FunctionalityPrinters functionalityPrinters : getFunctionalityPrintersSet()) {
+	    if (functionalityPrinters.getFunctionality().equals(name)) {
+		return functionalityPrinters.getPrinterNames();
+	    }
+	}
+	return new String[0];
     }
 
     public boolean isSiteAvailable() {
-        return hasSite();
+	return hasSite();
     }
 
     public List<ResearchResultPublication> getResearchResultPublications() {
-        Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
+	Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
 
-        for (ResultUnitAssociation association : getResultUnitAssociations()) {
-            if (association.getResult() instanceof ResearchResultPublication) {
-                publications.add((ResearchResultPublication) association.getResult());
-            }
-        }
-        return new ArrayList<ResearchResultPublication>(publications);
+	for (ResultUnitAssociation association : getResultUnitAssociations()) {
+	    if (association.getResult() instanceof ResearchResultPublication) {
+		publications.add((ResearchResultPublication) association.getResult());
+	    }
+	}
+	return new ArrayList<ResearchResultPublication>(publications);
     }
 
     public List<ResearchResultPatent> getAssociatedPatents() {
-        Set<ResearchResultPatent> patents = new HashSet<ResearchResultPatent>();
+	Set<ResearchResultPatent> patents = new HashSet<ResearchResultPatent>();
 
-        for (ResultUnitAssociation association : getResultUnitAssociations()) {
-            if (association.getResult() instanceof ResearchResultPatent) {
-                patents.add((ResearchResultPatent) association.getResult());
-            }
-        }
-        return new ArrayList<ResearchResultPatent>(patents);
+	for (ResultUnitAssociation association : getResultUnitAssociations()) {
+	    if (association.getResult() instanceof ResearchResultPatent) {
+		patents.add((ResearchResultPatent) association.getResult());
+	    }
+	}
+	return new ArrayList<ResearchResultPatent>(patents);
     }
 
     public List<UnitFile> getAccessibileFiles(Person person) {
-        List<UnitFile> files = new ArrayList<UnitFile>();
-        for (UnitFile file : getFiles()) {
-            if (file.isPersonAllowedToAccess(person)) {
-                files.add(file);
-            }
-        }
-        return files;
+	List<UnitFile> files = new ArrayList<UnitFile>();
+	for (UnitFile file : getFiles()) {
+	    if (file.isPersonAllowedToAccess(person)) {
+		files.add(file);
+	    }
+	}
+	return files;
     }
 
     public List<UnitFile> getAccessibileFiles(Person person, Collection<UnitFileTag> tag) {
-    	List<UnitFile> files = new ArrayList<UnitFile>();
-    	for(UnitFile file : getAccessibileFiles(person)) {
-    		if(file.hasUnitFileTags(tag)) {
-    			files.add(file);
-    		}
-    	}
-    	return files;
+	List<UnitFile> files = new ArrayList<UnitFile>();
+	for (UnitFile file : getAccessibileFiles(person)) {
+	    if (file.hasUnitFileTags(tag)) {
+		files.add(file);
+	    }
+	}
+	return files;
     }
-    
+
     public List<UnitFile> getAccessibileFiles(Person person, UnitFileTag tag) {
-    	List<UnitFile> files = new ArrayList<UnitFile>();
-        if (tag != null) {
-            for (UnitFile file : tag.getTaggedFiles()) {
-                if (file.isPersonAllowedToAccess(person)) {
-                    files.add(file);
-                }
-            }
-        }
-        return files;
- 
+	List<UnitFile> files = new ArrayList<UnitFile>();
+	if (tag != null) {
+	    for (UnitFile file : tag.getTaggedFiles()) {
+		if (file.isPersonAllowedToAccess(person)) {
+		    files.add(file);
+		}
+	    }
+	}
+	return files;
+
     }
-    
+
     public List<UnitFile> getAccessibileFiles(Person person, String tagName) {
-        return getAccessibileFiles(person, getUnitFileTag(tagName));
+	return getAccessibileFiles(person, getUnitFileTag(tagName));
     }
 
     public UnitFileTag getUnitFileTag(String name) {
-        for (UnitFileTag tag : getUnitFileTags()) {
-            if (tag.getName().equalsIgnoreCase(name)) {
-                return tag;
-            }
-        }
-        return null;
+	for (UnitFileTag tag : getUnitFileTags()) {
+	    if (tag.getName().equalsIgnoreCase(name)) {
+		return tag;
+	    }
+	}
+	return null;
     }
 
     public void removeGroupFromUnitFiles(PersistentGroupMembers members) {
-        PersistentGroup group = new PersistentGroup(members);
-        for (UnitFile file : getFiles()) {
-            file.updatePermissions(group);
-        }
+	PersistentGroup group = new PersistentGroup(members);
+	for (UnitFile file : getFiles()) {
+	    file.updatePermissions(group);
+	}
     }
 
     public boolean isUserAllowedToUploadFiles(Person person) {
-        return getAllowedPeopleToUploadFiles().contains(person);
+	return getAllowedPeopleToUploadFiles().contains(person);
     }
 
     public boolean isCurrentUserAllowedToUploadFiles() {
-        return isUserAllowedToUploadFiles(AccessControl.getPerson());
+	return isUserAllowedToUploadFiles(AccessControl.getPerson());
     }
 
     public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople) {
-        getAllowedPeopleToUploadFiles().clear();
-        getAllowedPeopleToUploadFiles().addAll(allowedPeople);
+	getAllowedPeopleToUploadFiles().clear();
+	getAllowedPeopleToUploadFiles().addAll(allowedPeople);
     }
 
     public MultiLanguageString getNameI18n() {
-        String name = getName();
-        String nameEn = getNameEn();
+	String name = getName();
+	String nameEn = getNameEn();
 
-        MultiLanguageString mls = new MultiLanguageString(name);
+	MultiLanguageString mls = new MultiLanguageString(name);
 
-        if (nameEn != null) {
-            mls.setContent(Language.en, nameEn);
-        }
+	if (nameEn != null) {
+	    mls.setContent(Language.en, nameEn);
+	}
 
-        return mls;
+	return mls;
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequests(int year, Month month, int hoursDoneInYear,
+	    Month hoursDoneInMonth) {
+	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
+		DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
+	Partial hoursDonePartialDate = new Partial().with(DateTimeFieldType.year(), hoursDoneInYear)
+		.with(DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
+	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    if (extraWorkRequest.getPartialPayingDate().equals(partialDate)
+		    && extraWorkRequest.getHoursDoneInPartialDate().equals(hoursDonePartialDate)) {
+		extraWorkRequestList.add(extraWorkRequest);
+	    }
+	}
+	return extraWorkRequestList;
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(int year, Month month) {
-        Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
-                DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
-        List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-        for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-            if (extraWorkRequest.getPartialPayingDate().equals(partialDate)) {
-                extraWorkRequestList.add(extraWorkRequest);
-            }
-        }
-        return extraWorkRequestList;
+	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
+		DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
+	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    if (extraWorkRequest.getPartialPayingDate().equals(partialDate)) {
+		extraWorkRequestList.add(extraWorkRequest);
+	    }
+	}
+	return extraWorkRequestList;
     }
 
     public UnitExtraWorkAmount getUnitExtraWorkAmountByYear(Integer year) {
-        for (UnitExtraWorkAmount unitExtraWorkAmount : getUnitExtraWorkAmounts()) {
-            if (unitExtraWorkAmount.getYear().equals(year)) {
-                return unitExtraWorkAmount;
-            }
-        }
-        return null;
+	for (UnitExtraWorkAmount unitExtraWorkAmount : getUnitExtraWorkAmounts()) {
+	    if (unitExtraWorkAmount.getYear().equals(year)) {
+		return unitExtraWorkAmount;
+	    }
+	}
+	return null;
     }
-    
+
     public List<IGroup> getUserDefinedGroups() {
 	final List<IGroup> groups = new ArrayList<IGroup>();
 	for (final PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
@@ -1079,7 +1094,7 @@ public class Unit extends Unit_Base {
 	}
 	return groups;
     }
-    
+
     public boolean isEarth() {
 	return this.equals(RootDomainObject.getInstance().getEarthUnit());
     }

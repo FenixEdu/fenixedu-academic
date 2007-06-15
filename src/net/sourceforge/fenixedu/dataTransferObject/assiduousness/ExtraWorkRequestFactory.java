@@ -89,7 +89,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     public void setUnit(Unit unit) {
 	if (unit != null) {
 	    this.unit = new DomainReference<Unit>(unit);
-	    setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(
+	    setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYear(), getMonth(),
 		    getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth()));
 	    addEmployeeExtraWorkRequest();
 	}
@@ -119,8 +119,8 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     }
 
     public void reloadEmployeeExtraWorkRequest() {
-	setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYearMonthHoursDone().getYear(),
-		getYearMonthHoursDone().getMonth()));
+	setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYear(), getMonth(),
+		getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth()));
 	addEmployeeExtraWorkRequest();
     }
 

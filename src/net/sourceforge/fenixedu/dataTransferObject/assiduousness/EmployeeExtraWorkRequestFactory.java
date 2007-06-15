@@ -246,9 +246,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    Double accumulatedNightVacationsAmount = 0.0;
 	    if (validateWorkingDaysExtraWork() && (getWorkdayHours() != null || getNightHours() != null)) {
 
-		YearMonthDay day = new YearMonthDay(getExtraWorkRequest().getHoursDoneInPartialDate()
-			.get(DateTimeFieldType.year()), getExtraWorkRequest()
-			.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
+		YearMonthDay day = new YearMonthDay(getExtraWorkRequestFactory()
+			.getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
+			getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
+				DateTimeFieldType.monthOfYear()), 1);
 		Schedule schedule = getEmployee().getAssiduousness().getSchedule(day);
 		int dayHours = 7;
 		if (schedule != null) {
