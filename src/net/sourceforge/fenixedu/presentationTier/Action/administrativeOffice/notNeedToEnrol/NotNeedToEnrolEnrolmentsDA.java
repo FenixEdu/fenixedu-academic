@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedT
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean.SelectedExternalEnrolment;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -87,7 +88,9 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	    HttpServletResponse response, NotNeedToEnrolEnrolmentsBean notNeedToEnrolEnrolmentsBean) {
 	List<DomainObject> notNeedToEnrolList = new ArrayList<DomainObject>();
 	for (Registration registration : notNeedToEnrolEnrolmentsBean.getStudent().getActiveRegistrations()) {
-	    notNeedToEnrolList.addAll(registration.getActiveStudentCurricularPlan().getNotNeedToEnrollCurricularCourses());
+	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		notNeedToEnrolList.addAll(studentCurricularPlan.getNotNeedToEnrollCurricularCourses());
+	    }
 	}
 	
 	if(notNeedToEnrolList.isEmpty()) {
