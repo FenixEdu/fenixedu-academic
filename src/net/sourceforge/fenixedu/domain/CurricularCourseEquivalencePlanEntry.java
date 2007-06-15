@@ -153,4 +153,8 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
+    @Override
+    public boolean isCurricularCourseEntry() {
+        return true;
+    }
 }

@@ -38,7 +38,10 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.enclosing_type.newCourseGroup.cannot.be.null");
 	}
-
     }
 
+    @Override
+    public boolean isCourseGroupEntry() {
+        return true;
+    }
 }

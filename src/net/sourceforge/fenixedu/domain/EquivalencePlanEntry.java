@@ -31,7 +31,13 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
 	}
-
+    }
+    
+    public boolean isCourseGroupEntry() {
+	return false;
     }
 
+    public boolean isCurricularCourseEntry() {
+	return false;
+    }
 }
