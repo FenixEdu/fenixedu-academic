@@ -27,5 +27,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table EquivalencePlan" AlterTableEquivalencePlan.sql
 execute "Changing table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
 execute "Creating CurricularCourseEquivalencePlanEntryNewCurricularCourse Table" CreateTableCurricularCourseEquivalencePlanEntryNewCurricularCourse.sql
+
