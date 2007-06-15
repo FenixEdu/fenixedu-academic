@@ -14,7 +14,7 @@
 		</span>
 	</html:messages>
 
-	<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean" action="/evaluationMethodControl.do?method=search"
+	<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean1" action="/evaluationMethodControl.do?method=search"
 			 name="executionCourseWithNoEvaluationMethodSearchBean"
 			 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
 			 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
@@ -23,10 +23,43 @@
   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	   	</fr:layout>	    	
 	</fr:edit>
-	<br/>
-
-	<br/>
 	<logic:present name="executionCourses">
+		<bean:define id="executionPeriod" name="executionCourseWithNoEvaluationMethodSearchBean" property="executionPeriod"/>
+		<bean:define id="degreeTypes" name="executionCourseWithNoEvaluationMethodSearchBean" property="degreeTypes"/>
+
+		<fr:form action="/evaluationMethodControl.do?method=exportToCSV">
+			<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean2"
+					 name="executionCourseWithNoEvaluationMethodSearchBean"
+					 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+					 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+  					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			   	</fr:layout>
+			</fr:edit>
+			<html:submit><bean:message key="button.download.csv"/></html:submit>
+		</fr:form>
+
+		<fr:form action="/evaluationMethodControl.do?method=exportToXLS">
+			<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean3"
+					 name="executionCourseWithNoEvaluationMethodSearchBean"
+					 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+					 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+  					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			   	</fr:layout>
+			</fr:edit>
+			<html:submit><bean:message key="button.download.xls"/></html:submit>
+		</fr:form>
+
+		<br/>
+		<bean:message key="label.total.execution.courses"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="total"/>
+		<br/>
+		<bean:message key="label.execution.courses.with.evaluation.method"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withEvaluationMethod"/>
+		<br/>
+		<bean:message key="label.execution.courses.without.evaluation.method"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withoutEvaluationMethod"/>
+		<br/>
 		<table>
 			<tr>
 				<th  class="listClasses-header">

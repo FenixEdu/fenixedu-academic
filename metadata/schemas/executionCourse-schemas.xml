@@ -650,6 +650,10 @@
 	</slot>
 </schema>
 
+<schema name="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls"
+		type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
+</schema>
+
 <schema name="degree.type" type="net.sourceforge.fenixedu.domain.degree.DegreeType">
 	<slot name="name" key="label.degreeType"/>
 </schema>

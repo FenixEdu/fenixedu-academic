@@ -19,11 +19,21 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 
     private List<DegreeType> degreeTypes;
 
+    private int withEvaluationMethod = 0;
+
+    private int withoutEvaluationMethod = 0;
+
+    private int total = 0;
+
     public ExecutionCourseWithNoEvaluationMethodSearchBean() {
 	super();
     }
 
     public Set getSearchResult() {
+	withEvaluationMethod = 0;
+	withoutEvaluationMethod = 0;
+	total = 0;
+
 	final ExecutionPeriod executionPeriod = getExecutionPeriod();
 	final List<DegreeType> degreeTypes = getDegreeTypes();
 	if (executionPeriod == null || degreeTypes == null) {
@@ -31,8 +41,14 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 	}
 	final Set<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
-	    if (hasNoEvaluationMethod(executionCourse) && isLecturedIn(executionCourse, degreeTypes)) {
-		executionCourses.add(executionCourse);
+	    if (isLecturedIn(executionCourse, degreeTypes)) {
+		total++;
+		if (hasNoEvaluationMethod(executionCourse)) {
+		    withoutEvaluationMethod++;
+		    executionCourses.add(executionCourse);
+		} else {
+		    withEvaluationMethod++;
+		}
 	    }
 	}
 	return executionCourses;
@@ -70,6 +86,18 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 
     public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod == null ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public int getWithEvaluationMethod() {
+        return withEvaluationMethod;
+    }
+
+    public int getWithoutEvaluationMethod() {
+        return withoutEvaluationMethod;
     }
 
 }
