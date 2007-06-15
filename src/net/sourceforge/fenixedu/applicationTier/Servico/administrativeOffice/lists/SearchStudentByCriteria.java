@@ -11,11 +11,16 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -38,18 +43,25 @@ public class SearchStudentByCriteria extends Service {
 	private List<StudentCurricularPlan> getStudentByDegree(
 			ExecutionDegreeListBean executionDegreeBean,
 			ListInformationBean ingressionInformationBean) {
+
 		final List<StudentCurricularPlan> registrations = new ArrayList<StudentCurricularPlan>();
-	
+
 		if (executionDegreeBean.getDegreeCurricularPlan() != null) {
+
+			if (ingressionInformationBean.getRegistrationAgreement() == null
+					&& ingressionInformationBean.getRegistrationStateType() == null
+					&& executionDegreeBean.getExecutionYear() == null) {
+
+				registrations.addAll(executionDegreeBean
+						.getDegreeCurricularPlan().getStudentCurricularPlans());
+				Collections.sort(registrations, new BeanComparator(
+						"registration.number"));
+				Collections.reverse(registrations);
+				return registrations;
+			}
+
 			for (final StudentCurricularPlan studentCurricularPlan : executionDegreeBean
 					.getDegreeCurricularPlan().getStudentCurricularPlans()) {
-
-				if (ingressionInformationBean.getRegistrationAgreement() == null
-						&& ingressionInformationBean.getRegistrationStateType() == null
-						&& executionDegreeBean.getExecutionYear() == null) {
-					registrations.add(studentCurricularPlan);
-					continue;
-				}
 
 				if (executionDegreeBean.getExecutionYear() != null) {
 					final ExecutionYear executionYear = ExecutionYear
@@ -58,59 +70,212 @@ public class SearchStudentByCriteria extends Service {
 					if (!studentCurricularPlan.getRegistration()
 							.hasAnyEnrolmentsIn(executionYear)) {
 						continue;
+					} else {
+						if (ingressionInformationBean
+								.getRegistrationAgreement() != null) {
+
+							if (!studentCurricularPlan
+									.getRegistration()
+									.getStudentCurricularPlan(executionYear)
+									.getRegistration()
+									.getRegistrationAgreement()
+									.equals(
+											ingressionInformationBean
+													.getRegistrationAgreement())) {
+								continue;
+							}
+						}
+
+						if (ingressionInformationBean
+								.getRegistrationStateType() != null) {
+
+							if (!studentCurricularPlan
+									.getRegistration()
+									.getStateInDate(
+											studentCurricularPlan
+													.getRegistration()
+													.getStudentCurricularPlan(
+															executionYear)
+													.getStartDateYearMonthDay()
+													.toDateTimeAtCurrentTime())
+									.getStateType()
+									.equals(
+											ingressionInformationBean
+													.getRegistrationStateType())) {
+								continue;
+							}
+						}
+
+						registrations.add(studentCurricularPlan
+								.getRegistration().getStudentCurricularPlan(
+										executionYear));
 					}
-				}
-				if (ingressionInformationBean.getRegistrationAgreement() != null) {
-					
-					if (!studentCurricularPlan.getRegistration()
-							.getRegistrationAgreement().equals(
-									ingressionInformationBean
-											.getRegistrationAgreement())) {
-						continue;
+
+				} else {
+
+					if (ingressionInformationBean.getRegistrationAgreement() != null) {
+
+						if (!studentCurricularPlan.getRegistration()
+								.getStudentCurricularPlan(
+										executionDegreeBean
+												.getDegreeCurricularPlan())
+								.getRegistration().getRegistrationAgreement()
+								.equals(
+										ingressionInformationBean
+												.getRegistrationAgreement())) {
+							continue;
+						}
 					}
-				}
 
-				if (ingressionInformationBean.getRegistrationStateType() != null) {
-
-					if (!studentCurricularPlan.getRegistration()
-							.getActiveStateType().equals(
-									ingressionInformationBean
-											.getRegistrationStateType())) {
-						continue;
+					if (ingressionInformationBean.getRegistrationStateType() != null) {
+						if (!studentCurricularPlan.getRegistration()
+								.getStudentCurricularPlan(
+										executionDegreeBean
+												.getDegreeCurricularPlan())
+								.getCurrentState().equals(
+										StudentCurricularPlanState.PAST)
+								|| !studentCurricularPlan
+										.getRegistration()
+										.getStudentCurricularPlan(
+												executionDegreeBean
+														.getDegreeCurricularPlan())
+										.getCurrentState()
+										.equals(
+												StudentCurricularPlanState.INCOMPLETE)) {
+							if (!studentCurricularPlan
+									.getRegistration()
+									.getStudentCurricularPlan(
+											executionDegreeBean
+													.getDegreeCurricularPlan())
+									.getRegistration()
+									.getActiveStateType()
+									.equals(
+											ingressionInformationBean
+													.getRegistrationStateType())) {
+								continue;
+							}
+						} else if (ingressionInformationBean
+								.getRegistrationStateType().equals(
+										RegistrationStateType.INTERNAL_ABANDON)
+								&& studentCurricularPlan
+										.getRegistration()
+										.getStudentCurricularPlan(
+												executionDegreeBean
+														.getDegreeCurricularPlan())
+										.getCurrentState()
+										.equals(
+												StudentCurricularPlanState.INCOMPLETE)
+								&& studentCurricularPlan
+										.getRegistration()
+										.getStudentCurricularPlan(
+												executionDegreeBean
+														.getDegreeCurricularPlan())
+										.getRegistration()
+										.getActiveStateType()
+										.equals(
+												RegistrationStateType.REGISTERED)) {
+							registrations.add(studentCurricularPlan);
+							continue;
+						}
 					}
+					registrations.add(studentCurricularPlan);
+
 				}
-
-				registrations.add(studentCurricularPlan);
-
 			}
 		} else {
-			for (final DegreeCurricularPlan dcp : executionDegreeBean
-					.getDegree().getDegreeCurricularPlans()) {
 
-				for (final StudentCurricularPlan sPlan : dcp
-						.getStudentCurricularPlans()) {
-					if (!registrations.contains(sPlan)) {
-						if (ingressionInformationBean.getRegistrationAgreement() != null) {
-							
-							if (!sPlan.getRegistration()
-									.getRegistrationAgreement().equals(
+			for (final StudentCurricularPlan sPlan : executionDegreeBean
+					.getDegree().getLastStudentCurricularPlans()) {
+
+				if (executionDegreeBean.getExecutionYear() != null) {
+					final ExecutionYear executionYear = ExecutionYear
+							.readExecutionYearByName(executionDegreeBean
+									.getExecutionYear().getYear());
+					if (!sPlan.getRegistration().hasAnyEnrolmentsIn(
+							executionYear)) {
+						continue;
+					} else {
+						if (ingressionInformationBean
+								.getRegistrationAgreement() != null) {
+
+							if (!sPlan
+									.getRegistration()
+									.getStudentCurricularPlan(executionYear)
+									.getRegistration()
+									.getRegistrationAgreement()
+									.equals(
 											ingressionInformationBean
-											.getRegistrationAgreement())) {
+													.getRegistrationAgreement())) {
 								continue;
 							}
 						}
-						
-						if (ingressionInformationBean.getRegistrationStateType() != null) {
-							
-							if (!sPlan.getRegistration()
-									.getActiveStateType().equals(
+						if (ingressionInformationBean
+								.getRegistrationStateType() != null) {
+							if (!sPlan
+									.getRegistration()
+									.getStudentCurricularPlan(executionYear)
+									.getRegistration()
+									.getActiveStateType()
+									.equals(
 											ingressionInformationBean
-											.getRegistrationStateType())) {
+													.getRegistrationStateType())) {
 								continue;
 							}
 						}
-						registrations.add(sPlan);
+						registrations.add(sPlan.getRegistration()
+								.getStudentCurricularPlan(executionYear));
+
 					}
+				} else {
+
+					if (ingressionInformationBean.getRegistrationAgreement() != null) {
+
+						if (!sPlan.getRegistration()
+								.getLastStudentDegreeCurricularPlansByDegree(
+										executionDegreeBean.getDegree())
+								.getRegistration().getRegistrationAgreement()
+								.equals(
+										ingressionInformationBean
+												.getRegistrationAgreement())) {
+							continue;
+
+						}
+					}
+					if (ingressionInformationBean.getRegistrationStateType() != null) {
+						if (!sPlan.getRegistration()
+								.getLastStudentDegreeCurricularPlansByDegree(
+										executionDegreeBean.getDegree())
+								.getCurrentState().equals(
+										StudentCurricularPlanState.PAST)
+								&& !sPlan
+										.getRegistration()
+										.getLastStudentDegreeCurricularPlansByDegree(
+												executionDegreeBean.getDegree())
+										.getCurrentState()
+										.equals(
+												StudentCurricularPlanState.INCOMPLETE)) {
+							if (!sPlan
+									.getRegistration()
+									.getLastStudentDegreeCurricularPlansByDegree(
+											executionDegreeBean.getDegree())
+									.getRegistration()
+									.getActiveStateType()
+									.equals(
+											ingressionInformationBean
+													.getRegistrationStateType())) {
+								continue;
+							}
+						} else if (!sPlan.getRegistration()
+								.getLastStudentDegreeCurricularPlansByDegree(
+										executionDegreeBean.getDegree())
+								.getRegistration().getActiveStateType().equals(
+										RegistrationStateType.REGISTERED)) {
+
+							continue;
+
+						}
+					}
+					registrations.add(sPlan);
 
 				}
 
