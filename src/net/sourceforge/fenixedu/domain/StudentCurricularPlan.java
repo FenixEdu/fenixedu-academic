@@ -1341,7 +1341,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return null;
     }
-
+    
+    public Enrolment getEnrolment(ExecutionPeriod executionPeriod, String code) {
+	for (Enrolment enrolment : this.getEnrolmentsSet()) {
+	    if (enrolment.getCurricularCourse().getCode().equals(code)
+		    && enrolment.getExecutionPeriod() == executionPeriod){
+		return enrolment;
+	    }
+	}
+	return null;
+    }
+    
     public void setStudentAreasWithoutRestrictions(Branch specializationArea, Branch secundaryArea)
 	    throws DomainException {
 
@@ -2236,7 +2246,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isBoxStructure() ? getRoot().findEnrolmentFor(curricularCourse, executionPeriod) : null;
     }
-    
+
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedEnrolment(curricularCourse) : null;
     }
