@@ -456,15 +456,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
 	public boolean isEditableByCurrentUser() {
 		Person person = AccessControl.getPerson();
-		if (getCreator().equals(person)) {
-			return true;
-		}
-		for (ResultParticipation participation : this.getResultParticipations()) {
-			if (participation.getPerson().equals(person)) {
-				return true;
-			}
-		}
-		return false;
+		return getCreator().equals(person) || hasPersonParticipation(person);
 	}
 
 	public boolean isDeletableByCurrentUser() {

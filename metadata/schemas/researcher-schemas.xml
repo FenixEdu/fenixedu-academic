@@ -2597,15 +2597,30 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 
 <schema name="presentEvent" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
 	<slot name="name"/>
-	<slot name="url"/>
+	<slot name="url">
+		<property name="link" value="true"/>
+	</slot>
 	<slot name="locationType" key="label.scope"/>
 </schema>
 
 <schema name="presentArticlesInEvent" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles">
-	<slot name="eventEdition.fullName" key="label.edition"/>
+	<slot name="eventEdition.fullName" key="label.edition" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/activities/editResearchActivity.do?activityId=${eventEdition.idInternal}&amp;method=prepareEventEdition"/>
+	</slot>
 	<slot name="eventEdition.url" layout="null-as-label" key="label.eventUrl">
 		<property name="label" value="-"/>
 		<property name="subLayout" value="text-link"/>
+	</slot>
+	<slot name="eventEdition.startDate" layout="null-as-label" key="label.project.startDate">
+			<property name="label" value="-"/>
+		<property name="subLayout" value="default"/>
+	</slot>
+	<slot name="eventEdition.endDate" layout="null-as-label" key="label.project.endDate">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="default"/>
 	</slot>
 	<slot name="title" layout="link">
 		<property name="contextRelative" value="true"/>

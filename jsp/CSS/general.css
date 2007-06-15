@@ -1918,6 +1918,7 @@ ul.autoCompleteItems li.selected { background-color:  #cef; }
 
 ul.tcloud {
 background: #f2faec;
+margin: 1em 0;
 padding: 0.5em 1em;
 }
 ul.tcloud li {
