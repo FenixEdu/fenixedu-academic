@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -2171,7 +2172,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, getRoot());
     }
 
-    public void createNewCreditsDismissal(CourseGroup courseGroup,
+    public Credits createNewCreditsDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
 	    Double givenCredits) {
 	if ((courseGroup == null && (dismissals == null || dismissals.isEmpty()))
@@ -2180,13 +2181,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (courseGroup != null) {
-	    new Credits(this, courseGroup, enrolments, givenCredits);
+	    return new Credits(this, courseGroup, enrolments, givenCredits);
 	} else {
-	    new Credits(this, dismissals, enrolments);
+	    return new Credits(this, dismissals, enrolments);
 	}
     }
 
-    public void createNewEquivalenceDismissal(CourseGroup courseGroup,
+    public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
 	    Double givenCredits, String givenGrade) {
 	if ((courseGroup == null && (dismissals == null || dismissals.isEmpty()))
@@ -2195,15 +2196,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (courseGroup != null) {
-	    new Equivalence(this, courseGroup, enrolments, givenCredits, givenGrade);
+	    return new Equivalence(this, courseGroup, enrolments, givenCredits, givenGrade);
 	} else {
-	    new Equivalence(this, dismissals, enrolments, givenGrade);
+	    return new Equivalence(this, dismissals, enrolments, givenGrade);
 	}
+    }
+    
+    public Substitution createSubstitution(final Collection<SelectedCurricularCourse> dismissals, final Collection<IEnrolment> enrolments) {
+	return new Substitution(this, dismissals, enrolments);
     }
 
     public void setActive() {
-	getRegistration().getActiveStudentCurricularPlan().setCurrentState(
-		StudentCurricularPlanState.INACTIVE);
+	getRegistration().getActiveStudentCurricularPlan().setCurrentState(StudentCurricularPlanState.INACTIVE);
 	this.setCurrentState(StudentCurricularPlanState.ACTIVE);
     }
 
