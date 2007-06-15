@@ -103,8 +103,8 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institution == null) ? null : new DomainReference<Unit>(institutionUnitName
-		.getUnit());
+	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(
+		institutionUnitName.getUnit());
     }
 
 }
