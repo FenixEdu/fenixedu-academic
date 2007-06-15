@@ -42,6 +42,6 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
 
     @Override
     public boolean isCourseGroupEntry() {
-        return true;
+	return true;
     }
 }

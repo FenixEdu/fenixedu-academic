@@ -10,16 +10,16 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
 	init(studentCurricularPlan);
     }
 
-    private void init(StudentCurricularPlan studentCurricularPlan) {
-	checkParameters(studentCurricularPlan);
+    private void init(StudentCurricularPlan oldStudentCurricularPlan) {
+	checkParameters(oldStudentCurricularPlan);
 
-	super.setStudentCurricularPlan(studentCurricularPlan);
+	super.setOldStudentCurricularPlan(oldStudentCurricularPlan);
     }
 
-    private void checkParameters(StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan == null) {
+    private void checkParameters(StudentCurricularPlan oldStudentCurricularPlan) {
+	if (oldStudentCurricularPlan == null) {
 	    throw new DomainException(
-		    "error.StudentCurricularPlanEquivalencePlan.studentCurricularPlan.cannot.be.null");
+		    "error.StudentCurricularPlanEquivalencePlan.oldStudentCurricularPlan.cannot.be.null");
 	}
     }
 

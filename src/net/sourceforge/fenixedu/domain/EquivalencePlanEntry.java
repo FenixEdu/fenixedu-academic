@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
@@ -12,8 +10,7 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	super.setOjbConcreteClass(this.getClass().getName());
     }
 
-    public EquivalencePlanEntry(final EquivalencePlan equivalencePlan,
-	    final List<CurricularCourse> oldCurricularCourses, final CurricularCourse newCurricularCourse) {
+    public EquivalencePlanEntry(final EquivalencePlan equivalencePlan) {
 	this();
 
 	init(equivalencePlan);
@@ -31,8 +28,9 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
 	}
+
     }
-    
+
     public boolean isCourseGroupEntry() {
 	return false;
     }
