@@ -27,3 +27,11 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix table types." fixTableTypes.sql
+
+execute "Change SiteTemplate and use of functionality sections" changeSite.sql
+execute "Delete some UnitSite functionalities and change availability of others" deleteUnitSiteFunctionalities.sql
+execute "Prepare migration of FunctionalitySections to UnitSites" prepareUnitSiteTemplateSections.sql
+executeWithTempFile "Create new sections in all UnitSites" copyUnitSiteTemplateSections.sql
+execute "Delete remaining sections from UnitSite's templates" deleteUnitSiteTemplateSections.sql
+execute "Remove unused columns from UnitSite" removeColumnsFromUnitSite.sql
