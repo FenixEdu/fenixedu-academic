@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
@@ -99,6 +100,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public static final Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
 	    "startDateYearMonthDay");
+    
+    public static Comparator<StudentCurricularPlan> DATE_COMPARATOR = new Comparator<StudentCurricularPlan>() {
+		public int compare(StudentCurricularPlan leftState,
+				StudentCurricularPlan rightState) {
+			int comparationResult = leftState.getStartDateYearMonthDay()
+					.compareTo(rightState.getStartDateYearMonthDay());
+			return (comparationResult == 0) ? leftState.getIdInternal()
+					.compareTo(rightState.getIdInternal()) : comparationResult;
+		}
+	};
 
     private Map<ExecutionPeriod, Map<String, Integer>> acumulatedEnrollments; // For
 
@@ -2386,5 +2397,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	result.addAll(getDissertationEnrolments());
 	return result.isEmpty() ? null : result.last();
     }
+    
+    final public RegistrationStateType getRegistrationStateType() {
+
+		if (this.getCurrentState().equals(StudentCurricularPlanState.PAST)&&
+				this.getRegistration().getActiveState().getStateType().equals(RegistrationStateType.REGISTERED)) {
+			return null;
+		}
+		if(this.getCurrentState().equals(
+						StudentCurricularPlanState.INCOMPLETE)&&
+		this.getRegistration().getActiveState().getStateType().equals(RegistrationStateType.REGISTERED)){
+			return RegistrationStateType.INTERNAL_ABANDON;
+		}
+
+		
+		return this.getRegistration().getActiveState().getStateType();
+	}
 
 }
