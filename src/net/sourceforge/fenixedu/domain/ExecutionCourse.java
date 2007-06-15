@@ -1634,5 +1634,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return result;
-    }    
+    }   
+    
+    @Override
+    public Boolean getAvailableForInquiries() {
+	if(super.getAvailableForInquiries() != null) {
+	    return super.getAvailableForInquiries();
+	}
+	
+	return Boolean.FALSE;
+    }
 }
