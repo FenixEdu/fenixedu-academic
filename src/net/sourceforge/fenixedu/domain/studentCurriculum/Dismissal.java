@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class Dismissal extends Dismissal_Base {
     
-    protected  Dismissal() {
+    protected Dismissal() {
         super();
     }
     
-    protected Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
+    public Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
         super();
         if(credits == null || curriculumGroup == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
@@ -28,7 +28,7 @@ public class Dismissal extends Dismissal_Base {
         setCurriculumGroup(curriculumGroup);
     }
     
-    protected Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    public Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
         this(credits, curriculumGroup);
         if( curricularCourse == null) {
             throw new DomainException("error.dismissal.wrong.arguments");

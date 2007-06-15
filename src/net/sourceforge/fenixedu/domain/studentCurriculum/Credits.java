@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Credits extends Credits_Base {
     
-    protected Credits() {
+    public Credits() {
         super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setOjbConcreteClass(this.getClass().getName());
