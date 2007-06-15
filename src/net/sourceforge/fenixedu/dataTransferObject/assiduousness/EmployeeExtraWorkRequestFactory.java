@@ -233,6 +233,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    try {
 		totalValue = getThisRequestValue();
 	    } catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
 		return new ActionMessage("error.connectionError");
 	    }
 
