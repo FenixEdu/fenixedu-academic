@@ -24,7 +24,6 @@ public class DataInitializer {
 	MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
 	SuportePersistenteOJB.fixDescriptors();
 	RootDomainObject.init();
-        Transaction.startMonitoringTransactions();
 
 	try {
 	    Transaction.withTransaction(false, new jvstm.TransactionalCommand() {
