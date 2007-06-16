@@ -1644,4 +1644,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	
 	return Boolean.FALSE;
     }
+
+    public Set<Department> getDepartments() {
+	final Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+	    if (competenceCourse != null) {
+		departments.addAll(competenceCourse.getDepartmentsSet());
+	    }
+	}
+	return departments;
+    }
+
 }

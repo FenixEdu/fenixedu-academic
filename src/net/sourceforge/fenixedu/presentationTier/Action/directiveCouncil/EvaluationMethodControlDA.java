@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -61,7 +62,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
 	export(request, response, new MethodInvoker() {
 	    @Override
 	    public void export(Spreadsheet spreadsheet, OutputStream outputStream) throws IOException {
-		spreadsheet.exportToXLSSheet(outputStream);
+		spreadsheet.exportToCSV(outputStream, "\t");
 	    }
 
 	    @Override
@@ -93,7 +94,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
         	    if (degrees.length() > 0) {
         		degrees.append(", ");
         	    }
-        	    degrees.append(degree.getName());
+        	    degrees.append(degree.getSigla());
         	}
         	row.setCell(degrees.toString());
         	final StringBuilder responsibleTeachers = new StringBuilder();
@@ -121,6 +122,14 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
         	}
         	row.setCell(responsibleTeachers.toString());
         	row.setCell(otherTeachers.toString());
+        	final StringBuilder departments = new StringBuilder();
+        	for (final Department department : executionCourse.getDepartments()) {
+        	    if (departments.length() > 0) {
+        		departments.append(", ");
+        	    }
+        	    departments.append(department.getName());
+        	}
+        	row.setCell(departments.toString());
             }
             methodInvoker.export(spreadsheet, writer);
 

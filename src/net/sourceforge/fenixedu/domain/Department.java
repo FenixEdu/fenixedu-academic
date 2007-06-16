@@ -11,8 +11,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
@@ -26,10 +28,18 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Department extends Department_Base {
+
+    public static final Comparator<Department> COMPARATOR_BY_NAME = new ComparatorChain();
+    static {
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(COMPARATOR_BY_ID);
+    }
 
     public Department() {
 	super();

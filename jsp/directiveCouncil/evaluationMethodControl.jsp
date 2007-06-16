@@ -74,6 +74,9 @@
 				<th  class="listClasses-header">
 					<bean:message key="label.executionCourse.degrees"/>
 				</th>
+				<th  class="listClasses-header">
+					<bean:message key="label.executionCourse.departments"/>
+				</th>
 			</tr>
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<tr>
@@ -112,6 +115,14 @@
 								,
 							</logic:notEqual>
 							<bean:write name="degree" property="sigla"/>
+						</logic:iterate>
+					</td>
+					<td  class="listClasses">
+						<logic:iterate id="department" indexId="i" name="executionCourse" property="departments">
+							<logic:notEqual name="i" value="0">
+								,
+							</logic:notEqual>
+							<bean:write name="department" property="name"/>
 						</logic:iterate>
 					</td>
 				</tr>				
