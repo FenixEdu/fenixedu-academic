@@ -51,7 +51,7 @@ public class Campus extends Campus_Base {
     public String getLocation() {
 	if (getSpaceInformation().getName().equals("Alameda")) {
 	    return "Lisboa";
-	} else if (getSpaceInformation().getName().equals("TagusPark")) {
+	} else if (getSpaceInformation().getName().equals("Taguspark")) {
 	    return "Oeiras";
 	}
 	
