@@ -31,38 +31,6 @@ public abstract class ForumService extends Service {
     protected static final ResourceBundle GLOBAL_RESOURCES = ResourceBundle.getBundle(
 	    "resources.GlobalResources", DEFAULT_LOCALE);
 
-    public static class EmailSenderThread extends Thread {
-	private String emailFrom;
-
-	private String emailFromAddress;
-
-	private String emailSubject;
-
-	private Set<String> toAddresses;
-
-	private Set<String> ccAddresses;
-
-	private Set<String> bccAddresses;
-
-	private String emailBody;
-
-	public EmailSenderThread(String emailFrom, String emailFromAddress, Set<String> toAddresses,
-		Set<String> ccAddresses, Set<String> bccAddresses, String emailSubject, String emailBody) {
-	    this.emailFrom = emailFrom;
-	    this.emailSubject = emailSubject;
-	    this.emailFromAddress = emailFromAddress;
-	    this.toAddresses = toAddresses;
-	    this.ccAddresses = ccAddresses;
-	    this.bccAddresses = bccAddresses;
-	    this.emailBody = emailBody;
-	}
-
-	public void run() {
-	    new Email(this.emailFrom, this.emailFromAddress, null, this.toAddresses, this.ccAddresses,
-		    this.bccAddresses, this.emailSubject, this.emailBody);
-	}
-    }
-
     protected void sendNotifications(ConversationMessage conversationMessage) {
 	this.notifyEmailSubscribers(conversationMessage);
 	this.notifyLastReplier(conversationMessage);
@@ -131,20 +99,17 @@ public abstract class ForumService extends Service {
 
     private void sendEmailWithConversationMessage(Set<String> teacherAddresses,
 	    Set<String> studentAddresses, ConversationMessage conversationMessage) {
-	String emailFrom = GLOBAL_RESOURCES.getString("forum.email.from");
-	String emailFromAddress = GLOBAL_RESOURCES.getString("forum.email.fromAddress");
-	String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
-
-	final EmailSenderThread teacherEmailSenderThread = new EmailSenderThread(emailFrom,
-		emailFromAddress, new HashSet<String>(), new HashSet<String>(), teacherAddresses,
-		emailSubject, getEmailFormattedBody(conversationMessage, true));
-	teacherEmailSenderThread.start();
-
-	final EmailSenderThread studentEmailSenderThread = new EmailSenderThread(emailFrom,
-		emailFromAddress, new HashSet<String>(), new HashSet<String>(), studentAddresses,
-		emailSubject, getEmailFormattedBody(conversationMessage, false));
-	studentEmailSenderThread.start();
-
+		String emailFrom = GLOBAL_RESOURCES.getString("forum.email.from");
+		String emailFromAddress = GLOBAL_RESOURCES.getString("forum.email.fromAddress");
+		String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
+	
+		if (! teacherAddresses.isEmpty()) {
+			new Email(emailFrom, emailFromAddress, null, null, null, teacherAddresses, emailSubject, getEmailFormattedBody(conversationMessage, true));
+		}
+		
+		if (! studentAddresses.isEmpty()) {
+			new Email(emailFrom, emailFromAddress, null, null, null, studentAddresses, emailSubject, getEmailFormattedBody(conversationMessage, false));
+		}
     }
 
     private String getEmailFormattedSubject(ConversationThread conversationThread) {
