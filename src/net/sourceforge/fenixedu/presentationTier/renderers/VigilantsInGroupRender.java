@@ -162,10 +162,10 @@ public class VigilantsInGroupRender extends InputRenderer {
 							bean.getPerson().getCurrentVigilant());
 				}
 				if (bound != null) {
-					HtmlText text = new HtmlText("(" + RenderUtils.getResourceString(
+					HtmlText text = new HtmlText(RenderUtils.getResourceString(
 													"VIGILANCY_RESOURCES",
 													((bound.getConvokable())) ? "label.vigilancy.convokable.abbr"
-															: "label.vigilancy.notConvokable.abbr")	+ ")");
+															: "label.vigilancy.notConvokable.abbr"),false);
 					if (getLabelStyle() != null) {
 						text.setStyle(getLabelStyle());
 					}
