@@ -5,6 +5,20 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	
+	<script type="text/javascript">
+		<!--
+			function setCheckBoxValue(value) {
+				elements = document.getElementsByTagName('input');
+				for (i = 0; i < elements.length; i++) {
+					if (elements[i].type == 'checkbox') {
+						elements[i].checked = value;	
+					}
+				}
+			}
+		//-->
+	</script>	
+	
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>
@@ -58,12 +72,18 @@
 	</h:form>
 	<h:outputFormat value="<br/>" escape="false"/>
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.rooms != null}">
-	<h:form>
+
+	<h:form id="form">				
+				
+		<h:outputText escape="false" value='<p><a href="javascript:setCheckBoxValue(true)"> #{bundle["button.selectAll"]}</a>' />
+		<h:outputText escape="false" value=' | '/>						
+		<h:outputText escape="false" value='<a href="javascript:setCheckBoxValue(false)"> #{bundle["button.selectNone"]}</a></p>' />						
+			
 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.startDate' id='startDate' name='startDate' type='hidden' value='#{writtenEvaluationsByRoom.startDate}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.endDate' id='endDate' name='endDate' type='hidden' value='#{writtenEvaluationsByRoom.endDate}'/>"/>
-		<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room"
-				headerClass="listClasses-header" rowClasses="listClasses" width="80%">
+		
+		<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room" headerClass="listClasses-header" rowClasses="listClasses" width="80%">
 			<h:column>
 				<f:facet name="header">
 				</f:facet>
@@ -106,9 +126,9 @@
 				<h:outputText value="#{room.capacidadeExame}"/>
 			</h:column>
 		</h:dataTable>
-
 		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" rendered="#{writtenEvaluationsByRoom.rooms != null}" styleClass="inputbutton" value="#{bundle['label.search']}"/>
 	</h:form>
+	
 	</h:panelGroup>
 	</h:panelGroup>
 

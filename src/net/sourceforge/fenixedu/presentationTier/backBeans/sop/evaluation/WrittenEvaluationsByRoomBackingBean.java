@@ -188,8 +188,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         }
     }
 
-    private Collection<OldRoom> filterRooms(final Collection<OldRoom> allRooms,
-            final Set<Integer> selectedRoomIDs) {
+    private Collection<OldRoom> filterRooms(final Collection<OldRoom> allRooms, final Set<Integer> selectedRoomIDs) {
         final Collection<OldRoom> rooms = new ArrayList<OldRoom>(selectedRoomIDs.size());
         for (final OldRoom room : allRooms) {
             if (selectedRoomIDs.contains(room.getIdInternal())) {
