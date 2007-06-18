@@ -54,7 +54,7 @@
 								<logic:present name="quotationText">
 				           			<fr:default slot="body" name="quotationText"/>
 								</logic:present>
-					           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewThread&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=false" %>"/>
+					           <fr:destination name="cancel" path="<%= contextPrefix.toString().replaceAll("&amp;", "&") + "method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
 						</fr:create>
 						<br/>
 					</logic:equal>
