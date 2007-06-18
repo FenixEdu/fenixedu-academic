@@ -139,6 +139,7 @@
 		 			extraLines="true"
 			 		/>
 		</h:panelGroup>
+		<h:outputFormat value="<div class='break-before'></div>" escape="false"/>
 	</fc:dataRepeater>
 
 </ft:tilesView>

@@ -301,12 +301,19 @@ background: #fff;
 /* Miscelaneous */
 
 .leftcol { text-align: right; vertical-align: top; }
-td.tdclear {  /* used in renderers column dedicated to feedback messages*/
+td.tdclear {  /* used in renderers column dedicated to feedback messages */
 border-right: none;
 border-bottom: none;
 border-top: none;
 background: none;
 }
+th.thclear {
+border-left: none;
+border-bottom: none;
+border-top: none;
+background: none;
+}
+
 td.tdwarning span {
 background-color: #fff8bb; color: #664400;
 }
@@ -1658,9 +1665,12 @@ table.registration {
 	}	
 	
 .break-before {
-	page-break-before:always;
+	page-break-before: always;
 	}	
-		
+.break-after {
+	page-break-after: always;
+	}	
+
 #pagewrapper_registration {
 	width: 800px;
 	margin-right:auto;
