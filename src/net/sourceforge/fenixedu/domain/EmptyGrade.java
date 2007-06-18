@@ -19,4 +19,9 @@ public class EmptyGrade extends Grade {
     public String exportAsString() {
         return null;
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
 }

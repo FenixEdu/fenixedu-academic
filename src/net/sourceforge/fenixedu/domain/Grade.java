@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class Grade {
+public class Grade implements Serializable {
     
     private static Grade emptyGrade = new EmptyGrade();
     
@@ -81,5 +82,9 @@ public class Grade {
 	stringBuilder.append(value.trim());
 	
 	return stringBuilder.toString();	
+    }
+    
+    public boolean isEmpty() {
+	return false;
     }
 }
