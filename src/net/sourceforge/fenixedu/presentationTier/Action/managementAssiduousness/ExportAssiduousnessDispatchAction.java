@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -120,6 +121,22 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	for (AssiduousnessMonthlyResume assiduousnessMonthlyResume : assiduousnessMonthlyResumeList) {
 	    assiduousnessMonthlyResume.getExcelRow(spreadsheet);
 	}
+	final ServletOutputStream writer = response.getOutputStream();
+	spreadsheet.getWorkbook().write(writer);
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+
+    public ActionForward exportJustifications(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	assiduousnessExportChoices.setYearMonth();
+	final IUserView userView = SessionUtils.getUserView(request);
+	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService(
+		userView, "ExportJustifications", new Object[] { assiduousnessExportChoices });
+	response.setContentType("text/plain");
+	response.setHeader("Content-disposition", "attachment; filename=justificacoes.xls");
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.getWorkbook().write(writer);
 	writer.flush();

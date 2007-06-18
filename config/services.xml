@@ -9776,6 +9776,15 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>ExportJustifications</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportJustifications</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>ReadMonthResume</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthResume</implementationClass>
 		<description />

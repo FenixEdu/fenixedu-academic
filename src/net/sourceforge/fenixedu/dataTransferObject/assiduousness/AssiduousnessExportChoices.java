@@ -78,6 +78,13 @@ public class AssiduousnessExportChoices implements Serializable {
 	return result;
     }
 
+    public boolean satisfiedAll(Assiduousness assiduousness) {
+	setYearMonth();
+	return (assiduousness.isStatusActive(beginDate, endDate) && satisfiedCostCenter(assiduousness)
+		&& satisfiedScheduleAcronym(assiduousness) && satisfiedStatus(assiduousness));
+
+    }
+
     private boolean satisfiedJustification(
 	    HashMap<Assiduousness, List<Justification>> justificationsMap, Assiduousness assiduousness) {
 	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
@@ -169,6 +176,46 @@ public class AssiduousnessExportChoices implements Serializable {
 		    justificationsList.add((Justification) assiduousnessRecord);
 		    justificationsMap.put(assiduousnessRecord.getAssiduousness(), justificationsList);
 		}
+	    }
+	}
+	return justificationsMap;
+    }
+
+    public HashMap<Assiduousness, List<Justification>> getAllJustificationMap() {
+	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
+	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
+		Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
+	for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance()
+		.getAssiduousnessRecords()) {
+	    if (assiduousnessRecord.isLeave()
+		    && !assiduousnessRecord.isAnulated()
+		    && (StringUtils.isEmpty(getJustificationMotiveAcronym()) || ((Leave) assiduousnessRecord)
+			    .getJustificationMotive().getAcronym().equals(
+				    getJustificationMotiveAcronym()))) {
+		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
+			((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
+		if (leaveInterval.overlaps(interval)) {
+		    List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord
+			    .getAssiduousness());
+		    if (justificationsList == null) {
+			justificationsList = new ArrayList<Justification>();
+		    }
+		    justificationsList.add((Justification) assiduousnessRecord);
+		    justificationsMap.put(assiduousnessRecord.getAssiduousness(), justificationsList);
+		}
+	    } else if (assiduousnessRecord.isMissingClocking()
+		    && !assiduousnessRecord.isAnulated()
+		    && (StringUtils.isEmpty(getJustificationMotiveAcronym()) || ((MissingClocking) assiduousnessRecord)
+			    .getJustificationMotive().getAcronym().equals(
+				    getJustificationMotiveAcronym()))
+		    && interval.contains(assiduousnessRecord.getDate())) {
+		List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord
+			.getAssiduousness());
+		if (justificationsList == null) {
+		    justificationsList = new ArrayList<Justification>();
+		}
+		justificationsList.add((Justification) assiduousnessRecord);
+		justificationsMap.put(assiduousnessRecord.getAssiduousness(), justificationsList);
 	    }
 	}
 	return justificationsMap;
