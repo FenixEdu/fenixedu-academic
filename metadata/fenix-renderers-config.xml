@@ -581,8 +581,12 @@ Documentation:
 	<!--@ The default layout for a YearMonthDay automatically includes the day, month, and year -->
 	<renderer type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
-	</renderer>	
+	</renderer>
 	
+	<renderer type="org.joda.time.YearMonthDay" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${monthOfYear,02d}-${year}"/>
+	</renderer>	
+
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
     <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer">
         <property name="groupLinks" value="true"/>

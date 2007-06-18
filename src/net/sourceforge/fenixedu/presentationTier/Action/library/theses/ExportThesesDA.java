@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library.theses;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,32 +75,33 @@ public class ExportThesesDA extends LibraryThesisDA {
 		Element element = new Element("thesis");
 
 		element
-			.addContent(new Element("date").setText(thesis.getDiscussed().toString()))
-			.addContent(new Element("author").setText(thesis.getStudent().getPerson().getName()))
-			.addContent(new Element("language").setText(thesis.getLanguage().toString()))
+			.addContent(new Element("title").setText(thesis.getTitle()))
+			.addContent(new Element("subtitle").setText(thesis.getSubtitle()))
+			.addContent(new Element("date").setText(getMonthYear(thesis.getMonth(), thesis.getYear())))
+			.addContent(new Element("author").setText(thesis.getAuthors().get(0).getName()))
+			.addContent(new Element("language").setText(thesis.getLanguage()))
+			.addContent(new Element("pages").setText(stringify(thesis.getNumberPages())))
+			.addContent(new Element("url").setText(thesis.getUrl()))
 			.addContent(new Element("scientific-area").setText(thesis.getScientificArea()));
-			
-		Element title = new Element("title");
-		MultiLanguageString finalTitle = thesis.getFinalTitle();
-		for (Language language : finalTitle.getAllLanguages()) {
-			Element innerValue = new Element("value").setAttribute("lang", language.toString());
-			innerValue.setText(finalTitle.getContent(language));
-			
-			title.addContent(innerValue);
-		}
-		
-		Element subtitle = new Element("subtitle");
-		MultiLanguageString finalSubtitle = thesis.getFinalTitle();
-		for (Language language : finalSubtitle.getAllLanguages()) {
-			Element innerValue = new Element("value").setAttribute("lang", language.toString());
-			innerValue.setText(finalSubtitle.getContent(language));
-			
-			subtitle.addContent(innerValue);
-		}
-		
-		element.addContent(title).addContent(subtitle);
 		
 		return element;
+	}
+
+	private String stringify(Integer number) {
+		if (number == null) {
+			return null;
+		}
+		else {
+			return number.toString();
+		}
+	}
+
+	private String getMonthYear(Month month, Integer year) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MONTH, month.getNumberOfMonth() - 1);
+		calendar.set(Calendar.YEAR, year);
+		
+		return String.format(Locale.ENGLISH, "%1$tb %1$tY", calendar.getTime());
 	}
 
 	public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

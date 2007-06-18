@@ -27,12 +27,7 @@ public class ResultPredicates {
 
 	public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
 		public boolean evaluate(ResearchResult result) {
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
-				return true;
-			}
-			return false;
+			return result.isEditableByCurrentUser();
 		}
 	};
 
@@ -41,13 +36,7 @@ public class ResultPredicates {
 	 */
 	public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
 		public boolean evaluate(ResultUnitAssociation association) {
-			final ResearchResult result = association.getResult();
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
-				return true;
-			}
-			return false;
+			return writePredicate.evaluate(association.getResult());
 		}
 	};
 
@@ -56,13 +45,7 @@ public class ResultPredicates {
 	 */
 	public static final AccessControlPredicate<ResultParticipation> participationWritePredicate = new AccessControlPredicate<ResultParticipation>() {
 		public boolean evaluate(ResultParticipation participation) {
-			final ResearchResult result = participation.getResult();
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
-				return true;
-			}
-			return false;
+			return writePredicate.evaluate(participation.getResult());
 		}
 	};
 
@@ -71,13 +54,7 @@ public class ResultPredicates {
 	 */
 	public static final AccessControlPredicate<ResearchResultDocumentFile> documentFileWritePredicate = new AccessControlPredicate<ResearchResultDocumentFile>() {
 		public boolean evaluate(ResearchResultDocumentFile documentFile) {
-			final ResearchResult result = documentFile.getResult();
-			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& (result.hasPersonParticipation(userView.getPerson()) || result.getCreator().equals(userView.getPerson()))) {
-				return true;
-			}
-			return false;
+			return writePredicate.evaluate(documentFile.getResult());
 		}
 	};
 }

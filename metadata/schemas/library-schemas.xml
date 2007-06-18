@@ -1,40 +1,51 @@
-<schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
-    <slot name="discussed" key="label.thesis.discussed"/>
-    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name"/>
-    <slot name="finalFullTitle" key="label.thesis.title" layout="short">
+<schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="authorsNames" key="label.thesis.authors" layout="person-name"/>
+    <slot name="title" key="label.thesis.title" layout="short">
     	<property name="length" value="60"/>
     </slot>
+    <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
 </schema>
 
-<schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
-    <slot name="discussed" key="label.thesis.discussed"/>
-    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name"/>
-    <slot name="finalTitle" key="label.thesis.title"/>
-    <slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label"/>
-    <slot name="language" key="label.thesis.language"/>
-    <slot name="scientificArea" key="label.thesis.scientific.area" layout="null-as-label"/>
+<schema name="library.thesis.list.author" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" layout="person-name"/>
 </schema>
 
-<schema name="library.thesis.details.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
-    <slot name="discussed" key="label.thesis.discussed" read-only="true"/>
-    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name" read-only="true"/>
-    <slot name="finalTitle" key="label.thesis.title" read-only="true"/>
-    <slot name="finalSubtitle" key="label.thesis.subtitle"  layout="null-as-label" read-only="true"/>
-    <slot name="language" key="label.thesis.language" read-only="true"/>
+<schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="authorsNames" key="label.thesis.authors" layout="person-name"/>
+	<slot name="title" key="label.thesis.title"/>
+	<slot name="note" key="label.thesis.note" layout="short">
+		<property name="length" value="300"/>
+	</slot>
+	<slot name="keywords" key="label.thesis.keywords"/>	
+	<slot name="language" key="label.thesis.language"/>
+    <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
+	<slot name="numberPages" key="label.thesis.pages"/>
+	<slot name="url" key="label.thesis.url">
+		<property name="link" value="true"/>
+	</slot>
+    <slot name="scientificArea" key="label.thesis.scientific.area"/>
+</schema>
+
+<schema name="library.thesis.details.edit" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="authorsNames" key="label.thesis.authors" layout="person-name" read-only="true"/>
+	<slot name="title" key="label.thesis.title" read-only="true"/>
+	<slot name="note" key="label.thesis.note" layout="short" read-only="true">
+		<property name="length" value="300"/>
+	</slot>
+	<slot name="keywords" key="label.thesis.keywords" read-only="true"/>	
+	<slot name="language" key="label.thesis.language" read-only="true"/>
+    <slot name="yearMonth" layout="year-month" key="label.thesis.date" read-only="true"/>
+	<slot name="numberPages" key="label.thesis.pages"/>
+	<slot name="url" key="label.thesis.url">
+		<property name="link" value="true"/>
+	</slot>
     <slot name="scientificArea" key="label.thesis.scientific.area">
     	<property name="size" value="50"/>
     </slot>
 </schema>
 
-<schema name="library.thesis.list.exported" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="LIBRARY_RESOURCES">
-    <slot name="discussed" key="label.thesis.discussed"/>
-    <slot name="student.person.nickname" key="label.thesis.student" layout="person-name">
-    	<property name="middleNamesInicials" value="true"/>
-    </slot>
-    <slot name="finalTitle" key="label.thesis.title" layout="short"/>
-    <slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label">
-    	<property name="subLayout" value="short"/>
-    </slot>
-    <slot name="language" key="label.thesis.language"/>
-    <slot name="scientificArea" key="label.thesis.scientific.area" layout="null-as-label"/>
+<schema name="library.thesis.list.exported" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="LIBRARY_RESOURCES">
+    <slot name="authorsNames" key="label.thesis.authors" layout="person-name"/>
+    <slot name="title" key="label.thesis.title" layout="short"/>
+    <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
 </schema>

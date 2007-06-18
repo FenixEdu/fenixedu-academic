@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -97,7 +96,6 @@ public class Thesis extends Thesis_Base {
         
         setRootDomainObject(RootDomainObject.getInstance());
         setDeclarationAccepted(false);
-        setLibraryConfirmation(false);
         
         create();
     }
@@ -576,7 +574,7 @@ public class Thesis extends Thesis_Base {
     /**
 	 * Indicates if this thesis is the last one that can be created for this
 	 * enrolment, that is, if the student can have any other thesis after this
-	 * one for the same enrolment. A student can present up to two thesis in a
+	 * one for the same enrolment. A student can present up to two theses in a
 	 * single enrolment. This corresponds to 2 distinct evaluation chances:
 	 * first semester, second semester.
 	 * 
@@ -593,6 +591,15 @@ public class Thesis extends Thesis_Base {
         }
     }
 
+    /**
+     * Same as the above but also ensures that the student had a positive grade.
+     * 
+     * @return <code>true</code> if the student had a positive grade
+     */
+    public boolean isFinalAndApprovedThesis() {
+    	return isFinalThesis() && !getEvaluationMark().equals(GradeScale.RE);
+    }
+    
     /**
      * Verifies if the student has any EnrolmentEvaluation crated by a
      * MarkSheet.
@@ -1235,30 +1242,4 @@ public class Thesis extends Thesis_Base {
         setOrientatorCreditsDistribution(percent != null ? 100 - percent : null);
     }
 
-    @Override
-    public String getScientificArea() {
-    	String customArea = super.getScientificArea();
-    	
-    	if (customArea != null) {
-    		return customArea;
-    	}
-
-    	ScientificArea scientificArea = getEnrolment().getCurricularCourse().getScientificArea();
-    	if (scientificArea != null) {
-    		return scientificArea.getName();
-    	}
-        	
-    	return null;
-    }
-
-	public boolean isLibraryDetailsConfirmed() {
-		Boolean confirmation = getLibraryConfirmation();
-		return confirmation != null && confirmation;
-	}
-
-	public boolean isLibraryDetailsExported() {
-		Boolean exported = getLibraryExported();
-		return exported != null && exported;
-	}
-    
 }

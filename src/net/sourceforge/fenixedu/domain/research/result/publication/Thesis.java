@@ -1,17 +1,21 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import bibtex.dom.BibtexEntry;
-import bibtex.dom.BibtexFile;
-import bibtex.dom.BibtexPersonList;
-import bibtex.dom.BibtexString;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
+
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPersonList;
+import bibtex.dom.BibtexString;
 
 /**
  * mastersthesis A Master's thesis. Required fields: author, title, school,
@@ -207,4 +211,78 @@ public class Thesis extends Thesis_Base {
     public String getSchema() {
     	return usedSchema;
     }
+    
+    @Override
+    public boolean isDeletableByCurrentUser() {
+    	return !hasThesis() && super.isDeletableByCurrentUser();
+    }
+    
+    @Override
+    public boolean isEditableByCurrentUser() {
+    	return !hasThesis() && super.isEditableByCurrentUser();
+    }
+    
+    @Override
+    public String getScientificArea() {
+    	String customArea = super.getScientificArea();
+    	
+    	if (customArea != null) {
+    		return customArea;
+    	}
+
+    	CurricularCourse curricularCourse = getThesis().getEnrolment().getCurricularCourse();
+		ScientificArea scientificArea = curricularCourse.getScientificArea();
+    	if (scientificArea != null) {
+    		return scientificArea.getName();
+    	}
+        	
+    	return null;
+    }
+
+	public boolean isLibraryDetailsConfirmed() {
+		Boolean confirmation = getLibraryConfirmation();
+		return confirmation != null && confirmation;
+	}
+
+	public boolean isLibraryDetailsExported() {
+		Boolean exported = getLibraryExported();
+		return exported != null && exported;
+	}
+
+	/**
+	 * Verifies if this publication was the result of an internal thesis evaluation process, that is,
+	 * if this thesis result is connected to the theses from the evaluation process.
+	 * 
+	 * @return <code>true</code> if the result is connected to a process thesis
+	 */
+	public boolean isInternalThesis() {
+		return hasThesis() && getThesis().isFinalAndApprovedThesis();
+	}
+
+	public String getSubtitle() {
+		if (! hasThesis()) {
+			return null;
+		}
+		else {
+			return getThesis().getFinalSubtitle().getContent(getThesis().getLanguage());
+		}
+	}
+	
+	public String getAuthorsNames() {
+		StringBuilder builder = new StringBuilder();
+		
+		for (Person person : getAuthors()) {
+			if (builder.length() > 0) {
+				builder.append(", ");
+			}
+			
+			builder.append(person.getName());
+		}
+		
+		return builder.toString();
+	}
+	
+	public YearMonthDay getYearMonth() {
+		return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
+	}
 }

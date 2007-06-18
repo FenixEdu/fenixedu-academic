@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

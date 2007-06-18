@@ -29,7 +29,7 @@
 	</logic:messagesPresent>
 
 	<bean:define id="sortedBy">
-		<%= request.getParameter("sortBy") == null ? "discussed" : request.getParameter("sortBy") %>
+		<%= request.getParameter("sortBy") == null ? "yearMonth" : request.getParameter("sortBy") %>
 	</bean:define>
 
     <fr:view name="theses" schema="library.thesis.list">

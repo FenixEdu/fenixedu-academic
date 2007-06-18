@@ -6,44 +6,83 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 public abstract class LibraryThesisDA extends FenixDispatchAction {
 
-	protected List<Thesis> getUnconfirmedTheses() {
-		List<Thesis> result = new ArrayList<Thesis>();
+	private static abstract class ThesesFilter {
 		
-		for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-			if (! thesis.isFinalThesis()) {
-				continue;
+		public List<Thesis> filter() {
+			List<Thesis> list = new ArrayList<Thesis>();
+			
+			for (ResearchResult result  : RootDomainObject.getInstance().getResults()) {
+				if (! (result instanceof Thesis)) {
+					continue;
+				}
+				
+				Thesis thesis = (Thesis) result;
+				if (! thesis.isInternalThesis()) {
+					continue;
+				}
+				
+				if (isAcceptable(thesis)) {
+					list.add(thesis);
+				}
 			}
 			
-			Integer mark = thesis.getMark();
-			if (mark == null || mark <= 10) {
-				continue;
-			}
-			
-			if (thesis.isLibraryDetailsConfirmed()) {
-				continue;
-			}
-			
-			result.add(thesis);
+			return list;
 		}
+
+		protected abstract boolean isAcceptable(Thesis thesis);
 		
-		return result;
+	}
+	
+	protected List<Thesis> getUnconfirmedTheses() {
+		return new ThesesFilter() {
+
+			@Override
+			protected boolean isAcceptable(Thesis thesis) {
+				return !thesis.isLibraryDetailsConfirmed();
+			}
+			
+		}.filter();
+	}
+
+
+	protected List<Thesis> getOnlyConfirmedTheses() {
+		return new ThesesFilter() {
+
+			@Override
+			protected boolean isAcceptable(Thesis thesis) {
+				return thesis.isLibraryDetailsConfirmed() && !thesis.isLibraryDetailsExported();
+			}
+			
+		}.filter();
+	}
+
+	protected List<Thesis> getExportedTheses() {
+		return new ThesesFilter() {
+
+			@Override
+			protected boolean isAcceptable(Thesis thesis) {
+				return thesis.isLibraryDetailsConfirmed() && thesis.isLibraryDetailsExported();
+			}
+			
+		}.filter();
 	}
 
 	protected Thesis getThesis(HttpServletRequest request) {
 		Integer id = getIdInternal(request, "thesisID");
 		
 		if (id != null) {
-			return RootDomainObject.getInstance().readThesisByOID(id);
+			return (Thesis) RootDomainObject.getInstance().readResearchResultByOID(id);
 		}
 		
 		return null;
@@ -53,12 +92,12 @@ public abstract class LibraryThesisDA extends FenixDispatchAction {
 		List<Integer> ids = getIdInternals(request, "thesesIDs");
 		
 		if (ids == null) {
-			return null;
+			return Collections.emptyList();
 		}
 	
 		List<Thesis> theses = new ArrayList<Thesis>();
 		for (Integer id : ids) {
-			Thesis thesis = RootDomainObject.getInstance().readThesisByOID(id);
+			Thesis thesis = (Thesis) RootDomainObject.getInstance().readResearchResultByOID(id);
 			
 			if (thesis == null) {
 				return Collections.emptyList();
@@ -91,40 +130,5 @@ public abstract class LibraryThesisDA extends FenixDispatchAction {
 		
 		return result;
 	}
-
-	protected List<Thesis> getOnlyConfirmedTheses() {
-		List<Thesis> result = new ArrayList<Thesis>();
-		
-		for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-			if (! thesis.isLibraryDetailsConfirmed()) {
-				continue;
-			}
-			
-			if (thesis.isLibraryDetailsExported()) {
-				continue;
-			}
-			
-			result.add(thesis);
-		}
-		return result;
-	}
-
-	protected List<Thesis> getExportedTheses() {
-		List<Thesis> result = new ArrayList<Thesis>();
-		
-		for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
-			if (! thesis.isLibraryDetailsConfirmed()) {
-				continue;
-			}
-			
-			if (! thesis.isLibraryDetailsExported()) {
-				continue;
-			}
-			
-			result.add(thesis);
-		}
-		return result;
-	}
-
 	
 }
