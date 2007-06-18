@@ -56,7 +56,7 @@ public class CheckPathByRoleFilter implements Filter {
     }
 
     private boolean isDomainBrowser(final String uri) {
-	return uri.startsWith("/domainbrowser");
+	return uri.startsWith("/domainbrowser/") || uri.startsWith("domainbrowser/");
     }
 
     private boolean isJavascript(final String uri) {
