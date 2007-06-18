@@ -9,6 +9,6 @@ public class EditExternalEnrolment extends Service {
     
     public void run(final EditExternalEnrolmentBean bean, final Student student) {
 	final ExternalEnrolment externalEnrolment = bean.getExternalEnrolment();
-	externalEnrolment.edit(student, bean.getGradeValue(), bean.getExecutionPeriod(), bean.getEvaluationDate());
+	externalEnrolment.edit(student, bean.getGrade(), bean.getExecutionPeriod(), bean.getEvaluationDate());
     }
 }

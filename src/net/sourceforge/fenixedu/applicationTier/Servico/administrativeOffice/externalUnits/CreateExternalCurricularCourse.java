@@ -22,7 +22,7 @@ public class CreateExternalCurricularCourse extends Service {
 		throw new FenixServiceException("error.CreateExternalEnrolment.student.cannot.be.null");
 	    }
 	    new ExternalEnrolment(student, externalCurricularCourse, externalEnrolmentBean
-		    .getGradeValue(), externalEnrolmentBean.getExecutionPeriod(), externalEnrolmentBean
+		    .getGrade(), externalEnrolmentBean.getExecutionPeriod(), externalEnrolmentBean
 		    .getEvaluationDate());
 	}
 	return externalCurricularCourse;

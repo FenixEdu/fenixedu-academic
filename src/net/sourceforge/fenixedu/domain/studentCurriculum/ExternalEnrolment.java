@@ -34,10 +34,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	if(AccessControl.getPerson() != null){
 	    setCreatedBy(AccessControl.getPerson().getUsername());
 	}
-	setGrade(Grade.createEmptyGrade());
     }
     
-    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final String grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
+    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
         this();
         if(student == null) {
             throw new DomainException("error.externalEnrolment.student.cannot.be.null");
@@ -45,13 +44,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         if(externalCurricularCourse == null) {
             throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
         }
-        if (StringUtils.isEmpty(grade)) {
+        if (grade == null || grade.isEmpty()) {
             throw new DomainException("error.externalEnrolment.invalid.grade");
         }
         checkIfCanCreateExternalEnrolment(student, externalCurricularCourse);
         setStudent(student);
         setExternalCurricularCourse(externalCurricularCourse);
-        setGradeValue(grade);
+        setGradeValue(grade.getValue());
+        setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
     }
@@ -64,14 +64,15 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
     
-    public void edit(final Student student, final String gradeValue, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
+    public void edit(final Student student, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
 	
 	if (student != getStudent()) {
 	    checkIfCanCreateExternalEnrolment(student, getExternalCurricularCourse());
 	}
 	
 	setStudent(student);
-        setGradeValue(gradeValue);
+        setGradeValue(grade.getValue());
+        setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
     }
@@ -126,6 +127,11 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public Unit getAcademicUnit() {
 	return getExternalCurricularCourse().getAcademicUnit();
+    }
+    
+    @Override
+    public String getGradeValue() {
+        return getGrade().getValue();
     }
 
 }

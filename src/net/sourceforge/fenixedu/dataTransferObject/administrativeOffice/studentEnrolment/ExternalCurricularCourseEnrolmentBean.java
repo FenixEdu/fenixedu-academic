@@ -8,13 +8,14 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.external
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import net.sourceforge.fenixedu.domain.Grade;
 
 public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     
     private ExternalCurricularCourseResultBean externalCurricularCourseResultBean;
     private DomainReference<ExecutionPeriod> executionPeriod;
-    private String gradeValue;
     private YearMonthDay evaluationDate;
+    private Grade grade;
     
     public ExternalCurricularCourseEnrolmentBean(final ExternalCurricularCourse externalCurricularCourse) {
 	setExternalCurricularCourseResultBean(new ExternalCurricularCourseResultBean(externalCurricularCourse));
@@ -36,14 +37,6 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
 
-    public String getGradeValue() {
-        return gradeValue;
-    }
-
-    public void setGradeValue(String grade) {
-        this.gradeValue = grade;
-    }
-    
     public ExternalCurricularCourse getExternalCurricularCourse() {
 	return getExternalCurricularCourseResultBean().getExternalCurricularCourse();
     }
@@ -54,5 +47,13 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 
     public void setEvaluationDate(YearMonthDay evaluationDate) {
         this.evaluationDate = evaluationDate;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 }

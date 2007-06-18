@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externa
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import net.sourceforge.fenixedu.domain.Grade;
+
+import org.joda.time.YearMonthDay;
 
 public class CreateExternalEnrolmentBean implements Serializable {
 
@@ -14,7 +15,7 @@ public class CreateExternalEnrolmentBean implements Serializable {
     private DomainReference<ExecutionPeriod> executionPeriod;
 
     private Integer studentNumber;
-    private String gradeValue;
+    private Grade grade;
     private YearMonthDay evaluationDate;
     
     public CreateExternalEnrolmentBean() {
@@ -40,14 +41,6 @@ public class CreateExternalEnrolmentBean implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    public String getGradeValue() {
-        return gradeValue;
-    }
-
-    public void setGradeValue(String gradeValue) {
-        this.gradeValue = gradeValue;
-    }
-    
     public ExecutionPeriod getExecutionPeriod() {
 	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
     }
@@ -62,5 +55,13 @@ public class CreateExternalEnrolmentBean implements Serializable {
 
     public void setEvaluationDate(YearMonthDay evaluationDate) {
         this.evaluationDate = evaluationDate;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 }

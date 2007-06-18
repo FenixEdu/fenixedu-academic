@@ -42,6 +42,15 @@
 		<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
 		<html:hidden property="externalUnitId" value="<%= externalUnitId.toString() %>"/>
 		
+		<fr:hasMessages for="externalCurricularCourseEnrolmentBeans" type="validation">
+			<span class="error0">
+				<br />
+				<fr:messages for="externalCurricularCourseEnrolmentBeans" type="validation">
+					<fr:message for="externalCurricularCourseEnrolmentBeans" type="validation"/>
+				</fr:messages>
+			</span>
+		</fr:hasMessages>
+		
 		<fr:edit id="externalCurricularCourseEnrolmentBeans"
 				 name="externalCurricularCourseEnrolmentBeans"
 				 schema="ExternalCurricularCourseEnrolmentBean.edit">
