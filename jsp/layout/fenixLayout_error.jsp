@@ -14,46 +14,85 @@
 <bean:define id="pageTitle" ><tiles:getAsString name="title" ignore="true" /></bean:define>
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+
+<!--[if IE 5]><style>
+#navlateral { margin: 0 -3px; }
+#bigdiv { width: 300px; }
+</style><![endif]-->
+<!--[if IE]><style>
+#wrap {	margin-right: -3000px; position: relative; width: 100%; }
+#clear { _height: 0; zoom: 1; }
+</style><![endif]-->
+
 </head>
+
 <body>
+
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
+
 <!-- Context -->
 <tiles:insert attribute="context" ignore="true"/>
 <!--End Context -->
+
+
 <!-- Header -->
-<div id="header">	
-	<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
-	<bean:define id="pageServiceName" ><tiles:getAsString name="serviceName" ignore="true" /></bean:define>
-    <p><bean:message name="pageServiceName" bundle="GLOBAL_RESOURCES"/></p>
+<div id="top">
+	<h1 id="logo">
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+	</h1>
+
+	<%--
+	<tiles:getAsString name="serviceName" />
+	--%>
+	
+	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
+	<ul>
+		<li style="display: none;"><a href="">Skip to Content</a> |</li>
+		<li class="support"><a href="<%= supportLink %>">Suporte</a></li>
+		<li class="logout"><a href="<%= request.getContextPath() %>/logoff.do">Logout</a></li>
+	</ul>
+	<p id="user">
+		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
+	</p>
 </div>
-<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />"/></a><a href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />"/></a></div>
-<div><!-- hack to make "hdr-nav" appear in IE --></div>
 <!-- End Header -->
+
+
 <!-- NavGeral -->
-<tiles:insert attribute="navGeral" />
-
-<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
-
-<!-- End NavGeral -->
-<!-- Navbar Lateral e Body Content -->
-<table width="100%" border="0" cellspacing="0">
-   <tr>
-     <td id="bodycontent" width="100%" align="left" valign="top" >
-     	<tiles:insert attribute="body-context" ignore="true"/>
-     	<tiles:insert attribute="body" ignore="true"/>
-     	<tiles:getAsString name="body-inline" ignore="true"/>
-	</td>
-  </tr>
-</table>
-<!--End Navbar Lateral e Body Content -->
-<!-- Footer -->
-<div id="footer">
-    <tiles:insert attribute="footer" />
+<div id="navtop">
+	<tiles:insert attribute="navGeral" />
 </div>
-<!--End Footer -->
+<!-- End NavGeral -->
+
+
+<!-- Container -->
+<div id="container">
+	
+	<!-- Content -->
+	<div id="content">
+		<!-- Wrap -->
+		<div id="wrap">
+	     	<tiles:insert attribute="body-context" ignore="true"/>
+	     	<tiles:insert attribute="body" ignore="true"/>
+	     	<tiles:getAsString name="body-inline" ignore="true"/>
+		</div>
+		<!-- End Wrap -->
+	</div>
+	<!-- End Content -->
+
+	<!-- Footer -->
+	<div id="footer">
+		<tiles:insert attribute="footer" />
+	</div>
+	<!--End Footer -->
+
+</div>
+<!-- End Container -->
+
+
 <script type="text/javascript">
 	hideButtons()
 </script>
+
 </body>
 </html:html>
