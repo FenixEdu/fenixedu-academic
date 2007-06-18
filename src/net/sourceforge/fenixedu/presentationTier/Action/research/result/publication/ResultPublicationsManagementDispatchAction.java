@@ -377,6 +377,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		}
 
 		request.setAttribute("resultId", publicationChanged.getIdInternal());
+		bean.setIdInternal(publicationChanged.getIdInternal());
 		return showPublication(mapping, form, request, response);
 	}
 
