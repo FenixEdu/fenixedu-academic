@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changing table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
-execute "Connect thesis process and result publication" connectThesisAndPublications.sql

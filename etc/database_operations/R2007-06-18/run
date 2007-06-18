@@ -31,3 +31,5 @@ execute "Changing table EquivalencePlan" AlterTableEquivalencePlan.sql
 execute "Changing table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
 execute "Creating CurricularCourseEquivalencePlanEntryNewCurricularCourse Table" CreateTableCurricularCourseEquivalencePlanEntryNewCurricularCourse.sql
 
+execute "Changing table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
+execute "Connect thesis process and result publication" connectThesisAndPublications.sql
