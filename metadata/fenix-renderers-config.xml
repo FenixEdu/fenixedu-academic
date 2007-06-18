@@ -664,7 +664,7 @@ Documentation:
 	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.TestGradeInputRenderer"
               mode="input" />
 
 	<renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
@@ -862,5 +862,16 @@ Documentation:
 	<renderer mode="input" layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.ColorInputRenderer">
 		<property name="size" value="10"/>
 	</renderer>
+	
+    <renderer type="net.sourceforge.fenixedu.domain.Grade"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeInputRenderer"
+              mode="input" layout="grade-input"/>
+              
+    <renderer type="net.sourceforge.fenixedu.domain.Grade"
+              class="net.sourceforge.fenixedu.presentationTier.renderers.GradeRenderer">
+		<property name="gradeScaleClasses" value="color888 smalltxt"/>
+    </renderer>
+              
+	
 
 </renderers-config>
