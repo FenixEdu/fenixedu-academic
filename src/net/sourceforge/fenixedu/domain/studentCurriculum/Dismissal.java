@@ -141,6 +141,11 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
+    public boolean isDismissal() {
+        return true;
+    }
+    
+    @Override
     public void delete() {
         removeCredits();
         super.delete();
