@@ -50,7 +50,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         checkIfCanCreateExternalEnrolment(student, externalCurricularCourse);
         setStudent(student);
         setExternalCurricularCourse(externalCurricularCourse);
-        setGradeValue(grade.getValue());
         setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
@@ -71,7 +70,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
 	
 	setStudent(student);
-        setGradeValue(grade.getValue());
         setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
@@ -129,7 +127,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getExternalCurricularCourse().getAcademicUnit();
     }
     
-    @Override
     public String getGradeValue() {
         return getGrade().getValue();
     }

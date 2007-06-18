@@ -19,33 +19,38 @@ public class Equivalence extends Equivalence_Base {
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, String grade) {
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Grade grade) {
 	this();
 	init(studentCurricularPlan, dismissals, enrolments, grade);
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, String grade) {
+	    Collection<IEnrolment> enrolments, Double credits, Grade grade) {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, credits, grade);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, String grade) {
+	    Collection<IEnrolment> enrolments, Double credits, Grade grade) {
 	initGrade(enrolments, grade);
 	super.init(studentCurricularPlan, courseGroup, enrolments, credits);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan,
-	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, String grade) {
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Grade grade) {
 	initGrade(enrolments, grade);
 	super.init(studentCurricularPlan, dismissals, enrolments);
     }
 
-    private void initGrade(Collection<IEnrolment> enrolments, String grade) {
-	if ((enrolments == null || enrolments.isEmpty()) && StringUtils.isEmpty(grade)) {
+    private void initGrade(Collection<IEnrolment> enrolments, Grade grade) {
+	if ((enrolments == null || enrolments.isEmpty()) && grade.isEmpty()) {
 	    throw new DomainException("error.equivalence.must.define.enrolments.and.grade");
 	}
-	setGivenGrade(grade);
+	setGrade(grade);
+    }
+    
+    @Override
+    public String getGivenGrade() {
+        return getGrade().getValue();
     }
 }

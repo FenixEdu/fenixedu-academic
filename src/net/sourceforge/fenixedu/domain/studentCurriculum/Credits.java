@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -112,6 +113,10 @@ public class Credits extends Credits_Base {
     }
     
     public String getGivenGrade() {
+	return null;
+    }
+    
+    public Grade getGrade() {
 	return null;
     }
     

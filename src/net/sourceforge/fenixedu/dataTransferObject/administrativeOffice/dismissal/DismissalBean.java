@@ -7,6 +7,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -21,7 +22,7 @@ public class DismissalBean implements Serializable {
     private Collection<SelectedExternalEnrolment> externalEnrolments;
     private DismissalType dismissalType;
     private Double credits;
-    private String grade;
+    private Grade grade;
   
     public Collection<SelectedCurricularCourse> getDismissals() {
         return dismissals;
@@ -63,11 +64,11 @@ public class DismissalBean implements Serializable {
         this.dismissalType = dismissalType;
     }
 
-    public String getGradeValue() {
+    public Grade getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
     }
     

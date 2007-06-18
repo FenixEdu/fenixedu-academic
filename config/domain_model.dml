@@ -1524,7 +1524,6 @@ class net.sourceforge.fenixedu.domain.util.Email extends net.sourceforge.fenixed
 }
 
 class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
-	String gradeValue;
 	Grade grade (REQUIRED);
     String createdBy;
 	DateTime creationDateDateTime;
@@ -1541,7 +1540,6 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 }
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
-		String givenGrade;
 		Grade grade (REQUIRED);
 	}
 

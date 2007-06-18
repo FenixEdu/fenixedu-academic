@@ -560,18 +560,20 @@
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
 	</slot>
-	<slot name="gradeValue" key="label.studentDismissal.grade">
-		<property name="size" value="7"/>
-		<property name="maxLength" value="6"/>
-	</slot>
+	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
+		<property name="maxLength" value="5" />
+		<property name="required" value="false" />
+		<property name="size" value="5" />
+	</slot>	
 </schema>
 
 <schema name="DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="gradeValue" key="label.studentDismissal.grade">
-		<property name="size" value="7"/>
-		<property name="maxLength" value="6"/>
-	</slot>
+	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
+		<property name="maxLength" value="5" />
+		<property name="required" value="false" />
+		<property name="size" value="5" />
+	</slot>	
 </schema>
 
 <schema name="DismissalBean.chooseEquivalents" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -606,7 +608,7 @@
 	<slot name="externalEnrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
 	</slot>	
-	<slot name="externalEnrolment.gradeValue" key="label.studentDismissal.grade" read-only="true"/>	
+	<slot name="externalEnrolment.grade" key="label.studentDismissal.grade" read-only="true"/>	
 </schema>
 
 <schema name="student.Dismissal.choose.external.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -625,7 +627,7 @@
 		<property name="eachSchema" value="equivalence.view" />
 	</slot>
 	<slot name="givenCredits" key="label.ects.credits"/>	
-	<slot name="givenGrade" key="label.studentDismissal.grade"/>	
+	<slot name="grade" key="label.studentDismissal.grade"/>	
 </schema>
 
 <schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.IEnrolment" >

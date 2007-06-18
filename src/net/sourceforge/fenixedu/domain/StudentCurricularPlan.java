@@ -2189,7 +2189,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
-	    Double givenCredits, String givenGrade) {
+	    Double givenCredits, Grade givenGrade) {
 	if ((courseGroup == null && (dismissals == null || dismissals.isEmpty()))
 		|| (courseGroup != null && dismissals != null && !dismissals.isEmpty())) {
 	    throw new DomainException("error.equivalence.wrong.arguments");
