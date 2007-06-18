@@ -9,8 +9,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
+import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry.CourseGroupEquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.CurricularCourseEquivalencePlanEntryCreator;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +44,10 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	    final Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = curricularCourse.getNewCurricularCourseEquivalencePlanEntry(equivalencePlan);
 	    request.setAttribute("curricularCourseEquivalencePlanEntries", curricularCourseEquivalencePlanEntries);
 	}
+	final CourseGroup courseGroup = getCourseGroup(request);
+	if (courseGroup != null) {
+	    request.setAttribute("courseGroupEquivalencePlanEntries", courseGroup.getEquivalencePlanEntrySet());
+	}
 	return mapping.findForward("showPlan");
     }
 
@@ -61,12 +68,35 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	return mapping.findForward("addEquivalency");
     }
 
+    public ActionForward prepareAddCourseGroupEquivalency(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	CourseGroupEquivalencePlanEntryCreator courseGroupEquivalencePlanEntryCreator = (CourseGroupEquivalencePlanEntryCreator) getRenderedObject();
+	final EquivalencePlan equivalencePlan;
+	if (courseGroupEquivalencePlanEntryCreator == null) {
+	    equivalencePlan = getEquivalencePlan(request);
+	    final CourseGroup courseGroup = getCourseGroup(request);
+	    courseGroupEquivalencePlanEntryCreator = new CourseGroupEquivalencePlanEntryCreator(equivalencePlan, courseGroup);
+	} else {
+	    equivalencePlan = courseGroupEquivalencePlanEntryCreator.getEquivalencePlan();
+	}
+	request.setAttribute("equivalencePlan", equivalencePlan);
+	request.setAttribute("courseGroupEquivalencePlanEntryCreator", courseGroupEquivalencePlanEntryCreator);
+	return mapping.findForward("addCourseGroupEquivalency");
+    }
+
     public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry = getCurricularCourseEquivalencePlanEntry(request);
-	final Object[] args = { curricularCourseEquivalencePlanEntry };
-	executeService(request, "DeleteCurricularCourseEquivalencePlanEntry", args);
+	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
+	final Object[] args = { equivalencePlanEntry };
+	executeService(request, "DeleteEquivalencePlanEntry", args);
 	return mapping.findForward("showPlan");
+    }
+
+    private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
+	final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
+	final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
+	return equivalencePlanEntryID == null ? null
+		: (EquivalencePlanEntry) RootDomainObject.getInstance().readEquivalencePlanEntryByOID(equivalencePlanEntryID);
     }
 
     private CurricularCourseEquivalencePlanEntry getCurricularCourseEquivalencePlanEntry(
@@ -77,6 +107,13 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	return curricularCourseEquivalencePlanEntryID == null ? null
 		: (CurricularCourseEquivalencePlanEntry) RootDomainObject.getInstance()
 			.readEquivalencePlanEntryByOID(curricularCourseEquivalencePlanEntryID);
+    }
+
+    private CourseGroup getCourseGroup(HttpServletRequest request) {
+	final String courseGroupIDString = request.getParameter("courseGroupID");
+	final Integer courseGroupID = getInteger(courseGroupIDString);
+	return courseGroupID == null ? null : (CourseGroup) RootDomainObject.getInstance()
+		.readDegreeModuleByOID(courseGroupID);
     }
 
     private CurricularCourse getCurricularCourse(HttpServletRequest request) {

@@ -105,6 +105,10 @@
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
 	</definition>
+	<definition name="add-course-group-equivalency" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
+		<put name="body" value="/coordinator/degreeCurricularPlan/addCourseGroupEquivalency.jsp"/>
+	</definition>
 	<definition name="view-course-information" extends="definition.coordinator.two-column">
 		<put name="body" value="/gesdis/viewCourseInformation.jsp">
 		</put>

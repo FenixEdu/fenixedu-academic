@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -37,7 +36,7 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	}
     }
 
-    public SortedSet<CurricularCourseEquivalencePlanEntry> getOrderedEntries() {
+    public SortedSet<CurricularCourseEquivalencePlanEntry> getOrderedCurricularCourseEntries() {
 	final SortedSet<CurricularCourseEquivalencePlanEntry> entries = new TreeSet<CurricularCourseEquivalencePlanEntry>(CurricularCourseEquivalencePlanEntry.COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES_AND_NEW_CURRICULAR_COURSE_NAMES);
 	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
 	    if (equivalencePlanEntry.isCurricularCourseEntry()) {
@@ -45,6 +44,21 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	    }
 	}
 	return entries;
+    }
+
+    public SortedSet<CourseGroupEquivalencePlanEntry> getOrderedCourseGroupEntries() {
+	try {
+	final SortedSet<CourseGroupEquivalencePlanEntry> entries = new TreeSet<CourseGroupEquivalencePlanEntry>(CourseGroupEquivalencePlanEntry.COMPARATOR_BY_OLD_COURSE_GROUP_NAME_AND_NEW_COURSE_GROUP_NAME);
+	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
+	    if (equivalencePlanEntry.isCourseGroupEntry()) {
+		entries.add((CourseGroupEquivalencePlanEntry) equivalencePlanEntry);
+	    }
+	}
+	return entries;
+	} catch (Throwable t) {
+	    t.printStackTrace();
+	    throw new Error(t);
+	}
     }
 
 }

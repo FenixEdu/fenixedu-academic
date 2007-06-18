@@ -318,4 +318,13 @@ public class Context extends Context_Base implements Comparable<Context> {
 	degreeModule.getAllCurricularCourses(curricularCourses);
     }
 
+    public void addAllCourseGroups(Set<CourseGroup> courseGroups) {
+	final DegreeModule degreeModule = getChildDegreeModule();
+	if (!degreeModule.isLeaf()) {
+	    final CourseGroup courseGroup = (CourseGroup) degreeModule;
+	    courseGroups.add(courseGroup);
+	    courseGroup.getAllCoursesGroupse(courseGroups);
+	}
+    }
+
 }

@@ -59,20 +59,20 @@
 		</html:link>
 		<br/>
 		<br/>
-		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
-				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.add"/>
-		</html:link>
-		<br/>
-		<br/>
 		<logic:present name="curricularCourseEquivalencePlanEntries">
-			<bean:define id="entries" name="curricularCourseEquivalencePlanEntries" toScope="request"/>
+			<bean:define id="curricularCourseEntries" name="curricularCourseEquivalencePlanEntries" toScope="request"/>
+			<jsp:include page="showEquivalencyPlanTable.jsp"/>
+		</logic:present>
+		<logic:present name="courseGroupEquivalencePlanEntries">
+			<bean:define id="courseGroupEntries" name="courseGroupEquivalencePlanEntries" toScope="request"/>
 			<jsp:include page="showEquivalencyPlanTable.jsp"/>
 		</logic:present>
 		<logic:notPresent name="curricularCourseEquivalencePlanEntries">
-			<bean:define id="entries" name="degreeCurricularPlan" property="equivalencePlan.orderedEntries" toScope="request"/>
-			<jsp:include page="showEquivalencyPlanTable.jsp"/>
+			<logic:notPresent name="courseGroupEquivalencePlanEntries">
+				<bean:define id="curricularCourseEntries" name="degreeCurricularPlan" property="equivalencePlan.orderedCurricularCourseEntries" toScope="request"/>
+				<bean:define id="courseGroupEntries" name="degreeCurricularPlan" property="equivalencePlan.orderedCourseGroupEntries" toScope="request"/>
+				<jsp:include page="showEquivalencyPlanTable.jsp"/>
+			</logic:notPresent>
 		</logic:notPresent>
 	</logic:present>
 </logic:present>

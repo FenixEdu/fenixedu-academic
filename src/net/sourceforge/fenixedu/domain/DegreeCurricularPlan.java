@@ -1536,4 +1536,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return studentCurricularPlans;
 	}
 
+    public Set<CourseGroup> getAllCoursesGroups() {
+	final Set<CourseGroup> courseGroups = new TreeSet<CourseGroup>(CourseGroup.COMPARATOR_BY_NAME);
+	if (hasRoot()) {
+	    courseGroups.add(getRoot());
+	    getRoot().getAllCoursesGroupse(courseGroups);
+	}
+	return courseGroups;
+    }
+
 }

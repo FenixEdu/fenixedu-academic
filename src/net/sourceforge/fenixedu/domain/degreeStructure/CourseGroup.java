@@ -617,7 +617,13 @@ public class CourseGroup extends CourseGroup_Base {
 	    context.getAllCurricularCourses(curricularCourses);
 	}
     }
-    
+
+    public void getAllCoursesGroupse(final Set<CourseGroup> courseGroups) {
+	for (final Context context : getChildContextsSet()) {
+	    context.addAllCourseGroups(courseGroups);
+	}
+    }
+
     public boolean allowChildWith(final ExecutionPeriod executionPeriod) {
 	return getMinimumExecutionPeriod().isBeforeOrEquals(executionPeriod);
     }

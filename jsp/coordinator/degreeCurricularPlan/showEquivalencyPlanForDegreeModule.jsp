@@ -74,14 +74,43 @@
 </logic:equal>
 <logic:notEqual name="degreeModule" property="leaf" value="true">
 
+	<bean:define id="courseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" name="degreeModule"/>
 	<bean:define id="indentLevel" type="java.lang.String" name="indentLevel"/>
 	<bean:define id="width" type="java.lang.String" name="width"/>
 
 	<div style="padding-left: <%= indentLevel %>em;">
 		<table class="showinfo3 mvert0" style="width: <%= width %>em;">
 			<tr class="bgcolor2">
-				<th class="aleft" colspan="3">
+				<th class="aleft">
 					<bean:write name="degreeModule" property="name"/>
+				</th>
+				<th class="smalltxt" align="center" style="width: 14em;">
+					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddCourseGroupEquivalency&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getIdInternal() + "&amp;courseGroupID="
+							+ courseGroup.getIdInternal() %>">
+						<bean:message key="link.equivalency.add"/>
+					</html:link>
+				</th>
+				<th class="smalltxt" align="right" style="width: 22em;">
+					<%
+						java.util.Set<net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry> courseGroupEquivalencePlanEntries  = courseGroup.getEquivalencePlanEntrySet();
+						request.setAttribute("courseGroupEquivalencePlanEntries", courseGroupEquivalencePlanEntries);
+					%>					
+					<bean:size id="numElements" name="courseGroupEquivalencePlanEntries"/>
+					<logic:equal name="numElements" value="0">
+						<span style="color: #888">
+							<bean:message key="message.course.group.has.no.equivalencies"/>
+						</span>
+					</logic:equal>
+					<logic:notEqual name="numElements" value="0">
+						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getIdInternal() + "&amp;courseGroupID="
+								+ courseGroup.getIdInternal() %>">
+							<bean:message key="link.equivalencies.for.course.group.view"/>
+						</html:link>
+					</logic:notEqual>
 				</th>
 			</tr>
 		</table>

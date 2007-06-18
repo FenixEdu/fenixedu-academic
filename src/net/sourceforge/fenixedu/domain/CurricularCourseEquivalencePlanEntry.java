@@ -209,14 +209,12 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     }
 
     @Checked("EquivalencePlanPredicates.isCoordinator")
+    @Override
     public void delete() {
 	removeCourseGroupEquivalencePlanEntry();
-	removeEquivalencePlan();
-	getEquivalencePlansSet().clear();
 	getNewCurricularCoursesSet().clear();
 	getOldCurricularCoursesSet().clear();
-	removeRootDomainObject();
-	deleteDomainObject();
+	super.delete();
     }
 
     public void checkPermissions(final Person person) {

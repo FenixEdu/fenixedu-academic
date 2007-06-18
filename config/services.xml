@@ -12009,8 +12009,8 @@
 		</filterChains>
     </service>
     <service>
-    	<name>DeleteCurricularCourseEquivalencePlanEntry</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteCurricularCourseEquivalencePlanEntry</implementationClass>
+    	<name>DeleteEquivalencePlanEntry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquivalencePlanEntry</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>

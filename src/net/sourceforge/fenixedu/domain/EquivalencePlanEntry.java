@@ -38,4 +38,11 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public boolean isCurricularCourseEntry() {
 	return false;
     }
+
+    public void delete() {
+	removeRootDomainObject();
+	removeEquivalencePlan();
+	getEquivalencePlansSet().clear();
+	deleteDomainObject();
+    }
 }
