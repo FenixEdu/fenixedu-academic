@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModule_Base {
 
@@ -59,7 +59,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
         if (belongsToCompositeRule()
-                && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
+                && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
             labelList.add(new GenericPair<Object, Boolean>("label.precedenceNotEnrolled", true));
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.precedenceEnrolled", true));

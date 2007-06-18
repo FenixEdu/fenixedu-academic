@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public abstract class CurricularRule extends CurricularRule_Base implements ICurricularRule {
 
@@ -151,7 +151,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     abstract public List<GenericPair<Object, Boolean>> getLabel();
 
-    static public CurricularRule createCurricularRule(final LogicOperators logicOperator,
+    static public CurricularRule createCurricularRule(final LogicOperator logicOperator,
 	    final CurricularRule... curricularRules) {
 	switch (logicOperator) {
 	case AND:

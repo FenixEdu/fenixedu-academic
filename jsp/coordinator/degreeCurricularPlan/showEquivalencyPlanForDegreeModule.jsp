@@ -40,6 +40,15 @@
 							<bean:message key="message.curricular.course.has.no.equivalencies"/>
 						</span>
 					</logic:equal>
+					<logic:notEqual name="numElements" value="0">
+						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getIdInternal() + "&amp;curricularCourseID="
+								+ curricularCourse.getIdInternal() %>">
+							<bean:message key="link.equivalencies.for.curricular.course.view"/>
+						</html:link>
+					</logic:notEqual>
+<%--
 					<logic:iterate id="curricularCourseEquivalencePlanEntry" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry" name="curricularCourseEquivalencePlanEntries">
 						(
 						<logic:iterate id="oldCurricularCourse" indexId="i" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="curricularCourseEquivalencePlanEntry" property="oldCurricularCoursesSortedByName">
@@ -57,6 +66,7 @@
 						</html:link>
 						<br/>
 					</logic:iterate>
+--%>
 				</td>
 			</tr>
 		</table>

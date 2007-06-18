@@ -273,20 +273,35 @@
 	<setter signature="createEquivalencePlan(sourceDegreeCurricularPlan)"/>
 </schema>
 
-<schema name="CurricularCourseEquivalencePlanEntry.Creator.addCurricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
-	<slot name="equivalencePlan" hidden="true"/>
-	<slot name="curricularCourse" hidden="true"/>
-    <slot name="curricularCourseToAdd" type="net.sourceforge.fenixedu.domain.CurricularCourse"
-    		layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCourseForEquivalencePlanEntryProvider"/>
+<schema name="CurricularCourseEquivalencePlanEntry.Creator.addOriginCurricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
+    <slot name="originCurricularCourseToAdd" type="net.sourceforge.fenixedu.domain.CurricularCourse"
+    		layout="menu-select" key="label.curricularCourse">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginCurricularCourseForEquivalencePlanEntryProvider"/>
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.CurricularCourse" />
 		<property name="format" value="${name}" />
     </slot>
-    <setter signature="add(curricularCourseToAdd)"/>
+    <setter signature="addOrigin(originCurricularCourseToAdd)"/>
+</schema>
+
+<schema name="CurricularCourseEquivalencePlanEntry.Creator.addDestinationCurricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
+    <slot name="destinationCurricularCourseToAdd" type="net.sourceforge.fenixedu.domain.CurricularCourse"
+    		layout="menu-select" key="label.curricularCourse">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationCurricularCourseForEquivalencePlanEntryProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.CurricularCourse" />
+		<property name="format" value="${name}" />
+    </slot>
+    <setter signature="addDestination(destinationCurricularCourseToAdd)"/>
+</schema>
+
+<schema name="CurricularCourseEquivalencePlanEntry.Creator.setDestinationCurricularCourseOperator" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
+    <slot name="logicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
+    		layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
+		<property name="format" value="${localizedName}" />
+    </slot>
 </schema>
 
 <schema name="CurricularCourseEquivalencePlanEntry.Creator.create" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator">
-	<slot name="equivalencePlan" hidden="true"/>
-	<slot name="curricularCourse" hidden="true"/>
     <setter signature="execute()"/>
 </schema>

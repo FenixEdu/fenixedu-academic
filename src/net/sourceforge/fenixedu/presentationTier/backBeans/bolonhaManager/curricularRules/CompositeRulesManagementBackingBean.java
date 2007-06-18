@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -95,7 +95,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
     public String createCompositeRule() throws FenixFilterException {
         try {
             final Object args[] = { 
-                    LogicOperators.valueOf(getSelectedLogicOperator()), 
+                    LogicOperator.valueOf(getSelectedLogicOperator()), 
                     getSelectedCurricularRuleIDs() };
             ServiceUtils.executeService(getUserView(), "CreateCompositeRule", args);
             removeSelectedCurricularRuleIDs();

@@ -119,7 +119,7 @@ valueType org.joda.time.TimeOfDay                                               
 valueType org.joda.time.Partial                                                                					as Partial;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    							as BibliographicReferences;
 valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    								as CurricularRuleType;
-valueType net.sourceforge.fenixedu.domain.util.LogicOperators   												as LogicOperators;
+valueType net.sourceforge.fenixedu.domain.util.LogicOperator   												    as LogicOperator;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType											as ProjectType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum									as PartyType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification							as UnitClassification;
@@ -1283,7 +1283,7 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
 	}
 	
     class net.sourceforge.fenixedu.domain.curricularRules.CompositeRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
-        LogicOperators compositeRuleType;
+        LogicOperator compositeRuleType;
     }
     
     	class net.sourceforge.fenixedu.domain.curricularRules.AndRule extends net.sourceforge.fenixedu.domain.curricularRules.CompositeRule {    
@@ -5384,7 +5384,7 @@ class net.sourceforge.fenixedu.domain.EquivalencePlanEntry extends net.sourcefor
 	class net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
 		Integer keyCourseGroupEquivalencePlanEntry;
 		Integer keyPreviousCourseGroupForNewCurricularCourses;
-		LogicOperators newCurricularCoursesOperator;
+		LogicOperator newCurricularCoursesOperator;
 	}
 	
 	class net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {

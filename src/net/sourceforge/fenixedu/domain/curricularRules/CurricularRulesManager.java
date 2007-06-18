@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class CurricularRulesManager {
 
@@ -56,7 +56,7 @@ public class CurricularRulesManager {
 	return null;
     }
 
-    public static CurricularRule createCompositeRule(LogicOperators logicOperator,
+    public static CurricularRule createCompositeRule(LogicOperator logicOperator,
 	    CurricularRule... curricularRules) {
 	return CurricularRule.createCurricularRule(logicOperator, curricularRules);
     }

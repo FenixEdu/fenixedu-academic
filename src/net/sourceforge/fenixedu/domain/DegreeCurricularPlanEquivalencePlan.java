@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEquivalencePlan_Base {
@@ -19,8 +23,7 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 
     }
 
-    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan,
-	    DegreeCurricularPlan sourceDegreeCurricularPlan) {
+    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
 	if (degreeCurricularPlan == null) {
 	    throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.degreeCurricularPlan.cannot.be.null");
 	}
@@ -32,6 +35,16 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	if (degreeCurricularPlan == sourceDegreeCurricularPlan) {
 	    throw new DomainException("error.DegreeCurricularPlanEquivalencePlan.source.and.target.cannot.be.the.same");
 	}
+    }
+
+    public SortedSet<CurricularCourseEquivalencePlanEntry> getOrderedEntries() {
+	final SortedSet<CurricularCourseEquivalencePlanEntry> entries = new TreeSet<CurricularCourseEquivalencePlanEntry>(CurricularCourseEquivalencePlanEntry.COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES_AND_NEW_CURRICULAR_COURSE_NAMES);
+	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
+	    if (equivalencePlanEntry.isCurricularCourseEntry()) {
+		entries.add((CurricularCourseEquivalencePlanEntry) equivalencePlanEntry);
+	    }
+	}
+	return entries;
     }
 
 }

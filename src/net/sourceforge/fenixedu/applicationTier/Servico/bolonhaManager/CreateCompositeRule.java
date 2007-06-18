@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class CreateCompositeRule extends Service {
 
-    public void run(LogicOperators logicOperator, Integer[] selectedCurricularRuleIDs)
+    public void run(LogicOperator logicOperator, Integer[] selectedCurricularRuleIDs)
 	    throws FenixServiceException {
 	if (selectedCurricularRuleIDs != null) {
 	    final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];

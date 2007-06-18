@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,24 +32,32 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	return mapping.findForward("showPlan");
     }
 
+    public ActionForward showTable(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("viewTable", Boolean.TRUE);
+	final CurricularCourse curricularCourse = getCurricularCourse(request);
+	if (curricularCourse != null) {
+	    final EquivalencePlan equivalencePlan = getEquivalencePlan(request);
+	    final Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = curricularCourse.getNewCurricularCourseEquivalencePlanEntry(equivalencePlan);
+	    request.setAttribute("curricularCourseEquivalencePlanEntries", curricularCourseEquivalencePlanEntries);
+	}
+	return mapping.findForward("showPlan");
+    }
+
     public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	CurricularCourseEquivalencePlanEntryCreator courseEquivalencePlanEntryCreator = (CurricularCourseEquivalencePlanEntryCreator) getRenderedObject();
 	final EquivalencePlan equivalencePlan;
-	final CurricularCourse curricularCourse;
 	if (courseEquivalencePlanEntryCreator == null) {
 	    equivalencePlan = getEquivalencePlan(request);
-	    curricularCourse = getCurricularCourse(request);
-	    courseEquivalencePlanEntryCreator = new CurricularCourseEquivalencePlanEntryCreator(
-		    equivalencePlan, curricularCourse);
+	    final CurricularCourse curricularCourse = getCurricularCourse(request);
+	    courseEquivalencePlanEntryCreator = new CurricularCourseEquivalencePlanEntryCreator(equivalencePlan, curricularCourse);
+	    courseEquivalencePlanEntryCreator.setDestinationCurricularCourseToAdd(curricularCourse);
 	} else {
 	    equivalencePlan = courseEquivalencePlanEntryCreator.getEquivalencePlan();
-	    curricularCourse = courseEquivalencePlanEntryCreator.getCurricularCourse();
 	}
 	request.setAttribute("equivalencePlan", equivalencePlan);
-	request.setAttribute("curricularCourse", curricularCourse);
-	request.setAttribute("curricularCourseEquivalencePlanEntryCreator",
-		courseEquivalencePlanEntryCreator);
+	request.setAttribute("curricularCourseEquivalencePlanEntryCreator", courseEquivalencePlanEntryCreator);
 	return mapping.findForward("addEquivalency");
     }
 

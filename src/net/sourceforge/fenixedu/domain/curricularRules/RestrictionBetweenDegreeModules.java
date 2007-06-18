@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
 
@@ -54,7 +54,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
         
-        if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
+        if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
             labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));

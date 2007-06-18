@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
+import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class OrRule extends OrRule_Base {
     
     public  OrRule(CurricularRule... curricularRules) {
 	initCompositeRule(curricularRules);
-	setCompositeRuleType(LogicOperators.OR);
+	setCompositeRuleType(LogicOperator.OR);
     }
 
     @Override
