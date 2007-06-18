@@ -106,7 +106,9 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	    }
 	} catch (Exception e) {
 	    final ActionForward defaultForward = backToResultList(mapping, form, request, response);
-	    bean.reset();
+	    if (bean != null) {
+	    	bean.reset();
+	    }
 	    return processException(request, mapping, defaultForward, e);
 	}
 
