@@ -18,7 +18,12 @@
 
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompatibilityScreen">
 <fr:edit id="selectVigilant" name="bean" schema="selectVigilantsOfVigilantGroup" 
-action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompatibilityScreen"/>
+action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompatibilityScreen">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5 thmiddle thlight mbottom05"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	</fr:layout>
+</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
@@ -26,14 +31,14 @@ action="/vigilancy/vigilantGroupManagement.do?method=vigilantSelectedInIncompati
 <logic:present name="bean" property="selectedVigilant">
 
 	<logic:present name="bean" property="selectedVigilant.incompatiblePerson">
-		<ul>
+		<ul class="mvert15">
 			<li>
-			<fr:view name="bean" property="selectedVigilant" schema="presentVigilantWithIncompatiblePerson" layout="values"/>
+				<fr:view name="bean" property="selectedVigilant" schema="presentVigilantWithIncompatiblePerson" layout="values"/>
 			</li>
 		</ul>
 	</logic:present>	
 	<logic:notPresent name="bean" property="selectedVigilant.incompatiblePerson">
-		<p><em><bean:message key="label.vigilancy.noIncompatiblePerson" bundle="VIGILANCY_RESOURCES"/></em></p>
+		<p class="mtop05"><em><bean:message key="label.vigilancy.noIncompatiblePerson" bundle="VIGILANCY_RESOURCES"/></em></p>
 	</logic:notPresent>  
 
 	<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean"/>

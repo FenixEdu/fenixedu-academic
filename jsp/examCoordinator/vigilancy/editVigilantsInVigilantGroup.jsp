@@ -5,12 +5,10 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editVigilantGroup"/></h2>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
-
 
 <ul>
 	<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.back"/></html:link></li>

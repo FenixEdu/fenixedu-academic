@@ -18,6 +18,9 @@
 
 <fr:form action="/vigilancy/unavailablePeriodManagement.do?method=manageUnavailablePeriodsOfVigilants">
 <fr:edit id="selectVigilantGroup" name="bean" schema="vigilantGroup.selectToEdit">
+	<fr:layout>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
+	</fr:layout>
 </fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
@@ -25,11 +28,11 @@
 <logic:present name="bean" property="selectedVigilantGroup">
 <bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
 
-<ul>
+<ul class="mtop1">
 	<li>
-	<html:link page="<%= "/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
-		<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addAnUnavailablePeriodOfVigilant"/>
-	</html:link>
+		<html:link page="<%= "/vigilancy/unavailablePeriodManagement.do?method=prepareAddPeriodToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
+			<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.addAnUnavailablePeriodOfVigilant"/>
+		</html:link>
 	</li>
 </ul>
 
@@ -46,7 +49,7 @@
     >
     <fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1" />
-
+		<fr:property name="columnClasses" value="nowrap smalltxt color888,nowrap smalltxt color888,,,nowrap" />
 		<fr:property name="key(edit)" value="label.edit"/>
 		<fr:property name="bundle(edit)" value="VIGILANCY_RESOURCES"/>
 		<fr:property name="link(edit)" value="<%= "/vigilancy/unavailablePeriodManagement.do?method=editUnavailablePeriodOfVigilant&gid=" + vigilantGroup.getIdInternal() %>"/>

@@ -11,7 +11,8 @@
 
 <fr:edit id="group" name="group" schema="edit.vigilantGroup.points">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="success" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
 	<fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>

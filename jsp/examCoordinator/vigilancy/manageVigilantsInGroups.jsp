@@ -36,12 +36,11 @@
 
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=addVigilantsToGroup">
 
-<strong><bean:message key="label.vigilancy.manageDepartmentVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:
+<p class="mbottom05"><strong><bean:message key="label.vigilancy.manageDepartmentVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
 <fr:edit id="bounds" name="bounds">
 <fr:layout name="vigilantsInGroup-render">
 	<fr:property name="personSchema" value="presentPersonWithCatAndNumber"/>
-	<fr:property name="classes" value="tstyle1"/>
-
+	<fr:property name="classes" value="tstyle1 thlight"/>
 </fr:layout>
 <fr:destination name="cancel" path="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"/>
 </fr:edit>
@@ -61,11 +60,11 @@
 </fr:form>
 
 <p class="mbottom0"><em><bean:message key="label.vigilancy.label" bundle="VIGILANCY_RESOURCES"/>:</em></p>
-<p class="mvert0"><em><bean:message key="label.vigilancy.convokable.abbr" bundle="VIGILANCY_RESOURCES"/>-<bean:message key="label.vigilancy.convokable" bundle="VIGILANCY_RESOURCES"/></em></p>
-<p class="mtop0"><em><bean:message key="label.vigilancy.notConvokable.abbr" bundle="VIGILANCY_RESOURCES"/>-<bean:message key="label.vigilancy.notConvokable" bundle="VIGILANCY_RESOURCES"/></em></p>
+<p class="mvert0"><em><bean:message key="label.vigilancy.convokable.abbr" bundle="VIGILANCY_RESOURCES"/> - <bean:message key="label.vigilancy.convokable" bundle="VIGILANCY_RESOURCES"/></em></p>
+<p class="mtop0"><em><bean:message key="label.vigilancy.notConvokable.abbr" bundle="VIGILANCY_RESOURCES"/> - <bean:message key="label.vigilancy.notConvokable" bundle="VIGILANCY_RESOURCES"/></em></p>
 
 
-<p class="mtop3 mbottom05"><strong><bean:message key="label.vigilancy.externalPersonToGroup" bundle="VIGILANCY_RESOURCES"/></strong></p>
+<p class="mtop3 mbottom05"><strong><bean:message key="label.vigilancy.externalPersonToGroup" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">

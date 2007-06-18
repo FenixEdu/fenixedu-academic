@@ -8,10 +8,13 @@
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.displayIncompatibleInformation"/></h2>
 
-
 <fr:form action="/vigilancy/vigilantGroupManagement.do?method=manageIncompatiblesOfVigilants">
-<fr:edit id="selectVigilantGroup" name="bean" schema="vigilantGroup.selectToEdit">
-</fr:edit>
+	<fr:edit id="selectVigilantGroup" name="bean" schema="vigilantGroup.selectToEdit">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thmiddle mbottom05"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
@@ -19,11 +22,11 @@
 <bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
 
 <logic:empty name="vigilants"> 
-<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noIncompatibilitiesToManage"/> 
+	<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noIncompatibilitiesToManage"/> 
 </logic:empty>
 
 <logic:notEmpty name="vigilants">
-<ul class="mtop15">
+<ul>
 	<logic:iterate id="vigilantIterator" name="vigilants">
 	<bean:define id="vigilant" name="vigilantIterator" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant"/>
 		<li>
@@ -40,9 +43,10 @@
 
 <p>
 	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareAddIncompatiblePersonToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
-	<bean:message key="label.vigilancy.addIncompatibilityToVigilant" bundle="VIGILANCY_RESOURCES"/>
+		<bean:message key="label.vigilancy.addIncompatibilityToVigilant" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 </p>
+
 </logic:present>
 
 

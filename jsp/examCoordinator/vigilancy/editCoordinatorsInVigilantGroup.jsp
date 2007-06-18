@@ -30,10 +30,9 @@
 action="vigilancy/vigilantGroupManagement.do?method=removeCoordinatorsFromGroup"
 nested="true">
 	<fr:layout>
-	<fr:property name="displayLabel" value="false"/>
-	<fr:property name="classes" value="mvert0"/>
+		<fr:property name="displayLabel" value="false"/>
+		<fr:property name="classes" value="mvert0"/>
 	</fr:layout>
-	
 </fr:edit>
 <p class="mtop0">
 	<span class="switchInline"><a href="javascript:document.getElementById('removeCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
@@ -48,15 +47,16 @@ nested="true">
 <fr:edit id="selectUnit" name="bean" schema="selectUnitInVigilantGroup" nested="true">
 <fr:destination name="postback" path="/vigilancy/vigilantGroupManagement.do?method=selectUnit"/>
 	<fr:layout>
-			<fr:property name="classes" value="mtop15"/>
-		</fr:layout>
+		<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop15"/>
+	</fr:layout>
 </fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 
 <div id="addCoordinatorsToGroup">
-<p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></strong></p>
+<p class="mbottom05"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></strong></p>
 <fr:form id="addCoordinatorsForm" action="/vigilancy/vigilantGroupManagement.do?method=addCoordinatorsToGroup">
+
 <fr:edit name="bean" id="addCoordinators" schema="addCoordinators" 
 			action="/vigilancy/vigilantGroupManagement.do?method=addCoordinatorsToGoup">
 			<fr:layout>
@@ -64,7 +64,8 @@ nested="true">
 			<fr:property name="classes" value="mvert0"/>
 			</fr:layout>
 </fr:edit>
-<p class="mtop0">
+
+<p class="mtop05">
 	<span class="switchInline"><a href="javascript:document.getElementById('addCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.add"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
 	<span class="switchInline"><a href="javascript:checkall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
 	<span class="switchInline"><a href="javascript:uncheckall('addCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a></span>
