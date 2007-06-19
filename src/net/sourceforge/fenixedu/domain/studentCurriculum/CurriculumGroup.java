@@ -309,6 +309,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
         return null;
     }
+    
+    @Override
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    final Dismissal dismissal = curriculumModule.getDismissal(curricularCourse);
+	    if (dismissal != null) {
+		return dismissal;
+	    }
+	}
+        return null;
+    }
 
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
 	if (getDegreeModule() == courseGroup) {

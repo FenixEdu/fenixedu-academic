@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -91,6 +90,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     
     @Override
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+        return null;
+    }
+    
+    @Override
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
         return null;
     }
     

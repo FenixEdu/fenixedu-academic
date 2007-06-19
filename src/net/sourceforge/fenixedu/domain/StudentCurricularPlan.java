@@ -2265,6 +2265,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedEnrolment(curricularCourse) : null;
     }
+    
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+	return isBoxStructure() ? getRoot().getDismissal(curricularCourse) : null;
+    }
 
     public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();

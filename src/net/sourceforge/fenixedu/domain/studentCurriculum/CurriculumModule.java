@@ -134,6 +134,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
     abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
+    abstract public Dismissal getDismissal(final CurricularCourse curricularCourse);
 
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear);
     abstract public void collectDismissals(final List<Dismissal> result);

@@ -146,6 +146,11 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+        return (getCurricularCourse() == curricularCourse) ? this : null;
+    }
+    
+    @Override
     public void delete() {
         removeCredits();
         super.delete();
