@@ -674,6 +674,7 @@
 		<property name="required" value="true" />
 		<property name="size" value="5" />
 	</slot>
+	<slot name="ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="StudentCurricularPlan.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" >
@@ -802,6 +803,7 @@
 		<property name="required" value="true" />
 		<property name="size" value="5" />	
 	</slot>
+	<slot name="externalEnrolmentBean.ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
@@ -826,6 +828,7 @@
 		<property name="required" value="true" />
 		<property name="size" value="5" />
 	</slot>	
+	<slot name="ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="executionPeriod" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
@@ -843,6 +846,7 @@
 		<property name="required" value="true" />
 		<property name="size" value="5" />
 	</slot>
+	<slot name="ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="executionPeriod" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
@@ -857,6 +861,7 @@
 	<slot name="student.number" key="label.number" read-only="true"/>
 	<slot name="student.person.name" key="label.name" read-only="true"/>
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
+	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>
@@ -869,6 +874,7 @@
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
 	<slot name="externalCurricularCourse.fullPathName" key="label.externalUnits.externalCurricularCourse" read-only="true"/>
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
+	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
 	</slot>

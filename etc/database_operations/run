@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add ECTS_CREDITS to EXTERNAL_ENROLMENT" alterTableExternalEnrolment.sql
+

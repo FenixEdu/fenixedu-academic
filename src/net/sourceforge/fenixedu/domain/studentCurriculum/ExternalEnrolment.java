@@ -36,7 +36,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
     
-    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
+    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
         this();
         if(student == null) {
             throw new DomainException("error.externalEnrolment.student.cannot.be.null");
@@ -44,15 +44,16 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         if(externalCurricularCourse == null) {
             throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
         }
-        if (grade == null || grade.isEmpty()) {
-            throw new DomainException("error.externalEnrolment.invalid.grade");
-        }
+
+        checkConstraints(grade, ectsCredits);
         checkIfCanCreateExternalEnrolment(student, externalCurricularCourse);
+        
         setStudent(student);
         setExternalCurricularCourse(externalCurricularCourse);
         setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
+        setEctsCredits(ectsCredits);
     }
 
     private void checkIfCanCreateExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse) {
@@ -63,16 +64,28 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
     
-    public void edit(final Student student, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate) {
+    private void checkConstraints(final Grade grade, final Double ectsCredits) {
+        if (grade == null || grade.isEmpty()) {
+            throw new DomainException("error.externalEnrolment.invalid.grade");
+        }
+        if(ectsCredits == null) {
+            throw new DomainException("error.externalEnrolment.ectsCredits.cannot.be.null");
+        }	
+    }
+    
+    public void edit(final Student student, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
 	
 	if (student != getStudent()) {
 	    checkIfCanCreateExternalEnrolment(student, getExternalCurricularCourse());
 	}
 	
+	checkConstraints(grade, ectsCredits);
+	
 	setStudent(student);
         setGrade(grade);
         setExecutionPeriod(executionPeriod);
         setEvaluationDate(evaluationDate);
+        setEctsCredits(ectsCredits);
     }
 
     public MultiLanguageString getName() {
@@ -104,10 +117,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     final public boolean isExternalEnrolment() {
 	return true;
-    }
-
-    public Double getEctsCredits() {
-	return Double.valueOf(0d);
     }
 
     public Integer getFinalGrade() {

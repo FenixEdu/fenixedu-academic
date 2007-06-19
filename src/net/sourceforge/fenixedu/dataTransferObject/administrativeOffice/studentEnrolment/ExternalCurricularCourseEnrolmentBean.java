@@ -16,6 +16,7 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     private DomainReference<ExecutionPeriod> executionPeriod;
     private YearMonthDay evaluationDate;
     private Grade grade;
+    private Double ectsCredits;
     
     public ExternalCurricularCourseEnrolmentBean(final ExternalCurricularCourse externalCurricularCourse) {
 	setExternalCurricularCourseResultBean(new ExternalCurricularCourseResultBean(externalCurricularCourse));
@@ -55,5 +56,13 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 
     public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+
+    public Double getEctsCredits() {
+        return ectsCredits;
+    }
+
+    public void setEctsCredits(Double ectsCredits) {
+        this.ectsCredits = ectsCredits;
     }
 }

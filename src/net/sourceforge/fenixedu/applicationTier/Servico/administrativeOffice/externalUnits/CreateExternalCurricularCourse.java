@@ -23,7 +23,7 @@ public class CreateExternalCurricularCourse extends Service {
 	    }
 	    new ExternalEnrolment(student, externalCurricularCourse, externalEnrolmentBean
 		    .getGrade(), externalEnrolmentBean.getExecutionPeriod(), externalEnrolmentBean
-		    .getEvaluationDate());
+		    .getEvaluationDate(), externalEnrolmentBean.getEctsCredits());
 	}
 	return externalCurricularCourse;
     }

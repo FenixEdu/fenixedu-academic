@@ -1528,6 +1528,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extend
     String createdBy;
 	DateTime creationDateDateTime;
 	YearMonthDay evaluationDate;
+	Double ectsCredits (REQUIRED);
 	Integer keyExternalCurricularCourse;
 	Integer keyStudent;
 	Integer keyExecutionPeriod;

@@ -14,6 +14,7 @@ public class EditExternalEnrolmentBean extends CreateExternalEnrolmentBean {
 	setGrade(externalEnrolment.getGrade());
 	setEvaluationDate(externalEnrolment.getEvaluationDate());
 	setExternalEnrolment(externalEnrolment);
+	setEctsCredits(externalEnrolment.getEctsCredits());
     }
     
     public ExternalEnrolment getExternalEnrolment() {
