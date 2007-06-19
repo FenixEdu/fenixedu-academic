@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -680,5 +681,50 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-
+    
+    /**
+     * -> Temporary overrides due migrations
+     * 	  - Filter 'InTransition' registrations
+     * -> Do not use this method to add new registrations directly (use {@link addRegistrations} method)
+     */
+    @Override
+    public List<Registration> getRegistrations() {
+	final List<Registration> result = new ArrayList<Registration>();
+        for (final Registration registration : super.getRegistrations()) {
+            if (!registration.isTransition()) {
+        	result.add(registration);
+            }
+        }
+        return Collections.unmodifiableList(result);
+    }
+    
+    @Override
+    public Set<Registration> getRegistrationsSet() {
+        final Set<Registration> result = new HashSet<Registration>();
+        for (final Registration registration : super.getRegistrationsSet()) {
+            if (!registration.isTransition()) {
+        	result.add(registration);
+            }
+        }
+        return Collections.unmodifiableSet(result);
+    }
+    
+    @Override
+    public Iterator<Registration> getRegistrationsIterator() {
+        return getRegistrationsSet().iterator();
+    }
+    
+    @Override
+    public int getRegistrationsCount() {
+        return getRegistrations().size();
+    }
+    
+    public Registration getTransitionRegistration() {
+        for (final Registration registration : super.getRegistrations()) {
+            if (registration.isTransition()) {
+        	return registration;
+            }
+        }
+        return null;
+    }
 }
