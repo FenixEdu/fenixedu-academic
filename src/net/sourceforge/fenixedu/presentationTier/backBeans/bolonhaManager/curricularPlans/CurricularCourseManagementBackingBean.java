@@ -228,7 +228,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getCurricularCourseID())) : curricularCourse;
     }
 
-    private Context getContext(Integer contextID) {
+    protected Context getContext(Integer contextID) {
         return (context == null && contextID != null) ? (context = rootDomainObject.readContextByOID(contextID)) : context;
     }
 

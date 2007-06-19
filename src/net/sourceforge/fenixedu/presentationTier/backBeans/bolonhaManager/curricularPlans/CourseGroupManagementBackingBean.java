@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -80,9 +81,12 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     
     @Override
     protected ExecutionPeriod getMinimumExecutionPeriod() {
-	CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());
+	CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());;
 	if (courseGroup == null) {
-	    courseGroup = getCourseGroup(getCourseGroupID());
+	    final Context context = getContext(getContextID());
+	    if (context != null) {
+		courseGroup = context.getParentCourseGroup();
+	    }
 	}
 	return (courseGroup == null) ? null : courseGroup.getMinimumExecutionPeriod();
     }

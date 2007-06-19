@@ -91,7 +91,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
             throw new DomainException("degreeModule.cannot.add.context.to.root");
         }
         if (!parentCourseGroup.allowChildWith(beginExecutionPeriod)) {
-            throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period");
+            throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period", parentCourseGroup.getName(), beginExecutionPeriod.getName(), beginExecutionPeriod.getExecutionYear().getYear());
         }
         
         checkContextsFor(parentCourseGroup, curricularPeriod, null);
