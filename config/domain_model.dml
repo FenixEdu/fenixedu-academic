@@ -3287,6 +3287,9 @@ class net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSta
 
 	class net.sourceforge.fenixedu.domain.student.registrationStates.ExternalAbandonState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 	}
+	
+	class net.sourceforge.fenixedu.domain.student.registrationStates.TransitionalState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+	}
 
 class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;

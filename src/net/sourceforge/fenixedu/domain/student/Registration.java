@@ -100,7 +100,7 @@ public class Registration extends Registration_Base {
 	}
     };
 
-    public Registration() {
+    private Registration() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setStartDate(new YearMonthDay());
@@ -157,7 +157,7 @@ public class Registration extends Registration_Base {
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
-	setRegistrationAgreement(agreement);
+	setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
     }
 
     @Override
@@ -1525,9 +1525,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isActive() {
-	final RegistrationStateType activeStateType = getActiveStateType();
-	return activeStateType == RegistrationStateType.REGISTERED
-		|| activeStateType == RegistrationStateType.MOBILITY;
+	return getActiveStateType().isActive();
     }
 
     public boolean isInRegisteredState() {
@@ -1642,6 +1640,10 @@ public class Registration extends Registration_Base {
 
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
+    }
+    
+    public boolean isTransition() {
+	return getActiveStateType() == RegistrationStateType.TRANSITION;
     }
 
     final public YearMonthDay getConclusionDate() {

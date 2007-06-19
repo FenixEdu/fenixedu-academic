@@ -30,6 +30,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.InternalAbandonState" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.ExternalAbandonState" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.student.registrationStates.TransitionalState" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState" table="REGISTRATION_STATE" />
@@ -41,5 +42,6 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.CanceledState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.InternalAbandonState" table="REGISTRATION_STATE" />
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.ExternalAbandonState" table="REGISTRATION_STATE" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.registrationStates.TransitionalState" table="REGISTRATION_STATE" />
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.RegistrationNumber" table="REGISTRATION_NUMBER" />

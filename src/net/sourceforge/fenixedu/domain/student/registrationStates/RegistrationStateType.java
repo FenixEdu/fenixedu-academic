@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.domain.student.registrationStates;
 public enum RegistrationStateType {
 
     REGISTERED(true), MOBILITY(true), CANCELED(false), CONCLUDED(false), FLUNKED(false), INTERRUPTED(
-	    false), SCHOOLPARTCONCLUDED(true), INTERNAL_ABANDON(false), EXTERNAL_ABANDON(false);
+	    false), SCHOOLPARTCONCLUDED(true), INTERNAL_ABANDON(false), EXTERNAL_ABANDON(false), TRANSITION(false);
 
     private RegistrationStateType(boolean active) {
 	this.active = active;

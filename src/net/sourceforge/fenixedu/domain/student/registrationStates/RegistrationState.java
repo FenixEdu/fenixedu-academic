@@ -67,6 +67,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return new ExternalAbandonState(registration, person, dateTime);
 	case MOBILITY:
 	    return new MobilityState(registration, person, dateTime);
+	case TRANSITION:
+	    return new TransitionalState(registration, person, dateTime);
 	}
 
 	return null;
