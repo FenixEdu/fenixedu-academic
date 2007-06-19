@@ -44,7 +44,7 @@ function addEmployee(){
 		<fr:edit id="employees" name="extraWorkAuthorizationFactory" property="employeesExtraWorkAuthorizations" 
 			layout="tabular-editable" schema="edit.EmployeeExtraWorkAuthorizationBean">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thleft thlight"/>
+				<fr:property name="classes" value="tstyle5 thcenter thlight tdcenter"/>
 			</fr:layout>
 		</fr:edit>
 
