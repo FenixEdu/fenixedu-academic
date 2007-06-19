@@ -21,108 +21,114 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 
-	public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("degreeType", DegreeType.DEGREE.name());
-		return mapping.findForward("chooseStudent");
-	}
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("degreeType", DegreeType.DEGREE.name());
+	return mapping.findForward("chooseStudent");
+    }
 
-	public ActionForward showAndChooseStudentAreas(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showAndChooseStudentAreas(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-		final DynaActionForm form = (DynaActionForm) actionForm;
-		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
 
-		try {
-			final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
-					DegreeType.DEGREE);
-			final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
-					.executeService(getUserView(request), "ReadStudentCurricularPlanForEnrollments",
-							new Object[] { null, registration });
+	try {
+	    final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+	    final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
+		    .executeService(getUserView(request), "ReadStudentCurricularPlanForEnrollments",
+			    new Object[] { null, registration });
 
-			prepareStudentAreasInformation(request, form, studentCurricularPlan);
-
-		} catch (Exception e) {
-			setAcurateErrorMessage(request, e, studentNumber, "chooseStudent");
-			return mapping.getInputForward();
-		}
-
-		return mapping.findForward("showAndChooseStudentAreas");
-	}
-
-	private void prepareStudentAreasInformation(HttpServletRequest request, final DynaActionForm form,
-			final StudentCurricularPlan studentCurricularPlan) {
-
-		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-
-		if (studentCurricularPlan.hasBranch()) {
-			form.set("specializationAreaID", studentCurricularPlan.getBranch().getIdInternal());
-		}
-		if (studentCurricularPlan.hasSecundaryBranch()) {
-			form.set("secondaryAreaID", studentCurricularPlan.getSecundaryBranch().getIdInternal());
-		}
-	}
-
-	public ActionForward showChangeOfStudentAreasConfirmation(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-
-		final DynaActionForm form = (DynaActionForm) actionForm;
-
-		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
-		final DegreeType degreeType = DegreeType.valueOf(form.getString("degreeType"));
-		final Integer specializationAreaID = (Integer) form.get("specializationAreaID");
-		final Integer secondaryAreaID = (Integer) form.get("secondaryAreaID");
-
-		final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-		try {
-			ServiceManagerServiceFactory.executeService(getUserView(request),
-					"WriteStudentAreasWithoutRestrictions", new Object[] { registration, degreeType,
-							specializationAreaID, secondaryAreaID });
-		} catch (Exception e) {
-			setAcurateErrorMessage(request, e, studentNumber, "showAndChooseStudentAreas");
-			prepareStudentAreasInformation(request, form, registration
-					.getActiveOrConcludedStudentCurricularPlan());
-			return mapping.findForward("showAndChooseStudentAreas");
-		}
+	    if (studentCurricularPlan.isBoxStructure()) {
+		addActionMessage(request, "error.changeStudentArea.studentCurricularPlan.cannot.be.managed");
 		return chooseStudent(mapping, form, request, response);
-	}
+	    }
+	    
+	    prepareStudentAreasInformation(request, form, studentCurricularPlan);
 
-	public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		return mapping.findForward("exit");
+	} catch (Exception e) {
+	    setAcurateErrorMessage(request, e, studentNumber, "chooseStudent");
+	    return mapping.getInputForward();
 	}
+	
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
-		final String methodName = (String) request.getAttribute("methodName");
-		if (methodName == null) {
-			request.setAttribute("degreeType", Integer.valueOf(request.getParameter("degreeType")));
-			return mapping.findForward("chooseStudent");
-		}
-		return mapping.findForward(methodName);
+	return mapping.findForward("showAndChooseStudentAreas");
+    }
+
+    private void prepareStudentAreasInformation(HttpServletRequest request, final DynaActionForm form,
+	    final StudentCurricularPlan studentCurricularPlan) {
+
+	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+
+	if (studentCurricularPlan.hasBranch()) {
+	    form.set("specializationAreaID", studentCurricularPlan.getBranch().getIdInternal());
 	}
-
-	private void setAcurateErrorMessage(HttpServletRequest request, Exception e, Integer studentNumber,
-			String methodName) {
-		e.printStackTrace();
-		if (e instanceof NotAuthorizedException) {
-			addActionMessage(request, "error.exception.notAuthorized2");
-		} else if (e instanceof ExistingServiceException) {
-			if (e.getMessage().equals("student")) {
-				addActionMessage(request, "error.no.student.in.database", studentNumber.toString());
-			} else if (e.getMessage().equals("studentCurricularPlan")) {
-				addActionMessage(request, "error.student.curricularPlan.nonExistent");
-			}
-		} else if (e instanceof NonExistingServiceException) {
-			addActionMessage(request, "error.student.curricularPlan.nonExistent");
-
-		} else if (e instanceof DomainException) {
-			addActionMessage(request, e.getMessage());
-		} else if (e instanceof FenixServiceException) {
-			addActionMessage(request, "error.impossible.operations");
-		} else {
-			addActionMessage(request, "error.impossible.operations");
-		}
-		request.setAttribute("methodName", methodName);
+	if (studentCurricularPlan.hasSecundaryBranch()) {
+	    form.set("secondaryAreaID", studentCurricularPlan.getSecundaryBranch().getIdInternal());
 	}
+    }
+
+    public ActionForward showChangeOfStudentAreasConfirmation(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+	final DynaActionForm form = (DynaActionForm) actionForm;
+
+	final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+	final DegreeType degreeType = DegreeType.valueOf(form.getString("degreeType"));
+	final Integer specializationAreaID = (Integer) form.get("specializationAreaID");
+	final Integer secondaryAreaID = (Integer) form.get("secondaryAreaID");
+
+	final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
+		degreeType);
+	try {
+	    ServiceManagerServiceFactory.executeService(getUserView(request),
+		    "WriteStudentAreasWithoutRestrictions", new Object[] { registration, degreeType,
+			    specializationAreaID, secondaryAreaID });
+	} catch (Exception e) {
+	    setAcurateErrorMessage(request, e, studentNumber, "showAndChooseStudentAreas");
+	    prepareStudentAreasInformation(request, form, registration
+		    .getActiveOrConcludedStudentCurricularPlan());
+	    return mapping.findForward("showAndChooseStudentAreas");
+	}
+	return chooseStudent(mapping, form, request, response);
+    }
+
+    public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("exit");
+    }
+
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final String methodName = (String) request.getAttribute("methodName");
+	if (methodName == null) {
+	    request.setAttribute("degreeType", Integer.valueOf(request.getParameter("degreeType")));
+	    return mapping.findForward("chooseStudent");
+	}
+	return mapping.findForward(methodName);
+    }
+
+    private void setAcurateErrorMessage(HttpServletRequest request, Exception e, Integer studentNumber,
+	    String methodName) {
+	e.printStackTrace();
+	if (e instanceof NotAuthorizedException) {
+	    addActionMessage(request, "error.exception.notAuthorized2");
+	} else if (e instanceof ExistingServiceException) {
+	    if (e.getMessage().equals("student")) {
+		addActionMessage(request, "error.no.student.in.database", studentNumber.toString());
+	    } else if (e.getMessage().equals("studentCurricularPlan")) {
+		addActionMessage(request, "error.student.curricularPlan.nonExistent");
+	    }
+	} else if (e instanceof NonExistingServiceException) {
+	    addActionMessage(request, "error.student.curricularPlan.nonExistent");
+
+	} else if (e instanceof DomainException) {
+	    addActionMessage(request, e.getMessage());
+	} else if (e instanceof FenixServiceException) {
+	    addActionMessage(request, "error.impossible.operations");
+	} else {
+	    addActionMessage(request, "error.impossible.operations");
+	}
+	request.setAttribute("methodName", methodName);
+    }
 }
