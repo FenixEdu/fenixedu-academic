@@ -2220,7 +2220,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEnrolable() {
-	return this.isBolonhaDegree() && getRegistration().isActive()
+	return this.isBoxStructure() && getRegistration().isActive()
 		&& getRegistration().getLastStudentCurricularPlanExceptPast().equals(this);
     }
 
@@ -2358,7 +2358,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Dismissal> getDismissals() {
 	final List<Dismissal> result = new ArrayList<Dismissal>();
-	if (isBolonhaDegree()) {
+	if (isBoxStructure()) {
 	    getRoot().collectDismissals(result);
 	}
 	return result;
