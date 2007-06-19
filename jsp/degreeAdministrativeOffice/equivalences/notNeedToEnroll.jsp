@@ -14,6 +14,12 @@
 	<fr:destination name="studentCurricularPlanPostBack" path="/showNotNeedToEnroll.do?method=prepare"/>	
 </fr:edit>
 
+<html:messages message="true" id="messages">
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+	</p>
+</html:messages>
+
 <html:form action="showNotNeedToEnroll">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertNotNeedToEnroll"/>
 	

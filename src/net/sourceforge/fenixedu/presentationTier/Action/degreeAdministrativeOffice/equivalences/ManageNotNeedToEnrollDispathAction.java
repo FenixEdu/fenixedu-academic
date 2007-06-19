@@ -51,7 +51,11 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 		: bean);
 
 	if (bean != null && bean.getStudentCurricularPlan() != null) {
-	    return showNotNeedToEnroll(mapping, form, request, response);
+	    if (bean.getStudentCurricularPlan().isBoxStructure()) {
+		addActionMessage(request, "error.ManageNotNeedToEnrollDispathAction.cannot.manage.studentCurricularPlan");
+	    } else {
+		return showNotNeedToEnroll(mapping, form, request, response);
+	    }
 	}
 
 	return mapping.findForward("showNotNeedToEnroll");
