@@ -16,7 +16,7 @@
 </p>	
 
 <logic:present name="yearMonthToExport">
-	<h3><fr:view name="yearMonthToExport" schema="show.date">
+	<h3 class="mtop2"><fr:view name="yearMonthToExport" schema="show.date">
 		<fr:layout name="flow">
 			<fr:property name="labelExcluded" value="true" />
 		</fr:layout>
@@ -39,11 +39,13 @@
 </logic:present>
 
 <logic:present name="yearMonth">
-		<h3><fr:view name="yearMonth" schema="show.date">
+	<h3 class="mtop2">
+		<fr:view name="yearMonth" schema="show.date">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true" />
 			</fr:layout>
-		</fr:view></h3>
+		</fr:view>
+	</h3>
 	<logic:notEqual name="yearMonth" property="isThisYearMonthClosedForExtraWork" value="true">
 		<fr:form action="/monthClosure.do?method=closeExtraWorkMonth">
 			<fr:edit id="yearMonth" name="yearMonth" schema="show.date" visible="false"/>

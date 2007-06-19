@@ -19,7 +19,10 @@ function addEmployee(){
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="title.extraWorkAuthorization" /></h2>
 
-<span class="error0"><html:errors/></span>
+<p>
+	<span class="error0"><html:errors/></span>
+</p>
+
 <fr:form action="/createExtraWorkAuthorization.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="extraWorkAuthorizationForm" property="method" value="createExtraWorkAuthorization" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="extraWorkAuthorizationForm" property="addEmployee" value="no"/>
@@ -45,15 +48,14 @@ function addEmployee(){
 			</fr:layout>
 		</fr:edit>
 
-		<p><em><bean:message key="label.subtitle" bundle="ASSIDUOUSNESS_RESOURCES"/>:</em></p>
-		<ul class="nobullet" style="margin-left: 0; padding-left: 0;">
-			<li><em><bean:message key="label.A" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.normalExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-			<li><em><bean:message key="label.B" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.normalExtraWorkB" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-			<li><em><bean:message key="label.C" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.nightExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-			<li><em><bean:message key="label.D" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.weeklyRestExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-			<li><em><bean:message key="label.E" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.auxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-			<li><em><bean:message key="label.F" bundle="ASSIDUOUSNESS_RESOURCES"/> - <bean:message key="label.executiveAuxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></li>
-		</ul>
+		<p class="mbottom025"><em><bean:message key="label.subtitle" bundle="ASSIDUOUSNESS_RESOURCES"/>:</em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.A" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.normalExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.B" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.normalExtraWorkB" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.C" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.nightExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.D" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.weeklyRestExtraWork" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.E" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.auxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		<p class="mvert025"><em><strong><bean:message key="label.F" bundle="ASSIDUOUSNESS_RESOURCES"/></strong> - <bean:message key="label.executiveAuxiliarPersonel" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+
 	</logic:notEmpty>
 
 	<p class="mvert15">

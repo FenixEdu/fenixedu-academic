@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
 <em><bean:message key="title.extraWork" /></em>
 <h2><bean:message key="link.paymentRequests" /></h2>
 
@@ -15,15 +16,20 @@
 	<fr:form action="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth">
 		<fr:edit id="1" name="extraWorkRequestFactory" schema="choose.unitYearMonth">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thlight thright" />
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright mbottom0" />
+				<fr:property name="columnClasses" value="width10em,width20em,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
-		<p>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-				<bean:message key="button.submit" />
-			</html:submit>
-		</p>
+		<table class="tstyle5 gluetop mtop0">
+			<tr>
+				<td class="width10em"></td>
+				<td class="width20em">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+						<bean:message key="button.submit" />
+					</html:submit>
+				</td>
+			</tr>
+		</table>
 	</fr:form>
 	
 	<logic:notEmpty name="extraWorkRequestFactory" property="unitCode">
@@ -37,29 +43,37 @@
 			<bean:define id="year" name="extraWorkRequestFactory" property="year"/>
 			<bean:define id="month" name="extraWorkRequestFactory" property="month"/>
 			<bean:define id="unitCode" name="extraWorkRequestFactory" property="unitCode"/>
-			
-			<strong><bean:message key="label.extraWorkDoneIn" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong>
-			<fr:edit id="yearMonthHoursDone" name="extraWorkRequestFactory" schema="choose.hoursDoneIn" 
-				action="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth">
+
+			<p class="mtop15 mbottom05"><strong><bean:message key="label.extraWorkDoneIn" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong></p>
+			<fr:edit id="yearMonthHoursDone" name="extraWorkRequestFactory" schema="choose.hoursDoneIn" action="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth">
 				<fr:destination name="invalid" path="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"/>
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+					<fr:property name="columnClasses" value="width10em,width20em,tdclear tderror1"/>
+				</fr:layout>
 			</fr:edit>
-			
+
 			<bean:define id="doneInYear" name="extraWorkRequestFactory" property="yearMonthHoursDone.year"/>
 			<bean:define id="doneInMonth" name="extraWorkRequestFactory" property="yearMonthHoursDone.month"/>
 			
 			<fr:form action="/extraWorkPaymentRequest.do?method=processPayments">
 				<fr:edit id="extraWorkRequestFactory" name="extraWorkRequestFactory" visible="false"/>				
-				<p>
-					<bean:message key="label.extraWork.unitInitialbalance" bundle="ASSIDUOUSNESS_RESOURCES"/>:
-					<fmt:formatNumber maxFractionDigits="3" minFractionDigits="3" pattern="#.###">
-						<bean:write name="extraWorkRequestFactory" property="initialUnitBalance"/>
-					</fmt:formatNumber>
-				<p/>
+				<p class="mtop2">
+					<span class="highlight1">
+						<bean:message key="label.extraWork.unitInitialbalance" bundle="ASSIDUOUSNESS_RESOURCES"/>:
+						<fmt:formatNumber maxFractionDigits="3" minFractionDigits="3" pattern="#.###">
+							<bean:write name="extraWorkRequestFactory" property="initialUnitBalance"/>
+						</fmt:formatNumber>
+					</span>
+				</p>
+
 				<logic:messagesPresent message="true">
 					<html:messages id="message" message="true">
 						<p><span class="error0"><bean:write name="message" /></span></p>
 					</html:messages>
 				</logic:messagesPresent>
+
+				
 				<fr:view name="extraWorkRequestFactory" property="employeesExtraWorkRequests" schema="view.extraWorkRequest">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 printborder" />
@@ -72,20 +86,25 @@
 							<fr:property name="visibleIf(view)" value="extraWorkRequestFactory.isMonthClosed()"/>
 						</logic:equal>
 					</fr:layout>
-				</fr:view>				
+				</fr:view>
+
 				<p>
 					<bean:message key="label.extraWork.monthAmount" bundle="ASSIDUOUSNESS_RESOURCES"/>:
 					<fmt:formatNumber maxFractionDigits="3" minFractionDigits="3" pattern="#.###">
 						<bean:write name="extraWorkRequestFactory" property="monthAmount"/>
 					</fmt:formatNumber>
 				</p>
+				
 				<p>
-					<bean:message key="label.extraWork.unitFinalbalance" bundle="ASSIDUOUSNESS_RESOURCES"/>:
-					<fmt:formatNumber maxFractionDigits="3" minFractionDigits="3" pattern="#.###">
-						<bean:write name="extraWorkRequestFactory" property="finalUnitBalance"/>
-					</fmt:formatNumber>
+					<span class="highlight1">
+						<bean:message key="label.extraWork.unitFinalbalance" bundle="ASSIDUOUSNESS_RESOURCES"/>:
+						<fmt:formatNumber maxFractionDigits="3" minFractionDigits="3" pattern="#.###">
+							<bean:write name="extraWorkRequestFactory" property="finalUnitBalance"/>
+						</fmt:formatNumber>
+					</span>
 				</p>
-				<p>
+				
+				<p class="mtop15">
 					<logic:equal name="extraWorkRequestFactory" property="isMonthClosedForExtraWork" value="false">
 					<logic:equal name="extraWorkRequestFactory" property="paymentConfirmed" value="false">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">

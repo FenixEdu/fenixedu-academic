@@ -8,7 +8,6 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="title.viewUnitExtraWorkAmounts" /></h2>
 
-
 <fr:form action="/manageUnitsExtraWorkAmounts.do?method=chooseYear">
 	<table>
 		<tr>
@@ -28,9 +27,13 @@
 </fr:form>
 
 <bean:define id="choosenYear"><bean:write name="year" property="year"/></bean:define>
-<html:link page="/manageUnitsExtraWorkAmounts.do?method=prepareCreateUnitExtraWorkAmount" paramId="year" paramName="choosenYear">
-	<bean:message key="link.insertNewUnitAmount"/>
-</html:link>
+<ul class="mtop15">
+	<li>
+		<html:link page="/manageUnitsExtraWorkAmounts.do?method=prepareCreateUnitExtraWorkAmount" paramId="year" paramName="choosenYear">
+			<bean:message key="link.insertNewUnitAmount"/>
+		</html:link>
+	</li>
+</ul>
 
 <p>
 <logic:present name="createUnitExtraWorkAmount">

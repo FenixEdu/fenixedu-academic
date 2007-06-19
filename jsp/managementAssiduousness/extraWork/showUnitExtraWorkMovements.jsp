@@ -6,19 +6,23 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
-<h2><bean:message key="title.viewUnitExtraWorkAmounts" /></h2>
+<h2><bean:message key="title.viewUnitExtraWorkAmounts"/></h2>
 	
-<p>
+
 <h3><bean:write name="unitExtraWorkAmountFactory" property="year"/></h3>
-<h3><bean:write name="unitExtraWorkAmountFactory" property="unit.presentationName"/></h3>
+
+<p><strong class="highlight1"><bean:write name="unitExtraWorkAmountFactory" property="unit.presentationName"/></strong></p>
 
 <bean:define id="unitExtraWorkAmountID" name="unitExtraWorkAmountFactory" property="unitExtraWorkAmount.idInternal"/>
 
 <fr:form action="/manageUnitsExtraWorkAmounts.do?method=prepareEditUnitExtraWorkMovement">
+
 <fr:edit id="editMovement" name="unitExtraWorkAmountFactory" visible="false"/>
 <bean:size id="size" name="unitExtraWorkAmountFactory" property="unitExtraWorkAmount.unitExtraWorkMovements"/>
-<p><strong><bean:message key="label.addedAmounts" bundle="ASSIDUOUSNESS_RESOURCES"/></strong></p>
-<table class="tstyle5 thleft thlight">
+
+<p class="mtop15 mbottom025"><bean:message key="label.addedAmounts" bundle="ASSIDUOUSNESS_RESOURCES"/>:</p>
+
+<table class="tstyle2 thlight mtop025 mbottom05">
 	<tr>
 		<th><bean:message key="label.date" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
 		<th><bean:message key="label.amount" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
@@ -49,16 +53,26 @@
 	</logic:iterate>
 </table>
 
-<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
-</fr:form>
+<p class="mtop05">
+	<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
 </p>
+
+</fr:form>
+
 
 <fr:form action="/manageUnitsExtraWorkAmounts.do?method=insertNewAmount">
 	<fr:edit id="amountFactory" name="unitExtraWorkAmountFactory" visible="false"/>
-	<p>
-	<strong><bean:message key="label.addNewAmount" bundle="ASSIDUOUSNESS_RESOURCES"/></strong>
-	<br>
-	<fr:edit id="amount" name="unitExtraWorkAmountFactory" schema="insert.unitExtraWorkMovement"/>
+
+	<p class="mtop2 mbottom025"><bean:message key="label.addNewAmount" bundle="ASSIDUOUSNESS_RESOURCES"/>:</p>
+	
+	<fr:edit id="amount" name="unitExtraWorkAmountFactory" schema="insert.unitExtraWorkMovement">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025 mbottom05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
+	
+	<p class="mtop5">
+		<html:submit><bean:message key="button.insert" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
 	</p>
-	<html:submit><bean:message key="button.insert" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
 </fr:form>
