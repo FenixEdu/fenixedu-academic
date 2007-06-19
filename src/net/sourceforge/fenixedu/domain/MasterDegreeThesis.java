@@ -71,4 +71,12 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 	return MasterDegreeThesisState.NOT_DELIVERED;
     }
 
+    public void delete(){
+        getMasterDegreeThesisDataVersions().clear();
+        getMasterDegreeProofVersions().clear();
+        removeStudentCurricularPlan();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+    
 }
