@@ -23,4 +23,11 @@ public enum LogicOperator {
 	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(name());
     }
 
+    public boolean isAND() {
+	return this.equals(LogicOperator.AND);
+    }
+    
+    public boolean isOR() {
+	return this.equals(LogicOperator.OR);
+    }
 }
