@@ -13,6 +13,10 @@
 	<bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/>	
 </h2>
 
+<logic:present name="inquiryMessageKey">
+	<span class="error"><bean:message name="inquiryMessageKey" bundle="INQUIRIES_RESOURCES"/></span>
+</logic:present>
+
 <logic:present name="executionPeriod">
 	<logic:present name="executionPeriod" property="inquiryResponsePeriod">
 		<div class="infoop2 mtop1">

@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -108,7 +109,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	IUserView userView = SessionUtils.getUserView(request);
 
-	final Registration registration = userView.getPerson().getStudentsSet().iterator().next();
+	final Registration registration = findAvailableRegistration(userView.getPerson());
 	if (registration == null) {
 	    throw new InvalidSessionActionException();
 	}
@@ -170,6 +171,15 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	return actionMapping.findForward("inquiryIntroduction");
 
+    }
+
+    private Registration findAvailableRegistration(final Person person) {
+	for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+	    if (registration.isAvailableDegreeTypeForInquiries()) {
+		return registration;
+	    }
+	}
+	return person.getStudent().getLastActiveRegistration();
     }
 
     private boolean same(final InfoExecutionCourse infoExecutionCourse1,
