@@ -274,15 +274,15 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    }
 	    setTotalVacationDays(thisNormalVacationsDays + thisNightVacationsDays);
 	    if (getExtraWorkRequest() == null) {
-		new ExtraWorkRequest(getExtraWorkRequestFactory().getPartialPayingDate(),
-			getExtraWorkRequestFactory().getUnit(), getEmployee(), getNightHours(),
-			getExtraNightHours(), getExtraNightDays(), getHolidayHours(),
+		setExtraWorkRequest(new ExtraWorkRequest(getExtraWorkRequestFactory()
+			.getPartialPayingDate(), getExtraWorkRequestFactory().getUnit(), getEmployee(),
+			getNightHours(), getExtraNightHours(), getExtraNightDays(), getHolidayHours(),
 			getSaturdayHours(), getSundayHours(), getWorkdayHours(), getAddToVacations(),
 			getAddToWeekRestTime(), getModifiedBy(), totalValue, false,
 			getExtraWorkRequestFactory().getHoursDoneInPartialDate(),
 			thisNormalVacationsDays, thisNormalVacationsAmount,
 			accumulatedNormalVacationsAmount, thisNightVacationsDays,
-			thisNightVacationsAmount, accumulatedNightVacationsAmount);
+			thisNightVacationsAmount, accumulatedNightVacationsAmount));
 	    } else {
 		getExtraWorkRequest().edit(getNightHours(), getExtraNightHours(), getExtraNightDays(),
 			getHolidayHours(), getSaturdayHours(), getSundayHours(), getWorkdayHours(),
@@ -319,10 +319,11 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		    .getHoursDoneInPartialDate().get(DateTimeFieldType.year())) {
 		if (getExtraWorkRequest() == null
 			|| (getExtraWorkRequest().getHoursDoneInPartialDate().get(
-				DateTimeFieldType.monthOfYear()) != request.getHoursDoneInPartialDate()
-				.get(DateTimeFieldType.monthOfYear()) && request.getApproved()))
+				DateTimeFieldType.monthOfYear()) > request.getHoursDoneInPartialDate()
+				.get(DateTimeFieldType.monthOfYear()))) {
 		    result[0] = result[0] + request.getAccumulatedNormalVacationsAmount();
-		result[1] = result[1] + request.getAccumulatedNightVacationsAmount();
+		    result[1] = result[1] + request.getAccumulatedNightVacationsAmount();
+		}
 	    }
 	}
 	return result;
