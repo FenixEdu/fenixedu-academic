@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<script>
 		function selectAll(){
 			var checkBox = document.forms.form.selectedMarks;
@@ -18,7 +19,7 @@
 			}
 		}
 	</script>
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+	
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
