@@ -138,9 +138,9 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 		    mergeSlot.setType("Collection");
 
 		    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1,
-			    domainObject1.getIdInternal(), classToMerge);
+			    domainObject1.getOID(), classToMerge);
 		    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2,
-			    domainObject2.getIdInternal(), classToMerge);
+			    domainObject2.getOID(), classToMerge);
 		}
 
 		results.add(mergeSlot);
@@ -157,11 +157,11 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order,
-	    Integer idInternal, String domainClass) {
+	    long oid, String domainClass) {
 	if (collection != null) {
 	    mergeSlot.setValueProperty(order, "Size: " + ((Collection) collection).size());
-	    mergeSlot.setValueLinkProperty(order, "/domainbrowser/listRole?domainClass=" + domainClass
-		    + "&objId=" + idInternal + "&role=" + mergeSlot.getName());
+	    mergeSlot.setValueLinkProperty(order, "/domainbrowser/listRole?OID=" + oid + "&role="
+		    + mergeSlot.getName());
 
 	} else {
 	    mergeSlot.setValueProperty(order, "null collection");
@@ -172,10 +172,9 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	    String order) {
 	if (reference != null) {
 	    if (roleSlot.getType() instanceof DomainClass) {
-		final Integer idInternal = ((DomainObject) reference).getIdInternal();
+		final long idInternal = ((DomainObject) reference).getOID();
 		mergeSlot.setValueProperty(order, "OID: " + idInternal);
-		mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?domainClass="
-			+ reference.getClass().getName() + "&objId=" + idInternal);
+		mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + idInternal);
 	    } else {
 		// enum ??
 		mergeSlot.setValueProperty(order, reference.toString());
