@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurr
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -1492,13 +1493,21 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
-
-    public CourseGroup getFirstCycleCourseGroup() {
-	return isBolonhaDegree() ? getRoot().getFirstCycleCourseGroup() : null;
+    
+    public boolean isFirstCycle() {
+	return getDegree().isFirstCycle();
     }
 
-    public CourseGroup getSecondCycleCourseGroup() {
-	return isBolonhaDegree() ? getRoot().getSecondCycleCourseGroup() : null;
+    public CycleCourseGroup getFirstCycleCourseGroup() {
+	return isFirstCycle() ? getRoot().getFirstCycleCourseGroup() : null;
+    }
+    
+    public boolean isSecondCycle() {
+	return getDegree().isSecondCycle();
+    }
+
+    public CycleCourseGroup getSecondCycleCourseGroup() {
+	return isSecondCycle() ? getRoot().getSecondCycleCourseGroup() : null;
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses() {
