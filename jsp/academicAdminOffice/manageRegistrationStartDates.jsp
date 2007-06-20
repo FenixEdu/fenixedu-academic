@@ -5,13 +5,11 @@
 <html:xhtml />
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
-
-<bean:define id="registration" name="ingressionBean" property="registration" />
+<h2><strong><bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
 <ul class="mtop2 list5">
 	<li>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="ingressionBean" paramProperty="registration.idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</li>
@@ -34,23 +32,30 @@
 </p>
 
 <logic:present name="registration" property="ingressionEnum">
-<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
 
-<fr:edit name="ingressionBean" schema="ingression.information-edit" action="/manageIngression.do?method=editIngression">
-	<fr:destination name="ingressionPostBack"
-		path="/manageIngression.do?method=postBack" />
-	<fr:destination name="entryPhasePostBack"
-		path="/manageIngression.do?method=postBack" />
+
+<logic:notPresent name="registration" property="ingressionEnum">
+<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<fr:view name="registration" schema="student.registrationsWithStartData" >
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+	</fr:layout>
+</fr:view>
+</logic:notPresent>
+
+<bean:define id="registrationID" name="registration" property="idInternal" />
+<fr:edit name="registration" schema="student.manageRegistrationStartDates" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright mtop025" />
 		<fr:property name="columnClasses" value="width12em,,tdclear tderror1" />
 	</fr:layout>
+	<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />	
 </fr:edit>
 

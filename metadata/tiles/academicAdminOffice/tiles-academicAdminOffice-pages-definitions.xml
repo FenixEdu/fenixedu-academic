@@ -89,6 +89,9 @@
     <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
     </definition>      
+    <definition name="student.showEditStartDates" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageRegistrationStartDates.jsp"></put>
+    </definition>      
 
 	<!-- ************* Academic Service Requests Management ************* -->
 	<definition name="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric" extends="academicAdminOffice.masterPage">

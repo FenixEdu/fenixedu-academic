@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Add ECTS_CREDITS to EXTERNAL_ENROLMENT" alterTableExternalEnrolment.sql
 
+execute "alter Table Registration" alterTableRegistration.sql

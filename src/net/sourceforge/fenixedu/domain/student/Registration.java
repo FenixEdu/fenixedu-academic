@@ -1641,7 +1641,7 @@ public class Registration extends Registration_Base {
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
-    
+
     public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
     }
@@ -1793,6 +1793,10 @@ public class Registration extends Registration_Base {
 	if (hasStudentCandidacy()) {
 	    return getStudentCandidacy().getActiveCandidacySituation().getSituationDate()
 		    .toYearMonthDay();
+	}
+	
+	if (getRegistrationYear() != null) {
+	    return getRegistrationYear().getBeginDateYearMonthDay();
 	}
 
 	return null;
