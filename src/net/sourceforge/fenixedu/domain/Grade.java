@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Grade implements Serializable {
@@ -87,4 +89,9 @@ public class Grade implements Serializable {
     public boolean isEmpty() {
 	return false;
     }
+    
+    public boolean isNumeric() {
+	return StringUtils.isNumeric(getValue()); 
+    }
+    
 }

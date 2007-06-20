@@ -24,4 +24,10 @@ public class EmptyGrade extends Grade {
     public boolean isEmpty() {
         return true;
     }
+    
+    @Override
+    public boolean isNumeric() {
+        return false;
+    }
+    
 }
