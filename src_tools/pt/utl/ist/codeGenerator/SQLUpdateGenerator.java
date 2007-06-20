@@ -22,11 +22,13 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
+import pt.utl.ist.codeGenerator.database.SqlTable;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
@@ -248,6 +250,8 @@ public class SQLUpdateGenerator {
 
 	final StringBuilder stringBuilder = new StringBuilder();
 
+	final Set<String> processedIndirectionTables = new HashSet<String>();
+
         final Map<String, ClassDescriptor> classDescriptorMap = DatabaseDescriptorFactory.getDescriptorTable();
         for (final ClassDescriptor classDescriptor : classDescriptorMap.values()) {
 
@@ -260,14 +264,85 @@ public class SQLUpdateGenerator {
         	    createTable(stringBuilder, classDescriptor);
         	}
             }
+
+            for (final Iterator iterator = classDescriptor.getCollectionDescriptors().iterator(); iterator.hasNext();) {
+                final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
+                final String indirectionTablename = collectionDescriptor.getIndirectionTable();
+                if (indirectionTablename != null && !processedIndirectionTables.contains(indirectionTablename) && !exists(indirectionTablename)) {
+                    processedIndirectionTables.add(indirectionTablename);
+            	    appendIndirectionTable(stringBuilder, collectionDescriptor, indirectionTablename);
+                }
+            }
         }
 
 	writeFile(destinationFilename, getOutputString(stringBuilder));
     }
 
+    private static void appendIndirectionTable(final StringBuilder stringBuilder,
+	    final CollectionDescriptor collectionDescriptor, final String indirectionTablename) {
+	stringBuilder.append("create table ");
+	stringBuilder.append(indirectionTablename);
+	stringBuilder.append(" (");
+	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+	stringBuilder.append(" int(11) not null, ");
+	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+	stringBuilder.append(" int(11) not null, ");
+	stringBuilder.append(" primary key (");
+	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+	stringBuilder.append(", ");
+	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+	stringBuilder.append("), key(");
+	stringBuilder.append(collectionDescriptor.getFksToThisClass()[0]);
+	stringBuilder.append("), key(");
+	stringBuilder.append(collectionDescriptor.getFksToItemClass()[0]);
+	stringBuilder.append(")");
+	stringBuilder.append(") type=InnoDB;\n");
+    }
+
+    private static boolean exists(final String indirectionTablename) throws SQLException {
+	    final Statement statement = connection.createStatement();
+	    try {
+		final ResultSet resultSet = statement.executeQuery("show create table " + indirectionTablename);
+		resultSet.next();
+		resultSet.close();
+		return true;
+	    } catch (final MySQLSyntaxErrorException mySQLSyntaxErrorException) {
+		return false;
+	    }
+    }
+
     private static void createTable(final StringBuilder stringBuilder, final ClassDescriptor classDescriptor) {
-	// TODO Auto-generated method stub
-	
+	final SqlTable sqlTable = new SqlTable(classDescriptor.getFullTableName());
+	addColumns(sqlTable, classDescriptor.getFieldDescriptions());
+	setPrimaryKey(sqlTable, classDescriptor.getPkFields());
+	addIndexes(sqlTable, classDescriptor);
+	sqlTable.appendCreateTableMySql(stringBuilder);
+    }
+
+    private static void addColumns(final SqlTable sqlTable, final FieldDescriptor[] fieldDescriptions) {
+        if (fieldDescriptions != null) {
+            for (final FieldDescriptor fieldDescriptor : fieldDescriptions) {
+                sqlTable.addColumn(fieldDescriptor.getColumnName(), fieldDescriptor.getColumnType());
+            }
+        }
+    }
+
+    private static void setPrimaryKey(final SqlTable sqlTable, final FieldDescriptor[] pkFields) {
+        final String[] primaryKey = new String[pkFields.length];
+        for (int i = 0; i < pkFields.length; i++) {
+            primaryKey[i] = pkFields[i].getColumnName();
+        }
+        sqlTable.primaryKey(primaryKey);
+    }
+
+    private static void addIndexes(final SqlTable sqlTable, final ClassDescriptor classDescriptor) {
+        for (final Iterator iterator = classDescriptor.getObjectReferenceDescriptors().iterator(); iterator.hasNext();) {
+            final ObjectReferenceDescriptor objectReferenceDescriptor = (ObjectReferenceDescriptor) iterator.next();
+            final String foreignKeyField = (String) objectReferenceDescriptor.getForeignKeyFields().get(0);
+            final FieldDescriptor fieldDescriptor = classDescriptor.getFieldDescriptorByName(foreignKeyField);
+
+            sqlTable.index(fieldDescriptor.getColumnName());
+        }
     }
 
     private static String getOutputString(final StringBuilder stringBuilder) {
