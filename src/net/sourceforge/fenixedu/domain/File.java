@@ -13,6 +13,7 @@ import org.apache.ojb.broker.accesslayer.LookupException;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class File extends File_Base {
 
@@ -25,8 +26,8 @@ public abstract class File extends File_Base {
     protected void init(String filename, String displayName, String mimeType, String checksum,
 	    String checksumAlgorithm, Integer size, String externalStorageIdentification,
 	    Group permittedGroup) {
-	setFilename(filename);
-	setDisplayName(displayName);
+	setFilename(FileUtils.getFilenameOnly(filename));
+	setDisplayName(FileUtils.getFilenameOnly(displayName));
 	setMimeType(mimeType);
 	setChecksum(checksum);
 	setChecksumAlgorithm(checksumAlgorithm);
