@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.en
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonToEnrolBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -41,12 +42,17 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	final StudentCurricularPlan activeStudentCurricularPlan = specialSeasonEnrolmentBean.getStudent().getActiveStudentCurricularPlan();
+	if (activeStudentCurricularPlan.isBoxStructure()) {
+	    addActionMessage(request, "error.SpecialSeasonEnrolmentDispatchAction.cannot.manage.studentCurricularPlan");
+	    return prepareChooseStudent(mapping, form, request, response);
+	}
+	
 	specialSeasonEnrolmentBean.setSpecialSeasonCode(specialSeasonEnrolmentBean.getStudent()
 		.getSpecialSeasonCodeByExecutionYear(specialSeasonEnrolmentBean.getExecutionYear()));
 
 	Set<SpecialSeasonToEnrolBean> toEnrol = new HashSet<SpecialSeasonToEnrolBean>();
-	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent()
-		.getActiveStudentCurricularPlan().getSpecialSeasonToEnrol(
+	for (Enrolment enrolment : activeStudentCurricularPlan.getSpecialSeasonToEnrol(
 			specialSeasonEnrolmentBean.getExecutionYear())) {
 	    SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
 	    enrolmentBean.setEnrolment(enrolment);
@@ -59,8 +65,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 	}
 
 	Set<SpecialSeasonToEnrolBean> alreadyEnroled = new HashSet<SpecialSeasonToEnrolBean>();
-	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent()
-		.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(
+	for (Enrolment enrolment : activeStudentCurricularPlan.getSpecialSeasonEnrolments(
 			specialSeasonEnrolmentBean.getExecutionYear())) {
 	    SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
 	    enrolmentBean.setEnrolment(enrolment);

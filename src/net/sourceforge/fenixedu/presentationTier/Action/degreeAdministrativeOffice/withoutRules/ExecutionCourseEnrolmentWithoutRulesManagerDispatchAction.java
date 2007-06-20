@@ -476,7 +476,14 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	    throw new FenixActionException("invalid registration id");
 	}
 	
-	request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlansSet());
+	// This code will be removed
+	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+	for (final StudentCurricularPlan studentCurricularPlan: registration.getStudentCurricularPlansSet()) {
+	    if (!studentCurricularPlan.isBoxStructure()) {
+		studentCurricularPlans.add(studentCurricularPlan);
+	    }
+	}
+	request.setAttribute("studentCurricularPlans", studentCurricularPlans);
 	return mapping.findForward("viewStudentCurricularPlans");
     }
     

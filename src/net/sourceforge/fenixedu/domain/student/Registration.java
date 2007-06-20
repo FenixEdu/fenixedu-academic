@@ -1116,9 +1116,9 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.executionPeriod.notExist");
 	}
 
-	List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
-	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-	    if (scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
+	final List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
+	for (final StudentCurricularPlan scp : getStudentCurricularPlans()) {
+	    if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
 	    }
 	}
@@ -1126,9 +1126,9 @@ public class Registration extends Registration_Base {
     }
 
     public List<Enrolment> getEnroledImprovements() {
-	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
-	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
-	    if (scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
+	final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
+	for (final StudentCurricularPlan scp : getStudentCurricularPlans()) {
+	    if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
 		enroledImprovements.addAll(scp.getEnroledImprovements());
 	    }
 	}

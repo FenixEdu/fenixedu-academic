@@ -106,8 +106,12 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			.executeService(userView, "ReadStudentCurricularPlanWithRulesForEnrollments",
 				args);
 	    }
-
-	    prepareEnrollmentChooseCurricularCoursesInformation(request, studentCurricularPlan);
+	    
+	    if (studentCurricularPlan.isBoxStructure()) {
+		addActionMessage(request, "error.CurricularCoursesEnrollmentDispatchAction.cannot.manage.studentCurricularPlan");
+	    } else {
+		prepareEnrollmentChooseCurricularCoursesInformation(request, studentCurricularPlan);
+	    }
 
 	} catch (NotAuthorizedFilterException e) {
 	    if (e.getMessage() != null) {
