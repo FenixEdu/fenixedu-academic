@@ -12016,5 +12016,15 @@
 		<filterChains>
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
-    </service>      
+    </service>
+    <service>
+    	<name>DeleteExtraWorkRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteExtraWorkRequest</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+    </service>  
+
 </serviceDefinitions>

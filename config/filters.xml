@@ -935,4 +935,16 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>AssiduousnessRoleAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessRoleAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>AssiduousnessManagementGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessManagementGroup</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>      
 </filterDefinitions>

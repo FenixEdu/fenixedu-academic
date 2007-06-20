@@ -34,6 +34,16 @@
 	
 	<logic:notEmpty name="extraWorkRequestFactory" property="unitCode">
 	<logic:notEmpty name="extraWorkRequestFactory" property="unit">
+		<strong><bean:message key="label.extraWorkDoneIn" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong>
+		<fr:edit id="yearMonthHoursDone" name="extraWorkRequestFactory" schema="choose.hoursDoneIn" 
+			action="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth">
+			<fr:destination name="invalid" path="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"/>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value="width10em,width20em,tdclear tderror1"/>
+			</fr:layout>	
+		</fr:edit>
+			
 		<logic:empty name="extraWorkRequestFactory" property="employeesExtraWorkRequests">
 			<p class="mtop15">
 				<em><bean:message key="message.noPaymentRequests"/></em>
@@ -42,17 +52,8 @@
 		<logic:notEmpty name="extraWorkRequestFactory" property="employeesExtraWorkRequests">
 			<bean:define id="year" name="extraWorkRequestFactory" property="year"/>
 			<bean:define id="month" name="extraWorkRequestFactory" property="month"/>
-			<bean:define id="unitCode" name="extraWorkRequestFactory" property="unitCode"/>
-
-			<p class="mtop15 mbottom05"><strong><bean:message key="label.extraWorkDoneIn" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong></p>
-			<fr:edit id="yearMonthHoursDone" name="extraWorkRequestFactory" schema="choose.hoursDoneIn" action="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth">
-				<fr:destination name="invalid" path="/extraWorkPaymentRequest.do?method=chooseUnitYearMonth"/>
-				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-					<fr:property name="columnClasses" value="width10em,width20em,tdclear tderror1"/>
-				</fr:layout>
-			</fr:edit>
-
+			<bean:define id="unitCode" name="extraWorkRequestFactory" property="unitCode"/>						
+			
 			<bean:define id="doneInYear" name="extraWorkRequestFactory" property="yearMonthHoursDone.year"/>
 			<bean:define id="doneInMonth" name="extraWorkRequestFactory" property="yearMonthHoursDone.month"/>
 			
@@ -83,7 +84,12 @@
 							<fr:property name="key(view)" value="link.paymentRequest" />
 							<fr:property name="param(view)" value="employee.employeeNumber/employeeNumber,idInternal" />
 							<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES" />
-							<fr:property name="visibleIf(view)" value="extraWorkRequestFactory.isMonthClosed()"/>
+							<fr:property name="visibleIf(view)" value="extraWorkRequestFactory.isMonthClosed"/>
+							<fr:property name="link(delete)" value="<%="/extraWorkPaymentRequest.do?method=deleteExtraWorkRequest&year="+year.toString()+"&month="+month.toString()+"&unitCode="+unitCode.toString() + "&doneInYear="+doneInYear.toString()+"&doneInMonth="+doneInMonth.toString()%>" />
+							<fr:property name="key(delete)" value="link.deleteExtraWorkRequest" />
+							<fr:property name="param(delete)" value="idInternal" />
+							<fr:property name="bundle(delete)" value="ASSIDUOUSNESS_RESOURCES" />
+							<fr:property name="visibleIf(delete)" value="canBeDeleted"/>
 						</logic:equal>
 					</fr:layout>
 				</fr:view>
