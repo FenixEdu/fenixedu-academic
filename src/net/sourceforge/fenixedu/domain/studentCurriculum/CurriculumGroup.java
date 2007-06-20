@@ -58,8 +58,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	setDegreeModule(courseGroup);
     }
 
-    private void checkInitConstraints(StudentCurricularPlan studentCurricularPlan,
-	    CourseGroup courseGroup) {
+    protected void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
 	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
 	    throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup",
 		    courseGroup.getName());
@@ -83,8 +82,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	init(parentCurriculumGroup, courseGroup, executionPeriod);
     }
 
-    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup,
-	    ExecutionPeriod executionPeriod) {
+    protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	checkParameters(curriculumGroup, courseGroup, executionPeriod);
 	setDegreeModule(courseGroup);
