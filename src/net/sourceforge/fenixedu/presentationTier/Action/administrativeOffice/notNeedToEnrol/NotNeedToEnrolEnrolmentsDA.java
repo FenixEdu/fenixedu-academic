@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.notNeedToEnrol;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -99,6 +102,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	    return prepare(mapping, form, request, response);
 	}
 	
+	Collections.sort(notNeedToEnrolList, new BeanComparator("curricularCourse.name", Collator.getInstance()));
 	notNeedToEnrolEnrolmentsBean.setObjects(notNeedToEnrolList);
 	request.setAttribute("bean", notNeedToEnrolEnrolmentsBean);
 	

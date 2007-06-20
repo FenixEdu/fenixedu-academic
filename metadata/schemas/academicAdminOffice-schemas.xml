@@ -945,7 +945,7 @@
 	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.notNeedToEnrol.degreeCurricularPlan.withbreak"/>
 	<slot name="curricularCourse.code" key="label.notNeedToEnrol.code.withbreak"/>	
 	<slot name="curricularCourse.name" key="label.notNeedToEnrol.name"/>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan.student"/>
 	<slot name="IEnrolments" layout="list" key="label.notNeedToEnrol.associated.enrolments">
 		<property name="classes" value="list5 mvert0"/>
 		<property name="eachLayout" value="values" />
