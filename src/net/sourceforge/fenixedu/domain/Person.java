@@ -1835,10 +1835,18 @@ public class Person extends Person_Base {
 	}
 
 	@Override
-	public boolean isPerson() {
-		return true;
+	final public boolean isPerson() {
+	    return true;
 	}
 
+	final public boolean isFemale() {
+	    return getGender() == Gender.FEMALE;
+	}
+	
+	final public boolean isMale() {
+	    return getGender() == Gender.MALE;
+	}
+	
 	public List<Registration> getStudents() {
 		return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
 	}
