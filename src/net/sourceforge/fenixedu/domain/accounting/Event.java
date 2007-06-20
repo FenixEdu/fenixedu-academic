@@ -254,7 +254,7 @@ public abstract class Event extends Event_Base {
 	    }
 
 	    final Entry entry = transaction.getToAccountEntry();
-	    if (!entry.isAssociatedToAnyActiveReceipt() && entry.isPositiveAmount()) {
+	    if (!entry.isAssociatedToAnyActiveReceipt() && entry.isAmountWithAdjustmentPositive()) {
 		result.add(entry);
 	    }
 	}
@@ -495,7 +495,6 @@ public abstract class Event extends Event_Base {
 	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(),
 		getToAccount(), transactionDetail);
     }
-
 
     public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {

@@ -61,6 +61,10 @@ public class Entry extends Entry_Base {
 	return getOriginalAmount().isPositive();
     }
 
+    public boolean isAmountWithAdjustmentPositive() {
+	return getAmountWithAdjustment().isPositive();
+    }
+
     @Override
     public void removeAccount() {
 	throw new DomainException("error.accounting.entry.cannot.remove.account");
