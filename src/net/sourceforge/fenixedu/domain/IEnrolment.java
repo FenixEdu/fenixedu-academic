@@ -39,6 +39,8 @@ public interface IEnrolment {
     
     String getCode();
     
+    Grade getGrade();
+    
     String getGradeValue();
     
     Integer getFinalGrade();

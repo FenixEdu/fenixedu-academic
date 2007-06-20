@@ -973,6 +973,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGradeValue();
     }
 
+    public Grade getGrade() {
+	final String gradeValue = getGradeValue();
+	if (gradeValue == null || gradeValue.length() == 0) {
+	    return Grade.createEmptyGrade();
+	}
+	
+	return Grade.createGrade(gradeValue, getCurricularCourse().getGradeScaleChain());
+    }
+
     public Integer getFinalGrade() {
 	final String grade = getGradeValue();
 	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
