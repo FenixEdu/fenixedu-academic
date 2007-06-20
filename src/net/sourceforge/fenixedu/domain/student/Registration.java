@@ -1653,9 +1653,17 @@ public class Registration extends Registration_Base {
 	
 	throw new DomainException("Registration.is.not.concluded");
     }
+    
+    final public boolean hasConcludedFirstCycle() {
+	return hasConcludedCycle(CycleType.FIRST_CYCLE);
+    }
+    
+    final public boolean hasConcludedSecondCycle() {
+	return hasConcludedCycle(CycleType.SECOND_CYCLE);
+    }
 
     final public boolean hasConcludedCycle(final CycleType cycleType) {
-	// TODO
+	// TODO:
 	if (cycleType == null) {
 
 	} else {
