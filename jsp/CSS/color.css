@@ -92,6 +92,8 @@ border-bottom: none;
 
 #content a:hover {
 /*background: #e5f2fb;*/
-border-bottom: 1px solid #fff;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+border-bottom-color: transparent;
 }
 #content a:visited { }
