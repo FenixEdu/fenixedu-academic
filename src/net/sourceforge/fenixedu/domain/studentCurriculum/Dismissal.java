@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -20,16 +21,23 @@ public class Dismissal extends Dismissal_Base {
     }
     
     public Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
-        super();
+	init(credits, curriculumGroup);
+    }
+    
+    public Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+	init(credits, curriculumGroup, curricularCourse);
+    }
+    
+    protected void init(Credits credits, CurriculumGroup curriculumGroup) {
         if(credits == null || curriculumGroup == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
         }
         setCredits(credits);
-        setCurriculumGroup(curriculumGroup);
+        setCurriculumGroup(curriculumGroup);	
     }
     
-    public Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-        this(credits, curriculumGroup);
+    protected void init(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+        init(credits, curriculumGroup);
         if( curricularCourse == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
         }
@@ -65,6 +73,11 @@ public class Dismissal extends Dismissal_Base {
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
 	return new Dismissal(credits, findCurriculumGroupForCurricularCourse(studentCurricularPlan, curricularCourse), curricularCourse);
     }
+    
+    static protected OptionalDismissal createNewOptionalDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan, final OptionalCurricularCourse optionalCurricularCourse, final Double ectsCredits) {
+	return new OptionalDismissal(credits, findCurriculumGroupForCurricularCourse(studentCurricularPlan, optionalCurricularCourse), optionalCurricularCourse, ectsCredits);
+    }
+
 
     static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
 	if (curricularCourse.hasOnlyOneParentCourseGroup()) {
@@ -105,7 +118,7 @@ public class Dismissal extends Dismissal_Base {
         return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits();
     }
     
-    private Double getEnrolmentsEcts() {
+    protected Double getEnrolmentsEcts() {
 	return getCredits().getEnrolmentsEcts();
     }
     

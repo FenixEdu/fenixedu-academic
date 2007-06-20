@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -72,6 +74,15 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     
     public void setCurricularCourse(CurricularCourse curricularCourse) {
     	setDegreeModule(curricularCourse);
+    }
+    
+    @Override
+    public void setDegreeModule(DegreeModule degreeModule) {
+	if (!(degreeModule instanceof CurricularCourse)) {
+	    throw new DomainException(
+		    "error.curriculumLine.DegreeModuleCanOnlyBeCurricularCourse");
+	}
+	super.setDegreeModule(degreeModule);
     }
     
     public boolean hasCurricularCourse() {
