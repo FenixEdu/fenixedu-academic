@@ -46,8 +46,9 @@
 					           action="<%= contextPrefix + "method=createMessage&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=false&amp;goToLastPage=true" %>">
 					           
 					            <fr:layout name="tabular">
-        							<fr:property name="classes" value="thlight mtop1"/>
-							    </fr:layout>
+									<fr:property name="classes" value="thlight mtop05 tstyle5"/>
+									<fr:property name="columnClasses" value=",,tdclear tderror1"/>							    
+								</fr:layout>
 					
 								<fr:hidden slot="creator" name="person"/>
 								<fr:hidden slot="conversationThread" name="thread"/>

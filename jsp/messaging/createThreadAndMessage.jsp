@@ -31,13 +31,14 @@
            	action="<%= contextPrefix + "method=createThreadAndMessage&amp;forumId="+forumId+"&amp;goToLastPage=true" %>">
 
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight mtop05"/>
+				<fr:property name="classes" value="thlight mtop05 tstyle5"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>           	
 
            <fr:hidden slot="creator" name="person"/>
            <fr:hidden slot="forum" name="forum"/>
-           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
-           <fr:destination name="exception" path="<%= contextPrefix + "method=viewForum&amp;forumId="+forumId%>"/>
+           <fr:destination name="cancel" path="<%= contextPrefix.toString().replace("&amp;", "&") + "method=viewForum&forumId="+forumId%>"/>
+           <fr:destination name="exception" path="<%= contextPrefix.toString().replace("&amp;", "&") + "method=viewForum&forumId="+forumId%>"/>
 	</fr:create>
 
 
