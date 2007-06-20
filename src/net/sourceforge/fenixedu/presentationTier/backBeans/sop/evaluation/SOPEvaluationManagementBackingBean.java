@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -755,9 +754,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
                 	if (evaluation instanceof WrittenEvaluation) {
                 	    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-                	    for (final CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScopeSet()) {
-                		if (curricularCourseScope.getCurricularSemester().getCurricularYear().getIdInternal().equals(curricularYearID)
-                			&& degreeCurricularPlan == curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan()) {
+                	    for (final DegreeModuleScope scope : writtenEvaluation.getDegreeModuleScopes()) {
+                		if (scope.getCurricularYear().intValue() == curricularYearID.intValue()
+                			&& degreeCurricularPlan == scope.getCurricularCourse().getDegreeCurricularPlan()) {
                 		    writtenEvaluations.add(writtenEvaluation);
                 		}
                 	    }

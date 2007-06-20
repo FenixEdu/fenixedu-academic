@@ -14,10 +14,10 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -38,6 +38,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 
     private static final DateFormat yearFormat = new SimpleDateFormat("yyyy");
+    
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
     private Integer degreeID;
@@ -215,7 +216,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final CurricularYear curricularYear = getCurricularYear();
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            if (curricularYear == null || isActiveForCurricularYear(curricularCourse, curricularYear)) {
+            if (curricularYear == null || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                     if (executionCourse.getExecutionPeriod() == executionPeriod) {
                         for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
@@ -283,16 +284,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginningDate()));
         stringBuilder.append(")");
         return stringBuilder.toString();
-    }
-
-    private boolean isActiveForCurricularYear(final CurricularCourse curricularCourse, final CurricularYear curricularYear) {
-        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-            if (curricularCourseScope.getCurricularSemester().getCurricularYear() == curricularYear) {
-                return true;
-            }
-        }
-        return false;
-    }
+    }     
 
     public String getApplicationContext() {
         final String appContext = PropertiesManager.getProperty("app.context");
