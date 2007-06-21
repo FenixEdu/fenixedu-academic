@@ -253,7 +253,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public GradeScale getGradeScale() {
-	return getDegreeCurricularPlan().getGradeScaleChain();
+	return getEnrolment().getCurricularCourse().getGradeScaleChain();
     }
     
     private EnrollmentState getEnrollmentStateByGrade(String grade) {
