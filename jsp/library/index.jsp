@@ -6,12 +6,12 @@
 
 <html:xhtml/>
 
-<h1>
+<h2>
 	<bean:message key="portal.library.name" bundle="PORTAL_RESOURCES"/>
-</h1>
+</h2>
 
-<div class="infoop2">
-    <p class="mvert0">
-		<bean:message key="message.library.portal.intro" bundle="LIBRARY_RESOURCES"/>
-	</p>
-</div>
+
+<p>
+	<bean:message key="message.library.portal.intro" bundle="LIBRARY_RESOURCES"/>
+</p>
+
