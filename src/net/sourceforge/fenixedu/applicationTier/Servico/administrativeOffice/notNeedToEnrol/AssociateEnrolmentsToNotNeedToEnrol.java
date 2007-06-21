@@ -39,7 +39,7 @@ public class AssociateEnrolmentsToNotNeedToEnrol extends Service {
 
 	if(externalEnrolments != null && !externalEnrolments.isEmpty()) {
 	    Collection<ExternalEnrolment> enrolments = student.getExternalEnrolments();
-	    for (ExternalEnrolment selectedExternalEnrolment : enrolments) {
+	    for (ExternalEnrolment selectedExternalEnrolment : externalEnrolments) {
 		ExternalEnrolment externalEnrolment = getExternalEnrolment(enrolments, selectedExternalEnrolment);
 		if(externalEnrolment == null) {
 		    throw new FenixServiceException();

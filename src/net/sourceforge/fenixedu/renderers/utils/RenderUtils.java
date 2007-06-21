@@ -237,28 +237,30 @@ public class RenderUtils {
                 lastIndex = end + 1;
 
                 if (end - index == 2) {
-                    continue;
-                }
-                
-                String spec = format.substring(index + 2, end);
-                String[] parts = spec.split(",");
-                
-                String property = parts[0];
-                
-                if (parts.length > 1) {
-                    builder.append("%" + parts[1]);
+                    builder.append("%s");
+                    args.add(object);
                 }
                 else {
-                    builder.append("%s");
-                }
-                
-                try {
-                    Object value = PropertyUtils.getProperty(object, property);
+                    String spec = format.substring(index + 2, end);
+                    String[] parts = spec.split(",");
                     
-                    args.add(value);
+                    String property = parts[0];
                     
-                } catch (Exception e) {
-                    throw new RuntimeException("could not retrieve property '" + property + "' for object " + object, e);
+                    if (parts.length > 1) {
+                        builder.append("%" + parts[1]);
+                    }
+                    else {
+                        builder.append("%s");
+                    }
+                    
+                    try {
+                        Object value = PropertyUtils.getProperty(object, property);
+                        
+                        args.add(value);
+                        
+                    } catch (Exception e) {
+                        throw new RuntimeException("could not retrieve property '" + property + "' for object " + object, e);
+                    }
                 }
             }
             

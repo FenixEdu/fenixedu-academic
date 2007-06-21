@@ -956,7 +956,9 @@
 <schema name="notNeedToEnroll.view.enrolment" 
 	type="net.sourceforge.fenixedu.domain.IEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="name" />
-	<slot name="code" />
+	<slot name="code" layout="format">
+		<property name="format" value="(${})"/>
+	</slot>
 </schema>
 
 <schema name="notNeedToEnroll.view.aproved.enrolment" 

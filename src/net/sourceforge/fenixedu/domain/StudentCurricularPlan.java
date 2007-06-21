@@ -734,7 +734,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.isEnrolmentStateApproved()) {
+	    if (enrolment.isApproved()) {
 		result.add(enrolment);
 	    }
 	}

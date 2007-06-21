@@ -512,9 +512,11 @@ public class Student extends Student_Base {
     }
 
     public Set<Enrolment> getApprovedEnrolments() {
-	final Set<Enrolment> enrolments = new HashSet<Enrolment>();
-	addApprovedEnrolments(enrolments);
-	return enrolments;
+	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+	for (Registration registration : getRegistrationsSet()) {
+	    aprovedEnrolments.addAll(registration.getApprovedEnrolments());
+	}
+	return aprovedEnrolments;
     }
 
     public boolean isHandicapped() {

@@ -733,14 +733,17 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
 
+    @Deprecated
     public boolean isEnrolmentStateApproved() {
 	return this.getEnrollmentState() == EnrollmentState.APROVED;
     }
 
+    @Deprecated
     public boolean isEnrolmentStateNotApproved() {
 	return this.getEnrollmentState() == EnrollmentState.NOT_APROVED;
     }
 
+    @Deprecated
     public boolean isEnrolmentStateNotEvaluated() {
 	return this.getEnrollmentState() == EnrollmentState.NOT_EVALUATED;
     }
