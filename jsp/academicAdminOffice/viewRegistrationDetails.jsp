@@ -187,7 +187,7 @@
 		<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
@@ -217,7 +217,7 @@
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
@@ -247,7 +247,7 @@
 		<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
-				<fr:property name="columnClasses" value="smalltxt nowrap,smalltxt nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
+				<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
 
 				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 				<fr:property name="key(view)" value="view"/>
