@@ -18,9 +18,8 @@
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"
 			 schema="choose.curricularCourses">
 		<fr:destination name="executionYearPostBack" path="/chooseExecutionYearAndDegreeCurricularPlan.do?method=chooseDegreeCurricularPlan"/>
-	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
