@@ -85,10 +85,14 @@
 		</ol>
 
 	<!-- Personal Information -->
-    <p id='personalInformationTitle' class="separator2" style="float: left; display: inline;"> 	<span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-	<div class="cboth"></div>
+    <p id='personalInformationTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
+    
 	<ul>			
-	<li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> <logic:present name="person" property="teacher"> (<fr:view name="person" property="teacher.teacherNumber"/>)</li> </logic:present>
+	<li><bean:message key="researcher.viewCurriculum.name" bundle="RESEARCHER_RESOURCES"/>: <strong><fr:view name="person" property="nickname"/></strong> <logic:present name="person" property="teacher"> (<fr:view name="person" property="teacher.teacherNumber"/>)</li>
+	</logic:present>
 	<logic:present name="person" property="teacher">
 		<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
 	</logic:present>
@@ -98,7 +102,11 @@
 
 	<!-- Lectures -->
 	<logic:notEmpty name="lectures">
-    <p id='lecturesTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.lecturedCoursesInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
+    <p id='lecturesTitle' class="separator2" style="position: relative;">
+    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.lecturedCoursesInformation"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
+
 	<div class="cboth"></div>
 		<ul>
   	    <logic:iterate id="lecture" name="lectures" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
@@ -111,14 +119,20 @@
 
    	<!-- Final Works -->
     <logic:notEmpty  name="final_works">	
-    <p id='guidancesTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
+    <p id='guidancesTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
+    
 	<div class="cboth"></div>
 
 	</logic:notEmpty>
 	<logic:empty  name="final_works">	
 	    <logic:notEmpty  name="guidances">	
-		    <p id='guidancesTitle' class="separator2" style="float: left; display: inline;"><span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-			<div class="cboth"></div>
+		    <p id='guidancesTitle' class="separator2" style="position: relative; margin-top: 2em;">
+		    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
+		    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+		    </p>
 		</logic:notEmpty>
 	</logic:empty>
 	
@@ -160,7 +174,10 @@
 
 	<!-- Functions -->	
 	<logic:notEmpty name="functions">
-    <p id='functionsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.functionsInformation"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
+    <p id='functionsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.functionsInformation"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
 	<div class="cboth"></div>
 	<ul>
 	<logic:iterate id="personFunction" name="functions">
@@ -176,8 +193,10 @@
 			
 	<!-- Research Interests -->
 		<logic:notEmpty name="researchInterests">
-	    <p id='researchInterestsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-		<div class="cboth"></div>
+	    <p id='researchInterestsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+	    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/></span>
+	    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+	    </p>
 
 		<fr:view name="researchInterests" >
 			<fr:layout>
@@ -213,8 +232,11 @@
 	<!-- Publications -->
 	
 	<logic:notEmpty name="resultPublications">
-	    <p id='publicationsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-		<div class="cboth"></div>
+    <p id='publicationsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
+		
 	<logic:notEmpty name="books">
 		<p id='books' class="mtop2 mbottom0"><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Books"/></span></strong></p>
 		<bean:define id="currentSchema" value="result.publication.presentation.Book" toScope="request"/>
@@ -350,8 +372,12 @@
 		
 		<!-- Patents -->
 		<logic:notEmpty name="resultPatents">
-	    <p id='patentsTitle' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-		<div class="cboth"></div>
+	    <p id='patentsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+	    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/></span>
+	    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+	    </p>		
+
+		
 			<ul>
 			<logic:iterate id="result" name="resultPatents" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
 				<li><strong>
@@ -377,8 +403,11 @@
 			-->
 
 <logic:notEmpty name="participations">
-    <p id='activities' class="separator2" style="float: left; display: inline;"> <span class="fleft"><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></span> <span class="fright"><a href="#header"><bean:message key="label.top" /></a></span> </p>
-	<div class="cboth"></div>
+    <p id='activities' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    </p>
+
 
 	<logic:notEmpty name="international-events">
 		<p id='events' class="mtop2 mbottom0">
