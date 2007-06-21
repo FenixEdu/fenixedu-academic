@@ -27,27 +27,28 @@
 	
 	<logic:present name="yearMonth">
 		<div class="mvert1 invisible">
-		<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
-			<fr:edit name="yearMonth" schema="choose.date">
-				<fr:layout>
-			        <fr:property name="classes" value="thlight thright"/>
-				</fr:layout>
-			</fr:edit>
-			<p>
-			<html:submit>
-				<bean:message key="button.submit" />
-			</html:submit>
-			</p>
-		</fr:form>
+			<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
+				<fr:edit name="yearMonth" schema="choose.date">
+					<fr:layout>
+				        <fr:property name="classes" value="thlight thright"/>
+					</fr:layout>
+				</fr:edit>
+				<p>
+					<html:submit>
+						<bean:message key="button.submit"/>
+					</html:submit>
+				</p>
+			</fr:form>
 		</div>
 		
 		<div class="toprint">
-		<p class="bold mbottom0">
-		<bean:define id="month" name="yearMonth" property="month"/>
-		<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
-		<bean:write name="yearMonth" property="year"/>
-		</p>
-		<br/>
+			<p class="mbottom0">
+				<strong>
+					<bean:define id="month" name="yearMonth" property="month"/>
+					<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
+					<bean:write name="yearMonth" property="year"/>
+				</strong>
+			</p>
 		</div>
 	</logic:present>
 		
@@ -56,6 +57,7 @@
 			<em><bean:message key="message.employee.noWorkSheet" /></em>
 		</p>
 	</logic:empty>
+	
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList" schema="show.workDaySheet">
 			<fr:layout name="tabular">
@@ -74,7 +76,7 @@
 		<logic:present name="employeeWorkSheet" property="unjustifiedBalance">
 			<p class="mvert05"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString"/></b></p>
 		</logic:present>
-<%-- 		<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
+<%-- 	<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
 			<p class="mvert05"><bean:message key="label.totalComplementaryWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></p>
 		</logic:present>
 		<logic:present name="employeeWorkSheet" property="weeklyRest">
