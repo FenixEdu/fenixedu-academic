@@ -181,7 +181,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
 	@Override
 	public String getBranch() {
-	    return curricularCourseScope.getBranch().getName();
+	    return curricularCourseScope.getBranch() == null ? "" : curricularCourseScope.getBranch().getName();
 	}
 
 	public CurricularCourseScope getCurricularCourseScope() {
