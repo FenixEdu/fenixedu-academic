@@ -32,3 +32,7 @@ execute "Add ECTS_CREDITS to EXTERNAL_ENROLMENT" alterTableExternalEnrolment.sql
 execute "Add ECTS_CREDITS to CURRICULUM_MODULE" alterTableCurriculumModule.sql
 
 execute "alter Table Registration" alterTableRegistration.sql
+
+execute "Droping table CurricularCourseEquivalencePlanEntryNewCurricularCourse" DropTableCurricularCourseEquivalencePlanEntryNewCurricularCourse.sql
+execute "Creating Table CurricularCourseEquivalencePlanEntryNewDegreeModule" CreateTableCurricularCourseEquivalencePlanEntryNewDegreeModule.sql
+execute "Changing Table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql

@@ -27,7 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Droping table CurricularCourseEquivalencePlanEntryNewCurricularCourse" DropTableCurricularCourseEquivalencePlanEntryNewCurricularCourse.sql
-execute "Creating Table CurricularCourseEquivalencePlanEntryNewDegreeModule" CreateTableCurricularCourseEquivalencePlanEntryNewDegreeModule.sql
-execute "Changing Table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
-execute "Delete Enrolment" deleteEnrolment.sql
