@@ -5395,7 +5395,8 @@ class net.sourceforge.fenixedu.domain.EquivalencePlanEntry extends net.sourcefor
 	class net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
 		Integer keyCourseGroupEquivalencePlanEntry;
 		Integer keyPreviousCourseGroupForNewCurricularCourses;
-		LogicOperator newCurricularCoursesOperator;
+		LogicOperator newDegreeModulesOperator;
+		Double ectsCredits;
 	}
 	
 	class net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
@@ -13200,8 +13201,8 @@ relation StudentCurricularPlanEquivalencePlanEntryToRemove {
 	}
 }
 
-relation CurricularCourseEquivalencePlanEntryNewCurricularCourse {
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole newCurricularCourses {
+relation CurricularCourseEquivalencePlanEntryNewDegreeModule {
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole newDegreeModules {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry playsRole newEquivalencePlanEntries {

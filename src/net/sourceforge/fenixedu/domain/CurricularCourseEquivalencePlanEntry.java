@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
@@ -39,23 +40,28 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 
     public static Comparator<CurricularCourseEquivalencePlanEntry> COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES_AND_NEW_CURRICULAR_COURSE_NAMES = new Comparator<CurricularCourseEquivalencePlanEntry>() {
 
-	public int compare(final CurricularCourseEquivalencePlanEntry o1, final CurricularCourseEquivalencePlanEntry o2) {
+	public int compare(final CurricularCourseEquivalencePlanEntry o1,
+		final CurricularCourseEquivalencePlanEntry o2) {
 	    final String o1String = getCompareString(o1);
 	    final String o2String = getCompareString(o2);
 	    return Collator.getInstance().compare(o1String, o2String);
 	}
 
-	private String getCompareString(final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry) {
+	private String getCompareString(
+		final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry) {
 	    final StringBuilder stringBuilder = new StringBuilder();
-	    getCompareString(stringBuilder, curricularCourseEquivalencePlanEntry.getOldCurricularCoursesSet());
-	    getCompareString(stringBuilder, curricularCourseEquivalencePlanEntry.getNewCurricularCoursesSet());
+	    getCompareString(stringBuilder, curricularCourseEquivalencePlanEntry
+		    .getOldCurricularCoursesSet());
+	    getCompareString(stringBuilder, curricularCourseEquivalencePlanEntry
+		    .getNewDegreeModulesSet());
 	    stringBuilder.append(curricularCourseEquivalencePlanEntry.getIdInternal());
 	    return stringBuilder.toString();
 	}
 
-	private void getCompareString(final StringBuilder stringBuilder, final Set<CurricularCourse> curricularCourses) {
-	    for (final CurricularCourse curricularCourse : curricularCourses) {
-		stringBuilder.append(curricularCourse.getName());
+	private void getCompareString(final StringBuilder stringBuilder,
+		final Set<? extends DegreeModule> degreeModules) {
+	    for (final DegreeModule degreeModule : degreeModules) {
+		stringBuilder.append(degreeModule.getName());
 	    }
 	}
     };
@@ -82,8 +88,9 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public Object execute() {
-	    return new CurricularCourseEquivalencePlanEntry(getEquivalencePlan(), getOriginCurricularCourses(),
-		    getDestinationCurricularCourses(), null, getLogicOperator());
+	    return new CurricularCourseEquivalencePlanEntry(getEquivalencePlan(),
+		    getOriginCurricularCourses(), getDestinationCurricularCourses(), null,
+		    getLogicOperator());
 	}
 
 	public EquivalencePlan getEquivalencePlan() {
@@ -96,7 +103,8 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public Set<CurricularCourse> getOriginCurricularCourses() {
-	    final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+	    final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(
+		    CurricularCourse.COMPARATOR_BY_NAME);
 	    for (final DomainReference<CurricularCourse> curricularCourse : this.originCurricularCourses) {
 		curricularCourses.add(curricularCourse.getObject());
 	    }
@@ -104,7 +112,8 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public Set<CurricularCourse> getDestinationCurricularCourses() {
-	    final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+	    final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(
+		    CurricularCourse.COMPARATOR_BY_NAME);
 	    for (final DomainReference<CurricularCourse> curricularCourse : this.destinationCurricularCourses) {
 		curricularCourses.add(curricularCourse.getObject());
 	    }
@@ -116,26 +125,31 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public void setOriginCurricularCourseToAdd(CurricularCourse curricularCourseToAdd) {
-	    this.originCurricularCourseToAdd = curricularCourseToAdd == null ? null : new DomainReference<CurricularCourse>(curricularCourseToAdd);
+	    this.originCurricularCourseToAdd = curricularCourseToAdd == null ? null
+		    : new DomainReference<CurricularCourse>(curricularCourseToAdd);
 	}
 
 	public CurricularCourse getDestinationCurricularCourseToAdd() {
-	    return destinationCurricularCourseToAdd == null ? null : destinationCurricularCourseToAdd.getObject();
+	    return destinationCurricularCourseToAdd == null ? null : destinationCurricularCourseToAdd
+		    .getObject();
 	}
 
 	public void setDestinationCurricularCourseToAdd(CurricularCourse curricularCourseToAdd) {
-	    this.destinationCurricularCourseToAdd = curricularCourseToAdd == null ? null : new DomainReference<CurricularCourse>(curricularCourseToAdd);
+	    this.destinationCurricularCourseToAdd = curricularCourseToAdd == null ? null
+		    : new DomainReference<CurricularCourse>(curricularCourseToAdd);
 	}
 
 	public void addOrigin(CurricularCourse curricularCourseToAdd) {
 	    if (curricularCourseToAdd != null) {
-		originCurricularCourses.add(new DomainReference<CurricularCourse>(curricularCourseToAdd));
+		originCurricularCourses
+			.add(new DomainReference<CurricularCourse>(curricularCourseToAdd));
 	    }
 	}
 
 	public void addDestination(CurricularCourse curricularCourseToAdd) {
 	    if (curricularCourseToAdd != null) {
-		destinationCurricularCourses.add(new DomainReference<CurricularCourse>(curricularCourseToAdd));
+		destinationCurricularCourses.add(new DomainReference<CurricularCourse>(
+			curricularCourseToAdd));
 	    }
 	}
 
@@ -155,12 +169,23 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 
     public CurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan,
 	    final Collection<CurricularCourse> oldCurricularCourses,
-	    final Collection<CurricularCourse> newCurricularCourses,
-	    final CourseGroup previousCourseGroup, final LogicOperator newCurricularCoursesOperator) {
+	    final Collection<? extends DegreeModule> newDegreeModules,
+	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator,
+	    final Double ectsCredits) {
 	this();
-	init(equivalencePlan, oldCurricularCourses, newCurricularCourses, previousCourseGroup,
-		newCurricularCoursesOperator);
+	init(equivalencePlan, oldCurricularCourses, newDegreeModules, previousCourseGroup,
+		newDegreeModulesOperator, ectsCredits);
 	checkPermisionsForConstructor();
+    }
+
+    public CurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan,
+	    final Collection<CurricularCourse> oldCurricularCourses,
+	    final Collection<? extends DegreeModule> newDegreeModules,
+	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator) {
+
+	this(equivalencePlan, oldCurricularCourses, newDegreeModules, previousCourseGroup,
+		newDegreeModulesOperator, null);
+
     }
 
     @Checked("EquivalencePlanPredicates.isCoordinator")
@@ -171,27 +196,29 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 
     private void init(final EquivalencePlan equivalencePlan,
 	    final Collection<CurricularCourse> oldCurricularCourses,
-	    final Collection<CurricularCourse> newCurricularCourses,
-	    final CourseGroup previousCourseGroup, final LogicOperator newCurricularCoursesOperator) {
+	    final Collection<? extends DegreeModule> newDegreeModules,
+	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator,
+	    final Double ectsCredits) {
 	super.init(equivalencePlan);
-	checkParameters(oldCurricularCourses, newCurricularCourses, newCurricularCoursesOperator);
+	checkParameters(oldCurricularCourses, newDegreeModules, newDegreeModulesOperator);
 	super.getOldCurricularCourses().addAll(oldCurricularCourses);
-	super.getNewCurricularCourses().addAll(newCurricularCourses);
+	super.getNewDegreeModules().addAll(newDegreeModules);
 	super.setPreviousCourseGroupForNewCurricularCourses(previousCourseGroup);
-	super.setNewCurricularCoursesOperator(newCurricularCoursesOperator);
+	super.setNewDegreeModulesOperator(newDegreeModulesOperator);
+	super.setEctsCredits(ectsCredits);
     }
 
     public void checkParameters(Collection<CurricularCourse> oldCurricularCourses,
-	    Collection<CurricularCourse> newCurricularCourses,
+	    Collection<? extends DegreeModule> newDegreeModules,
 	    LogicOperator newCurricularCoursesOperator) {
 	if (oldCurricularCourses.isEmpty()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.oldCurricularCourses.cannot.be.empty");
 	}
 
-	if (newCurricularCourses.isEmpty()) {
+	if (newDegreeModules.isEmpty()) {
 	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.newCurricularCourse.cannot.be.empty");
+		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.newDegreeModules.cannot.be.empty");
 	}
 
 	if (newCurricularCoursesOperator == null) {
@@ -212,7 +239,7 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     @Override
     public void delete() {
 	removeCourseGroupEquivalencePlanEntry();
-	getNewCurricularCoursesSet().clear();
+	getNewDegreeModulesSet().clear();
 	getOldCurricularCoursesSet().clear();
 	super.delete();
     }
@@ -233,4 +260,5 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     public boolean isCurricularCourseEntry() {
 	return true;
     }
+
 }
