@@ -37,12 +37,19 @@
 <logic:equal name="site" property="defaultLogoUsed" value="true">
 	<logic:notPresent name="siteDefaultLogo">
 		<div class="unitname">
-			<h1>
-				<fr:view name="site" property="unit.acronym"/>
-			</h1>
-			<p>
-				<fr:view name="site" property="unit.name"/>
-			</p>
+			<logic:notEmpty name="site" property="unit.acronym">
+				<h1>
+					<fr:view name="site" property="unit.acronym"/>
+				</h1>
+				<p>
+					<fr:view name="site" property="unit.name"/>
+				</p>
+			</logic:notEmpty>
+			<logic:empty name="site" property="unit.acronym">
+				<h1>
+					<fr:view name="site" property="unit.name"/>
+				</h1>
+			</logic:empty>
 		</div>
 	</logic:notPresent>
 </logic:equal>

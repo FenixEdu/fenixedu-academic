@@ -7,4 +7,10 @@
 	<definition name="show-weekly-work-load" extends="pedagogicalCouncil.masterPage">
 		<put name="body" value="/pedagogicalCouncil/weeklyWorkLoad.jsp" />
 	</definition>
+	<definition name="site.managers.no-site" extends="pedagogicalCouncil.masterPage">
+		<put name="body" value="/pedagogicalCouncil/site/no-site.jsp" />
+	</definition>
+	<definition name="site.managers.choose-managers" extends="pedagogicalCouncil.masterPage">
+		<put name="body" value="/pedagogicalCouncil/site/chooseManagers.jsp" />
+	</definition>
 </tiles-definitions>

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
@@ -22,31 +23,26 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
 
-public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
+public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ResearchUnitSite site = getSite(request);
-		if (site != null) {
-			request.setAttribute("site", site);
-		}
+		request.setAttribute("researchUnit", site.getUnit());
+		
 		return super.execute(mapping, form, request, response);
+	}
+
+	@Override
+	protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return frontPage(mapping, form, request, response);
 	}
 
 	public ActionForward frontPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
-		ResearchUnitSite site = getSite(request);
-		request.setAttribute("researchUnit", site.getUnit());
-		if (site.getShowEvents()) {
-			request.setAttribute("eventAnnouncements", getEventAnnouncements(site));
-		}
-		if (site.getShowAnnouncements()) {
-			request.setAttribute("announcements", getAnnouncements(site));
-		}
-
-		String redirect = (site.getLayout() != null) ? "frontPage-" + site.getLayout() : "frontPage";
-		return mapping.findForward(redirect);
+		return presentation(mapping, form, request, response);
 	}
 
 	public ActionForward showResearchers(ActionMapping mapping, ActionForm form,
@@ -86,51 +82,19 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 		
 	}
 
-	private List<Announcement> getEventAnnouncements(ResearchUnitSite site) {
-		PartyAnnouncementBoard eventBoard = getEventBoards(site.getUnit());
-		List<Announcement> announcements = (eventBoard != null) ? eventBoard.getAnnouncements()
-				: new ArrayList<Announcement>();
-		return announcements;
-	}
-
-	private List<Announcement> getAnnouncements(ResearchUnitSite site) {
-		PartyAnnouncementBoard announcementBoard = getAnnouncementBoards(site.getUnit());
-		List<Announcement> announcements = (announcementBoard != null) ? announcementBoard
-				.getAnnouncements() : new ArrayList<Announcement>();
-		return announcements;
-	}
-
 	@Override
-	protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		return frontPage(mapping, form, request, response);
+	protected String getContextParamName(HttpServletRequest request) {
+		return "siteID";
 	}
-
-	private PartyAnnouncementBoard getBoardByName(ResearchUnit unit, String name) {
-		for (PartyAnnouncementBoard board : unit.getBoards()) {
-			if (board.getName().equals(name)) {
-				return board;
-			}
-		}
-		return null;
+	
+	@Override
+	protected Unit getUnit(HttpServletRequest request) {
+		return getSite(request).getUnit();
 	}
-
-	protected PartyAnnouncementBoard getEventBoards(ResearchUnit unit) {
-		// autch :-(
-		return getBoardByName(unit, "Eventos");
-	}
-
-	protected PartyAnnouncementBoard getAnnouncementBoards(ResearchUnit unit) {
-		return getBoardByName(unit, "Anúncios");
-	}
-
+	
 	private ResearchUnitSite getSite(HttpServletRequest request) {
-		String siteID = request.getParameter("siteID");
-		DomainObject possibleResearchUnitSite = rootDomainObject.readDomainObjectByOID(
-				ResearchUnitSite.class, Integer.valueOf(siteID));
-
-		return (possibleResearchUnitSite instanceof ResearchUnitSite) ? (ResearchUnitSite) possibleResearchUnitSite
-				: null;
+		String siteID = request.getParameter(getContextParamName(request));
+		return (ResearchUnitSite) rootDomainObject.readSiteByOID(Integer.valueOf(siteID));
 	}
 
 	@Override
@@ -144,4 +108,5 @@ public class ViewResearchUnitSiteDA extends SiteVisualizationDA {
 			return null;
 		}
 	}
+	
 }

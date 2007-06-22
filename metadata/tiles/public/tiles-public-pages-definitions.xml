@@ -433,6 +433,56 @@
     <definition name="show.event" extends="definition.public.homepage">
        <put name="body" value="/publico/researcher/showEvent.jsp"/>  
     </definition>    
+
+	<!-- ========== PEDAGOGICAL COUNCIL SITE -->
+    <definition name="pedagogicalCouncil-site-front-page-banner-intro" extends="definition.public.pedagogicalCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+    </definition>
+    
+    <definition name="pedagogicalCouncil-site-front-page-intro-banner" extends="definition.public.pedagogicalCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+    </definition>
+    
+    <definition name="pedagogicalCouncil-site-front-page-intro-float" extends="definition.public.pedagogicalCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="useFlags" value="false"/>
+    </definition>
+
+    <definition name="definition.public.pedagogicalCouncil.site" extends="definition.public.pedagogicalCouncil">
+        <put name="body-context" value="/publico/pedagogicalCouncil/siteContext.jsp"/>
+    </definition>
+    
+    <definition name="pedagogicalCouncil-section" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-section-deny" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-section-adviseLogin" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-item" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-item-deny" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-item-adviseLogin" extends="definition.public.pedagogicalCouncil.site">
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
+    
+    <definition name="public-pedagogicalCouncil-list-announcements" extends="definition.public.pedagogicalCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/listAnnouncements.jsp"/>
+    </definition>
+    <definition name="public-pedagogicalCouncil-list-events" extends="definition.public.pedagogicalCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/listEvents.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-view-announcement" extends="definition.public.pedagogicalCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/showAnnouncement.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-view-event" extends="definition.public.pedagogicalCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
+    </definition>
    
 	<!--  ===== RESEARCH UNIT SITE ======== -->
 	<definition name="research-site-front-page-banner-intro" extends="definition.public.researchUnit.noPaddingLayout">

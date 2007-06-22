@@ -63,7 +63,7 @@
 	<slot name="evaluated" layout="teacherNumber-as-teacher" key="label.teacher.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="departmentSite.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentUnitManagerBean">
+<schema name="departmentSite.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitSiteManagerBean">
     <slot name="alias"/>
     <slot name="idNumber"/>
 </schema>

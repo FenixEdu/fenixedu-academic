@@ -52,7 +52,7 @@
 
   	<definition name="edit-research-site" extends="definition.researchUnitSite.masterPage" >
 	    <put name="navLocalExtra" value="/webSiteManager/researchUnitSite/researchUnitSiteEditionNavBar.jsp"/>
-	    <put name="body" value="/webSiteManager/researchUnitSite/start.jsp"/>
+	    <put name="body" value="/webSiteManager/commons/start.jsp"/>
 	</definition>
 
   	<definition name="add-manager-to-research-site" extends="definition.researchUnitSite.masterPage" >
@@ -129,11 +129,11 @@
 	</definition>
 
 	<definition name="research-announcements-list-boards" extends="definition.researchUnitSite.announcements">
-		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
+		<put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
 	</definition>
 	
 	<definition name="research-site-no-boards" extends="definition.researchUnitSite.announcements">
-		<put name="body" value="/webSiteManager/researchUnitSite/noBoards.jsp"/>
+		<put name="body" value="/webSiteManager/commons/noBoards.jsp"/>
 	</definition>
 	
 	<definition name="research-announcements-list-announcements" extends="definition.researchUnitSite.announcements">
@@ -228,7 +228,7 @@
     </definition>
     
     <definition name="departmentSite-start" extends="definition.department.site.management">
-        <put name="body" value="/webSiteManager/departmentSite/start.jsp"/>
+        <put name="body" value="/webSiteManager/commons/start.jsp"/>
     </definition>
     <definition name="departmentSite-edit-introduction" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/commons/edit-introduction.jsp"/>
@@ -326,10 +326,10 @@
     </definition>
         
     <definition name="department-announcements-no-boards" extends="definition.department.site.announcements.management">
-        <put name="body" value="/webSiteManager/departmentSite/noBoards.jsp" />
+        <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
     </definition>
     <definition name="department-announcements-list-boards" extends="definition.department.site.announcements.management">
-        <put name="body" value="/webSiteManager/departmentSite/listAnnouncementBoards.jsp" />
+        <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
     </definition>
     <definition name="department-announcements-list-announcements" extends="definition.department.site.announcements.management">
         <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
@@ -341,6 +341,129 @@
         <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
     </definition>
     <definition name="department-announcements-edit-announcement" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+    </definition>
+    
+       <!-- ==== Pedagogical Council Site === -->
+    <definition name="definition.pedagogicalCouncil.site.management" extends="definition.websiteManager.masterPage">
+        <put name="body-context" value="/webSiteManager/pedagogicalCouncilSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/pedagogicalCouncilSite/siteMenu.jsp"/>
+    </definition>
+    
+    <definition name="pedagogicalCouncil-start" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/start.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-introduction" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-introduction.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-configuration" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-configuration.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-side-banner" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-side-banner.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-logo" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-logo.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-banners" extends="definition.pedagogicalCouncil.site.management">
+        <put name="head" value="/webSiteManager/commons/colorPickerHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-top-navigation" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-top-navigation.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-footer-navigation" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-footer-navigation.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-organizeTopLinks" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-top-links.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-edit-organizeFooterLinks" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-footer-links.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-sectionsManagement" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-section" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-editSection" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-createSection" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-createItem" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-editItem" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-uploadFile" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-editFile" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="pedagogicalCouncil-organizeItems" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-organizeFiles" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-confirmSectionDelete" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-editSectionPermissions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-editItemPermissions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="pedagogicalCouncil-editFile" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-chooseIntroductionSections" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/chooseIntroductionSections.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-addInstitutionSection" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-functionalitySection" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-editFunctionalitySection" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
+    </definition>
+        <!-- announcements -->
+
+    <definition name="definition.pedagogicalCouncil.site.announcements.management" extends="definition.websiteManager.masterPage">
+        <put name="body-context" value="/webSiteManager/pedagogicalCouncilSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/pedagogicalCouncilSite/siteMenu.jsp"/>
+    </definition>
+        
+    <definition name="pedagogicalCouncil-announcements-no-boards" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-list-boards" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-list-announcements" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-add-announcement" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-view-announcement" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-edit-announcement" extends="definition.pedagogicalCouncil.site.announcements.management">
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>
 </tiles-definitions>

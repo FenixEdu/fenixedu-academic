@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -13,18 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.messaging.Announcement;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -34,33 +28,24 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.YearMonthDay;
 
-public class PublicDepartmentSiteDA extends SiteVisualizationDA {
+public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
-    public static final int ANNOUNCEMENTS_NUMBER = 3;
-    public static final String ANNOUNCEMENTS_NAME = "Anúncios";
-    public static final String EVENTS_NAME = "Eventos";
-    
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");
-        Unit unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
-        
-        if (unit != null) {
-            request.setAttribute("unit", unit);
-            request.setAttribute("department", unit.getDepartment());
-            
-            DepartmentSite site = (DepartmentSite) unit.getSite();
-            request.setAttribute("site", site);
-        }
-        
-        request.setAttribute("announcementActionVariable", "/department/announcements.do");
-        request.setAttribute("eventActionVariable", "/department/events.do");
-        request.setAttribute("siteContextParam", "selectedDepartmentUnitID");
-        request.setAttribute("siteContextParamValue", id);
-        
+    	request.setAttribute("department", getDepartment(request));
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @Override
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return presentation(mapping, form, request, response);
+    }
+
+    @Override
+    protected String getContextParamName(HttpServletRequest request) {
+    	return "selectedDepartmentUnitID";
+    }
+    
     @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
         Department department = getDepartment(request);
@@ -69,43 +54,6 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
         } catch (MalformedURLException e) {
             return null;
         }
-    }
-    
-    @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        return presentation(mapping, form, request, response);
-    }
-
-    public ActionForward presentation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        Unit unit = getUnit(request);
-        UnitSite site = unit.getSite();
-        
-        AnnouncementBoard announcementsBoard = null;
-        AnnouncementBoard eventsBoard = null;
-        
-        for (AnnouncementBoard unitBoard : unit.getBoards()) {
-            if (unitBoard.isPublicToRead() && unitBoard.getName().equals(ANNOUNCEMENTS_NAME)) {
-                announcementsBoard = unitBoard;
-            }
-
-            if (unitBoard.isPublicToRead() && unitBoard.getName().equals(EVENTS_NAME)) {
-                eventsBoard = unitBoard;
-            }
-        }
-        
-        if (announcementsBoard != null) {
-            List<Announcement> announcements = announcementsBoard.getActiveAnnouncements();
-            announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
-            request.setAttribute("announcements", announcements);
-        }
-        
-        if (eventsBoard != null) {
-            List<Announcement> announcements = eventsBoard.getActiveAnnouncements();
-            announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
-            request.setAttribute("eventAnnouncements", announcements);
-        }
-
-        return mapping.findForward("frontPage-" + site.getLayout());
     }
     
     private Department getDepartment(HttpServletRequest request) {
@@ -118,10 +66,6 @@ public class PublicDepartmentSiteDA extends SiteVisualizationDA {
         }
     }
 
-    private Unit getUnit(HttpServletRequest request) {
-        return (Unit) request.getAttribute("unit");
-    }
-    
     public ActionForward employees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         Unit unit = getUnit(request);
         

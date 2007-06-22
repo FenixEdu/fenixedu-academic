@@ -1,32 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManageUnitSiteManagers;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-public class DepartmentSiteDA extends FenixDispatchAction {
+public class DepartmentSiteDA extends ManageUnitSiteManagers {
 
     private Department getDepartment(final HttpServletRequest request) {
         return getUserView(request).getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
-    
+	
+    @Override
     protected DepartmentSite getSite(HttpServletRequest request) {
         Department department = getDepartment(request);
         
@@ -37,107 +24,15 @@ public class DepartmentSiteDA extends FenixDispatchAction {
         
         return (DepartmentSite) departmentUnit.getSite();
     }
-    
+
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Site site = getSite(request);
-        if (site == null) {
-            return mapping.findForward("no-site");
-        }
-        else {
-            request.setAttribute("site", site);
-            return super.execute(mapping, actionForm, request, response);
-        }
-    }
+	protected String getRemoveServiceName() {
+		return "RemoveDepartmentSiteManager";
+	}
 
-    public ActionForward chooseManagers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DepartmentSite site = getSite(request);
-     
-        request.setAttribute("managersBean", new DepartmentUnitManagerBean());
-        request.setAttribute("managers", site.getManagers());
-        
-        return mapping.findForward("chooseManagers");
-    }
-
-    public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Department department = getDepartment(request);
-        UnitSite site = department.getDepartmentUnit().getSite();
-        
-        Integer managerId = getId(request.getParameter("managerID"));
-        for (Person manager : site.getManagers()) {
-            if (manager.getIdInternal().equals(managerId)) {
-                try {
-                    executeService("RemoveDepartmentSiteManager", site, manager);
-                } catch (DomainException e) {
-                    addActionMessage("error", request, e.getKey(), e.getArgs());
-                }
-            }
-        }
-        
-        return chooseManagers(mapping, actionForm, request, response);
-    }
+    @Override
+	protected String getAddServiceName() {
+		return "AddDepartmentSiteManager";
+	}
     
-    public ActionForward addManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DepartmentUnitManagerBean bean = (DepartmentUnitManagerBean) getRenderedObject("add");
-        
-        if (bean == null) {
-            return chooseManagers(mapping, actionForm, request, response);
-        }
-        
-        Person person = null;
-        
-        String alias = bean.getAlias();
-        if (alias != null) {
-            person = Person.readPersonByUsername(alias);
-            
-            if (person == null) {
-                addActionMessage("addError", request, "error.departmentSite.managers.add.alias.notFound");
-            }
-        }
-        else {
-            String documentId = bean.getIdNumber();
-            
-            if (documentId != null) {
-                ArrayList<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(documentId));
-                
-                if (persons.isEmpty()) {
-                    person = null;
-                }
-                else {
-                    // TODO: show a selection list
-                    person = persons.get(new Random().nextInt() % persons.size());
-                }
-                
-                if (person == null) {
-                    addActionMessage("addError", request, "error.departmentSite.managers.add.idNumber.notFound");
-                }
-            }
-        }
-
-        if (person != null) {
-            try {
-                UnitSite site = getDepartment(request).getDepartmentUnit().getSite();
-                
-                executeService("AddDepartmentSiteManager", site, person);
-                RenderUtils.invalidateViewState("add");
-            } catch (DomainException e) {
-                addActionMessage("addError", request, e.getKey(), e.getArgs());
-            }
-        }
-        
-        return chooseManagers(mapping, actionForm, request, response);
-    }
-    
-    private Integer getId(String id) {
-        if (id == null || id.equals("")) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

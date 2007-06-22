@@ -191,4 +191,21 @@ public class UnitUtils {
 	    result.add(unit);
 	}
     }
+    
+    public static Collection<Unit> readAllUnitsWithClassification(UnitClassification classification) {
+    	List<Unit> result = new ArrayList<Unit>();
+    	
+	    for (Party party : RootDomainObject.getInstance().getPartys()) {
+	    	if (party.isUnit()) {
+	    		Unit unit = (Unit) party;
+	    		
+	    		UnitClassification unitClassification = unit.getClassification();
+				if (unitClassification != null && unitClassification.equals(classification)) {
+	    			result.add(unit);
+	    		}
+	    	}
+	    }
+	    
+	    return result;
+    }
 }

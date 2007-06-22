@@ -1,8 +1,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<html:xhtml/>
 
 <bean:define id="announcementAction" name="announcementActionVariable" toScope="request"/>
 <bean:define id="eventAction" name="eventActionVariable" toScope="request"/>
@@ -39,15 +39,19 @@
 		<td>
 			<logic:notEmpty name="announcements">
 			
-			<logic:iterate id="announcement" name="announcements" length="1">
-				<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
+			<logic:notEmpty name="announcementRSSActionVariable">
+				<bean:define id="announcementRSSAction" name="announcementRSSActionVariable"/>
 				
-				<div class="fright">
-					<html:link page="<%= String.format("/department/announcementsRSS.do?method=simple&amp;%s", context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
-						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
-					</html:link>
-				</div>
-			</logic:iterate>
+				<logic:iterate id="announcement" name="announcements" length="1">
+					<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
+					
+					<div class="fright">
+						<html:link page="<%= String.format("%s?method=simple&amp;%s", announcementRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+							<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
+						</html:link>
+					</div>
+				</logic:iterate>
+			</logic:notEmpty>
 			
 			<logic:iterate id="announcement" name="announcements">
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
@@ -90,20 +94,22 @@
 	<logic:equal name="site" property="showEvents" value="true">
 		<td>
 			<logic:notEmpty name="eventAnnouncements">
+
+			<logic:notEmpty name="eventRSSActionVariable">
+				<bean:define id="eventRSSAction" name="eventRSSActionVariable"/>
 			
-			<logic:iterate id="announcement" name="eventAnnouncements" length="1">
-				<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
-				
-				<div class="fright">
-					<html:link page="<%= String.format("/department/eventsRSS.do?method=simple&amp;%s", context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
-						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
-					</html:link>
-				</div>
-			</logic:iterate>
+				<logic:iterate id="announcement" name="eventAnnouncements" length="1">
+					<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
+					
+					<div class="fright">
+						<html:link page="<%= String.format("%s?method=simple&amp;%s", eventRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+							<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
+						</html:link>
+					</div>
+				</logic:iterate>
+			</logic:notEmpty>
 			
 			<logic:iterate id="announcement" name="eventAnnouncements">
-				<bean:define id="rssBoard" name="announcement" property="announcementBoard" toScope="request"/>
-			
 				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
 				<p class="mtop025 mbottom05" style="color: #888;">
 					<logic:present name="announcement" property="referedSubjectBegin">

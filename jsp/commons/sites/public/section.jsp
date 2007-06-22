@@ -38,14 +38,15 @@
 	<fr:view name="section" type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu">
 		<fr:layout>
 			<fr:property name="sectionUrl" value="<%= String.format("%s?method=section&amp;%s", actionName, context) %>"/>
-			<fr:property name="empty">
-				<p>
-					<em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
-				</p>
-			</fr:property>
 		</fr:layout>
 	</fr:view>
     
+    <logic:empty name="protectedItems">
+		<p>
+			<em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
+		</p>
+    </logic:empty>
+
     <logic:notEmpty name="protectedItems">
        	
        	<logic:iterate id="protectedItem" name="protectedItems">

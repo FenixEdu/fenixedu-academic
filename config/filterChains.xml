@@ -1180,6 +1180,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
    	<filterChain>
+        <name>PedagogicalCouncilAuthorization</name>
+        <expression>PedagogicalCouncilAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+   	<filterChain>
         <name>AssiduousnessManagementAuthorization</name>
         <expression>ManagementAssiduousnessAuthorization &amp;&amp; AssiduousnessManagementGroup</expression>
         <description/>

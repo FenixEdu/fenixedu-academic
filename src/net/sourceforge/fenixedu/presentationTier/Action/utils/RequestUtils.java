@@ -159,6 +159,7 @@ public class RequestUtils {
         return (uri.length() > 1
                 && (uri.indexOf("CSS/") == -1)
                 && (uri.indexOf("images/") == -1)
+                && (uri.indexOf("img/") == -1)
                 && (uri.indexOf("download/") == -1)
                 && (uri.indexOf("external/") == -1)
                 && (uri.indexOf("index.jsp") == -1)

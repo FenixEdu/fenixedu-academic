@@ -54,4 +54,14 @@ public class DegreeCoordinatorsGroup extends Group {
     protected Argument[] getExpressionArguments() {
         return new Argument[0];
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	return obj instanceof DegreeCoordinatorsGroup;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return getClass().hashCode();
+    }
 }

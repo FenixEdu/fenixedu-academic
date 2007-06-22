@@ -297,3 +297,13 @@
         <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
     </slot>
 </schema>
+
+<schema name="pedagogicalCouncil.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitSiteManagerBean" bundle="PEDAGOGICAL_COUNCIL">
+    <slot name="alias"/>
+    <slot name="idNumber"/>
+</schema>
+
+<schema name="pedagogicalCouncil.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="PEDAGOGICAL_COUNCIL">
+    <slot name="mostImportantAlias" key="label.alias"/>
+    <slot name="name" key="label.name"/>
+</schema>

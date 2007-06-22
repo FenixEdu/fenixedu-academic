@@ -4862,6 +4862,9 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
 	}
 
+	class net.sourceforge.fenixedu.domain.PedagogicalCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
+	}
+
 //
 // AccessibleItem, items that may appear in the interface as menus allowing access to information and use cases.
 //

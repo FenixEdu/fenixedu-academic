@@ -9,6 +9,10 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.homepage.Homepage"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.UnitSite"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.DepartmentSite"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.InstitutionSite"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.ResearchUnitSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.PedagogicalCouncilSite"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.SiteTemplate" table="SITE">
@@ -45,6 +49,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DepartmentSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.InstitutionSite"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.ResearchUnitSite"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.PedagogicalCouncilSite"/>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitSiteBanner" table="UNIT_SITE_BANNER">
@@ -57,6 +62,9 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.ResearchUnitSite" table="SITE">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.PedagogicalCouncilSite" table="SITE">
 </class-descriptor>
 
 <!-- ******************************** -->

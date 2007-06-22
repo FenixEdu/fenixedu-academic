@@ -2,24 +2,18 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteBoardsDA;
+
 public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
 
-    // TODO: change literal
-    public static final String NAME = "Anúncios";
-    
     @Override
-    protected String getBoardName() {
-        return NAME;
+    protected String getBoardName(HttpServletRequest request) {
+        return UnitSiteBoardsDA.ANNOUNCEMENTS;
     }
 
-    @Override
-    protected String getContextInformation(HttpServletRequest request) {
-        String path = "/department/announcements.do";
-        
-        request.setAttribute("announcementActionVariable", path);
-        request.setAttribute("showingAnnouncements", true);
-        
-        return path;
-    }
+	@Override
+	protected String getActionPath(HttpServletRequest request) {
+		return "/department/announcements.do";
+	}
 
 }

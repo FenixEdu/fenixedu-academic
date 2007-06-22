@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Changing Table Professional Situation" alterTableProfessionalSitutationTable.sql
 execute "Alter table ExtraWorkRequest" alterTableExtraWorkRequest.sql
+execute "Add classification to Pedagogical Council unit and create site" updatePedagogicalCouncilClassification.sql

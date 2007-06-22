@@ -936,6 +936,12 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>PedagogicalCouncilAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PedagogicalCouncilAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
         <name>AssiduousnessManagementGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessManagementGroup</implementationClass>
         <description/>

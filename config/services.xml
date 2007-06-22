@@ -11853,6 +11853,24 @@
 			<chain name="DepartmentAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
+	<service>
+        <name>AddPedagogicalSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="PedagogicalCouncilAuthorization" />
+		</filterChains>
+    </service>
+	<service>
+        <name>RemovePedagogicalSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="PedagogicalCouncilAuthorization" />
+		</filterChains>
+    </service>
     <service>
         <name>AddResearchUnitSiteManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>

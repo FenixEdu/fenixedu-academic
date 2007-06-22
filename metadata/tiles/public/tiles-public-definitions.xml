@@ -158,4 +158,16 @@
         <put name="main_navigation" value="/publico/department/mainNavigation.jsp" />
     </definition>   
 
+    <definition name="definition.public.pedagogicalCouncil.frontPage" extends="definition.public.noPaddingLayout">
+        <put name="profile_navigation" value="/publico/pedagogicalCouncil/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/pedagogicalCouncil/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/pedagogicalCouncil/siteContext.jsp" />
+    </definition>
+
+    <definition name="definition.public.pedagogicalCouncil" extends="definition.public.paddingLayout">
+        <put name="profile_navigation" value="/publico/pedagogicalCouncil/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/pedagogicalCouncil/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/pedagogicalCouncil/siteContext.jsp" />
+    </definition>
+
 </tiles-definitions>

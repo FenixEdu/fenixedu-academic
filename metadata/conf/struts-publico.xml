@@ -935,6 +935,11 @@
             <forward name="site-item" path="department-item"/>
             <forward name="site-item-deny" path="department-item-deny"/>
             <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
+
+            <forward name="announcementsAction" path="/department/announcements.do"/>
+            <forward name="eventsAction" path="/department/announcements.do"/>
+            <forward name="announcementsRSSAction" path="/department/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/department/eventsRSS.do"/>
         </action>
 
         <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
@@ -960,6 +965,45 @@
         <action path="/department/eventsRSS" parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentEventsRSS"/>
 
+   <!--============ Pedagogical Council site ============-->
+        <action path="/pedagogicalCouncilSite/viewSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.ViewPedagogicalSiteDA">
+            <forward name="frontPage-BANNER_INTRO" path="pedagogicalCouncil-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="pedagogicalCouncil-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="pedagogicalCouncil-site-front-page-intro-float"/>
+            <forward name="site-section" path="pedagogicalCouncil-section"/>
+            <forward name="site-section-deny" path="pedagogicalCouncil-site-section-deny"/>
+            <forward name="site-section-adviseLogin" path="pedagogicalCouncil-site-section-adviseLogin"/>
+            <forward name="site-item" path="pedagogicalCouncil-site-item"/>
+            <forward name="site-item-deny" path="pedagogicalCouncil-site-item-deny"/>
+            <forward name="site-item-adviseLogin" path="pedagogicalCouncil-site-item-adviseLogin"/>
+
+            <forward name="announcementsAction" path="/pedagogicalCouncil/announcements.do"/>
+            <forward name="eventsAction" path="/pedagogicalCouncil/announcements.do"/>
+            <forward name="announcementsRSSAction" path="/pedagogicalCouncil/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/pedagogicalCouncil/eventsRSS.do"/>
+        </action>
+
+        <action path="/pedagogicalCouncil/announcements"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilAnnouncementsDA">
+            <forward name="listAnnouncements" path="public-pedagogicalCouncil-list-announcements"/>
+            <forward name="viewAnnouncement" path="pedagogicalCouncil-view-announcement"/>
+        </action>
+        
+        <action path="/pedagogicalCouncil/events"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilEventsDA">
+            <forward name="listAnnouncements" path="public-pedagogicalCouncil-list-events"/>
+            <forward name="viewAnnouncement" path="pedagogicalCouncil-view-event"/>
+        </action>
+
+        <action path="/pedagogicalCouncil/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilAnnouncementsRSS"/>
+        <action path="/pedagogicalCouncil/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilEventsRSS"/>
+
        <!-- ===== ResearchUnit Site Visualization ===== -->
        <action path="/researchSite/viewResearchUnitSite"
         parameter="method"
@@ -977,6 +1021,11 @@
 	        <forward name="showBoardEvents" path="show-research-unit-board-events"/>
 	        <forward name="showResearchers" path="show-research-unit-researchers"/>
 	        <forward name="showPublications" path="show-research-unit-publications"/>
+	        
+            <forward name="announcementsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>
+            <forward name="eventsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>
+            <forward name="announcementsRSSAction" path="/researchSite/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/researchSite/eventsRSS.do"/>
         </action>
        
         <action path="/researchSite/manageResearchUnitAnnouncements"
@@ -988,6 +1037,11 @@
             <forward name="listAnnouncements" path="show-research-unit-board-announcements"/>
       </action>
       
+        <action path="/researchSite/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.ResearchUnitAnnouncementsRSS"/>
+        <action path="/researchSite/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.ResearchUnitEventsRSS"/>
+
         <action path="/loginRequest"
 	   type="net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement"
 	   parameter="method">

@@ -136,7 +136,6 @@
         <forward name="editItemPermissions" path="departmentSite-editItemPermissions"/>
         <forward name="editFile" path="departmentSite-editFile"/>
         <forward name="chooseIntroductionSections" path="departmentSite-chooseIntroductionSections"/>
-        <!-- xxxxx -->
         <forward name="addInstitutionSection" path="departmentSite-addInstitutionSection"/>
         <forward name="functionalitySection" path="departmentSite-functionalitySection"/>
         <forward name="editFunctionalitySection" path="departmentSite-editFunctionalitySection"/>
@@ -159,6 +158,50 @@
         type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManagerAnnouncementForwardAction"
 		/>
             
+    <action path="/managePedagogicalCouncilSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PedagogicalCouncilSiteManagementDA">
+        <forward name="start" path="pedagogicalCouncil-start"/>
+        <forward name="editIntroduction" path="pedagogicalCouncil-edit-introduction"/>
+        <forward name="editConfiguration" path="pedagogicalCouncil-edit-configuration"/>
+        <forward name="editSideBanner" path="pedagogicalCouncil-edit-side-banner"/>
+        <forward name="editLogo" path="pedagogicalCouncil-edit-logo"/>
+        <forward name="editBanners" path="pedagogicalCouncil-edit-banners"/>
+        <forward name="editTopNavigation" path="pedagogicalCouncil-edit-top-navigation"/>
+        <forward name="editFooterNavigation" path="pedagogicalCouncil-edit-footer-navigation"/>
+        <forward name="organizeTopLinks" path="pedagogicalCouncil-edit-organizeTopLinks"/>
+        <forward name="organizeFooterLinks" path="pedagogicalCouncil-edit-organizeFooterLinks"/>
+        <forward name="createSection" path="pedagogicalCouncil-createSection"/>
+        <forward name="sectionsManagement" path="pedagogicalCouncil-sectionsManagement"/>
+        <forward name="section" path="pedagogicalCouncil-section"/>
+        <forward name="editSection" path="pedagogicalCouncil-editSection"/>
+        <forward name="createItem" path="pedagogicalCouncil-createItem"/>
+        <forward name="editItem" path="pedagogicalCouncil-editItem"/>
+        <forward name="uploadFile" path="pedagogicalCouncil-uploadFile"/>
+        <forward name="editFile" path="pedagogicalCouncil-editFile"/>          
+        <forward name="organizeItems" path="pedagogicalCouncil-organizeItems"/>
+        <forward name="organizeFiles" path="pedagogicalCouncil-organizeFiles"/>
+        <forward name="confirmSectionDelete" path="pedagogicalCouncil-confirmSectionDelete"/>
+        <forward name="editSectionPermissions" path="pedagogicalCouncil-editSectionPermissions"/>
+        <forward name="editItemPermissions" path="pedagogicalCouncil-editItemPermissions"/>
+        <forward name="editFile" path="pedagogicalCouncil-editFile"/>
+        <forward name="chooseIntroductionSections" path="pedagogicalCouncil-chooseIntroductionSections"/>
+        <forward name="addInstitutionSection" path="pedagogicalCouncil-addInstitutionSection"/>
+        <forward name="functionalitySection" path="pedagogicalCouncil-functionalitySection"/>
+        <forward name="editFunctionalitySection" path="pedagogicalCouncil-editFunctionalitySection"/>
+    </action>
+
+    <action path="/managePedagogicalCouncilAnnouncements"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PedagogicalCouncilAnnouncementsDA"
+            scope="request">
+        <forward name="noBoards" path="pedagogicalCouncil-announcements-no-boards"/>
+        <forward name="viewAnnouncementsRedirect" path="/managePedagogicalCouncilAnnouncements.do?method=viewAnnouncements&amp;tabularVersion=true"/>
+        <forward name="listAnnouncementBoards" path="pedagogicalCouncil-announcements-list-boards"/>
+        <forward name="listAnnouncements" path="pedagogicalCouncil-announcements-list-announcements"/>
+        <forward name="add" path="pedagogicalCouncil-announcements-add-announcement"/>
+        <forward name="viewAnnouncement" path="pedagogicalCouncil-announcements-view-announcement"/>
+        <forward name="edit" path="pedagogicalCouncil-announcements-edit-announcement"/>
+    </action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

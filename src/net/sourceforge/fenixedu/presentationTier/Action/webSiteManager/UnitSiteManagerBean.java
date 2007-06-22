@@ -1,8 +1,8 @@
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
+package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.Serializable;
 
-public class DepartmentUnitManagerBean implements Serializable {
+public class UnitSiteManagerBean implements Serializable {
 
     /**
      * Serial Version id.
