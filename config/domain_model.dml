@@ -3450,7 +3450,7 @@ class net.sourceforge.fenixedu.domain.ProfessionalSituation extends net.sourcefo
 		Integer keyCategory;
 		Integer percentage;
 		Integer weeklyLessonHours;
-		Double monthlyHours;		
+		Double weeklyWorkingHours;		
 	}
 	
 	class net.sourceforge.fenixedu.domain.EmployeeProfessionalSituation extends net.sourceforge.fenixedu.domain.ProfessionalSituation {		

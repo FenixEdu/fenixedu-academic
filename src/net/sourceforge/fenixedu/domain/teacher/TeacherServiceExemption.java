@@ -18,6 +18,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public TeacherServiceExemption(Teacher teacher, YearMonthDay beginDate, YearMonthDay endDate,
 	    ProfessionalSituationType type, String institution) {
+	
 	super();	
 	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee());	
 	setInstitution(institution);
@@ -47,8 +48,9 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
     }
 
     public boolean isForCountInCreditsButDontIsSabbatical(Teacher teacher, ExecutionPeriod executionPeriod) {	
+	
 	if (isLongDuration() && !isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
-	    
+	   
 	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
 		    || getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
 		    || getSituationType().equals(ProfessionalSituationType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)) {
@@ -58,7 +60,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)) {
 		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
 		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
-		return (teacherCategory != null && pax_category != null && !teacherCategory.equals(pax_category) && !teacherCategory.isMostImportantThan(pax_category));		    
+		return (teacherCategory != null && pax_category != null	&& !teacherCategory.equals(pax_category) 
+			&& !teacherCategory.isMostImportantThan(pax_category));		    
 	    }
 	}
 

@@ -7,7 +7,7 @@ import org.joda.time.YearMonthDay;
 
 public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     
-    public ProfessionalSituation() {
+    protected ProfessionalSituation() {
         super();
         setOjbConcreteClass(getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
@@ -33,7 +33,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     }
     
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) 
+	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate))
 		&& (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay().isBefore(beginDate)));
     }
 

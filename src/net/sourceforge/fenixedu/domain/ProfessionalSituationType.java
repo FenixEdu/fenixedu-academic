@@ -67,12 +67,7 @@ public enum ProfessionalSituationType {
     GOVERNMENT_MEMBER(true);   
     
     private boolean isServiceExemption;
-    
-    
-    
-    
-    
-    
+        
     private ProfessionalSituationType(boolean isServiceExemption) {
 	this.isServiceExemption = isServiceExemption;
     }    

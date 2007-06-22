@@ -16,7 +16,7 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
 	super();	
 	super.init(beginDate, endDate, legalRegimenType, regimenType, teacher.getPerson().getEmployee());		
 	setCategory(category);
-	setMonthlyHours(totalHoursNumber);
+	setWeeklyWorkingHours(totalHoursNumber);
 	setWeeklyLessonHours(lessonHoursNumber);
 	setPercentage(percentage);	
     }   
@@ -36,11 +36,11 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     }
     
     @Override
-    public void setMonthlyHours(Double monthlyHours) {
-	if(monthlyHours == null && !isEndSituation()) {
+    public void setWeeklyWorkingHours(Double weeklyWorkingHours) {
+	if(weeklyWorkingHours == null && !isEndSituation()) {
 	    throw new DomainException("error.TeacherProfessionalSituation.no.total.hours");
 	}
-        super.setMonthlyHours(monthlyHours);
+        super.setWeeklyWorkingHours(weeklyWorkingHours);
     }
     
     @Override

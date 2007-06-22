@@ -1,0 +1,1 @@
+alter table PROFESSIONAL_SITUATION change column MONTHLY_HOURS WEEKLY_WORKING_HOURS double default NULL;
