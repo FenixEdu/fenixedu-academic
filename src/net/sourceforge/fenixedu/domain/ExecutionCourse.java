@@ -1644,6 +1644,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	
 	return Boolean.FALSE;
     }
+    
+    @Override
+    public Boolean getAvailableGradeSubmission() {
+        if(super.getAvailableGradeSubmission() != null) {
+           return  super.getAvailableGradeSubmission();
+        }
+        return Boolean.TRUE;
+    }
 
     public Set<Department> getDepartments() {
 	final Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
