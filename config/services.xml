@@ -9718,7 +9718,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9727,7 +9727,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9736,7 +9736,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9745,7 +9745,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9763,7 +9763,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ManagementAssiduousnessAuthorization" />
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9773,6 +9773,33 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+    <service>
+		<name>OpenExtraWorkClosedMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+	</service>
+    <service>
+    	<name>DeleteExtraWorkRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteExtraWorkRequest</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+    </service>  
+	<service>
+		<name>UpdateExtraWorkClosedMonth</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.UpdateExtraWorkClosedMonth</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization" />
 		</filterChains>		
 	</service>
 	<service>
@@ -9793,6 +9820,14 @@
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>		
 	</service>
+	<service>
+    	<name>SearchEmployeeAssiduousness</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeeAssiduousness</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>
 	<service>
 		<name>DeletePersonSpaceOccupation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation</implementationClass>
@@ -11275,14 +11310,6 @@
         	<chain name="StudentAuthorization" />
         </filterChains>     
     </service>  
-     <service>
-    	<name>SearchEmployeeAssiduousness</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeeAssiduousness</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        </filterChains>     
-    </service>
     <service>
     	<name>CreateNewCreditsDismissal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewCreditsDismissal</implementationClass>
@@ -11914,13 +11941,6 @@
         </filterChains>     
     </service>       
 	<service>
-		<name>OpenExtraWorkClosedMonth</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
         <name>RegisterStudentInquiryResponseIntention</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.RegisterStudentInquiryResponseIntention</implementationClass>
         <description></description>
@@ -12017,16 +12037,7 @@
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
     </service>
-    <service>
-    	<name>DeleteExtraWorkRequest</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteExtraWorkRequest</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="AssiduousnessManagementAuthorization"/>
-		</filterChains>
-    </service>  
-    <service>
+	<service>
     	<name>CreateStudentCurricularPlanEquivalencePlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan</implementationClass>
         <description/>

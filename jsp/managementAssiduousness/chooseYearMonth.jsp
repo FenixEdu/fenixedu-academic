@@ -63,3 +63,15 @@
 		</p>
 	</fr:form>
 </logic:present>
+<logic:present name="yearMonth">
+	<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
+		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
+			<fr:layout>
+				<fr:property name="classes" value="thlight thright" />
+			</fr:layout>
+		</fr:edit>
+		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+			<bean:message key="button.export" />
+		</html:submit><p>
+</fr:form>
+</logic:present>

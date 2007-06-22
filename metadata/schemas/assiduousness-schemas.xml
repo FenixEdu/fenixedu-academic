@@ -688,24 +688,39 @@
 </schema>
 	
 <schema name="insert.nightHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="nightHours" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedNightHours" key="label.nightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-			<property name="required" value="false" />
-		</validator>
+		<property name="readOnly" value="true" />
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
+<schema name="show.nightHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="nightHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+	</slot>
+</schema>
+
 <schema name="insert.extraNightDays" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="extraNightDays" key="label.extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="required" value="false" />
 		</validator>
 	</slot>
+	<slot name="requestedExtraNightHours" key="label.extraNightHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="show.extraNightDays" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="extraNightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
@@ -716,7 +731,17 @@
 </schema>
 
 <schema name="insert.saturdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedSaturdayHours" key="label.saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+
+<schema name="show.saturdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="saturdayHours" key="label.saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
@@ -726,7 +751,16 @@
 </schema>
 
 <schema name="insert.holidayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedHolidayHours" key="label.holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+<schema name="show.holidayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="holidayHours" key="label.holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
@@ -736,7 +770,16 @@
 </schema>
 
 <schema name="insert.sundayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedSundayHours" key="label.sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+<schema name="show.sundayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="sundayHours" key="label.sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
@@ -746,7 +789,16 @@
 </schema>
 
 <schema name="insert.workdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedWorkdayHours" key="label.workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+	</slot>
+</schema>
+<schema name="show.workdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
+	<slot name="workdayHours" key="label.workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
@@ -760,7 +812,9 @@
 </schema>
 
 <schema name="insert.addToWeekRestTime" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="addToWeekRestTime"  bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="addToWeekRestTime"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="readOnly" value="true" />
+	</slot>
 </schema>
 
 <schema name="show.extraWorkRequestHeader" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">

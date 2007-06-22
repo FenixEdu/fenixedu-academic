@@ -35,6 +35,7 @@ public class CloseAssiduousnessMonth extends Service {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(
 		beginDate, endDate.plusDays(1));
 	ClosedMonth closedMonth = new ClosedMonth(beginDate);
+	System.out.println("Vou fechar o mes: " + new DateTime());
 	for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
 	    if (assiduousness.isStatusActive(beginDate, endDate)) {
 		getMonthAssiduousnessBalance(assiduousness, assiduousnessRecords.get(assiduousness),

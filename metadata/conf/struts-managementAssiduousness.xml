@@ -151,6 +151,15 @@
 			<forward name="show-units-extra-work-amounts" path="show-units-extra-work-amounts"/>
 			<forward name="show-unit-extra-work-movements" path="show-unit-extra-work-movements"/>
 		</action>		
+		<action path="/exportExtraWork"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportExtraWorkDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
+				<forward name="choose-year-month" path="choose-year-month"/>
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

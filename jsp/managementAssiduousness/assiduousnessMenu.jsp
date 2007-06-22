@@ -31,4 +31,7 @@
 	<li><html:link page="/manageUnitsExtraWorkAmounts.do?method=chooseYear"><bean:message key="link.unitAmounts" /></html:link></li>
     <li><html:link page="/monthClosure.do?method=prepareToCloseExtraWorkMonth"><bean:message key="link.closeExtraMonth" /></html:link></li>
 	<%}%>
+	<li class="navheader"><bean:message key="link.exportExtraWork" /></li>
+	<li><html:link page="/exportExtraWork.do?method=chooseYearMonth&amp;action=exportByEmployees"><bean:message key="link.byEmployees" /></html:link></li>
+	<%--<li><html:link page="/exportExtraWork.do?method=chooseYearMonth&amp;action=exportByUnits"><bean:message key="link.byUnits" /></html:link></li>--%>
 </ul>   

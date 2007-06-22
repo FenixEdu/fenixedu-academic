@@ -355,9 +355,27 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     public ActionForward openExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
-	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
+	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
 	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenExtraWorkClosedMonth",
 		    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
+	}
+	RenderUtils.invalidateViewState();
+	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+    }
+
+    public ActionForward updateExtraWorkAmounts(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToUpdate");
+	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
+	    ActionMessage result = (ActionMessage) ServiceUtils.executeService(SessionUtils
+		    .getUserView(request), "UpdateExtraWorkClosedMonth", new Object[] { ClosedMonth
+		    .getClosedMonth(yearMonth) });
+	    if (result == null) {
+		result = new ActionMessage("message.successUpdatingExtraWork");
+	    }
+	    ActionMessages actionMessages = getMessages(request);
+	    actionMessages.add("message", result);
+	    saveMessages(request, actionMessages);
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);

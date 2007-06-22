@@ -61,11 +61,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private static String extraWorkVacationDaysMovementCode = "209";
 
-    private static String extraWorkSundayMovementCode = "207";
+    public static String extraWorkSundayMovementCode = "207";
 
-    private static String extraWorkSaturdayMovementCode = "210";
+    public static String extraWorkSaturdayMovementCode = "210";
 
-    private static String extraWorkHolidayMovementCode = "212";
+    public static String extraWorkHolidayMovementCode = "212";
 
     public String run(ClosedMonth closedMonth) {
 	YearMonthDay beginDate = new YearMonthDay().withField(DateTimeFieldType.year(),
@@ -122,7 +122,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    YearMonthDay beginDate, YearMonthDay endDate, String movementCode, Integer daysNumber) {
 	StringBuilder result = new StringBuilder();
 	result.append(year).append(fieldSeparator);
-	result.append(monthFormat.format(month+1)).append(fieldSeparator);
+	result.append(monthFormat.format(month + 1)).append(fieldSeparator);
 	result.append(employeeNumberFormat.format(assiduousness.getEmployee().getEmployeeNumber()))
 		.append(fieldSeparator);
 	result.append("M").append(fieldSeparator).append(movementCode).append(fieldSeparator);

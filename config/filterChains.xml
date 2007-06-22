@@ -1181,7 +1181,7 @@
     </filterChain>
    	<filterChain>
         <name>AssiduousnessManagementAuthorization</name>
-        <expression>AssiduousnessRoleAuthorization &amp;&amp; AssiduousnessManagementGroup</expression>
+        <expression>ManagementAssiduousnessAuthorization &amp;&amp; AssiduousnessManagementGroup</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

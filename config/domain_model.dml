@@ -4073,6 +4073,15 @@ class net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest extends net
 	Integer nightVacationsDays;
 	Double nightVacationsAmount;
 	Double accumulatedNightVacationsAmount;
+	Integer requestedNightHours;
+	Integer requestedExtraNightHours;
+	Integer requestedHolidayHours;
+	Integer requestedSaturdayHours;
+	Integer requestedSundayHours;
+	Integer requestedWorkdayHours;	
+	Double holidayAmount;
+	Double saturdayAmount;
+	Double sundayAmount;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount extends net.sourceforge.fenixedu.domain.DomainObject {

@@ -21,18 +21,27 @@
 			<fr:property name="labelExcluded" value="true" />
 		</fr:layout>
 	</fr:view></h3>
-	<bean:message key="message.exportClosedMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<p>
 	<fr:form action="/monthClosure.do?method=exportExtraWorkMonth">
 		<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-			<bean:message key="button.export" />
+			<bean:message key="button.exportGIAF" />
 		</html:submit>
 	</fr:form>
+	</p>
+	<p>
 	<fr:form action="/monthClosure.do?method=openExtraWorkMonth">
 		<fr:edit id="yearMonthToOpen" name="yearMonthToExport" schema="show.date" visible="false"/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
 			<bean:message key="button.open" />
+		</html:submit>
+	</fr:form>
+	</p>
+	<p>
+	<fr:form action="/monthClosure.do?method=updateExtraWorkAmounts">
+		<fr:edit id="yearMonthToUpdate" name="yearMonthToExport" schema="show.date" visible="false"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
+			<bean:message key="button.updateExtraWorkAmounts" />
 		</html:submit>
 	</fr:form>
 	</p>

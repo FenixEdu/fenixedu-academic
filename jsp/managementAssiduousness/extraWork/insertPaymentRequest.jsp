@@ -24,7 +24,7 @@
 	<logic:equal name="employeeExtraWorkRequestFactory" property="extraWorkRequestFactory.isMonthClosedForExtraWork" value="false">
 		<fr:form action="/extraWorkPaymentRequest.do?method=insertPaymentRequest" encoding="multipart/form-data">
 		
-		<table>
+		<table class="tstyle1">
 		<tr align="left">
 			<td><strong><bean:message key="label.hoursNumbersAuthorizedAndRealized" /></strong></td>
 		</tr>
@@ -37,6 +37,14 @@
 					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 				</fr:edit>
 			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.nightHours">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
+			</td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -45,6 +53,14 @@
 						<fr:property name="labelTerminator" value=""/>
 					</fr:layout>
 				</fr:edit>
+			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.extraNightDays">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
 			</td>
 		</tr>
 		<tr align="right">
@@ -55,6 +71,14 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.saturdayHours">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
+			</td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -63,6 +87,14 @@
 						<fr:property name="labelTerminator" value=""/>
 					</fr:layout>
 				</fr:edit>
+			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.holidayHours">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
 			</td>
 		</tr>
 		<tr align="right">
@@ -73,6 +105,14 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.sundayHours">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
+			</td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -82,6 +122,14 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
+			<td>
+			<fr:view name="employeeExtraWorkRequestFactory" schema="show.workdayHours">
+					<fr:layout name="flow">
+						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+			</fr:view>
+			</td>
 		</tr>
 		<tr align="left">
 			<td>
@@ -90,11 +138,12 @@
 		</tr>
 		<tr align="right">
 			<td>
-				<fr:edit id="addToWeekRestTime" name="employeeExtraWorkRequestFactory" schema="insert.addToWeekRestTime">
+				<fr:view name="employeeExtraWorkRequestFactory" schema="insert.addToWeekRestTime">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
+						<fr:property name="labelStyle" value="fwnormal"/>
 					</fr:layout>
-				</fr:edit>
+				</fr:view>
 			</td>
 		</tr>
 		<tr align="right">

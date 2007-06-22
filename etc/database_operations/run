@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Changing Table Professional Situation" alterTableProfessionalSitutationTable.sql
+execute "Alter table ExtraWorkRequest" alterTableExtraWorkRequest.sql
