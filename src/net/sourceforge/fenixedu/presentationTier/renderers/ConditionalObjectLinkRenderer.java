@@ -44,7 +44,7 @@ public class ConditionalObjectLinkRenderer extends ObjectLinkRenderer {
             public HtmlComponent createComponent(Object object, Class type) {
                 Boolean visible = Boolean.FALSE;
                 try {
-                    visible = (Boolean) RendererPropertyUtils.getProperty(object, getVisibleIf(), false);
+                    visible = (Boolean) RendererPropertyUtils.getProperty(getTargetObject(object), getVisibleIf(), false);
                 } catch (ClassCastException e) {
                     e.printStackTrace();
                 }

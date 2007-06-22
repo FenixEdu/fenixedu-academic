@@ -355,18 +355,19 @@ public class ObjectLinkRenderer extends OutputRenderer {
                 return link;
             }
 
-            private Object getTargetObject(Object object) {
-                if (isUseParent()) {
-                    if (getContext().getParentContext() != null) {
-                        return getContext().getParentContext().getMetaObject().getObject();
-                    } else {
-                        return null;
-                    }
-                } else {
-                    return object;
-                }
-            }
-
         };
     }
+
+    protected Object getTargetObject(Object object) {
+        if (isUseParent()) {
+            if (getContext().getParentContext() != null) {
+                return getContext().getParentContext().getMetaObject().getObject();
+            } else {
+                return null;
+            }
+        } else {
+            return object;
+        }
+    }
+
 }

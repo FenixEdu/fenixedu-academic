@@ -298,7 +298,7 @@ public class HtmlLink extends HtmlComponent {
                         buffer.append("=");
     
                         try {
-                            buffer.append(URLEncoder.encode(values[i], "UTF-8"));
+                            buffer.append(URLEncoder.encode(values[i], "ISO-8859-1"));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }

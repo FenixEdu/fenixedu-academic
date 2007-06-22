@@ -1925,30 +1925,86 @@ ul.autoCompleteItems li.selected { background-color:  #cef; }
 .showHideDetailsButton { display:none; }
 
 
+.tcloudlevel6-0 { font-size: 0.5em; }
+.tcloudlevel6-1 { font-size: 0.8em; }
+.tcloudlevel6-2 { font-size: 1.0em; }
+.tcloudlevel6-3 { font-size: 1.2em; }
+.tcloudlevel6-4 { font-size: 1.4em; }
+.tcloudlevel6-5 { font-size: 1.7em; }
+.tcloudlevel6-6 { font-size: 2.0em; }
+.tcloudlevel6-7 { font-size: 3.0em; }
+.tcloudlevel6-8 { font-size: 4.0em; }
+
+/*
+ul.tcloud {
+line-height: 2.5em;
+background: #fafafa;
+padding: 0.5em 0.5em;
+}
+ul.tcloud li {
+display: inline;
+padding: 0 0.25em;
+line-height: 2em;
+}
+ul.tcloud li a { border: none !important; }
+ul.tcloud li a span {
+padding: 0 2px;
+color: #888;
+background: url(../images/underline1.gif) bottom left repeat-x;
+}
+.tcloudselected {
+color: #eb7500 !important;
+background: #fdf1e5 url(../images/underline2.gif) bottom left repeat-x !important;
+}
+.tcloudnearBy {
+color: #eb7500 !important;
+background: transparent url(../images/underline2.gif) bottom left repeat-x !important;
+}
+ul.tcloud li a:hover span {
+background: #eee;
+}
+ul.tcloud li a:hover span.tcloudselected {
+background: #fdf1e5;
+}
+ul.tcloud li a:hover span.tcloudnearBy {
+background: #fdf1e5;
+}
+*/
+
+
 
 ul.tcloud {
 background: #f2faec;
-margin: 1em 0;
 padding: 0.5em 1em;
 }
 ul.tcloud li {
 display: inline;
-padding: 0;
-padding-right: 0.25em;
-line-height: 2em;
+padding-right: 0.5em;
+line-height: 2.5em;
 }
 
 ul.tcloud li a { border: none !important; }
 
-.tcloudlevel6-0 { font-size: 0.5em; color: #88a859 !important; }
-.tcloudlevel6-1 { font-size: 0.8em; color: #88a859 !important; }
-.tcloudlevel6-2 { font-size: 1.0em; color: #88a859 !important; }
-.tcloudlevel6-3 { font-size: 1.2em; color: #88a859 !important; }
-.tcloudlevel6-4 { font-size: 1.4em; color: #88a859 !important; }
-.tcloudlevel6-5 { font-size: 1.7em; color: #88a859 !important; }
-.tcloudlevel6-6 { font-size: 2.0em; color: #88a859 !important; }
-.tcloudlevel6-7 { font-size: 3.0em; color: #88a859 !important; }
-.tcloudlevel6-8 { font-size: 4.0em; color: #88a859 !important; }
+
+ul.tcloud li a span {
+color: #88a859;
+padding: 0 0.15em;
+}
+
+.tcloudselected {
+color: #88a859 !important;
+border: 1px solid #b8cb9b !important;
+background: #e6f0de;
+}
+.tcloudnearBy {
+color: #88a859 !important;
+border: 1px solid #b8cb9b;
+}
+ul.tcloud li a:hover span {
+background: #e6f0de;
+}
+
+
 
 ul.tcloudedit {
 background: none;
@@ -1962,29 +2018,20 @@ line-height: 2em;
 
 ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
 
-.tcloudedit .tcloudlevel6-0 { font-size: 0.5em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-1 { font-size: 0.8em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-2 { font-size: 1.0em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-3 { font-size: 1.2em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-4 { font-size: 1.4em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-5 { font-size: 1.7em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-6 { font-size: 2.0em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-7 { font-size: 3.0em; color: #444 !important; }
-.tcloudedit .tcloudlevel6-8 { font-size: 4.0em; color: #444 !important; }
+.tcloudeditlevel .tcloudlevel6-0 { font-size: 0.5em; }
+.tcloudeditlevel .tcloudlevel6-1 { font-size: 0.8em; }
+.tcloudeditlevel .tcloudlevel6-2 { font-size: 1.0em; }
+.tcloudeditlevel .tcloudlevel6-3 { font-size: 1.2em; }
+.tcloudeditlevel .tcloudlevel6-4 { font-size: 1.4em; }
+.tcloudeditlevel .tcloudlevel6-5 { font-size: 1.7em; }
+.tcloudeditlevel .tcloudlevel6-6 { font-size: 2.0em; }
+.tcloudeditlevel .tcloudlevel6-7 { font-size: 3.0em; }
+.tcloudeditlevel .tcloudlevel6-8 { font-size: 4.0em; }
 
-ul.tcloud li a span {
-padding: 0 0.125em;
-}
+.tcloudeditnolevel span {}
 
-.tcloudselected {
-color: #f2faec !important;
-background: #88a859;
-padding: 0 0.125em;
-}
 
-.tcloudnearBy {
-color: #88a859 !important;
-background: #fff;
-padding: 0 0.125em;
-}
+
+
+
 

@@ -9,12 +9,14 @@ import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class TagInputCloudRenderer extends InputRenderer {
 
@@ -24,7 +26,17 @@ public class TagInputCloudRenderer extends InputRenderer {
 	
 	private String tagSort;
 	
+	private String textClasses;
 	
+	
+	public String getTextClasses() {
+		return textClasses;
+	}
+
+	public void setTextClasses(String textClasses) {
+		this.textClasses = textClasses;
+	}
+
 	public String getTagSort() {
 		return tagSort;
 	}
@@ -87,6 +99,10 @@ public class TagInputCloudRenderer extends InputRenderer {
 
 				container.addChild(getScript());
 				container.addChild(input);
+				container.addChild(new HtmlText("<br/>", false));
+				HtmlText text = new HtmlText(RenderUtils.getResourceString("RENDERER_RESOURCES", "renderers.label.tags.are.space.separated"));
+				text.setClasses(getTextClasses());
+				container.addChild(text);
 				container.addChild(RenderKit.getInstance().renderUsing(tagCloud, newContext, tagList,
 						tagList.getClass()));
 

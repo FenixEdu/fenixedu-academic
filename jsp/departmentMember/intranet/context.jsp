@@ -6,4 +6,5 @@
 
 <em><fr:view name="unit" property="name"/></em>
 <bean:define id="functionalityAction" value="departmentFunctionalities" toScope="request"/>
+<bean:define id="module" value="departmentMember" toScope="request"/>
 

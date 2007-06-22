@@ -151,8 +151,9 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	}
 
 	private ActionForward putFilesOnRequest(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response, List<UnitFile> files)
+			HttpServletRequest request, HttpServletResponse response, List<UnitFile> unsortedList)
 			throws Exception {
+		List<UnitFile> files = RenderUtils.sortCollectionWithCriteria(unsortedList, request.getParameter("sort"));
 		int numberOfPages = files.size() / getPageSize();
 		numberOfPages += (files.size() % getPageSize() != 0) ? 1 : 0;
 		request.setAttribute("numberOfPages", numberOfPages);

@@ -58,7 +58,21 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
     
     private String sortableSlots;
     
-    public OrderableCollectionRenderer() {
+    private boolean sortIgnored;
+    
+    public boolean isSortIgnored() {
+		return sortIgnored;
+	}
+
+    /**
+     * 
+     * @property
+     */
+	public void setSortIgnored(boolean sortIgnored) {
+		this.sortIgnored = sortIgnored;
+	}
+
+	public OrderableCollectionRenderer() {
         setContextRelative(true);
     }
     
@@ -190,7 +204,7 @@ public class OrderableCollectionRenderer extends CollectionRenderer {
     
     @Override
     protected Layout getLayout(Object object, Class type) {
-        Collection sortedCollection = RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
+        Collection sortedCollection = (isSortIgnored()) ? (Collection) object : RenderUtils.sortCollectionWithCriteria((Collection) object, getSortBy());
         
         return new CollectionTabularLayout(sortedCollection) {
 
