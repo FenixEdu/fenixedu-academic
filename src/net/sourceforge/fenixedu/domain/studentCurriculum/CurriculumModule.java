@@ -137,5 +137,5 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Dismissal getDismissal(final CurricularCourse curricularCourse);
 
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear);
-    abstract protected void collectDismissals(final List<Dismissal> result);
+    abstract public void collectDismissals(final List<Dismissal> result);
 }

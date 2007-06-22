@@ -44,7 +44,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
     
     @Override
-    protected void collectDismissals(final List<Dismissal> result) {
+    public void collectDismissals(final List<Dismissal> result) {
 	// nothing to do
     }
     

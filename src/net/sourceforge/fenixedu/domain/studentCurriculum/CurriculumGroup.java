@@ -167,7 +167,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    protected void collectDismissals(final List<Dismissal> result) {
+    public void collectDismissals(final List<Dismissal> result) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    curriculumModule.collectDismissals(result);
 	}
