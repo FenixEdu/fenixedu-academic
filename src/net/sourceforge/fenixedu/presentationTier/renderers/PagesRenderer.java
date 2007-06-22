@@ -62,7 +62,7 @@ public class PagesRenderer extends InputRenderer {
 	PageContainerBean bean = (PageContainerBean) object;
 	setPageContainerBean(bean);
 	
-	List<DomainObject> objects = getPageObjects(bean.getObjects());
+	List<? extends DomainObject> objects = getPageObjects(bean.getObjects());
 	
 	Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
 	MetaObject listMetaObject = MetaObjectFactory.createObject(objects, schema);
@@ -74,14 +74,14 @@ public class PagesRenderer extends InputRenderer {
 	return decorateTable(table, objects);
     }
 
-    private List<DomainObject> getPageObjects(List<DomainObject> objects) {
+    private List<? extends DomainObject> getPageObjects(List<? extends DomainObject> objects) {
 	if(!this.pagedValue) {
 	    return getPageContainerBean().getAllObjects();
 	}
 	return getPageContainerBean().getPageByPageSize(getDefaultObjectsPerPage());
     }
 
-    private HtmlComponent decorateTable(HtmlTable table, List<DomainObject> objects) {
+    private HtmlComponent decorateTable(HtmlTable table, List<? extends DomainObject> objects) {
 	MetaObject bean = getContext().getMetaObject();
 	
 	HtmlHiddenField page = new HtmlHiddenField();

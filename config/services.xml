@@ -9828,6 +9828,24 @@
         <filterChains>
         </filterChains>     
     </service>
+    <service>
+    	<name>CreateEmployeeExceptionSchedule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CreateEmployeeExceptionSchedule</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>EditEmployeeExceptionSchedule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.EditEmployeeExceptionSchedule</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+    </service>    
 	<service>
 		<name>DeletePersonSpaceOccupation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation</implementationClass>
@@ -12044,5 +12062,5 @@
         <isTransactional>true</isTransactional>  
 		<filterChains>
 		</filterChains>
-    </service>
+    </service>      
 </serviceDefinitions>

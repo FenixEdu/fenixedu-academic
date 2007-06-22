@@ -90,8 +90,12 @@
 		<put name="body" value="/managementAssiduousness/employee/prepareAssociateSchedule.jsp"/>
 	</definition>
 	<definition name="associate-schedule" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/managementAssiduousness/employee/associateWorkSchedule.jsp"/>
+		<put name="body" value="/managementAssiduousness/employee/associateSchedule.jsp"/>
 	</definition>
+	<definition name="associate-exception-schedule" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/associateExceptionSchedule.jsp"/>
+	</definition>
+	
 	<!-- Month Closure-->
 	<definition name="close-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/closeMonth.jsp"/>

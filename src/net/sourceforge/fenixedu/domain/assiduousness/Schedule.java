@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExceptionScheduleBean;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkWeekScheduleBean;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -23,7 +24,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Partial;
-import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 public class Schedule extends Schedule_Base {
@@ -102,6 +102,89 @@ public class Schedule extends Schedule_Base {
                 getWorkSchedules().add(workSchedule);
             }
         }
+    }
+
+    //creates a new Exception Schedule
+    public Schedule(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setAssiduousness(employeeExceptionScheduleBean.getEmployee().getAssiduousness());
+        setBeginDate(employeeExceptionScheduleBean.getBeginDate());
+        setEndDate(employeeExceptionScheduleBean.getEndDate());
+        ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
+        if (startsBeforeClosedMonth(closedMonth)) {
+            Month month = Month.values()[closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.monthOfYear()) - 1];
+            throw new DomainException("error.schedule.monthClose",
+                    ResourceBundle
+                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
+                            DateTimeFieldType.year())).toString());
+        }
+        if (overLapsAnotherExceptionSchedule()) {
+            throw new DomainException("error.schedule.overlapsAnotherException");
+        }
+        setException(Boolean.TRUE);
+        setModifiedBy(employeeExceptionScheduleBean.getModifiedBy());
+        setLastModifiedDate(new DateTime());
+        addWorkScheduleForExceptionSchedule(employeeExceptionScheduleBean);
+    }
+
+    public void editException(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
+        setBeginDate(employeeExceptionScheduleBean.getBeginDate());
+        setEndDate(employeeExceptionScheduleBean.getEndDate());
+        ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
+        if (startsBeforeClosedMonth(closedMonth)) {
+            Month month = Month.values()[closedMonth.getClosedYearMonth().get(
+                    DateTimeFieldType.monthOfYear()) - 1];
+            throw new DomainException("error.schedule.monthClose",
+                    ResourceBundle
+                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
+                            DateTimeFieldType.year())).toString());
+        }
+        if (overLapsAnotherExceptionSchedule()) {
+            throw new DomainException("error.schedule.overlapsAnotherException");
+        }
+        setModifiedBy(employeeExceptionScheduleBean.getModifiedBy());
+        setLastModifiedDate(new DateTime());
+        if (!employeeExceptionScheduleBean.getOnlyChangeDates()
+                && employeeExceptionScheduleBean.getSelected() != null) {           
+            for (WorkSchedule workSchedule : getWorkSchedules()) {
+                removeWorkSchedules(workSchedule);
+                workSchedule.delete();
+            }
+            addWorkScheduleForExceptionSchedule(employeeExceptionScheduleBean);
+        }
+    }
+
+    private void addWorkScheduleForExceptionSchedule(
+            EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
+        Periodicity periodicity = getPeriodicity(1);
+        WorkSchedule workSchedule = new WorkSchedule((WorkScheduleType) employeeExceptionScheduleBean
+                .getSelected(), getFullWorkWeek(), periodicity);
+        getWorkSchedules().add(workSchedule);
+    }
+
+    private WorkWeek getFullWorkWeek() {
+        List<WeekDay> weekDays = new ArrayList<WeekDay>();
+        weekDays.add(WeekDay.MONDAY);
+        weekDays.add(WeekDay.TUESDAY);
+        weekDays.add(WeekDay.WEDNESDAY);
+        weekDays.add(WeekDay.THURSDAY);
+        weekDays.add(WeekDay.FRIDAY);
+        WeekDay array[] = {};
+        return new WorkWeek(weekDays.toArray(array));
+    }
+
+    private boolean overLapsAnotherExceptionSchedule() {
+        for (Schedule schedule : getAssiduousness().getSchedules()) {
+            if (schedule != this && schedule.getException()
+                    && schedule.isDefinedInInterval(getValidInterval())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Schedule deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
@@ -399,7 +482,7 @@ public class Schedule extends Schedule_Base {
             if (weekDuration != null) {
                 weekDuration = weekDuration.plus(workScheduleTypeWorkDuration.getMillis()
                         * workSchedule.getWorkWeek().getDays().size());
-                weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(),weekDuration);
+                weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), weekDuration);
             } else {
                 weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), new Duration(
                         workScheduleTypeWorkDuration.getMillis()
@@ -408,11 +491,23 @@ public class Schedule extends Schedule_Base {
         }
         long average = 0;
         for (Duration weekDuration : weekDurations.values()) {
-            if(average < weekDuration.getMillis()/5){
-                average = weekDuration.getMillis()/5;
+            if (average < weekDuration.getMillis() / 5) {
+                average = weekDuration.getMillis() / 5;
             }
         }
         return new Duration(average);
+    }
+
+    private boolean startsBeforeClosedMonth(ClosedMonth closedMonth) {
+        YearMonthDay beginClosedMonth = new YearMonthDay(closedMonth.getClosedYearMonth().get(
+                DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
+                DateTimeFieldType.monthOfYear()), 1);
+        YearMonthDay endClosedMonth = new YearMonthDay(beginClosedMonth.getYear(), beginClosedMonth
+                .getMonthOfYear(), beginClosedMonth.dayOfMonth().getMaximumValue());
+        if (getBeginDate().isBefore(endClosedMonth.plusDays(1))) {
+            return true;
+        }
+        return false;
     }
 
     public boolean getIsEditable() {

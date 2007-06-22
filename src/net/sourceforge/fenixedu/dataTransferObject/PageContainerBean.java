@@ -5,23 +5,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class PageContainerBean implements Serializable {
     
-    private transient List<DomainObject> objects;
-    private List<DomainReference<DomainObject>> pageObjects;
+    private transient List<? extends DomainObject> objects;
+    private DomainListReference<DomainObject> pageObjects;
     private DomainReference<DomainObject> selected;
     private Integer numberOfPages;
     
     private Integer page = 1;
     
-    public List<DomainObject> getObjects() {
+    public List<? extends DomainObject> getObjects() {
         return objects;
     }
 
-    public void setObjects(List<DomainObject> objects) {
+    public void setObjects(List<? extends DomainObject> objects) {
 	this.objects = objects;
         setPageObjects(null);
     }
@@ -29,8 +30,8 @@ public class PageContainerBean implements Serializable {
     public List<DomainObject> getPageObjects() {
 	if(this.pageObjects != null) {
 	    List<DomainObject> result = new ArrayList<DomainObject>();
-	    for (DomainReference<DomainObject> domainReference : this.pageObjects) {
-		result.add(domainReference.getObject());
+	    for (DomainObject domainObject : this.pageObjects) {
+		result.add(domainObject);
 	    }
 	    return result;
 	} else {
@@ -38,11 +39,11 @@ public class PageContainerBean implements Serializable {
 	}
     }
 
-    public void setPageObjects(List<DomainObject> pageObjects) {
+    public void setPageObjects(List<? extends DomainObject> pageObjects) {
 	if(pageObjects != null) {
-	    this.pageObjects = new ArrayList<DomainReference<DomainObject>>();
+	    this.pageObjects = new DomainListReference<DomainObject>();
 	    for (DomainObject object : pageObjects) {
-		this.pageObjects.add(new DomainReference<DomainObject>(object));
+		this.pageObjects.add(object);
 	    }
 	} else {
 	    this.pageObjects = null;
@@ -109,7 +110,7 @@ public class PageContainerBean implements Serializable {
 	return getPage() > 1; 
     }
 
-    public List<DomainObject> getAllObjects() {
+    public List<? extends DomainObject> getAllObjects() {
 	if(getPageObjects() != null) {
 	    return getPageObjects();
 	} else {

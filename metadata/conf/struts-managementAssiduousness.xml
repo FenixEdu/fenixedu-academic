@@ -83,6 +83,7 @@
 				<forward name="insert-schedule" path="insert-schedule"/>
 				<forward name="show-all-schedules" path="show-all-schedules"/>
 		</action>
+		
 		<action path="/employeeAssiduousness" name="employeeForm"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
 				parameter="method"
@@ -90,7 +91,7 @@
 				validate="true"
 				input="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule">
 				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
 			<forward name="show-justifications" path="show-justifications"/>
 			<forward name="prepare-associate-schedule" path="prepare-associate-schedule"/>
@@ -98,6 +99,20 @@
 			<forward name="show-clockings" path="show-clockings"/>
 			<forward name="create-missing-clocking-month" path="create-missing-clocking-month"/>
 			<forward name="insert-justification" path="insert-justification"/>
+			<forward name="associate-exception-schedule" path="associate-exception-schedule"/>
+			<forward name="show-schedule" path="show-schedule"/>			
+		</action>
+		
+		<action path="/employeeExceptionSchedule" name="employeeForm"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="/employeeExceptionSchedule.do?method=prepareAssociateExceptionWorkSchedule">
+				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+			<forward name="associate-exception-schedule" path="associate-exception-schedule"/>
+			<forward name="show-schedule" path="show-schedule"/>			
 		</action>	
 		
 		<action path="/createExtraWorkAuthorization"
