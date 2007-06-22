@@ -141,5 +141,12 @@ public class Credits extends Credits_Base {
 	return result;
     }
 
+    public boolean hasGivenCredits() {
+	return getGivenCredits() != null;
+    }
+
+    public boolean hasGivenCredits(final Double ectsCredits) {
+	return hasGivenCredits() && getGivenCredits().equals(ectsCredits);
+    }
     
 }
