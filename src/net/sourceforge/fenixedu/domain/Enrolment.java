@@ -1135,8 +1135,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return Double.valueOf(0);
 	}
 	
-	final Double baseWeigth = (super.getWeigth() == null || super.getWeigth() == 0) ? getCurricularCourse().getWeigth() : super.getWeigth();
-	
 	if (!isBolonhaDegree()) {
 	    
 	    if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
@@ -1144,11 +1142,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 
 	    if (isFromLMAC() || isFromLCI()) {
-		return baseWeigth * LMAC_AND_LCI_WEIGHT_FACTOR;
+		return getBaseWeigth() * LMAC_AND_LCI_WEIGHT_FACTOR;
 	    }
 	}
 	
-	return baseWeigth;
+	return getBaseWeigth();
+    }
+
+    private Double getBaseWeigth() {
+	return (super.getWeigth() == null || super.getWeigth() == 0) ? getCurricularCourse().getWeigth() : super.getWeigth();
     }
     
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
