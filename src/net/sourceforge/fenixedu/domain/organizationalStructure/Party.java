@@ -95,6 +95,26 @@ abstract public class Party extends Party_Base {
 		super.setName(name);
 	}
 
+	@Deprecated
+	@Override
+	final public Country getNationality() {
+	    return getCountry();
+	}
+	
+	@Deprecated
+	@Override
+	public void setNationality(final Country country) {
+	    setCountry(country);
+	}
+	
+	final public Country getCountry() {
+	    return super.getNationality();
+	}
+	
+	final public void setCountry(final Country country) {
+	    super.setNationality(country);
+	}
+	
 	public Account createAccount(AccountType accountType) {
 		checkAccountsFor(accountType);
 		return new Account(accountType, this);

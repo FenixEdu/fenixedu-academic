@@ -496,26 +496,6 @@ public class Person extends Person_Base {
 		return null;
 	}
 
-	@Deprecated
-	@Override
-	final public Country getNationality() {
-	    return getCountry();
-	}
-	
-	@Deprecated
-	@Override
-	public void setNationality(final Country country) {
-	    setCountry(country);
-	}
-	
-	final public Country getCountry() {
-	    return super.getNationality();
-	}
-	
-	final public void setCountry(final Country country) {
-	    super.setNationality(country);
-	}
-	
 	// FIXME: Remove as soon as possible.
 	@Deprecated
 	public Registration getStudentByUsername() {
