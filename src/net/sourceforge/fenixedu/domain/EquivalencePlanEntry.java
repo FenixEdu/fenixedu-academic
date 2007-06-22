@@ -45,4 +45,6 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	getEquivalencePlansSet().clear();
 	deleteDomainObject();
     }
+
+    abstract public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan);
 }

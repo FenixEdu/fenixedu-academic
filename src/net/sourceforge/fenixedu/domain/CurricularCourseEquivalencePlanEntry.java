@@ -260,5 +260,32 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     public boolean isCurricularCourseEntry() {
 	return true;
     }
+    
+    public boolean hasOnlyCourseGroupsInDestination() {
+	for (final DegreeModule degreeModule : getNewDegreeModules()) {
+	    if (degreeModule.isLeaf()) {
+		return false;
+	    }
+	}
+	return true;
+    }
+    
+    public boolean hasOnlyCurricularCoursesInDestination() {
+	for (final DegreeModule degreeModule : getNewDegreeModules()) {
+	    if (!degreeModule.isLeaf()) {
+		return false;
+	    }
+	}
+	return true;
+    }
 
+    @Override
+    public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final DegreeModule degreeModule : getNewDegreeModules()) {
+	    if (degreeCurricularPlan.hasDegreeModule(degreeModule)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

@@ -109,4 +109,9 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
 	removeNewCourseGroup();
 	super.delete();
     }
+
+    @Override
+    public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	return degreeCurricularPlan.hasDegreeModule(getNewCourseGroup());
+    }
 }
