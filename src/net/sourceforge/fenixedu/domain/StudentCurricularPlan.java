@@ -2422,4 +2422,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return this.getRegistration().getActiveState().getStateType();
 	}
 
+    public StudentCurricularPlanEquivalencePlan createStudentCurricularPlanEquivalencePlan() {
+	return new StudentCurricularPlanEquivalencePlan(this);
+    }
+
 }

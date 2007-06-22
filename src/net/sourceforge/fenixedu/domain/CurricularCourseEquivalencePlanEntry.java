@@ -260,7 +260,7 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     public boolean isCurricularCourseEntry() {
 	return true;
     }
-    
+
     public boolean hasOnlyCourseGroupsInDestination() {
 	for (final DegreeModule degreeModule : getNewDegreeModules()) {
 	    if (degreeModule.isLeaf()) {
@@ -288,4 +288,15 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 	return false;
     }
+
+    @Override
+    public boolean isFor(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+	    if (degreeModule.getParentDegreeCurricularPlan() == degreeCurricularPlan) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

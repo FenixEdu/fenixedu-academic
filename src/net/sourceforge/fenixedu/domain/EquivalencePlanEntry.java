@@ -47,4 +47,7 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     abstract public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan);
+
+    public abstract boolean isFor(final DegreeCurricularPlan degreeCurricularPlan);
+
 }

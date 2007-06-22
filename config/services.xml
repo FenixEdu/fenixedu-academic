@@ -12026,5 +12026,12 @@
 			<chain name="AssiduousnessManagementAuthorization"/>
 		</filterChains>
     </service>  
-
+    <service>
+    	<name>CreateStudentCurricularPlanEquivalencePlan</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+		</filterChains>
+    </service>
 </serviceDefinitions>

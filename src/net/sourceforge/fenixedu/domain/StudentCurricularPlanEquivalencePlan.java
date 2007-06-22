@@ -31,7 +31,7 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
 	for (final EquivalencePlanEntry entry : getEntriesToRemoveSet()) {
 	    if (entry.hasAnyDestinationDegreeModuleFor(degreeCurricularPlan)) {
 		result.add(entry);
-	    }
+	}
 	}
 	return result;
     }
@@ -46,4 +46,15 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
 	return result;
     }
 
+    public Set<EquivalencePlanEntry> getEquivalencePlanEntries(final DegreeCurricularPlan degreeCurricularPlan) {
+	final Set<EquivalencePlanEntry> equivalencePlanEntries = new HashSet<EquivalencePlanEntry>();
+	equivalencePlanEntries.addAll(degreeCurricularPlan.getEquivalencePlan().getEntriesSet());
+	equivalencePlanEntries.removeAll(getEntriesToRemoveSet());
+	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
+	    if (equivalencePlanEntry.isFor(degreeCurricularPlan)) {
+		equivalencePlanEntries.add(equivalencePlanEntry);
+	    }
+	}
+	return equivalencePlanEntries;
+    }
 }

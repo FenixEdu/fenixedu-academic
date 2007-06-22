@@ -321,3 +321,7 @@
     </slot>
     <setter signature="execute()"/>
 </schema>
+
+<schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean">
+	<slot name="studentNumber"/>
+</schema>

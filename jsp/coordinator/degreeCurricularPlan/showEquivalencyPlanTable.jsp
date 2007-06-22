@@ -72,11 +72,11 @@
 				</span>
 			</logic:iterate>
 			==>
-			<logic:iterate id="curricularCourseFromList2" indexId="i2" name="entry" property="newCurricularCourses">
+			<logic:iterate id="curricularCourseFromList2" indexId="i2" name="entry" property="newDegreeModules">
 				<span style="border-bottom: 1px dotted #aaa;">
 					<logic:notEqual name="i2" value="0">
 						<strong>
-							<bean:message name="entry" property="newCurricularCoursesOperator.name" bundle="ENUMERATION_RESOURCES"/>
+							<bean:message name="entry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 						</strong>
 					</logic:notEqual>
 					<bean:write name="curricularCourseFromList2" property="name"/>

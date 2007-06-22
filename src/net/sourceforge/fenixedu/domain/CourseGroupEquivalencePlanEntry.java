@@ -114,4 +114,9 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
     public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return degreeCurricularPlan.hasDegreeModule(getNewCourseGroup());
     }
+
+    @Override
+    public boolean isFor(DegreeCurricularPlan degreeCurricularPlan) {
+	return getNewCourseGroup().getParentDegreeCurricularPlan() == degreeCurricularPlan;
+    }
 }

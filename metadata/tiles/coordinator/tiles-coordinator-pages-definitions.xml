@@ -101,6 +101,10 @@
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
 	</definition>
+	<definition name="show-student-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
+		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+	</definition>
 	<definition name="add-equivalency" extends="definition.coordinator.two-column.extra-menu">
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
