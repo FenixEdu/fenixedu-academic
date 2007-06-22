@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
@@ -44,6 +45,7 @@ public class InquiriesTest extends DomainTestBase {
 	
 	private Registration student;
 	
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		
@@ -111,7 +113,7 @@ public class InquiriesTest extends DomainTestBase {
 	}
 	
 	private void setUpCreateInquiriesRegistry() {
-		student = new Registration();
+		student = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 	}
 	
 	public void testCreateInquiriesCourse() {

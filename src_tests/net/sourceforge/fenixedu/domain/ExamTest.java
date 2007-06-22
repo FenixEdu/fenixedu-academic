@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -33,6 +34,7 @@ public class ExamTest extends DomainTestBase {
     private Calendar examStartTime;
     private Calendar examEndTime;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
@@ -195,7 +197,7 @@ public class ExamTest extends DomainTestBase {
         WrittenEvaluationEnrolment writtenEvaluationEnrolment = new WrittenEvaluationEnrolment();
         writtenEvaluationEnrolment.setIdInternal(1);
 
-        Registration registration = new Registration();
+        Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         registration.setIdInternal(1);
 
         writtenEvaluationEnrolment.setWrittenEvaluation(exam);

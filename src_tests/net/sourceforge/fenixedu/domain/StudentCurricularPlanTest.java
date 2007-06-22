@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -39,10 +40,11 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private Branch primaryArea = null;
 	private Branch secondaryArea = null;
 	
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		Registration registration = new Registration();
+		Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 		
 		setUpChangeState(registration, degreeCurricularPlan);
@@ -68,7 +70,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		Enrolment e1 = new Enrolment();
 		studentCurricularPlanToDelete.addEnrolments(e1);
 		
-		Registration s1 = new Registration();
+		Registration s1 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		studentCurricularPlanToDelete.setRegistration(s1);
 		
 		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
@@ -123,7 +125,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE, new YearMonthDay());
 		
 		
-		studentForNewStudentCurricularPlan = new Registration();
+		studentForNewStudentCurricularPlan = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
 		branchForNewStudentCurricularPlan = new Branch();
 		startDateForNewStudentCurricularPlan = DateFormatUtil.parse("yyyy/mm/dd", "2002/04/13");

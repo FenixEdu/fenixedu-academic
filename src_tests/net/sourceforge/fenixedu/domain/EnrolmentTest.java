@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -101,7 +102,7 @@ public class EnrolmentTest extends DomainTestBase {
 		curricularCourseToImprove = new CurricularCourse();
 		executionPeriodForImprovement = new ExecutionPeriod();
 		executionCourseToEnrollImprovement = new ExecutionCourse("name", "acronym", executionPeriodForImprovement);
-		studentToImprove = new Registration();
+		studentToImprove = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		
 //		someEmployee = new Employee();
 		
@@ -126,8 +127,8 @@ public class EnrolmentTest extends DomainTestBase {
 		executionCourseToUnEnrollImprovement = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		
 		StudentCurricularPlan scp = new StudentCurricularPlan();
-		Registration registration = new Registration();
-		Registration otherStudent = new Registration();
+		Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
+		Registration otherStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		CurricularCourse cc = new CurricularCourse();
 		ExecutionCourse ec1 = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
 		ExecutionPeriod ep1 = new ExecutionPeriod();
@@ -343,8 +344,8 @@ public class EnrolmentTest extends DomainTestBase {
 	private void setUpForInitializeAsNewCase() {
 		enrolmentToInitialize = new Enrolment();
 		
-		thisStudent = new Registration();
-		Registration otherStudent = new Registration();
+		thisStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
+		Registration otherStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		
 		Attends attends2 = new Attends();
 		attends2.setAluno(otherStudent);

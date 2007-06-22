@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 
 public class DistributionTeacherServiceByTeacherTest extends DomainTestBase {
 	

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 
 
 public class DistributionTeacherServiceByCourseTest extends DomainTestBase {

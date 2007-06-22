@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -32,6 +33,7 @@ public class GroupingTest extends DomainTestBase {
 
     Attends attend, attend2, attend3, attend4, attend5, attend6, attend7;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
@@ -49,7 +51,7 @@ public class GroupingTest extends DomainTestBase {
             assertEquals("StudentGroup UnExpected", studentGroup, grouping.getStudentGroups().get(0));
         }
 
-        List<Registration> students = new ArrayList();
+        List<Registration> students = new ArrayList<Registration>();
         students.add(student3);
         students.add(student4);
 
@@ -370,25 +372,25 @@ public class GroupingTest extends DomainTestBase {
         exportGrouping2.setGrouping(grouping2);
         exportGrouping2.setExecutionCourse(executionCourse2);
 
-        student = new Registration();
+        student = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student.setIdInternal(0);
 
-        student2 = new Registration();
+        student2 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student2.setIdInternal(1);
 
-        student3 = new Registration();
+        student3 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student3.setIdInternal(2);
 
-        student4 = new Registration();
+        student4 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student4.setIdInternal(3);
 
-        student5 = new Registration();
+        student5 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student5.setIdInternal(4);
 
-        student6 = new Registration();
+        student6 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student6.setIdInternal(5);
 
-        student7 = new Registration();
+        student7 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         student7.setIdInternal(6);
 
         attend = new Attends();

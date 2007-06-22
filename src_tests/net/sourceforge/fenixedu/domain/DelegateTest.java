@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -14,7 +15,7 @@ public class DelegateTest extends DomainTestBase {
 		ExecutionYear executionYear = new ExecutionYear();
 		executionYear.addDelegate(delegateToDelete);
 		
-		Registration registration  = new Registration();
+		Registration registration  = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		registration.addDelegate(delegateToDelete);
 		
 		Degree degree = new Degree();

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,6 +31,7 @@ public class ExecutionCourseTest extends DomainTestBase {
     /*CurricularCourse curricularCourse;
     ExecutionPeriod executionPeriod;*/
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
@@ -56,18 +58,18 @@ public class ExecutionCourseTest extends DomainTestBase {
 
     private void setUpForGetAttendsByStudentCase() {
 		executionCourseToReadFrom = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());
-		thisStudent = new Registration();
+		thisStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		attendsForThisStudent = new Attends();
 		
 		attendsForThisStudent.setAluno(thisStudent);
 		executionCourseToReadFrom.addAttends(attendsForThisStudent);
 		
 		Attends otherAttends1 = new Attends();
-		otherAttends1.setAluno(new Registration());
+		otherAttends1.setAluno(Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE));
 		executionCourseToReadFrom.addAttends(otherAttends1);
 		
 		Attends otherAttends2 = new Attends();
-		otherAttends2.setAluno(new Registration());
+		otherAttends2.setAluno(Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE));
 		executionCourseToReadFrom.addAttends(otherAttends2);
 	}
     

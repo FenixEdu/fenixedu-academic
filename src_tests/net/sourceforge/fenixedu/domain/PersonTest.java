@@ -109,11 +109,11 @@ public class PersonTest extends DomainTestBase {
 //        employee = new Employee();
         employee.setEmployeeNumber(employeeNumber);
 
-        degreeStudent = new Registration();
+        degreeStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
         degreeStudent.setNumber(degreeStudentNumber);
         degreeStudent.setDegreeType(DegreeType.DEGREE);                
 
-		masterDegreeStudent = new Registration();
+		masterDegreeStudent = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		masterDegreeStudent.setDegreeType(DegreeType.MASTER_DEGREE);
         masterDegreeStudent.setNumber(masterDegreeStudentNumber);
 

@@ -61,7 +61,7 @@ public class DegreeTest extends DomainTestBase {
 //		ExecutionPeriod ep1 = new ExecutionPeriod();
 //		ExecutionYear ey1 = new ExecutionYear();
 //		
-//		Registration student1 = new Registration();
+//		Registration student1 = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 //		Teacher teacher1 = new Teacher();
 //		Delegate d1 = new Delegate();
 //		d1.setStudent(student1);

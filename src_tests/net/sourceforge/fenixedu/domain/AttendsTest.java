@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -18,7 +19,7 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete3 = new Attends();
 		attendNotToDelete4 = new Attends();
 		
-		Registration registration = new Registration();
+		Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		Enrolment enrolment = new Enrolment();
 		ExecutionCourse executionCourse = new ExecutionCourse("name", "acronym", ExecutionPeriod.readActualExecutionPeriod());		
 		

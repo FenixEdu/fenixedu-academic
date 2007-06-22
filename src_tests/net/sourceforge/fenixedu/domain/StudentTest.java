@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
@@ -42,8 +43,8 @@ public class StudentTest extends DomainTestBase {
 	}
 
 	private void setUpGetActiveStudentCurricularPlan() {
-		studentWithActiveStudentCurricularPlan = new Registration();
-		studentWithoutActiveStudentCurricularPlan = new Registration();
+		studentWithActiveStudentCurricularPlan = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
+		studentWithoutActiveStudentCurricularPlan = Registration.readRegisteredRegistrationByNumberAndDegreeType(55000, DegreeType.DEGREE);
 		
 		activeStudentCurricularPlan = new StudentCurricularPlan();
 		activeStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);
