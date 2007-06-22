@@ -721,12 +721,13 @@ public class Student extends Student_Base {
         return getRegistrations().size();
     }
     
-    public Registration getTransitionRegistration() {
+    public List<Registration> getTransitionRegistrations() {
+	final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : super.getRegistrations()) {
             if (registration.isTransition()) {
-        	return registration;
+        	result.add(registration);
             }
         }
-        return null;
+        return result;
     }
 }
