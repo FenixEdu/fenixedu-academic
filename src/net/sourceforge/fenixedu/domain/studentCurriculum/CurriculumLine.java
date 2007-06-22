@@ -77,8 +77,8 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
     
     @Override
-    public void setDegreeModule(DegreeModule degreeModule) {
-	if (!(degreeModule instanceof CurricularCourse)) {
+    public void setDegreeModule(final DegreeModule degreeModule) {
+	if (degreeModule != null && !(degreeModule instanceof CurricularCourse)) {
 	    throw new DomainException(
 		    "error.curriculumLine.DegreeModuleCanOnlyBeCurricularCourse");
 	}

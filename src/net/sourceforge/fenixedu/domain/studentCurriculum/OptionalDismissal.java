@@ -21,8 +21,8 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     }
     
     @Override
-    public void setDegreeModule(DegreeModule degreeModule) {
-	if (!(degreeModule instanceof OptionalCurricularCourse)) {
+    public void setDegreeModule(final DegreeModule degreeModule) {
+	if (degreeModule != null && !(degreeModule instanceof OptionalCurricularCourse)) {
 	    throw new DomainException(
 		    "error.optionalDismissal.DegreeModuleCanOnlyBeOptionalCurricularCourse");
 	}
