@@ -749,7 +749,7 @@ public class Unit extends Unit_Base {
 		null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-	noOfficialExternalInstitutionUnit.setNationality(country);
+	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
     }
 

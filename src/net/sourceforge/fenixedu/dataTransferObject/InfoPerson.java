@@ -88,7 +88,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public InfoCountry getInfoPais() {
-        return InfoCountry.newInfoFromDomain(getPerson().getNationality());
+        return InfoCountry.newInfoFromDomain(getPerson().getCountry());
     }
 
     public String getLocalEmissaoDocumentoIdentificacao() {
@@ -108,7 +108,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public String getNacionalidade() {
-        return getPerson().getNationality().getNationality();
+        return getPerson().getCountry().getNationality();
     }
 
     public Date getNascimento() {

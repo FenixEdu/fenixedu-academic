@@ -38,7 +38,7 @@ public class FiliationForm extends Form {
     }
 
     public static FiliationForm createFromPerson(final Person person) {
-	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getNationality()
+	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry()
 		: RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID);
 
 	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(),

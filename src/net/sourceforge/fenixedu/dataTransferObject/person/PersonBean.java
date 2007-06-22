@@ -123,7 +123,7 @@ public class PersonBean implements Serializable {
 	setFatherName(person.getNameOfFather());
 	setMotherName(person.getNameOfMother());
 	setProfession(person.getProfession());
-	setNationality(person.getNationality());
+	setNationality(person.getCountry());
 
 	setCountryOfBirth(person.getCountryOfBirth());
 	setDateOfBirth(person.getDateOfBirthYearMonthDay());

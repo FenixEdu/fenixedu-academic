@@ -88,10 +88,10 @@ public class ProtocolSearch implements Serializable {
 	    return satisfiedCountry(protocol);
 	}
 	for (Unit partner : protocol.getPartners()) {
-	    if (partner.getNationality() != null
+	    if (partner.getCountry() != null
 		    && ((getSearchNationalityType().equals(SearchNationalityType.NATIONAL) && partner
-			    .getNationality().getName().equalsIgnoreCase("PORTUGAL")) || (getSearchNationalityType()
-			    .equals(SearchNationalityType.INTERNATIONAL) && !partner.getNationality()
+			    .getCountry().getName().equalsIgnoreCase("PORTUGAL")) || (getSearchNationalityType()
+			    .equals(SearchNationalityType.INTERNATIONAL) && !partner.getCountry()
 			    .getName().equalsIgnoreCase("PORTUGAL")))) {
 		return true;
 	    }
@@ -104,8 +104,8 @@ public class ProtocolSearch implements Serializable {
 	    return true;
 	}
 	for (Unit partner : protocol.getPartners()) {
-	    if (partner.getNationality() != null
-		    && partner.getNationality().getName().equals(getCountry().getName())) {
+	    if (partner.getCountry() != null
+		    && partner.getCountry().getName().equals(getCountry().getName())) {
 		return true;
 	    }
 	}

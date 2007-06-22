@@ -233,7 +233,7 @@ public class ReadStudentExternalInformation extends Service {
 	info.setFiscalNumber(person.getSocialSecurityNumber());
 	info.setIdentification(this.buildExternalIdentificationInfo(person));
 	info.setName(person.getName());
-	info.setNationality(person.getNationality().getCode());
+	info.setNationality(person.getCountry().getCode());
 	info.setPhone(person.getPhone());
 	info.setSex(person.getGender().toString());
 	info.setUsername(person.getUsername());

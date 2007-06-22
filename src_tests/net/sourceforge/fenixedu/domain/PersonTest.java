@@ -594,7 +594,7 @@ public class PersonTest extends DomainTestBase {
 
 	private void assertPersonContent(Person person, Country country) {
 
-		assertEquals(person.getNationality(), country);
+		assertEquals(person.getCountry(), country);
 		assertEquals(person.getAvailableEmail(), availableEmail);
 		assertEquals(person.getAvailablePhoto(), availablePhoto);
 		assertEquals(person.getAvailableWebSite(), availableWebSite);
@@ -610,16 +610,16 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getWebAddress(), enderecoWeb);
 		assertEquals(person.getParishOfResidence(), freguesiaMorada);
 		assertEquals(person.getParishOfBirth(), freguesiaNaturalidade);
-		assertEquals(person.getNationality().getName(), "Portugal");
-		assertEquals(person.getNationality().getCode(), "PT");
-		assertEquals(person.getNationality().getNationality(), "Portuguese");
+		assertEquals(person.getCountry().getName(), "Portugal");
+		assertEquals(person.getCountry().getCode(), "PT");
+		assertEquals(person.getCountry().getNationality(), "Portuguese");
 		assertEquals(person.getEmissionLocationOfDocumentId(),
 				localEmissaoDocumentoIdentificacao);
 		assertEquals(person.getArea(), localidade);
 		assertEquals(person.getAreaOfAreaCode(), localidadeCodigoPostal);
 		assertEquals(person.getMaritalStatus(), maritalStatus);
 		assertEquals(person.getAddress(), address);
-		assertEquals(person.getNationality().getNationality(), nacionalidade);
+		assertEquals(person.getCountry().getNationality(), nacionalidade);
 		
 		assertEquals(person.getDateOfBirth(), dataNascimento);
 		assertEquals(person.getName(), nome);
