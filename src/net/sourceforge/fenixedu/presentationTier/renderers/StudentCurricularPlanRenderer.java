@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -18,11 +19,13 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -232,11 +235,12 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private class StudentCurricularPlanLayout extends Layout {
 
-	private final CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController();
+	final private CopyCheckBoxValuesController enrollmentsController = new CopyCheckBoxValuesController();
+	final private int MAX_CELLS_PER_ENROLMENT = 13;
 	
 	private int RENDERED_CELLS_PER_ENROLMENT;
-	
 	private int RENDERED_CELLS_UNTIL_GRADE;
+	
 	    
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -257,7 +261,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		return scpDiv;
 	    } 
 
-	    if (studentCurricularPlan.getEnrolmentsSet().isEmpty()) {
+	    if (studentCurricularPlan.getEnrolmentsSet().isEmpty() && studentCurricularPlan.getDismissals().isEmpty()) {
 		scpDiv.addChild(new HtmlText(studentResources.getString("message.no.enrolments")));
 		scpDiv.setClasses("italic");
 		return scpDiv;
@@ -295,7 +299,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		scpNameCell.setBody(generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null));
 		
 		if (isOrganizedByExecutionYears()) {
-		    generateEnrolmentsExecutionPeriods();		    
+		    generateEnrolmentsExecutionPeriods();
+		    generateDismissalsWhenOrganizedByExecutionYears();
 		} else if (isOrganizedByCurricularYears()) {
 		    generateEnrolmentsCurricularPeriods();
 		}
@@ -365,7 +370,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateGroupChilds(double depth, final CurriculumGroup group) {
-	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(new BeanComparator("childOrder"));
+	    final Set<CurriculumGroup> sortedCurriculumGroups = new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_CHILD_ORDER_AND_ID);
+		
 	    sortedCurriculumGroups.addAll(group.getCurriculumGroups());
 	    
 	    for (final CurriculumGroup curriculumGroup : sortedCurriculumGroups) {
@@ -391,10 +397,45 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	private void generateLine(final HtmlTable groupLinesTable, final CurriculumLine curriculumLine) {
 	    if (curriculumLine.isEnrolment()) {
 		generateEnrolment(curriculumLine, groupLinesTable);
+	    } else if (curriculumLine.isDismissal()) {
+		//generateDismissal(curriculumLine, groupLinesTable);
 	    }
 	}
+	
+	private void generateDismissal(CurriculumLine curriculumLine, HtmlTable parentTable) {
+	    final Dismissal dismissal = (Dismissal) curriculumLine;
+	    
+	    final HtmlTableRow lineRow = parentTable.createRow();
+	    
+	    final HtmlTableCell dismissalCell = lineRow.createCell();
+	    dismissalCell.setColspan(11);
+	    
+	    final StringBuilder buffer = new StringBuilder();
+	    buffer.append(studentResources.getString("label.dismissal"));
+	    
+	    if (dismissal.hasCurricularCourse()) {
+		
+		buffer.append("\t");
 
-	final private int MAX_CELLS_PER_ENROLMENT = 13;
+		if (!StringUtils.isEmpty(dismissal.getCurricularCourse().getCode())) {
+		    buffer.append(dismissal.getCurricularCourse().getCode() + " - ");
+		}
+		buffer.append(dismissal.getName().getContent(LanguageUtils.getLanguage()));
+		
+		buffer.append("\t(");
+		final Iterator<IEnrolment> enrolments = dismissal.getCredits().getIEnrolments().iterator();
+		while (enrolments.hasNext()) {
+		    buffer.append(enrolments.next().getName()).append(enrolments.hasNext() ? "," : "");
+		}
+		buffer.append(")");
+		
+		buffer.append("\t").append(dismissal.getEctsCredits().toString());
+	    } else {
+		buffer.append("\t-");
+	    }
+	    
+	    dismissalCell.setBody(new HtmlText(buffer.toString()));
+	}
 	
 	private void generateEnrolment(final CurriculumLine curriculumLine, final HtmlTable parentTable) {
 	    final Enrolment enrolment = (Enrolment) curriculumLine;
@@ -689,6 +730,23 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 	}
 
+	private void generateDismissalsWhenOrganizedByExecutionYears() {
+/*	    final HtmlTable dismissalsTable = new HtmlTable();
+	    dismissalsTable.setBorder("0");
+	    
+	    scpDiv.addChild(dismissalsTable);
+	    dismissalsTable.setClasses(getTablesClasses() + " " + getInitialWidth() + String.valueOf(1));
+
+	    final HtmlTableRow executionPeriodRow = dismissalsTable.createRow();
+	    executionPeriodRow.setClasses(getGroupRowClasses());
+
+	    final HtmlTableCell executionPeriodNameCell = executionPeriodRow.createCell();
+	    executionPeriodNameCell.setType(CellType.HEADER);
+	    executionPeriodNameCell.setClasses(getGroupNameClasses());
+	    executionPeriodNameCell.setColspan(RENDERED_CELLS_PER_ENROLMENT - RENDERED_CELLS_UNTIL_GRADE);
+	    //executionPeriodNameCell.setBody(new HtmlText(executionPeriod.getYear() + ", " + executionPeriod.getName()));
+*/
+	}
 	
 	// FOR CURRICULAR PERIOD VIEW
 	
