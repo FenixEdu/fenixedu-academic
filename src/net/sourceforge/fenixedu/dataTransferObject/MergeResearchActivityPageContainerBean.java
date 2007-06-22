@@ -25,7 +25,7 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
 	return result;
     }
 
-    public void setPageObjects(List<DomainObject> pageObjects) {
+    public void setPageObjects(List<? extends DomainObject> pageObjects) {
 	this.selectedObjects = new ArrayList<DomainReference<DomainObject>>();
 	for (DomainObject object : pageObjects) {
 	    this.selectedObjects.add(new DomainReference<DomainObject>(object));
@@ -46,7 +46,7 @@ public abstract class MergeResearchActivityPageContainerBean extends PageContain
     }
     
     @Override
-    public void setObjects(List<DomainObject> objects) {
+    public void setObjects(List<? extends DomainObject> objects) {
 	List<DomainObject> result = new ArrayList<DomainObject>(objects);
 	result.removeAll(getSelectedObjects());
         getPageContainerBean().setObjects(result);
