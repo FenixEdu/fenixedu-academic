@@ -48,6 +48,17 @@
 	</fr:layout>
 </fr:view>
 
+
+
+
+<logic:notEmpty name="tags">
+	<bean:define id="separatedTags" value="<%= tags.replace(" ", " + ") %>"/>
+	<p class="mbottom05"><bean:message key="label.tagCloud.selectedTags" bundle="RESEARCHER_RESOURCES"/>: 
+		<span class="color888"><fr:view name="separatedTags"/></span>
+	</p>
+	<p class="mtop0 mbottom2"><html:link page="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.tagCloud.cleanTags" bundle="RESEARCHER_RESOURCES"/></html:link> <span class="color888">(<bean:message key="label.showAllFiles" bundle="RESEARCHER_RESOURCES"/>mostra todos os ficheiros)</span></p>	
+</logic:notEmpty>
+
 <logic:notEmpty name="files">
 
 <bean:define id="URL" value="<%=  "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
