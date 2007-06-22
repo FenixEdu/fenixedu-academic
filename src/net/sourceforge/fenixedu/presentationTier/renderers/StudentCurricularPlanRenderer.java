@@ -239,8 +239,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	final private int MAX_CELLS_PER_ENROLMENT = 13;
 	
 	private int RENDERED_CELLS_PER_ENROLMENT;
-	private int RENDERED_CELLS_UNTIL_GRADE;
 	
+	private int RENDERED_CELLS_UNTIL_GRADE;
 	    
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -299,7 +299,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		scpNameCell.setBody(generateDegreeCurricularPlanNameLink(studentCurricularPlan.getDegreeCurricularPlan(), null));
 		
 		if (isOrganizedByExecutionYears()) {
-		    generateEnrolmentsExecutionPeriods();
+		    generateEnrolmentsExecutionPeriods();		    
 		    generateDismissalsWhenOrganizedByExecutionYears();
 		} else if (isOrganizedByCurricularYears()) {
 		    generateEnrolmentsCurricularPeriods();
@@ -401,10 +401,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		//generateDismissal(curriculumLine, groupLinesTable);
 	    }
 	}
-	
+
 	private void generateDismissal(CurriculumLine curriculumLine, HtmlTable parentTable) {
 	    final Dismissal dismissal = (Dismissal) curriculumLine;
-	    
+	
 	    final HtmlTableRow lineRow = parentTable.createRow();
 	    
 	    final HtmlTableCell dismissalCell = lineRow.createCell();
@@ -498,7 +498,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		// Enrolment Weight
 		final HtmlTableCell enrolmentWeightCell = lineRow.createCell();
 		enrolmentWeightCell.setClasses(getEnrolmentClasses()[6]);
-		final String enrolmentWeight = enrolment.getFinalGrade() == null ? "-" : enrolment.getEnrolmentWeigth().toString();
+		final String enrolmentWeight = enrolment.getFinalGrade() == null ? "-" : enrolment.getWeigth().toString();
 		enrolmentWeightCell.setBody(new HtmlText(enrolmentWeight));
 
 		// Enrolment Credits
@@ -733,7 +733,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	private void generateDismissalsWhenOrganizedByExecutionYears() {
 /*	    final HtmlTable dismissalsTable = new HtmlTable();
 	    dismissalsTable.setBorder("0");
-	    
+	
 	    scpDiv.addChild(dismissalsTable);
 	    dismissalsTable.setClasses(getTablesClasses() + " " + getInitialWidth() + String.valueOf(1));
 

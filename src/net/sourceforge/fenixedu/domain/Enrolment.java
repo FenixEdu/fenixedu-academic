@@ -1127,32 +1127,28 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return result;
     }
 
+    static final double LMAC_AND_LCI_WEIGHT_FACTOR = 0.25d;
+    
     @Override
-    public Double getWeigth() {
+    final public Double getWeigth() {
 	if (isExtraCurricular()) {
 	    return Double.valueOf(0);
 	}
 	
-	final Double weigth = super.getWeigth();
-	return (weigth == null || weigth == 0) ? getCurricularCourse().getWeigth() : weigth;
-    }
-    
-    public Double getEnrolmentWeigth() {
-	if (isExtraCurricular()) {
-	    return Double.valueOf(0d);
-	}
+	final Double baseWeigth = (super.getWeigth() == null || super.getWeigth() == 0) ? getCurricularCourse().getWeigth() : super.getWeigth();
 	
 	if (!isBolonhaDegree()) {
 	    
 	    if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
 		return getEctsCredits();
 	    }
+
 	    if (isFromLMAC() || isFromLCI()) {
-		return calculateLCIorLMACWeigth();
+		return baseWeigth * LMAC_AND_LCI_WEIGHT_FACTOR;
 	    }
 	}
 	
-	return getWeigth();
+	return baseWeigth;
     }
     
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
@@ -1169,18 +1165,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
     
-    private Double calculateLCIorLMACWeigth() {
-	final double weigth = getWeigth().doubleValue();
-	return Double.valueOf(weigth * 0.25d);
-    }
-
     @Override
-    public Double getEctsCredits() {
+    final public Double getEctsCredits() {
 	return isExtraCurricular() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
 
     @Override
-    public Double getAprovedEctsCredits() {
+    final public Double getAprovedEctsCredits() {
 	return isApproved() ? getEctsCredits() : Double.valueOf(0d);
     }
 
