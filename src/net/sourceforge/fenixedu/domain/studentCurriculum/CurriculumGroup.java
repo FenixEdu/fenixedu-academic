@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		    }
 		});
     }
+    
+    static final public Comparator<CurriculumGroup> COMPARATOR_BY_CHILD_ORDER_AND_ID = new Comparator<CurriculumGroup>() {
+        public int compare(CurriculumGroup o1, CurriculumGroup o2) {
+            int result = o1.getChildOrder().compareTo(o2.getChildOrder());
+	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+        }
+    };
 
     protected CurriculumGroup() {
 	super();
@@ -159,10 +167,20 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    public void collectDismissals(final List<Dismissal> result) {
+    protected void collectDismissals(final List<Dismissal> result) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    curriculumModule.collectDismissals(result);
 	}
+    }
+    
+    public List<Dismissal> getChildDismissals() {
+	final List<Dismissal> result = new ArrayList<Dismissal>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isDismissal()) {
+		result.add((Dismissal) curriculumModule);
+	    }
+	}
+	return result;
     }
 
     public boolean isRoot() {

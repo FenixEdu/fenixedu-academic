@@ -149,7 +149,7 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public void collectDismissals(final List<Dismissal> result) {
+    protected void collectDismissals(final List<Dismissal> result) {
 	result.add(this);
     }
     
