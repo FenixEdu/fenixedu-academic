@@ -37,6 +37,10 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	setDegreeModule(courseGroup);
 	addChildCurriculumGroups(courseGroup, executionPeriod, cycleType);
     }
+    
+    public void setRootCourseGroup(final RootCourseGroup rootCourseGroup) {
+	setDegreeModule(rootCourseGroup);
+    }
 
     @Override
     public void setDegreeModule(DegreeModule degreeModule) {
@@ -51,7 +55,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
 	throw new DomainException("error.curriculumGroup.RootCurriculumGroupCannotHaveParent");
     }
-
+    
     @Override
     public boolean isRoot() {
 	return true;
