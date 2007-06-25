@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
@@ -37,7 +36,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	setDegreeModule(courseGroup);
 	addChildCurriculumGroups(courseGroup, executionPeriod, cycleType);
     }
-    
+
     public void setRootCourseGroup(final RootCourseGroup rootCourseGroup) {
 	setDegreeModule(rootCourseGroup);
     }
@@ -55,7 +54,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
 	throw new DomainException("error.curriculumGroup.RootCurriculumGroupCannotHaveParent");
     }
-    
+
     @Override
     public boolean isRoot() {
 	return true;
@@ -70,8 +69,13 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    ExecutionPeriod executionPeriod, CycleType cycle) {
 
 	if (rootCourseGroup.hasCycleGroups()) {
-	    for (final CycleCourseGroup cycleCourseGroup : rootCourseGroup.getCycleCourseGroups(cycle)) {
-		new CycleCurriculumGroup(this, cycleCourseGroup, executionPeriod);
+	    if (cycle == null) {
+		cycle = rootCourseGroup.getDegree().getDegreeType().getFirstCycleType();
+	    }
+
+	    if (cycle != null) {
+		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle),
+			executionPeriod);
 	    }
 
 	} else {

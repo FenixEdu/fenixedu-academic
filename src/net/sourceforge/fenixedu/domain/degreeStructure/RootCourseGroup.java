@@ -56,7 +56,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	removeParentDegreeCurricularPlan();
 	super.delete();
     }
-    
+
     private void removeChildDegreeModules() {
 	for (final DegreeModule degreeModule : getChildDegreeModules()) {
 	    degreeModule.delete();
@@ -100,47 +100,26 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	return getCycleCourseGroup(CycleType.THIRD_CYCLE);
     }
 
-    public CycleCourseGroup getCycleCourseGroup(CycleType cycleType) {
-	for (CycleCourseGroup cycleCourseGroup : getCycleCourseGroups()) {
-	    if (cycleCourseGroup.getCycleType() == cycleType) {
-		return cycleCourseGroup;
+    public CycleCourseGroup getCycleCourseGroup(CycleType cycle) {
+	for (Context context : getChildContextsSet()) {
+	    if (context.getChildDegreeModule().isCycleCourseGroup()) {
+		CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
+		if (cycle == cycleCourseGroup.getCycleType()) {
+		    return (CycleCourseGroup) context.getChildDegreeModule();
+		}
 	    }
 	}
 	return null;
     }
 
-    public Collection<CycleCourseGroup> getCycleCourseGroups(CycleType cycle) {
-
-	Collection<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
-
-	if (cycle == null) {
-
-	    CycleType firstCycleType = getDegree().getDegreeType().getFirstCycleType();
-	    if (firstCycleType != null) {
-		return getCycleCourseGroups(firstCycleType);
-	    }
-
-	} else {
-
-	    for (Context context : getChildContextsSet()) {
-		if (context.getChildDegreeModule().isCycleCourseGroup()) {
-
-		    CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context
-			    .getChildDegreeModule();
-		    if (cycle == null || cycle == cycleCourseGroup.getCycleType()) {
-			result.add((CycleCourseGroup) context.getChildDegreeModule());
-		    }
-		}
-	    }
-
-	}
-
-	return result;
-
-    }
-
     private Collection<CycleCourseGroup> getCycleCourseGroups() {
-	return getCycleCourseGroups(null);
+	Collection<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
+	for (Context context : getChildContextsSet()) {
+	    if (context.getChildDegreeModule().isCycleCourseGroup()) {
+		result.add((CycleCourseGroup) context.getChildDegreeModule());
+	    }
+	}
+	return result;
     }
 
     public boolean hasCycleGroups() {
