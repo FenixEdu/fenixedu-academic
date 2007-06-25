@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -298,5 +299,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
     abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
     abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 
-    abstract public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses);
+    abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
+
 }

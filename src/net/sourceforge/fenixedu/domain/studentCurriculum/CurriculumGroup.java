@@ -540,4 +540,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+
+    @Override
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	degreeModules.add(getDegreeModule());
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    curriculumModule.getAllDegreeModules(degreeModules);
+	}
+    }
 }

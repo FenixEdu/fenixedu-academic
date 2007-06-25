@@ -2447,4 +2447,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
+    public Set<DegreeModule> getAllDegreeModules() {
+	final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
+	final RootCurriculumGroup rootCurriculumGroup = getRoot();
+	if (rootCurriculumGroup != null) {
+	    rootCurriculumGroup.getAllDegreeModules(degreeModules);
+	}
+	return degreeModules;
+    }
+
 }

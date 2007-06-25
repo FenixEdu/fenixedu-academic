@@ -12073,14 +12073,14 @@
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
     </service>
-    <service>
+	<service>
     	<name>CreateStudentCurricularPlanEquivalencePlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
 		</filterChains>
-    </service> 
+    </service>
     <service>
     	<name>DeletePrize</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize</implementationClass>
@@ -12116,6 +12116,23 @@
 		<filterChains>
 			<chain name="EditPrize"/>
 		</filterChains>
-    </service>  
-      
+    </service>
+    <service>
+    	<name>DeActivateEquivalencePlanEntry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeActivateEquivalencePlanEntry</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>ActivateEquivalencePlanEntry</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ActivateEquivalencePlanEntry</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+    </service>
 </serviceDefinitions>

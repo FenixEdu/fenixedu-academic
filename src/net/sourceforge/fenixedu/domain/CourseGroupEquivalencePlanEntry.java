@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanEntry_Base {
 
     public static class CourseGroupEquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
@@ -123,6 +125,11 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
 
     @Override
     public boolean isFor(final DegreeModule degreeModule) {
-	return getNewCourseGroup() == degreeModule;
+	return getNewCourseGroup() == degreeModule || getOldCourseGroup() == degreeModule;
+    }
+
+    @Override
+    protected String getCompareString() {
+	return StringAppender.append(getOldCourseGroup().getName(), getNewCourseGroup().getName(), getIdInternal().toString()); 
     }
 }

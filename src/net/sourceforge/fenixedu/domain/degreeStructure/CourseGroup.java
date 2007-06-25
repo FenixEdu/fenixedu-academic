@@ -612,9 +612,10 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	degreeModules.add(this);
 	for (Context context : getChildContexts()) {
-	    context.getAllCurricularCourses(curricularCourses);
+	    context.getAllDegreeModules(degreeModules);
 	}
     }
 

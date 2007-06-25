@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.text.Collator;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -313,11 +314,6 @@ public class Context extends Context_Base implements Comparable<Context> {
 	return getCurricularPeriod().getParent().getAbsoluteOrderOfChild();
     }
 
-    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
-	final DegreeModule degreeModule = getChildDegreeModule();
-	degreeModule.getAllCurricularCourses(curricularCourses);
-    }
-
     public void addAllCourseGroups(Set<CourseGroup> courseGroups) {
 	final DegreeModule degreeModule = getChildDegreeModule();
 	if (!degreeModule.isLeaf()) {
@@ -325,6 +321,11 @@ public class Context extends Context_Base implements Comparable<Context> {
 	    courseGroups.add(courseGroup);
 	    courseGroup.getAllCoursesGroupse(courseGroups);
 	}
+    }
+
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	final DegreeModule degreeModule = getChildDegreeModule();
+	degreeModule.getAllDegreeModules(degreeModules);	
     }
 
 }

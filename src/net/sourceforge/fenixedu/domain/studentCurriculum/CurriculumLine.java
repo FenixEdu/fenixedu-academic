@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -113,4 +112,10 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
         return Collections.emptySet();
     }
+
+    @Override
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	degreeModules.add(getDegreeModule());
+    }
+
 }

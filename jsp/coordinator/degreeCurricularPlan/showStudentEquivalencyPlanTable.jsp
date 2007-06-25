@@ -5,15 +5,28 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
+<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+
 
 <logic:present name="equivalencePlanEntryWrappers">
 	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.EquivalencyPlanEntryWrapper" indexId="n" name="equivalencePlanEntryWrappers">
 			<bean:define id="equivalencePlanEntry" name="entry" property="equivalencePlanEntry"/>
+
+			<% boolean strikeText = false; %>
+
+			<logic:equal name="entry" property="removalEntry" value="true">
+				<% strikeText = true; %>
+			</logic:equal>
+
 			<logic:notEqual name="n" value="0">
 				<br/>
 				<br/>
 			</logic:notEqual>
+			<% if (strikeText) { %>
+				<strike>
+			<% } %>
 			<logic:equal name="equivalencePlanEntry" property="courseGroupEntry" value="true">
 				<span style="border-bottom: 1px dotted #aaa;">
 					<bean:write name="equivalencePlanEntry" property="oldCourseGroup.name"/>
@@ -46,6 +59,35 @@
 					</span>
 				</logic:iterate>
 			</logic:equal>
+			<% if (strikeText) { %>
+				</strike>
+			<% } %>
+			<logic:equal name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
+				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
+						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+						+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+						+ student.getNumber() %>">
+					<bean:message key="link.delete"/>
+				</html:link>
+			</logic:equal>
+			<logic:notEqual name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
+				<logic:equal name="entry" property="removalEntry" value="true">
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=activate&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() %>">
+						<bean:message key="link.activate"/>
+					</html:link>
+				</logic:equal>
+				<logic:notEqual name="entry" property="removalEntry" value="true">
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deactivate&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() %>">
+						<bean:message key="link.deactivate"/>
+					</html:link>
+				</logic:notEqual>
+			</logic:notEqual>
 		</logic:iterate>
 	</div>
 </logic:present>

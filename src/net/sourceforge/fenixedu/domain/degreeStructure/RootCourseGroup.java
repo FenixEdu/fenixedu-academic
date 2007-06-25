@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

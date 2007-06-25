@@ -245,12 +245,13 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     }
 
     public void checkPermissions(final Person person) {
-	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) getEquivalencePlan();
-	final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
-	for (final Coordinator coordinator : person.getCoordinatorsSet()) {
-	    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		return;
+	for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = degreeModule.getParentDegreeCurricularPlan();
+	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+		final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+		if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+		    return;
+		}
 	    }
 	}
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
@@ -301,7 +302,19 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 
     @Override
     public boolean isFor(final DegreeModule degreeModule) {
-	return getNewDegreeModulesSet().contains(degreeModule);
+	return getNewDegreeModulesSet().contains(degreeModule) || getOldCurricularCoursesSet().contains(degreeModule);
+    }
+
+    @Override
+    protected String getCompareString() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final CurricularCourse curricularCourse : getOldCurricularCoursesSet()) {
+	    stringBuilder.append(curricularCourse.getName());
+	}
+	for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
+	    stringBuilder.append(degreeModule.getName());
+	}
+	return stringBuilder.toString();
     }
 
 }

@@ -1,9 +1,17 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
+
+    public static Comparator<EquivalencePlanEntry> COMPARATOR = new Comparator<EquivalencePlanEntry>() {
+	public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
+	    return o1.getCompareString().compareTo(o2.getCompareString());
+	}
+    };
 
     protected EquivalencePlanEntry() {
 	super();
@@ -53,4 +61,5 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     public abstract boolean isFor(final DegreeModule degreeModule);
 
+    protected abstract String getCompareString();
 }

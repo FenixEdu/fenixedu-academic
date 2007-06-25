@@ -325,3 +325,36 @@
 <schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean">
 	<slot name="studentNumber"/>
 </schema>
+
+<schema name="StudentEquivalencyPlanEntryCreator.addOrigin" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator">
+    <slot name="originDegreeModule" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+    		layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
+		<property name="format" value="${name}" />
+    </slot>
+    <setter signature="addOriginDegreeModule(originDegreeModule)"/>
+</schema>
+
+<schema name="StudentEquivalencyPlanEntryCreator.addDestination" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator">
+    <slot name="destinationDegreeModule" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
+    		layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
+		<property name="format" value="${name}" />
+    </slot>
+    <setter signature="addDestinationDegreeModule(destinationDegreeModule)"/>
+</schema>
+
+<schema name="StudentEquivalencyPlanEntryCreator.addDestinationOperator" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator">
+    <slot name="destinationOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
+    		layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
+		<property name="format" value="${localizedName}" />
+    </slot>
+</schema>
+
+<schema name="StudentEquivalencyPlanEntryCreator.create" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator">
+    <setter signature="execute()"/>
+</schema>

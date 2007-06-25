@@ -1804,8 +1804,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public void getAllCurricularCourses(final Set<CurricularCourse> curricularCourses) {
-	curricularCourses.add(this);
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	degreeModules.add(this);
     }
 
     public List<CurricularCourseEquivalence> getOldCurricularCourseEquivalences(final DegreeCurricularPlan degreeCurricularPlan) {

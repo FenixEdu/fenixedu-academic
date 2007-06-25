@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;

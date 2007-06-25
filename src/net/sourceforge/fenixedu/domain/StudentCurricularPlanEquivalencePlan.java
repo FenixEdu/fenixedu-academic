@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -65,7 +66,7 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
     }
 
     public Set<EquivalencyPlanEntryWrapper> getEquivalencePlanEntryWrappers(final DegreeCurricularPlan degreeCurricularPlan, final CurriculumModule curriculumModule) {
-	final Set<EquivalencyPlanEntryWrapper> equivalencePlanEntries = new HashSet<EquivalencyPlanEntryWrapper>();
+	final Set<EquivalencyPlanEntryWrapper> equivalencePlanEntries = new TreeSet<EquivalencyPlanEntryWrapper>(EquivalencyPlanEntryWrapper.COMPARATOR);
 
 	for (final EquivalencePlanEntry equivalencePlanEntry : degreeCurricularPlan.getEquivalencePlan().getEntriesSet()) {
 	    if (hasAllEnrolmentsFor(equivalencePlanEntry, getOldStudentCurricularPlan())

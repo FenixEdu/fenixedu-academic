@@ -510,13 +510,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Set<CurricularCourse> getAllCurricularCourses() {
-	final Set<CurricularCourse> curricularCourses = new TreeSet<CurricularCourse>(
-		CurricularCourse.COMPARATOR_BY_NAME);
+	final Set<DegreeModule> curricularCourses = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
+	    @Override
+	    public boolean add(DegreeModule degreeModule) {
+		return degreeModule instanceof CurricularCourse && super.add(degreeModule);
+	    }
+	};
 	curricularCourses.addAll(super.getCurricularCoursesSet());
 	if (hasRoot()) {
-	    getRoot().getAllCurricularCourses(curricularCourses);
+	    getRoot().getAllDegreeModules(curricularCourses);
 	}
-	return curricularCourses;
+	return (Set) curricularCourses;
     }
 
     public List<CurricularCourse> getCurricularCoursesWithExecutionIn(ExecutionYear executionYear) {
@@ -1555,12 +1559,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public Set<CourseGroup> getAllCoursesGroups() {
-	final Set<CourseGroup> courseGroups = new TreeSet<CourseGroup>(CourseGroup.COMPARATOR_BY_NAME);
+	final Set<DegreeModule> courseGroups = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
+	    @Override
+	    public boolean add(DegreeModule degreeModule) {
+		return degreeModule instanceof CourseGroup && super.add(degreeModule);
+	    }
+	};
 	if (hasRoot()) {
 	    courseGroups.add(getRoot());
-	    getRoot().getAllCoursesGroupse(courseGroups);
+	    getRoot().getAllDegreeModules(courseGroups);
 	}
-	return courseGroups;
+	return (Set) courseGroups;
+    }
+
+    public Set<DegreeModule> getAllDegreeModules() {
+	final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
+	final RootCourseGroup rootCourseGroup = getRoot();
+	if (rootCourseGroup != null) {
+	    rootCourseGroup.getAllDegreeModules(degreeModules);
+	}
+	return degreeModules;
     }
 
 }

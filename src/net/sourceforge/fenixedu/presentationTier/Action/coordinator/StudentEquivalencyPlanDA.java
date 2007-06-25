@@ -6,8 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -30,8 +33,6 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final Student student = getStudent(request);
 	if (student != null) {
-	    request.setAttribute("student", student);
-
 	    final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(request, student);
 	    if (studentCurricularPlanEquivalencePlan != null) {
 		request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
@@ -46,19 +47,71 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     public ActionForward showTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final Student student = getStudent(request);
 	if (student != null) {
-	    request.setAttribute("student", student);
-
 	    final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(request, student);
 	    if (studentCurricularPlanEquivalencePlan != null) {
 		request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
 		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request.getAttribute("degreeCurricularPlan");
 		final CurriculumModule curriculumModule = getCurriculumModule(request);
 		request.setAttribute("equivalencePlanEntryWrappers", studentCurricularPlanEquivalencePlan.getEquivalencePlanEntryWrappers(degreeCurricularPlan, curriculumModule));
-//		request.setAttribute("equivalencePlanEntries", studentCurricularPlanEquivalencePlan.getEquivalencePlanEntries(degreeCurricularPlan, curriculumModule));
-//		request.setAttribute("removedEquivalencePlanEntries", studentCurricularPlanEquivalencePlan.getRemovedEquivalencePlanEntries(degreeCurricularPlan, curriculumModule));
 	    }
 	}
 	return mapping.findForward("showPlan");	
+    }
+
+    public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Student student = getStudent(request);
+	final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(request, student);
+	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request.getAttribute("degreeCurricularPlan");
+
+	StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = (StudentEquivalencyPlanEntryCreator) getRenderedObject();
+	if (studentEquivalencyPlanEntryCreator == null) {
+	    studentEquivalencyPlanEntryCreator = new StudentEquivalencyPlanEntryCreator(studentCurricularPlanEquivalencePlan, degreeCurricularPlan.getEquivalencePlan());
+	}
+
+	final CurriculumModule curriculumModule = getCurriculumModule(request);
+	if (curriculumModule != null) {
+	    studentEquivalencyPlanEntryCreator.setOriginDegreeModule(curriculumModule.getDegreeModule());
+	    studentEquivalencyPlanEntryCreator.addOriginDegreeModule(curriculumModule.getDegreeModule());
+	}
+
+	request.setAttribute("studentEquivalencyPlanEntryCreator", studentEquivalencyPlanEntryCreator);
+	return mapping.findForward("addEquivalency");
+    }
+
+    public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	getStudent(request);
+	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
+	final Object[] args = { equivalencePlanEntry };
+	executeService(request, "DeleteEquivalencePlanEntry", args);
+	return showTable(mapping, actionForm, request, response);
+    }
+
+    public ActionForward activate(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return changeActiveState(mapping, actionForm, request, response, "ActivateEquivalencePlanEntry");
+    }
+
+    public ActionForward deactivate(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return changeActiveState(mapping, actionForm, request, response, "DeActivateEquivalencePlanEntry");
+    }
+
+    public ActionForward changeActiveState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response, final String service) throws Exception {
+	final Student student = getStudent(request);
+	final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(request, student);
+	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
+	final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
+	executeService(request, service, args);
+	return showTable(mapping, actionForm, request, response);
+    }
+
+    private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
+	final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
+	final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
+	return equivalencePlanEntryID == null ? null
+		: (EquivalencePlanEntry) RootDomainObject.getInstance().readEquivalencePlanEntryByOID(equivalencePlanEntryID);
     }
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request, final Student student)
@@ -77,7 +130,11 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 	    }
 	}
 	request.setAttribute("studentSearchBean", studentSearchBean);
-	return studentSearchBean.search();
+	final Student student = studentSearchBean.search();
+	if (student != null) {
+	    request.setAttribute("student", student);
+	}
+	return student;
     }
 
     private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
