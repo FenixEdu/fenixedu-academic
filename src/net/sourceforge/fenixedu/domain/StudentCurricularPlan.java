@@ -1977,12 +1977,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Override
     public List<Enrolment> getEnrolments() {
-	return isBoxStructure() ? getRoot().getEnrolments() : super.getEnrolments();
+	return hasRoot() ? getRoot().getEnrolments() : super.getEnrolments();
     }
 
     @Override
     public Set<Enrolment> getEnrolmentsSet() {
-	return isBoxStructure() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet();
+	return hasRoot() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet();
     }
 
     public boolean isBolonhaDegree() {
@@ -1994,7 +1994,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
      * @return
      */
     public boolean isBoxStructure() {
-	return getDegreeCurricularPlan().isBoxStructure();
+	return hasRoot();
     }
 
     public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol,
