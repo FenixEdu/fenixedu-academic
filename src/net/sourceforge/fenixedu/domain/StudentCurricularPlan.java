@@ -2426,4 +2426,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return new StudentCurricularPlanEquivalencePlan(this);
     }
 
+    public boolean hasEnrolmentOrAprovalInCurriculumModule(final DegreeModule degreeModule) {
+	final RootCurriculumGroup rootCurriculumGroup = getRoot();
+	return rootCurriculumGroup != null && hasEnrolmentOrAprovalInCurriculumModule(rootCurriculumGroup, degreeModule);
+    }
+
+    private boolean hasEnrolmentOrAprovalInCurriculumModule(final CurriculumModule curriculumModule, final DegreeModule degreeModule) {
+	if (curriculumModule.getDegreeModule() == degreeModule) {
+	    return true;
+	}
+	if (curriculumModule.isLeaf()) {
+	    return false;
+	}
+	final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+	for (final CurriculumModule child : curriculumGroup.getCurriculumModulesSet()) {
+	    if (hasEnrolmentOrAprovalInCurriculumModule(child, degreeModule)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

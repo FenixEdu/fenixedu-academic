@@ -290,13 +290,18 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     }
 
     @Override
-    public boolean isFor(DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
 	    if (degreeModule.getParentDegreeCurricularPlan() == degreeCurricularPlan) {
 		return true;
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    public boolean isFor(final DegreeModule degreeModule) {
+	return getNewDegreeModulesSet().contains(degreeModule);
     }
 
 }

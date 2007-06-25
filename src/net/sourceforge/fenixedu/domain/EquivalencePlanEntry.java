@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
@@ -49,5 +50,7 @@ public abstract class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     abstract public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan);
 
     public abstract boolean isFor(final DegreeCurricularPlan degreeCurricularPlan);
+
+    public abstract boolean isFor(final DegreeModule degreeModule);
 
 }

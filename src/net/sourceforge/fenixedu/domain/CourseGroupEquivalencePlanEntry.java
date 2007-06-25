@@ -5,6 +5,7 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -118,5 +119,10 @@ public class CourseGroupEquivalencePlanEntry extends CourseGroupEquivalencePlanE
     @Override
     public boolean isFor(DegreeCurricularPlan degreeCurricularPlan) {
 	return getNewCourseGroup().getParentDegreeCurricularPlan() == degreeCurricularPlan;
+    }
+
+    @Override
+    public boolean isFor(final DegreeModule degreeModule) {
+	return getNewCourseGroup() == degreeModule;
     }
 }
