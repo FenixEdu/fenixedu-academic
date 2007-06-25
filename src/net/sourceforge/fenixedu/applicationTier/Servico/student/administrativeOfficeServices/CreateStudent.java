@@ -48,6 +48,8 @@ public class CreateStudent extends Service {
 	Registration registration = new Registration(person, executionDegreeBean
 		.getDegreeCurricularPlan(), studentCandidacy, ingressionInformationBean
 		.getRegistrationAgreement(), executionDegreeBean.getCycleType());
+	registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
+	registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());
 
 	// create qualification
 	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());

@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.util.EntryPhase;
@@ -20,6 +22,10 @@ public class IngressionInformationBean implements Serializable {
     private EntryPhase entryPhase;
 
     private RegistrationAgreement registrationAgreement;
+
+    private YearMonthDay studiesStartDate;
+
+    private YearMonthDay homologationDate;
 
     public IngressionInformationBean() {
 	super();
@@ -53,10 +59,28 @@ public class IngressionInformationBean implements Serializable {
     public void clearIngressionAndEntryPhase() {
 	this.ingression = null;
 	this.entryPhase = null;
+	this.studiesStartDate = null;
+	this.homologationDate = null;
     }
 
     public void clearAgreement() {
 	this.registrationAgreement = RegistrationAgreement.NORMAL;
+    }
+
+    public YearMonthDay getHomologationDate() {
+	return homologationDate;
+    }
+
+    public void setHomologationDate(YearMonthDay homologationDate) {
+	this.homologationDate = homologationDate;
+    }
+
+    public YearMonthDay getStudiesStartDate() {
+	return studiesStartDate;
+    }
+
+    public void setStudiesStartDate(YearMonthDay studiesStartDate) {
+	this.studiesStartDate = studiesStartDate;
     }
 
 }

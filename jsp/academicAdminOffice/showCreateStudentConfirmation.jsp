@@ -38,8 +38,15 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createStudent"/>
 	<fr:edit id="executionDegree" name="executionDegreeBean" visible="false" />
 	<fr:edit id="person" name="personBean" visible="false" />	
-	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />	
+	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />
 	<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformationBean" visible="false" />
+
+	<fr:edit name="ingressionInformationBean" schema="student.createRegistrationStartDates" >
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
 	
 	<h3><bean:message key="message.student.registerStudent.confirm" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	
