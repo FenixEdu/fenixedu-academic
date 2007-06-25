@@ -57,11 +57,11 @@ margin: 1em 0;
 vertical-align: top;
 font-weight: normal;
 border-bottom: 1px solid #aaa;
-padding: 0.5em;
+padding: 5px 2px;
 }
 .showinfo3 td {
 border-bottom: 1px solid #ddd;
-padding: 0.5em;
+padding: 5px 2px;
 }
 
 /* ----------------------
@@ -544,6 +544,8 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width600px { width: 600px; }
 .width700px { width: 700px; }
 
+.width25px { width: 25px; }
+.width35px { width: 35px; }
 
 /* display */
 .hidden { display: none; }
