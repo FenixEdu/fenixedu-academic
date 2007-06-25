@@ -14,7 +14,7 @@
 		<fr:property name="rowClasses" value="tdbold,,,,"/>
 	</fr:layout>
 </fr:view>
-
+ 
 <logic:notEmpty name="journal" property="articles">
 <p class="mbottom05"><bean:message key="label.articleList" bundle="RESEARCHER_RESOURCES"/>:</p>
 <fr:view name="journal" property="articles" schema="presentArticlesInJournal">

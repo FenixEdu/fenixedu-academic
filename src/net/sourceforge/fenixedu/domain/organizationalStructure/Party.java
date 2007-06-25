@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
+import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
@@ -1157,5 +1158,15 @@ abstract public class Party extends Party_Base {
 		return publicationsForExecutionYear;
 	}
 
+	public List<Prize> getPrizes(ExecutionYear executionYear) {
+		List<Prize> prizes = new ArrayList<Prize>();
+		for(Prize prize : this.getPrizes()) {
+			if(executionYear.belongsToCivilYear(prize.getYear())) {
+				prizes.add(prize);
+			}
+		}
+		return prizes;
+	}
+	
 	public abstract List<ResearchResultPublication> getResearchResultPublications();
 }

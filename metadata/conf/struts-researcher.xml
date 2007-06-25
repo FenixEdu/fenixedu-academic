@@ -184,6 +184,8 @@
 			<forward name="editEvent" path="edit-event"/>
 		    <forward name="backFromDetails" path="/resultPublications/listPublications.do"/>
 		    <forward name="ListUnitPublications" path="/researchUnitFunctionalities.do?method=preparePublications"/>
+		    <forward name="associatePrize" path="publications.associate.prize"/>
+		    <forward name="editPrize" path="edit.prize"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
@@ -289,6 +291,19 @@
 			     <forward name="compose-mail" path="sendMail"/>
 	            <forward name="success" path="sendMail"/>
     	        <forward name="problem" path="sendMail"/>	    
+		</action>
+		
+		<action path="/prizes/prizeManagement"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.research.PrizeManagement">
+			
+			<forward name="listPrizes" path="list-prizes"/>
+		    <forward name="editPrize" path="edit.prize"/>
+		    <forward name="createPrize" path="create-prize"/>
+		    <forward name="viewPrize" path="view-prize"/>
+		    <forward name="editUnits" path="edit-prize-units"/>
+   		    <forward name="personAssociation" path="edit-prize-people"/>
+		    
 		</action>
 	</action-mappings>
 

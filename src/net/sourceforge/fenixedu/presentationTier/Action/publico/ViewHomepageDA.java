@@ -395,6 +395,18 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	
     }
     
+    public ActionForward showPrizes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    	    HttpServletResponse response) throws Exception {
+
+    	final String homepageId = request.getParameter("homepageID");
+    	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
+    		.valueOf(homepageId));
+
+    	request.setAttribute("prizes",homepage.getPerson().getPrizes());
+    	
+    	return mapping.findForward("showPrizes");
+    }
+    
     private void setPublicationsInRequest(HttpServletRequest request, Person person) {
 
 	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks()));

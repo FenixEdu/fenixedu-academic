@@ -147,6 +147,27 @@
     <definition name="publications.search" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
     </definition>     
+	<definition name="publications.associate.prize" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/associatePrizeToResult.jsp"/>  
+    </definition> 
+    <definition name="list-prizes" extends="researcher.masterPage">
+	    <put name="body" value="/researcher/prizes/listPrizes.jsp"/> 
+    </definition>     
+	<definition name="edit.prize" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/editPrize.jsp"/>  
+    </definition>           
+	<definition name="create-prize" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/createPrize.jsp"/>  
+    </definition>     
+	<definition name="view-prize" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/showPrize.jsp"/>  
+    </definition>          
+	<definition name="edit-prize-units" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/associateUnitToPrize.jsp"/>  
+    </definition>         
+	<definition name="edit-prize-people" extends="researcher.masterPage">
+       <put name="body" value="/researcher/prizes/associatePersonToPrize.jsp"/>  
+    </definition>          
      
     <definition name="show.journal" extends="researcher.masterPage">
        <put name="body" value="/researcher/showJournal.jsp"/>  
@@ -216,5 +237,6 @@
 	<definition name="research-unit-list-publications" extends="researcher.unit.functionalities">
        <put name="body" value="/researcher/researchUnit/listPublications.jsp"/>  
     </definition>      
+
 
 </tiles-definitions>

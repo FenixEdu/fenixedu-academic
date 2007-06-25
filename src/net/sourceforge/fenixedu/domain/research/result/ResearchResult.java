@@ -170,8 +170,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Returns participations list ordered.
-	 */
+     * Returns participations list ordered.
+     */
 	public List<ResultParticipation> getOrderedResultParticipations() {
 		return Collections.unmodifiableList(sort(super.getResultParticipations()));
 	}
@@ -197,9 +197,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Returns true if already exists a result participation with the given
-	 * person and role.
-	 */
+     * Returns true if already exists a result participation with the given
+     * person and role.
+     */
 	public boolean hasPersonParticipationWithRole(Person person, ResultParticipationRole role) {
 		if (this.hasAnyResultParticipations()) {
 			for (ResultParticipation participation : this.getResultParticipations()) {
@@ -213,9 +213,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Returns true if already exists a result participation with the given
-	 * person. (Role not relevant. Used for access control verification).
-	 */
+     * Returns true if already exists a result participation with the given
+     * person. (Role not relevant. Used for access control verification).
+     */
 	public boolean hasPersonParticipation(Person person) {
 		if (this.hasAnyResultParticipations()) {
 			for (ResultParticipation participation : this.getResultParticipations()) {
@@ -228,9 +228,9 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Returns true if exists an association between result and the given unit
-	 * and role.
-	 */
+     * Returns true if exists an association between result and the given unit
+     * and role.
+     */
 	public boolean hasAssociationWithUnitRole(Unit unit, ResultUnitAssociationRole role) {
 		if (unit != null && role != null && this.hasAnyResultUnitAssociations()) {
 			final List<ResultUnitAssociation> list = this.getResultUnitAssociations();
@@ -281,8 +281,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Order result participations by person order.
-	 */
+     * Order result participations by person order.
+     */
 	private static <T extends ResultParticipation> List<T> sort(Collection<T> resultParticipations) {
 		List<T> sorted = new ArrayList<T>(resultParticipations);
 		Collections.sort(sorted, new ResultParticipation.OrderComparator());
@@ -291,8 +291,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Method responsible for updates on result participations order.
-	 */
+     * Method responsible for updates on result participations order.
+     */
 	private void reOrderParticipations(List<ResultParticipation> newParticipationsOrder) {
 		int order = 0;
 		for (ResultParticipation participation : newParticipationsOrder) {
@@ -303,8 +303,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Removes all references to result.
-	 */
+     * Removes all references to result.
+     */
 	private void removeAssociations() {
 		super.setCountry(null);
 		removeCreator();
@@ -327,8 +327,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Block individual setters
-	 */
+     * Block individual setters
+     */
 	@Override
 	public void setOjbConcreteClass(String ojbConcreteClass) {
 		throw new DomainException("error.researcher.Result.call", "setOjbConcreteClass");
@@ -351,8 +351,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	}
 
 	/**
-	 * Block operations on relation lists.
-	 */
+     * Block operations on relation lists.
+     */
 	@Override
 	public void addResultParticipations(ResultParticipation resultParticipations) {
 		throw new DomainException("error.researcher.Result.call", "addResultParticipations");
@@ -454,14 +454,29 @@ public abstract class ResearchResult extends ResearchResult_Base {
 		return visibleDocuments;
 	}
 
+	public boolean isEditableByUser(Person person) {
+		return getCreator().equals(person) || hasPersonParticipation(person);
+	}
+
 	public boolean isEditableByCurrentUser() {
-		Person person = AccessControl.getPerson();
+		return isEditableByUser(AccessControl.getPerson());
+	}
+
+	public boolean isDeletableByUser(Person person) {
 		return getCreator().equals(person) || hasPersonParticipation(person);
 	}
 
 	public boolean isDeletableByCurrentUser() {
-		Person person = AccessControl.getPerson();
-		return getCreator().equals(person) || hasPersonParticipation(person);
+		return isDeletableByUser(AccessControl.getPerson());
+	}
+
+	public boolean isAssociateWith(Unit unit) {
+		for (ResultUnitAssociation association : getResultUnitAssociations()) {
+			if (association.getUnit().equals(unit)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public abstract String getSchema();

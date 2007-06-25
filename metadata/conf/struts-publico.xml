@@ -817,6 +817,13 @@
     		<forward name="showParticipations" path="show-participations"/>
 		</action>				
 	
+		<action path="/showPrizes"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
+    			parameter="method"
+    			>
+    		<forward name="showPrizes" path="show-prizes"/>
+		</action>
+		
 		<action path="/activities/editResearchActivity"
 			type="net.sourceforge.fenixedu.presentationTier.Action.research.activity.EditResearchActivityDispatchAction"
 			parameter="method">
@@ -902,6 +909,12 @@
 		    <forward name="showEvent" path="show.event"/>
 	</action>
 
+	<action path="/prizes/showPrizes"
+		parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.research.PrizeManagement">
+			<forward name="viewPrize" path="view.prize"/>
+	</action>
+	
 	<!-- =========== RSS ======================== -->
 		<action path="/announcementsRSS"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"

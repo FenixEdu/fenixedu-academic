@@ -10,7 +10,7 @@
 
 <logic:present role="RESEARCHER">		
 		<em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
-		<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/></h2>
+		<h2 id="header"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/></h2>
 	
 		<bean:define id="personId" name="person" property="idInternal"/>
 		
@@ -81,6 +81,9 @@
 			</logic:notEmpty>
 			<logic:notEmpty name="participations"> 
 			<li><a href="#activities"><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></a></li>
+			</logic:notEmpty>
+			<logic:notEmpty name="prizes">
+			<li><a href="#prizes"><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></a></li>
 			</logic:notEmpty>
 		</ol>
 
@@ -491,7 +494,7 @@
 		<jsp:include page="activities/researchActivitiesList.jsp"/>
 	</logic:notEmpty>
 	
-	<logic:notEmpty name="cooperations">
+	<logic:notEmpty name="cooperations">	
 		<p id='cooperations' class="mtop2 mbottom0">
 			<strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.cooperationsTitle" /></span></strong>
 		</p>
@@ -502,6 +505,50 @@
 	</logic:notEmpty>
 </logic:notEmpty>
 	
+<logic:notEmpty name="prizes">
+	  <p id='prizes' class="separator2" style="position: relative; margin-top: 2em;">
+    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></span>
+    	<span style="position: absolute; right: 0;"><a href="#header"><bean:message key="label.top" /></a></span>
+    	</p>
+		
+		<ul class="listresearch">
+		<logic:iterate id="prize" name="prizes">
+			<bean:define id="prizeID" name="prize" property="idInternal"/>
+			<li class="mtop1">
+				<p class="mvert0">
+		 			<strong>
+						<html:link page="<%= "/prizes/prizeManagement.do?method=showPrize&oid=" + prizeID %>"><fr:view name="prize" property="name"/></html:link>	 			
+		 			</strong>
+		 			 , 
+		 			<span>
+		 				<fr:view name="prize" property="year"/>
+			 		</span>
+		 		</p>
+		 		<logic:present name="prize" property="researchResult">
+				<bean:define id="resultId" name="prize" property="researchResult.idInternal"/>
+		 		<p class="mvert0">
+		 			<span>
+		 				<html:link page="<%= "/resultPublications/showPublication.do?resultId=" + resultId %>">
+			 				<fr:view name="prize" property="researchResult.title"/>
+		 				</html:link>
+			 		</span>
+	 			</p>
+	 			</logic:present>
+	 			<logic:present name="prize" property="description">
+				<p class="mvert0">
+					<span class="color888">
+						<fr:view name="prize" property="description"/>
+					</span>
+				</p>
+				</logic:present>
+ 			</li>
+ 			
+ 			</logic:iterate>
+		</ul>
+		
+		
+</logic:notEmpty>
+
 </logic:present>
 
 <script type="text/javascript" language="javascript">

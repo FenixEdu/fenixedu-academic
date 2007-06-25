@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -210,7 +212,8 @@ public class Inproceedings extends Inproceedings_Base {
     
     @Override
     public Integer getYear() {
-	return getEventEdition().getStartDate().getYear();
+    	YearMonthDay startDate =getEventEdition().getStartDate(); 
+    	return startDate != null ? startDate.getYear() : new YearMonthDay().getYear();
     }
 		
     @Override

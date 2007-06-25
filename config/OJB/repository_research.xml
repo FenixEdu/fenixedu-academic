@@ -33,3 +33,5 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" table="JOURNAL_ISSUE"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation" table="ARTICLE_ASSOCIATION"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.Prize" table="RESEARCH_PRIZE"/>

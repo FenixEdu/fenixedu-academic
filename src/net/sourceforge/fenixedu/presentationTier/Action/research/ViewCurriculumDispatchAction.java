@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.Event;
@@ -89,6 +90,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> unstructured = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
+	Set<Prize> prizes = new HashSet<Prize>();
 	
 	if (firstExecutionYear == null) {
 	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
@@ -129,7 +131,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    otherPublication.addAll(person.getOtherPublications(iteratorYear));
 	    unstructured.addAll(person.getUnstructureds(iteratorYear));
 	    bookParts.addAll(person.getInbooks(iteratorYear));
-
+	    prizes.addAll(person.getPrizes(iteratorYear));
 	    
 		
 	    iteratorYear = iteratorYear.getNextExecutionYear();
@@ -140,6 +142,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("functions", functionsList);
 	List<Advise> final_worksList = new ArrayList<Advise>(final_works);
 	Collections.sort(final_worksList, new BeanComparator("student.number"));
+	
 	request.setAttribute("final_works", final_worksList);
 	request.setAttribute("guidances", guidances);
 	request.setAttribute("lectures", lectures);
@@ -175,7 +178,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		.getAssociatedJournalIssues(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
 	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
 		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
-
 	request.setAttribute("participations", person.getParticipations());
+	request.setAttribute("prizes", prizes);
     }
 }

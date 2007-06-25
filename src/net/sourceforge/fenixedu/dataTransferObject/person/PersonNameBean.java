@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PersonNameBean implements Serializable {
 
+	private boolean external;
+	
 	private DomainReference<PersonName> personName;
 	private String name; 
 	
@@ -22,6 +24,7 @@ public class PersonNameBean implements Serializable {
 	public PersonNameBean() {
 		super();
 		setPersonName(null);
+		external = false;
 	}
 
 	public PersonName getPersonName() {
@@ -35,5 +38,13 @@ public class PersonNameBean implements Serializable {
 	public Person getPerson() {
 		PersonName personName =  getPersonName();
 		return (personName!=null) ? personName.getPerson() : null;
+	}
+
+	public boolean isExternal() {
+		return external;
+	}
+
+	public void setExternal(boolean external) {
+		this.external = external;
 	}
 }

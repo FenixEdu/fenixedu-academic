@@ -88,7 +88,7 @@ public class AdvancedTagCloudSearchRenderer extends TagCloudRenderer {
 			}
 			
 		}
-		return newSelectedTags;
+		return newSelectedTags.trim();
 	}
 
 	private boolean isSelected(UnitFileTag tag) {

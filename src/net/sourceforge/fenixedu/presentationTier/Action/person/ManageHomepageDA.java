@@ -79,6 +79,7 @@ public class ManageHomepageDA extends SiteManagementDA {
             dynaActionForm.set("showPatents", booleanString(homepage.getShowPatents()));
             dynaActionForm.set("showInterests", booleanString(homepage.getShowInterests()));
             dynaActionForm.set("showParticipations", booleanString(homepage.getShowParticipations()));
+            dynaActionForm.set("showPrizes", booleanString(homepage.getShowPrizes()));
     	}
         
         SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
@@ -124,6 +125,8 @@ public class ManageHomepageDA extends SiteManagementDA {
         	final String showPatents = (String) dynaActionForm.get("showPatents");
         	final String showInterests = (String) dynaActionForm.get("showInterests");
         	final String showParticipations = (String) dynaActionForm.get("showParticipations");
+        	final String showPrizes = (String) dynaActionForm.get("showPrizes");
+        	
         	final MultiLanguageString researchUnitMultiLanguageString;
         	if (researchUnit != null && researchUnit.length() > 0) {
         		researchUnitMultiLanguageString = new MultiLanguageString();
@@ -154,7 +157,8 @@ public class ManageHomepageDA extends SiteManagementDA {
         			Boolean.valueOf(showPublications),
         		    Boolean.valueOf(showPatents),
         		    Boolean.valueOf(showInterests),
-        		    Boolean.valueOf(showParticipations)
+        		    Boolean.valueOf(showParticipations),
+        		    Boolean.valueOf(showPrizes)
         		                		};
         	executeService(request, "SubmitHomepage", args);
 

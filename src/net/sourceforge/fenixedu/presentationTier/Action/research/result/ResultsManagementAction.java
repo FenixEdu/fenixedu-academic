@@ -3,10 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -63,6 +66,42 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward associatePrize(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		final ResearchResult result = (ResearchResult) getResultByIdFromRequest(request);
+		request.setAttribute("publication",result);
+		
+		return mapping.findForward("associatePrize");
+	
+	}
+	public ActionForward deletePrize(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+		String prizeID = request.getParameter("oid");
+		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+		if(prize.isDeletableByUser((getLoggedPerson(request)))) {
+			try {
+				executeService("DeletePrize", new Object[] { prize } );
+			}catch(DomainException e) {
+				addActionMessage(request, e.getMessage());
+			}
+		}
+		return associatePrize(mapping, form, request, response);
+	} 
+	
+	public ActionForward editPrize(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		
+		String prizeID = request.getParameter("oid");
+		Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+		if(prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
+			request.setAttribute("prize",prize);
+		}
+		request.setAttribute("result", getResultByIdFromRequest(request));
+		return mapping.findForward("editPrize");
+	}
+	
     protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
 	final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
 

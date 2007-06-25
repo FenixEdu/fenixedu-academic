@@ -4220,6 +4220,13 @@ class net.sourceforge.fenixedu.domain.ManagementGroups extends net.sourceforge.f
 	Group protocolManagers;
 }
 
+class net.sourceforge.fenixedu.domain.research.Prize extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer year;
+	String name;
+	MultiLanguageString description;
+	Integer keyResearchResult;
+}
+
 class net.sourceforge.fenixedu.domain.research.result.ResearchResult extends net.sourceforge.fenixedu.domain.DomainObject {
 	String title;
 	MultiLanguageString note;
@@ -4795,6 +4802,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 		Boolean showPatents;
 		Boolean showInterests;
 		Boolean showParticipations;
+		Boolean showPrizes;
 		MultiLanguageString researchUnit;
 		String researchUnitHomepage;
 		Boolean showCurrentAttendingExecutionCourses;
@@ -13320,6 +13328,30 @@ relation AllowedToUploadInUnit {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole allowedPeopleToUploadFiles {
+		multiplicity *;
+	}
+}
+
+relation PrizeWinners {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.research.Prize playsRole prizes {
+		multiplicity * ;
+	}
+}
+
+relation ResearchResultPrize {
+	net.sourceforge.fenixedu.domain.research.result.ResearchResult playsRole researchResult;
+	net.sourceforge.fenixedu.domain.research.Prize playsRole prizes {
+		multiplicity *;
+	}
+	
+}
+
+relation PrizeRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.Prize playsRole prizes {
 		multiplicity *;
 	}
 }

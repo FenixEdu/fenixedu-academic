@@ -429,7 +429,20 @@
 				<td><span class="color888"><bean:message key="label.homepage.options.participations.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
   			</logic:empty>
 		</tr>
-				
+  			
+		<tr> 
+		
+			<logic:notEmpty name="UserView" property="person.prizes">
+				<th><bean:message key="label.homepage.showPrizes" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</th>
+				<td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" property="showPrizes" value="true"/></td>
+  			</logic:notEmpty> 			
+  			
+  			<logic:empty name="UserView" property="person.prizes">
+				<th><span class="color888"><bean:message key="label.homepage.showPrizes" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.homepage.sectionMark" bundle="HOMEPAGE_RESOURCES"/>:</span></th>
+				<td><input type="checkbox" disabled="disabled"/></td>
+				<td><span class="color888"><bean:message key="label.homepage.options.prizes.disabled" bundle="HOMEPAGE_RESOURCES"/>.</span></td>
+  			</logic:empty>
+		</tr>		
 		</logic:present>
 		
 		<tr>

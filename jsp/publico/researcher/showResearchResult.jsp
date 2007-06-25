@@ -21,6 +21,7 @@
 		<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 	</fr:layout>
+		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${idInternal}"/>
 	</fr:view>
 	</logic:notEqual>
 
@@ -30,6 +31,7 @@
 		<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 	</fr:layout>
+		<fr:destination name="view.prize" path="/prizes/showPrizes.do?method=showPrize&oid=${idInternal}"/>
 	</fr:view>
 	</logic:equal>
 

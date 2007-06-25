@@ -92,9 +92,12 @@
 	</html:link>, 
 	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?" + parameters %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label" />
+	</html:link>, 
+	<html:link page="<%="/resultPublications/associatePrize.do?" + parameters %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.PrizeAssociation.title.label"/>
 	</html:link>
 	</logic:equal>
-				
+
 	<fr:view name="result" schema="<%="result.publication.presentation."+resultPublicationType + ".mainInfo" %>">
 	<fr:layout name="tabular-nonNullValues">
 		<fr:property name="classes" value="tstyle2 thleft thlight thtop"/>
@@ -102,6 +105,7 @@
 		<fr:property name="columnClasses" value="width10em, width50em"/>
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
+			<fr:destination name="view.prize" path="/prizes/prizeManagement.do?method=showPrize&oid=${idInternal}"/>
 	</fr:view>
 
 	

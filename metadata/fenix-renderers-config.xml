@@ -398,6 +398,16 @@ Documentation:
 		<property name="contextRelative" value="true"/>
 		<property name="separator" value="-"/>
 	</renderer>
+
+	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" layout="unit-with-parent-and-links" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteRenderer">
+		<property name="moduleRelative" value="false"/>
+		<property name="contextRelative" value="true"/>
+		<property name="separator" value="-"/>
+		<property name="unitLayout" value="values"/>
+		<property name="unitSchema" value="unit.name"/>
+		<property name="targetBlank" value="true"/>
+		<property name="parenteShown" value="true"/>
+	</renderer>
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  

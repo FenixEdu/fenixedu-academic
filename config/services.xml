@@ -12073,12 +12073,49 @@
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
     </service>
-	<service>
+    <service>
     	<name>CreateStudentCurricularPlanEquivalencePlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
 		</filterChains>
-    </service>      
+    </service> 
+    <service>
+    	<name>DeletePrize</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="DeletePrize"/>
+		</filterChains>
+    </service>  
+    <service>
+    	<name>CreatePrize</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.CreatePrize</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResearcherAuthorization"/>
+		</filterChains>
+    </service>
+     <service>
+    	<name>AddPartyToPrize</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.AddPartyToPrize</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="EditPrize"/>
+		</filterChains>
+    </service>  
+     <service>
+    	<name>RemovePartyFromPrize</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.RemovePartyFromPrize</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="EditPrize"/>
+		</filterChains>
+    </service>  
+      
 </serviceDefinitions>
