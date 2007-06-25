@@ -2077,6 +2077,10 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Double remainingValue;
     ExemptionGratuityType exemptionType;
     Integer keyPaymentCode;
+    Boolean hasPenaltyExemption;
+    String penaltyExemptionJustification;
+    Integer keyPenaltyExemptionEmployee;
+    YearMonthDay penaltyExemptionDate;
 }
 
 
@@ -3244,9 +3248,10 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
     Integer keyDislocatedStudent;
     Character entryGradeClassification;
     Character approvationRatioClassification;
-    Character arithmeticMeanClassification;  
+    Character arithmeticMeanClassification;
     YearMonthDay startDate;
     YearMonthDay studiesStartDate;
+    YearMonthDay homologationDate;
     Integer finalAverage;
     Integer keySenior;
     Integer keyAssociatedGaugingTestResult;
@@ -6961,6 +6966,13 @@ relation GratuitySituationEmployee {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation GratuitySituationPenaltyExemptionEmployee {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole penaltyExemptionGratuitySituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole penaltyExemptionEmployee;
 }
 
 relation GratuitySituationGratuityValues {
@@ -13331,7 +13343,6 @@ relation AllowedToUploadInUnit {
 		multiplicity *;
 	}
 }
-
 relation PrizeWinners {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
 		multiplicity *;

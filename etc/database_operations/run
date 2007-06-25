@@ -32,3 +32,5 @@ execute "Create Prize Tables" createPrizeTables.sql
 execute "Add Show Prizes to homepage" addShowPrizesToHomePage.sql
 execute "Create functioanlities" changes-20070625183052.sql
 execute "Add Prizes functionality" addShowPrizesFunctionality.sql
+execute "Changing Table Gratuity Situation: Adding penalty exemption" alterTableGratuitySituation.sql
+execute "Alter Table Registration" alterTableRegistration-HomologationDate.sql
