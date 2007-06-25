@@ -154,7 +154,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final String value = dynaActionForm.getString(string);
 	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
     }
-
+    
     protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
 	final String requestParameter = request.getParameter(parameterName);
 
@@ -172,6 +172,13 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return (value != null) ? value : getInteger(form, name);
     }
 
+    protected Object getFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form,
+	    final String name) {
+	final Object value = getFromRequest(request, name);
+
+	return (value != null) ? value : form.get(name);
+    }
+    
     /**
          * Searches in request parameters first and next in request attributed
          * 
