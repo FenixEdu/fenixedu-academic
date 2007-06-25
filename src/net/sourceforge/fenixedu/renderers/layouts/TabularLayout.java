@@ -191,23 +191,25 @@ public abstract class TabularLayout extends Layout {
         table.setCaption(this.caption);
 
         // header
-        // decompose header cell classes
-        String[] headerClasses = null;
         if (getHeaderClasses() != null) {
-            headerClasses = getHeaderClasses().split(",", -1);
-        }
-
-        HtmlTableHeader header = table.getHeader();
-        if (header != null) {
-            for (HtmlTableRow row : header.getRows()) {
-            	int cellIndex = 0;
-                for (HtmlTableCell cell : row.getCells()) {
-                	String choosenCellClass = headerClasses[cellIndex % headerClasses.length];
-                    cell.setClasses(choosenCellClass);
-                    
-                    cellIndex++;
-                }
-            }
+		    // decompose header cell classes
+		    String[] headerClasses = null;
+		    if (getHeaderClasses() != null) {
+		        headerClasses = getHeaderClasses().split(",", -1);
+		    }
+		
+		    HtmlTableHeader header = table.getHeader();
+		    if (header != null) {
+		        for (HtmlTableRow row : header.getRows()) {
+		        	int cellIndex = 0;
+		            for (HtmlTableCell cell : row.getCells()) {
+		            	String choosenCellClass = headerClasses[cellIndex % headerClasses.length];
+		                cell.setClasses(choosenCellClass);
+		                
+		                cellIndex++;
+		            }
+		        }
+		    }
         }
 
         // decompose row and cell classes
