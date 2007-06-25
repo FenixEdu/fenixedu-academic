@@ -186,7 +186,7 @@ public class CollectionRenderer extends OutputRenderer {
 
     /**
      * The value of the class attribute of each cell in the table's header.
-     * There is no repetition as in
+     * There is repetition as in
      * {@linkplain #setColumnClasses(String) columnClasses} or
      * {@linkplain #setRowClasses(String) rowClasses}.
      * 
