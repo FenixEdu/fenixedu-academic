@@ -9,7 +9,7 @@
 <h2><bean:message key="title.viewUnitExtraWorkAmounts" /></h2>
 
 <fr:form action="/manageUnitsExtraWorkAmounts.do?method=chooseYear">
-	<table>
+	<table class="printhidden">
 		<tr>
 			<td>
 				<fr:edit id="year" name="year" schema="choose.year">
@@ -20,14 +20,14 @@
 				</fr:edit>	
 			</td>
 			<td>
-				<html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit>
+				<span class="printhidden"><html:submit><bean:message key="button.confirm" bundle="ASSIDUOUSNESS_RESOURCES"/></html:submit></span>
 			</td>
 		</tr>
 	</table>
 </fr:form>
 
 <bean:define id="choosenYear"><bean:write name="year" property="year"/></bean:define>
-<ul class="mtop15">
+<ul class="mtop15 printhidden">
 	<li>
 		<html:link page="/manageUnitsExtraWorkAmounts.do?method=prepareCreateUnitExtraWorkAmount" paramId="year" paramName="choosenYear">
 			<bean:message key="link.insertNewUnitAmount"/>
@@ -53,7 +53,9 @@
 <p class="mtop025">
 <fr:view name="unitExtraWorkAmountList" schema="show.unitExtraWorkAmount">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thleft thlight mtop0"/>
+		<fr:property name="classes" value="tstyle1 thleft thlight mtop0 showborder"/>
+		<fr:property name="headerClasses" value=",,,,printhidden"/>
+		<fr:property name="columnClasses" value=",aright,aright,aright,printhidden"/>
 		<fr:property name="link(viewExtraWorkMovements)" value="/manageUnitsExtraWorkAmounts.do?method=prepareEditUnitExtraWorkMovement" />
 		<fr:property name="key(viewExtraWorkMovements)" value="link.details" />
 		<fr:property name="param(viewExtraWorkMovements)" value="idInternal/unitExtraWorkAmountID" />
