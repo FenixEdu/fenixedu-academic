@@ -11,7 +11,7 @@
 		<fc:viewState binding="#{studentCalendar.viewState}"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
 		
-		<h:panelGrid styleClass="infoop2" columns="2">
+		<h:panelGrid styleClass="tstyle5" columns="2">
 			<h:outputText value="#{bundle['label.choose.degreeCurricularPlan']}:"/>
 			<h:panelGroup>
 				<h:selectOneMenu id="registrationID" value="#{studentCalendar.registrationID}"
