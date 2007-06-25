@@ -97,6 +97,20 @@
 
 <br/>
 
+<logic:notPresent name="toShow">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="searchPerson"
+		 onclick="this.form.page.value='0';this.form.method.value='prepareEditGrantOwnerForm';">
+		<bean:message key="button.continue"/>
+	</html:submit>
+</logic:notPresent>
+			
+<logic:messagesPresent message="true">
+	<html:messages id="message" message="true" property="message">
+		<span class="highlight1"><bean:write name="message"/></span>
+	</html:messages>
+</logic:messagesPresent>			
+			
+<logic:present name="toShow">
 <table>
 	<tr>
 		<td colspan="2" ><b><bean:message key="label.grant.owner.personalinformation"/></td>
@@ -305,13 +319,15 @@
 </table>	
 
 <br/>
-
+</logic:present>
 <table>
 	<tr>
 		<td>
+		<logic:present name="toShow">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.save"/>
 			</html:submit>
+		</logic:present>			
 		</html:form>		
 		</td>
 		<td>

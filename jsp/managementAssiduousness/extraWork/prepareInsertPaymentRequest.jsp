@@ -31,9 +31,7 @@
 			</tr>
 		</table>
 	</fr:form>
-	<script type="text/javascript">
-		document.getElementsByName("unitCode").focus();
-	</script>
+
 	<logic:notEmpty name="extraWorkRequestFactory" property="unitCode">
 	<logic:notEmpty name="extraWorkRequestFactory" property="unit">
 		<strong><bean:message key="label.extraWorkDoneIn" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong>
