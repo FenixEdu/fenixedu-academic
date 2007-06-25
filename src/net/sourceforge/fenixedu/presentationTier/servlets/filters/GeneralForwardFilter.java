@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathElementsProvider;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PedagogicalCouncilProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ProcessingContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
@@ -53,6 +54,7 @@ public class GeneralForwardFilter implements Filter {
         String departmentSiteURI = config.getInitParameter("departmentSiteURI");
         String departmentsURI = config.getInitParameter("departmentsURI");
         String researchURI = config.getInitParameter("researchURI");
+        String pedagocialCouncilURI = config.getInitParameter("pedagogicalCouncilURI");
         
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
@@ -70,6 +72,7 @@ public class GeneralForwardFilter implements Filter {
         DepartmentProcessor department = new DepartmentProcessor(departmentSiteURI);
         ResearchProcessor research = new ResearchProcessor();
         ResearchUnitProcessor researchUnit = new ResearchUnitProcessor(researchURI);
+        PedagogicalCouncilProcessor pedagogicalCouncil = new PedagogicalCouncilProcessor(pedagocialCouncilURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -98,6 +101,7 @@ public class GeneralForwardFilter implements Filter {
         processors.add(homepage.add(sectionAndItem));
         processors.add(departments.add(department.add(sectionAndItem)));
         processors.add(research.add(researchUnit.add(sectionAndItem)));
+        processors.add(pedagogicalCouncil.add(sectionAndItem));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

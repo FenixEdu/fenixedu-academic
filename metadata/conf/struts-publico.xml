@@ -966,7 +966,7 @@
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentEventsRSS"/>
 
    <!--============ Pedagogical Council site ============-->
-        <action path="/pedagogicalCouncilSite/viewSite"
+        <action path="/pedagogicalCouncil/viewSite"
                 parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.ViewPedagogicalSiteDA">
             <forward name="frontPage-BANNER_INTRO" path="pedagogicalCouncil-site-front-page-banner-intro"/>

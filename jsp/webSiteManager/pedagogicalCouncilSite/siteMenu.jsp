@@ -9,7 +9,7 @@
 
 <ul>
     <li>
-		<html:link module="/publico" action="<%= "/pedagogicalCouncilSite/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
+		<html:link module="/publico" action="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
 		    <bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
 		</html:link>
     </li>

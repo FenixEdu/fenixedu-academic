@@ -7,7 +7,7 @@
 <ul>
 	<li>
 		<bean:define id="unitId" name="unit" property="idInternal"/>
-		<html:link page="<%= "/pedagogicalCouncilSite/viewSite.do?method=presentation&amp;unitID=" + unitId %>">
+		<html:link page="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>">
 			<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
 		</html:link>
 	</li>

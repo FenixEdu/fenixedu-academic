@@ -36,7 +36,7 @@
 			<logic:notEmpty name="site">
 				<bean:define id="unitId" name="site" property="unit.idInternal"/>
 				
-				<html:link module="/publico" action="<%= "/pedagogicalCouncilSite/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
+				<html:link module="/publico" action="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
 					<bean:message bundle="PEDAGOGICAL_COUNCIL" key="link.site.view"/>
 				</html:link>
 			</logic:notEmpty>
