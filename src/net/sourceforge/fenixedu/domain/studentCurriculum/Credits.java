@@ -100,6 +100,10 @@ public class Credits extends Credits_Base {
 	return result;
     }
     
+    public boolean hasAnyIEnrolments() {
+	return hasAnyEnrolments();
+    }
+    
     @Override
     public Double getGivenCredits() {
         if(super.getGivenCredits() == null) {
