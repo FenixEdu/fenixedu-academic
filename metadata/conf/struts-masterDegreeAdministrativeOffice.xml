@@ -2393,6 +2393,14 @@
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="showDetails" path="gratuitySituationDetails" />
 	</action>
+
+	<action path="/penaltyExemption"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.PenaltyExemptionDA"
+		parameter="method"
+		scope="request" >
+		<forward name="edit" path="gratuity.penaltyExemption.edit" />
+		<forward name="return" path="/studentSituation.do?page=0&amp;method=readStudent" />
+	</action>
 	
 	<action path="/createGuideFromTransactions"
 		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.CreateGuideFromTransactionsDispatchAction"

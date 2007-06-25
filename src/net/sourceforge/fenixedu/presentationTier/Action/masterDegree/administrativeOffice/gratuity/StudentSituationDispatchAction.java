@@ -51,8 +51,9 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
         DynaActionForm studentSituationForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer studentNumber = (Integer) studentSituationForm.get("studentNumber");
-        String degreeType = (String) studentSituationForm.get("degreeType");
+        Integer studentNumber = getIntegerFromRequestOrForm(request, studentSituationForm,
+		"studentNumber");
+        String degreeType = (String) getFromRequestOrForm(request, studentSituationForm, "degreeType");
 
         InfoStudent infoStudent = null;
 

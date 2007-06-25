@@ -90,6 +90,14 @@
 					<html:link page="<%= linkGratuitySituationDetails %>" ><bean:message key="link.masterDegree.administrativeOffice.viewDetails"/></html:link>
 				</td>
 				
+				<bean:define id="linkPenaltyExemption">
+					/penaltyExemption.do?method=prepare&gratuitySituationID=<bean:write name="gratuitySituation" property="idInternal"/>
+				</bean:define>
+
+				<td align="center">
+					<html:link page="<%= linkPenaltyExemption %>" ><bean:message key="link.masterDegree.administrativeOffice.gratuity.penaltyExemption"/></html:link>
+				</td>
+				
 				<% 
 					if(remainingValueDbl.doubleValue() > 0)
 					{									
@@ -106,6 +114,7 @@
 				<% 
 					}
 				%>
+								
 			</tr>	
 
 		</logic:iterate>

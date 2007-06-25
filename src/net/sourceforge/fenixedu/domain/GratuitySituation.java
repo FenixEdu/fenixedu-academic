@@ -18,8 +18,11 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.commons.lang.StringUtils;
+import org.jfree.data.time.Year;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -169,7 +172,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     private Student getStudent() {
 	return getStudentCurricularPlan().getRegistration().getStudent();
     }
-    
+
     private Person getPerson() {
 	return getStudent().getPerson();
     }
@@ -213,13 +216,18 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private boolean hasPenalty() {
-	if (new YearMonthDay().isAfter(getEndPaymentDate())) {
+	if (!getHasPenaltyExemption() && new YearMonthDay().isAfter(getEndPaymentDate())) {
 	    final double payedValue = calculatePayedValue(getEndPaymentDate());
 	    return payedValue < (calculateOriginalTotalValue() - calculateExemptionValue());
 	}
 
 	return false;
 
+    }
+
+    @Override
+    public Boolean getHasPenaltyExemption() {
+	return super.getHasPenaltyExemption() != null && super.getHasPenaltyExemption();
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
@@ -277,9 +285,10 @@ public class GratuitySituation extends GratuitySituation_Base {
 	return transaction;
 
     }
-    
+
     private PersonAccount getOrCreatePersonAccount() {
-	return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount() : new PersonAccount(getPerson()); 
+	return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount()
+		: new PersonAccount(getPerson());
     }
 
     @Override
@@ -292,6 +301,19 @@ public class GratuitySituation extends GratuitySituation_Base {
     public void setRemainingValue(Double value) {
 	throw new DomainException(
 		"error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+    }
+
+    public void editPenaltyExemption(final Boolean hasPenaltyExemption, final String justification) {
+	setHasPenaltyExemption(hasPenaltyExemption);
+	if (hasPenaltyExemption != null && hasPenaltyExemption) {
+	    setPenaltyExemptionDate(new YearMonthDay());
+	    setPenaltyExemptionEmployee(AccessControl.getPerson().getEmployee());
+	    setPenaltyExemptionJustification(justification);
+	} else {
+	    setPenaltyExemptionDate(null);
+	    setPenaltyExemptionEmployee(null);
+	    setPenaltyExemptionJustification(null);
+	}
     }
 
 }

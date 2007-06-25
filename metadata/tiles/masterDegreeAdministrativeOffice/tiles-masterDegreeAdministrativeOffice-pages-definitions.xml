@@ -128,6 +128,9 @@
 	<definition name="manageExemptionGratuity" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/manageExemptionGratuity.jsp"/>
 	</definition>
+	<definition name="gratuity.penaltyExemption.edit" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/penaltyExemption.jsp"/>
+	</definition>
 	<definition name="confirmationExemptionGratuity" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/confirmationExemptionGratuity.jsp"/>
 	</definition>		
