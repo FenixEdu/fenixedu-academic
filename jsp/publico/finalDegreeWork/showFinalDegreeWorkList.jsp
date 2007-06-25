@@ -6,8 +6,12 @@
 <html:xhtml/>
 
 <h2><bean:message key="title.finalDegreeWorkProposals"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-	<table border="0" cellspacing="0" cellpadding="0">
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+	<table class="tstyle5 mtop15 mbottom2">
 		<tr>
 			<td nowrap="nowrap">
 				<bean:message key="property.executionPeriod"/>:
@@ -53,8 +57,7 @@
 			</td>
 		</tr>
 	</table>
-	<br />
-<br />
+
 <logic:present name="publishedFinalDegreeWorkProposalHeaders">
 	<bean:size id="numberOfHeaders" name="publishedFinalDegreeWorkProposalHeaders"/>
 	<bean:define id="executionDegreeOID" name="finalDegreeWorksForm" property="executionDegreeOID"/>
@@ -63,7 +66,7 @@
 
 	<bean:define id="selectedBranchOID" name="finalDegreeWorksForm" property="branchOID"/>
 
-<!--
+<%--
 		<table>
 			<tr>
 				<td nowrap="nowrap">
@@ -91,73 +94,73 @@
 				</td>
 			</tr>
 		</table>
--->
+--%>
 
-		<table>
+		<table class="tstyle4">
 			<tr>
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				<th rowspan="2">
 		        	<html:link page="<%= "/finalDegreeWorks.do?method=sortByNumber&amp;executionDegreeOID=" + executionDegreeOID + "&amp;branchOID=" + selectedBranchOID %>">
 						<bean:message key="finalDegreeWorkProposalHeader.number"/>
 			        </html:link>
-				</td>
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				</th>
+				<th rowspan="2">
 					<html:link page="<%= "/finalDegreeWorks.do?method=sortByTitle&amp;executionDegreeOID=" + executionDegreeOID + "&amp;branchOID=" + selectedBranchOID %>">
 						<bean:message key="finalDegreeWorkProposalHeader.title"/>
 					</html:link>
-				</td>
-				<td bgcolor="#a2aebc" align="center">
+				</th>
+				<th>
 					<html:link page="<%= "/finalDegreeWorks.do?method=sortByOrientatorName&amp;executionDegreeOID=" + executionDegreeOID + "&amp;branchOID=" + selectedBranchOID %>">
 						<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
 					</html:link>
-				</td>
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				</th>
+				<th rowspan="2">
 					<html:link page="<%= "/finalDegreeWorks.do?method=sortByCompanyLink&amp;executionDegreeOID=" + executionDegreeOID + "&amp;branchOID=" + selectedBranchOID %>">
 						<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
 					</html:link>
-				</td>
+				</th>
 <!--
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				<td rowspan="2">
 					<bean:message key="label.teacher.finalWork.priority.info"/>
 				</td>
 -->
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				<th rowspan="2">
 					<bean:message key="finalDegreeWorkProposal.attribution.byTeacher"/>
-				</td>
-				<td bgcolor="#a2aebc" align="center" rowspan="2">
-				</td>
+				</th>
+				<th rowspan="2">
+				</th>
 			</tr>
 			<tr>
-		        <td bgcolor="#a2aebc" align="center">
+		        <th>
 			        <html:link page="<%= "/finalDegreeWorks.do?method=sortByCoorientatorName&amp;executionDegreeOID=" + executionDegreeOID + "&amp;branchOID=" + selectedBranchOID %>">
 			        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
 			        </html:link>
-	    	    </td>
+	    	    </th>
 			</tr>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="publishedFinalDegreeWorkProposalHeaders">
 				<tr>
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+					<td rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+					<td rowspan="2">
 			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>
-					<td bgcolor="#eae7e4" align="center">
+					<td>
 						<bean:write name="finalDegreeWorkProposalHeader" property="orientatorName"/> 
 					</td>
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+					<td rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="companyLink"/>
 					</td>
-<!--
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+<%--
+					<td rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="branches">
 							<bean:size id="numberBranches" name="finalDegreeWorkProposalHeader" property="branches"/>
 							<logic:greaterThan name="numberBranches" value="0">
 								<table>
 									<logic:iterate id="branch" name="finalDegreeWorkProposalHeader" property="branches">
 										<tr>
-											<td bgcolor="#eae7e4" align="center" >
+											<td >
 												<bean:write name="branch" property="name"/>
 											</td>
 										</tr>
@@ -166,15 +169,15 @@
 							</logic:greaterThan>
 						</logic:present>
 					</td>
--->
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+--%>
+					<td rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher">
 							<logic:iterate id="groupStudent" name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher.groupStudents">
 								<bean:write name="groupStudent" property="student.number"/><br/>
 							</logic:iterate>
 						</logic:present>
 					</td>
-					<td bgcolor="#eae7e4" align="center" rowspan="2">
+					<td rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="groupAttributed">
 							<logic:iterate id="groupStudent" name="finalDegreeWorkProposalHeader" property="groupAttributed.groupStudents">
 								<bean:write name="groupStudent" property="student.number"/><br/>
@@ -207,14 +210,18 @@
 					</td>
 				</tr>
 				<tr>
-					<td bgcolor="#eae7e4" align="center">
+					<td>
 						<bean:write name="finalDegreeWorkProposalHeader" property="coorientatorName"/> 
 					</td>
 				</tr>
 			</logic:iterate>
 		</table>
 	</logic:greaterThan>
+	
 	<logic:lessEqual name="numberOfHeaders" value="0">
-		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		<p>
+			<span class="error0"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		</p>
 	</logic:lessEqual>	
+	
 </logic:present>
