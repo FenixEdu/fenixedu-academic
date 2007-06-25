@@ -46,8 +46,9 @@
 	</logic:present>
 	
 		
-	<span class="toprint"><br />
-	</span>
+	<%--
+	<span class="toprint"><br /></span>
+	--%>
 	
 	<table border="0">
 		<tr><td class="invisible">
