@@ -96,7 +96,7 @@ public class StyledExcelSpreadsheet {
 	currentRow.setHeight((short) 250);
     }
 
-    protected HSSFRow getRow() {
+    public HSSFRow getRow() {
 	return sheet.getRow(sheet.getLastRowNum());
     }
 
@@ -133,6 +133,13 @@ public class StyledExcelSpreadsheet {
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
 	cell.setCellStyle(newStyle);
+    }
+
+    public void addCell(Integer value, int columnNumber) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) columnNumber);
+	cell.setCellValue(value);
+	cell.setCellStyle(excelStyle.getValueStyle());
     }
 
     public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn,
