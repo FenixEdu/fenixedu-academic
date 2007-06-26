@@ -36,7 +36,13 @@ public class OptionalDismissal extends OptionalDismissal_Base {
 	} else {
 	    return getEnrolmentsEcts();
 	}
-        
     }
-        
+
+    @Override
+    public StringBuilder print(String tabs) {
+	final StringBuilder builder = new StringBuilder();
+	builder.append(tabs);
+	builder.append("[OD ").append(hasDegreeModule() ? getDegreeModule().getName() :  "").append(" ]\n");
+	return builder;
+    }
 }
