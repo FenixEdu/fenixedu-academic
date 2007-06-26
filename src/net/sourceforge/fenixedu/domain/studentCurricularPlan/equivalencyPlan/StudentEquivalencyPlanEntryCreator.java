@@ -120,7 +120,8 @@ public class StudentEquivalencyPlanEntryCreator implements Serializable {
 		}
 	    }
 	    final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry = new CurricularCourseEquivalencePlanEntry(
-		    getStudentCurricularPlanEquivalencePlan(), curricularCourses, getDestinationDegreeModules(), null, getDestinationOperator());
+		    getStudentCurricularPlanEquivalencePlan(), curricularCourses,
+		    getDestinationDegreeModules(), null, LogicOperator.AND, getDestinationOperator());
 	    return curricularCourseEquivalencePlanEntry;
 	}
     }

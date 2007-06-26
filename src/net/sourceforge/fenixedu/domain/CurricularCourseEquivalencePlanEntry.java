@@ -88,9 +88,10 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 	}
 
 	public Object execute() {
-	    return new CurricularCourseEquivalencePlanEntry(getEquivalencePlan(),
+	   return new CurricularCourseEquivalencePlanEntry(getEquivalencePlan(),
 		    getOriginCurricularCourses(), getDestinationCurricularCourses(), null,
-		    getLogicOperator());
+		    LogicOperator.AND, getLogicOperator());
+	    
 	}
 
 	public EquivalencePlan getEquivalencePlan() {
@@ -170,21 +171,25 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     public CurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan,
 	    final Collection<CurricularCourse> oldCurricularCourses,
 	    final Collection<? extends DegreeModule> newDegreeModules,
-	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator,
+	    final CourseGroup previousCourseGroup,
+	    final LogicOperator sourceDegreeModulesOperator,
+	    final LogicOperator newDegreeModulesOperator,
 	    final Double ectsCredits) {
 	this();
 	init(equivalencePlan, oldCurricularCourses, newDegreeModules, previousCourseGroup,
-		newDegreeModulesOperator, ectsCredits);
+		sourceDegreeModulesOperator, newDegreeModulesOperator, ectsCredits);
 	checkPermisionsForConstructor();
     }
 
     public CurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan,
 	    final Collection<CurricularCourse> oldCurricularCourses,
 	    final Collection<? extends DegreeModule> newDegreeModules,
-	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator) {
+	    final CourseGroup previousCourseGroup,
+	    final LogicOperator sourceDegreeModulesOperator,
+	    final LogicOperator newDegreeModulesOperator) {
 
 	this(equivalencePlan, oldCurricularCourses, newDegreeModules, previousCourseGroup,
-		newDegreeModulesOperator, null);
+		sourceDegreeModulesOperator, newDegreeModulesOperator, null);
 
     }
 
@@ -197,20 +202,23 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
     private void init(final EquivalencePlan equivalencePlan,
 	    final Collection<CurricularCourse> oldCurricularCourses,
 	    final Collection<? extends DegreeModule> newDegreeModules,
-	    final CourseGroup previousCourseGroup, final LogicOperator newDegreeModulesOperator,
+	    final CourseGroup previousCourseGroup, final LogicOperator sourceDegreeModulesOperator,
+	    final LogicOperator newDegreeModulesOperator,
 	    final Double ectsCredits) {
+	
 	super.init(equivalencePlan);
-	checkParameters(oldCurricularCourses, newDegreeModules, newDegreeModulesOperator);
+	checkParameters(oldCurricularCourses, newDegreeModules, sourceDegreeModulesOperator, newDegreeModulesOperator);
 	super.getOldCurricularCourses().addAll(oldCurricularCourses);
 	super.getNewDegreeModules().addAll(newDegreeModules);
 	super.setPreviousCourseGroupForNewCurricularCourses(previousCourseGroup);
+	super.setSourceDegreeModulesOperator(sourceDegreeModulesOperator);
 	super.setNewDegreeModulesOperator(newDegreeModulesOperator);
 	super.setEctsCredits(ectsCredits);
     }
 
     public void checkParameters(Collection<CurricularCourse> oldCurricularCourses,
 	    Collection<? extends DegreeModule> newDegreeModules,
-	    LogicOperator newCurricularCoursesOperator) {
+	    LogicOperator sourceDegreeModulesOperator, LogicOperator newDegreeModulesOperator) {
 	if (oldCurricularCourses.isEmpty()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.oldCurricularCourses.cannot.be.empty");
@@ -221,7 +229,12 @@ public class CurricularCourseEquivalencePlanEntry extends CurricularCourseEquiva
 		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.newDegreeModules.cannot.be.empty");
 	}
 
-	if (newCurricularCoursesOperator == null) {
+	if (sourceDegreeModulesOperator == null) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.sourceCurricularCoursesOperator.cannot.be.null");
+	}
+	
+	if (newDegreeModulesOperator == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry.newCurricularCoursesOperator.cannot.be.null");
 	}

@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add source operator column" AlterTableEquivalencePlanEntry.sql

@@ -5420,6 +5420,7 @@ class net.sourceforge.fenixedu.domain.EquivalencePlanEntry extends net.sourcefor
 	class net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
 		Integer keyCourseGroupEquivalencePlanEntry;
 		Integer keyPreviousCourseGroupForNewCurricularCourses;
+		LogicOperator sourceDegreeModulesOperator;
 		LogicOperator newDegreeModulesOperator;
 		Double ectsCredits;
 	}
