@@ -35,7 +35,8 @@
 <h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -53,8 +54,7 @@
 <bean:define id="registrationID" name="registration" property="idInternal" />
 <fr:edit name="registration" schema="student.manageRegistrationStartDates" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop025" />
-		<fr:property name="columnClasses" value="width12em,,tdclear tderror1" />
+		<fr:property name="classes" value="tstyle5 thlight thright mtop15 thmiddle" />
 	</fr:layout>
 	<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />	
 </fr:edit>

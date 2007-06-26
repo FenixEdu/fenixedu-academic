@@ -7,3 +7,5 @@
 <h2>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="portal.academicAdminOffice"/>
 </h2>
+
+<p><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="portal.academicAdminOffice.welcome"/></p>

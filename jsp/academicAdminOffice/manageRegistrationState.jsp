@@ -15,9 +15,9 @@
 
 <ul class="mtop2">
 	<li>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-	</html:link>
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
 	</li>
 </ul>
 
@@ -42,6 +42,7 @@
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -52,6 +53,7 @@
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
@@ -59,7 +61,8 @@
 <h3 class="mbottom025"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop025"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
 </fr:edit>
 
@@ -71,7 +74,7 @@
 	<h3 class="mtop2 mbottom025"><bean:message key="label.registration.historic" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" property="registrationStates" schema="student.viewRegistrationStatesHistoric" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+			<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 			
 			<fr:property name="customLink(delete)">
 		        <a href="manageRegistrationState.do?method=deleteState&registrationId=${registration.idInternal}&amp;registrationStateId=${idInternal}" onclick="<%= deleteConfirm %>" >

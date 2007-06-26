@@ -38,7 +38,7 @@
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -49,8 +49,8 @@
 	<fr:destination name="entryPhasePostBack"
 		path="/manageIngression.do?method=postBack" />
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop025" />
-		<fr:property name="columnClasses" value="width12em,,tdclear tderror1" />
+		<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
+		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 	</fr:layout>
 </fr:edit>
 

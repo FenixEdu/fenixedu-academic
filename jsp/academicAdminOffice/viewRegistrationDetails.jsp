@@ -52,7 +52,7 @@
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight"/>
-		<fr:property name="rowClasses" value=",,tdhl1,,,"/>
+		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
