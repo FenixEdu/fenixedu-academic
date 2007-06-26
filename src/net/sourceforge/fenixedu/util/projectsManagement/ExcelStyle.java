@@ -35,6 +35,8 @@ public class ExcelStyle extends FenixUtil {
 
     private HSSFCellStyle valueStyle;
 
+    private HSSFCellStyle redValueStyle;
+
     public ExcelStyle(HSSFWorkbook wb) {
 	setTitleStyle(wb);
 	setHeaderStyle(wb);
@@ -45,6 +47,7 @@ public class ExcelStyle extends FenixUtil {
 	setIntegerStyle(wb);
 	setLabelStyle(wb);
 	setValueStyle(wb);
+	setRedValueStyle(wb);
     }
 
     private void setTitleStyle(HSSFWorkbook wb) {
@@ -158,6 +161,17 @@ public class ExcelStyle extends FenixUtil {
 	valueStyle = style;
     }
 
+    private void setRedValueStyle(HSSFWorkbook wb) {
+	HSSFCellStyle style = wb.createCellStyle();
+	HSSFFont font = wb.createFont();
+	font.setColor(HSSFColor.RED.index);
+	font.setFontHeightInPoints((short) 8);
+	style.setFont(font);
+	style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+	style.setWrapText(true);
+	redValueStyle = style;
+    }
+
     public HSSFCellStyle getDoubleNegativeStyle() {
 	return doubleNegativeStyle;
     }
@@ -188,6 +202,10 @@ public class ExcelStyle extends FenixUtil {
 
     public HSSFCellStyle getValueStyle() {
 	return valueStyle;
+    }
+
+    public HSSFCellStyle getRedValueStyle() {
+	return redValueStyle;
     }
 
     public HSSFCellStyle getVerticalHeaderStyle() {

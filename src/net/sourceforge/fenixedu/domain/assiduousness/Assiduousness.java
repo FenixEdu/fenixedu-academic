@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -623,16 +624,28 @@ public class Assiduousness extends Assiduousness_Base {
 		&& getExtraWorkRequests().isEmpty() && getEmployeeExtraWorkAuthorizations().isEmpty();
     }
 
-    public ExtraWorkRequest getExtraWorkRequest(YearMonthDay begin) {
+    public List<ExtraWorkRequest> getExtraWorkRequests(YearMonthDay begin) {
+	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
 	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == begin.getYear()) {
 		if (begin.getMonthOfYear() == request.getPartialPayingDate().get(
 			DateTimeFieldType.monthOfYear())
 			&& request.getApproved())
-		    return request;
+		    result.add(request);
 	    }
 	}
-	return null;
+	return result;
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequestsByUnit(Unit unit, int year) {
+	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest request : getExtraWorkRequests()) {
+	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year
+		    && request.getUnit().equals(unit) && request.getApproved()) {
+		result.add(request);
+	    }
+	}
+	return result;
     }
 
 }

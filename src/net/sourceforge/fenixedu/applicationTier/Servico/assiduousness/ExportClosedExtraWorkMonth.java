@@ -149,46 +149,50 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    }
 	}
 
-	ExtraWorkRequest extraWorkRequest = assiduousness.getExtraWorkRequest(beginDate);
-	if (extraWorkRequest != null) {
-	    YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
-		    DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
-		    DateTimeFieldType.monthOfYear()), 1);
-	    YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
-		    DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
-		    DateTimeFieldType.monthOfYear()), begin.dayOfMonth().getMaximumValue());
+	List<ExtraWorkRequest> extraWorkRequests = assiduousness.getExtraWorkRequests(beginDate);
 
-	    if (extraWorkRequest.getSundayHours() != null && extraWorkRequest.getSundayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
-			.getMonthOfYear(), begin, end, extraWorkSundayMovementCode, extraWorkRequest
-			.getSundayHours()));
-	    }
-	    Integer totalVacationDays = 0;
-	    if (extraWorkRequest.getNightVacationsDays() != null) {
-		totalVacationDays = totalVacationDays + extraWorkRequest.getNightVacationsDays();
-	    }
-	    if (extraWorkRequest.getNormalVacationsDays() != null) {
-		totalVacationDays = totalVacationDays + extraWorkRequest.getNormalVacationsDays();
-	    }
+	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
+	    if (extraWorkRequest != null) {
+		YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+			DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+			DateTimeFieldType.monthOfYear()), 1);
+		YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(
+			DateTimeFieldType.year()), extraWorkRequest.getHoursDoneInPartialDate().get(
+			DateTimeFieldType.monthOfYear()), begin.dayOfMonth().getMaximumValue());
 
-	    if (totalVacationDays != 0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
-			.getMonthOfYear(), begin, end, extraWorkVacationDaysMovementCode,
-			extraWorkRequest.getNightVacationsDays()
-				+ extraWorkRequest.getNormalVacationsDays()));
-	    }
-	    if (extraWorkRequest.getSaturdayHours() != null
-		    && extraWorkRequest.getSaturdayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
-			.getMonthOfYear(), begin, end, extraWorkSaturdayMovementCode, extraWorkRequest
-			.getSaturdayHours()));
-	    }
-	    if (extraWorkRequest.getHolidayHours() != null && extraWorkRequest.getHolidayHours() != 0.0) {
-		result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
-			.getMonthOfYear(), begin, end, extraWorkHolidayMovementCode, extraWorkRequest
-			.getHolidayHours()));
-	    }
+		if (extraWorkRequest.getSundayHours() != null
+			&& extraWorkRequest.getSundayHours() != 0.0) {
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
+			    .getMonthOfYear(), begin, end, extraWorkSundayMovementCode, extraWorkRequest
+			    .getSundayHours()));
+		}
+		Integer totalVacationDays = 0;
+		if (extraWorkRequest.getNightVacationsDays() != null) {
+		    totalVacationDays = totalVacationDays + extraWorkRequest.getNightVacationsDays();
+		}
+		if (extraWorkRequest.getNormalVacationsDays() != null) {
+		    totalVacationDays = totalVacationDays + extraWorkRequest.getNormalVacationsDays();
+		}
 
+		if (totalVacationDays != 0) {
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
+			    .getMonthOfYear(), begin, end, extraWorkVacationDaysMovementCode,
+			    extraWorkRequest.getNightVacationsDays()
+				    + extraWorkRequest.getNormalVacationsDays()));
+		}
+		if (extraWorkRequest.getSaturdayHours() != null
+			&& extraWorkRequest.getSaturdayHours() != 0.0) {
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
+			    .getMonthOfYear(), begin, end, extraWorkSaturdayMovementCode,
+			    extraWorkRequest.getSaturdayHours()));
+		}
+		if (extraWorkRequest.getHolidayHours() != null
+			&& extraWorkRequest.getHolidayHours() != 0.0) {
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate
+			    .getMonthOfYear(), begin, end, extraWorkHolidayMovementCode,
+			    extraWorkRequest.getHolidayHours()));
+		}
+	    }
 	}
 	return result.toString();
     }
