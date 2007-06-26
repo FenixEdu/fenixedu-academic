@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -318,11 +319,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
     }
-
+    
     public boolean isBolonhaDegree() {
 	return getDegree().isBolonhaDegree();
     }
-
+    
     /**
      * Temporary method, after all degrees migration this is no longer necessary
      * 
@@ -542,7 +543,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (isBolonhaDegree()) {
 	    return Collections.emptyList();
 	}
-
+	
 	final List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
 	    if (curricularCourse.getBasic().equals(basic)) {
@@ -758,7 +759,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<CompetenceCourse> getCompetenceCourses(ExecutionYear executionYear) {
 	SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-
+	
 	if (isBolonhaDegree()) {
 	    for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
 		if (!curricularCourse.isOptionalCurricularCourse()) {
@@ -1207,7 +1208,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus,
 	    Boolean temporaryExamMap) {
-
+	
 	if (isBolonhaDegree() && isDraft()) {
 	    throw new DomainException(
 		    "degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
@@ -1497,7 +1498,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
-    
+
     public boolean isFirstCycle() {
 	return getDegree().isFirstCycle();
     }
@@ -1512,6 +1513,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CycleCourseGroup getSecondCycleCourseGroup() {
 	return isSecondCycle() ? getRoot().getSecondCycleCourseGroup() : null;
+    }
+
+    public CycleCourseGroup getThirdCycleCourseGroup() {
+	return isBolonhaDegree() ? getRoot().getThirdCycleCourseGroup() : null;
+    }
+
+    public CycleCourseGroup getCycleCourseGroup(final CycleType cycleType) {
+	return isBolonhaDegree() ? getRoot().getCycleCourseGroup(cycleType) : null;
+    }
+
+    public CycleCourseGroup getLastCycleCourseGroup() {
+	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastCycleType()) : null;
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses() {
@@ -1530,13 +1543,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     // this slot is a hack to allow renderers to call the setter. Don't delete
     // it.
     private DegreeCurricularPlan sourceDegreeCurricularPlan = null;
-
     public DegreeCurricularPlan getSourceDegreeCurricularPlan() {
-	return sourceDegreeCurricularPlan;
+        return sourceDegreeCurricularPlan;
     }
-
     public void setSourceDegreeCurricularPlan(DegreeCurricularPlan sourceDegreeCurricularPlan) {
-	this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
+        this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
     }
 
     public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(
@@ -1548,15 +1559,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return hasRoot() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
 
-    public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
+	public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
 	List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-	    studentCurricularPlans.add(studentCurricularPlan.getRegistration()
-		    .getLastStudentCurricularPlan());
+		studentCurricularPlans.add(studentCurricularPlan.getRegistration()
+				.getLastStudentCurricularPlan());
 
 	}
 	return studentCurricularPlans;
-    }
+	}
 
     public Set<CourseGroup> getAllCoursesGroups() {
 	final Set<DegreeModule> courseGroups = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
@@ -1580,5 +1591,5 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return degreeModules;
     }
-
+    
 }
