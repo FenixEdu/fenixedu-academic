@@ -8,59 +8,68 @@
 	<bean:message key="link.manage.finalWork"/>
 </h2>
 
-<span class="error"><!-- Error messages go here --><html:errors /><br /></span>
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <logic:present name="infoScheduleing">
-	<span class="error"><!-- Error messages go here -->
-		<bean:message key="finalDegreeWorkProposal.ProposalPeriod.interval"/>
-		<dt:format pattern="dd/MM/yyyy HH:mm">
-			<bean:write name="infoScheduleing" property="startOfProposalPeriod.time"/>
-		</dt:format>
-		-
-		<dt:format pattern="dd/MM/yyyy HH:mm">
-			<bean:write name="infoScheduleing" property="endOfProposalPeriod.time"/>
-		</dt:format>
-		<br />
-	</span>
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<bean:message key="finalDegreeWorkProposal.ProposalPeriod.interval"/>
+			<dt:format pattern="dd/MM/yyyy HH:mm">
+				<bean:write name="infoScheduleing" property="startOfProposalPeriod.time"/>
+			</dt:format>
+			-
+			<dt:format pattern="dd/MM/yyyy HH:mm">
+				<bean:write name="infoScheduleing" property="endOfProposalPeriod.time"/>
+			</dt:format>
+		</span>
+	</p>
 </logic:present>
-<br />
+
 
 <html:form action="/finalWorkManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareFinalWorkInformation"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.responsibleCreditsPercentage" property="responsibleCreditsPercentage"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage"/>
 
-	<strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong><br />
-	<html:select bundle="HTMLALT_RESOURCES" property="executionYear"
-			onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
-			>
-		<html:options collection="infoExecutionYears" property="idInternal" labelProperty="nextExecutionYearYear" />
-	</html:select>
-	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
-	<html:select bundle="HTMLALT_RESOURCES" property="degree"
-			onchange="this.form.method.value='chooseDegree';this.form.submit();"
-			>
-		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
-	</html:select>
-	<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
-	<br /><br />
-	<strong><bean:message key="label.teacher.finalWork.role" />:</strong>
-	<br />
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message key="label.teacher.finalWork.responsable"/>
-	<br />
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message key="label.teacher.finalWork.coResponsable"/>
-	<br /><br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.create"/></html:submit>
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong></p>
+	
+	<table class="tstyle5 mtop05">
+		<tr>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" property="executionYear"
+						onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
+						>
+					<html:options collection="infoExecutionYears" property="idInternal" labelProperty="nextExecutionYearYear" />
+				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" property="degree"
+						onchange="this.form.method.value='chooseDegree';this.form.submit();"
+						>
+					<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
+				</html:select>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
+		</tr>
+	</table>
+	
+	<p class="mbottom05"><strong><bean:message key="label.teacher.finalWork.role" />:</strong></p>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message key="label.teacher.finalWork.responsable"/><br/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message key="label.teacher.finalWork.coResponsable"/><br/>
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.create"/></html:submit></p>
 </html:form>
 
-<br />
-<br />
+
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
-		<table>
+		<table class="mtop15">
 			<tr>
 				<th class="listClasses-header" rowspan="2" colspan="2">
 				</th>
