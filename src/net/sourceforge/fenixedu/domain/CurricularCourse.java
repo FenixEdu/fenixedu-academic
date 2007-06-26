@@ -51,13 +51,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     private static final double ECTS_CREDITS_FOR_PRE_BOLONHA = 6;
 
-    public static final Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    static final public Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new Comparator<CurricularCourse>() {
+        public int compare(CurricularCourse o1, CurricularCourse o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("degreeCurricularPlan.degree.tipoCurso.name", Collator.getInstance()));
+            comparatorChain.addComparator(new BeanComparator("degreeCurricularPlan.degree.nome", Collator.getInstance()));
+            comparatorChain.addComparator(CurricularCourse.COMPARATOR_BY_NAME);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
 
     public static List<CurricularCourse> readCurricularCourses() {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
@@ -113,6 +116,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 		.getGradeScaleChain();
     }
 
+    @Override
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
 	String tab = tabs + "\t";
 	dcp.append(tab);
@@ -125,10 +129,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	dcp.append(this.getName()).append("\n");
     }
 
+    @Override
     public boolean isLeaf() {
 	return true;
     }
 
+    @Override
     public boolean isRoot() {
 	return false;
     }
@@ -145,6 +151,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return !(getCurricularStage() == CurricularStage.OLD);
     }
 
+    @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
 	//FIXME: in the future, a curricular course may be included in contexts of diferent curricular plans?
 	if (isBoxStructure()) {
@@ -155,12 +162,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
+    final public DegreeCurricularPlan getDegreeCurricularPlan() {
 	return getParentDegreeCurricularPlan();
-    }
-
-    public Degree getDegree() {
-	return getDegreeCurricularPlan().getDegree();
     }
 
     public void edit(Double weight, String prerequisites, String prerequisitesEn,
@@ -1079,7 +1082,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public Double getCredits() {	
+    final public Double getCredits() {	
 	return isBolonhaDegree() ? getEctsCredits() : super.getCredits();
     }
     
@@ -1140,8 +1143,18 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public Double getWeigth() {
-	return isBolonhaDegree() ? getEctsCredits() : super.getWeigth();
+    final public Double getWeigth() {
+	if (isBolonhaDegree()) {
+	    return getEctsCredits();
+	}
+	
+	final Double baseWeight = super.getWeigth();
+	
+	if ((baseWeight == null || baseWeight.doubleValue() == 0d) && getDegreeType() == DegreeType.MASTER_DEGREE) {
+	    return getCredits();
+	}
+	
+	return baseWeight;
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -1336,6 +1349,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return results;
     }
 
+    @Override
     protected void checkContextsFor(final CourseGroup parentCourseGroup,
 	    final CurricularPeriod curricularPeriod, final Context ignoreContext) {
 	for (final Context context : this.getParentContexts()) {
@@ -1346,10 +1360,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
     }
 
+    @Override
     protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
 	// no rules to add
     }
 
+    @Override
     protected void checkOwnRestrictions(final CourseGroup parentCourseGroup,
 	    final CurricularPeriod curricularPeriod) {
 	if (getCompetenceCourse() != null && getCompetenceCourse().getRegime() == RegimeType.ANUAL
