@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Refactor Equivalency Plan Stuff" refactorEquivalencyPlanEntries.sql
-
