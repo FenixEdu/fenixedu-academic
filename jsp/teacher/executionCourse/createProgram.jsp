@@ -8,18 +8,15 @@
 <h2><bean:message key="link.program" /></h2>
 
 <p>
-	<span class="error"><!-- Error messages go here -->
+	<span class="error0"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 </p>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.program.explanation" />
-		</td>
-	</tr>
-</table>
+<td class="infoop2">
+	<bean:message key="label.program.explanation" />
+</td>
+
 
 <logic:present name="curricularCourse">
 	<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>

@@ -7,13 +7,10 @@
 
 <h2><bean:message key="link.objectives" /></h2>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.objectives.explanation" />
-		</td>
-	</tr>
-</table>
+<div class="infoop2">
+	<bean:message key="label.objectives.explanation" />
+</div>
+
 
 <p>
 	<span class="error"><!-- Error messages go here -->

@@ -61,7 +61,7 @@ function cleanSelect(checkboxes) {
 	<bean:size id="studentsListSize" name="studentsComponent" property="infoAttends"/>
 
 
-<div class="infoop5">
+<div class="infoop2">
 	<bean:message key="message.students.explanation"/>
 </div>
 

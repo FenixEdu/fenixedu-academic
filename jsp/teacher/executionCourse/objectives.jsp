@@ -5,15 +5,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2><bean:message key="link.objectives" /></h2>
+<h2><bean:message key="link.objectives"/></h2>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.objectives.explanation" />
-		</td>
-	</tr>
-</table>
+<div class="infoop2">
+	<bean:message key="label.objectives.explanation" />
+</div>
+
 
 <p>
 	<span class="error"><!-- Error messages go here -->
@@ -38,7 +35,7 @@
 			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
 			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
 				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-				<h3>
+				<h3 class="mtop15">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
@@ -67,7 +64,7 @@
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
-				<h3>
+				<h3 class="mtop2">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
@@ -126,8 +123,6 @@
 				</logic:notPresent>
 		</logic:notEqual>
 
-		<br/>
-		<br/>
 	</logic:iterate>
 
 </logic:present>

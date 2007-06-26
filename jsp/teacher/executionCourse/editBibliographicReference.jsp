@@ -7,7 +7,7 @@
 
 <h2><bean:message key="link.bibliography" /></h2>
 
-<div class="section1">
+<div class="infoop2">
 	<bean:message key="label.bibliography.explanation" />
 </div>
 
@@ -20,45 +20,59 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.bibliographicReferenceID" property="bibliographicReferenceID" value="<%= bibliographicReferenceID.toString() %>"/>
 			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<h4>
-				<bean:message key="message.bibliographicReferenceTitle"/>
-			</h4>
+			
+			<table class="tstyle5">
+			<tr>
+			<td><bean:message key="message.bibliographicReferenceTitle"/></td>
 			<span class="error"><!-- Error messages go here --><html:errors property="title"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" bundle="HTMLALT_RESOURCES" property="title" cols="56" rows="4"/>
-			<br/>
-			<h4>
-				<bean:message key="message.bibliographicReferenceAuthors"/>
-			</h4>
+			</tr>
+
+			<tr>
+			<td><bean:message key="message.bibliographicReferenceAuthors"/></td>
+			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="authors"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.authors" bundle="HTMLALT_RESOURCES" property="authors" cols="56" rows="4"/>
-			<h4>
-				<bean:message key="message.bibliographicReferenceReference"/>
-			</h4>
+			</td>
+			</tr>
+
+			<tr>
+			<td><bean:message key="message.bibliographicReferenceReference"/>
+			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="reference"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reference" bundle="HTMLALT_RESOURCES" property="reference" cols="56" rows="2"/>
-			<br/>
-			<h4>
-				<bean:message key="message.bibliographicReferenceYear"/>
-			</h4>
+			</td>
+			</tr>
+
+			<tr>
+			<td><bean:message key="message.bibliographicReferenceYear"/></td>
+			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="year"/></span>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.year" property="year"/>
-			<br/>
-			<h4>
-				<bean:message key="message.bibliographicReferenceOptional"/>
-			</h4>
+			</td>
+			</tr>
+
+			<tr>
+			<td><bean:message key="message.bibliographicReferenceOptional"/></td>
+			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="optional"/></span>
 			<html:select bundle="HTMLALT_RESOURCES" property="optional">
 				<html:option key="option.bibliographicReference.optional" value="true"/>
 				<html:option key="option.bibliographicReference.recommended" value="false"/>
 			</html:select>
-			<br/>
-			<br/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-				<bean:message key="button.save"/>
-			</html:submit>
-			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>
+			</td>
+			</tr>
+			
+			</table>
+
+			<p>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+					<bean:message key="button.save"/>
+				</html:submit>
+				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
+					<bean:message key="label.clear"/>
+				</html:reset>
+			</p>
 		</html:form>
 	</blockquote>
 </logic:present>

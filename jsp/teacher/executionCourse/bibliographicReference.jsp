@@ -8,12 +8,12 @@
 <h2><bean:message key="link.bibliography" /></h2>
 
 <p>
-	<span class="error"><!-- Error messages go here -->
+	<span class="error0"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 </p>
 
-<div class="section1">
+<div class="infoop2">
 	<bean:message key="label.bibliography.explanation" />
 </div>
 
@@ -33,6 +33,7 @@
 			</html:link>
 		</div>
 	</p>
+
 
 	<h3 class="mtop2">
 		<bean:message key="message.recommendedBibliography"/>

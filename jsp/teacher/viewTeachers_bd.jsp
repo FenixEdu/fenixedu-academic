@@ -7,12 +7,14 @@
 
 <h2><bean:message key="title.teachers"/></h2>
 
-<div class="infoop5">
+<div class="infoop2">
 	<bean:message key="label.teachers.explanation" />
 	<p><bean:message key="label.teachers.specialTeacherWarning" /></p>
 </div>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>	
+<p>
+	<span class="error0"><!-- Error messages go here --><html:errors /></span>	
+</p>
 
 <logic:present name="siteView">
 <bean:define id="infoSiteTeachers" name="siteView" property="component"/>

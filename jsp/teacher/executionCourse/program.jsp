@@ -7,19 +7,16 @@
 
 <h2><bean:message key="link.program" /></h2>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.program.explanation" />
-		</td>
-	</tr>
-</table>
+
+<div class="infoop2">
+	<bean:message key="label.program.explanation" />
+</div>
 
 <p>
-	<span class="error"><!-- Error messages go here -->
+	<span class="error0"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
-	<span class="info"><!-- w3c complient -->
+	<span class="warning0"><!-- w3c complient -->
 		<html:messages id="info" message="true"/>
 	</span>
 </p>
@@ -37,7 +34,7 @@
 			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
 			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
 				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-				<h3>
+				<h3 class="mtop15">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
@@ -66,7 +63,7 @@
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
-				<h3>
+				<h3 class="mtop2">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
@@ -112,8 +109,6 @@
 				</logic:notPresent>
 		</logic:notEqual>
 
-		<br/>
-		<br/>
 	</logic:iterate>
 
 </logic:present>

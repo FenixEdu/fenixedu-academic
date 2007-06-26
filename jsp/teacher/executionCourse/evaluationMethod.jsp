@@ -8,22 +8,19 @@
 <h2><bean:message key="link.evaluationMethod" /></h2>
 
 <p>
-	<span class="error"><!-- Error messages go here -->
+	<span class="error0"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 </p>
 
-<table width="100%">
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.evaluationMethod.explanation" />
-		</td>
-	</tr>
-</table>
+
+<div class="infoop2">
+	<bean:message key="label.evaluationMethod.explanation" />
+</div>
 
 <logic:present name="executionCourse">
 
-	<h3>
+	<h3 class="mtop15">
 		<bean:message key="title.evaluationMethod"/>
 	</h3>
 	<blockquote>
@@ -46,9 +43,7 @@
 		</logic:notPresent>
 	</blockquote>
 
-	<br/>
-
-	<h3>
+	<h3 class="mtop2">
 		<bean:message key="title.evaluationMethod.eng"/>
 	</h3>
 	<blockquote>
@@ -71,12 +66,14 @@
 		</logic:notPresent>
 	</blockquote>
 
-	<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-		<bean:message key="button.edit"/>
-	</html:link>
-	<br/>
-	<html:link page="/manageExecutionCourse.do?method=prepareImportEvaluationMethod&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-		<bean:message key="link.import.evaluationMethod"/>
-	</html:link>
+	<p>
+		<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message key="button.edit"/>
+		</html:link>
+		<br/>
+		<html:link page="/manageExecutionCourse.do?method=prepareImportEvaluationMethod&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message key="link.import.evaluationMethod"/>
+		</html:link>
+	</p>
 
 </logic:present>
