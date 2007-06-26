@@ -146,7 +146,7 @@
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.number"/>
+					<f:param name="sortBy" value="registration.number"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -166,7 +166,7 @@
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.person.name"/>
+					<f:param name="sortBy" value="registration.person.name"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -179,14 +179,14 @@
 				</h:outputLink>
 			</f:facet>
 			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}'>" escape="false"/>
-				<h:outputText value="#{studentCurricularPlan.student.person.name}"/>
+				<h:outputText value="#{studentCurricularPlan.registration.person.name}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.person.email"/>
+					<f:param name="sortBy" value="registration.person.email"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -198,14 +198,14 @@
 					<h:outputText value="#{bundle['label.email']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="<a href='mailto:#{studentCurricularPlan.student.person.email}'>" escape="false"/>
-			<h:outputText value="#{studentCurricularPlan.student.person.email}</a>" escape="false"/>
+			<h:outputText value="<a href='mailto:#{studentCurricularPlan.registration.person.email}'>" escape="false"/>
+			<h:outputText value="#{studentCurricularPlan.registration.person.email}</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.person.email"/>
+					<f:param name="sortBy" value="registration.person.email"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -224,7 +224,7 @@
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.approvedEnrollmentsNumber"/>
+					<f:param name="sortBy" value="registration.numberOfCurriculumEntries"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -236,13 +236,31 @@
 					<h:outputText value="#{bundle['label.number.approved.curricular.courses']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.student.approvedEnrollmentsNumber}"/>
+			<h:outputText value="#{studentCurricularPlan.registration.numberOfCurriculumEntries}"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
 				<h:outputLink>
 					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
-					<f:param name="sortBy" value="student.arithmeticMean"/>
+					<f:param name="sortBy" value="registration.ectsCredits"/>
+					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
+					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
+					<f:param name="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
+					<h:outputText value="#{bundle['label.ects']}" />
+				</h:outputLink>
+			</f:facet>
+			<h:outputText value="#{studentCurricularPlan.registration.ectsCredits}"/>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputLink>
+					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+					<f:param name="sortBy" value="registration.average"/>
 					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
 					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
 					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
@@ -254,16 +272,34 @@
 					<h:outputText value="#{bundle['label.average']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.student.arithmeticMean}">
+			<h:outputText value="#{studentCurricularPlan.registration.average}">
 				<f:converter converterId="net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter"/>
 			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputLink>
+					<f:param name="degreeCurricularPlanID" value="#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
+					<f:param name="sortBy" value="registration.curricularYear"/>
+					<f:param name="studentCurricularPlanStateString" value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<f:param name="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}"/>
+					<f:param name="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}"/>
+					<f:param name="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
+					<f:param name="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}"/>
+					<f:param name="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}"/>
+					<f:param name="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}"/>
+					<f:param name="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}"/>
+					<h:outputText value="#{bundle['label.student.curricular.year']}" />
+				</h:outputLink>
+			</f:facet>
+			<h:outputText value="#{studentCurricularPlan.registration.curricularYear}"/>
 		</h:column>
 		<h:column rendered="#{CoordinatorStudentsBackingBean.showPhoto == true}">
 			<f:facet name="header">
 				<h:outputText value="#{bundle['label.person.photo']}" />
 			</f:facet>
 			<h:form>
-				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}'/> alt='<bean:message key='personPhoto' bundle='IMAGE_RESOURCES' />'" escape="false"/>
+				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.registration.person.idInternal}'/> alt='<bean:message key='personPhoto' bundle='IMAGE_RESOURCES' />'" escape="false"/>
 			</h:form>
 		</h:column>
 	</h:dataTable>
