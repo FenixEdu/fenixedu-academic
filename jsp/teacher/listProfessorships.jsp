@@ -14,9 +14,10 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="label.professorships"/></h2>
 
-<table border="0" cellspacing="0" cellpadding="0" class="mtop1 mbottom15">
+<table class="mtop1 mbottom15">
 	<tr>
 		<td nowrap="nowrap">
 			<bean:message key="property.executionPeriod"/>:
@@ -38,7 +39,7 @@
 </table>
 
 
-<table cellpadding="5" border="0">
+<table class="tstyle4">
 	<tr>
 		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorship.course"/>
@@ -55,13 +56,13 @@
 	</tr>
 	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 		<tr>
-			<td class="listClasses nowrap" style="text-align:left">
+			<td class="nowrap" style="text-align:left">
 				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 					<bean:write name="executionCourse" property="nome"/>
                     (<bean:write name="executionCourse" property="sigla"/>)
 				</html:link>
 			</td>
-			<td class="listClasses" style="text-align:left">
+			<td style="text-align:left">
 	            <span class="smalltxt">
 					<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 						<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
@@ -72,12 +73,12 @@
 					</logic:iterate>
 				</span>
 			</td>
-			<td class="listClasses nowrap" style="text-align:left">
+			<td class="nowrap" style="text-align:left">
 	            <span class="smalltxt">
 					<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
 				</span>
 			</td>
-            <td class="listClasses aleft breakword" style="word-wrap: break-word !important;">
+            <td class="aleft breakword" style="word-wrap: break-word !important;">
 	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
 	            <span class="smalltxt breakword" style="word-wrap: break-word !important;">
 	                <html:link href="<%= executionCourseURL %>" >
