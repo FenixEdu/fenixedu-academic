@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
+
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class Country extends Country_Base {
     
@@ -58,4 +61,11 @@ public class Country extends Country_Base {
 	return result;
 
     }
+    
+    public String getFilteredNationality() {
+        final String nationality = getNationality();
+        final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString("label.person.portugueseNationality").toUpperCase();
+	return nationality.trim().contains(nationalitySpecialCase) ? nationalitySpecialCase : nationality;
+    }
+    
 }
