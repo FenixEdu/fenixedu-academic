@@ -6,7 +6,7 @@
 
 <h2>
 	<bean:message key="label.curricularPlan"  bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-	&nbsp;-&nbsp;
+	-
 	<bean:write name="degreeCurricularPlan" property="name"/>
 </h2>
 

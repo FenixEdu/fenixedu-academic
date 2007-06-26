@@ -13,7 +13,7 @@
 	
 	<h2>
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
-			&nbsp;- &nbsp;
+		-
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
 	</h2>
 
@@ -53,10 +53,11 @@
 
 	</logic:notEmpty>
 
-	<p class="mtop15">
-		<bean:message key="message.teachingReport.note1" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-		<br/>
-		<bean:message key="message.teachingReport.note2" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+	<p>
+		<em><bean:message key="message.teachingReport.note1" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
+	</p>
+	<p>
+		<em><bean:message key="message.teachingReport.note2" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
 	</p>
 
 </logic:present>
