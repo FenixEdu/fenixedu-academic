@@ -379,7 +379,7 @@ ul.padding1 li { padding: 0.25em 0; }
 .success3 { padding: 0.2em 0.5em 0.2em 28px; background: #efe; }
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd; color: #070; }
 
-.warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fbf8cc; color: #805500; }
+.warning0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em;*/ background-color: #fbf8cc; color: #805500; }
 
 
 /* ----------------------
@@ -1424,9 +1424,8 @@ color: #223d4a;
 ***********************************************/
 
 .error {
-font-weight: bold;
+background-color: #ffeadd;
 color: #c00;
-background: #ffc;
 }
 
 .inputbutton {
@@ -2036,5 +2035,8 @@ ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
 
 
 
-
-
+.flowblock {
+display: block;
+padding-top: 1em;
+padding-bottom: 1em;
+}
