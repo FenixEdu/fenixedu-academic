@@ -32,7 +32,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public String toString() {
-	return getPerson().toString();
+        return getPerson().toString();
     }
 
     public String getCodigoFiscal() {
@@ -108,7 +108,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public String getNacionalidade() {
-        return getPerson().getCountry().getNationality();
+        return getPerson().getCountry() != null ? getPerson().getCountry().getNationality() : null;
     }
 
     public Date getNascimento() {
@@ -186,9 +186,9 @@ public class InfoPerson extends InfoObject {
     public Boolean getAvailablePhoto() {
         return getPerson().getAvailablePhoto();
     }
-    
-    public Set<LoginAlias> getLoginAlias(){
-	return getPerson().getLoginAliasOrderByImportance();
+
+    public Set<LoginAlias> getLoginAlias() {
+        return getPerson().getLoginAliasOrderByImportance();
     }
 
     public InfoExternalPerson getInfoExternalPerson() {
@@ -196,7 +196,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public Homepage getHomepage() {
-	return getPerson().getHomepage();
+        return getPerson().getHomepage();
     }
 
     public static InfoPerson newInfoFromDomain(Person person) {
@@ -223,7 +223,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public List<String> getMainRoles() {
-	return getPerson().getMainRoles();
+        return getPerson().getMainRoles();
     }
 
     public String getIstUsername() {
