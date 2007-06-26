@@ -2,11 +2,14 @@ package net.sourceforge.fenixedu.util.report;
 
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
+import org.apache.commons.lang.exception.NestableException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.contrib.HSSFCellUtil;
 import org.apache.poi.hssf.util.CellReference;
 
 public class StyledExcelSpreadsheet {
@@ -140,6 +143,7 @@ public class StyledExcelSpreadsheet {
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
 	cell.setCellStyle(excelStyle.getValueStyle());
+
     }
 
     public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn,
@@ -178,6 +182,30 @@ public class StyledExcelSpreadsheet {
 	}
     }
 
+    protected void setCellBorder(HSSFCell cell) {
+	final short borderProperty = HSSFCellStyle.BORDER_THIN;
+	try {
+	    HSSFCellUtil.setCellStyleProperty(cell, workbook, "borderLeft", borderProperty);
+	    HSSFCellUtil.setCellStyleProperty(cell, workbook, "borderRight", borderProperty);
+	    HSSFCellUtil.setCellStyleProperty(cell, workbook, "borderTop", borderProperty);
+	    HSSFCellUtil.setCellStyleProperty(cell, workbook, "borderBottom", borderProperty);
+	} catch (NestableException e) {
+	}
+    }
+
+    public void setRegionBorder(int firstRow, int lastRow, int firstColumn, int lastColumn) {
+	for (int rowIndex = firstRow; rowIndex < lastRow; rowIndex++) {
+	    for (int colIndex = firstColumn; colIndex < lastColumn; colIndex++) {
+		HSSFRow row = sheet.getRow(rowIndex);
+		HSSFCell cell = row.getCell((short) colIndex);
+		if (cell == null) {
+		    cell = row.createCell((short) colIndex);
+		}
+		setCellBorder(cell);
+	    }
+	}
+    }
+
     public int getMaxiumColumnNumber() {
 	int result = 0;
 	for (int row = 0; row <= sheet.getLastRowNum(); row++) {
@@ -185,6 +213,15 @@ public class StyledExcelSpreadsheet {
 		    : result;
 	}
 	return result;
+    }
+
+    public void setSheetOrientation() {
+	HSSFPrintSetup ps = getSheet().getPrintSetup();
+	ps.setLandscape(true);
+	getSheet().setMargin(HSSFSheet.TopMargin, 0.10);
+	getSheet().setMargin(HSSFSheet.BottomMargin, 0.10);
+	getSheet().setMargin(HSSFSheet.LeftMargin, 0.10);
+	getSheet().setMargin(HSSFSheet.RightMargin, 0.10);
     }
 
 }

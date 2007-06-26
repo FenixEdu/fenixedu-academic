@@ -165,18 +165,15 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.initial"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getInitial())), spreadsheet
-			.getExcelStyle().getValueStyle());
+		spreadsheet.addCell(decimalFormat.format(getInitial()));
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.actual"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getTotal())), spreadsheet
-			.getExcelStyle().getValueStyle());
+		spreadsheet.addCell(decimalFormat.format(getTotal()));
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.balance"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getBalance())), spreadsheet
-			.getExcelStyle().getValueStyle());
+		spreadsheet.addCell(decimalFormat.format(getBalance()));
 
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();

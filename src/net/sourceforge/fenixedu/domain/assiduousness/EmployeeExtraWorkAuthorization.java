@@ -11,7 +11,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
+import org.apache.commons.lang.exception.NestableException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.contrib.HSSFRegionUtil;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -82,16 +86,18 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	spreadsheet.newHeaderRow();
 	int firstHeaderRow = spreadsheet.getSheet().getLastRowNum();
 	spreadsheet.addHeader(bundle.getString("label.number"), 1500);
-	spreadsheet.addHeader(bundle.getString("label.employee.name"), 8000);
+	spreadsheet.addHeader(bundle.getString("label.employee.name"), 5000);
 	int cellNum = 0;
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(enumBundle.getString(month.getName()));
+	    spreadsheet.addHeader(enumBundle.getString(month.getName()), spreadsheet.getExcelStyle()
+		    .getVerticalHeaderStyle());
 	    spreadsheet.addHeader("");
 	    cellNum = (short) spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum();
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(firstHeaderRow, (short) (cellNum - 1), firstHeaderRow, (short) cellNum));
 	}
-	spreadsheet.addHeader(bundle.getString("label.total"));
+	spreadsheet.getRow().setHeight((short) 1000);
+	spreadsheet.addHeader(bundle.getString("label.total"), 2000);
 	spreadsheet.newHeaderRow();
 	spreadsheet.getSheet().addMergedRegion(
 		new Region(firstHeaderRow, (short) 0, firstHeaderRow + 1, (short) 0));
@@ -104,21 +110,26 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	spreadsheet.addHeader("");
 	spreadsheet.addHeader("");
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(bundle.getString("label.hoursNum"), 1500);
-	    spreadsheet.addHeader(bundle.getString("label.value"), 1750);
+	    spreadsheet.addHeader(bundle.getString("label.hoursNum"), spreadsheet.getExcelStyle()
+		    .getVerticalHeaderStyle(), 600);
+	    spreadsheet.addHeader(bundle.getString("label.value"), spreadsheet.getExcelStyle()
+		    .getVerticalHeaderStyle(), 1600);
 	}
 	spreadsheet.addHeader("");
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
+	int firstRow = 9;
+	int firstColumn = 3;
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
 	int lastColumn = spreadsheet.getMaxiumColumnNumber() - 1;
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
 
-	for (int col = 3; col <= lastColumn; col += 2) {
-	    spreadsheet.sumColumn(9, lastRow, col, col, spreadsheet.getExcelStyle().getDoubleStyle());
+	for (int col = firstColumn; col <= lastColumn; col += 2) {
+	    spreadsheet.sumColumn(firstRow, lastRow, col, col, spreadsheet.getExcelStyle()
+		    .getDoubleStyle());
 	}
 	spreadsheet.newRow();
 	spreadsheet.newRow();
@@ -126,7 +137,10 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 	decimalFormatSymbols.setDecimalSeparator('.');
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
-	spreadsheet.sumRows(9, lastRow, 3, lastColumn, 2, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.sumRows(firstRow, lastRow, firstColumn, lastColumn, 2, spreadsheet.getExcelStyle()
+		.getDoubleStyle());
+	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() - 1, 0, spreadsheet
+		.getMaxiumColumnNumber() + 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet, int year) {
@@ -136,7 +150,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 	spreadsheet.newRow();
 	spreadsheet.addCell(getAssiduousness().getEmployee().getEmployeeNumber().toString());
-	spreadsheet.addCell(getAssiduousness().getEmployee().getPerson().getName());
+	spreadsheet.addCell(getSmallName());
 	List<ExtraWorkRequest> extraWorkRequests = getAssiduousness().getExtraWorkRequestsByUnit(
 		getExtraWorkAuthorization().getPayingUnit(), year);
 	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
@@ -162,5 +176,10 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	    oldValue = cell.getNumericCellValue();
 	}
 	return oldValue;
+    }
+
+    private String getSmallName() {
+	String name = getAssiduousness().getEmployee().getPerson().getName();
+	return name.substring(0, name.indexOf(" ")).concat(name.substring(name.lastIndexOf(" ")));
     }
 }

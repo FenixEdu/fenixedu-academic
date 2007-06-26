@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
-import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -24,8 +23,8 @@ import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.util.Region;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -129,13 +128,16 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    unitExtraWorkAmount.getExtraWorkAuthorizationsExcelRows(spreadsheet, bundle, enumBundle);
 	    spreadsheet.getSheet(sheetName);
 	}
-	for (int i = 1; i < spreadsheet.getWorkbook().getNumberOfSheets(); i++) {
-	    String thisSheetName = spreadsheet.getWorkbook().getSheetName(i);
+	for (int sheetIndex = 0; sheetIndex < spreadsheet.getWorkbook().getNumberOfSheets(); sheetIndex++) {
+	    String thisSheetName = spreadsheet.getWorkbook().getSheetName(sheetIndex);
 	    spreadsheet.getSheet(thisSheetName);
-	    EmployeeExtraWorkAuthorization.getExcelFooter(spreadsheet, bundle);
+	    if (sheetIndex == 0) {
+		UnitExtraWorkAmount.getExcelFooter(spreadsheet, bundle);
+	    } else {
+		EmployeeExtraWorkAuthorization.getExcelFooter(spreadsheet, bundle);
+	    }
+	    spreadsheet.setSheetOrientation();
 	}
-	spreadsheet.getSheet(sheetName);
-	UnitExtraWorkAmount.getExcelFooter(spreadsheet, bundle);
 
 	response.setContentType("text/plain");
 	response.addHeader("Content-Disposition", "attachment; filename=trabalhoExtraCC.xls");
