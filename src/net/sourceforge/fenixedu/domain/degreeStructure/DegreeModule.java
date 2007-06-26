@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -224,8 +225,12 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return false;
     }
 
-    public Degree getDegree() {
+    final public Degree getDegree() {
 	return getParentDegreeCurricularPlan().getDegree();
+    }
+    
+    final public DegreeType getDegreeType() {
+	return getDegree().getDegreeType();
     }
     
     public boolean hasOnlyOneParentCourseGroup() {
