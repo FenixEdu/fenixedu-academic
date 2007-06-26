@@ -19,22 +19,24 @@
 </ul>
 
 <logic:equal name="prize" property="editableByCurrentUser" value="true">
-<strong><bean:message key="label.prize.people" bundle="RESEARCHER_RESOURCES"/></strong>:
+<p class="mtop15 mbottom0"><strong><bean:message key="label.prize.people" bundle="RESEARCHER_RESOURCES"/></strong></p>
 
 <logic:notEmpty name="prize" property="people" >
 <fr:view name="prize" property="people" schema="showName">
 	<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2"/>
-			<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removePersonFromPrize&oid=" + prizeID %>"/>
-			<fr:property name="param(remove)" value="idInternal/pid"/>
-			<fr:property name="key(remove)" value="link.remove"/>
-			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+		<fr:property name="classes" value="tstyle2 mtop05"/>
+		<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removePersonFromPrize&oid=" + prizeID %>"/>
+		<fr:property name="param(remove)" value="idInternal/pid"/>
+		<fr:property name="key(remove)" value="link.remove"/>
+		<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>
 
 <logic:empty name="prize" property="people">  
-	<bean:message key="label.no.units.for.prize" bundle="RESEARCHER_RESOURCES"/>
+	<p>
+		<em><bean:message key="label.no.units.for.prize" bundle="RESEARCHER_RESOURCES"/></em>
+	</p>
 </logic:empty>
 
 
@@ -49,7 +51,9 @@
 	<bean:define id="schema" value="create.prize.person.association.external"/>
 </logic:equal>
 
-<strong><bean:message key="researcher.project.editProject.participants.addNewParticipant" bundle="RESEARCHER_RESOURCES"/>:</strong>
+<p class="mtop15 mbottom05">
+	<strong><bean:message key="researcher.project.editProject.participants.addNewParticipant" bundle="RESEARCHER_RESOURCES"/></strong>
+</p>
 
 <logic:present name="prompt-creation">
 	<div class="infoop2">
@@ -60,11 +64,13 @@
 <fr:form action="<%= "/prizes/prizeManagement.do?method=associatePersonToPrize&oid=" + prizeID %>">
 <fr:edit id="createAssociation" name="bean" schema="<%= schema %>">
 	<fr:layout>
-			<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop05"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
 	<fr:destination name="postBack" path="<%= "/prizes/prizeManagement.do?method=personPostBack&oid=" + prizeID %>"/> 
 </fr:edit>
-	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+
+<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 <logic:present name="prompt-creation">
 	<html:submit property="create"><bean:message key="button.create" bundle="APPLICATION_RESOURCES"/></html:submit>
 </logic:present>

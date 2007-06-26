@@ -19,22 +19,25 @@
 </ul>
 
 <logic:equal name="prize" property="editableByCurrentUser" value="true">
-<strong><bean:message key="label.prize.unit" bundle="RESEARCHER_RESOURCES"/></strong>:
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.prize.unit" bundle="RESEARCHER_RESOURCES"/></strong></p>
 
 <logic:notEmpty name="prize" property="units">
 <fr:view name="prize" property="units" schema="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name">
 	<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2"/>
-			<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removeUnitFromPrize&oid=" + prizeID %>"/>
-			<fr:property name="param(remove)" value="idInternal/uid"/>
-			<fr:property name="key(remove)" value="link.remove"/>
-			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+		<fr:property name="classes" value="tstyle2 thlight mtop05"/>
+		<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removeUnitFromPrize&oid=" + prizeID %>"/>
+		<fr:property name="param(remove)" value="idInternal/uid"/>
+		<fr:property name="key(remove)" value="link.remove"/>
+		<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>
 
-<logic:empty name="prize" property="units">  
-	<bean:message key="label.no.units.for.prize" bundle="RESEARCHER_RESOURCES"/>
+<logic:empty name="prize" property="units">
+	<p>
+		<em><bean:message key="label.no.units.for.prize" bundle="RESEARCHER_RESOURCES"/></em>
+	</p>
 </logic:empty>
 
 
@@ -49,7 +52,9 @@
 	<bean:define id="schema" value="create.prize.unit.association.external"/>
 </logic:equal>
 
-<strong><bean:message key="researcher.ResultUnitAssociation.add" bundle="RESEARCHER_RESOURCES"/>:</strong>
+<p class="mbottom05">
+	<strong><bean:message key="researcher.ResultUnitAssociation.add" bundle="RESEARCHER_RESOURCES"/></strong>
+</p>
 
 <logic:present name="prompt-creation">
 	<div class="infoop2">
@@ -60,11 +65,13 @@
 <fr:form action="<%= "/prizes/prizeManagement.do?method=associateUnitToPrize&oid=" + prizeID %>">
 <fr:edit id="createAssociation" name="bean" schema="<%= schema %>">
 	<fr:layout>
-			<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop05"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
 	<fr:destination name="postBack" path="<%= "/prizes/prizeManagement.do?method=unitPostBack&oid=" + prizeID %>"/> 
 </fr:edit>
-	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+
+<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 <logic:present name="prompt-creation">
 	<html:submit property="create"><bean:message key="button.create" bundle="APPLICATION_RESOURCES"/></html:submit>
 </logic:present>

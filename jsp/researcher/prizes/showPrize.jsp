@@ -24,16 +24,16 @@
 
 <logic:equal name="prize" property="deletableByCurrentUser" value="true">
 	<logic:present name="deleteRequest">
-		<div  class="mtop1 mbottom15">
-		<p><span class="warning0"><bean:message key="researcher.prize.delete.confirmation"/></span></p>
-		<fr:form action="<%="/prizes/prizeManagement.do?method=deletePrize&oid=" + prizeID%>">
-			<html:submit property="confirm">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
-			</html:submit>
-			<html:submit>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
-			</html:submit>
-		</fr:form>
+		<div  class="mtop1 mbottom15 warning0" style="padding: 0.5em;">
+			<p class="mtop0 mbottom05"><bean:message key="researcher.prize.delete.confirmation"/></p>
+			<fr:form action="<%="/prizes/prizeManagement.do?method=deletePrize&oid=" + prizeID%>">
+				<html:submit property="confirm">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
+				</html:submit>
+				<html:submit>
+					<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
+				</html:submit>
+			</fr:form>
 		</div>
 	</logic:present>
 </logic:equal>

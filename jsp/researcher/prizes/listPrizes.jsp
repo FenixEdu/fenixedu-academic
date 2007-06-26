@@ -16,9 +16,10 @@
 	</li>
 </ul>
 
-<strong><bean:message key="label.prizes.list" bundle="RESEARCHER_RESOURCES"/>:</strong>
-
 <logic:notEmpty name="prizes">
+
+		<p class="mtop15"><strong><bean:message key="label.prizes.list" bundle="RESEARCHER_RESOURCES"/></strong></p>
+
 		<ul class="listresearch">
 		<logic:iterate id="prize" name="prizes">
 			<bean:define id="prizeID" name="prize" property="idInternal"/>
@@ -60,5 +61,7 @@
 </logic:notEmpty>
 
 <logic:empty name="prizes">
-	<bean:message key="label.no.prizes.in.person" bundle="RESEARCHER_RESOURCES"/>
+	<p class="mtop15">
+		<em><bean:message key="label.no.prizes.in.person" bundle="RESEARCHER_RESOURCES"/>.</em>
+	</p>
 </logic:empty>

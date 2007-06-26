@@ -10,7 +10,8 @@
 	
 <fr:edit id="createPrize" name="bean" schema="create.prize" action="/prizes/prizeManagement.do?method=createPrize">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
 	<fr:destination name="cancel" path="/prizes/prizeManagement.do?method=listPrizes"/>
 </fr:edit>
