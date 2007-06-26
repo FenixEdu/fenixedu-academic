@@ -65,6 +65,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.curriculum.CurriculumEntry;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -411,11 +412,27 @@ public class Registration extends Registration_Base {
 	return Double.valueOf(Math.round(this.arithmeticMean * 100) / 100.0);
     }
 
-    public double getAverage() {
+    final public int getNumberOfCurriculumEntries() {
+	return getCurriculumEntries().size();
+    }
+
+    final public int getNumberOfCurriculumEntries(final ExecutionYear executionYear) {
+	return getCurriculumEntries(executionYear).size();
+    }
+
+    final public Collection<CurriculumEntry> getCurriculumEntries() {
+	return getCurriculumEntries((ExecutionYear) null);
+    }
+
+    final public Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear) {
+	return new StudentCurriculum(this).getCurriculumEntries(executionYear);
+    }
+
+    final public double getAverage() {
 	return isConcluded() ? getFinalAverage() : getAverage(null);
     }
 
-    public double getAverage(final ExecutionYear executionYear) {
+    final public double getAverage(final ExecutionYear executionYear) {
 	return new StudentCurriculum(this).getRoundedAverage(executionYear, true);
     }
 
@@ -1630,12 +1647,20 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public double getEctsCredits() {
-	return new StudentCurriculum(this).getTotalEctsCredits(null);
+    final public double getEctsCredits() {
+	return getTotalEctsCredits((ExecutionYear) null).doubleValue();
     }
     
-    public int getCurricularYear() {
-	return new StudentCurriculum(this).calculateCurricularYear(null);
+    final public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
+	return BigDecimal.valueOf(new StudentCurriculum(this).getTotalEctsCredits(executionYear));
+    }
+
+    final public int getCurricularYear() {
+	return getCurricularYear((ExecutionYear) null);
+    }
+
+    final public int getCurricularYear(ExecutionYear executionYear) {
+	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
     }
 
     public boolean isConcluded() {
@@ -1653,7 +1678,7 @@ public class Registration extends Registration_Base {
 	
 	throw new DomainException("Registration.is.not.concluded");
     }
-    
+
     final public boolean hasConcludedFirstCycle() {
 	return hasConcludedCycle(CycleType.FIRST_CYCLE);
     }
@@ -1684,10 +1709,6 @@ public class Registration extends Registration_Base {
 	return result;
     }
     
-    public int getCurricularYear(ExecutionYear executionYear) {
-	return new StudentCurriculum(this).calculateCurricularYear(executionYear);
-    }
-
     public boolean hasApprovement(ExecutionYear executionYear) {
 	int curricularYearInTheBegin = getCurricularYear(executionYear);
 	int curricularYearAtTheEnd = getCurricularYear(executionYear.getNextExecutionYear());
@@ -1802,7 +1823,7 @@ public class Registration extends Registration_Base {
 	    return getStudentCandidacy().getActiveCandidacySituation().getSituationDate()
 		    .toYearMonthDay();
 	}
-	
+
 	if (getRegistrationYear() != null) {
 	    return getRegistrationYear().getBeginDateYearMonthDay();
 	}
@@ -1836,19 +1857,6 @@ public class Registration extends Registration_Base {
 
     public boolean isCompleteEnrolmentModel() {
 	return isCompleteEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
-	BigDecimal totalEctsCredits = BigDecimal.ZERO;
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    for (final Enrolment enrolment : studentCurricularPlan
-		    .getEnrolmentsByExecutionYear(executionYear)) {
-		totalEctsCredits = totalEctsCredits.add(BigDecimal.valueOf(enrolment
-			.getCurricularCourse().getEctsCredits()));
-	    }
-	}
-
-	return totalEctsCredits;
     }
 
     public DegreeCurricularPlan getActiveDegreeCurricularPlan() {
@@ -2112,15 +2120,18 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
-    
+
     public StudentCurricularPlan getLastStudentDegreeCurricularPlansByDegree(Degree degree) {
-	final SortedSet<StudentCurricularPlan> result = new TreeSet<StudentCurricularPlan>(StudentCurricularPlan.DATE_COMPARATOR);
+		final SortedSet<StudentCurricularPlan> result = new TreeSet<StudentCurricularPlan>(StudentCurricularPlan.DATE_COMPARATOR);
 	for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
-	    if (degreeCurricularPlan.getDegree() == degree) {
-		result.add(this.getStudentCurricularPlan(degreeCurricularPlan));
-	    }
+			if (degreeCurricularPlan.getDegree() == degree ) {
+				result.add(this.getStudentCurricularPlan(degreeCurricularPlan));
+}
+		}
+		return result.last();
+				
 	}
-	return result.last();
-    }
+	
+
 
 }
