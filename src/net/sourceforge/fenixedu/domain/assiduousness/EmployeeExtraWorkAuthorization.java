@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
@@ -108,22 +107,26 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	    spreadsheet.addHeader(bundle.getString("label.hoursNumber"));
 	    spreadsheet.addHeader(bundle.getString("label.value"));
 	}
+	spreadsheet.addHeader("");
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
-	int lastColumn = spreadsheet.getSheet().getRow(7).getLastCellNum() - 1;
+	int lastColumn = spreadsheet.getMaxiumColumnNumber() - 1;
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
-	spreadsheet.sumColumn(9, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
+
+	for (int col = 3; col <= lastColumn; col += 2) {
+	    spreadsheet.sumColumn(9, lastRow, col, col, spreadsheet.getExcelStyle().getDoubleStyle());
+	}
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	DecimalFormat decimalFormat = new DecimalFormat("0.00");
 	DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 	decimalFormatSymbols.setDecimalSeparator('.');
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
-	spreadsheet.sumRows(9, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.sumRows(9, lastRow, 3, lastColumn, 2, spreadsheet.getExcelStyle().getDoubleStyle());
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet, int year) {

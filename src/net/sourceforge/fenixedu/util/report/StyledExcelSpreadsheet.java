@@ -154,16 +154,39 @@ public class StyledExcelSpreadsheet {
 	}
     }
 
-    public void sumRows(int firstRow, int lastRow, int firstColumn, int lastColumn,
+    public void sumRows(int firstRow, int lastRow, int firstColumn, int lastColumn, int increment,
 	    HSSFCellStyle newStyle) {
 	for (int row = firstRow; row <= lastRow; row++) {
-	    CellReference cellRef1 = new CellReference(row, firstColumn);
-	    CellReference cellRef2 = new CellReference(row, lastColumn);
+	    CellReference[] refs = new CellReference[lastColumn - firstColumn / increment];
+	    for (int colIndex = 0, col = firstColumn; col <= lastColumn; col = col + increment, colIndex++) {
+		refs[colIndex] = new CellReference(row, col);
+	    }
 	    HSSFRow currentRow = sheet.getRow(row);
 	    HSSFCell cell = currentRow.createCell((short) (lastColumn + 1));
 	    cell.setCellStyle(newStyle);
-	    cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
+	    StringBuilder formula = new StringBuilder();
+	    for (int index = 0; index < refs.length; index++) {
+		if (refs[index] != null) {
+		    if (formula.length() != 0) {
+			formula.append(";");
+		    }
+		    formula.append(refs[index].toString());
+		}
+	    }
+	    formula.append(")");
+
+	    System.out.println(formula.toString());
+	    cell.setCellFormula("sum(" + formula.toString());
 	}
+    }
+
+    public int getMaxiumColumnNumber() {
+	int result = 0;
+	for (int row = 0; row < sheet.getLastRowNum(); row++) {
+	    result = sheet.getRow(row).getLastCellNum() > result ? sheet.getRow(row).getLastCellNum()
+		    : result;
+	}
+	return result;
     }
 
 }

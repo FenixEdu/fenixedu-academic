@@ -87,7 +87,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
-	int lastColumn = spreadsheet.getSheet().getRow(2).getLastCellNum();
+	int lastColumn = spreadsheet.getMaxiumColumnNumber();
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
