@@ -15,14 +15,9 @@
 	<div class="infoop2">
 		<p>
 			<%--<bean:message key="message.courseInformation.courseName"/>--%>
-			<h3 class="mvert05"><bean:write name="executionCourse" property="nome"/> <bean:write name="executionYear" property="year"/></h3>
-		</p>
-		<p>
 			<%--<bean:message key="message.courseInformation.executionYear"/>--%>
-
+			<h3 class="mtop05 mbottom15"><bean:write name="executionCourse" property="nome"/> <bean:write name="executionYear" property="year"/></h3>
 		</p>
-		<br/>
-
 			<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
 				<div class="mbottom15">
 					<b><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
@@ -55,9 +50,11 @@
 			</logic:iterate>
 
 		<div class="mtop15">
+			<p class="mvert05">
+				<strong><bean:message key="message.courseInformation.responsiblesForTheCourse"/></strong>
+			</p>
 		<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
 			<p class="mvert05">
-				<bean:message key="message.courseInformation.responsibleForTheCourse" />
 				<bean:write name="infoTeacher" property="infoPerson.nome" /> - 
 				<bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
 				<logic:present name="infoTeacher" property="infoCategory.longName">
@@ -269,13 +266,9 @@
 
 	<logic:present name="siteCourseInformation" property="infoCourseReport">
 		<logic:notEmpty name="siteCourseInformation" property="infoCourseReport.report">
-			<table class="tstyle4" width="98%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td>					
-						<bean:write name="siteCourseInformation" property="infoCourseReport.report"/>
-					</td> 
-				</tr>
-			</table>
+			<p>
+				<bean:write name="siteCourseInformation" property="infoCourseReport.report"/>
+			</p>
 		</logic:notEmpty>
 	</logic:present>
 	<logic:empty name="siteCourseInformation" property="infoCourseReport">
