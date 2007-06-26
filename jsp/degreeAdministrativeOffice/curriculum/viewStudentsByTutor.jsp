@@ -5,7 +5,7 @@
 
 
 <!-- AVISOS E ERROS -->
-<span class="error"><!-- Error messages go here -->
+<em><!-- Error messages go here -->
 <logic:notPresent name="studentsOfTutor">
 	<bean:message key="error.tutor.noStudent" />
 </logic:notPresent>
@@ -16,7 +16,7 @@
 </logic:empty>
 </logic:present>
 <html:errors/>
-</span>
+</em>
 
 <logic:present name="studentsOfTutor">
 	<logic:notEmpty name="studentsOfTutor">
