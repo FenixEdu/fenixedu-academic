@@ -37,7 +37,7 @@
 			<bean:message key="message.teacherInformation.warning"/>
 		</div>
 
-<table class="tstyle4" class="tstyle2 thlight">
+<table class="tstyle2" class="tstyle2 thlight">
 	<tr>
 		<td><bean:message key="message.teacherInformation.name" /></td>
 		<td><bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /></td>

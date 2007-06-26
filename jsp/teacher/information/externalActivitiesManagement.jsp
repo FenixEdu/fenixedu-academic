@@ -4,6 +4,8 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 <logic:present name="siteView"> 
@@ -21,7 +23,7 @@
 	<bean:message key="message.externalActivities.managementInsertActExplanation" />
 	<bean:message key="message.externalActivities.managementSaveExplanation" />
 	
-<table class="tstyle1">
+<table class="tstyle4" width="100%">
 <logic:iterate id="infoExternalActivity" name="infoSiteExternalActivities" property="infoExternalActivities">
 <tr>
 	<td class="listClasses" style="text-align:left;" >

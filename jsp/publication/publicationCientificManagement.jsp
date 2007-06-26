@@ -3,17 +3,23 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 <logic:messagesPresent>
-		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<p>
+		<span class="error0"><!-- Error messages go here --><html:errors /></span>
+	</p>
 </logic:messagesPresent>
+
 <logic:present name="siteView"> 
 	<bean:define id="infoSitePublications" name="siteView" property="component"/>
-	<br/>
+
 	<h3>
-	<bean:message key="message.cientificPublications" />
+		<bean:message key="message.cientificPublications" />
 	</h3>
+	
 	<p class="infoop"><span class="emphasis-box">1</span>
 	<logic:notEmpty name="infoSitePublications" property="infoPublications">
 		<bean:message key="message.publications.management" /></p>
@@ -28,7 +34,7 @@
 		<bean:message key="message.publications.managementContinue" />
 	</logic:empty>
 	
-	<table style="text-align:left" width="100%">
+	<table class="tstyle4" width="100%">
 	
 		<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 		<tr>
@@ -50,31 +56,27 @@
 		</tr>
 		</logic:iterate>
 	</table>
-	<br />
+
 	<bean:define id="infoPublications" name="infoSitePublications" property="infoPublications" type="java.util.List"/>
 	<bean:size id="infoPublicationsSize"  name="infoPublications"/>
 	<logic:lessThan name="infoPublicationsSize"  value="5">
-		<div class="gen-button">
+		<p class="mtop05">
 			<html:link page="/readPublicationsAuthor.do?typePublication=Cientific&amp;page=0&amp;method=readPublicationsAuthor">
 				<bean:message key="link.publication.add" />
 			</html:link>
-		</div>
+		</p>
 	</logic:lessThan>
+	
 	<logic:greaterEqual name="infoPublicationsSize" value="5">
-		<bean:message key="message.publications.more5"/>
+		<p class="mtop05 mbottom15">
+			<em><bean:message key="message.publications.more5"/></em>
+		</p>
 	</logic:greaterEqual>
-	<br />
-	<h3>
-	<table>
-		<tr align="center">	
-			<td>
-			<html:form action="/voidAction">
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
-					<bean:message key="button.continue"/>
-				</html:submit>
-			</html:form>
-			</td>
-		</tr>
-		</table>
-	</h3>
+
+	<html:form action="/voidAction">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
+			<bean:message key="button.continue"/>
+		</html:submit>
+	</html:form>
+
 </logic:present>

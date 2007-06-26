@@ -4,18 +4,22 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
+
 <logic:present name="siteView"> 
 <bean:define id="infoSiteCareers" name="siteView" property="component"/>
-<br/>
 <h3><bean:message key="message.teachingCareer" /></h3>
+
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.teachingCareer.management" /></p>
 <bean:message key="message.teachingCareer.managementInsertExplanation" />
 <bean:message key="message.teachingCareer.managementCleanExplanation" />
 <bean:message key="message.teachingCareer.managementInsertCareerExplanation" />
 <bean:message key="message.teachingCareer.managementSaveExplanation" />
-<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">	
+
+<table class="tstyle4" width="100%">	
 <logic:iterate id="infoTeachingCareer" name="infoSiteCareers" property="infoCareers">
 <tr>
 	<td class="listClasses">
@@ -54,7 +58,7 @@
 </tr>
 </logic:iterate>
 </table>
-<br />
+
 <div class="gen-button">
 	<html:link page="<%= "/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=" + net.sourceforge.fenixedu.domain.CareerType.TEACHING.toString() %>" 
 			   paramId="infoTeacher#idInternal" 
@@ -63,18 +67,14 @@
 		<bean:message key="message.teachingCareer.insert" />
 	</html:link>
 </div>
-<br />
 
-<table>
-<tr align="center">	
-	<td>
+<p class="mtop15">
 	<html:form action="/voidAction">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 			<bean:message key="button.continue"/>
 		</html:submit>
 	</html:form>
-	</td>
-</tr>
-</table>
+</p>
+
 
 </logic:present>

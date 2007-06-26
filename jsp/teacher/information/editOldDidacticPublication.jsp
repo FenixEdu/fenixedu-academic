@@ -3,9 +3,12 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
+
 <html:form action="/oldDidacticPublication">
-<br/>
+
 <h3>
 	<logic:present name="infoOldPublication">
 		<bean:message key="message.publications.insertPublication" />
@@ -14,6 +17,7 @@
 		<bean:message key="message.publications.editPublication" />
 	</logic:notPresent>
 </h3>
+
 <p class="infoop"><span class="emphasis-box">1</span>
 	<logic:present name="infoOldPublication">
 		<bean:message key="message.publications.managementInsert" />
@@ -21,26 +25,31 @@
 	<logic:notPresent name="infoOldPublication">
 		<bean:message key="message.publications.managementEdit" />
 	</logic:notPresent></p>
-	<span class="error"><!-- Error messages go here -->
+	
+	<p>
+	<span class="error0"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
-	<br />
+	</p>
+
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoTeacher#idInternal" property="infoTeacher#idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oldPublicationTypeString" property="oldPublicationTypeString" value="Didactic"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
-<table width="90%">
+
+<table class="tstyle5 thlight thtop" width="90%">
 	<tr>
-		<td><bean:message key="message.publications.publication" /></td>
-	</tr>
-	<tr>
+		<th><bean:message key="message.publications.publication" />:</th>
 		<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.publication" property="publication" cols="90%" rows="4"/></td>
 	<tr/>
 </table>
-<br/>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm"><bean:message key="button.save"/>
-</html:submit> 
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
-</html:reset>  
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm"><bean:message key="button.save"/>
+	</html:submit> 
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
+	</html:reset>
+</p>
+
 </html:form>

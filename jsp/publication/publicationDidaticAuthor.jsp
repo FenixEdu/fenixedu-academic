@@ -3,14 +3,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
-<br/>
+
 <h3>
 <bean:message key="message.authorPublications" />
 </h3>
+
 <logic:messagesPresent>
-		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
+
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.publications.management" /></p>
 <logic:notEmpty name="infoSitePublications" property="infoPublications">
@@ -23,8 +27,8 @@
 	<bean:message key="message.publications.explanationInsertPublication"/>
 	<bean:message key="message.publications.cientificContinue"/>
 </logic:empty>
-<table style="text-align:left" width="100%">
 
+<table class="tstyle4" width="100%">
 	<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 	<tr>
 		<td class="listClasses" style="text-align:left" width="100%">
@@ -45,14 +49,11 @@
 	</tr>
 	</logic:iterate>
 </table>
-<table>
-	<tr align="center">	
-		<td>
-		<html:form action="/readPublications.do?typePublication=Didatic&amp;page=0">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
-				<bean:message key="button.continue"/>
-			</html:submit>
-		</html:form>
-		</td>
-	</tr>
-</table>
+
+<p>
+	<html:form action="/readPublications.do?typePublication=Didatic&amp;page=0">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
+			<bean:message key="button.continue"/>
+		</html:submit>
+	</html:form>
+</p>

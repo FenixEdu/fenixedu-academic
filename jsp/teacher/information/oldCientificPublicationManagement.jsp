@@ -4,20 +4,25 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
+
 <logic:present name="siteView"> 
 <bean:define id="infoSiteOldPublications" name="siteView" property="component"/>
-<br/>
+
 <h3>
-<bean:message key="message.cientificPublications" />
+	<bean:message key="message.cientificPublications" />
 </h3>
+
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.publications.management" /></p>
 <bean:message key="message.publications.managementInsertExplanation" />
 <bean:message key="message.publications.managementCleanExplanation" />
 <bean:message key="message.publications.managementInsertPubExplanation" />
 <bean:message key="message.publications.managementSeeExplanation" />
-<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">
+
+<table class="tstyle4" width="100%">
 <logic:iterate id="infoOldPublication" name="infoSiteOldPublications" property="infoOldPublications">
 <tr>
 	<td class="listClasses" style="text-align:left" width="60%">

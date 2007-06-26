@@ -4,9 +4,11 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="title.teacherInformation"/></h2>
 <html:form action="/oldCientificPublication">
-<br/>
+
 <h3>
 	<logic:present name="infoOldPublication">
 		<bean:message key="message.publications.insertPublication" />
