@@ -550,4 +550,15 @@ public class Vigilant extends Vigilant_Base {
 
 		return new ArrayList<VigilantGroup>(groups);
 	}
+	
+	@Override
+	public void addVigilancies(Vigilancy vigilancy) {
+		if(hasNoEvaluationsOnDate(vigilancy.getBeginDateTime(), vigilancy.getEndDateTime())) {
+			super.addVigilancies(vigilancy);
+		}
+		else {
+			throw new DomainException("error.collapsing.convokes");
+		}
+	}
 }
+
