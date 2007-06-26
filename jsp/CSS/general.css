@@ -565,9 +565,10 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .color3 { color: #336699; }
 .lowlight1 { color: #999; }
 .color888 { color: #888; }
-a.color888 { color: #888; }
+a.color888 { color: #888 !important; }
 .color555 { color: #555; }
-.color007b4d, a.color007b4d { color: #007b4d; }
+.color007b4d { color: #007b4d; }
+a.color007b4d { color: #007b4d !important; }
 .color890 { color: #890; }
 
 /* anchor colors */
