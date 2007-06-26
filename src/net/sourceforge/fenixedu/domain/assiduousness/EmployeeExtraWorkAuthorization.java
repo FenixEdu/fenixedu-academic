@@ -81,8 +81,8 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	    ResourceBundle enumBundle) {
 	spreadsheet.newHeaderRow();
 	int firstHeaderRow = spreadsheet.getSheet().getLastRowNum();
-	spreadsheet.addHeader(bundle.getString("label.number"));
-	spreadsheet.addHeader(bundle.getString("label.employee.name"), 10000);
+	spreadsheet.addHeader(bundle.getString("label.number"), 1500);
+	spreadsheet.addHeader(bundle.getString("label.employee.name"), 8000);
 	int cellNum = 0;
 	for (Month month : Month.values()) {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()));
@@ -104,8 +104,8 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	spreadsheet.addHeader("");
 	spreadsheet.addHeader("");
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(bundle.getString("label.hoursNumber"));
-	    spreadsheet.addHeader(bundle.getString("label.value"));
+	    spreadsheet.addHeader(bundle.getString("label.hoursNum"), 1500);
+	    spreadsheet.addHeader(bundle.getString("label.value"), 1750);
 	}
 	spreadsheet.addHeader("");
     }

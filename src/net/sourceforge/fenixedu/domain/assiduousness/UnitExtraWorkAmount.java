@@ -74,15 +74,23 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     }
 
     public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
-	    ResourceBundle enumBundle) {
+	    ResourceBundle enumBundle, String title) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 15000);
-	spreadsheet.addHeader(bundle.getString("label.initial"));
-	spreadsheet.addHeader(bundle.getString("label.actual"));
-	spreadsheet.addHeader(bundle.getString("label.balance"));
+	spreadsheet.addCell(title, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.newHeaderRow();
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 1500);
+	spreadsheet.addHeader("", 15000);
+	spreadsheet.addHeader(bundle.getString("label.initial"), 2000);
+	spreadsheet.addHeader(bundle.getString("label.actual"), 2000);
+	spreadsheet.addHeader(bundle.getString("label.balance"), 2000);
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(enumBundle.getString(month.getName()));
+	    spreadsheet.addHeader(enumBundle.getString(month.getName()), 2000);
 	}
+	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
+	System.out.println(spreadsheet.getMaxiumColumnNumber());
+	spreadsheet.getSheet().addMergedRegion(
+		new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
@@ -91,7 +99,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
-	spreadsheet.sumColumn(3, lastRow, 1, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.sumColumn(3, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet) {
@@ -102,8 +110,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    valueStyle = spreadsheet.getExcelStyle().getRedValueStyle();
 	}
 	spreadsheet.newRow();
-	spreadsheet.addCell(getUnit().getCostCenterCode().toString() + "  " + getUnit().getName(),
-		valueStyle);
+	spreadsheet.addCell(getUnit().getCostCenterCode().toString(), valueStyle);
+	spreadsheet.addCell(getUnit().getName(), valueStyle);
 	DecimalFormat decimalFormat = new DecimalFormat("0.00");
 	DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 	decimalFormatSymbols.setDecimalSeparator('.');
@@ -150,28 +158,31 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		decimalFormatSymbols.setDecimalSeparator('.');
 		decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(getUnit().getCostCenterCode().toString() + "  "
-			+ getUnit().getName(), spreadsheet.getExcelStyle().getLabelStyle());
-		spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) 1));
+		spreadsheet.addCell(getUnit().getCostCenterCode().toString() + " - "
+			+ getUnit().getName(), spreadsheet.getExcelStyle().getTitleStyle());
 
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.initial"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getInitial())));
+		spreadsheet.addCell(new Double(decimalFormat.format(getInitial())), spreadsheet
+			.getExcelStyle().getValueStyle());
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.actual"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getTotal())));
+		spreadsheet.addCell(new Double(decimalFormat.format(getTotal())), spreadsheet
+			.getExcelStyle().getValueStyle());
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.balance"), spreadsheet.getExcelStyle()
 			.getLabelStyle());
-		spreadsheet.addCell(new Double(decimalFormat.format(getBalance())));
+		spreadsheet.addCell(new Double(decimalFormat.format(getBalance())), spreadsheet
+			.getExcelStyle().getValueStyle());
 
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
 		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
-
+		spreadsheet.getSheet().addMergedRegion(
+			new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
 	    } else {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 	    }

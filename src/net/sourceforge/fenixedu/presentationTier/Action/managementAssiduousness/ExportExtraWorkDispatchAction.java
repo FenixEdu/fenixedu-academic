@@ -122,13 +122,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 
 	String sheetName = bundle.getString("title.extraWork");
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(sheetName);
-	spreadsheet.newHeaderRow();
-	spreadsheet.addCell(bundle.getString("message.unitExtraWorkPlafon")
-		+ yearMonth.getYear().toString(), spreadsheet.getExcelStyle().getTitleStyle());
-	spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) 3));
-	spreadsheet.newHeaderRow();
-
-	UnitExtraWorkAmount.getExcelHeader(spreadsheet, bundle, enumBundle);
+	String title = bundle.getString("message.unitExtraWorkPlafon") + yearMonth.getYear().toString();
+	UnitExtraWorkAmount.getExcelHeader(spreadsheet, bundle, enumBundle, title);
 	for (UnitExtraWorkAmount unitExtraWorkAmount : unitExtraWorkAmountList) {
 	    unitExtraWorkAmount.getExcelRow(spreadsheet);
 	    unitExtraWorkAmount.getExtraWorkAuthorizationsExcelRows(spreadsheet, bundle, enumBundle);

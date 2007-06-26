@@ -174,15 +174,13 @@ public class StyledExcelSpreadsheet {
 		}
 	    }
 	    formula.append(")");
-
-	    System.out.println(formula.toString());
 	    cell.setCellFormula("sum(" + formula.toString());
 	}
     }
 
     public int getMaxiumColumnNumber() {
 	int result = 0;
-	for (int row = 0; row < sheet.getLastRowNum(); row++) {
+	for (int row = 0; row <= sheet.getLastRowNum(); row++) {
 	    result = sheet.getRow(row).getLastCellNum() > result ? sheet.getRow(row).getLastCellNum()
 		    : result;
 	}
