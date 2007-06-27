@@ -45,6 +45,9 @@ if (degreeCurricularPlanID == null) {
 				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="link.equivalency.plan" />
 				</html:link>
+				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="link.equivalency.plan.student" />
+				</html:link>
 -->
 			</li>
 		</logic:equal>
