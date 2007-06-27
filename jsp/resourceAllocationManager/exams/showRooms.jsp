@@ -31,13 +31,10 @@
 				<logic:iterate id ="infoRoom" name="availableRooms">
 			<tr>
 				<td>
-					<bean:write name="infoRoom" property="nome"/>
+					 <bean:write name="infoRoom" property="nome"/>
 				</td>
 				<td>
-					 <bean:define id="tipo" name="infoRoom" property="tipo"/>
-					 <logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
-					 <logic:equal name="tipo" value="P">Plana</logic:equal>
-					 <logic:equal name="tipo" value="L">Laboratório</logic:equal>
+					 <bean:write name="infoRoom" property="tipo"/>					 
 				</td>
 				<td>
 					 <bean:write name="infoRoom" property="edificio"/>
