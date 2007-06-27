@@ -19,7 +19,7 @@
 
     <%
         Degree degree = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID).getDegree();
-        if (degree.isCoordinator(person)) {
+        if (degree.isCurrentCoordinator(person)) {
             request.setAttribute("isCoordinator", true);
         }
         
