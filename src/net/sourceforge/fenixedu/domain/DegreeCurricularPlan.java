@@ -411,6 +411,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return null;
     }
+    
+    public ExecutionDegree getExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear && executionDegree.getCampus() == campus) {
+		return executionDegree;
+	    }
+	}
+	return null;	
+    }
 
     public boolean hasExecutionDegreeFor(ExecutionYear executionYear) {
 	return getExecutionDegreeByYear(executionYear) != null;

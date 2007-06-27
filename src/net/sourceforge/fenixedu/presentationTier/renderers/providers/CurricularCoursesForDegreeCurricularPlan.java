@@ -17,7 +17,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
         final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
         final List<DegreeModule> result = new ArrayList<DegreeModule>();
-        if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getDegreeCurricularPlan() != null) {
+        if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getDegreeCurricularPlan() != null
+        	&& markSheetManagementBean.getExecutionPeriod() != null) {
             
             if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
                 if (markSheetManagementBean.getDegree().isBolonhaDegree()) {

@@ -35,20 +35,25 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 		return mapping.findForward("searchMarkSheet");
 	}
 	
-    public ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-        String[] printerNames = AccessControl.getPerson().getEmployee().getAdministrativeOffice().getUnit().getPrinterNamesByFunctionalityName("markSheet");
-        request.setAttribute("printerNames", Arrays.asList(printerNames));
-        
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        Collection<MarkSheet> webMarkSheetsNotPrinted = executionPeriod.getWebMarkSheetsNotPrinted();
-        
-        request.setAttribute("executionPeriod", executionPeriod);
-        request.setAttribute("curricularCourseMap", buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
-        request.setAttribute("totalMarkSheetsCount", webMarkSheetsNotPrinted.size());
-        
-        return mapping.findForward("choosePrinterMarkSheetsWeb");
+	String[] printerNames = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace()
+		.getPrinterNamesByFunctionalityName("markSheet");
+	request.setAttribute("printerNames", Arrays.asList(printerNames));
+
+	ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	Collection<MarkSheet> webMarkSheetsNotPrinted = executionPeriod
+		.getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AccessControl.getPerson()
+			.getEmployee().getAdministrativeOffice(), AccessControl.getPerson()
+			.getEmployee().getCurrentCampus());
+
+	request.setAttribute("executionPeriod", executionPeriod);
+	request.setAttribute("curricularCourseMap",
+		buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
+	request.setAttribute("totalMarkSheetsCount", webMarkSheetsNotPrinted.size());
+
+	return mapping.findForward("choosePrinterMarkSheetsWeb");
     }
     
     private Map<CurricularCourse, Integer> buildMapWithCurricularCoursesAndNumberOfMarkSheets(

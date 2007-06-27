@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -159,6 +161,19 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	}
 	return markSheets;
     }
+    
+    public Collection<MarkSheet> getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AdministrativeOffice administrativeOffice, Campus campus) {
+	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
+	for (MarkSheet sheet : this.getMarkSheets()) {
+	    if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
+		if(sheet.getCurricularCourse().getDegreeType().getAdministrativeOfficeType() == administrativeOffice.getAdministrativeOfficeType() && 
+			sheet.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(getExecutionYear(), campus) != null) {
+		    markSheets.add(sheet);
+		}
+	    }
+	}
+	return markSheets;
+    }    
 
     public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(
 	    DegreeCurricularPlan degreeCurricularPlan) {
