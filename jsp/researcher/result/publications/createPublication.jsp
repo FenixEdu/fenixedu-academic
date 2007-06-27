@@ -124,7 +124,7 @@
 							</fr:layout>
 						</fr:edit>
 						<br/>
-						<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
+						<html:submit><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 						<logic:present name="publicationBean" property="scientificJournalName">
 							<html:submit property="new"><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	
 						</logic:present>
@@ -133,7 +133,7 @@
 					<fr:form action="/resultPublications/listPublications.do">
 						<html:submit><bean:message key="button.cancel"/></html:submit>
 					</fr:form>
-				</div>
+			</div>
 			</logic:notPresent>
 					
 			<logic:present name="publicationBean" property="scientificJournal">

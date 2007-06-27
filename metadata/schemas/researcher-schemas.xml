@@ -985,7 +985,7 @@ extends="eventCreation">
 	<slot name="personParticipationType" key="label.person" layout="radio-postback">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="participator" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="participator" layout="autoComplete">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="participatorName"/>
 		<property name="labelField" value="text"/>

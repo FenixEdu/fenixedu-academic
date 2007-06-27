@@ -34,13 +34,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultPublicationsManagementDispatchAction extends ResultsManagementAction {
-	
+
 	public ActionForward listPublications(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		if (request.getParameter("unitId") != null) {
 			return mapping.findForward("ListUnitPublications");
-		}
-		else {
+		} else {
 			setRequestAttributesToList(request, getLoggedPerson(request));
 			return mapping.findForward("ListPublications");
 		}
@@ -156,44 +155,40 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		final ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationBean");
 		ResearchResultPublication publication = null;
 
-		if (getFromRequest(request, "confirm") != null) {
-			try {
-				if (bean instanceof ConferenceArticlesBean
-						&& !((ConferenceArticlesBean) bean).getCreateEvent()) {
-					bean.setCreateEvent(true);
-					ResultEventAssociationBean eventBean = new ResultEventAssociationBean();
-					request.setAttribute("eventEditionBean", eventBean);
+		try {
+			if (bean instanceof ConferenceArticlesBean
+					&& !((ConferenceArticlesBean) bean).getCreateEvent()) {
+				bean.setCreateEvent(true);
+				ResultEventAssociationBean eventBean = new ResultEventAssociationBean();
+				request.setAttribute("eventEditionBean", eventBean);
+				request.setAttribute("publicationBean", bean);
+				return mapping.findForward("PreparedToCreate");
+			}
+			if (bean instanceof ArticleBean) {
+				ArticleBean articleBean = (ArticleBean) bean;
+				if (articleBean.getJournalIssue() == null) {
+					bean.setCreateJournal(Boolean.TRUE);
+					RenderUtils.invalidateViewState();
 					request.setAttribute("publicationBean", bean);
 					return mapping.findForward("PreparedToCreate");
 				}
-				if (bean instanceof ArticleBean) {
-					ArticleBean articleBean = (ArticleBean) bean;
-					if (articleBean.getJournalIssue() == null) {
-						bean.setCreateJournal(Boolean.TRUE);
-						RenderUtils.invalidateViewState();
-						request.setAttribute("publicationBean", bean);
-						return mapping.findForward("PreparedToCreate");
-					}
-				}
-				final Object[] args = { bean };
-				publication = (ResearchResultPublication) executeService(request,
-						"CreateResultPublication", args);
-				if (bean.getUnit() != null) {
-					request.setAttribute("unit", bean.getUnit());
-				}
-			} catch (DomainException ex) {
-				addActionMessage(request, ex.getKey());
-				request.setAttribute("publicationBean", bean);
-				return mapping.findForward("PreparedToCreate");
-			} catch (FileManagerException e) {
-				e.printStackTrace();
-				addActionMessage(request, "label.communicationError");
-				return listPublications(mapping, form, request, response);
-			} catch (Exception ex) {
-				addActionMessage(request, ex.getMessage());
-				return listPublications(mapping, form, request, response);
 			}
-		} else {
+			final Object[] args = { bean };
+			publication = (ResearchResultPublication) executeService(request, "CreateResultPublication",
+					args);
+			if (bean.getUnit() != null) {
+				request.setAttribute("unit", bean.getUnit());
+			}
+		} catch (DomainException ex) {
+			addActionMessage(request, ex.getKey());
+			request.setAttribute("publicationBean", bean);
+			return mapping.findForward("PreparedToCreate");
+		} catch (FileManagerException e) {
+			e.printStackTrace();
+			addActionMessage(request, "label.communicationError");
+			return listPublications(mapping, form, request, response);
+		} catch (Exception ex) {
+			addActionMessage(request, ex.getMessage());
 			return listPublications(mapping, form, request, response);
 		}
 
@@ -232,7 +227,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 					articleBean.setCreateJournal(false);
 					final Object[] args2 = { bean };
 					publication = (ResearchResultPublication) executeService(request, service, args2);
-					if(bean.getUnit() != null) {
+					if (bean.getUnit() != null) {
 						request.setAttribute("unit", bean.getUnit());
 					}
 				} catch (DomainException e) {
@@ -592,8 +587,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	}
 
 	/**
-	 * Auxiliary methods
-	 */
+     * Auxiliary methods
+     */
 	private boolean isCurrentState(HttpServletRequest request, String state) {
 		return (getFromRequest(request, state) != null);
 	}
@@ -637,10 +632,10 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 	// TODO: Verifiy if this method is necessary
 	/*
-	 * private ResultPublicationType getTypeFromRequest(HttpServletRequest
-	 * request) { final String typeStr = (String) getFromRequest(request,
-	 * "publicationType"); ResultPublicationType type = null; if (typeStr !=
-	 * null) { type = ResultPublicationType.valueOf(typeStr); } return type; }
-	 */
+     * private ResultPublicationType getTypeFromRequest(HttpServletRequest
+     * request) { final String typeStr = (String) getFromRequest(request,
+     * "publicationType"); ResultPublicationType type = null; if (typeStr !=
+     * null) { type = ResultPublicationType.valueOf(typeStr); } return type; }
+     */
 
 }
