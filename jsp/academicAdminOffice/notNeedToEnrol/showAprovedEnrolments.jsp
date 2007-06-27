@@ -42,7 +42,7 @@
 		<fr:edit id="externalEnrolments" name="bean" property="externalEnrolments" schema="notNeedToEnroll.view.external.enrolment">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle1 thlight"/>
-				<fr:property name="sortBy" value="externalEnrolment.name"/>
+				<fr:property name="sortBy" value="externalEnrolment.code"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
