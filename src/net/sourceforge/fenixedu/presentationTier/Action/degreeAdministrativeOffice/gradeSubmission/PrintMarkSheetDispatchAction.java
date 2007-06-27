@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PrinterManager;
@@ -69,9 +70,9 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward choosePrinterMarkSheet(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
     	DynaActionForm form = (DynaActionForm) actionForm;
-    	String[] printerNames = AccessControl.getPerson().getEmployee().getAdministrativeOffice().getUnit().getPrinterNamesByFunctionalityName("markSheet");
-    	
-        request.setAttribute("printerNames", Arrays.asList(printerNames));
+    	String[] printerNames = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getPrinterNamesByFunctionalityName("markSheet");
+
+    	request.setAttribute("printerNames", Arrays.asList(printerNames));
         if(form.get("markSheet") == null || form.getString("markSheet").length() == 0) {
         	form.set("markSheet", request.getAttribute("markSheet"));
         }
