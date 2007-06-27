@@ -156,12 +156,14 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public EquivalencePlanEntry(final DegreeCurricularPlanEquivalencePlan equivalencePlan,
 	    final List<CurricularCourse> oldCurricularCourses,
 	    final List<DegreeModule> newDegreeModules,
+	    final CourseGroup previousCourseGroupForNewDegreeModules,
 	    final LogicOperator sourceCurricularCoursesOperator,
 	    final LogicOperator newCurricularCoursesOperator,
 	    final Double ectsCredits) {
 	this(equivalencePlan);
 	getOldDegreeModulesSet().addAll(oldCurricularCourses);
 	getNewDegreeModulesSet().addAll(newDegreeModules);
+	setPreviousCourseGroupForNewDegreeModules(previousCourseGroupForNewDegreeModules);
 	setSourceDegreeModulesOperator(sourceCurricularCoursesOperator);
 	setNewDegreeModulesOperator(newCurricularCoursesOperator);
 	setEctsCredits(ectsCredits);
