@@ -5,4 +5,5 @@ alter table LESSON drop column KEY_ROOM_OCCUPATION;
 
 select concat('update LESSON set LESSON.KEY_LESSON_SPACE_OCCUPATION = ' , RESOURCE_ALLOCATION.ID_INTERNAL , ' where LESSON.ID_INTERNAL = ' , RESOURCE_ALLOCATION.KEY_LESSON , ';') as "" from RESOURCE_ALLOCATION where RESOURCE_ALLOCATION.KEY_LESSON is not null;
 
+alter table LESSON drop key U1;
 alter table LESSON drop column KEY_SALA;

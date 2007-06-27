@@ -27,14 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add Resource Manager Role" addedResourceManagerRole.sql
-execute "Change SOP Role To ResourcesManager" changeSopRoleToResourceAllocationManager.sql
-execute "Alter Table SPACE" alterTableSpace.sql
-execute "Fill SpaceOccupations With RoomOccupations" fillSpaceOccupationWithRoomOccupations.sql
-executeWithTempFile "Fill Lesson Space Occupation Key" alterTableLesson.sql
-execute "Changed Functionalities" changes-20070330115513.sql
-executeWithTempFile "Alter Resource Table" alterResourceTable.sql
-execute "Alter Resource Allocation Table" alterResourceAllocationTable.sql
-execute "Alter table Space Responsibility" alterSpaceResponsibilityTable.sql
-executeWithTempFile "Alter Resource Table 2" alterResourceTable2.sql
-execute "Changed Functionalities 2" changes-20070621160050.sql
