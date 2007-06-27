@@ -38,25 +38,27 @@ import org.joda.time.YearMonthDay;
 
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
-    public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME;
+    static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
+        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
+        }
+    };
 
-    public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR;
+    static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new Comparator<ExecutionDegree>() {
+        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+            return Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
+        }
+    };
 
-    public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR;
-    static {
-	final Comparator<ExecutionDegree> degreeTypeComparator = new BeanComparator("degreeCurricularPlan.degree.tipoCurso");
-	final Comparator<ExecutionDegree> degreeNameComparator = new BeanComparator("degreeCurricularPlan.degree.nome");
-	EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new BeanComparator("executionYear.year");
-	
-	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeTypeComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeNameComparator);
-	
-	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new ComparatorChain();
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeTypeComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeNameComparator);
-	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-    }
+    static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new Comparator<ExecutionDegree>() {
+        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+            comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+            
+            return comparatorChain.compare(o1, o2);
+        }
+    };
 
     private ExecutionDegree() {
 	super();
