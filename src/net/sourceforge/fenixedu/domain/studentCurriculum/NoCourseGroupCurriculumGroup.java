@@ -110,7 +110,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
     
     @Override
-    public Integer getChildOrder(ExecutionPeriod executionPeriod) {
+    public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
         return Integer.MAX_VALUE;
     }
     
