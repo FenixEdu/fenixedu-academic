@@ -28,4 +28,8 @@ public class Coordinator extends Coordinator_Base {
         return getResponsible().booleanValue();
     }
 
+    public Teacher getTeacher() {
+	return getPerson().getTeacher();
+    }
+
 }
