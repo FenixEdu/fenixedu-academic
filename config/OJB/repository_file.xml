@@ -41,3 +41,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitFile" table="FILE"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.UnitFileTag" table="UNIT_FILE_TAG"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.DeleteFileRequest" table="DELETE_FILE_REQUEST"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.DeleteFileLog" table="DELETE_FILE_LOG"/>

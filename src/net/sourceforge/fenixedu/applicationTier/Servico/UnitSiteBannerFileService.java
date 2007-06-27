@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
@@ -114,7 +115,7 @@ public class UnitSiteBannerFileService extends Service {
 		
 		bannerFile.delete();
 		
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        fileManager.deleteFile(bannerFile.getExternalStorageIdentification());
+		new DeleteFileRequest(AccessControl.getPerson(),bannerFile.getExternalStorageIdentification());
+ 
 	}
 }

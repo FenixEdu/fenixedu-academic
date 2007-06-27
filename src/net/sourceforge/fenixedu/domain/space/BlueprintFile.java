@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import org.apache.velocity.runtime.parser.node.GetExecutor;
+
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
@@ -36,8 +40,7 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
 
     private void deleteFile() {
-	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-	fileManager.deleteFile(getExternalStorageIdentification());
+    	new DeleteFileRequest(AccessControl.getPerson(),getExternalStorageIdentification());
     }
 
     public String getDirectDownloadUrlFormat() {

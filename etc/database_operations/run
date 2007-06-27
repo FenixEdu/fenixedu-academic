@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Modify Prize Name to MultiLanguageString" modifyPrizeTable.sql
+execute "Create File Delete Request" createFileDeleteRequest.sql

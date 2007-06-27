@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGrou
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
@@ -98,7 +100,7 @@ public class CreateProjectSubmission extends Service {
                 fileDescriptor.getSize(), studentGroup, attends, project);
 
         if (fileToDeleteExternalId != null) {
-            FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(fileToDeleteExternalId);
+        	new DeleteFileRequest(AccessControl.getPerson(), fileToDeleteExternalId);
         }
 
         return projectSubmission;

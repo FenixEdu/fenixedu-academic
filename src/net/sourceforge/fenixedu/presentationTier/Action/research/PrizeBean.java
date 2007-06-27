@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 public class PrizeBean implements Serializable {
 
 	private Integer year;
-	private String name;
+	private MultiLanguageString name;
 	private MultiLanguageString description;
 	private DomainReference<Person> person;
 	
@@ -35,10 +35,10 @@ public class PrizeBean implements Serializable {
 	public void setDescription(MultiLanguageString description) {
 		this.description = description;
 	}
-	public String getName() {
+	public MultiLanguageString getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(MultiLanguageString name) {
 		this.name = name;
 	}
 	public Integer getYear() {

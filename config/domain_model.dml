@@ -2170,6 +2170,18 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
     GuideState situation;
 }
 
+class net.sourceforge.fenixedu.domain.DeleteFileRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	String externalStorageIdentification;
+	String requestorIstUsername;
+	Boolean deleteItem;
+}
+ 
+class net.sourceforge.fenixedu.domain.DeleteFileLog extends net.sourceforge.fenixedu.domain.DomainObject {
+ 	String externalStorageIdentification;
+	DateTime requestTime;
+	String requestorIstUsername;
+}
+
 class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String filename;
@@ -2243,10 +2255,10 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 		
 	}
 	
-	class net.sourceforge.fenixedu.domain.UnitFileTag extends net.sourceforge.fenixedu.domain.DomainObject {
-		String name;
-		Integer keyUnit;
-	}
+class net.sourceforge.fenixedu.domain.UnitFileTag extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	Integer keyUnit;
+}
 	
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
@@ -4241,7 +4253,7 @@ class net.sourceforge.fenixedu.domain.ManagementGroups extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.research.Prize extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer year;
-	String name;
+	MultiLanguageString name;
 	MultiLanguageString description;
 	Integer keyResearchResult;
 }
@@ -13285,6 +13297,20 @@ relation ResearchResultPrize {
 relation PrizeRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.Prize playsRole prizes {
+		multiplicity *;
+	}
+}
+
+relation DeleteFileRequestRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DeleteFileRequest playsRole DeleteFileRequests {
+		multiplicity *;
+	}
+}
+
+relation DeleteFileLogRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DeleteFileLog playsRole DeleteFileLogs {
 		multiplicity *;
 	}
 }

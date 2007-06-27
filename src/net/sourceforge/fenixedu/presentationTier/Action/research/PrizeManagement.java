@@ -154,7 +154,7 @@ public class PrizeManagement extends FenixDispatchAction {
 		Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer
 				.valueOf(personID));
 
-		if (person != null && prize != null) {
+		if (person != null && prize != null && !prize.isLastParticipation()) {
 			try {
 				executeService("RemovePartyFromPrize", new Object[] { person, prize });
 			} catch (DomainException e) {

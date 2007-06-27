@@ -37,7 +37,7 @@
 		
 <logic:present name="prize">
 
-	<fr:edit name="prize" schema="prize.details">
+	<fr:edit name="prize" schema="create.prize">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>

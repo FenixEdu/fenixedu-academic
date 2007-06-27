@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateTime;
@@ -469,7 +471,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                         .getExternalStorageIdentification();
                 parkingDocument.delete();
                 if (externalIdentifier != null) {
-                    FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(externalIdentifier);
+                	new DeleteFileRequest(AccessControl.getPerson(),externalIdentifier);
                 }
             }
             if (documentDeliveryType == DocumentDeliveryType.ELECTRONIC_DELIVERY

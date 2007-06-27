@@ -24,11 +24,13 @@
 <logic:notEmpty name="prize" property="people" >
 <fr:view name="prize" property="people" schema="showName">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 mtop05"/>
-		<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removePersonFromPrize&oid=" + prizeID %>"/>
-		<fr:property name="param(remove)" value="idInternal/pid"/>
-		<fr:property name="key(remove)" value="link.remove"/>
-		<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+			<fr:property name="classes" value="tstyle2"/>
+			<logic:notEqual name="prize" property="lastParticipation" value="true">
+				<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removePersonFromPrize&oid=" + prizeID %>"/>
+				<fr:property name="param(remove)" value="idInternal/pid"/>
+				<fr:property name="key(remove)" value="link.remove"/>
+				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
+			</logic:notEqual>
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>

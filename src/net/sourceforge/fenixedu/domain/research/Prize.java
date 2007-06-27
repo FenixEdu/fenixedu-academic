@@ -38,24 +38,24 @@ public class Prize extends Prize_Base {
 		this.setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public Prize(String name, MultiLanguageString description, Integer year) {
+	public Prize(MultiLanguageString name, MultiLanguageString description, Integer year) {
 		this();
 		setName(name);
 		setYear(year);
 		setDescription(description);
 	}
 
-	public Prize(String name, MultiLanguageString description, Integer year, Person person) {
+	public Prize(MultiLanguageString name, MultiLanguageString description, Integer year, Person person) {
 		this(name, description, year);
 		addPerson(person);
 	}
 
-	public Prize(String name, MultiLanguageString description, Integer year, Unit unit) {
+	public Prize(MultiLanguageString name, MultiLanguageString description, Integer year, Unit unit) {
 		this(name, description, year);
 		addUnit(unit);
 	}
 
-	public Prize(String name, MultiLanguageString description, Integer year, ResearchResult result) {
+	public Prize(MultiLanguageString name, MultiLanguageString description, Integer year, ResearchResult result) {
 		this(name, description, year);
 		for (ResultParticipation participation : result.getResultParticipations()) {
 			addPerson(participation.getPerson());
@@ -144,5 +144,9 @@ public class Prize extends Prize_Base {
 	
 	public boolean isAssociatedToPublication() {
 		return getResearchResult() instanceof ResearchResultPublication;
+	}
+	
+	public boolean isLastParticipation() {
+		return getPeople().size() == 1;
 	}
 }

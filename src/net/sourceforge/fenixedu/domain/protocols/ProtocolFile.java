@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.protocols;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class ProtocolFile extends ProtocolFile_Base {
 
@@ -32,8 +33,7 @@ public class ProtocolFile extends ProtocolFile_Base {
         setRootDomainObject(null);
         setProtocol(null);
         setPermittedGroup(null);
-        String externalIdentifier = getExternalStorageIdentification();
-        FileManagerFactory.getFactoryInstance().getFileManager().deleteFile(externalIdentifier);
+        new DeleteFileRequest(AccessControl.getPerson(),getExternalStorageIdentification());
         deleteDomainObject();
     }
 }

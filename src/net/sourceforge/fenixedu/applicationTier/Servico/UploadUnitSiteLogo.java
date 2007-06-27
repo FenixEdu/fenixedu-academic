@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteFile;
@@ -27,10 +28,8 @@ public class UploadUnitSiteLogo extends Service {
 
 		if (site.hasLogo()) {
 			UnitSiteFile logo = site.getLogo();
-
-			IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-			fileManager.deleteFile(logo.getExternalStorageIdentification());
-
+			new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+			
 			logo.delete();
 		}
 

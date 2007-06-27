@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreatePrize extends Service {
 
-	public void run(String name, MultiLanguageString description, Integer year, Person person) {
+	public void run(MultiLanguageString name, MultiLanguageString description, Integer year, Person person) {
 		new Prize(name,description,year,person);
 	}
 }
