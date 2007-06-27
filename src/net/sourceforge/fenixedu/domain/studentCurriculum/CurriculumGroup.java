@@ -385,7 +385,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Integer getChildOrder() {
-	return getChildOrder(ExecutionPeriod.readActualExecutionPeriod());
+	return getChildOrder(null);
     }
 
     public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
