@@ -14,7 +14,8 @@
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoExecutionDegree)infoExecutionDegree).getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()%>" />
 		<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />&nbsp;&nbsp;>&nbsp;&nbsp;
-		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
+		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />&nbsp;&nbsp;>&nbsp;&nbsp;
+		<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
 		</em>
 
 	<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
