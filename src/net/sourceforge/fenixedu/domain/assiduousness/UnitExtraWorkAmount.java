@@ -69,8 +69,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     }
 
     public void updateValue(Double oldValue, Double newValue) {
-	sumSpent(oldValue);
-	subtractSpent(newValue);
+	subtractSpent(oldValue);
+	sumSpent(newValue);
     }
 
     public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
