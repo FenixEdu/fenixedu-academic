@@ -133,6 +133,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 			}
 		}
 
+		RenderUtils.invalidateViewState("variantBean");
 		return viewVigilants(mapping, form, request, response);
 	}
 
