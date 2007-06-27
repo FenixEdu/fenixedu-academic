@@ -274,6 +274,13 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="registrationId" type="java.lang.Integer" />
 	    </form-bean>
+	    
+	    
+	    <!-- transitionRegistrationsManagementForm -->
+		<form-bean name="bolonhaTransitionManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationId" type="java.lang.Integer" />
+	    </form-bean>
 
     </form-beans>
     
@@ -948,6 +955,18 @@
 			<forward name="thesis-upload-dissertation" path="thesis-upload-dissertation" />
 			<forward name="thesis-upload-abstract" path="thesis-upload-abstract" />
         </action>
+        
+        <!-- Start : Bolonha Transition Management -->
+		
+        <action path="/bolonhaTransitionManagement" 
+        		type="net.sourceforge.fenixedu.presentationTier.Action.student.transition.BolonhaTransitionManagementDA" 
+        		parameter="method"
+        		name="bolonhaTransitionManagementForm">
+        	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />
+        	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />
+        </action>
+        
+        <!-- End : Bolonha Transition Management -->
 		
 		
   		

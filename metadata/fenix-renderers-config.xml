@@ -310,7 +310,7 @@ Documentation:
     <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
           the same way that the <tt>values</tt> layouts works for slots. -->
     <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowCollectionRenderer" />
-
+    
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
     <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer" />
@@ -855,10 +855,7 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>
-
-	<renderer type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" layout="dismissal-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
-        <property name="format" value="${name}  (${curriculumGroup.name})"/>
-    </renderer>
+  
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.domain.student.Student" layout="by-number" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentByNumberInputRenderer"/>
     

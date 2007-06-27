@@ -647,14 +647,19 @@
 <schema name="student.Dismissal.view.dismissals" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" >
 	<slot name="dismissals" key="label.studentDismissal.dismissals" layout="list">
-		<property name="eachLayout" value="dismissal-label" />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="Dismissal.with.fullPath" />
 	</slot>
+	<slot name="givenCredits" key="label.ects"/>
 	<slot name="IEnrolments" key="label.studentDismissal.dismissals.enrolments" layout="list" >
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="equivalence.view" />
 	</slot>
-	<slot name="givenCredits" key="label.ects.credits"/>	
 	<slot name="grade" key="label.studentDismissal.grade"/>	
+</schema>
+
+<schema name="Dismissal.with.fullPath" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" >
+	<slot name="fullPath"/>
 </schema>
 
 <schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.IEnrolment" >

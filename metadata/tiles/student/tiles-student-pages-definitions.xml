@@ -364,5 +364,14 @@
     <definition name="thesis-upload-abstract" extends="definition.student.masterPage">
         <put name="body" value="/student/thesis/uploadAbstract.jsp"/>
     </definition>
+    
+    <!-- Begin: Bolonha Transition Management -->
+	<definition name="transition.bolonha.chooseRegistration" extends="definition.student.masterPage">
+		<put name="body" value="/student/transition/bolonha/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.student.masterPage">
+		<put name="body" value="/student/transition/bolonha/showStudentCurricularPlan.jsp"/>
+	</definition>
+	<!-- End: Bolonha Transition Management -->
 
 </tiles-definitions>

@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -721,6 +722,7 @@ public class Student extends Student_Base {
         return getRegistrations().size();
     }
     
+    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwner")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : super.getRegistrations()) {

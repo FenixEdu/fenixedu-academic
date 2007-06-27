@@ -42,12 +42,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		    }
 		});
     }
-    
+
     static final public Comparator<CurriculumGroup> COMPARATOR_BY_CHILD_ORDER_AND_ID = new Comparator<CurriculumGroup>() {
-        public int compare(CurriculumGroup o1, CurriculumGroup o2) {
-            int result = o1.getChildOrder().compareTo(o2.getChildOrder());
+	public int compare(CurriculumGroup o1, CurriculumGroup o2) {
+	    int result = o1.getChildOrder().compareTo(o2.getChildOrder());
 	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
-        }
+	}
     };
 
     protected CurriculumGroup() {
@@ -66,7 +66,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	setDegreeModule(courseGroup);
     }
 
-    protected void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
+    protected void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan,
+	    final CourseGroup courseGroup) {
 	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
 	    throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup",
 		    courseGroup.getName());
@@ -90,7 +91,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	init(parentCurriculumGroup, courseGroup, executionPeriod);
     }
 
-    protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+    protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup,
+	    final ExecutionPeriod executionPeriod) {
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	checkParameters(curriculumGroup, courseGroup, executionPeriod);
 	setDegreeModule(courseGroup);
@@ -172,7 +174,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    curriculumModule.collectDismissals(result);
 	}
     }
-    
+
     public List<Dismissal> getChildDismissals() {
 	final List<Dismissal> result = new ArrayList<Dismissal>();
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -235,7 +237,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class, (ExecutionPeriod) null)) {
+	for (final Context context : this.getDegreeModule().getValidChildContexts(
+		CurricularCourse.class, (ExecutionPeriod) null)) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    if (!getStudentCurricularPlan().getRoot().isApproved(curricularCourse, null)) {
 		result.add(curricularCourse);
@@ -304,7 +307,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    final Enrolment search = curriculumModule
 		    .findEnrolmentFor(curricularCourse, executionPeriod);
@@ -314,7 +318,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return null;
     }
-    
+
     @Override
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -323,9 +327,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		return enrolment;
 	    }
 	}
-        return null;
+	return null;
     }
-    
+
     @Override
     public Dismissal getDismissal(final CurricularCourse curricularCourse) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -334,7 +338,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		return dismissal;
 	    }
 	}
-        return null;
+	return null;
     }
 
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
@@ -548,4 +552,5 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    curriculumModule.getAllDegreeModules(degreeModules);
 	}
     }
+
 }
