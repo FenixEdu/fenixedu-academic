@@ -59,6 +59,41 @@
 	</tr>
 
 
+<logic:iterate id="vigilancy" name="ownVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
+<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
+<td class="acenter">
+	<logic:present name="vigilancy" property="vigilant.teacher">
+		<fr:view name="vigilancy" property="vigilant.teacher.category.code"/>
+	</logic:present>
+</td>
+<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.name" /></td>
+<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+<td class="acenter"><fr:view name="vigilancy" property="points" /></td>
+<td class="acenter"><fr:view name="vigilancy" property="active" /></td>
+<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>
+
+			<logic:equal name="vigilancy" property="attended" value="true">
+				<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+			</logic:equal>
+			<logic:equal name="vigilancy" property="attended" value="false">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatus", vigilancy.getIdInternal(), "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatus", vigilancy.getIdInternal(), "", "ATTENDED")%>"/></td>
+			</logic:equal>
+			<logic:equal name="vigilancy" property="notAttended" value="true">
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+			</logic:equal>			
+			<logic:equal name="vigilancy" property="notAttended" value="false">
+				<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatus", vigilancy.getIdInternal(),  "NOT_ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatus", vigilancy.getIdInternal(), "", "NOT_ATTENDED")%>"/></td>
+			</logic:equal>
+			<logic:equal name="vigilancy" property="dismissed" value="true">
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+			</logic:equal>
+			<logic:equal name="vigilancy" property="dismissed" value="false">
+				<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatus", vigilancy.getIdInternal(),  "DISMISSED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', participationType: '%s'});","changeConvokeStatust", vigilancy.getIdInternal(), "", "DISMISSED")%>"/></td>			
+			</logic:equal>
+
+</tr>
+</logic:iterate>
+
 <logic:iterate id="vigilancy" name="vigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
 <tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 <td class="acenter">
@@ -95,6 +130,10 @@
 </logic:iterate>
 
 </table>
+
+
+
+
 </form>
 
 

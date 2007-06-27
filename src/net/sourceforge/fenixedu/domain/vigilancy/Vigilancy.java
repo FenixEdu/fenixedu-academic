@@ -39,6 +39,14 @@ public abstract class Vigilancy extends Vigilancy_Base {
 	}
     };
 
+    public static final Comparator<Vigilancy> COMPARATOR_BY_VIGILANT_SORT_CRITERIA = new Comparator<Vigilancy>() {
+
+		public int compare(Vigilancy o1, Vigilancy o2) {
+			return Vigilant.SORT_CRITERIA_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
+		}
+    	
+    };
+    
     public Vigilancy() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());

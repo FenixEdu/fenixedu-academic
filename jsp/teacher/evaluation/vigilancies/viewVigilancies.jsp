@@ -23,9 +23,11 @@
 </li>
 </ul>
 
-<strong><fr:view name="evaluation" property="name"/> (<fr:view name="evaluation" property="dayDateYearMonthDay"/> - <fr:view name="evaluation" property="beginningDateHourMinuteSecond"/>) </strong>
 
-<logic:notEmpty name="vigilancies">
+<h3><fr:view name="evaluation" property="name"/> (<fr:view name="evaluation" property="dayDateYearMonthDay"/> - <fr:view name="evaluation" property="beginningDateHourMinuteSecond"/>)</h3>
+
+
+<logic:notEmpty name="ownVigilancies">
 
 <script type="text/javascript">
 	function submitForm(form, options) {
@@ -44,7 +46,10 @@
 	<input type="hidden" name="oid" value=""/>
 	<input type="hidden" name="bool" value=""/>
 
-<table class="tstyle1">
+
+<p class="mbottom05"><strong><bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+
+<table class="tstyle1 mtop05">
 	<tr>
 		<th rowspan="2"><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/></th>
 		<th rowspan="2"><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/></th>
@@ -58,7 +63,7 @@
 		<th><bean:message key="message.no" bundle="APPLICATION_RESOURCES"/></th>
 	</tr>
 
-<logic:iterate id="vigilancy" name="vigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
+<logic:iterate id="vigilancy" name="ownVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
 <tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 <td class="acenter">
 	<logic:present name="vigilancy" property="vigilant.teacher">
@@ -86,6 +91,67 @@
 </form>
 
 </logic:notEmpty>
+
+
+<logic:notEmpty name="vigilancies">
+
+<p class="mbottom05"><strong><bean:message key="label.otherVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+
+<table class="tstyle1 mtop05">
+	<tr>
+		<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/></th>
+		<th><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/></th>
+		<th><bean:message key="label.vigilancy.username" bundle="VIGILANCY_RESOURCES"/></th>
+		<th><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></th>
+		<th><bean:message key="label.vigilancy.active" bundle="VIGILANCY_RESOURCES"/></th>
+		<th><bean:message key="label.vigilancy.confirmed" bundle="VIGILANCY_RESOURCES"/></th>
+	</tr>
+	<logic:iterate id="vigilancy" name="vigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
+		<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
+			<td class="acenter">
+				<logic:present name="vigilancy" property="vigilant.teacher">
+					<fr:view name="vigilancy" property="vigilant.teacher.category.code"/>
+				</logic:present>
+			</td>
+			<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.name" /></td>
+			<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+			<td class="acenter"><fr:view name="vigilancy" property="points" /></td>
+			<td class="acenter"><fr:view name="vigilancy" property="active"/></td>
+			<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>
+		</tr>
+	</logic:iterate>
+</table>
+
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+			<span class="error0"><bean:write name="messages"/></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>
+
+<fr:form action="<%= "/evaluation/vigilancy/vigilantsForEvaluation.do?method=requestUnconvokes&evaluationOID=" + evaluationId + "&executionCourseID=" + executionCourseId %>">
+<table>
+	<tr>
+		<td>
+			<fr:edit id="variantBean" name="unconvokeRequest" schema="variant.integer">
+				<fr:layout>
+					<fr:property name="classes" value="thlight"/>
+				</fr:layout>
+			</fr:edit>
+		</td>
+		<td>
+			<html:submit>
+				<bean:message key="label.deactivate" bundle="VIGILANCY_RESOURCES"/>
+			</html:submit>
+		</td>
+	</tr>
+</table>
+</fr:form>
+
+
+</logic:notEmpty>
+
 <logic:empty name="vigilancies">
 	<p>
 	<bean:message key="label.noVigilanciesFoundForEvaluation" bundle="VIGILANCY_RESOURCES"/>

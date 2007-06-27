@@ -672,6 +672,16 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		return vigilancies;
 	}
 	
+	public List<Vigilancy> getActiveOtherVigilancies() {
+		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+		for (Vigilancy vigilancy : this.getVigilancies()) {
+			if (vigilancy.isOtherCourseVigilancy() && vigilancy.isActive()) {
+				vigilancies.add((Vigilancy) vigilancy);
+			}
+		}
+		return vigilancies;
+	}
+	
 	public List<Vigilancy> getAllActiveVigilancies() {
 		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
 		for (Vigilancy vigilancy : this.getVigilancies()) {

@@ -903,3 +903,9 @@ extends="presentSimpleConvokesWithoutLink">
 		<property name="format" value="${firstAndLastName} (${istUsername})"/>
 	</slot>
 </schema>
+
+<schema name="variant.integer" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="VIGILANCY_RESOURCES">
+	<slot name="integer" key="label.vigilancy.selectNumberOfVigilantsToUnconvoke" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="1"/>
+	</slot>
+</schema>

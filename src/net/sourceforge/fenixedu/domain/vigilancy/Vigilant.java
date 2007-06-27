@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -58,6 +59,17 @@ public class Vigilant extends Vigilant_Base {
 
 		}
 
+	};
+
+	public static final Comparator<Vigilant> SORT_CRITERIA_COMPARATOR = new Comparator<Vigilant>() {
+		public int compare(Vigilant v1, Vigilant v2) {
+			ComparatorChain comparator = new ComparatorChain();
+			comparator.addComparator(Vigilant.ESTIMATED_POINTS_COMPARATOR);
+			comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
+			comparator.addComparator(Vigilant.USERNAME_COMPARATOR);
+			
+			return comparator.compare(v1, v2);
+		}
 	};
 
 	protected Vigilant() {
@@ -240,10 +252,10 @@ public class Vigilant extends Vigilant_Base {
 		List<Campus> campusList = this.getCampus();
 
 		/*
-		 * If campusList is empty it's best to say that he is available and then
-		 * someone has to remove the vigilant by hand, instead of saying that
-		 * the vigilant is never available in any campus (which is wrong).
-		 */
+         * If campusList is empty it's best to say that he is available and then
+         * someone has to remove the vigilant by hand, instead of saying that
+         * the vigilant is never available in any campus (which is wrong).
+         */
 		return campusList.isEmpty() ? true : campusList.contains(campus);
 	}
 
@@ -251,9 +263,9 @@ public class Vigilant extends Vigilant_Base {
 		List<Campus> campusList = this.getCampus();
 
 		/*
-		 * Check comment above for explanation of why you have the conditional
-		 * statement below.
-		 */
+         * Check comment above for explanation of why you have the conditional
+         * statement below.
+         */
 		if (campusList.isEmpty()) {
 			return true;
 		}
@@ -284,7 +296,7 @@ public class Vigilant extends Vigilant_Base {
 	@Override
 	public Person getIncompatiblePerson() {
 		Person person = super.getIncompatiblePerson();
-		if (person == null && this.getPerson()!=null) {
+		if (person == null && this.getPerson() != null) {
 			List<Vigilant> vigilants = this.getPerson().getIncompatibleVigilants();
 			ExecutionYear year = this.getExecutionYear();
 			for (Vigilant vigilant : vigilants) {
@@ -550,15 +562,13 @@ public class Vigilant extends Vigilant_Base {
 
 		return new ArrayList<VigilantGroup>(groups);
 	}
-	
+
 	@Override
 	public void addVigilancies(Vigilancy vigilancy) {
-		if(hasNoEvaluationsOnDate(vigilancy.getBeginDateTime(), vigilancy.getEndDateTime())) {
+		if (hasNoEvaluationsOnDate(vigilancy.getBeginDateTime(), vigilancy.getEndDateTime())) {
 			super.addVigilancies(vigilancy);
-		}
-		else {
+		} else {
 			throw new DomainException("error.collapsing.convokes");
 		}
 	}
 }
-
