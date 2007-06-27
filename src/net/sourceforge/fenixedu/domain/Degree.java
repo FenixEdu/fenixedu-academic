@@ -11,9 +11,11 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -38,36 +40,36 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
     static final private Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
-	public int compare(final Degree o1, final Degree o2) {
+        public int compare(final Degree o1, final Degree o2) {
 	    return Collator.getInstance().compare(o1.getName(), o2.getName());
-	}
+        }
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_NAME_AND_ID = new Comparator<Degree>() {
-	public int compare(final Degree o1, final Degree o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME);
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(o1, o2);
-	}
+        public int compare(final Degree o1, final Degree o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME);
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
     };
 
     static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
-	public int compare(final Degree o1, final Degree o2) {
+        public int compare(final Degree o1, final Degree o2) {
 	    return Collator.getInstance().compare(o1.getDegreeType().getLocalizedName(),
-		    o2.getDegreeType().getLocalizedName());
-	}
+					o2.getDegreeType().getLocalizedName());
+        }
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new Comparator<Degree>() {
-	public int compare(final Degree o1, final Degree o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_DEGREE_TYPE);
-	    comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME_AND_ID);
-
-	    return comparatorChain.compare(o1, o2);
-	}
+        public int compare(final Degree o1, final Degree o2) {
+            final ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_DEGREE_TYPE);
+            comparatorChain.addComparator(Degree.COMPARATOR_BY_NAME_AND_ID);
+            
+            return comparatorChain.compare(o1, o2);
+        }
     };
 
     public int compareTo(final Degree o) {
@@ -75,10 +77,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     protected Degree() {
-	super();
-
-	setRootDomainObject(RootDomainObject.getInstance());
-	new DegreeSite(this);
+        super();
+        
+	    setRootDomainObject(RootDomainObject.getInstance());
+        new DegreeSite(this);
     }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
@@ -130,7 +132,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	this.setDegreeType(degreeType);
 	this.setEctsCredits(ectsCredits);
 	this.setPrevailingScientificArea(prevailingScientificArea == null ? null
-		: prevailingScientificArea.trim());
+						: prevailingScientificArea.trim());
     }
 
     public void edit(String name, String nameEn, String code, DegreeType degreeType,
@@ -157,73 +159,73 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Boolean getCanBeDeleted() {
-	if (hasAnyDegreeCurricularPlans()) {
-	    return false;
-	}
-
-	if (hasSite() && getSite().canBeDeleted()) {
-	    return false;
-	}
-
-	return true;
+        if (hasAnyDegreeCurricularPlans()) {
+            return false;   
+        }
+        
+        if (hasSite() && getSite().canBeDeleted()) {
+            return false;
+        }
+        
+        return true;
     }
 
     private void checkDeletion() {
-	if (hasAnyDegreeCurricularPlans()) {
-	    throw new DomainException("error.degree.has.degree.curricular.plans");
-	}
-
-	if (hasSite() && !getSite().canBeDeleted()) {
-	    throw new DomainException("error.degree.has.site.undeletable");
-	}
+        if (hasAnyDegreeCurricularPlans()) {
+            throw new DomainException("error.degree.has.degree.curricular.plans");  
+        }
+        
+        if (hasSite() && !getSite().canBeDeleted()) {
+            throw new DomainException("error.degree.has.site.undeletable");  
+        }
     }
 
     public void delete() throws DomainException {
 
-	checkDeletion();
+        checkDeletion();
+        
+        Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
+        while (oicrIterator.hasNext()) {
+            OldInquiriesCoursesRes oicr = oicrIterator.next();
+            oicrIterator.remove();            
+            oicr.delete();
+        }
 
-	Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
-	while (oicrIterator.hasNext()) {
-	    OldInquiriesCoursesRes oicr = oicrIterator.next();
-	    oicrIterator.remove();
-	    oicr.delete();
-	}
+        Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
+        while (oitrIterator.hasNext()) {
+            OldInquiriesTeachersRes oitr = oitrIterator.next();
+            oitrIterator.remove();            
+            oitr.delete();
+        }
 
-	Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
-	while (oitrIterator.hasNext()) {
-	    OldInquiriesTeachersRes oitr = oitrIterator.next();
-	    oitrIterator.remove();
-	    oitr.delete();
-	}
+        Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesIterator();
+        while (oisIterator.hasNext()) {
+            OldInquiriesSummary ois = oisIterator.next();
+            oisIterator.remove();            
+            ois.delete();
+        }
 
-	Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesIterator();
-	while (oisIterator.hasNext()) {
-	    OldInquiriesSummary ois = oisIterator.next();
-	    oisIterator.remove();
-	    ois.delete();
-	}
+        Iterator<Delegate> delegatesIterator = getDelegateIterator();
+        while (delegatesIterator.hasNext()) {
+            Delegate delegate = delegatesIterator.next();
+            delegatesIterator.remove();          
+            delegate.delete();
+        }
 
-	Iterator<Delegate> delegatesIterator = getDelegateIterator();
-	while (delegatesIterator.hasNext()) {
-	    Delegate delegate = delegatesIterator.next();
-	    delegatesIterator.remove();
-	    delegate.delete();
-	}
+        Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
+        while (degreeInfosIterator.hasNext()) {
+            DegreeInfo degreeInfo = degreeInfosIterator.next();
+            degreeInfosIterator.remove();           
+            degreeInfo.delete();
+        }
 
-	Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
-	while (degreeInfosIterator.hasNext()) {
-	    DegreeInfo degreeInfo = degreeInfosIterator.next();
-	    degreeInfosIterator.remove();
-	    degreeInfo.delete();
-	}
+		for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
+				.get(0).delete())
+			;
 
-	for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-		.get(0).delete())
-	    ;
-
-	removeRootDomainObject();
-	removeUnit();
-	deleteDomainObject();
+        removeRootDomainObject();
+        removeUnit();
+        deleteDomainObject();
     }
 
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {
@@ -298,23 +300,23 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Override
     @Deprecated
     public DegreeType getTipoCurso() {
-	return getDegreeType();
+        return getDegreeType();
     }
-
+    
     @Override
     @Deprecated
     public void setTipoCurso(final DegreeType degreeType) {
-	setDegreeType(degreeType);
+        setDegreeType(degreeType);
     }
-
+    
     public DegreeType getDegreeType() {
 	return super.getTipoCurso();
     }
 
     public void setDegreeType(final DegreeType degreeType) {
-	super.setTipoCurso(degreeType);
+        super.setTipoCurso(degreeType);
     }
-
+    
     @Deprecated
     public DegreeType getBolonhaDegreeType() {
 	return getDegreeType();
@@ -374,11 +376,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(
 	    final ExecutionYear executionYear) {
-
+	
 	if (isBolonhaDegree()) {
 	    return Collections.emptyList();
 	}
-
+	
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
@@ -398,11 +400,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(
 	    final ExecutionYear executionYear, final Integer curricularYear) {
-
+	
 	if (isBolonhaDegree()) {
 	    return Collections.emptyList();
 	}
-
+	
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
@@ -443,16 +445,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     final public String getPresentationName() {
 	final ResourceBundle enumResourceBundle = ResourceBundle
-		.getBundle("resources.EnumerationResources");
+		.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	final ResourceBundle appResourceBundle = ResourceBundle
-		.getBundle("resources.ApplicationResources");
+		.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 	return enumResourceBundle.getString(getDegreeType().toString()) + " "
 		+ appResourceBundle.getString("label.in") + " " + getNome();
     }
 
     final public String getFilteredName() {
 	final StringBuilder result = new StringBuilder(getName());
-
+	
 	for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
 	    final String toRemove = " - " + campus.getName();
 	    if (result.toString().contains(toRemove)) {
@@ -460,7 +462,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 			"");
 	    }
 	}
-
+	
 	return result.toString();
     }
 
@@ -570,14 +572,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Collection<Registration> getActiveRegistrations() {
 	final Collection<Registration> result = new HashSet<Registration>();
-
+	
 	for (final DegreeCurricularPlan degreeCurricularPlan : getActiveDegreeCurricularPlans()) {
 	    result.addAll(degreeCurricularPlan.getActiveRegistrations());
 	}
-
+	
 	return result;
     }
-
+    
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -708,7 +710,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 
 	// ok, so let's create a new one based on the most recent one, if
-	// existing
+        // existing
 	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo();
 	if (mostRecentDegreeInfo != null) {
 	    return new DegreeInfo(mostRecentDegreeInfo, currentExecutionYear);
@@ -726,145 +728,158 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public ScientificCommission getMostRecentScientificCommission(Person person) {
-	for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
-		.getPreviousExecutionYear()) {
-	    for (ScientificCommission member : getScientificCommissionMembers(ey)) {
-		if (member.getPerson() == person) {
-		    return member;
-		}
-	    }
-	}
-
-	return null;
+		for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
+				.getPreviousExecutionYear()) {
+            for (ScientificCommission member : getScientificCommissionMembers(ey)) {
+                if (member.getPerson() == person) {
+                    return member;
+                }
+            }
+        }
+        
+        return null;
     }
-
+    
     public boolean isMemberOfAnyScientificCommission(Person person) {
-	return getMostRecentScientificCommission(person) != null;
+        return getMostRecentScientificCommission(person) != null;
     }
 
     public boolean isMemberOfCurrentScientificCommission(Person person) {
-	for (ScientificCommission member : getCurrentScientificCommissionMembers()) {
-	    if (member.getPerson() == person) {
-		return true;
-	    }
-	}
-
-	return false;
+        for (ScientificCommission member : getCurrentScientificCommissionMembers()) {
+            if (member.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
     }
-
+    
     public Collection<ScientificCommission> getCurrentScientificCommissionMembers() {
-	for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
-		.getPreviousExecutionYear()) {
-	    Collection<ScientificCommission> members = getScientificCommissionMembers(ey);
-
-	    if (!members.isEmpty()) {
-		return members;
-	    }
-	}
-
-	return Collections.emptyList();
+		for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
+				.getPreviousExecutionYear()) {
+            Collection<ScientificCommission> members = getScientificCommissionMembers(ey);
+            
+            if (! members.isEmpty()) {
+                return members;
+            }
+        }
+        
+        return Collections.emptyList();
     }
-
+    
     public Collection<ScientificCommission> getScientificCommissionMembers(ExecutionYear executionYear) {
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
-	    ExecutionDegree executionDegree = degreeCurricularPlan
-		    .getExecutionDegreeByYear(executionYear);
-
-	    if (executionDegree != null) {
-		return new ArrayList<ScientificCommission>(executionDegree
-			.getScientificCommissionMembers());
-	    }
-	}
-
-	return Collections.emptyList();
+        for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
+			ExecutionDegree executionDegree = degreeCurricularPlan
+					.getExecutionDegreeByYear(executionYear);
+            
+            if (executionDegree != null) {
+				return new ArrayList<ScientificCommission>(executionDegree
+						.getScientificCommissionMembers());
+            }
+        }
+        
+        return Collections.emptyList();
     }
 
-    public boolean isCoordinator(Person person) {
-	for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
-		.getPreviousExecutionYear()) {
-	    for (Coordinator coordinator : getResponsibleCoordinators(ey)) {
-		if (coordinator.getPerson() == person) {
-		    return true;
-		}
-	    }
-	}
-
-	return false;
+    final public boolean isCoordinator(final Person person, final ExecutionYear executionYear) {
+        for (final Coordinator coordinator : getCoordinators(executionYear, false)) {
+            if (coordinator.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
-    public boolean isCurrentCoordinator(Person person) {
-	for (Coordinator coordinator : getCurrentResponsibleCoordinators()) {
-	    if (coordinator.getPerson() == person) {
-		return true;
-	    }
-	}
-
-	return false;
+    final public boolean isCurrentCoordinator(final Person person) {
+        for (final Coordinator coordinator : getCurrentCoordinators(false)) {
+            if (coordinator.getPerson() == person) {
+                return true;
+            }
+        }
+        
+        return false;
     }
-
-    public Collection<Coordinator> getCurrentResponsibleCoordinators() {
-	for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey
-		.getPreviousExecutionYear()) {
-	    Collection<Coordinator> coordinators = getResponsibleCoordinators(ey);
-
-	    if (!coordinators.isEmpty()) {
-		return coordinators;
-	    }
-	}
-
-	return Collections.emptyList();
+    
+    final private Collection<Coordinator> getCoordinators(final ExecutionYear executionYear, final boolean responsible) {
+	final Collection<Coordinator> result = new HashSet<Coordinator>();
+        
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+            if (executionDegree != null) {
+                result.addAll(responsible ? executionDegree.getResponsibleCoordinators() : executionDegree.getCoordinatorsList());
+            }
+        }
+        
+        return result;
     }
+    
+    final private Collection<Coordinator> getCurrentCoordinators(final boolean responsible) {
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-    public Collection<Coordinator> getResponsibleCoordinators(ExecutionYear executionYear) {
-	List<Coordinator> coordinators = new ArrayList<Coordinator>();
+	Collection<Coordinator> result = getCoordinators(currentExecutionYear, responsible);
+        if (!result.isEmpty()) {
+            return result;
+        }
 
-	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
-	    ExecutionDegree executionDegree = degreeCurricularPlan
-		    .getExecutionDegreeByYear(executionYear);
+	final List<ExecutionYear> sortedDegreeCurricularPlansExecutionYears = getDegreeCurricularPlansExecutionYears();
+	Collections.sort(sortedDegreeCurricularPlansExecutionYears, ExecutionYear.COMPARATOR_BY_YEAR);
+	
+	if(!sortedDegreeCurricularPlansExecutionYears.isEmpty() && sortedDegreeCurricularPlansExecutionYears.iterator().next().isAfter(currentExecutionYear)) {
+	    final ExecutionYear executionYear = sortedDegreeCurricularPlansExecutionYears.iterator().next();
 
-	    if (executionDegree != null) {
-		coordinators.addAll(executionDegree.getCoordinatorsList());
-	    }
-	}
-
-	return coordinators;
-    }
-
-    public Collection<Teacher> getResponsibleCoordinatorsTeachers(ExecutionYear executionYear) {
-	Set<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-	    final ExecutionDegree executionDegree = degreeCurricularPlan
-		    .getExecutionDegreeByYear(executionYear);
-	    if (executionDegree != null) {
-		for (final Coordinator coordinator : executionDegree.getResponsibleCoordinators()) {
-		    final Person person = coordinator.getPerson();
-		    final Teacher teacher = person.getTeacher();
-		    if (teacher != null) {
-			result.add(teacher);
-		    }
-		}
-	    }
-	}
-	return new ArrayList<Teacher>(result);
-    }
-
-    public Collection<Teacher> getCurrentResponsibleCoordinatorsTeachers() {
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	Collection<Teacher> result = this.getResponsibleCoordinatorsTeachers(executionYear);
-
-	if (!result.isEmpty()) {
-	    return result;
-	}
-
-	for (; executionYear != null; executionYear = executionYear.getNextExecutionYear()) {
-	    result = this.getResponsibleCoordinatorsTeachers(executionYear);
-
+	    result = getCoordinators(executionYear, responsible);
 	    if (!result.isEmpty()) {
 		return result;
 	    }
 	}
+	
+	final ListIterator<ExecutionYear> iterator = sortedDegreeCurricularPlansExecutionYears.listIterator();
+	while (iterator.hasPrevious()) {
+	    final ExecutionYear executionYear = iterator.previous();
+	    
+	    if (executionYear.isBeforeOrEquals(currentExecutionYear)) {
+		result = getCoordinators(executionYear, responsible);
+		if (!result.isEmpty()) {
+		    return result;
+		}
+	    }
+	}
+	
+	return Collections.emptyList();
+    }
+    
+    final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {
+	return getCoordinators(executionYear, true);
+    }
+    
+    final public Collection<Coordinator> getCurrentResponsibleCoordinators() {
+	return getCurrentCoordinators(true);
+    }
+    
+    final public Collection<Teacher> getResponsibleCoordinatorsTeachers(final ExecutionYear executionYear) {
+	final Collection<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+	
+	collectCoordinatorsTeachers(result, getResponsibleCoordinators(executionYear));
 
-	return new ArrayList<Teacher>();
+	return result;
+    }
+
+    final public Collection<Teacher> getCurrentResponsibleCoordinatorsTeachers() {
+	final Collection<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+	
+	collectCoordinatorsTeachers(result, getCurrentResponsibleCoordinators());
+
+	return result;
+    }
+
+    final private void collectCoordinatorsTeachers(final Collection<Teacher> result, final Collection<Coordinator> coordinators) {
+	for (final Coordinator coordinator : coordinators) {
+	    final Teacher teacher = coordinator.getTeacher();
+	    if (teacher != null) { 
+		result.add(teacher);
+	    }
+	}
     }
 
     public Collection<Campus> getCampus(ExecutionYear executionYear) {
@@ -876,7 +891,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		result.add(executionDegree.getCampus());
 	    }
 	}
-
 	return new ArrayList<Campus>(result);
     }
 
@@ -904,27 +918,27 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		: "";
     }
 
-    public List<StudentCurricularPlan> getLastStudentCurricularPlans() {
-	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	final List<Registration> registrations = new ArrayList<Registration>();
+	public List<StudentCurricularPlan> getLastStudentCurricularPlans() {
+		final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+		final List<Registration> registrations = new ArrayList<Registration>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		    .getStudentCurricularPlans()) {
-		if (!registrations.contains(studentCurricularPlan.getRegistration())) {
-		    registrations.add(studentCurricularPlan.getRegistration());
-		    result.add(studentCurricularPlan.getRegistration()
-			    .getLastStudentDegreeCurricularPlansByDegree(this));
+			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+					.getStudentCurricularPlans()) {
+				if(!registrations.contains(studentCurricularPlan.getRegistration())){
+					registrations.add(studentCurricularPlan.getRegistration());
+					result.add(studentCurricularPlan.getRegistration()
+						.getLastStudentDegreeCurricularPlansByDegree(this));
+				}
+			}
 		}
-	    }
-	}
 
-	return new ArrayList<StudentCurricularPlan>(result);
-    }
+		return new ArrayList<StudentCurricularPlan>(result);
+	}
 
     public boolean isFirstCycle() {
 	return getDegreeType().isFirstCycle();
     }
-
+    
     public boolean isSecondCycle() {
 	return getDegreeType().isSecondCycle();
     }
