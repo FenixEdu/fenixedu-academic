@@ -12,9 +12,6 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -37,122 +36,51 @@ import org.apache.struts.action.ActionMapping;
 
 public class CoordinatedDegreeInfo extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
+    @Override
+    @SuppressWarnings("unchecked")
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws FenixActionException {
+        final HttpSession session = request.getSession(false);
+        
         if (session != null) {
-            IUserView userView = SessionUtils.getUserView(request);
-            InfoExecutionYear currentExecutionYear = null;
-            //gets the idInternal for the degreeCurricularCourse from the
-            // request
-            Integer degreeCurricularPlanID = findDegreeCurricularPlanID(request);
+            final IUserView userView = SessionUtils.getUserView(request);
 
-            List result = null;
-
-            Object argsTemp[] = { degreeCurricularPlanID };
-
-            try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadExecutionDegreesByDegreeCurricularPlanID", argsTemp);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            try {
-                currentExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadCurrentExecutionYear", null);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            InfoExecutionDegree infoExecutionDegree = chooseExecutionDegree(result, currentExecutionYear);
-
-            argsTemp[0] = infoExecutionDegree.getIdInternal();
-
-            // TODO remove this service invocation
-            try {
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadExecutionDegree", argsTemp);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            // Put the selected Degree in the request
-            /*
-             * InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree)
-             * degreeList .get(choosenDegreePosition.intValue());
-             */
-
-            // request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+            final Integer degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+            
+            final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+            
+	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
 
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
-            argsTemp[0] = degreeCurricularPlanID;
+            final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadDegreeCandidates", argsTemp);
-            } catch (FenixServiceException e) {
+        	infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", new Object[]{degreeCurricularPlanOID} );
+            } catch (Exception e) {
                 throw new FenixActionException(e);
             }
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates.size()));
 
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, new Integer(result
-                    .size()));
             return mapping.findForward("Success");
         }
-        throw new Exception();
+        
+        throw new FenixActionException();
     }
 
     /**
      * @param request
      * @return
      */
-    private Integer findDegreeCurricularPlanID(HttpServletRequest request) {
-        Integer degreeCurricularPlanID = null;
+    final private Integer findDegreeCurricularPlanID(HttpServletRequest request) {
+        final Integer degreeCurricularPlanID;
+        
         if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
         } else {
-            degreeCurricularPlanID = Integer.valueOf((String) request
-                    .getAttribute("degreeCurricularPlanID"));
+            degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute("degreeCurricularPlanID"));
         }
+
         return degreeCurricularPlanID;
     }
 
-    private InfoExecutionDegree chooseExecutionDegree(List infoExecutionDegrees,
-            InfoExecutionYear currentExecutionYear) {
-
-        Iterator it = infoExecutionDegrees.iterator();
-
-        Collections.sort(infoExecutionDegrees, new Comparator() {
-            public int compare(Object obj1, Object obj2) {
-                InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) obj1;
-                InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) obj2;
-
-                if (infoExecutionDegree1.getInfoExecutionYear().getBeginDate().before(
-                        infoExecutionDegree2.getInfoExecutionYear().getBeginDate())) {
-                    return -1;
-                }
-                return 1;
-            }
-        });
-
-        while (it.hasNext()) {
-
-            InfoExecutionDegree temp = (InfoExecutionDegree) it.next();
-
-            if (currentExecutionYear.equals((temp).getInfoExecutionYear())) {
-                return temp;
-            }
-        }
-
-        it = infoExecutionDegrees.iterator();
-        if (it.hasNext()) {
-            //((InfoExecutionDegree) it.next()).toString();
-            return (InfoExecutionDegree) it.next();
-        }
-        return null;
-    }
-
 }
-
