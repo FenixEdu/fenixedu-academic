@@ -111,19 +111,17 @@
 				</p>
 				
 				<p class="mtop15">
-					<logic:equal name="extraWorkRequestFactory" property="isMonthClosedForExtraWork" value="false">
-					<logic:equal name="extraWorkRequestFactory" property="paymentConfirmed" value="false">
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-							<bean:message key="button.confirmPayment" />
-						</html:submit>
-					</logic:equal>
-					</logic:equal>
-					<logic:equal name="extraWorkRequestFactory" property="isMonthClosedForExtraWork" value="false">
-					<logic:equal name="extraWorkRequestFactory" property="paymentConfirmed" value="true">
-						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" property="cancelPayment">
-							<bean:message key="button.cancelPayment" />
-						</html:submit>
-					</logic:equal>
+					<logic:equal name="extraWorkRequestFactory" property="isPayingMonthClosedForExtraWork" value="false">
+						<logic:equal name="extraWorkRequestFactory" property="paymentConfirmed" value="false">
+							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+								<bean:message key="button.confirmPayment" />
+							</html:submit>
+						</logic:equal>
+						<logic:equal name="extraWorkRequestFactory" property="paymentConfirmed" value="true">
+							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" property="cancelPayment">
+								<bean:message key="button.cancelPayment" />
+							</html:submit>
+						</logic:equal>
 					</logic:equal>
 				</p>			
 			</fr:form>		

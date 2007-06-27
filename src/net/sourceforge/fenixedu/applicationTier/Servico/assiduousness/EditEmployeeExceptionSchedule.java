@@ -8,5 +8,4 @@ public class EditEmployeeExceptionSchedule extends Service {
     public void run(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
 	employeeExceptionScheduleBean.getSchedule().editException(employeeExceptionScheduleBean);
     }
-
 }

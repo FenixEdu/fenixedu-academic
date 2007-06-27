@@ -13,6 +13,11 @@
 			<bean:write name="message" filter="false"/>
 		</html:messages>
 	</span>
+	<span class="highlight1 mtop0">
+		<html:messages id="message" message="true" property="sucess">
+			<bean:write name="message" filter="false"/>
+		</html:messages>
+	</span>
 </p>	
 
 <logic:present name="yearMonthToExport">

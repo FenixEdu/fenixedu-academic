@@ -374,7 +374,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		result = new ActionMessage("message.successUpdatingExtraWork");
 	    }
 	    ActionMessages actionMessages = getMessages(request);
-	    actionMessages.add("message", result);
+	    actionMessages.add("sucess", result);
 	    saveMessages(request, actionMessages);
 	}
 	RenderUtils.invalidateViewState();

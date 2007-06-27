@@ -198,6 +198,10 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
         return ClosedMonth.isMonthClosedForExtraWork(getHoursDoneInPartialDate());
     }
 
+    public Boolean getIsPayingMonthClosedForExtraWork() {
+        return ClosedMonth.isMonthClosedForExtraWork(getPartialPayingDate());
+    }
+    
     public YearMonth getYearMonthHoursDone() {
         return yearMonthHoursDone;
     }
