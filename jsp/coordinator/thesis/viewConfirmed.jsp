@@ -29,7 +29,7 @@
 <logic:present name="confirmRevision">
 	<div class="warning0" style="padding: 1em;">
 			<p class="mtop0 mbottom1">	
-		    	<strong><bean:message key="label.attention"/>:</strong>
+		    	<strong><bean:message key="label.attention"/>:</strong><br/>
 		    	<bean:message key="label.coordinator.thesis.revision.confirm"/>
 	    	</p>
     	    <div class="forminline">
@@ -46,6 +46,13 @@
 	    </div>
     </div>
 </logic:present>
+
+<%-- general process message --%>
+<logic:notPresent name="confirmRevision">
+	<div class="infoop2">
+		<p class="mvert0"><bean:message key="message.coordinator.thesis.confirmed.process"/></p>
+	</div>
+</logic:notPresent>
 
 <%-- Dissertation --%>
 <h3><bean:message key="title.coordinator.thesis.confirm.details"/></h3>

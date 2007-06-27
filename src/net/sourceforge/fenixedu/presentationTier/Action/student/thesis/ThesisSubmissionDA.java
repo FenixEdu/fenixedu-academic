@@ -62,11 +62,15 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
         
         Enrolment enrolment = student.getDissertationEnrolment();
         if (enrolment == null) {
+        	request.setAttribute("noEnrolment", true);
             return mapping.findForward("thesis-notFound");
         }
         
         Thesis thesis = enrolment.getThesis();
-        if (thesis == null) {
+        if (thesis == null || thesis.isDraft() || thesis.isSubmitted()) {
+        	request.setAttribute("noThesis", true);
+        	request.setAttribute("proposal", enrolment.getDissertationProposal());
+        	
             return mapping.findForward("thesis-notFound");
         }
         

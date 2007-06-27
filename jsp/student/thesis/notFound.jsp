@@ -9,6 +9,22 @@
 
 <div class="infoop2">
     <p>
-        <bean:message key="label.student.thesis.notFound"/>
+    	<logic:present name="noEnrolment">
+	        <bean:message key="label.student.thesis.notFound"/>
+        </logic:present>
+    	<logic:present name="noThesis">
+	        <bean:message key="label.student.thesis.jury.notFound"/>
+        </logic:present>
     </p>
 </div>
+
+<logic:notEmpty name="proposal">
+	<h3><bean:message key="title.student.thesis.proposal"/></h3>
+	
+	<fr:view name="proposal" schema="thesis.proposal.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+			<fr:property name="columnClasses" value="width12em,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>

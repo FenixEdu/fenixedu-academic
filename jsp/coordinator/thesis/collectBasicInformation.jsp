@@ -11,6 +11,10 @@
 
 <h2><bean:message key="title.coordinator.thesis.create"/></h2>
 
+<div class="infoop2">
+	<p class="mvert0"><bean:message key="message.coordinator.thesis.collectBasicInformation"/></p>
+</div>
+
 <div class="dinline forminline">
     <fr:form action="<%= String.format("/manageThesis.do?method=createProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
         <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit">

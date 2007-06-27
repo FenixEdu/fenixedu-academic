@@ -19,11 +19,18 @@
         </html:link>
     </li>
     <logic:equal name="thesis" property="valid" value="true">
-        <li>
-            <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="label.coordinator.list.submitted.thesis.print"/>
-            </html:link>
-        </li>
+	    <logic:equal name="thesis" property="submitted" value="true">
+	        <li>
+	            <html:link page="<%= String.format("/manageThesis.do?method=cancelApprovalRequest&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+	                <bean:message key="label.coordinator.submitted.cancelRequest"/>
+	            </html:link>
+	        </li>
+	        <li>
+	            <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+	                <bean:message key="label.coordinator.list.submitted.thesis.print"/>
+	            </html:link>
+	        </li>
+        </logic:equal>
     </logic:equal>
 </ul>
 
@@ -44,6 +51,13 @@
     </fr:layout>
 </fr:view>
 
+<logic:equal name="thesis" property="valid" value="true">
+    <logic:equal name="thesis" property="submitted" value="true">
+		<div class="infoop2 mtop1">
+			<p class="mvert0"><bean:message key="message.coordinator.thesis.submitted.waiting"/></p>
+		</div>
+	</logic:equal>
+</logic:equal>
 
 <%-- Dissertation --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>

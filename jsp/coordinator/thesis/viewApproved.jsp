@@ -20,7 +20,6 @@
     </li>
 </ul>
 
-
 <%-- Dissertation --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.confirm.details"/></h3>
 
@@ -31,6 +30,11 @@
     </fr:layout>
 </fr:view>
 
+<%-- general process message --%>
+
+<div class="infoop2 mtop1">
+	<p class="mvert0"><bean:message key="message.coordinator.thesis.confirm.process"/></p>
+</div>
 
 <%-- Resumo --%>
 <h3 class="mtop15 mbottom05"><bean:message key="label.thesis.abstract"/></h3>

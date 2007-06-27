@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.RemoveParentInherentFunction;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;

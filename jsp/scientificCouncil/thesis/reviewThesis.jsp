@@ -48,6 +48,13 @@
     </div>
 </logic:present>
 
+<%-- general process message --%>
+<logic:notPresent name="confirmApprove">
+	<div class="infoop2">
+		<p class="mvert0"><bean:message key="message.scientificCouncil.thesis.confirmed.process"/></p>
+	</div>
+</logic:notPresent>
+
 <%-- Dissertation --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.evaluation.details"/></h3>
 

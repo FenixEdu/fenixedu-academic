@@ -11656,6 +11656,15 @@
         </filterChains>
     </service>   
     <service>
+        <name>CancelSubmitThesis</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CancelSubmitThesis</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="ScientificCommissionAuthorization"/>
+        </filterChains>
+    </service>   
+    <service>
         <name>CreateThesisProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal</implementationClass>
         <description></description>

@@ -248,7 +248,7 @@
     </slot>
 </schema>
 
-<schema name="thesis.proposal.view" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">
+<schema name="thesis.proposal.view" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal" bundle="APPLICATION_RESOURCES">
 	<slot name="title" key="label.coordinator.title"/>
 	<slot name="orientator" key="label.coordinator.proposal.orientator" layout="null-as-label">
 		<property name="label" value="-"/>

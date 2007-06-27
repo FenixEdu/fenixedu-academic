@@ -437,6 +437,27 @@ public class Thesis extends Thesis_Base {
         setState(ThesisState.SUBMITTED);
     }
 
+    /// SUBMITTED -> DRAFT
+    public void cancelSubmit() {
+    	switch (getState()) {
+		case SUBMITTED:
+			break;
+		case APPROVED:
+			throw new DomainException("thesis.submit.cancel.alreadyApproved");
+		case DRAFT:
+			if (isRejected()) {
+				throw new DomainException("thesis.submit.cancel.alreadyRejected");
+			}
+		default:
+			throw new DomainException("thesis.submit.cancel.unable");
+		}
+    	
+    	setSubmission(null); // really undo step
+        setSubmitter(null);
+    	
+    	setState(ThesisState.DRAFT);
+    }
+
     public boolean isValid() {
         return getConditions().isEmpty();
     }

@@ -31,6 +31,11 @@
     </fr:layout>
 </fr:view>
 
+<%-- general process information --%>
+<div class="infoop2 mtop1">
+	<p class="mvert0"><bean:message key="message.scientificCouncil.thesis.evaluated.process"/></p>
+</div>
+
 <h3 class="mtop15 mbottom05"><bean:message key="label.thesis.abstract"/></h3>
 
 <logic:notEqual name="thesis" property="thesisAbstractInBothLanguages" value="true">

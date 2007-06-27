@@ -68,6 +68,24 @@
     </fr:form>
 </logic:present>
 
+<%-- general process message, under a notPresent to avoid having two message boxes next to each other --%>
+<logic:equal name="thesis" property="submitted" value="true">
+	<logic:notPresent name="confirmReject">
+		<div class="infoop2">
+			<strong><bean:message key="label.attention"/>:</strong><br/>
+			<p class="mvert0"><bean:message key="message.scientificCouncil.thesis.proposal.process"/></p>
+		</div>
+	</logic:notPresent>
+</logic:equal>
+
+<logic:equal name="thesis" property="approved" value="true">
+	<logic:notPresent name="confirmReject">
+		<div class="infoop2">
+			<p class="mvert0"><bean:message key="message.scientificCouncil.thesis.approved.proposal.process"/></p>
+		</div>
+	</logic:notPresent>
+</logic:equal>
+
 <%-- Student information--%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.dissertation" /></h3>
 

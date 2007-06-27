@@ -646,6 +646,24 @@ public class ManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("view-submitted");
     }
 
+    public ActionForward cancelApprovalRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        if (thesis == null) {
+            return listThesis(mapping, actionForm, request, response);
+        }
+
+        try {
+            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+            executeService("CancelSubmitThesis", degreeCurricularPlan, thesis);
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+            return viewSubmitted(mapping, actionForm, request, response);
+        }
+        
+        return listThesis(mapping, actionForm, request, response);
+    }
+
     // Approved
     
     public ActionForward viewApproved(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
