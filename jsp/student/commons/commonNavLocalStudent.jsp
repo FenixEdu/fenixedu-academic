@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <ul>
+<%--
+	<li class="navheader"><bean:message key="label.transition" bundle="STUDENT_RESOURCES"/></li>
+	<li><html:link page="/bolonhaTransitionManagement.do?method=prepare" titleKey="label.bolonha"><bean:message key="label.bolonha"/></html:link></li>
+--%>	
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
 	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
@@ -44,4 +48,5 @@
 			<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
 		</ul>
 	</li>
+
 </ul>
