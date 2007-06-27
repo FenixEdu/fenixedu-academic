@@ -27,38 +27,30 @@
 			<% if (strikeText) { %>
 				<strike>
 			<% } %>
-			<logic:equal name="equivalencePlanEntry" property="courseGroupEntry" value="true">
-				<span style="border-bottom: 1px dotted #aaa;">
-					<bean:write name="equivalencePlanEntry" property="oldCourseGroup.name"/>
-				</span>
-				==>
-				<span style="border-bottom: 1px dotted #aaa;">
-					<bean:write name="equivalencePlanEntry" property="newCourseGroup.name"/>
-				</span>
-			</logic:equal>
-			<logic:equal name="equivalencePlanEntry" property="curricularCourseEntry" value="true">
-				<logic:iterate id="curricularCourseFromList1" indexId="i1" name="equivalencePlanEntry" property="oldCurricularCourses">
+				<logic:iterate id="degreeModuleFromList1" indexId="i1" name="equivalencePlanEntry" property="oldDegreeModules">
 					<span style="border-bottom: 1px dotted #aaa;">
 						<logic:notEqual name="i1" value="0">
 							<strong>
-								<bean:message key="AND" bundle="ENUMERATION_RESOURCES"/>
+								<bean:message name="equivalencePlanEntry" property="sourceDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 							</strong>
 						</logic:notEqual>
-						<bean:write name="curricularCourseFromList1" property="name"/>
+						<bean:write name="degreeModuleFromList1" property="name"/>
 					</span>
 				</logic:iterate>
 				==>
-				<logic:iterate id="curricularCourseFromList2" indexId="i2" name="equivalencePlanEntry" property="newDegreeModules">
+				<logic:iterate id="degreeModuleFromList2" indexId="i2" name="equivalencePlanEntry" property="newDegreeModules">
 					<span style="border-bottom: 1px dotted #aaa;">
 						<logic:notEqual name="i2" value="0">
 							<strong>
 								<bean:message name="equivalencePlanEntry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 							</strong>
 						</logic:notEqual>
-						<bean:write name="curricularCourseFromList2" property="name"/>
+						<bean:write name="degreeModuleFromList2" property="name"/>
 					</span>
 				</logic:iterate>
-			</logic:equal>
+				<logic:notEmpty name="equivalencePlanEntry" property="ectsCredits">
+					(<bean:write name="equivalencePlanEntry" property="ectsCredits"/> <bean:message key="label.credits"/>)
+				</logic:notEmpty>
 			<% if (strikeText) { %>
 				</strike>
 			<% } %>

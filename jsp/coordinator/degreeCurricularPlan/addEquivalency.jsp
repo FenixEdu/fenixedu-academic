@@ -17,97 +17,100 @@
 </p>
 
 <fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
-	<p class="mtop2"><bean:message key="message.origin.curricular.course"/>:</p>
+	<p class="mtop2"><bean:message key="message.set.non.list.fields"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
-				<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.addOriginCurricularCourse"
-						name="curricularCourseEquivalencePlanEntryCreator"
-						type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"
-						schema="CurricularCourseEquivalencePlanEntry.Creator.addOriginCurricularCourse">
+				<fr:edit id="EquivalencePlanEntry.Creator.setNonListFields"
+						name="equivalencePlanEntryCreator"
+						type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator"
+						schema="EquivalencePlanEntry.Creator.setNonListFields">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
         				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				    </fr:layout>
 				</fr:edit>
-			</td>
-			<td>
-				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
 			</td>
 		</tr>
-	</table>
-	<p class="mtop2"><bean:message key="message.destination.curricular.course"/>:</p>
-	<table class="mtop0 tdmiddle">
 		<tr>
-			<td>
-				<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.addDestinationCurricularCourse"
-						name="curricularCourseEquivalencePlanEntryCreator"
-						type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"
-						schema="CurricularCourseEquivalencePlanEntry.Creator.addDestinationCurricularCourse">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
-        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				    </fr:layout>
-				</fr:edit>
-			</td>
-			<td>
-				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
-			</td>
-		</tr>
-	</table>
-	<p class="mtop2"><bean:message key="message.set.destination.curricular.course.operator"/>:</p>
-	<table class="mtop0 tdmiddle">
-		<tr>
-			<td>
-				<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.setDestinationCurricularCourseOperator"
-						name="curricularCourseEquivalencePlanEntryCreator"
-						type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"
-						schema="CurricularCourseEquivalencePlanEntry.Creator.setDestinationCurricularCourseOperator">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
-        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				    </fr:layout>
-				</fr:edit>
-			</td>
 			<td>
 				<html:submit><bean:message key="label.set" bundle="APPLICATION_RESOURCES"/></html:submit>
+			</td>
+		</tr>
+	</table>
+	<p class="mtop2"><bean:message key="message.origin.degree.module"/>:</p>
+	<table class="mtop0 tdmiddle">
+		<tr>
+			<td>
+				<fr:edit id="EquivalencePlanEntry.Creator.addOriginDegreeModule"
+						name="equivalencePlanEntryCreator"
+						type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator"
+						schema="EquivalencePlanEntry.Creator.addOriginDegreeModule">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
+        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
+				</fr:edit>
+			</td>
+			<td>
+				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
+			</td>
+		</tr>
+	</table>
+	<p class="mtop2"><bean:message key="message.destination.degree.module"/>:</p>
+	<table class="mtop0 tdmiddle">
+		<tr>
+			<td>
+				<fr:edit id="EquivalencePlanEntry.Creator.addDestinationDegreeModule"
+						name="equivalencePlanEntryCreator"
+						type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator"
+						schema="EquivalencePlanEntry.Creator.addDestinationDegreeModule">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
+        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
+				</fr:edit>
+			</td>
+			<td>
+				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
 			</td>
 		</tr>
 	</table>
 </fr:form>
 
 
-<logic:notEmpty name="curricularCourseEquivalencePlanEntryCreator" property="originCurricularCourses">
-<logic:notEmpty name="curricularCourseEquivalencePlanEntryCreator" property="destinationCurricularCourses">
+<logic:notEmpty name="equivalencePlanEntryCreator" property="originDegreeModules">
+<logic:notEmpty name="equivalencePlanEntryCreator" property="destinationDegreeModules">
 
 	<p class="mtop2"><bean:message key="label.equivalency.to.create"/></p>	
 	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
-		<logic:iterate id="curricularCourseFromList1" indexId="i1" name="curricularCourseEquivalencePlanEntryCreator" property="originCurricularCourses">
+		<logic:iterate id="degreeModuleFromList1" indexId="i1" name="equivalencePlanEntryCreator" property="originDegreeModules">
 			<span style="border-bottom: 1px dotted #aaa;">
 				<logic:notEqual name="i1" value="0">
 					<strong>
-						<bean:message key="AND" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message name="equivalencePlanEntryCreator" property="originLogicOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
-				<bean:write name="curricularCourseFromList1" property="name"/>
+				<bean:write name="degreeModuleFromList1" property="name"/>
 			</span>
 		</logic:iterate>
 		==>
-		<logic:iterate id="curricularCourseFromList2" indexId="i2" name="curricularCourseEquivalencePlanEntryCreator" property="destinationCurricularCourses">
+		<logic:iterate id="degreeModuleFromList2" indexId="i2" name="equivalencePlanEntryCreator" property="destinationDegreeModules">
 			<span style="border-bottom: 1px dotted #aaa;">
 				<logic:notEqual name="i2" value="0">
 					<strong>
-						<bean:message name="curricularCourseEquivalencePlanEntryCreator" property="logicOperator.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message name="equivalencePlanEntryCreator" property="destinationLogicOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
-				<bean:write name="curricularCourseFromList2" property="name"/>
+				<bean:write name="degreeModuleFromList2" property="name"/>
 			</span>
 		</logic:iterate>
+		(<bean:write name="equivalencePlanEntryCreator" property="ectsCredits"/> <bean:message key="label.credits"/>)
 	</div>
 
 	<fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
-		<fr:edit id="CurricularCourseEquivalencePlanEntry.Creator.create" name="curricularCourseEquivalencePlanEntryCreator" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry$CurricularCourseEquivalencePlanEntryCreator"
-				schema="CurricularCourseEquivalencePlanEntry.Creator.create">
+		<fr:edit id="EquivalencePlanEntry.Creator.create" name="equivalencePlanEntryCreator" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry$EquivalencePlanEntryCreator"
+				schema="EquivalencePlanEntry.Creator.create">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
         		<fr:property name="columnClasses" value=",,tdclear tderror1"/>

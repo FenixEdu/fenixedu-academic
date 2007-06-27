@@ -13,18 +13,4 @@
 
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" table="EQUIVALENCE_PLAN_ENTRY">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry"/>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry"/>
 </class-descriptor>
-
-
-	<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry" table="EQUIVALENCE_PLAN_ENTRY">
-		
-	</class-descriptor>
-	
-
-	<class-descriptor class="net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry" table="EQUIVALENCE_PLAN_ENTRY">
-		
-	</class-descriptor>
-
-

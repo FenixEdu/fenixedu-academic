@@ -371,6 +371,7 @@ public class SQLUpdateGenerator {
 	fileWriter.write("\n\n");
 
 	fileWriter.write(fileContents);
+	fileWriter.flush();
 	fileWriter.close();
     }
 

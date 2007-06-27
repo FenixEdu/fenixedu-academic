@@ -11,10 +11,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.EquivalencePlan;
+import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
@@ -305,5 +306,15 @@ public abstract class DegreeModule extends DegreeModule_Base {
     abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
+
+    public Set<EquivalencePlanEntry> getNewDegreeModuleEquivalencePlanEntries(final EquivalencePlan equivalencePlan) {
+	final Set<EquivalencePlanEntry> equivalencePlanEntries = new TreeSet<EquivalencePlanEntry>(EquivalencePlanEntry.COMPARATOR);
+	for (final EquivalencePlanEntry equivalencePlanEntry : getNewEquivalencePlanEntriesSet()) {
+	    if (equivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
+		equivalencePlanEntries.add(equivalencePlanEntry);
+	    }
+	}
+	return equivalencePlanEntries;
+    }
 
 }

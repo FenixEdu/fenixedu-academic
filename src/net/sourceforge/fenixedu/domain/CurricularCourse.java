@@ -1834,16 +1834,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
-    public Set<CurricularCourseEquivalencePlanEntry> getNewCurricularCourseEquivalencePlanEntry(final EquivalencePlan equivalencePlan) {
-	final Set<CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = new TreeSet<CurricularCourseEquivalencePlanEntry>(CurricularCourseEquivalencePlanEntry.COMPARATOR_BY_OLD_CURRICULAR_COURSE_NAMES);
-	for (final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry : getNewEquivalencePlanEntries()) {
-	    if (curricularCourseEquivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
-		curricularCourseEquivalencePlanEntries.add(curricularCourseEquivalencePlanEntry);
-	    }
-	}
-	return curricularCourseEquivalencePlanEntries;
-    }
-
     public List<CurricularCourseEquivalence> getCurricularCourseEquivalencesFor(final CurricularCourse equivalentCurricularCourse) {
 	final List<CurricularCourseEquivalence> result = new ArrayList<CurricularCourseEquivalence>();
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : getOldCurricularCourseEquivalences()) {

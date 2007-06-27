@@ -24,17 +24,17 @@
 				<td class="highlight2 smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;curricularCourseID="
+							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 							+ curricularCourse.getIdInternal() %>">
 						<bean:message key="link.equivalency.add"/>
 					</html:link>
 				</td>
 				<td class="smalltxt" align="right" style="width: 22em;">
 					<%
-						java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry> curricularCourseEquivalencePlanEntries = curricularCourse.getNewCurricularCourseEquivalencePlanEntry(equivalencePlan);
-						request.setAttribute("curricularCourseEquivalencePlanEntries", curricularCourseEquivalencePlanEntries);
+						java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> equivalencePlanEntries = curricularCourse.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
+						request.setAttribute("equivalencePlanEntries", equivalencePlanEntries);
 					%>					
-					<bean:size id="numElements" name="curricularCourseEquivalencePlanEntries"/>
+					<bean:size id="numElements" name="equivalencePlanEntries"/>
 					<logic:equal name="numElements" value="0">
 						<span style="color: #888">
 							<bean:message key="message.curricular.course.has.no.equivalencies"/>
@@ -43,30 +43,11 @@
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
 								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;curricularCourseID="
+								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 								+ curricularCourse.getIdInternal() %>">
 							<bean:message key="link.equivalencies.for.curricular.course.view"/>
 						</html:link>
 					</logic:notEqual>
-<%--
-					<logic:iterate id="curricularCourseEquivalencePlanEntry" type="net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry" name="curricularCourseEquivalencePlanEntries">
-						(
-						<logic:iterate id="oldCurricularCourse" indexId="i" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="curricularCourseEquivalencePlanEntry" property="oldCurricularCoursesSortedByName">
-							<logic:notEqual name="i" value="0">
-								+
-							</logic:notEqual>
-							<bean:write name="oldCurricularCourse" property="name"/>
-						</logic:iterate>
-						)
-						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;curricularCourseEquivalencePlanEntryID="
-								+ curricularCourseEquivalencePlanEntry.getIdInternal() %>">
-							<bean:message key="link.delete"/>
-						</html:link>
-						<br/>
-					</logic:iterate>
---%>
 				</td>
 			</tr>
 		</table>
@@ -85,19 +66,19 @@
 					<bean:write name="degreeModule" property="name"/>
 				</th>
 				<th class="smalltxt" align="center" style="width: 14em;">
-					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddCourseGroupEquivalency&amp;degreeCurricularPlanID="
+					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;courseGroupID="
+							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 							+ courseGroup.getIdInternal() %>">
 						<bean:message key="link.equivalency.add"/>
 					</html:link>
 				</th>
 				<th class="smalltxt" align="right" style="width: 22em;">
 					<%
-						java.util.Set<net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry> courseGroupEquivalencePlanEntries  = courseGroup.getEquivalencePlanEntrySet();
-						request.setAttribute("courseGroupEquivalencePlanEntries", courseGroupEquivalencePlanEntries);
+						java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> equivalencePlanEntries = courseGroup.getNewDegreeModuleEquivalencePlanEntries(equivalencePlan);
+						request.setAttribute("equivalencePlanEntries", equivalencePlanEntries);
 					%>					
-					<bean:size id="numElements" name="courseGroupEquivalencePlanEntries"/>
+					<bean:size id="numElements" name="equivalencePlanEntries"/>
 					<logic:equal name="numElements" value="0">
 						<span style="color: #888">
 							<bean:message key="message.course.group.has.no.equivalencies"/>
@@ -106,7 +87,7 @@
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
 								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;courseGroupID="
+								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 								+ courseGroup.getIdInternal() %>">
 							<bean:message key="link.equivalencies.for.course.group.view"/>
 						</html:link>

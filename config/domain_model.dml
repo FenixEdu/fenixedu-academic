@@ -5414,22 +5414,10 @@ class net.sourceforge.fenixedu.domain.EquivalencePlan extends net.sourceforge.fe
 
 class net.sourceforge.fenixedu.domain.EquivalencePlanEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEquivalencePlan;
-	String ojbConcreteClass;
+	LogicOperator sourceDegreeModulesOperator;
+	LogicOperator newDegreeModulesOperator;
+	Double ectsCredits;
 }
-
-	class net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
-		Integer keyCourseGroupEquivalencePlanEntry;
-		Integer keyPreviousCourseGroupForNewCurricularCourses;
-		LogicOperator sourceDegreeModulesOperator;
-		LogicOperator newDegreeModulesOperator;
-		Double ectsCredits;
-	}
-	
-	class net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry extends net.sourceforge.fenixedu.domain.EquivalencePlanEntry {
-		Integer keyNewCourseGroup;
-		Integer keyOldCourseGroup;
-	}
-
 
 /*
  * Relations definitions
@@ -13234,54 +13222,22 @@ relation StudentCurricularPlanEquivalencePlanEntryToRemove {
 	}
 }
 
-relation CurricularCourseEquivalencePlanEntryNewDegreeModule {
+relation EquivalencePlanEntryNewDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole newDegreeModules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry playsRole newEquivalencePlanEntries {
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole newEquivalencePlanEntries {
 		multiplicity *;
 	}
 }
 
-relation CurricularCourseEquivalencePlanEntryOldCurricularCourse {
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses {
+relation EquivalencePlanEntryOldDegreeModule {
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole oldDegreeModules {
 		multiplicity *;
 	}
-	
-	net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry playsRole oldEquivalencePlanEntries {
+	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole oldEquivalencePlanEntries {
 		multiplicity *;
 	}
-}
-
-relation CurricularCourseEquivalencePlanEntryPreviousCourseGroup {
-	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole previousCourseGroupForNewCurricularCourses;
-	net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry playsRole curricularCourseEquivalencePlanEntries {
-		multiplicity *;
-	}
-}
-
-relation CourseGroupEquilvancePlanEntryNewCourseGroup {
-	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole newCourseGroup;
-	
-	net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry playsRole equivalencePlanEntry {
-		multiplicity *;
-	}
-}
-
-relation CourseGroupEquivalencePlanEntryOldCourseGroup {
-	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole oldCourseGroup;
-	
-	net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry playsRole oldEquivalencePlanEntries {
-		multiplicity *;
-	}
-}
-
-relation CourseGroupEquivalencePlanEntryCurricularCourseEquivalencePlanEntry {
-	net.sourceforge.fenixedu.domain.CurricularCourseEquivalencePlanEntry playsRole curricularCourseEquivalencePlanEntries {
-		multiplicity *;
-	}
-	
-	net.sourceforge.fenixedu.domain.CourseGroupEquivalencePlanEntry playsRole courseGroupEquivalencePlanEntry;
 }
 
 relation PersistentGroupMembersUnit {

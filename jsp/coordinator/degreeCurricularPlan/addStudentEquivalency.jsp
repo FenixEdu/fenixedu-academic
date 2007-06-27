@@ -19,6 +19,27 @@
 
 <fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal()  
 			+ "&amp;studentNumber=" + student.getNumber() %>">
+	<p class="mtop2"><bean:message key="message.set.non.list.fields"/>:</p>
+	<table class="mtop0 tdmiddle">
+		<tr>
+			<td>
+				<fr:edit id="StudentEquivalencyPlanEntryCreator.setNonListFields"
+						name="studentEquivalencyPlanEntryCreator"
+						type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
+						schema="StudentEquivalencyPlanEntryCreator.setNonListFields">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
+        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				    </fr:layout>
+				</fr:edit>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<html:submit><bean:message key="label.set" bundle="APPLICATION_RESOURCES"/></html:submit>
+			</td>
+		</tr>
+	</table>
 	<p class="mtop2"><bean:message key="message.origin.degree.module"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
@@ -38,7 +59,7 @@
 			</td>
 		</tr>
 	</table>
-	<p class="mtop2"><bean:message key="message.destination.curricular.course"/>:</p>
+	<p class="mtop2"><bean:message key="message.destination.degree.module"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -57,25 +78,6 @@
 			</td>
 		</tr>
 	</table>
-	<p class="mtop2"><bean:message key="message.set.destination.degree.module.operator"/>:</p>
-	<table class="mtop0 tdmiddle">
-		<tr>
-			<td>
-				<fr:edit id="StudentEquivalencyPlanEntryCreator.addDestinationOperator"
-						name="studentEquivalencyPlanEntryCreator"
-						type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator"
-						schema="StudentEquivalencyPlanEntryCreator.addDestinationOperator">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thright thlight thmiddle dinline"/>
-        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				    </fr:layout>
-				</fr:edit>
-			</td>
-			<td>
-				<html:submit><bean:message key="label.set" bundle="APPLICATION_RESOURCES"/></html:submit>
-			</td>
-		</tr>
-	</table>
 </fr:form>
 
 
@@ -88,7 +90,7 @@
 			<span style="border-bottom: 1px dotted #aaa;">
 				<logic:notEqual name="i1" value="0">
 					<strong>
-						<bean:message key="AND" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message name="studentEquivalencyPlanEntryCreator" property="originLogicOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
 				<bean:write name="degreeModuleFromList1" property="name"/>
@@ -99,12 +101,13 @@
 			<span style="border-bottom: 1px dotted #aaa;">
 				<logic:notEqual name="i2" value="0">
 					<strong>
-						<bean:message name="studentEquivalencyPlanEntryCreator" property="destinationOperator.name" bundle="ENUMERATION_RESOURCES"/>
+						<bean:message name="studentEquivalencyPlanEntryCreator" property="destinationLogicOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
 				<bean:write name="degreeModuleFromList2" property="name"/>
 			</span>
 		</logic:iterate>
+		(<bean:write name="studentEquivalencyPlanEntryCreator" property="ectsCredits"/> <bean:message key="label.credits"/>)
 	</div>
 
 	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() 

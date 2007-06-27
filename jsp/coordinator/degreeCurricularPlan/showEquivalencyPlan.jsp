@@ -59,18 +59,13 @@
 		</html:link>
 		<br/>
 		<br/>
-		<logic:present name="curricularCourseEquivalencePlanEntries">
-			<bean:define id="curricularCourseEntries" name="curricularCourseEquivalencePlanEntries" toScope="request"/>
+		<logic:present name="equivalencePlanEntries">
+			<bean:define id="entries" name="equivalencePlanEntries" toScope="request"/>
 			<jsp:include page="showEquivalencyPlanTable.jsp"/>
 		</logic:present>
-		<logic:present name="courseGroupEquivalencePlanEntries">
-			<bean:define id="courseGroupEntries" name="courseGroupEquivalencePlanEntries" toScope="request"/>
-			<jsp:include page="showEquivalencyPlanTable.jsp"/>
-		</logic:present>
-		<logic:notPresent name="curricularCourseEquivalencePlanEntries">
+		<logic:notPresent name="equivalencePlanEntries">
 			<logic:notPresent name="courseGroupEquivalencePlanEntries">
-				<bean:define id="curricularCourseEntries" name="degreeCurricularPlan" property="equivalencePlan.orderedCurricularCourseEntries" toScope="request"/>
-				<bean:define id="courseGroupEntries" name="degreeCurricularPlan" property="equivalencePlan.orderedCourseGroupEntries" toScope="request"/>
+				<bean:define id="entries" name="degreeCurricularPlan" property="equivalencePlan.orderedEntries" toScope="request"/>
 				<jsp:include page="showEquivalencyPlanTable.jsp"/>
 			</logic:notPresent>
 		</logic:notPresent>

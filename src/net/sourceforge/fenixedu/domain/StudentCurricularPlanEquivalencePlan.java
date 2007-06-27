@@ -90,69 +90,21 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
     }
 
     private boolean hasAllEnrolmentsFor(final EquivalencePlanEntry equivalencePlanEntry, final StudentCurricularPlan studentCurricularPlan) {
-	if (equivalencePlanEntry.isCourseGroupEntry()) {
-	    final CourseGroupEquivalencePlanEntry courseGroupEquivalencePlanEntry = (CourseGroupEquivalencePlanEntry) equivalencePlanEntry;
-	    return studentCurricularPlan.hasEnrolmentOrAprovalInCurriculumModule(courseGroupEquivalencePlanEntry.getOldCourseGroup());
-	} else if (equivalencePlanEntry.isCurricularCourseEntry()) {
-	    final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry = (CurricularCourseEquivalencePlanEntry) equivalencePlanEntry;
-	    boolean isApprovedInAll = true;
-	    for (final CurricularCourse curricularCourse : curricularCourseEquivalencePlanEntry.getOldCurricularCoursesSet()) {
-		isApprovedInAll &= studentCurricularPlan.hasEnrolmentOrAprovalInCurriculumModule(curricularCourse);
-	    }
-	    return isApprovedInAll;
-	} else {
-	    throw new Error("unknown.type: " + equivalencePlanEntry.getClass().getName());
+	boolean isApprovedInAll = true;
+	for (final DegreeModule degreeModule : equivalencePlanEntry.getOldDegreeModulesSet()) {
+	    isApprovedInAll &= studentCurricularPlan.hasEnrolmentOrAprovalInCurriculumModule(degreeModule);
 	}
+	return isApprovedInAll;
     }
 
     private boolean matchOrigin(final EquivalencePlanEntry equivalencePlanEntry, final DegreeModule degreeModule) {
-	if (equivalencePlanEntry.isCourseGroupEntry()) {
-	    final CourseGroupEquivalencePlanEntry courseGroupEquivalencePlanEntry = (CourseGroupEquivalencePlanEntry) equivalencePlanEntry;
-	    return courseGroupEquivalencePlanEntry.getOldCourseGroup() == degreeModule;
-	} else if (equivalencePlanEntry.isCurricularCourseEntry()) {
-	    final CurricularCourseEquivalencePlanEntry curricularCourseEquivalencePlanEntry = (CurricularCourseEquivalencePlanEntry) equivalencePlanEntry;
-	    for (final CurricularCourse curricularCourse : curricularCourseEquivalencePlanEntry.getOldCurricularCoursesSet()) {
-		if (curricularCourse == degreeModule) {
-		    return true;
-		}
+	for (final DegreeModule otherDegreeModule : equivalencePlanEntry.getOldDegreeModulesSet()) {
+	    if (otherDegreeModule == degreeModule) {
+		return true;
 	    }
-	    return false;
-	} else {
-	    throw new Error("unknown.type: " + equivalencePlanEntry.getClass().getName());
 	}
+	return false;
     }
-
-//    public Set<EquivalencePlanEntry> getEquivalencePlanEntries(final DegreeCurricularPlan degreeCurricularPlan, final CurriculumModule curriculumModule) {
-//	final Set<EquivalencePlanEntry> equivalencePlanEntries = new HashSet<EquivalencePlanEntry>();
-//
-//	for (final EquivalencePlanEntry equivalencePlanEntry : degreeCurricularPlan.getEquivalencePlan().getEntriesSet()) {
-//	    if (!getEntriesToRemoveSet().contains(equivalencePlanEntry) && getOldStudentCurricularPlan().hasEnrolmentOrAprovalInCurriculumModule(curriculumModule)) {
-//		equivalencePlanEntries.add(equivalencePlanEntry);
-//	    }
-//	}
-//
-//	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
-//	    if (equivalencePlanEntry.isFor(degreeCurricularPlan)
-//		    && (curriculumModule == null || equivalencePlanEntry.isFor(curriculumModule.getDegreeModule()))) {
-//		equivalencePlanEntries.add(equivalencePlanEntry);
-//	    }
-//	}
-//
-//	return equivalencePlanEntries;	
-//    }
-
-//    public Set<EquivalencePlanEntry> getRemovedEquivalencePlanEntries(final DegreeCurricularPlan degreeCurricularPlan, final CurriculumModule curriculumModule) {
-//	final Set<EquivalencePlanEntry> equivalencePlanEntries = new HashSet<EquivalencePlanEntry>();
-//
-//	for (final EquivalencePlanEntry equivalencePlanEntry : getEntriesToRemoveSet()) {
-//	    if (equivalencePlanEntry.isFor(degreeCurricularPlan)
-//		    && (curriculumModule == null || equivalencePlanEntry.isFor(curriculumModule.getDegreeModule()))) {
-//		equivalencePlanEntries.add(equivalencePlanEntry);
-//	    }
-//	}
-//
-//	return equivalencePlanEntries;	
-//    }
 
     public EquivalencyPlanEntryCurriculumModuleWrapper getRootEquivalencyPlanEntryCurriculumModuleWrapper(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getEquivalencyPlanEntryCurriculumModuleWrapper(degreeCurricularPlan, getOldStudentCurricularPlan().getRoot());

@@ -70,8 +70,8 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
 	final CurriculumModule curriculumModule = getCurriculumModule(request);
 	if (curriculumModule != null) {
-	    studentEquivalencyPlanEntryCreator.setOriginDegreeModule(curriculumModule.getDegreeModule());
-	    studentEquivalencyPlanEntryCreator.addOriginDegreeModule(curriculumModule.getDegreeModule());
+	    studentEquivalencyPlanEntryCreator.setOriginDegreeModuleToAdd(curriculumModule.getDegreeModule());
+	    studentEquivalencyPlanEntryCreator.addOrigin(curriculumModule.getDegreeModule());
 	}
 
 	request.setAttribute("studentEquivalencyPlanEntryCreator", studentEquivalencyPlanEntryCreator);
