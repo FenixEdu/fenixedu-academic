@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -402,15 +403,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return studentCurricularPlan;
     }
 
-    public List<ExecutionDegree> getSortedExecutionDegrees() {
-	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>(getExecutionDegrees());
-
-	Collections.sort(result,
-		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
-
-	return result;
-    }
-
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
@@ -432,12 +424,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return result;
 	}
 
-	for (final ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
-	    if (result == null || result.isBefore(executionDegree)) {
-		result = executionDegree;
+	final List<ExecutionDegree> sortedExecutionDegrees = getExecutionDegrees();
+	Collections.sort(sortedExecutionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	
+	if(!sortedExecutionDegrees.isEmpty() 
+		&& sortedExecutionDegrees.iterator().next().getExecutionYear().isAfter(currentExecutionYear)) {
+	    return sortedExecutionDegrees.iterator().next();
+	}
+	
+	final ListIterator<ExecutionDegree> iterator = sortedExecutionDegrees.listIterator();
+	while(iterator.hasPrevious()) {
+	    final ExecutionDegree executionDegree = iterator.previous();
+	    if (executionDegree.getExecutionYear().isBeforeOrEquals(currentExecutionYear)) {
+		return executionDegree;
 	    }
 	}
-	return result;
+	
+	return null;
     }
 
     public ExecutionDegree getFirstExecutionDegree() {
@@ -1483,7 +1486,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return Campus.readActiveCampusByName("Alameda");
     }
-    
+
     @Override
     public Integer getDegreeDuration() {
 	final Integer degreeDuration = super.getDegreeDuration();
