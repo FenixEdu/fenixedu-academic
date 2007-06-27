@@ -31,11 +31,11 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixDateAndTimeDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

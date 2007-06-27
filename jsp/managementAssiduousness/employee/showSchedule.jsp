@@ -57,22 +57,12 @@
 						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
 							<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
 						</html:link>
-						<%
-							net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-        		            	.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-							if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
-						%>
-						, 
-						<logic:equal name="schedule" property="exception" value="false">
-							<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
-								<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
-							</html:link>
-						</logic:equal>
-						<logic:equal name="schedule" property="exception" value="true">
-							<html:link page="<%="/employeeExceptionSchedule.do?method=prepareAssociateExceptionWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
-								<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
-							</html:link>
-						</logic:equal>
+						<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+        		            .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
+						if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
+						,<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
+							<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+						</html:link>
 						<% } %>
 					</logic:equal>
 					<logic:equal name="schedule" property="isEditable" value="false">
@@ -85,11 +75,9 @@
 			</logic:iterate>	
 		</table>
 			
-		<%
-			net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-	            .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
-			if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
-		%>
+		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+	            .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
+		if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 		<logic:empty name="employeeScheduleBean" property="schedule">
 			<ul>
 				<li>

@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -1455,7 +1456,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return getState().equals(DegreeCurricularPlanState.PAST);
     }
 
-    public net.sourceforge.fenixedu.domain.space.Campus getCampus(final ExecutionYear executionYear) {
+    public Campus getCampus(final ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree.getCampus().getSpaceCampus();
@@ -1465,7 +1466,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
-    public net.sourceforge.fenixedu.domain.space.Campus getCurrentCampus() {
+    public Campus getCurrentCampus() {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
@@ -1476,14 +1477,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
-    public net.sourceforge.fenixedu.domain.space.Campus getLastCampus() {
+    public Campus getLastCampus() {
 	if (hasAnyExecutionDegrees()) {
 	    return getMostRecentExecutionDegree().getCampus().getSpaceCampus();
 	}
-
-	return net.sourceforge.fenixedu.domain.space.Campus.readOldestCampus();
+	return Campus.readActiveCampusByName("Alameda");
     }
-
+    
     @Override
     public Integer getDegreeDuration() {
 	final Integer degreeDuration = super.getDegreeDuration();

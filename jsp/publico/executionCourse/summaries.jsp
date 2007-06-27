@@ -43,13 +43,17 @@
 								<bean:write name="lesson" property="diaSemana"/>
 								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
 								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
-								<bean:write name="lesson" property="roomOccupation.room.nome"/>
+								<logic:notEmpty name="lesson" property="roomOccupation">
+									<bean:write name="lesson" property="roomOccupation.room.nome"/>
+								</logic:notEmpty>
 							</logic:iterate>
 							<logic:iterate id="lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" offset="1">
 								,
 								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
 								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
-								<bean:write name="lesson" property="roomOccupation.room.nome"/>
+								<logic:notEmpty name="lesson" property="roomOccupation">
+									<bean:write name="lesson" property="roomOccupation.room.nome"/>
+								</logic:notEmpty>
 							</logic:iterate>
 						</html:option>
 					</logic:iterate>

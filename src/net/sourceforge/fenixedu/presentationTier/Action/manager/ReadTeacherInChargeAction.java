@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

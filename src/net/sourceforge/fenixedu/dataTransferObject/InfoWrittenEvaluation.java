@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 /**
  * @author Ana e Ricardo
@@ -46,11 +46,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
 
     protected Integer enrolledStudents;
 
-    public List getAssociatedCurricularCourseScope() {
+    public List<InfoCurricularCourseScope> getAssociatedCurricularCourseScope() {
         return associatedCurricularCourseScope;
     }
 
-    public List getAssociatedRoomOccupation() {
+    public List<InfoRoomOccupation> getWrittenEvaluationSpaceOccupations() {
         return associatedRoomOccupation;
     }
 
@@ -86,7 +86,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         associatedCurricularCourseScope = list;
     }
 
-    public void setAssociatedRoomOccupation(List<InfoRoomOccupation> list) {
+    public void setWrittenEvaluationSpaceOccupations(List<InfoRoomOccupation> list) {
         associatedRoomOccupation = list;
     }
 
@@ -118,7 +118,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         enrollmentEndTime = calendar;
     }
 
-    public List getAssociatedExecutionCourse() {
+    public List<InfoExecutionCourse> getAssociatedExecutionCourse() {
         return associatedExecutionCourse;
     }
 
@@ -152,7 +152,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
-            for (RoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()) {
+            for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupations()) {
                 associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
             }
             for (CurricularCourseScope curricularCourseScope : writtenEvaluation

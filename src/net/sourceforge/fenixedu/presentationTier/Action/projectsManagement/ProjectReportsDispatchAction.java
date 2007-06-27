@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpens
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpeningProjectFileReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

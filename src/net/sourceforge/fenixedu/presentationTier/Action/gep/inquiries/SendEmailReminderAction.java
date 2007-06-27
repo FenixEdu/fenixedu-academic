@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInqu
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 

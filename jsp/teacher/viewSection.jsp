@@ -6,5 +6,5 @@
    <tiles:put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
   <tiles:put name="body" value="/teacher/viewSection_bd.jsp" />
  	<tiles:put name="navLocal" value="/teacher/sectionsNavbar.jsp" type="page"/>
-   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+   <tiles:put name="footer" value="/resourceAllocationManager/commonFooterSop.jsp" />
 </tiles:insert>

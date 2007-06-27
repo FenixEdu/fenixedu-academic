@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion;

@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 import net.sourceforge.fenixedu.util.DiaSemana;
 

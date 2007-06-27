@@ -485,3 +485,28 @@
         <property name="moduleOnly" value="true"/>
     </slot>
 </schema>
+
+<schema name="ViewPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES" constructor="name, type"> 	
+	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="type" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="personsCount" key="label.persistent.group.number.of.members" />
+</schema>
+
+<schema name="EditPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 	
+	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="type" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="edit(name, type)" />
+</schema>
+
+<schema name="AddNewMemberToPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 		
+	<slot name="newPersonToMembersList" key="label.responsibility.person.username" layout="username-as-person" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+</schema>
+
+<schema name="PersonInfoWithUsername" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">			
+	<slot name="name"/>
+	<slot name="username"/>		
+</schema>

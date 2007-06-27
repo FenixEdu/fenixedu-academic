@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

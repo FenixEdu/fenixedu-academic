@@ -30,13 +30,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 

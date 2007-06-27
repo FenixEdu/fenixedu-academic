@@ -161,7 +161,7 @@
 			</fr:form>
 			
 			<logic:notEmpty name="punctualRequest" property="genericEvents">
-				<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+				<jsp:include page="../../resourceAllocationManager/roomsPunctualScheduling/legend.jsp" />
 			</logic:notEmpty>
 					
 		</logic:notEqual>

@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.Util;
-import net.sourceforge.fenixedu.util.TipoSala;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,11 +31,7 @@ public class PrepareConsultRoomsFormAction extends FenixContextAction {
             request.setAttribute("publico.buildings", buildings);
 
             //TODO: No futuro, os tipos de salas devem ser lidos da BD
-            List types = new ArrayList();
-            types.add(new LabelValueBean("*", null));
-            types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));
-            types.add(new LabelValueBean("Laboratório", (new Integer(TipoSala.LABORATORIO)).toString()));
-            types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
+            List types = Util.readTypesOfRooms("*", null);
             request.setAttribute("publico.types", types);
 
             return mapping.findForward("Sucess");

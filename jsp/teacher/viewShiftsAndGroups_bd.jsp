@@ -8,7 +8,7 @@
 
 <%@ page import="java.lang.String" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
@@ -340,7 +340,7 @@
 								</td>
 									
 				               	<td>
-				               		<logic:notEmpty name="infoLesson" property="infoSala.nome">
+				               		<logic:notEmpty name="infoLesson" property="infoSala">
 										<bean:write name="infoLesson" property="infoSala.nome"/>
 									</logic:notEmpty>	
 						 		</td>
@@ -398,7 +398,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td>
-								<logic:notEmpty name="infoLesson" property="infoSala.nome">
+								<logic:notEmpty name="infoLesson" property="infoSala">
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</logic:notEmpty>	
 							</td>

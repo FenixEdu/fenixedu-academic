@@ -17,7 +17,7 @@ import javax.servlet.jsp.PageContext;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -464,7 +464,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                             "public.degree.information.label.lack"));
 
                                     // Obter o num de lugares de exame das salas
-                                    List roomOccupation = season1Exam.getAssociatedRoomOccupation();
+                                    List roomOccupation = season1Exam.getWrittenEvaluationSpaceOccupations();
                                     int numLugaresSalas = 0;
 
                                     for (int iterRO = 0; iterRO < roomOccupation.size(); iterRO++) {
@@ -488,7 +488,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("<td>");
                                 }
 
-                                List infoRoomOccupations = season1Exam.getAssociatedRoomOccupation();
+                                List infoRoomOccupations = season1Exam.getWrittenEvaluationSpaceOccupations();
 
                                 if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
                                     if (user.equals("sop")) {
@@ -608,7 +608,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                             "public.degree.information.label.lack"));
 
                                     // Obter o num de lugares de exame das salas
-                                    List roomOccupation = season2Exam.getAssociatedRoomOccupation();
+                                    List roomOccupation = season2Exam.getWrittenEvaluationSpaceOccupations();
                                     int numLugaresSalas = 0;
 
                                     for (int iterRO = 0; iterRO < roomOccupation.size(); iterRO++) {
@@ -632,7 +632,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("<td>");
                                 }
 
-                                List infoRoomOccupations = season2Exam.getAssociatedRoomOccupation();
+                                List infoRoomOccupations = season2Exam.getWrittenEvaluationSpaceOccupations();
 
                                 if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
                                     if (user.equals("sop")) {
@@ -858,14 +858,14 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                 ComparatorChain comparatorChain = new ComparatorChain();
                 comparatorChain.addComparator(new BeanComparator("infoRoom.capacidadeExame"), true);
                 comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));
-                Collections.sort(infoExam.getAssociatedRoomOccupation(), comparatorChain);
-                for (int k = 0; k < infoExam.getAssociatedRoomOccupation().size(); k++) {
+                Collections.sort(infoExam.getWrittenEvaluationSpaceOccupations(), comparatorChain);
+                for (int k = 0; k < infoExam.getWrittenEvaluationSpaceOccupations().size(); k++) {
                     if (k > 0) {
                         strBuffer.append(" ");
                     }
 
                     InfoRoomOccupation infoRoomOccupation = (InfoRoomOccupation) infoExam
-                            .getAssociatedRoomOccupation().get(k);
+                            .getWrittenEvaluationSpaceOccupations().get(k);
                     strBuffer.append(infoRoomOccupation.getInfoRoom().getNome());
                 }
                 strBuffer.append("</td>");

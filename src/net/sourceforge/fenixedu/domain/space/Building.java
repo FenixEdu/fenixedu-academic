@@ -1,43 +1,35 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
-import java.text.Collator;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Building extends Building_Base {
-
-    public final static Comparator<Building> BUILDING_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) BUILDING_COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
     
-    protected Building() {
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {	
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
-    }
-
-    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end,
-	    String blueprintNumber) {
-	this();
 	setSuroundingSpace(surroundingSpace);
 	new BuildingInformation(this, name, begin, end, blueprintNumber);
     }
 
+    @Override
+    public void setSuroundingSpace(Space suroundingSpace) {
+        if(suroundingSpace != null && !suroundingSpace.isCampus()) {
+            throw new DomainException("error.Space.invalid.suroundingSpace");
+        }
+	super.setSuroundingSpace(suroundingSpace);
+    }
+    
     @Override
     public BuildingInformation getSpaceInformation() {
 	return (BuildingInformation) super.getSpaceInformation();
@@ -59,16 +51,33 @@ public class Building extends Building_Base {
 	return true;
     }
     
-    public static Building readBuildingByName(String name) {
-	for (Resource resource : RootDomainObject.getInstance().getResources()) {
-	    if(resource.getClass().equals(Building.class)) {
-		Building building = (Building) resource;			
-		if(building.getSpaceInformation().getName().equals(name)) {
-		    return building; 		  	
-		}
+    @Deprecated
+    public String getName() {
+	return getNameWithCampus();
+    }
+    
+    public String getNameWithCampus() {
+	Campus campus = getSpaceCampus();
+	if(campus == null) {
+	    return getSpaceInformation().getName();
+	} else {
+	    return getSpaceInformation().getName() + " - (" + getSpaceCampus().getSpaceInformation().getName() + ")";
+	}
+    }
+         
+    public static List<Building> getActiveBuildingsByNames(List<String> names){
+	List<Building> result = new ArrayList<Building>();
+	for (Resource space : RootDomainObject.getInstance().getResources()) {
+	    if(space.isBuilding() && ((Building)space).isActive()) {
+		Building building = (Building) space;
+		for (String name : names) {
+		    if (building.getName().equals(name)) {
+			result.add((Building) space);
+		    }
+		}	 
 	    }
 	}
-	return null;
+	return result;
     }
 
     public Floor readFloorByLevel(Integer floorNumber) {

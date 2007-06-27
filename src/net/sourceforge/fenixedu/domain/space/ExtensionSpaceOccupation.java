@@ -42,8 +42,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	 actionName="Deleted extension occupation", 
          parameters={}
     )
-    public void delete() {
-	super.setExtension(null);
+    public void delete() {	
 	super.delete();
     }
     
@@ -51,15 +50,23 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
     public boolean isExtensionSpaceOccupation() {
         return true;
     }
-    
-    @Override    
-    public void setExtension(Extension extension) {
-	if (extension == null) {
-	    throw new DomainException("error.extensionSpaceOccupation.no.extension");
-	}
-	super.setExtension(extension);
+           
+    @Override
+    public void setMaterial(Material material) {	
+	if(material == null || !material.isExtension()) {
+            throw new DomainException("error.extensionSpaceOccupation.no.extension");
+        }
+	super.setMaterial(material);
     }
-
+    
+    public Extension getExtension(){
+	return (Extension) getMaterial();
+    }
+    
+    public void setExtension(Extension extension) {
+	setMaterial(extension);
+    }
+          
     @Override    
     public void setBegin(YearMonthDay begin) {
 	checkExtensionSpaceOccupationIntersection(begin, getEnd(), getExtension());
@@ -71,34 +78,25 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	checkExtensionSpaceOccupationIntersection(getBegin(), end, getExtension());
 	super.setEnd(end);
     }
- 
-    @Override
-    public Material getMaterial() {
-	return (Material) getExtension();
-    }
-
+    
     @Override
     public Group getAccessGroup() {
 	return getSpace().getExtensionOccupationsAccessGroupWithChainOfResponsibility();
     }
 
-    private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end,
-	    Extension extension) {
-	
+    private void checkExtensionSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Extension extension) {	
 	checkBeginDateAndEndDate(begin, end);
-	for (ExtensionSpaceOccupation extensionSpaceOccupation : extension
-		.getExtensionSpaceOccupations()) {
-	    if (!extensionSpaceOccupation.equals(this)
-		    && extensionSpaceOccupation.occupationsIntersection(begin, end)
-		    && extensionSpaceOccupation.getSpace().equals(getSpace())) {
+	for (MaterialSpaceOccupation materialSpaceOccupation: extension.getMaterialSpaceOccupations()) {
+	    if (materialSpaceOccupation.isExtensionSpaceOccupation() &&
+		    !materialSpaceOccupation.equals(this) && materialSpaceOccupation.getSpace().equals(getSpace())
+		    && ((ExtensionSpaceOccupation) materialSpaceOccupation).occupationsIntersection(begin, end)) {
 		throw new DomainException("error.extensionSpaceOccupation.intersection");
 	    }
 	}
     }
     
-    private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
-		.getEnd().isBefore(begin)));
+    private boolean occupationsIntersection(YearMonthDay possibleBegin, YearMonthDay possibleEnd) {
+	return ((possibleEnd == null || !getBegin().isAfter(possibleEnd)) && (getEnd() == null || !getEnd().isBefore(possibleBegin)));
     }
     
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;

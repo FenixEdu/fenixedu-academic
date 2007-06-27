@@ -7,7 +7,7 @@
 
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.justifications" /></h2>
-<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);%>
+<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);%>
 <logic:present name="yearMonth">
 	<bean:define id="yearMonth" name="yearMonth"/>
 	<bean:define id="month" name="yearMonth" property="month" />

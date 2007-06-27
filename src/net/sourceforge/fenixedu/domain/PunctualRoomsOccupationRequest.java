@@ -110,7 +110,15 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	}
 	super.setRequestor(requestor);
     }                        
-       
+    
+    @Override
+    public void setInstant(DateTime instant) {
+	if(instant == null) {
+	    throw new DomainException("error.PunctualRoomsOccupationRequest.empty.instant"); 
+	}
+	super.setInstant(instant);
+    }
+    
     private void closeRequestWithoutAssociateOwner(DateTime instant) {
 	if(!getCurrentState().equals(RequestState.RESOLVED)) {
 	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.RESOLVED, instant));

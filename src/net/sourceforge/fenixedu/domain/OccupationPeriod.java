@@ -107,15 +107,15 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         }
         return end;
     }    
-
+   
     private boolean intersectPeriods(final Calendar start, final Calendar end) {
         return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
-      
+         
     private boolean intersectPeriods(YearMonthDay start, YearMonthDay end) {
         return !getStartYearMonthDay().isAfter(end) && !getEndYearMonthDay().isBefore(start);
     }
-    
+  
     private boolean containsDay(YearMonthDay day) {
         return intersectPeriods(day, day);
     }
@@ -144,7 +144,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
     
     private boolean isEmpty() {
-        return getRoomOccupations().isEmpty()
+        return getEventSpaceOccupations().isEmpty()
         	&& getExecutionDegreesForExamsSpecialSeason().isEmpty()
                 && getExecutionDegreesForExamsFirstSemester().isEmpty()
                 && getExecutionDegreesForExamsSecondSemester().isEmpty()
@@ -193,13 +193,12 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	    }
 	}
 	return null;
-    }
+    }    
     
-    public boolean nestedOccupationPeriodsIntersectDates(OccupationPeriod occupationPeriod) {	
+    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {	
 	OccupationPeriod firstOccupationPeriod = this;
 	while(firstOccupationPeriod != null) {
-	    if(firstOccupationPeriod.intersectPeriods(occupationPeriod.getStartYearMonthDay(), 
-		    occupationPeriod.getEndYearMonthDay())) {
+	    if(firstOccupationPeriod.intersectPeriods(start, end)) {
 		return true;
 	    }
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
@@ -207,7 +206,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return false;
     }
     
-    public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {	
+    public boolean nestedOccupationPeriodsIntersectDates(YearMonthDay start, YearMonthDay end) {	
 	OccupationPeriod firstOccupationPeriod = this;
 	while(firstOccupationPeriod != null) {
 	    if(firstOccupationPeriod.intersectPeriods(start, end)) {

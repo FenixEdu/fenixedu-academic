@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
@@ -17,7 +17,7 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         this.setStudent(registration);
     }
 
-    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration registration, OldRoom room) {
+    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration registration, AllocatableSpace room) {
     	this();
         this.setWrittenEvaluation(writtenEvaluation);
         this.setStudent(registration);

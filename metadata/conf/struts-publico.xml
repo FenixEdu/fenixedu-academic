@@ -498,7 +498,7 @@
 	<action path="/chooseDayAndShiftForm"
 			input="/chooseDayAndShift.jsp"
 			name="chooseDayAndShiftForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExamDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction"
             parameter="method"
             scope="request"
             validate="true"
@@ -509,7 +509,7 @@
 
 	<action path="/viewExamsDayAndShiftForm"
 			input="/viewExamsDayAndShift.jsp"
-            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             name="examForm"
             validate="false"
@@ -536,7 +536,7 @@
     </action>
 
 	<action path="/viewExamsByDegreeAndCurricularYear"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDegreeAndCurricularYearAction"
     		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
@@ -562,7 +562,7 @@
             validate="false"
 			input="/notFound.do"
             >
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
                 key="error.exams.period.undefined" 
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
         <forward name="viewExamsMap" path="viewExamsMap"/>

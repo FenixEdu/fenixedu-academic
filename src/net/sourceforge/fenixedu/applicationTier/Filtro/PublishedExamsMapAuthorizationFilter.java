@@ -66,7 +66,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 		}
 
 		protected RoleType getRoleType() {
-	        return RoleType.TIME_TABLE_MANAGER;
+	        return RoleType.RESOURCE_ALLOCATION_MANAGER;
 	    }
 
 }

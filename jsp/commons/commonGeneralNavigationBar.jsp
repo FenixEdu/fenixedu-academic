@@ -5,7 +5,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.Role"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>	
 <%@ page import="org.apache.struts.Globals" %>	
 
 <logic:present name="<%= Globals.MODULE_KEY %>">

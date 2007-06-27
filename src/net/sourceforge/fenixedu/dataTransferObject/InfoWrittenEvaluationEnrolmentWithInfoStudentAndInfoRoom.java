@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 /**
  * @author Tânia Pousão
@@ -22,7 +21,7 @@ public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends In
         super.copyFromDomain(writtenEvaluationEnrolment);
         if (writtenEvaluationEnrolment != null) {
             setInfoStudent(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
-            setInfoRoom(InfoRoom.newInfoFromDomain((OldRoom) writtenEvaluationEnrolment.getRoom()));
+            setInfoRoom(InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom()));
         }
     }
 

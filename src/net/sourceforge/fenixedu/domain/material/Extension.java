@@ -6,26 +6,40 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Extension extends Extension_Base {
-
-    public Extension(Integer number, Integer barCodeNumber, YearMonthDay acquisition,
-	    YearMonthDay cease, Unit owner) {
-
-	super();	
-	setNumber(number);
-	setBarCodeNumber(barCodeNumber);	
-	setOwner(owner);
-	setOccupationInterval(acquisition, cease);
+    
+    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")    
+    public Extension(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease, Unit owner) {
+	super();				
+	super.init(identification, barCodeNumber, acquisition, cease, owner);
     }
-
+    
+    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
+    @Override
+    public void edit(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease, Unit owner) {
+	super.edit(identification, barCodeNumber, acquisition, cease, owner);
+    }
+    
+    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
+    @Override
+    public void delete() {        
+	super.delete();
+    }
+    
     @Override
     public String getMaterialSpaceOccupationSlotName() {
 	return "extension";
     }
 
+    public Integer getNumber() {
+	return Integer.valueOf(getIdentification());
+    }
+    
     @Override
     public Class<? extends MaterialSpaceOccupation> getMaterialSpaceOccupationSubClass() {
 	return ExtensionSpaceOccupation.class;
@@ -33,37 +47,29 @@ public class Extension extends Extension_Base {
 
     @Override
     public String getPresentationDetails() {
-	return getNumber().toString();
+	return getIdentification();
     }
     
     @Override
-    public void setNumber(Integer number) {
-	if (number == null) {
+    public void setIdentification(String identification) {		
+	if (identification != null && !StringUtils.isNumeric(identification)) {
 	    throw new DomainException("error.extension.no.number");
-	}
-	checkNumber(number);
-	super.setNumber(number);
+	}		
+	super.setIdentification(identification);
     }
-
+       
     @Override
     public boolean isExtension() {
         return true;
     }
-    
+         
     public static Extension readByNumber(Integer number) {
 	for (Resource resource : RootDomainObject.getInstance().getResources()) {
-	    if (resource.isExtension() && ((Extension) resource).getNumber() != null
-		    && ((Extension) resource).getNumber().equals(number)) {
+	    if (resource.isExtension() && ((Extension) resource).getIdentification() != null
+		    && ((Extension) resource).getIdentification().equals(number)) {
 		return (Extension) resource;
 	    }
 	}
 	return null;
-    }
-       
-    private void checkNumber(Integer number) {
-	Extension extension = readByNumber(number);
-	if (extension != null && !extension.equals(this)) {
-	    throw new DomainException("error.extension.already.exists.one.extension.with.same.number");
-	}
-    }   
+    }        
 }

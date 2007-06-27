@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 <%@ page import="net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
 <bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="request"/>

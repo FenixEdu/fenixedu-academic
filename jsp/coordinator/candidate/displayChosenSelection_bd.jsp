@@ -6,10 +6,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
 <%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br />
-	<h2>Ordenaï¿½ï¿½o de Candidatos Suplentes</h2>
+	<h2>Ordenação de Candidatos Suplentes</h2>
 	<br />
 	<bean:define id="listOfCandidates" name="candidateList" scope="request" />
 	

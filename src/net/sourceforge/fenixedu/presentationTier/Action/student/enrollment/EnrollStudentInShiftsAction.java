@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

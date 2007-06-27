@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <logic:present name="publico.infoRooms" >
   <h2><bean:message key="title.chooseRoom"/></h2>

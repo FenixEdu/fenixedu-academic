@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -217,7 +217,7 @@
 					</td>
 					<td width='5%' class="aright">
 						<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
-							<bean:write name="curricularYear"/>ï¿½&nbsp;
+							<bean:write name="curricularYear"/>º&nbsp;
 						</logic:iterate>
 					</td>
 				</tr>				

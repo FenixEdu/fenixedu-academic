@@ -98,7 +98,7 @@
 
 
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.U_VIEW);
+                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
             if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {
 
 	    %>

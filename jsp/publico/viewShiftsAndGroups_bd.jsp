@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 <%@ page import="java.util.Calendar" %>
@@ -134,7 +134,7 @@
 						</td>
 							
 		               	<td class="listClasses">
-		               		<logic:notEmpty name="infoLesson" property="infoSala.nome">
+		               		<logic:notEmpty name="infoLesson" property="infoSala">
 								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</logic:notEmpty>	
 				 		</td>
@@ -174,7 +174,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<logic:notEmpty name="infoLesson" property="infoSala.nome">
+								<logic:notEmpty name="infoLesson" property="infoSala">
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</logic:notEmpty>	
 							</td>

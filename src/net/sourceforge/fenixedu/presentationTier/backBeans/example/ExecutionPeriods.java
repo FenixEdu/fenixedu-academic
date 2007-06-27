@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.example;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 public class ExecutionPeriods {
 

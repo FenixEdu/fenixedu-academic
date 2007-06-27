@@ -10,19 +10,20 @@ package net.sourceforge.fenixedu.dataTransferObject;
  * @author tfc130
  */
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.util.TipoSala;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class InfoRoom extends InfoObject implements Comparable {
 
-    private final DomainReference<OldRoom> room;
+    private final DomainReference<AllocatableSpace> room;
 
-    public InfoRoom(final OldRoom room) {
-	this.room = new DomainReference<OldRoom>(room);
+    public InfoRoom(final AllocatableSpace room) {
+	this.room = new DomainReference<AllocatableSpace>(room);
     }
 
     public String getNome() {
-        return getRoom().getName();
+        return getRoom().getNome();
     }
 
     public String getEdificio() {
@@ -33,16 +34,17 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getRoom().getPiso();
     }
 
-    public TipoSala getTipo() {
-        return getRoom().getTipo();
+    public String getTipo() {
+	RoomClassification roomClassification = getRoom().getRoomClassification();
+        return roomClassification != null ? roomClassification.getName().getContent(LanguageUtils.getLanguage()) : "";
     }
 
     public Integer getCapacidadeNormal() {
-        return getRoom().getCapacidadeNormal();
+        return getRoom().getCapacidadeNormal() == null ? Integer.valueOf(0) : getRoom().getCapacidadeNormal();
     }
 
     public Integer getCapacidadeExame() {
-        return getRoom().getCapacidadeExame();
+        return getRoom().getCapacidadeExame() == null ? Integer.valueOf(0) : getRoom().getCapacidadeExame();
     }
 
     public boolean equals(Object obj) {
@@ -57,7 +59,7 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getNome().compareTo(((InfoRoom) obj).getNome());
     }
 
-    public static InfoRoom newInfoFromDomain(final OldRoom room) {
+    public static InfoRoom newInfoFromDomain(final AllocatableSpace room) {
 	return room == null ? null : new InfoRoom(room);
     }
 
@@ -71,7 +73,7 @@ public class InfoRoom extends InfoObject implements Comparable {
 	throw new Error("Method should not be called!");
     }
 
-    public OldRoom getRoom() {
+    public AllocatableSpace getRoom() {
         return room == null ? null : room.getObject();
     }
 

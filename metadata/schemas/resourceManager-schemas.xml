@@ -1,0 +1,111 @@
+<!-- Material Management -->
+
+<schema name="SearchMaterialByType" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
+	<slot name="materialType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="lable.material.type">
+		<property name="bundle" value="RESOURCE_MANAGER_RESOURCES"/>
+	</slot>
+    <slot name="identification" key="label.material.identification"/> 	
+</schema>
+
+<schema name="PrepareCreateMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
+	<slot name="materialType" layout="menu-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="lable.material.type">
+		<property name="bundle" value="RESOURCE_MANAGER_RESOURCES"/>
+		<property name="destination" value="postBack"/>	
+	</slot> 	
+</schema>
+
+<schema name="SeeFoundMaterials" type="net.sourceforge.fenixedu.domain.material.Material" bundle="RESOURCE_MANAGER_RESOURCES">	
+	<slot name="identification" key="label.material.identification"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber"/>
+	<slot name="owner.presentationNameWithParents" key="label.material.owner"/>
+	<slot name="acquisition" key="label.material.acquisition"/>
+	<slot name="cease" key="label.material.cease"/>	
+</schema>
+
+<schema name="EditGenericMaterial" type="net.sourceforge.fenixedu.domain.material.Material" bundle="RESOURCE_MANAGER_RESOURCES">	
+	<slot name="identification" key="label.material.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="labelField" value="presentationNameWithParents"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchAllActiveInternalUnits"/>
+		<property name="serviceArgs" value="slot=nameWithAcronym,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+		<property name="minChars" value="2"/>	
+	</slot>
+	<slot name="acquisition" key="label.material.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cease" key="label.material.cease"/>		
+</schema>
+
+<schema name="CreateGenericMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
+	<slot name="identification" key="label.material.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="labelField" value="presentationNameWithParents"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchAllActiveInternalUnits"/>
+		<property name="serviceArgs" value="slot=nameWithAcronym,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+		<property name="minChars" value="2"/>	
+	</slot>
+	<slot name="acquisition" key="label.material.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="cease" key="label.material.cease"/>		
+</schema>
+
+<!-- Extension Schemas -->
+
+<schema name="EditExtensionMaterial" type="net.sourceforge.fenixedu.domain.material.Extension" bundle="RESOURCE_MANAGER_RESOURCES" extends="EditGenericMaterial">		
+	<setter signature="edit(identification, barCodeNumber, acquisition, cease, owner)" />
+</schema>
+
+<schema name="CreateExtensionMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES" extends="CreateGenericMaterial">	
+</schema>
+
+<schema name="SeeExtensionMaterial" type="net.sourceforge.fenixedu.domain.material.Extension" bundle="RESOURCE_MANAGER_RESOURCES" extends="SeeFoundMaterials">	
+</schema>
+
+<!-- FireExtinguisher Schemas -->
+
+<schema name="EditFireExtinguisherMaterial" type="net.sourceforge.fenixedu.domain.material.FireExtinguisher" bundle="RESOURCE_MANAGER_RESOURCES" extends="EditGenericMaterial">		
+	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="loadedDate" key="label.material.loadedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="edit(identification, barCodeNumber, acquisition, cease, owner, delivererEnterprise, loadedDate, toBeInspectedDate)" />	
+</schema>
+
+<schema name="CreateFireExtinguisherMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES" extends="CreateGenericMaterial">
+	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="loadedDate" key="label.material.loadedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="SeeFireExtinguisherMaterial" type="net.sourceforge.fenixedu.domain.material.FireExtinguisher" bundle="RESOURCE_MANAGER_RESOURCES" extends="SeeFoundMaterials">
+	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" />
+	<slot name="loadedDate" key="label.material.loadedDate" />
+	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" />	
+</schema>
+
+<!-- Vehicle Schemas -->
+
+<schema name="SearchVehicleByNumberPlate" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.VehicleBean" bundle="RESOURCE_MANAGER_RESOURCES">		
+    <slot name="numberPlate" key="label.vehicle.numberPlate"/> 	
+</schema>
+
+<schema name="CreateVehicleSchema" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.VehicleBean" bundle="RESOURCE_MANAGER_RESOURCES">		
+    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 	
+    <slot name="make" key="label.vehicle.make" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="cease" key="label.vehicle.cease"/> 	
+</schema>
+
+<schema name="SeeVehicleDetails" type="net.sourceforge.fenixedu.domain.resource.Vehicle" bundle="RESOURCE_MANAGER_RESOURCES">		
+    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 	
+    <slot name="make" key="label.vehicle.make" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="cease" key="label.vehicle.cease"/>       
+    <setter signature="edit(numberPlate, make, model, acquisition, cease)" />
+</schema>

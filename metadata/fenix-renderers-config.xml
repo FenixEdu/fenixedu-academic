@@ -51,11 +51,11 @@ Documentation:
     <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer"/>
 
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Class" layout="label-to-space-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
-    	<property name="labelFormat" value="label.${simpleName}"/>
+    <renderer type="java.lang.Class" layout="label-to-material-type-in-spaces-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
+    	<property name="labelFormat" value="label.${simpleName}.type"/>
     	<property name="bundle" value="SPACE_RESOURCES"/>
     </renderer>
-
+    
     <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Class" layout="label-to-academicCalendar-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
     	<property name="labelFormat" value="label.${simpleName}.type"/>
@@ -152,8 +152,12 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
+        
+    <renderer type="net.sourceforge.fenixedu.domain.resource.Vehicle" layout="vehicle-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.VehiclePlainRenderer"/>
     
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
+
+ 	<renderer type="net.sourceforge.fenixedu.domain.Lesson" layout="lesson-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.LessonPlainRenderer"/>
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
 

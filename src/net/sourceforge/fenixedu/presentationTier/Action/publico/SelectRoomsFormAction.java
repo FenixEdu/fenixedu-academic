@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoSala;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -104,10 +104,10 @@ public class SelectRoomsFormAction extends FenixContextAction {
         return null;
     }
 
-    private TipoSala readTypeRoomFormValue(DynaActionForm roomForm, String name) {
+    private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
         Integer obj = readIntegerFormValue(roomForm, name);
         if (obj != null) {
-            return new TipoSala(obj);
+            return rootDomainObject.readRoomClassificationByOID(obj);
         }
 
         return null;

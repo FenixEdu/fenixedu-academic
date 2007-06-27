@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

@@ -32,13 +32,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
-import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -548,10 +549,10 @@ public class ContextUtils {
         return null;
     }
 
-    private static TipoSala readTypeRoomRequestValue(HttpServletRequest request, String name) {
+    private static RoomClassification readTypeRoomRequestValue(HttpServletRequest request, String name) {
         Integer obj = readIntegerRequestValue(request, name);
         if (obj != null) {
-            return new TipoSala(obj);
+            return RootDomainObject.getInstance().readRoomClassificationByOID(obj);            
         }
 
         return null;

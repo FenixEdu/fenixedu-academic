@@ -2,50 +2,39 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.Collator;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Room extends Room_Base {
-
-    public final static Comparator<Room> ROOM_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) ROOM_COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
-   
-    protected Room() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
-    }
-
+    
     public Room(Space suroundingSpace, String blueprintNumber, String identification,
 	    String description, RoomClassification roomClassification, BigDecimal area,
 	    Boolean heightQuality, Boolean illuminationQuality,
 	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
 	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber) {
 
-	this();
-
-	if (suroundingSpace == null) {
-	    throw new DomainException("error.surrounding.space");
-	}
+	super();		
 	setSuroundingSpace(suroundingSpace);
 	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
 		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
 		securityQuality, ageQuality, observations, begin, end, doorNumber);
+    }
+    
+    @Override
+    public void setSuroundingSpace(Space suroundingSpace) {	
+	if(suroundingSpace == null || suroundingSpace.isRoomSubdivision()) {
+            throw new DomainException("error.Space.invalid.suroundingSpace");
+        }        
+	super.setSuroundingSpace(suroundingSpace);
     }
     
     @Override
@@ -61,14 +50,76 @@ public class Room extends Room_Base {
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room", parameters = {})
     public void delete() {
+	if (!canBeDeleted()) {
+	    throw new DomainException("error.room.cannot.be.deleted");
+	}
 	super.delete();
     }
-
+    
+    private boolean canBeDeleted() {
+	return !hasAnyAssociatedSummaries()
+		&& !hasAnyWrittenEvaluationEnrolments() 
+		&& !hasAnyAssociatedInquiriesRooms(); 		
+    } 
+    
     @Override
     public boolean isRoom() {
 	return true;
     }
+          
+    @Override
+    public List<ResourceAllocation> getResourceAllocations() {
+        List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
+        if(roomSubdivisions.isEmpty()) {
+            return super.getResourceAllocations();
+        } else {
+            List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
+            result.addAll(super.getResourceAllocations());
+            for (RoomSubdivision roomSubdivision : roomSubdivisions) {
+		result.addAll(roomSubdivision.getResourceAllocationsWithoutSuroundingSpaceAllocations());
+	    }
+            return result;
+        }
+    }
+    
+    public List<ResourceAllocation> getResourceAllocationsWithoutRoomSubdivionsAllocations() {
+	return super.getResourceAllocations();
+    }     
+    
+    private List<RoomSubdivision> getRoomSubdivisions() {	
+	List<RoomSubdivision> result = new ArrayList<RoomSubdivision>(); 
+	for (Space subSpace : getContainedSpaces()) {
+	    if(subSpace.isRoomSubdivision()) {
+		result.add((RoomSubdivision) subSpace);
+	    }
+	}
+	return result;
+    }
 
+    @Deprecated
+    public RoomClassification getTipo() {
+	return getSpaceInformation().getRoomClassification();	
+    }
+    
+    @Override
+    public RoomClassification getRoomClassification() {
+	return getSpaceInformation().getRoomClassification();
+    }  
+    
+    @Deprecated
+    public Integer getCapacidadeNormal() {
+	return getNormalCapacity();
+    }
+    
+    @Deprecated
+    public Integer getCapacidadeExame() {
+	return getExamCapacity();
+    }
+    
+    public String getIdentification() {
+	return getSpaceInformation().getIdentification(); 
+    }
+                                               
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {
 	private String blueprintNumber;
 
@@ -255,5 +306,5 @@ public class Room extends Room_Base {
 		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
 		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
 	}
-    }
+    }   
 }

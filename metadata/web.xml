@@ -301,8 +301,12 @@
             <param-value>resources.ApplicationResources</param-value>
         </init-param>
         <init-param>
-            <param-name>config/sop</param-name>
-            <param-value>/WEB-INF/conf/struts-sop.xml</param-value>
+            <param-name>config/resourceAllocationManager</param-name>
+            <param-value>/WEB-INF/conf/struts-resourceAllocationManager.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/resourceManager</param-name>
+            <param-value>/WEB-INF/conf/struts-resourceManager.xml</param-value>
         </init-param>
         <init-param>
             <param-name>config/student</param-name>

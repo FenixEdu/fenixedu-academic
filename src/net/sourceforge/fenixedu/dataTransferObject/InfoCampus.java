@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 /**
  * @author Tânia Pousão Create on 10/Nov/2003

@@ -5,7 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <center>
 	<h2><bean:message key="title.masterDegree.administrativeOffice.guide.reimbursementGuide.createReimbursementGuide"/></h2>

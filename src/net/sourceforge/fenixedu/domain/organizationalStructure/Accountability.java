@@ -15,7 +15,7 @@ public class Accountability extends Accountability_Base {
 	setOjbConcreteClass(getClass().getName());
     }
 
-    protected Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
+    public Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
 	this();
 	setParentParty(parentParty);
 	setChildParty(childParty);
@@ -31,8 +31,7 @@ public class Accountability extends Accountability_Base {
     }
 
     public boolean belongsToPeriod(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBeginDate().isAfter(end)) && (this.getEndDate() == null || !this
-		.getEndDate().isBefore(begin)));
+	return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate().isBefore(begin)));
     }
 
     public boolean isActive(YearMonthDay currentDate) {
@@ -40,17 +39,15 @@ public class Accountability extends Accountability_Base {
     }
 
     public Boolean isPersonFunction() {
-	return this.getAccountabilityType() instanceof Function && this.getParentParty() instanceof Unit
-		&& this instanceof PersonFunction;
+	return getAccountabilityType() instanceof Function && getParentParty() instanceof Unit && this instanceof PersonFunction;
     }
 
     public Date getBeginDateInDateType() {
-	return (this.getBeginDate() != null) ? this.getBeginDate().toDateTimeAtCurrentTime().toDate()
-		: null;
+	return (getBeginDate() != null) ? getBeginDate().toDateTimeAtCurrentTime().toDate() : null;
     }
 
     public Date getEndDateInDateType() {
-	return (this.getEndDate() != null) ? this.getEndDate().toDateTimeAtCurrentTime().toDate() : null;
+	return (getEndDate() != null) ? getEndDate().toDateTimeAtCurrentTime().toDate() : null;
     }
 
     @Override
@@ -79,7 +76,7 @@ public class Accountability extends Accountability_Base {
 
     @Override
     public void setBeginDate(YearMonthDay beginDate) {
-	if (beginDate == null) {
+	if (beginDate == null || (getEndDate() != null && getEndDate().isBefore(beginDate))) {
 	    throw new DomainException("error.accountability.inexistent.beginDate");
 	}
 	super.setBeginDate(beginDate);

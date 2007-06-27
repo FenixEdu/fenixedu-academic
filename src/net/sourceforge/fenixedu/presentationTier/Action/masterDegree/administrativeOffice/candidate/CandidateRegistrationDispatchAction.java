@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChange
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;

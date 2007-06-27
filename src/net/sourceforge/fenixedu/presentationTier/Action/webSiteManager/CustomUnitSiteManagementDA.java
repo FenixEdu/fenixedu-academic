@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;

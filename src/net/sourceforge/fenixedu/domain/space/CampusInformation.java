@@ -38,7 +38,7 @@ public class CampusInformation extends CampusInformation_Base {
 
     @Override
     public void setName(final String name) {
-	if (name == null || StringUtils.isEmpty(name.trim())) {
+	if (StringUtils.isEmpty(name)) {
 	    throw new DomainException("error.campus.name.cannot.be.null");
 	}
 	super.setName(name);

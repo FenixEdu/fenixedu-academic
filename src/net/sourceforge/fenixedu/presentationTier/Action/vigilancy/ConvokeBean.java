@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -188,7 +188,7 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     public String getRoomsAsString() {
     	
     	String rooms="";
-    	for(OldRoom room : this.getWrittenEvaluation().getAssociatedRooms()) {
+    	for(AllocatableSpace room : this.getWrittenEvaluation().getAssociatedRooms()) {
     		rooms += room.getName() + "-" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity") + ":"+ room.getCapacidadeExame() + "\n";
     	}
     	return rooms;

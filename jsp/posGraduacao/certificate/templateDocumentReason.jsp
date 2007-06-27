@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST %>">	
 	<p>Esta DECLARAÇÃO destina-se a fins comprovativos de:</p>
 	<p><b><logic:iterate id="item" name="<%= SessionConstants.DOCUMENT_REASON_LIST %>" >

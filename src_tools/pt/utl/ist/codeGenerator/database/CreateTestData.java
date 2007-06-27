@@ -502,7 +502,7 @@ public class CreateTestData {
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityTypeEnum.MAILING_CONTRACT);       
         person.addPersonRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
-        person.addPersonRoleByRoleType(RoleType.TIME_TABLE_MANAGER);
+        person.addPersonRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
         person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         final Vigilant vigilant = new Vigilant(person, ExecutionYear.readCurrentExecutionYear());

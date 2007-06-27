@@ -13,16 +13,14 @@ import org.joda.time.YearMonthDay;
 public class PersonFunction extends PersonFunction_Base {
 
     public final static Comparator<PersonFunction> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
-
-    public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
-    static {
+	
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name"));
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    }    
 
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin,
 	    YearMonthDay end, Double credits) {
@@ -38,18 +36,32 @@ public class PersonFunction extends PersonFunction_Base {
 	setCredits(credits);
 	setOccupationInterval(begin, end);
     }
+    
+    @Override
+    public void setChildParty(Party childParty) {
+        if(childParty == null || !childParty.isPerson()) {
+            throw new DomainException("error.invalid.child.party");
+        }
+	super.setChildParty(childParty);
+    }
+    
+    @Override
+    public void setParentParty(Party parentParty) {
+	if(parentParty == null || !parentParty.isUnit()) {
+            throw new DomainException("error.invalid.parent.party");
+        }
+	super.setParentParty(parentParty);
+    }
 
     @Override
     public void setBeginDate(YearMonthDay beginDate) {
-	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate,
-		getEndDate());
+	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate, getEndDate());
 	super.setBeginDate(beginDate);
     }
 
     @Override
     public void setEndDate(YearMonthDay endDate) {
-	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), getBeginDate(),
-		endDate);
+	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), getBeginDate(), endDate);
 	super.setEndDate(endDate);
     }
     
@@ -68,20 +80,18 @@ public class PersonFunction extends PersonFunction_Base {
     }    
     
     public Person getPerson() {
-	return (Person) this.getChildParty();
+	return (Person) getChildParty();
     }
 
     public Unit getUnit() {
-	return (Unit) this.getParentParty();
+	return (Unit) getParentParty();
     }
 
     public Function getFunction() {
-	return (Function) this.getAccountabilityType();
+	return (Function) getAccountabilityType();
     }
     
-    private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function,
-	    YearMonthDay begin, YearMonthDay end) {
-
+    private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function, YearMonthDay begin, YearMonthDay end) {
 	checkBeginDateAndEndDate(begin, end);
 	for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
 	    if (!personFunction.equals(this) && personFunction.getFunction().equals(function)
@@ -92,8 +102,7 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBeginDate().isAfter(end)) && (this.getEndDate() == null || !this
-		.getEndDate().isBefore(begin)));
+	return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {

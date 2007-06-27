@@ -65,6 +65,9 @@
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 					<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">
+					<bean:message bundle="SPACE_RESOURCES" key="select.item.roomSubdivision"/>
+				</logic:equal>
 			</td>
 		</tr>
 		<tr>
@@ -109,10 +112,15 @@
 		%>
 		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
-		</html:link>&nbsp;,
+		</html:link>&nbsp;,	
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
-		</html:link>&nbsp;,
+		</html:link>&nbsp;,		
+		<logic:equal name="selectedSpaceInformation" property="space.class.superclass.superclass.name" value="net.sourceforge.fenixedu.domain.space.AllocatableSpace">
+			<html:link page="/manageSpaces.do?method=prepareMergeRoom&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+				<bean:message bundle="SPACE_RESOURCES" key="link.merge.space"/>
+			</html:link>&nbsp;,
+		</logic:equal>
 		<%
 			}
 		%>
@@ -254,6 +262,9 @@
 							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 								<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
 							</logic:equal>
+							<logic:equal name="subSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">
+								<bean:message bundle="SPACE_RESOURCES" key="select.item.roomSubdivision"/>
+							</logic:equal>
 						</td>
 						<td class="acenter">							
 							<logic:empty name="subSpace" property="spaceInformation.presentationName">
@@ -310,7 +321,6 @@
 		}
 	%>
 
-
 	<%-- Space Details --%>
 	<bean:define id="SpaceInformationDetailsSchema">View<bean:write name="selectedSpaceInformation" property="space.class.simpleName"/>Information</bean:define>
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></h3>
@@ -331,7 +341,6 @@
 	<%
 		}
 	%>
-
 
 	<%-- Responsability --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></h3>
@@ -436,7 +445,5 @@
 	<% 
 		}
 	%>
-
-
 	
 </logic:present>	

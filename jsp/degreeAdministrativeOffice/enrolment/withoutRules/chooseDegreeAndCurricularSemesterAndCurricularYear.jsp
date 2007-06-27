@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <html:xhtml/>
 
 <bean:define id="executionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>

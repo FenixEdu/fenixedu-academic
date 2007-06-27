@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;

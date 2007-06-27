@@ -18,7 +18,7 @@ public class CalculateFirstDayOfLesson extends Service {
 
 	public Calendar run(final Integer lessonId) throws ExcepcaoPersistencia {
 	    final Lesson lesson = rootDomainObject.readLessonByOID(lessonId);
-	    return lesson.getRoomOccupation().getPeriod().getStartDate();
+	    return lesson.getLessonSpaceOccupation().getPeriod().getStartDate();
     }
 
 }

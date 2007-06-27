@@ -44,7 +44,7 @@ public class Group2StringConverter implements FieldConversion {
      * @see ExpressionGroup#ExpressionGroup(String)
      */
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source == null) {
+        if (source == null || source.toString().length() == 0) {
             return null;
         }
         else {

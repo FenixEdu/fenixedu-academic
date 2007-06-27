@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -16,9 +17,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -61,7 +62,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
 			List<ExecutionCourse> executionCoursesToAssociate,
-			List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+			List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
 			OccupationPeriod period) {
 		this();
 		setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
@@ -95,11 +96,11 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
 	public Campus getCampus() {
-		List<OldRoom> rooms = this.getAssociatedRooms();
-		if (rooms.size() > 0) {
-			return rooms.get(0).getBuilding().getCampus();
-		} else
-			return null;
+	    List<AllocatableSpace> rooms = getAssociatedRooms();
+	    if (rooms.size() > 0) {
+		return rooms.get(0).getSpaceCampus();
+	    } else
+		return null;
 	}
 
 	public Boolean getIsAfterCurrentDate() {
@@ -161,9 +162,17 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
+    public List<AllocatableSpace> getAssociatedRooms() {
+	final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
+	for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
+	    result.add(roomOccupation.getRoom());
+	}
+	return result;
+    }
+    
     protected void checkIntervalBetweenEvaluations() {
 	final IUserView userView = AccessControl.getUserView();
-	if (userView == null || !userView.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
+	if (userView == null || !userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 	    checkIntervalBetweenEvaluationsCondition();
 	}
     }
@@ -301,11 +310,11 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
             OccupationPeriod period) {
        
 	if (rooms == null) {
-            rooms = new ArrayList<OldRoom>(0);
+            rooms = new ArrayList<AllocatableSpace>(0);
         }
 
         checkValidHours(beginning, end);
@@ -326,39 +335,25 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
 
-        associateRooms(rooms, period);
+        List<WrittenEvaluationSpaceOccupation> newOccupations = associateNewRooms(rooms, period);
 
-        final Set<RoomOccupation> roomOccupationsToDelete = new HashSet<RoomOccupation>();
-        for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
-            final Room room = roomOccupation.getRoom();
-            if (!rooms.contains(room)) {
-                roomOccupationsToDelete.add(roomOccupation);
-            } else {                
-                roomOccupation.setDayOfWeek(dayOfWeek);
-                roomOccupation.setEndTimeDate(end);
-                roomOccupation.setStartTimeDate(beginning);
-                roomOccupation.setPeriod(period);
+        final Set<WrittenEvaluationSpaceOccupation> roomOccupationsToDelete = new HashSet<WrittenEvaluationSpaceOccupation>();
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
+            if(!newOccupations.contains(roomOccupation)) {
+        	final AllocatableSpace room = roomOccupation.getRoom();
+        	if (!rooms.contains(room)) {
+        	    roomOccupationsToDelete.add(roomOccupation);
+        	} else {                        	    
+        	    roomOccupation.edit(this.getBeginningDateHourMinuteSecond(), this.getEndDateHourMinuteSecond(), dayOfWeek, period);        	    
+        	}
             }
-        }
+        }                
 
-        for (final RoomOccupation roomOccupation : roomOccupationsToDelete) {
-            roomOccupation.delete();
-        }
-
-        final Set<OldRoom> occupiedRooms = new HashSet<OldRoom>();
-        for (final RoomOccupation roomOccupation : getAssociatedRoomOccupationSet()) {
-            if (((OldRoom)roomOccupation.getRoom()).findOccupationSet(period, this.getBeginning(), this.getEnd(), roomOccupation.getDayOfWeek(), 
-        	    null, null, Boolean.TRUE, Boolean.TRUE).size() > 1) {
-                occupiedRooms.add((OldRoom) roomOccupation.getRoom());
-            }
-        }
-        if (!occupiedRooms.isEmpty()) {
-            final StringBuilder stringBuilder = new StringBuilder();
-            for (final OldRoom oldRoom : occupiedRooms) {
-                stringBuilder.append(oldRoom.getNome()).append(" ");
-            }
-            throw new DomainException("error.occupied.rooms", stringBuilder.toString());
-        }
+        for (Iterator<WrittenEvaluationSpaceOccupation> iter = roomOccupationsToDelete.iterator(); iter.hasNext();) {
+            WrittenEvaluationSpaceOccupation occupation = iter.next();
+            iter.remove();
+            occupation.delete();
+        }        
     }
 
 
@@ -370,20 +365,24 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
     private void deleteAllRoomOccupations() {
-        for (; !getAssociatedRoomOccupation().isEmpty(); getAssociatedRoomOccupation().get(0).delete());
+        for (; !getWrittenEvaluationSpaceOccupations().isEmpty(); getWrittenEvaluationSpaceOccupations().get(0).delete());
     }
 
-    private void associateRooms(final List<OldRoom> rooms, final OccupationPeriod period) {
-        final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
-        for (final OldRoom room : rooms) {
-            if (!hasOccupationForRoom(room)) {
-                room.createRoomOccupationForWrittenEvaluations(period, this.getBeginning(), this.getEnd(), dayOfWeek, this);
+    private List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms, final OccupationPeriod period) {
+        List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();
+	final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
+        for (final AllocatableSpace room : rooms) {
+            if (!hasOccupationForRoom(room)) {                
+                WrittenEvaluationSpaceOccupation writtenEvaluationSpaceOccupation = new WrittenEvaluationSpaceOccupation(room,
+                	this.getBeginningDateHourMinuteSecond(), this.getEndDateHourMinuteSecond(), dayOfWeek, period, this);
+                newInsertedOccupations.add(writtenEvaluationSpaceOccupation);
             }
         }
+        return newInsertedOccupations;
     }
 
-	private boolean hasOccupationForRoom(OldRoom room) {
-		for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+	private boolean hasOccupationForRoom(AllocatableSpace room) {
+		for (final WrittenEvaluationSpaceOccupation roomOccupation : this.getWrittenEvaluationSpaceOccupations()) {
 			if (roomOccupation.getRoom() == room) {
 				return true;
 			}
@@ -393,7 +392,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void edit(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
             OccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
@@ -415,15 +414,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
 			;
 	}
-
-	public List<OldRoom> getAssociatedRooms() {
-		final List<OldRoom> result = new ArrayList<OldRoom>();
-		for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
-			result.add((OldRoom) roomOccupation.getRoom());
-		}
-		return result;
-	}
-
+	
 	public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay, Date enrolmentBeginTime,
 			Date enrolmentEndTime) throws DomainException {
 
@@ -507,12 +498,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		return false;
 	}
 
-	public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<OldRoom> selectedRooms) {
+	public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<AllocatableSpace> selectedRooms) {
 
 		this.checkIfCanDistributeStudentsByRooms();
 		this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
-		for (final OldRoom room : selectedRooms) {
+		for (final AllocatableSpace room : selectedRooms) {
 			for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
 					&& !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
 				final Registration registration = getRandomStudentFromList(studentsToDistribute);
@@ -531,7 +522,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
 	public void checkIfCanDistributeStudentsByRooms() {
-		if (!this.hasAnyAssociatedRoomOccupation()) {
+		if (!this.hasAnyWrittenEvaluationSpaceOccupations()) {
 			throw new DomainException("error.no.roms.associated");
 		}
 
@@ -559,9 +550,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		}
 	}
 
-	private void checkRoomsCapacityForStudents(final List<OldRoom> selectedRooms, int studentsToDistributeSize) {
+	private void checkRoomsCapacityForStudents(final List<AllocatableSpace> selectedRooms, int studentsToDistributeSize) {
 		int totalCapacity = 0;
-		for (final OldRoom room : selectedRooms) {
+		for (final AllocatableSpace room : selectedRooms) {
 			totalCapacity += room.getCapacidadeExame();
 		}
 		if (studentsToDistributeSize > totalCapacity) {
@@ -620,8 +611,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	public Integer getCountNumberReservedSeats() {
 		int i = 0;
-		for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
-			i += ((OldRoom)roomOccupation.getRoom()).getCapacidadeExame().intValue();
+		for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
+			i += ((AllocatableSpace)roomOccupation.getRoom()).getCapacidadeExame().intValue();
 		}
 		return i;
 	}
@@ -704,7 +695,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	public String getAssociatedRoomsAsString() {
 		String rooms = "";
-		for (OldRoom room : this.getAssociatedRooms()) {
+		for (AllocatableSpace room : getAssociatedRooms()) {
 			rooms += room.getName() + "\n";
 		}
 		return rooms;

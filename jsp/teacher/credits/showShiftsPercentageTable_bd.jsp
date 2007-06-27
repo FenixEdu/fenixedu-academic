@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %> 
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 			 
@@ -63,7 +63,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>	
 							</td>
 							<td class="listClasses">
-								<logic:notEmpty name="infoLesson" property="infoSala.nome">	
+								<logic:notEmpty name="infoLesson" property="infoSala">	
 									<bean:write name="infoLesson" property="infoSala.nome"/>					
 								</logic:notEmpty>	
 							</td>
@@ -104,7 +104,7 @@
 									<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>	
 								</td>
 								<td class="listClasses">
-									<logic:notEmpty name="infoLesson" property="infoSala.nome">
+									<logic:notEmpty name="infoLesson" property="infoSala">
 										<bean:write name="infoLesson" property="infoSala.nome"/>					
 									</logic:notEmpty>	
 								</td>						

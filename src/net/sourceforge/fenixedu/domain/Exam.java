@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -27,7 +27,7 @@ public class Exam extends Exam_Base {
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, 
-            List<OldRoom> rooms,
+            List<AllocatableSpace> rooms,
             OccupationPeriod period, Season season) {
     	super();
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
@@ -67,7 +67,7 @@ public class Exam extends Exam_Base {
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, 
-            List<OldRoom> rooms, OccupationPeriod period, Season season) {
+            List<AllocatableSpace> rooms, OccupationPeriod period, Season season) {
 
         // It's necessary to remove this associations before check some constrains
         this.getAssociatedExecutionCourses().clear();
@@ -106,8 +106,8 @@ public class Exam extends Exam_Base {
         
         outter:
         for (Exam exam : Exam.readExams()) {
-            for (RoomOccupation occupation : exam.getAssociatedRoomOccupation()) {
-                if (! ((OldRoom)occupation.getRoom()).getNome().equals(room)) {
+            for (WrittenEvaluationSpaceOccupation occupation : exam.getWrittenEvaluationSpaceOccupations()) {
+                if (! ((AllocatableSpace)occupation.getRoom()).getNome().equals(room)) {
                     continue outter;
                 }
             }

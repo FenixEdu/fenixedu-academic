@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="java.lang.String" %>
@@ -72,13 +72,13 @@
 		<h2>
 		<logic:present name="totalRemaingValue">
 			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
-			&nbsp;<bean:write name="totalRemaingValue" />ï¿½
+			&nbsp;<bean:write name="totalRemaingValue" />¤
 		</logic:present>
 		</h2>
 		<h2>
 		<logic:present name="totalPayedValue">
 			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.payedValue"/>:
-			&nbsp;<bean:write name="totalPayedValue" />ï¿½
+			&nbsp;<bean:write name="totalPayedValue" />¤
 		</logic:present>
 		</h2>
 		

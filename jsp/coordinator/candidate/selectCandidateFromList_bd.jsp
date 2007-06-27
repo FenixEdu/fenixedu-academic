@@ -7,7 +7,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <jsp:include page="../context.jsp"/>
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <p>

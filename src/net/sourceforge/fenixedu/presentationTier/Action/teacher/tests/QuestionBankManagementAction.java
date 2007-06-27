@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.domain.tests.predicates.CompositePredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean.Action;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;

@@ -20,9 +20,14 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>TimeTableManagerAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.TimeTableManagerAuthorizationFilter</implementationClass>
+        <name>ResourceAllocationManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>ResourceManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResourceManagerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
@@ -881,9 +886,15 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
-     <filter>
+    <filter>
         <name>SpaceManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.spaceManager.SpaceManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>SpaceAdministratorAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.spaceManager.SpaceAdministratorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

@@ -18,7 +18,7 @@
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/><br/>" escape="false"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
 
- 		<h:outputText styleClass="success0" rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}"
+ 		<h:outputText styleClass="success0" rendered="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}"
 			value="#{bundle['message.evaluation.not.editable']}<br/><br/>" escape="false"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">
@@ -26,26 +26,26 @@
 				<h:outputText value="#{bundle['label.date']}" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.day']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.day}">
+				<h:inputText alt="#{htmlAltBundle['inputText.day']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.day}">
 					<f:validateLongRange minimum="1" maximum="31" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText alt="#{htmlAltBundle['inputText.month']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.month}">
+				<h:inputText alt="#{htmlAltBundle['inputText.month']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.month}">
 					<f:validateLongRange minimum="1" maximum="12" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText alt="#{htmlAltBundle['inputText.year']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="4" size="4" value="#{evaluationManagementBackingBean.year}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.year']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="4" size="4" value="#{evaluationManagementBackingBean.year}"/>
 				<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.beginning']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.beginHour']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginHour}">
+				<h:inputText alt="#{htmlAltBundle['inputText.beginHour']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText alt="#{htmlAltBundle['inputText.beginMinute']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginMinute}">
+				<h:inputText alt="#{htmlAltBundle['inputText.beginMinute']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.beginMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
@@ -54,11 +54,11 @@
 				<h:outputText value="#{bundle['label.end']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.endHour']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endHour}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endHour']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText alt="#{htmlAltBundle['inputText.endMinute']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endMinute}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endMinute']}" disabled="#{!empty evaluationManagementBackingBean.evaluation.writtenEvaluationSpaceOccupations}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.endMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.model.CompositeSlotSetter;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;

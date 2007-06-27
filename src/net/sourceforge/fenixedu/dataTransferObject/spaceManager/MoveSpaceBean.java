@@ -14,11 +14,18 @@ public class MoveSpaceBean implements Serializable {
   
     private SpaceState spaceState;
     
+    private String spaceName;
+    
     public MoveSpaceBean(Space thisSpace) {
 	setSpace(thisSpace);
 	setSpaceState(SpaceState.ACTIVE);
     }     
-       
+    
+    public MoveSpaceBean(Space fromSpace, Space destinationSpace) {
+	setSpace(fromSpace);
+	setSelectedParentSpace(destinationSpace);
+    }
+    
     public void setSelectedParentSpace(Space parentSpace) {
         this.selectedParentSpaceReference = (parentSpace != null) ? new DomainReference<Space>(parentSpace) : null;
     }
@@ -41,5 +48,13 @@ public class MoveSpaceBean implements Serializable {
 
     public void setSpaceState(SpaceState spaceState) {
         this.spaceState = spaceState;
+    }
+
+    public String getSpaceName() {
+        return spaceName;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
     }
 }

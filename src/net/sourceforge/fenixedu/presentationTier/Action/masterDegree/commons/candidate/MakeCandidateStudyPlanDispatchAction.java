@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;

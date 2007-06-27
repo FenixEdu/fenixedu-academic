@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInform
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionError;

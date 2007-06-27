@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessEx
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMonthlyResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;

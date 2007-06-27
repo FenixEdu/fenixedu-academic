@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.util.SituationName" %>

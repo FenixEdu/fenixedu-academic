@@ -14,6 +14,6 @@ public class ExtensionNumberConverter extends Converter {
             return null;
         }
         
-        return Extension.readByNumber(Integer.valueOf(numberText));        
+        return Extension.getMaterialByTypeAndIdentification(Extension.class, numberText);        
     }  
 }

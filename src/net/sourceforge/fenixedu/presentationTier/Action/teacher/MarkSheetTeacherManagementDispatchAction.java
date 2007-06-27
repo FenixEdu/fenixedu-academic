@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;

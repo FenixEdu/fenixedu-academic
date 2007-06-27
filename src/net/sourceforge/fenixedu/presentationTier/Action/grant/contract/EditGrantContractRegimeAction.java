@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

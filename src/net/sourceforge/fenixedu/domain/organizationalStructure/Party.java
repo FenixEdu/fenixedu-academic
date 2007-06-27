@@ -62,7 +62,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-abstract public class Party extends Party_Base {
+public abstract class Party extends Party_Base {
 
 	static final private Comparator<Party> COMPARATOR_BY_NAME = new Comparator<Party>() {
 		public int compare(final Party o1, final Party o2) {
@@ -96,6 +96,8 @@ abstract public class Party extends Party_Base {
 		super.setName(name);
 	}
 
+	public abstract String getPartyPresentationName();
+	
 	@Deprecated
 	@Override
 	final public Country getNationality() {
@@ -314,13 +316,20 @@ abstract public class Party extends Party_Base {
 	}
 
 	protected void delete() {
-		for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
-			;
-		for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules())
-			;
-		removePartyType();
-		removeRootDomainObject();
-		deleteDomainObject();
+	    if(!canBeDeleted()) {
+		throw new DomainException("error.party.cannot.be.deleted");
+	    }
+	    
+	    for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
+	    for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
+	    
+	    removePartyType();
+	    removeRootDomainObject();
+	    deleteDomainObject();
+	}
+
+	private boolean canBeDeleted() {
+	    return !hasAnyResourceResponsibility() && !hasAnyVehicleAllocations();
 	}
 
 	public static Set<Party> readContributors() {

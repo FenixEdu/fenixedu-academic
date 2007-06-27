@@ -39,6 +39,22 @@ public abstract class Contract extends Contract_Base {
     }
     
     @Override
+    public void setChildParty(Party childParty) {
+        if(childParty == null || !childParty.isPerson()) {
+            throw new DomainException("error.invalid.child.party");
+        }
+	super.setChildParty(childParty);
+    }
+    
+    @Override
+    public void setParentParty(Party parentParty) {
+	if(parentParty == null || !parentParty.isUnit()) {
+            throw new DomainException("error.invalid.parent.party");
+        }
+	super.setParentParty(parentParty);
+    }
+    
+    @Override
     public void setBeginDate(YearMonthDay beginDate) {
 	checkBeginDateAndEndDate(beginDate, getEndDate());	
 	super.setBeginDate(beginDate);

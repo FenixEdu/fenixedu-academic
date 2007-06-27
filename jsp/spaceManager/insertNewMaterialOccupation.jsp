@@ -35,7 +35,7 @@
 	
 	<logic:notEmpty name="materialTypeBean" property="materialType">	
 		<p class="mtop1 mbottom05"><strong><bean:message key="title.choose.material" bundle="SPACE_RESOURCES"/></strong></p>
-		<bean:define id="chooseMaterialSchema">Choose<bean:write name="materialTypeBean" property="materialType.simpleName"/></bean:define>
+		<bean:define id="chooseMaterialSchema">Choose<bean:write name="materialTypeBean" property="materialType.materialClass.simpleName"/></bean:define>
 		<fr:hasMessages for="materialTypeWithMaterial" type="conversion">
 			<p>
 				<span class="error0">			
@@ -58,7 +58,7 @@
 	<logic:notEmpty name="materialTypeBean" property="material">					
 		<p class="mtop1 mbottom05"><strong><bean:message key="title.insert.material.occupation.details" bundle="SPACE_RESOURCES"/></strong></p>
 		
-		<bean:define id="schemaName">AddNew<bean:write name="materialTypeBean" property="materialType.simpleName"/>SpaceOccupation</bean:define>		
+		<bean:define id="schemaName">AddNew<bean:write name="materialTypeBean" property="materialType.materialClass.simpleName"/>SpaceOccupation</bean:define>		
 		<bean:define id="type" name="materialTypeBean" property="material.materialSpaceOccupationSubClass.name"/>		
 		<bean:define id="materialSlotName" name="materialTypeBean" property="material.materialSpaceOccupationSlotName" />
 

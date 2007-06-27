@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
-import org.apache.velocity.runtime.parser.node.GetExecutor;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a
@@ -115,6 +115,12 @@ public abstract class Group implements Serializable, IGroup {
         return getGroupExpressionName() + getExpressionArgumentsList();
     }
 
+    public String getExpressionInHex() {
+	String expression = getExpression();
+	char[] encodeHex = Hex.encodeHex(expression.getBytes());
+	return new String(encodeHex);
+    }
+    
     protected String getGroupExpressionName() {
         String name = GroupBuilderRegistry.getNameOfBuilder(this.getClass());
         

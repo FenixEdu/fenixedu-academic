@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
 
 <body>
 <span class="error"><!-- Error messages go here --><html:errors /></span>

@@ -10,6 +10,20 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
         setOjbConcreteClass(getClass().getName());
 	setRootDomainObject(RootDomainObject.getInstance());
     }
+
+    @Override
+    public void setResource(Resource resource) {
+	if (resource == null) {
+	    throw new DomainException("error.allocation.no.space");
+	}	
+	super.setResource(resource);
+    }
+    
+    public void delete() {
+	super.setResource(null);	
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }     
     
     public boolean isSpaceOccupation() {
 	return false;
@@ -34,18 +48,20 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     public boolean isUnitSpaceOccupation() {
 	return false;
     }
-    
-    @Override
-    public void setResource(Resource resource) {
-	if (resource == null) {
-	    throw new DomainException("error.allocation.no.space");
-	}	
-	super.setResource(resource);
+        
+    public boolean isEventSpaceOccupation() {
+	return false;
     }
     
-    public void delete() {
-	super.setResource(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
+    public boolean isGenericEventSpaceOccupation() {
+	return false;
+    }
+    
+    public boolean isWrittenEvaluationSpaceOccupation() {
+	return false;
+    }
+    
+    public boolean isLessonSpaceOccupation() {
+	return false;
     }     
 }

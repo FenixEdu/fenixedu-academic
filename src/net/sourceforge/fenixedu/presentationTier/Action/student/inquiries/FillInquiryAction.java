@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
@@ -41,8 +40,8 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 

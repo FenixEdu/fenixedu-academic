@@ -20,10 +20,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionError;
@@ -160,7 +161,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
-            request.setAttribute("campus", rootDomainObject.getCampussSet());
+            request.setAttribute("campus", Campus.getAllActiveCampus());
 
             form.set("executionYearID", executionDegree.getExecutionYear().getIdInternal());
             form.set("campusID", executionDegree.getCampus().getIdInternal());

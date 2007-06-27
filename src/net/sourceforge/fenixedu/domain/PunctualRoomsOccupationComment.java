@@ -46,6 +46,14 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
     }
     
     @Override
+    public void setInstant(DateTime instant) {
+	if(instant == null) {
+	    throw new DomainException("error.PunctualRoomsOccupationComment.empty.instant");
+	}
+        super.setInstant(instant);
+    }
+    
+    @Override
     public void setDescription(MultiLanguageString description) {	
 	if(description == null || description.isEmpty()) {
 	    throw new DomainException("error.PunctualRoomsOccupationComment.empty.description");
@@ -53,6 +61,14 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 	super.setDescription(description);
     }
 
+    @Override
+    public void setSubject(MultiLanguageString subject) {
+	if(subject == null || subject.isEmpty()) {
+	    throw new DomainException("error.PunctualRoomsOccupationComment.empty.subject");
+	}
+	super.setSubject(subject);
+    }
+    
     @Override
     public void setRequest(PunctualRoomsOccupationRequest request) {
 	if(request == null) {

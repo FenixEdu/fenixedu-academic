@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.Building;
+
 
 /**
  * @author Luis Cruz
@@ -11,14 +12,14 @@ public class InfoBuilding extends InfoObject {
 
     private String name;
 
-    public void copyFromDomain(OldBuilding building) {
+    public void copyFromDomain(Building building) {
         super.copyFromDomain(building);
         if (building != null) {
             setName(building.getName());
         }
     }
 
-    public static InfoBuilding newInfoFromDomain(OldBuilding building) {
+    public static InfoBuilding newInfoFromDomain(Building building) {
         InfoBuilding infoBuilding = null;
         if (building != null) {
             infoBuilding = new InfoBuilding();

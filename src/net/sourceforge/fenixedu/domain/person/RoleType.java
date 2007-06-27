@@ -17,7 +17,9 @@ public enum RoleType {
     
     DEPARTMENT_MEMBER("Department Member"),
 
-    TIME_TABLE_MANAGER("Timetable Management"),
+    RESOURCE_ALLOCATION_MANAGER ("Rersource Allocation Management"),
+    
+    RESOURCE_MANAGER("Resource Management"),    
 
     MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 

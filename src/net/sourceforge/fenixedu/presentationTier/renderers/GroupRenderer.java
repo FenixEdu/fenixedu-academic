@@ -11,47 +11,47 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 
 public class GroupRenderer extends OutputRenderer {
 
-	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new Layout() {
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new Layout() {
 
-			private HtmlComponent processGroupUnion(GroupUnion group) {
-				HtmlContainer container = new HtmlInlineContainer();
-				container.setIndented(false);
+	    private HtmlComponent processGroupUnion(GroupUnion group) {
+		HtmlContainer container = new HtmlInlineContainer();
+		container.setIndented(false);
 
-				int i = group.getChildren().size();
+		int i = group.getChildren().size();
 
-				for (IGroup child : group.getChildren()) {
-					if (child instanceof GroupUnion) {
-						container.addChild(processGroupUnion((GroupUnion) child));
-					} else {
-						container.addChild(new HtmlText(child.getName()));
-					}
-					i--;
-					if (i > 0) {
-						container.addChild(new HtmlText(", "));
-					}
-				}
+		for (IGroup child : group.getChildren()) {
+		    if (child instanceof GroupUnion) {
+			container.addChild(processGroupUnion((GroupUnion) child));
+		    } else {
+			container.addChild(new HtmlText(child.getName()));
+		    }
+		    i--;
+		    if (i > 0) {
+			container.addChild(new HtmlText(", "));
+		    }
+		}
 
-				return container;
-			}
+		return container;
+	    }
 
-			@Override
-			public HtmlComponent createComponent(Object object, Class type) {
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
 
-				HtmlInlineContainer container = new HtmlInlineContainer();
+		HtmlInlineContainer container = new HtmlInlineContainer();
 
-				if (object instanceof GroupUnion) {
-					container.addChild(processGroupUnion((GroupUnion) object));
-				} else {
-					IGroup group = (IGroup) object;
-					container.addChild(new HtmlText(group.getName()));
-				}
+		if (object instanceof GroupUnion) {
+		    container.addChild(processGroupUnion((GroupUnion) object));
+		} else {
+		    IGroup group = (IGroup) object;
+		    container.addChild(new HtmlText(group.getName()));
+		}
 
-				return container;
-			}
+		return container;
+	    }
 
-		};
-	}
+	};
+    }
 
 }

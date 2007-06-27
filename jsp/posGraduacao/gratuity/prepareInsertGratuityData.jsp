@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <h2><bean:message key="link.masterDegree.gratuity.insert"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/insertGratuityDataDA">  

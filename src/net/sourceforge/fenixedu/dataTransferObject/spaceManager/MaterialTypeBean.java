@@ -1,30 +1,18 @@
 package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
-import java.io.Serializable;
-
+import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 
-public class MaterialTypeBean implements Serializable {
+public class MaterialTypeBean extends MaterialBean {
 
     private DomainReference<SpaceInformation> spaceInformationReference;
-    
-    private Class materialType;
-    
+        
     private DomainReference<Material> materialReference;
     
-    public MaterialTypeBean(SpaceInformation spaceInformationReference) {
-        super();
+    public MaterialTypeBean(SpaceInformation spaceInformationReference) {	
         setSpaceInformation(spaceInformationReference);
-    }       
-    
-    public Class getMaterialType() {
-        return materialType;
-    }
-
-    public void setMaterialType(Class materialType) {
-        this.materialType = materialType;
     }       
     
     public void setSpaceInformation(SpaceInformation spaceInformationReference) {
@@ -41,5 +29,5 @@ public class MaterialTypeBean implements Serializable {
     
     public Material getMaterial() {
         return (this.materialReference != null) ? this.materialReference.getObject() : null;
-    }
+    } 
 }

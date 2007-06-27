@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -45,11 +44,11 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Season;
@@ -756,7 +755,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (originPage != null) {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getApplicationContext());
-            stringBuilder.append("/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
             stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
             stringBuilder.append("&");
             stringBuilder.append(SessionConstants.EXECUTION_PERIOD_OID);
@@ -797,19 +796,19 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }    
 
-    public List<OldRoom> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
-        final OldRoom[] result = new OldRoom[getEvaluationRoomsPositions().size()];
+    public List<AllocatableSpace> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
+        final AllocatableSpace[] result = new AllocatableSpace[getEvaluationRoomsPositions().size()];
         for (final Entry<Integer, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
-            final OldRoom room = getRoom(entry.getKey());
+            final AllocatableSpace room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
         return Arrays.asList(result);
     }
 
-    private OldRoom getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
-        for (final RoomOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupation()) {
+    private AllocatableSpace getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
-                return (OldRoom) roomOccupation.getRoom();
+                return (AllocatableSpace) roomOccupation.getRoom();
             }
         }
         return null;
@@ -826,11 +825,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixFilterException, FenixServiceException {
         final Map<Integer, Integer> evaluationRooms = new TreeMap();
-        final List<RoomOccupation> roomOccupations = new ArrayList(((WrittenEvaluation) getEvaluation())
-                .getAssociatedRoomOccupation());
+        final List<WrittenEvaluationSpaceOccupation> roomOccupations = new ArrayList(((WrittenEvaluation) getEvaluation())
+                .getWrittenEvaluationSpaceOccupations());
         Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.capacidadeExame")));
         int count = 0;
-        for (final RoomOccupation roomOccupation : roomOccupations) {
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : roomOccupations) {
             evaluationRooms.put(roomOccupation.getRoom().getIdInternal(), Integer.valueOf(++count));
         }
         return evaluationRooms;
@@ -863,9 +862,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
-        final List<SelectItem> result = new ArrayList(((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupationCount());
-        for (final RoomOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupation()) {
-            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((OldRoom)roomOccupation.getRoom())
+        final List<SelectItem> result = new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
+        for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations()) {
+            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((AllocatableSpace)roomOccupation.getRoom())
                     .getNome()));
         }
         return result;
@@ -897,9 +896,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
     
     private List<Integer> getRoomIDs() throws FenixFilterException, FenixServiceException {
-        final List<OldRoom> rooms = getEvaluationRooms(); 
+        final List<AllocatableSpace> rooms = getEvaluationRooms(); 
         final List<Integer> result = new ArrayList(rooms.size());
-        for (final OldRoom room : rooms) {
+        for (final AllocatableSpace room : rooms) {
             result.add(room.getIdInternal());
         }
         return result;

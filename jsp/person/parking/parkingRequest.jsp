@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>

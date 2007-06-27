@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.collections.CollectionUtils;

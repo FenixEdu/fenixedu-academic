@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;

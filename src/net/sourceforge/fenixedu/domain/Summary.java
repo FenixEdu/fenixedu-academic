@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -36,7 +36,7 @@ public class Summary extends Summary_Base {
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
-	    Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
+	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -46,7 +46,7 @@ public class Summary extends Summary_Base {
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
-	    Shift shift, Lesson lesson, YearMonthDay date, OldRoom room, Partial hour) {
+	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour) {
 
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
 		teacher, shift, lesson, date, room, hour);
@@ -55,7 +55,7 @@ public class Summary extends Summary_Base {
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText,
 	    Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-	    OldRoom room, Partial hour) {
+	    AllocatableSpace room, Partial hour) {
 	
 	setShift(shift);
 	setSummaryDateYearMonthDay(date);
@@ -203,11 +203,11 @@ public class Summary extends Summary_Base {
     }
 
     @Override
-    public OldRoom getRoom() {
+    public AllocatableSpace getRoom() {
 	if (getLesson() != null) {
-	    return (OldRoom) getLesson().getSala();
+	    return (AllocatableSpace) getLesson().getSala();
 	}
-	return (OldRoom) super.getRoom();
+	return (AllocatableSpace) super.getRoom();
     }
 
     @Override

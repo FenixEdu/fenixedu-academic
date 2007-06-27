@@ -16,6 +16,10 @@ public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 	super(object);	
     }
 
+    public PersistentGroupMembers getPersistentGroupMembers() {
+	return getObject();
+    }
+    
     public String getName() {
     	return getObject().getName();
     }

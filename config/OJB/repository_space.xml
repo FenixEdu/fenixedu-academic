@@ -2,7 +2,12 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Campus" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Building" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.AllocatableSpace" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.AllocatableSpace" table="RESOURCE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomSubdivision" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
@@ -10,6 +15,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.BuildingInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.FloorInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomInformation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Campus" table="RESOURCE">
@@ -18,8 +24,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.CampusInformation" table="SPACE_INFORMATION">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="RESOURCE">
-	 <extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="RESOURCE">	 
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
@@ -35,6 +40,22 @@
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.EventSpaceOccupation" />	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.EventSpaceOccupation" table="RESOURCE_ALLOCATION">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation" table="RESOURCE_ALLOCATION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation" table="RESOURCE_ALLOCATION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation" table="RESOURCE_ALLOCATION">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" table="RESOURCE_ALLOCATION">
@@ -50,21 +71,26 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" table="RESOURCE_ALLOCATION">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="RESOURCE">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.OldRoom" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="RESOURCE">	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomSubdivision" table="RESOURCE">	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" table="SPACE_INFORMATION">
+</class-descriptor>
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomClassification" table="ROOM_CLASSIFICATION">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" table="SPACE_RESPONSIBILITY">
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" table="RESOURCE_RESPONSIBILITY">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Blueprint" table="BLUEPRINT">
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers " table="PERSISTENT_GROUP_MEMBERS">
+<class-descriptor class="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" table="PERSISTENT_GROUP_MEMBERS">
 </class-descriptor>

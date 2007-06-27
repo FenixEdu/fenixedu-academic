@@ -6,7 +6,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -81,7 +81,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     }
     
     public InfoRoom getInfoSala() {
-        return (infoSala == null) ? infoSala = InfoRoom.newInfoFromDomain((OldRoom) getLesson().getSala()) : infoSala;
+        return (infoSala == null) ? infoSala = InfoRoom.newInfoFromDomain((AllocatableSpace) getLesson().getSala()) : infoSala;
     }
 
     public InfoShift getInfoShift() {
@@ -90,7 +90,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     public InfoRoomOccupation getInfoRoomOccupation() {
     	if (infoRoomOccupation == null) {
-    		infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(getLesson().getRoomOccupation());
+    		infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(getLesson().getLessonSpaceOccupation());
     	}
     	return infoRoomOccupation;
 	}

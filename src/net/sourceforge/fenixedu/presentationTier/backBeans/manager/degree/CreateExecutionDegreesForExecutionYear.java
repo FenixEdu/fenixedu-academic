@@ -12,15 +12,15 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -247,8 +247,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public List getAllCampus() {
-        final List<SelectItem> result = new ArrayList<SelectItem>(rootDomainObject.getCampussCount());
-        for (final Campus campus : rootDomainObject.getCampuss()) {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final Campus campus : Campus.getAllCampus()) {
             result.add(new SelectItem(campus.getName(), campus.getName()));
         }
         return result;

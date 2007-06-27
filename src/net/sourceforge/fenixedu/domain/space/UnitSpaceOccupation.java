@@ -22,7 +22,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created unit space occupation", parameters = {
 	    "space", "unit", "begin", "end" })
     public UnitSpaceOccupation(Unit unit, Space space, YearMonthDay begin, YearMonthDay end) {
@@ -34,14 +34,14 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	super.setEnd(end);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted unit space occupation", parameters = {})
     public void delete() {
 	super.setUnit(null);
 	super.delete();
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited unit space occupation", parameters = {
 	    "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
@@ -84,12 +84,10 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     }
     
     public boolean isActive(YearMonthDay currentDate) {
-	return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
-		.isBefore(currentDate)));
+	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
 
-    private void checkUnitSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Space space,
-	    Unit unit) {
+    private void checkUnitSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Space space, Unit unit) {
 	checkBeginDateAndEndDate(begin, end);
 	for (UnitSpaceOccupation unitSpaceOccupation : space.getUnitSpaceOccupations()) {
 	    if (!unitSpaceOccupation.equals(this) && unitSpaceOccupation.getUnit().equals(unit)
@@ -100,8 +98,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     }
 
     private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
-		.getEnd().isBefore(begin)));
+	return ((end == null || !getBegin().isAfter(end)) && (getEnd() == null || !getEnd().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {

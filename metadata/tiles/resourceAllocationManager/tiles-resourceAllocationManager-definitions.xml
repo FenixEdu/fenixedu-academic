@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.sop.executionCourses" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" type="string" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
+	  <put name="navLocal" value="/resourceAllocationManager/commonNavLocalExecutionCourses.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.sop.examsPage" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" type="string" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navLocal" value="/resourceAllocationManager/exams/commonNavLocalExamsSop.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	 
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.sop.examsPage.print" page="/layout/fenixLayoutPrint.jsp">
+	  <put name="title" value="Gestão de Recursos" type="string" />
+	  <put name="head" value="/commons/blank.jsp"/>
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navLocal" value="/resourceAllocationManager/exams/commonNavLocalExamsSop.jsp" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="body-inline" value="" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.sop.foto" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" type="string" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.sop.curriculumHistoric" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" type="string"/>
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />	  
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
+	  <put name="navLocal" value="/resourceAllocationManager/navLocalSop.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+	</definition>	
+	<definition name="definition.sop.roomsManagement" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	 
+	  <put name="navLocal" value="/resourceAllocationManager/commonNavLocalSalasSop.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>  
+	  <put name="body" value="/resourceAllocationManager/principalSalas_bd.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	<definition name="definition.resourceAllocationManager.otherResourcesManagement" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Outros Recursos" />
+	  <put name="serviceName" value="Gestão de Outros Recursos" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	 
+	  <put name="navLocal" value="/resourceAllocationManager/navLocalSop.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>  
+	  <put name="body" value="/commons/blank.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
+</tiles-definitions>

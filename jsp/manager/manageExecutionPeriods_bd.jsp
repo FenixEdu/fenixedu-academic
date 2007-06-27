@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
 <h2><bean:message bundle="MANAGER_RESOURCES"
 	key="title.manage.execution.periods" /></h2>
 <br />

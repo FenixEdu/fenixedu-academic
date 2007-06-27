@@ -40,25 +40,26 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
+import org.joda.time.YearMonthDay;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
     private static final MessageResources messages = MessageResources
-            .getMessageResources("resources/ApplicationResourcesSOP");
+            .getMessageResources("resources/ResourceAllocationManagerResources");
     private static final MessageResources enumerations = MessageResources
             .getMessageResources("resources/EnumerationResources");
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
@@ -476,13 +477,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         result.add(new SelectItem(0, this.chooseMessage));
         for (InfoExecutionDegree infoExecutionDegree : (List<InfoExecutionDegree>) infoExecutionDegrees) {
             StringBuilder label = new StringBuilder();
-            label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                    .getInfoDegree().getTipoCurso().toString()));
+            label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()));
             label.append(" em ");
             label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-            label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? "-"
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "");
-
+            label.append(addAnotherInfoDegreeToLabel(infoExecutionDegrees, infoExecutionDegree) ? " - " + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "");
             result.add(new SelectItem(infoExecutionDegree.getIdInternal(), label.toString()));
         }
 
@@ -799,7 +797,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
-            for (final OldRoom room : writtenTest.getAssociatedRooms()) {
+            for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
                 buffer.append(room.getName()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
             }
@@ -880,7 +878,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public List<SelectItem> getOrderByCriteriaItems() {
         MessageResources messageResources = MessageResources
-                .getMessageResources("resources/ApplicationResourcesSOP");
+                .getMessageResources("resources/ResourceAllocationManagerResources");
 
         List<SelectItem> orderByCriteriaItems = new ArrayList<SelectItem>(3);
         orderByCriteriaItems.add(new SelectItem(0, messageResources.getMessage("label.capacity")));
@@ -895,7 +893,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<Integer> associatedRooms = new ArrayList<Integer>();
 
-            for (OldRoom room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 associatedRooms.add(room.getIdInternal());
             }
 
@@ -911,7 +909,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<SelectItem> getRoomsSelectItems() throws FenixFilterException, FenixServiceException {
-        Calendar examDate = Calendar.getInstance();
+       
+	Calendar examDate = Calendar.getInstance();
         examDate.set(Calendar.YEAR, getYear());
         examDate.set(Calendar.MONTH, getMonth() - 1);
         examDate.set(Calendar.DAY_OF_MONTH, getDay());
@@ -932,13 +931,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.SECOND, 0);
         examEndTime.set(Calendar.MILLISECOND, 0);
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null,
-                null, null, Boolean.FALSE };
-        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this
-                .getUserView(), "ReadAvailableRoomsForExam", args);
+        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null, null, null, Boolean.FALSE };
+        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this.getUserView(), "ReadAvailableRoomsForExam", args);
 
         if (this.getEvaluationID() != null) {
-            for (OldRoom room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
                 if (!availableInfoRoom.contains(associatedRoom)) {
                     availableInfoRoom.add(associatedRoom);
@@ -980,7 +977,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             label.append(", ");
             label.append(infoRoom.getEdificio());
             label.append(", ");
-            label.append(getRoomType(infoRoom.getTipo()));
+            label.append(infoRoom.getTipo());
             label.append(" )");
 
             items.add(new SelectItem(infoRoom.getIdInternal(), label.toString()));
@@ -994,7 +991,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {                
-                OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(chosenRoomID);
+        	AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
                 result.append(room.getName());
                 result.append("; ");
             }
@@ -1007,17 +1004,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         } else {
             return messages.getMessage("label.no.associated.rooms");
         }
-    }
-
-    public String getRoomType(TipoSala roomType) {
-        if (roomType.getTipo() == TipoSala.ANFITEATRO) {
-            return enumerations.getMessage("ANFITEATRO");
-        } else if (roomType.getTipo() == TipoSala.LABORATORIO) {
-            return enumerations.getMessage("LABORATORIO");
-        } else if (roomType.getTipo() == TipoSala.PLANA) {
-            return enumerations.getMessage("PLANA");
-        }
-        return "";
     }
 
     public String associateRoomToWrittenEvaluation() {
@@ -1131,7 +1117,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (originPage != null && originPage.length() > 0) {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getApplicationContext());
-            stringBuilder.append("/sop/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
             stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
             if (getSelectedBegin() != null && getSelectedBegin().length() > 0 && getSelectedBegin().equals("true")) {
                 stringBuilder.append("&selectedBegin=");
@@ -1488,5 +1474,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public Map<Integer, Integer> getExecutionCoursesEnroledStudents() {
         return executionCoursesEnroledStudents;
+    }
+    
+    
+    public String getSelectedDateString() throws FenixFilterException, FenixServiceException {
+	return new YearMonthDay(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
+    }
+    
+    public String getSelectedBeginHourString() throws FenixFilterException, FenixServiceException {
+	return new HourMinuteSecond(getBeginHour(), getBeginMinute(), 0).toString("HH:mm");
+    }
+    
+    public String getSelectedEndHourString() throws FenixFilterException, FenixServiceException {
+	return new HourMinuteSecond(getEndHour(), getEndMinute(), 0).toString("HH:mm");
     }
 }

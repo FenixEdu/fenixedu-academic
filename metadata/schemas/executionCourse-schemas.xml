@@ -347,7 +347,7 @@
 	<slot name="lesson" key="label.lesson" layout="menu-select-postback" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftLessonsToSummariesManagementProvider" />				
-		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
+		<property name="eachLayout"	value="lesson-plain" />
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
@@ -398,7 +398,7 @@
 	<slot name="summaryDate" key="label.date" />
 	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
 	<slot name="summaryRoom" layout="menu-select" key="label.room" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OldRoomsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
 		<property name="format" value="${name}" />
 	</slot>	
 	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
@@ -476,9 +476,7 @@
 </schema>
 <schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
 	<slot name="date" />
-	<slot name="lesson" key="label.lesson">
-		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
-	</slot>
+	<slot name="lesson" key="label.lesson" layout="lesson-plain"/>
 	<slot name="lesson.tipo" layout="" key="label.type"/>
 	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
 	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>		
@@ -514,9 +512,7 @@
 	<slot name="date.dayOfMonth" key="label.day"/>
 	<slot name="monthString" key="label.month"/>
 	<slot name="date.year" key="labe.summary.year"/>
-	<slot name="lesson" key="label.lesson">
-		<property name="format"	value="${diaSemana.diaSemanaString} (${beginHourMinuteSecond.hour,02d}:${beginHourMinuteSecond.minuteOfHour,02d} - ${endHourMinuteSecond.hour,02d}:${endHourMinuteSecond.minuteOfHour,02d}) ${sala.name}" />
-	</slot>		
+	<slot name="lesson" key="label.lesson" layout="lesson-plain" />		
 	<slot name="lesson.tipo" layout="" key="label.type"/>
 	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
 	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>			

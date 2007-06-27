@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -129,7 +129,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 		: (String) request.getAttribute("spaceResponsibilityID");
 	final Integer spaceResponsibilityID = spaceResponsibilityIDString != null ? Integer
 		.valueOf(spaceResponsibilityIDString) : null;
-	return rootDomainObject.readSpaceResponsibilityByOID(spaceResponsibilityID);
+	return (SpaceResponsibility) rootDomainObject.readResourceResponsibilityByOID(spaceResponsibilityID);
     }
 
     private Unit getResponsibleUnit(final HttpServletRequest request) {

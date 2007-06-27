@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionError;

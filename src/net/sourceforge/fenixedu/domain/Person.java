@@ -1090,7 +1090,8 @@ public class Person extends Person_Base {
 			case MANAGER:
 			case WEBSITE_MANAGER:
 			case MESSAGING:
-			case TIME_TABLE_MANAGER:
+			case RESOURCE_ALLOCATION_MANAGER:
+			case RESOURCE_MANAGER:
 			case EMPLOYEE:
 			case STUDENT:
 			case ALUMNI:
@@ -1133,7 +1134,7 @@ public class Person extends Person_Base {
 				removeRoleIfPresent(person, RoleType.GRANT_OWNER);
 				removeRoleIfPresent(person, RoleType.MANAGER);
 				removeRoleIfPresent(person, RoleType.OPERATOR);
-				removeRoleIfPresent(person, RoleType.TIME_TABLE_MANAGER);
+				removeRoleIfPresent(person, RoleType.RESOURCE_ALLOCATION_MANAGER);
 				removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
 				removeRoleIfPresent(person, RoleType.MESSAGING);
 				removeRoleIfPresent(person, RoleType.ALUMNI);
@@ -2491,5 +2492,14 @@ public class Person extends Person_Base {
 			}
 		}
 		return files;
+	}
+	
+	public String getPresentationName() {
+	    return getName() + " (" + getUsername() + ")";
+	}
+
+	@Override
+	public String getPartyPresentationName() {
+	    return getPresentationName();
 	}
 }

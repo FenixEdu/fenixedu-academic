@@ -26,14 +26,15 @@ public class RoomClassification extends RoomClassification_Base {
     private transient String absoluteCode;
 
     private transient String presentationCode;
-
+    
+    public static final String LABORATORY_FOR_EDUCATION_CODE = "2.1", LABORATORY_FOR_RESEARCHER_CODE = "2.2";
+    
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator("absoluteCode");
     
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = {
 	    "parentRoomClassification", "code", "name" })
-    public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
-	    final MultiLanguageString name) {
+    public RoomClassification(final RoomClassification parentRoomClassification, final Integer code, final MultiLanguageString name) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	edit(parentRoomClassification, code, name);

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <br/>
 <bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
@@ -19,7 +19,7 @@
 <br />	
 	<table width="70%" align="center">
 		<tr>
-			<td colspan="3"><h2 class="redtxt">Informações de utilização:</h2><p>Na lista abaixo estï¿½o as turmas que dispï¿½em de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de número de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
+			<td colspan="3"><h2 class="redtxt">Informações de utilização:</h2><p>Na lista abaixo estão as turmas que dispõem de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de número de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
 		</tr>
 		<tr>
 			<th class="listClasses-header">Ano</th>
@@ -29,7 +29,7 @@
 		<logic:iterate id="infoClass" name="infoStudentShiftEnrolment" property="allowedClasses" >
 			<bean:define id="curricularYear" name="infoClass" property="anoCurricular"/>
 			<tr>
-				<td class="listClasses"><bean:write name="curricularYear"/>ï¿½ Ano</td>
+				<td class="listClasses"><bean:write name="curricularYear"/>1º Ano</td>
 				<td class="listClasses">
 					<html:link page="/studentShiftEnrolmentManager.do?method=showAvailableShifts" paramId="class" paramName="infoClass" paramProperty="nome" transaction="true">
 					<bean:write name="infoClass" property="nome"/>
@@ -79,11 +79,11 @@
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="inicio.time.time"/>
 								</dt:format>
-								atï¿½ as 
+								às
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="fim.time.time"/>
 								</dt:format>
-								<logic:notEmpty name="lesson" property="infoSala.nome">
+								<logic:notEmpty name="lesson" property="infoSala">
 									na sala
 									<bean:write name="lesson" property="infoSala.nome"/>
 								</logic:notEmpty>	

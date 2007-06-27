@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
+import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
@@ -38,6 +39,13 @@ public class SpacePredicates {
 	}
     };
     
+    public static final AccessControlPredicate<SpaceOccupation> checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole = new AccessControlPredicate<SpaceOccupation>() {
+	public boolean evaluate(SpaceOccupation spaceOccupation) {
+	    spaceOccupation.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole();
+	    return true;
+	}
+    };
+
     public static final AccessControlPredicate<SpaceInformation> checkIfLoggedPersonHasPermissionsToEditSpaceInformation = new AccessControlPredicate<SpaceInformation>() {
 	public boolean evaluate(SpaceInformation spaceInformation) {
 	    spaceInformation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
@@ -65,4 +73,11 @@ public class SpacePredicates {
 	    return true;
 	}
     };    
+    
+    public static final AccessControlPredicate<UnitSpaceOccupation> checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations = new AccessControlPredicate<UnitSpaceOccupation>() {
+	public boolean evaluate(UnitSpaceOccupation unitSpaceOccupation) {
+	    unitSpaceOccupation.getSpace().checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
+	    return true;
+	}
+    };
 }

@@ -12,10 +12,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
@@ -35,34 +34,30 @@ public class Lesson extends Lesson_Base {
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public Lesson() {
+    private Lesson() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
-	    RoomOccupation roomOccupation, Shift shift, Integer weekOfQuinzenalStart, Integer frequency) {
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, Shift shift, 
+	    Integer weekOfQuinzenalStart, Integer frequency, ExecutionPeriod executionPeriod) {
 
 	this();
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
 	setFim(fim);
-	setTipo(tipo);
-	setSala(sala);
-	setRoomOccupation(roomOccupation);
+	setTipo(tipo);	
 	setShift(shift);
 	setFrequency(frequency);
 	setWeekOfQuinzenalStart(weekOfQuinzenalStart);
+	setExecutionPeriod(executionPeriod);
     }
 
-    public void edit(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo,
-	    OldRoom salaNova, Integer frequency, Integer weekOfQuinzenalStart) {
-
+    public void edit(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, Integer frequency, Integer weekOfQuinzenalStart) {
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
 	setFim(fim);
-	setTipo(tipo);
-	setSala(salaNova);
+	setTipo(tipo);	
 	setFrequency(frequency);
 	setWeekOfQuinzenalStart(weekOfQuinzenalStart);
     }
@@ -81,14 +76,21 @@ public class Lesson extends Lesson_Base {
 	    throw new DomainException("error.deleteLesson.with.summaries", prettyPrint());
 	}
 
-	removeExecutionPeriod();
-	removeSala();
+	removeExecutionPeriod();	
 	removeShift();
-	getRoomOccupation().delete();
+	getLessonSpaceOccupation().delete();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-
+    
+    public AllocatableSpace getSala() {
+	return getLessonSpaceOccupation() != null ? getLessonSpaceOccupation().getRoom() : null;
+    }
+    
+    public boolean hasSala() {
+	return getSala() != null;
+    }
+    
     public Calendar getInicio() {
 	if (this.getBegin() != null) {
 	    Calendar result = Calendar.getInstance();
@@ -123,6 +125,10 @@ public class Lesson extends Lesson_Base {
 	}
     }
 
+    public LessonSpaceOccupation getRoomOccupation() {
+	return getLessonSpaceOccupation();
+    }
+    
     public double hours() {
 	TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
 	return timePeriod.hours().doubleValue();
@@ -199,7 +205,7 @@ public class Lesson extends Lesson_Base {
     }
            
     private OccupationPeriod getLessonOccupationPeriod() {	
-	if(getRoomOccupation() == null) {
+	if(getLessonSpaceOccupation() == null) {
 	    ExecutionYear executionYear = getShift().getDisciplinaExecucao().getExecutionYear();
 	    Integer semester = getShift().getDisciplinaExecucao().getExecutionPeriod().getSemester();
 	    ExecutionDegree executionDegree = getShift().getDisciplinaExecucao().getFirsExecutionDegreesByYearWithExecutionIn(executionYear).first();
@@ -209,20 +215,12 @@ public class Lesson extends Lesson_Base {
 		return executionDegree.getPeriodLessonsSecondSemester();
 	    }
 	} else {
-	    return getRoomOccupation().getPeriod();
+	    return getLessonSpaceOccupation().getPeriod();
 	}
     }
     
     private Campus getLessonCampus() {
-	net.sourceforge.fenixedu.domain.Campus oldCampus = ((OldRoom)getSala()).getBuilding().getCampus();
-	if (oldCampus != null) {
-	    for (Campus campus : Space.getAllCampus()) {
-		if (campus.getSpaceInformation().getName().equalsIgnoreCase(oldCampus.getName())) {
-		    return campus;
-		}
-	    }
-	}
-	return null;
+	return hasSala() ? getSala().getSpaceCampus() : null;
     }
 
     public YearMonthDay getNextPossibleSummaryDate() {
@@ -311,7 +309,6 @@ public class Lesson extends Lesson_Base {
 				YearMonthDay day = getPossibleDateInValidSummaryDateWeekDay(startDateToSearch, summaryDate);
 				startDateToSearch = addPossibleDate(datesToInsert, day,	startDateToSearch, 
 					now, lessonCampus, lessonOccupationPeriod);
-
 			    } else {
 				// ERROR: I hope that never enter here
 				System.out.println("3 2 1 ... BOOOOOOMMMMMMMMM!!!");
@@ -442,7 +439,7 @@ public class Lesson extends Lesson_Base {
 	result.append(":");
 	result.append(getInicio().get(Calendar.MINUTE));
 	result.append(", ");
-	result.append(((OldRoom)getSala()).getName());
+	result.append(hasSala() ? ((AllocatableSpace)getSala()).getName() : "");
 	return result.toString();
     }
         

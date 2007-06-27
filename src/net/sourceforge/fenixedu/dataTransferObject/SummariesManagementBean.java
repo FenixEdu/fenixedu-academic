@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +39,7 @@ public class SummariesManagementBean implements Serializable {
 
     private String teacherName;
     
-    private DomainReference<OldRoom> roomReference;
+    private DomainReference<AllocatableSpace> roomReference;
 
     private Integer studentsNumber;
     
@@ -72,7 +72,7 @@ public class SummariesManagementBean implements Serializable {
     
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, SummaryType summaryType,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift,
-            Lesson lesson, YearMonthDay summaryDate, OldRoom summaryRoom, Partial summaryTime, Summary summary,
+            Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
             Professorship professorshipLogged) {
         
         setTitle(title);
@@ -187,12 +187,12 @@ public class SummariesManagementBean implements Serializable {
         this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
     }
 
-    public OldRoom getSummaryRoom() {
+    public AllocatableSpace getSummaryRoom() {
         return (this.roomReference != null) ? this.roomReference.getObject() : null;
     }
 
-    public void setSummaryRoom(OldRoom room) {
-        this.roomReference = (room != null) ? new DomainReference<OldRoom>(room) : null;
+    public void setSummaryRoom(AllocatableSpace room) {
+        this.roomReference = (room != null) ? new DomainReference<AllocatableSpace>(room) : null;
     }
     
     public SummaryType getSummaryType() {

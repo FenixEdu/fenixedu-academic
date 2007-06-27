@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 

@@ -885,6 +885,15 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
         return ISODateTimeFormat.hourMinuteSecond().print(this);
     }
 
+    /**
+     * Set the second of minute field property
+     * 
+     * @return the new HourMinuteSecond
+     */
+    public HourMinuteSecond setSecondOfMinute(int seconds) {
+	return new HourMinuteSecond(getHour(), getMinuteOfHour(), seconds);
+    }
+    
     // -----------------------------------------------------------------------
     /**
      * The property class for <code>HourMinuteSecond</code>.
@@ -1087,5 +1096,4 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
             return setCopy(getMinimumValue());
         }
     }
-
 }

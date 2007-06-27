@@ -152,7 +152,7 @@
 						 bundle="APPLICATION_RESOURCES" 
 					/>		
 				</p>
-				<jsp:include page="../../sop/roomsPunctualScheduling/legend.jsp" />
+				<jsp:include page="../../resourceAllocationManager/roomsPunctualScheduling/legend.jsp" />
 			</logic:notEmpty>
 		</logic:notEmpty>
 							

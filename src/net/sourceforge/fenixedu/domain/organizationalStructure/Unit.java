@@ -118,7 +118,8 @@ public class Unit extends Unit_Base {
 
     @Override
     public void setBeginDateYearMonthDay(YearMonthDay beginDateYearMonthDay) {
-	if (beginDateYearMonthDay == null) {
+	if (beginDateYearMonthDay == null || 
+		(getEndDateYearMonthDay() != null && getEndDateYearMonthDay().isBefore(beginDateYearMonthDay))) {
 	    throw new DomainException("error.unit.no.beginDate");
 	}
 	super.setBeginDateYearMonthDay(beginDateYearMonthDay);
@@ -127,8 +128,7 @@ public class Unit extends Unit_Base {
     @Override
     public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
 	if (getBeginDateYearMonthDay() == null
-		|| (endDateYearMonthDay != null && endDateYearMonthDay
-			.isBefore(getBeginDateYearMonthDay()))) {
+		|| (endDateYearMonthDay != null && endDateYearMonthDay.isBefore(getBeginDateYearMonthDay()))) {
 	    throw new DomainException("error.unit.endDateBeforeBeginDate");
 	}
 	super.setEndDateYearMonthDay(endDateYearMonthDay);
@@ -151,8 +151,7 @@ public class Unit extends Unit_Base {
 
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
-		&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnySpaceResponsibility()
-		&& !hasAnyMaterials() && !hasAnyVigilantGroups()
+		&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnyVigilantGroups()		
 		&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
 		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
@@ -854,24 +853,13 @@ public class Unit extends Unit_Base {
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
-	return getParentUnitsPresentationName(applicationResourcesBundle
-		.getString("label.html.breakLine"));
+        return getParentUnitsPresentationName(applicationResourcesBundle.getString("label.html.breakLine"));
     }
 
     public String getParentUnitsPresentationName() {
 	return getParentUnitsPresentationName(" - ");
     }
-
-    public String getDirectParentUnitsPresentationName() {
-	StringBuilder builder = new StringBuilder();
-	for (Unit unit : getParentUnits()) {
-	    if (!unit.isAggregateUnit()) {
-		builder.append(unit.getNameWithAcronym());
-	    }
-	}
-	return builder.toString();
-    }
-
+   
     private String getParentUnitsPresentationName(String separator) {
 	StringBuilder builder = new StringBuilder();
 	List<Unit> parentUnits = getParentUnitsPath();
@@ -902,8 +890,7 @@ public class Unit extends Unit_Base {
 	while (searchedUnit.getParentUnits().size() == 1) {
 	    Unit parentUnit = searchedUnit.getParentUnits().iterator().next();
 	    parentUnits.add(0, parentUnit);
-	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit
-		    && parentUnit != earthUnit) {
+	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit && parentUnit != earthUnit) {
 		searchedUnit = parentUnit;
 		continue;
 	    }
@@ -923,6 +910,16 @@ public class Unit extends Unit_Base {
 	return parentUnits;
     }
 
+    public String getDirectParentUnitsPresentationName() {
+        StringBuilder builder = new StringBuilder();
+        for (Unit unit : getParentUnits()) {
+            if (!unit.isAggregateUnit()) {
+                builder.append(unit.getNameWithAcronym());
+            }
+        }
+        return builder.toString();
+    }
+    
     public String getShortPresentationName() {
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Unit unit : getParentUnits()) {
@@ -1126,7 +1123,7 @@ public class Unit extends Unit_Base {
 	return this.equals(RootDomainObject.getInstance().getEarthUnit());
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequestsDoneIn(Integer year, Month month) {
+     public List<ExtraWorkRequest> getExtraWorkRequestsDoneIn(Integer year, Month month) {
         Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
                 DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
         List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
@@ -1136,5 +1133,10 @@ public class Unit extends Unit_Base {
             }
         }
         return extraWorkRequestList;
+    }
+
+    @Override
+    public String getPartyPresentationName() {
+	return getPresentationNameWithParents();
     }
 }

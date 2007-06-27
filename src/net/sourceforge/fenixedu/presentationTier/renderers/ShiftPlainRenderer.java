@@ -5,7 +5,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -36,8 +36,8 @@ public class ShiftPlainRenderer extends OutputRenderer {
                     lessonsLabel.append(lesson.getDiaSemana().toString()).append(" (");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
-                    if (lesson.getSala() != null) {
-                        lessonsLabel.append(((OldRoom)lesson.getSala()).getName().toString());
+                    if (lesson.hasSala()) {
+                        lessonsLabel.append(((AllocatableSpace)lesson.getSala()).getName().toString());
                     }
                     if (index < shift.getAssociatedLessonsCount()) {
                         lessonsLabel.append(" ; ");

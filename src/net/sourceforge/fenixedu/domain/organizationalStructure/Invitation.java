@@ -52,6 +52,22 @@ public class Invitation extends Invitation_Base {
     }
 
     @Override
+    public void setChildParty(Party childParty) {
+        if(!childParty.isPerson()) {
+            throw new DomainException("error.invalid.child.party");
+        }
+	super.setChildParty(childParty);
+    }
+    
+    @Override
+    public void setParentParty(Party parentParty) {
+	if(!parentParty.isUnit()) {
+            throw new DomainException("error.invalid.parent.party");
+        }
+	super.setParentParty(parentParty);
+    }
+    
+    @Override
     public void setResponsible(Party responsible) {
 	if (responsible == null) {
 	    throw new DomainException("error.invitation.empty.responsible");

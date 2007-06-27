@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,18 +21,17 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
     public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
-            setAssociatedRoomOccupation(copyIRoomOccupation2InfoRoomOccupation(writtenEvaluation
-                    .getAssociatedRoomOccupation()));
+            setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(writtenEvaluation.getWrittenEvaluationSpaceOccupations()));
         }
     }
 
-    private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
-        List infoRoomOccupation = null;
+    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
+        List<InfoRoomOccupation> infoRoomOccupation = null;
 
-        infoRoomOccupation = (List) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
+        infoRoomOccupation = (List<InfoRoomOccupation>) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
 
             public Object transform(Object arg0) {
-                RoomOccupation roomOccupation = (RoomOccupation) arg0;
+        	WrittenEvaluationSpaceOccupation roomOccupation = (WrittenEvaluationSpaceOccupation) arg0;
                 return InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             }
         });

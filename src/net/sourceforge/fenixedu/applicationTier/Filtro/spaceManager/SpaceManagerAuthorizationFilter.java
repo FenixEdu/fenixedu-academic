@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-public class SpaceManagerAuthorizationFilter extends AuthorizationByRoleFilter{
+public class SpaceManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
     // the singleton of this class
     public final static SpaceManagerAuthorizationFilter instance = new SpaceManagerAuthorizationFilter();

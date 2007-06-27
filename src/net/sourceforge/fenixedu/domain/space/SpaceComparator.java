@@ -36,13 +36,15 @@ public class SpaceComparator {
 
 	private int compareSpacesOfSameType(final Class<? extends Space> clazz, final Space space1, final Space space2) {
 	    if (clazz == Campus.class) {
-		return Campus.CAMPUS_COMPARATOR_BY_PRESENTATION_NAME.compare((Campus) space1, (Campus) space2);
+		return Campus.COMPARATOR_BY_PRESENTATION_NAME.compare((Campus) space1, (Campus) space2);
 	    } else if (clazz == Building.class) {
-		return Building.BUILDING_COMPARATOR_BY_PRESENTATION_NAME.compare((Building) space1, (Building) space2);
+		return Building.COMPARATOR_BY_PRESENTATION_NAME.compare((Building) space1, (Building) space2);
 	    } else if (clazz == Floor.class) {
 		return Floor.FLOOR_COMPARATOR_BY_LEVEL.compare((Floor) space1, (Floor) space2);
 	    } else if (clazz == Room.class) {
-		return Room.ROOM_COMPARATOR_BY_PRESENTATION_NAME.compare((Room) space1, (Room) space2);
+		return Room.COMPARATOR_BY_PRESENTATION_NAME.compare((Room) space1, (Room) space2);
+	    } else if (clazz == RoomSubdivision.class) {
+		return RoomSubdivision.COMPARATOR_BY_PRESENTATION_NAME.compare((RoomSubdivision) space1, (RoomSubdivision) space2);
 	    } else {
 		throw new IllegalArgumentException("Unknown space type: " + clazz);
 	    }

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 

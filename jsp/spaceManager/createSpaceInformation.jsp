@@ -82,8 +82,7 @@
 		</p>	
 	</fr:hasMessages>
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		
-		
+			
 		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 		<%
 			if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
@@ -111,6 +110,18 @@
 			}
 		%>			
 		
+	</logic:equal>
+	
+	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">			
+		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
+		<fr:edit id="editRoomSubdivision" name="SpaceFactoryEditor" schema="RoomSubdivisionFactoryEditor" action="<%= submitLink %>">				
+			<fr:destination name="cancel" path="<%= cancelLink %>"/>	
+			<fr:destination name="exception" path="<%= invalidLink %>"/>	
+			<fr:destination name="invalid" path="<%= invalidLink %>"/>		
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
+		</fr:edit>				
 	</logic:equal>
 
 </logic:present>

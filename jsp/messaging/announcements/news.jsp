@@ -5,14 +5,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <html:xhtml/>
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <logic:notEmpty name="userView" property="person.user.lastLoginHost">
-	<logic:notEmpty name="userView" property="person.user.lastLoginDateTimeDateTime">
-		<bean:define id="timestamp" name="userView" property="person.user.lastLoginDateTimeDateTime.millis"/>
+	<logic:notEmpty name="userView" property="person.user.lastLoginDateTime">
+		<bean:define id="lastLoginDateTime" type="java.util.Date" name="userView" property="person.user.lastLoginDateTime"/>
+		<bean:define id="timestamp" ><%= lastLoginDateTime.getTime() %></bean:define>
 		<bean:define id="lastLoginHost" name="userView" property="person.user.lastLoginHost"/>
 	    <p class="mtop0 mbottom2" style="float: right;"><span style="background-color: #eee; padding: 0.25em;"><bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b> (<bean:write name="lastLoginHost"/>)</span></p>	
 	</logic:notEmpty>	    

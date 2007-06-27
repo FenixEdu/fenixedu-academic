@@ -42,7 +42,7 @@ public class UIFenixCalendar extends UIInput {
 
         if (begin == null || end == null) {
             writer.write("<!-- begin and end dates must be specified -->");
-        } else if (!end.after(begin)) {
+        } else if (end.before(begin)) {
             writer.write("<!-- end date must be after begin date -->");
         } else {
             if (begin.get(Calendar.MONTH) == end.get(Calendar.MONTH)) {

@@ -12,19 +12,15 @@
 <logic:present name="selectedSpaceInformation">
 
 	<script language="JavaScript">
-		function check(e,v)
-		{	
+		function check(e,v)	{	
 			var contextPath = '<%= request.getContextPath() %>';	
-			if (e.style.display == "none")
-			  {
-			  e.style.display = "";
-			  v.src = contextPath + '/images/toggle_minus10.gif';
-			  }
-			else
-			  {
-			  e.style.display = "none";
-			  v.src = contextPath + '/images/toggle_plus10.gif';
-			  }
+			if (e.style.display == "none") {
+				e.style.display = "";
+				v.src = contextPath + '/images/toggle_minus10.gif';
+			} else {
+				e.style.display = "none";
+				v.src = contextPath + '/images/toggle_plus10.gif';
+			}
 		}
 	</script>
 		

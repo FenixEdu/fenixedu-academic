@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.EMailAddress;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.util.MessageResources;

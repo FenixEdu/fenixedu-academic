@@ -10,8 +10,7 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public Function(String functionName, YearMonthDay beginDate, YearMonthDay endDate,
-	    FunctionType type, Unit unit) {
+    public Function(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
 	super();
 	edit(functionName, beginDate, endDate, type);
 	setUnit(unit);
@@ -27,7 +26,8 @@ public class Function extends Function_Base {
 
     @Override
     public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
-	if (beginDate == null) {
+	if (beginDate == null || 
+		(getEndDateYearMonthDay() != null && getEndDateYearMonthDay().isBefore(beginDate))) {
 	    throw new DomainException("error.function.no.beginDate");
 	}
 	super.setBeginDateYearMonthDay(beginDate);

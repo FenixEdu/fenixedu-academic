@@ -248,34 +248,15 @@ public class Vigilant extends Vigilant_Base {
 		return campusNames;
 	}
 
-	public Boolean isAvailableInCampus(net.sourceforge.fenixedu.domain.space.Campus campus) {
-		List<Campus> campusList = this.getCampus();
+	public Boolean isAvailableInCampus(Campus campus) {
+	    List<Campus> campusList = this.getCampus();
 
-		/*
-         * If campusList is empty it's best to say that he is available and then
-         * someone has to remove the vigilant by hand, instead of saying that
-         * the vigilant is never available in any campus (which is wrong).
-         */
-		return campusList.isEmpty() ? true : campusList.contains(campus);
-	}
-
-	public Boolean isAvailableInCampus(net.sourceforge.fenixedu.domain.Campus campus) {
-		List<Campus> campusList = this.getCampus();
-
-		/*
-         * Check comment above for explanation of why you have the conditional
-         * statement below.
-         */
-		if (campusList.isEmpty()) {
-			return true;
-		}
-
-		for (Campus spaceCampus : campusList) {
-			if (spaceCampus.getSpaceInformation().getName().equals(campus.getName())) {
-				return true;
-			}
-		}
-		return false;
+	    /*
+	     * If campusList is empty it's best to say that he is available and then
+	     * someone has to remove the vigilant by hand, instead of saying that
+	     * the vigilant is never available in any campus (which is wrong).
+	     */
+	    return campusList.isEmpty() ? true : campusList.contains(campus);
 	}
 
 	public void removeIncompatiblePerson() {

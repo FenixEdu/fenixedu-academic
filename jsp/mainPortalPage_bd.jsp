@@ -5,7 +5,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 

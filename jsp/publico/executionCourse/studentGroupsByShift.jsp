@@ -77,7 +77,7 @@
 					</dt:format>
 				</td>
            		<td class="listClasses">
-           	   		<logic:notEmpty name="lesson" property="roomOccupation.room.nome">
+           	   		<logic:notEmpty name="lesson" property="roomOccupation">
 						<bean:write name="lesson" property="roomOccupation.room.nome"/>
 					</logic:notEmpty>	
 		 		</td>
@@ -99,7 +99,7 @@
 					</dt:format>
 				</td>
            		<td class="listClasses">
-           	   		<logic:notEmpty name="lesson" property="roomOccupation.room.nome">
+           	   		<logic:notEmpty name="lesson" property="roomOccupation">
 						<bean:write name="lesson" property="roomOccupation.room.nome"/>
 					</logic:notEmpty>	
 		 		</td>

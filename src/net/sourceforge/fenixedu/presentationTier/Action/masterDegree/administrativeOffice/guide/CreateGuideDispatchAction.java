@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInform
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;

@@ -4,9 +4,11 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
@@ -29,8 +31,7 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     public SpaceResponsibility(final Space space, final Unit unit, final YearMonthDay begin,
 	    final YearMonthDay end) {
 
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	super();	
 	setSpace(space);
 	setUnit(unit);
 	checkSpaceResponsabilityIntersection(begin, end, getUnit(), getSpace());
@@ -49,13 +50,15 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space responsibility", parameters = {})
-    public void delete() {
-	super.setSpace(null);
-	super.setUnit(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
+    public void delete() {	
+	super.delete();
     }
 
+    @Override
+    public boolean isSpaceResponsibility() {
+        return true;
+    }
+    
     @Override
     public void setBegin(YearMonthDay begin) {
 	checkSpaceResponsabilityIntersection(begin, getEnd(), getUnit(), getSpace());
@@ -69,32 +72,39 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     }
 
     @Override
-    public void setUnit(Unit unit) {
-	if (unit == null) {
-	    throw new DomainException("error.space.responsability.no.unit");
-	}
-	if(unit.isAggregateUnit()) {
-	    throw new DomainException("error.space.aggregate.unit");
-	}
-	super.setUnit(unit);
+    public void setResource(Resource resource) {
+        if(resource == null || !resource.isSpace()) {
+            throw new DomainException("error.space.responsability.no.space");
+        }
+	super.setResource(resource);
     }
-
+    
     @Override
+    public void setParty(Party party) {
+        if(party == null || !party.isUnit() || party.isAggregateUnit()) {
+            throw new DomainException("error.space.responsability.no.unit");
+        }
+	super.setParty(party);
+    }
+    
+    public void setUnit(Unit unit) {
+	setParty(unit);
+    }
+
+    public Unit getUnit() {
+	return (Unit) getParty();
+    }
+    
     public void setSpace(Space space) {
-	if (space == null) {
-	    throw new DomainException("error.space.responsability.no.space");
-	}
-	super.setSpace(space);
+	setResource(space);
     }
-
-    public boolean isActive(YearMonthDay currentDate) {
-	return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
-		.isBefore(currentDate)));
+    
+    public Space getSpace() {
+	return (Space) getResource();
     }
-
+  
     private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
-		.getEnd().isBefore(begin)));
+	return ((end == null || !getBegin().isAfter(end)) && (getEnd() == null || !getEnd().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
@@ -106,13 +116,12 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
 	}
     }
 
-    private void checkSpaceResponsabilityIntersection(final YearMonthDay begin, final YearMonthDay end,
-	    Unit unit, Space space) {
-
+    private void checkSpaceResponsabilityIntersection(final YearMonthDay begin, final YearMonthDay end, Unit unit, Space space) {
 	checkBeginDateAndEndDate(begin, end);
-	for (SpaceResponsibility spaceResponsibility : space.getSpaceResponsibility()) {
-	    if (!spaceResponsibility.equals(this) && spaceResponsibility.getUnit().equals(unit)
-		    && spaceResponsibility.checkIntersections(begin, end)) {
+	for (ResourceResponsibility resourceResponsibility : space.getResourceResponsibility()) {
+	    if (resourceResponsibility.isSpaceResponsibility() &&
+		    !resourceResponsibility.equals(this) && resourceResponsibility.getParty().equals(unit)
+		    && ((SpaceResponsibility)resourceResponsibility).checkIntersections(begin, end)) {
 		throw new DomainException("error.spaceResponsibility.unit.intersection");
 	    }
 	}

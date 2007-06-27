@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -107,7 +107,7 @@ public class WriteInquiry extends Service {
 
     private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse)
 	    throws ExcepcaoPersistencia {
-	OldRoom room = (OldRoom) rootDomainObject.readResourceByOID(iir.getRoom().getIdInternal());
+	AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(iir.getRoom().getIdInternal());
 	inquiriesCourse.createInquiriesRoom(room, iir);
     }
 

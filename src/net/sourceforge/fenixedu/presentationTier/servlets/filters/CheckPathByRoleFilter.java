@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 public class CheckPathByRoleFilter implements Filter {

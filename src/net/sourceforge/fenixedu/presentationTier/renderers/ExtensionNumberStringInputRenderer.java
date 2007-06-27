@@ -12,7 +12,7 @@ public class ExtensionNumberStringInputRenderer extends StringInputRenderer {
     protected HtmlComponent createTextField(Object object, Class type) {
         
         Extension extension = (Extension) object; 
-        String number = (extension != null) ? extension.getNumber().toString() : null; 
+        String number = (extension != null) ? extension.getIdentification().toString() : null; 
         
         HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);        
         formComponent.setConverter(new ExtensionNumberConverter());

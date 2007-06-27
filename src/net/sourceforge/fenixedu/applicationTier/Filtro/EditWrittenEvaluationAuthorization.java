@@ -13,11 +13,11 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         final IUserView userView = getRemoteUser(request);
 
-        if (!userView.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
+        if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             final Object[] arguments = getServiceCallArguments(request);
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
 
-            if (writtenEvaluation.getAssociatedRoomOccupation().size() > 0) {
+            if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().size() > 0) {
                 throw new NotAuthorizedFilterException("written.evaluation.has.alocated.rooms");
             }
         }

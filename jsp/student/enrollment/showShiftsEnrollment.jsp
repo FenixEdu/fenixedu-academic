@@ -372,8 +372,10 @@
 						</dt:format>
 					</td>
 					<td style="text-align:center">
-						<logic:notEmpty name="lesson" property="sala.name">
-							<bean:write name="lesson" property="sala.name" />
+						<logic:notEmpty name="lesson" property="sala">
+							<logic:notEmpty name="lesson" property="sala.name">
+								<bean:write name="lesson" property="sala.name" />
+							</logic:notEmpty>
 						</logic:notEmpty>	
 					</td>
 				</tr>			

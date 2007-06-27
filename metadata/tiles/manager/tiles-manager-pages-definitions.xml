@@ -907,4 +907,11 @@
 		<put name="body" value="/manager/organizationalStructureManagament/researchUnits/editSiteManagers.jsp"/>
 	</definition> 	
 	
+	<!--  ###################  Access Control Persistent Groups ####################### -->
+	<definition name="see-all-persistent-groups" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/persistentGroups/seeAllPersistentGroups.jsp" />
+	</definition>
+	<definition name="prepare-create-new-persistent-group" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/persistentGroups/createNewPersistentGroup.jsp" />		
+	</definition>	
 </tiles-definitions>

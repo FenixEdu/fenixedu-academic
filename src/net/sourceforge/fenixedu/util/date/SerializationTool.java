@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util.date;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
@@ -15,7 +16,7 @@ public class SerializationTool {
     }
 
     public static YearMonthDay yearMonthDaySerialize(String string) {
-	if (string != null) {
+	if (!StringUtils.isEmpty(string)) {
             int year = Integer.parseInt(string.substring(0, 4));
             int month = Integer.parseInt(string.substring(5, 7));
             int day = Integer.parseInt(string.substring(8, 10));

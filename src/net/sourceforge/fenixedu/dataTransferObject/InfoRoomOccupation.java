@@ -7,8 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -17,17 +16,17 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public class InfoRoomOccupation extends InfoObject {
 
-    private DomainReference<RoomOccupation> roomOccupationDomainReference;
+    private DomainReference<EventSpaceOccupation> roomOccupationDomainReference;
     
-    public InfoRoomOccupation(final RoomOccupation roomOccupation) {
-	roomOccupationDomainReference = new DomainReference<RoomOccupation>(roomOccupation);
+    public InfoRoomOccupation(final EventSpaceOccupation roomOccupation) {
+	roomOccupationDomainReference = new DomainReference<EventSpaceOccupation>(roomOccupation);
     }
     
-    public static InfoRoomOccupation newInfoFromDomain(final RoomOccupation roomOccupation) {
+    public static InfoRoomOccupation newInfoFromDomain(final EventSpaceOccupation roomOccupation) {
         return roomOccupation == null ? null : new InfoRoomOccupation(roomOccupation);
     }
     
-    private RoomOccupation getRoomOccupation() {
+    private EventSpaceOccupation getRoomOccupation() {
 	return roomOccupationDomainReference == null ? null : roomOccupationDomainReference.getObject();
     }
     
@@ -71,7 +70,7 @@ public class InfoRoomOccupation extends InfoObject {
      * @return Returns the infoRoom.
      */
     public InfoRoom getInfoRoom() {
-        return InfoRoom.newInfoFromDomain((OldRoom) getRoomOccupation().getRoom());
+        return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
     }
 
 }

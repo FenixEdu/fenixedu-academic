@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -11,22 +14,38 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.persistenceTier.Conversores.Group2StringConverter;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public abstract class Space extends Space_Base {
 
+    public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();   
+    static {
+	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);	
+    }
+    
     protected Space() {
 	super();	
 	setCreatedOn(new YearMonthDay());
@@ -39,12 +58,12 @@ public abstract class Space extends Space_Base {
 	    setSuroundingSpace(newParentSpace);
 	}
     }
-    
+
     @Override
     public boolean isSpace() {
-        return true;
+	return true;
     }
-    
+
     public SpaceInformation getMostRecentSpaceInformation() {
 	SpaceInformation selectedSpaceInformation = null;
 	for (final SpaceInformation spaceInformation : getSpaceInformations()) {
@@ -102,6 +121,20 @@ public abstract class Space extends Space_Base {
 	}
 	return personSpaceOccupations;
     }
+    
+    public int getSpaceResponsibilityCount() {
+	return getSpaceResponsibility().size();
+    }
+    
+    public List<SpaceResponsibility> getSpaceResponsibility(){
+	List<SpaceResponsibility> result = new ArrayList<SpaceResponsibility>();
+	for (ResourceResponsibility responsibility : getResourceResponsibility()) {
+	    if(responsibility.isSpaceResponsibility()) {
+		result.add((SpaceResponsibility) responsibility);
+	    }
+	}
+	return result;
+    }
 
     public List<MaterialSpaceOccupation> getMaterialSpaceOccupations() {
 	List<MaterialSpaceOccupation> materialSpaceOccupations = new ArrayList<MaterialSpaceOccupation>();
@@ -112,7 +145,7 @@ public abstract class Space extends Space_Base {
 	}
 	return materialSpaceOccupations;
     }
-    
+
     public List<UnitSpaceOccupation> getUnitSpaceOccupations() {
 	List<UnitSpaceOccupation> unitSpaceOccupations = new ArrayList<UnitSpaceOccupation>();
 	for (ResourceAllocation	allocation : getResourceAllocations()) {
@@ -122,7 +155,7 @@ public abstract class Space extends Space_Base {
 	}
 	return unitSpaceOccupations;
     }
-    
+
     public List<Space> getContainedSpacesByState(SpaceState spaceState){
 	List<Space> result = new ArrayList<Space>();
 	for (Space space : getContainedSpaces()) {
@@ -133,7 +166,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
+
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations() {
 	return getPersonSpaceOccupationsByState(true);
     }
@@ -166,14 +199,14 @@ public abstract class Space extends Space_Base {
 	SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(
 		SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
 	YearMonthDay current = new YearMonthDay();
-	for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
-	    if (responsibility.isActive(current) == state) {
-		spaceResponsibility.add(responsibility);
+	for (ResourceResponsibility responsibility : getResourceResponsibilitySet()) {
+	    if (responsibility.isSpaceResponsibility() && responsibility.isActive(current) == state) {
+		spaceResponsibility.add((SpaceResponsibility) responsibility);
 	    }
 	}
 	return spaceResponsibility;
     }
-    
+
     public SortedSet<UnitSpaceOccupation> getActiveUnitSpaceOccupations() {
 	return getUnitSpaceOccupationsByState(true);
     }
@@ -245,21 +278,23 @@ public abstract class Space extends Space_Base {
     public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
 	Set<Class<? extends DomainObject>> classs = new HashSet<Class<? extends DomainObject>>();
 	Person loggedPerson = AccessControl.getPerson();
-	if (personIsSpacesAdministrator(loggedPerson)) {
+	if (personIsSpacesAdministrator(loggedPerson)) {	    
 	    classs.add(Room.class);
 	    classs.add(Floor.class);
 	    classs.add(Campus.class);
 	    classs.add(Building.class);
-	    classs.add(RoomInformation.class);
+	    classs.add(Blueprint.class);
+	    classs.add(RoomSubdivision.class);
+	    classs.add(RoomInformation.class);	    
 	    classs.add(FloorInformation.class);
 	    classs.add(CampusInformation.class);
+	    classs.add(RoomClassification.class);
 	    classs.add(BuildingInformation.class);
+	    classs.add(UnitSpaceOccupation.class);
+	    classs.add(SpaceResponsibility.class);
 	    classs.add(PersonSpaceOccupation.class);
 	    classs.add(ExtensionSpaceOccupation.class);
-	    classs.add(UnitSpaceOccupation.class);
-	    classs.add(RoomClassification.class);
-	    classs.add(SpaceResponsibility.class);
-	    classs.add(Blueprint.class);	    
+	    classs.add(RoomSubdivisionInformation.class);	    	    	   	    	 
 	    return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
 	}
 	return new HashSet<DomainObjectActionLog>();
@@ -280,40 +315,62 @@ public abstract class Space extends Space_Base {
 	return null;
     }
 
+    @Override
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.space.cannot.be.deleted");
 	}
-	
+
 	for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete());
 	for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0).deleteWithoutCheckNumberOfSpaceInformations());
-	
-	removeSuroundingSpace();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
 
+	super.setSuroundingSpace(null);
+	super.delete();
+    }
+    
     private boolean canBeDeleted() {
-	if (hasAnyContainedSpaces() 
-		|| hasAnyResourceAllocations()
-		|| hasAnySpaceResponsibility()) {
-	    return false;
-	}
-	return true;
+        return !hasAnyContainedSpaces();
     }
 
     public boolean isActive() {
 	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
     }
 
-    public static Set<Campus> getAllCampus() {
-	Set<Campus> campus = new HashSet<Campus>();
-	for (Resource resource : RootDomainObject.getInstance().getResources()) {
-	    if (resource.isCampus()) {
-		campus.add((Campus) resource);
+    public static List<Campus> getAllCampus() {
+	return (List<Campus>) getAllSpacesByClass(Campus.class, null);
+    }
+
+    public static List<Campus> getAllActiveCampus() {
+	return (List<Campus>) getAllSpacesByClass(Campus.class, Boolean.TRUE);
+    }
+
+    public static List<Building> getAllActiveBuildings(){
+	return (List<Building>) getAllSpacesByClass(Building.class, Boolean.TRUE);
+    }
+
+    private static List<? extends Space> getAllSpacesByClass(Class<? extends Space> clazz, Boolean active){
+	List<Space> result = new ArrayList<Space>();
+	for (Resource space : RootDomainObject.getInstance().getResources()) {
+	    if (space.isSpace() && space.getClass().equals(clazz) && 
+		    (active == null || ((Space)space).isActive() == active.booleanValue())) {
+		result.add((Space) space);
 	    }
 	}
-	return campus;
+	return result;
+    }
+
+    public List<AllocatableSpace> getAllActiveSubRoomsForEducation(){
+	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
+	List<Space> containedSpaces = getContainedSpaces();
+	for (Space space : containedSpaces) {
+	    if(space.isAllocatableSpace() && space.isActive() && ((AllocatableSpace)space).isForEducation()) {
+		result.add((AllocatableSpace) space);
+	    }
+	}
+	for (Space subSpace : containedSpaces) {
+	    result.addAll(subSpace.getAllActiveSubRoomsForEducation());
+	}
+	return result;
     }
 
     public static boolean personIsSpacesAdministrator(Person person) {
@@ -326,7 +383,7 @@ public abstract class Space extends Space_Base {
 	}
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
-    
+
     public void checkIfLoggedPersonIsSpacesAdministrator(Person person) {
 	if (personIsSpacesAdministrator(person)) {
 	    return;
@@ -361,9 +418,33 @@ public abstract class Space extends Space_Base {
 	}
 	return false;
     }
-    
+
     public boolean personHasPermissionToManageUnitOccupations(Person person) {
 	Group accessGroup = getUnitOccupationsAccessGroupWithChainOfResponsibility();
+	if (accessGroup != null && accessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean personHasPermissionToManageLessonOccupations(Person person) {
+	Group accessGroup = getLessonOccupationsAccessGroupWithChainOfResponsibility();
+	if (accessGroup != null && accessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean personHasPermissionToManageWrittenEvaluationOccupations(Person person) {
+	Group accessGroup = getWrittenEvaluationOccupationsAccessGroup();
+	if (accessGroup != null && accessGroup.isMember(person)) {
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean personHasPermissionToGenericEventOccupations(Person person) {
+	Group accessGroup = getGenericEventOccupationsAccessGroup();
 	if (accessGroup != null && accessGroup.isMember(person)) {
 	    return true;
 	}
@@ -393,7 +474,7 @@ public abstract class Space extends Space_Base {
 	}
 	return null;
     }
-    
+
     public Group getExtensionOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group accessGroup = getExtensionOccupationsAccessGroup();
 	if (accessGroup != null && !accessGroup.getElements().isEmpty()) {
@@ -417,143 +498,284 @@ public abstract class Space extends Space_Base {
 	}
 	return null;
     }
-    
+
+    public Group getLessonOccupationsAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getLessonOccupationsAccessGroup();
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getLessonOccupationsAccessGroupWithChainOfResponsibility();
+	}
+	return null;
+    }
+
+    public Group getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getWrittenEvaluationOccupationsAccessGroup();
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
+	}
+	return null;
+    }
+
+    public Group getGenericEventOccupationsAccessGroupWithChainOfResponsibility() {
+	final Group thisGroup = getGenericEventOccupationsAccessGroup();
+	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
+	    return thisGroup;
+	}
+	final Space surroundingSpace = getSuroundingSpace();
+	if (surroundingSpace != null) {
+	    return surroundingSpace.getGenericEventOccupationsAccessGroupWithChainOfResponsibility();
+	}
+	return null;
+    }
+
     @Checked("SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Add or remove person from access group", parameters = {"this", "accessGroupType", "person", "toAdd", "isToMaintainElements" })
-    public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Person person, Boolean toAdd, Boolean isToMaintainElements) throws DomainException {
-	
-	if(person == null) {
+    @FenixDomainObjectActionLogAnnotation(actionName = "Add or remove person from access group", parameters = {"this",
+	    "accessGroupType", "toAdd", "isToMaintainElements", "expression" })
+    public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Boolean toAdd, Boolean isToMaintainElements,
+	    String expression) throws DomainException {
+
+	if(StringUtils.isEmpty(expression)) {
 	    throw new DomainException("error.space.access.groups.management.no.person");
 	}
 	
-	Set<Person> elements = null, newElements = null;
+	if(!toAdd) {
+	    byte[] encodeHex;
+	    try {
+		encodeHex = Hex.decodeHex(expression.toCharArray());
+	    } catch (DecoderException e) {
+		throw new DomainException("error.space.access.groups.invalid.expression");
+	    }	
+	    expression = new String(encodeHex);
+	}
 	
+	Group groupToAddOrRemove = (Group) new Group2StringConverter().sqlToJava(expression);	
+	
+	Set<Person> elementsToAddOrRemove = null;
+	Group existentGroup = null, newGroupUnion = null;
+
 	switch (accessGroupType) {
-	
+
 	case PERSON_OCCUPATION_ACCESS_GROUP:
-	    
-	    checkIfPersonAlreadyHasPermissions(person, toAdd);
-	    if (getPersonOccupationsAccessGroup() == null) {
-		setPersonOccupationsAccessGroup(new FixedSetGroup());
-	    }
-	    
-	    elements = getPersonOccupationsAccessGroup().getElements();
-	    if (isToMaintainElements.booleanValue()) {
-		Group accessGroup = getPersonOccupationsAccessGroupWithChainOfResponsibility();
-		elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+
+	    elementsToAddOrRemove = groupToAddOrRemove.getElements();
+	    checkIfPersonAlreadyHasPermissions(elementsToAddOrRemove, toAdd);
+
+	    if(isToMaintainElements) {		
+		existentGroup = getPersonOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getPersonOccupationsAccessGroup();		
 	    }
 
-	    newElements = manageAccessGroup(person, toAdd, elements);
-	    setPersonOccupationsAccessGroup(new FixedSetGroup(newElements));
-	    spaceManagerRoleManagement(person, toAdd);
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setPersonOccupationsAccessGroup(newGroupUnion);
+	    
+	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	   
 	    break;
 
 	case EXTENSION_OCCUPATION_ACCESS_GROUP:
-	    
-	    checkIfPersonAlreadyHasPermissions(person, toAdd);
-	    if (getExtensionOccupationsAccessGroup() == null) {
-		setExtensionOccupationsAccessGroup(new FixedSetGroup());
-	    }
-	    
-	    elements = getExtensionOccupationsAccessGroup().getElements();
-	    if (isToMaintainElements.booleanValue()) {
-		Group accessGroup = getExtensionOccupationsAccessGroupWithChainOfResponsibility();
-		elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+
+	    elementsToAddOrRemove = groupToAddOrRemove.getElements();
+	    checkIfPersonAlreadyHasPermissions(elementsToAddOrRemove, toAdd);
+
+	    if(isToMaintainElements) {		
+		existentGroup = getExtensionOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getExtensionOccupationsAccessGroup();		
 	    }
 
-	    newElements = manageAccessGroup(person, toAdd, elements);
-	    setExtensionOccupationsAccessGroup(new FixedSetGroup(newElements));
-	    spaceManagerRoleManagement(person, toAdd);
-	    break;
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setExtensionOccupationsAccessGroup(newGroupUnion);
 	    
+	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
+	    break;
+
 	case UNIT_OCCUPATION_ACCESS_GROUP:
-	   
-	    checkIfPersonAlreadyHasPermissions(person, toAdd);
-	    if (getUnitOccupationsAccessGroup() == null) {
-		setUnitOccupationsAccessGroup(new FixedSetGroup());
-	    }
-	    
-	    elements = getUnitOccupationsAccessGroup().getElements();
-	    if (isToMaintainElements.booleanValue()) {
-		Group accessGroup = getUnitOccupationsAccessGroupWithChainOfResponsibility();
-		elements = (accessGroup != null) ? accessGroup.getElements() : elements;
+
+	    elementsToAddOrRemove = groupToAddOrRemove.getElements();
+	    checkIfPersonAlreadyHasPermissions(elementsToAddOrRemove, toAdd);
+
+	    if(isToMaintainElements) {		
+		existentGroup = getUnitOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getUnitOccupationsAccessGroup();	
 	    }
 
-	    newElements = manageAccessGroup(person, toAdd, elements);
-	    setUnitOccupationsAccessGroup(new FixedSetGroup(newElements));
-	    spaceManagerRoleManagement(person, toAdd);
-	    break;
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setUnitOccupationsAccessGroup(newGroupUnion);
 	    
+	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
+	    break;
+
 	case SPACE_MANAGEMENT_ACCESS_GROUP:
-	   
-	    checkIfPersonAlreadyHasPermissions(person, toAdd);
-	    if (getSpaceManagementAccessGroup() == null) {
-		setSpaceManagementAccessGroup(new FixedSetGroup());
+
+	    elementsToAddOrRemove = groupToAddOrRemove.getElements();
+	    checkIfPersonAlreadyHasPermissions(elementsToAddOrRemove, toAdd);
+
+	    if(isToMaintainElements) {		
+		existentGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getSpaceManagementAccessGroup();		
 	    }
+
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setSpaceManagementAccessGroup(newGroupUnion);
 	    
-	    elements = getSpaceManagementAccessGroup().getElements();
-	    if (isToMaintainElements.booleanValue()) {
-		Group accessGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();
-		elements = (accessGroup != null) ? accessGroup.getElements() : elements;
-	    }
-	    
-	    newElements = manageAccessGroup(person, toAdd, elements);
-	    setSpaceManagementAccessGroup(new FixedSetGroup(newElements));
-	    spaceManagerRoleManagement(person, toAdd);
+	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
 	    break;
-	    
+
+	case LESSON_OCCUPATION_ACCESS_GROUP:
+
+	    if(isToMaintainElements) {		
+		existentGroup = getLessonOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getLessonOccupationsAccessGroup();
+	    }
+
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setLessonOccupationsAccessGroup(newGroupUnion);	    
+	    break;
+
+	case WRITTEN_EVALUATION_OCCUPATION_ACCESS_GROUP:
+
+	    if(isToMaintainElements) {		
+		existentGroup = getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getWrittenEvaluationOccupationsAccessGroup();
+	    }
+
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setWrittenEvaluationOccupationsAccessGroup(newGroupUnion);
+	    break;
+
+	case GENERIC_EVENT_SPACE_OCCUPATION_ACCESS_GROUP:
+
+	    if(isToMaintainElements) {		
+		existentGroup = getGenericEventOccupationsAccessGroupWithChainOfResponsibility();			
+	    } else {
+		existentGroup = getGenericEventOccupationsAccessGroup();		
+	    }
+
+	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
+	    setGenericEventOccupationsAccessGroup(newGroupUnion);
+	    break;
+
 	default:
 	    break;
 	}
     }
-    
-    private void checkIfPersonAlreadyHasPermissions(Person person, boolean toAdd) throws DomainException {
-	if (toAdd && personHasPermissionsToManageSpace(person)) {
-	    throw new DomainException("error.space.access.groups.management.person.already.have.permission");
-	}
-    }
 
-    private Set<Person> manageAccessGroup(Person person, boolean toAdd, Set<Person> elements) {	
-	Set<Person> newList = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
-	newList.addAll(elements);	
-	if(toAdd) {	   
-	    newList.add(person);
-	} else {	    
-	    newList.remove(person);
-	}
-	return newList;
-    }
+    private Group manageGroups(Boolean toAdd, Group groupToAddOrRemove, Group existentGroup) {
 
-    private void spaceManagerRoleManagement(Person person, boolean toAdd) {
-	if (toAdd) {
-	    if (!person.hasRole(RoleType.SPACE_MANAGER)) {
-		person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
+	List<IGroup> existentGroups = new ArrayList<IGroup>();
+	if(existentGroup != null) {	   
+	    if(existentGroup instanceof GroupUnion) {
+		existentGroups.addAll(((GroupUnion)existentGroup).getChildren());
+	    } else {		
+		existentGroups.add(existentGroup);
 	    }
-	} else {
+	} 
+
+	if(toAdd) {	    
+	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
+		IGroup existentGroup_ = (IGroup) iter.next();
+		if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
+			&& existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
+		    iter.remove();
+		    existentGroups.remove(groupToAddOrRemove);
+		}
+	    }
+	    existentGroups.add(groupToAddOrRemove);
+
+	} else {		
+	    if(groupToAddOrRemove instanceof PersonGroup) {		    
+		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
+		    IGroup existentGroup_ = (IGroup) iter.next();
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
+			    && ((PersonGroup)existentGroup_).getPerson().equals(((PersonGroup)groupToAddOrRemove).getPerson())) {
+			iter.remove();
+			existentGroups.remove(groupToAddOrRemove);
+		    }
+		}
+	    } else if(groupToAddOrRemove instanceof PersistentGroup) {
+		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
+		    IGroup existentGroup_ = (IGroup) iter.next();
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
+			    && ((PersistentGroup)existentGroup_).getPersistentGroupMembers().equals(((PersistentGroup)groupToAddOrRemove).getPersistentGroupMembers())) {
+			iter.remove();
+			existentGroups.remove(groupToAddOrRemove);
+		    }
+		}		    
+	    } else if(groupToAddOrRemove instanceof RoleGroup) {
+		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
+		    IGroup existentGroup_ = (IGroup) iter.next();
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
+			    && ((RoleGroup)existentGroup_).getRole().equals(((RoleGroup)groupToAddOrRemove).getRole())) {
+			iter.remove();
+			existentGroups.remove(groupToAddOrRemove);
+		    }
+		}		    
+	    }			    
+	}	
+	
+	return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(existentGroups)); 
+    }
+
+    private void checkIfPersonAlreadyHasPermissions(Set<Person> persons, boolean toAdd) throws DomainException {
+	if (toAdd) {	   
+	    for (Person person : persons) {
+		if(personHasPermissionsToManageSpace(person)) {
+		    throw new DomainException("error.space.access.groups.management.person.already.have.permission");    
+		}
+	    }	    		  
+	}
+    }
+
+    private void spaceManagerRoleManagement(Set<Person> elementsToManage, boolean toAdd) {	
+	if (toAdd) {
+	    for (Person person : elementsToManage) {
+		if (!person.hasRole(RoleType.SPACE_MANAGER)) {
+		    person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
+		}
+	    }	   
+	} else {	    
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 		if (resource.isSpace()) {
 		    Space space = (Space) resource;
-		    if (space.personHasPermissionToManageExtensionOccupations(person)
-			    || space.personHasPermissionToManagePersonOccupations(person)
-			    || space.personHasPermissionToManageUnitOccupations(person)
-			    || space.personHasSpecialPermissionToManageSpace(person)) {
-			return;
-		    }
+		    for (Person person : elementsToManage) {
+			if (!space.personHasPermissionToManageExtensionOccupations(person)
+				&& !space.personHasPermissionToManagePersonOccupations(person)
+				&& !space.personHasPermissionToManageUnitOccupations(person)
+				&& !space.personHasSpecialPermissionToManageSpace(person)) {
+			    person.removeRoleByType(RoleType.SPACE_MANAGER);
+			}			
+		    }				    
 		}
-	    }
-	    person.removeRoleByType(RoleType.SPACE_MANAGER);
+	    }	    
 	}
     }
-    
+
     public static enum SpaceAccessGroupType {
-		
+
 	PERSON_OCCUPATION_ACCESS_GROUP("personOccupationsAccessGroup"),
 
 	UNIT_OCCUPATION_ACCESS_GROUP("unitOccupationsAccessGroup"),
-	
+
 	EXTENSION_OCCUPATION_ACCESS_GROUP("extensionOccupationsAccessGroup"),
-	
-	SPACE_MANAGEMENT_ACCESS_GROUP("spaceManagementAccessGroup");
+
+	SPACE_MANAGEMENT_ACCESS_GROUP("spaceManagementAccessGroup"),
+
+	LESSON_OCCUPATION_ACCESS_GROUP("lessonOccupationsAccessGroup"),
+
+	WRITTEN_EVALUATION_OCCUPATION_ACCESS_GROUP("writtenEvaluationOccupationsAccessGroup"),
+
+	GENERIC_EVENT_SPACE_OCCUPATION_ACCESS_GROUP("genericEventOccupationsAccessGroup");
 
 	private String spaceAccessGroupSlotName;
 
@@ -579,10 +801,16 @@ public abstract class Space extends Space_Base {
 	}	
 	return getSuroundingSpace().getSpaceBuilding();
     }
-    
-    public Floor getSpaceFloor() {
+
+    public Floor getSpaceFloor() {	
 	if(isFloor()) {
-	    return (Floor) this;
+	    if(getSuroundingSpace() == null) {
+		return (Floor) this;
+	    } else if(getSuroundingSpace().isFloor()) {	    
+		return getSuroundingSpace().getSpaceFloor();
+	    } else {
+		return (Floor) this;
+	    }		
 	}	
 	if(getSuroundingSpace() == null) {
 	    return null;
@@ -590,18 +818,28 @@ public abstract class Space extends Space_Base {
 	return getSuroundingSpace().getSpaceFloor();
     }
 
+    public Campus getSpaceCampus() {
+	if(isCampus()) {
+	    return (Campus) this;
+	}	
+	if(getSuroundingSpace() == null) {
+	    return null;
+	}	
+	return getSuroundingSpace().getSpaceCampus();
+    }
+
     public Set<Space> getPossibleParentSpacesToMoveSpaceUp() {
 	Set<Space> result = new HashSet<Space>();
 	if(!(isCampus())) {
 	    result = getPossibleParentSpacesToMoveSpaceUp(result);			
 	    result.addAll(Space.getAllCampus());    	
-            if(getSuroundingSpace() != null) {
-                result.remove(getSuroundingSpace());
-            }
+	    if(getSuroundingSpace() != null) {
+		result.remove(getSuroundingSpace());
+	    }
 	}
 	return result;
     }
-    
+
     private Set<Space> getPossibleParentSpacesToMoveSpaceUp(Set<Space> result) {
 	if(getSuroundingSpace() != null) {
 	    result.add(getSuroundingSpace());
@@ -609,15 +847,38 @@ public abstract class Space extends Space_Base {
 	}		
 	return result;
     } 
-    
+
     public List<Space> getPossibleParentSpacesToMoveSpaceDown() {
 	List<Space> result = new ArrayList<Space>();
 	if(!(isCampus())) {
-            if(getSuroundingSpace() != null) {
-                result.addAll(getSuroundingSpace().getContainedSpaces());	
-            }
-            result.remove(this);
+	    if(getSuroundingSpace() != null) {
+		result.addAll(getSuroundingSpace().getContainedSpaces());	
+	    }
+	    result.remove(this);
 	}
 	return result;
-    }    
+    }
+    
+    public String getResourceAllocationsResume() {	
+	StringBuilder builder = new StringBuilder();	
+	int eventOccupations = 0, personOccupations = 0, unitOccupations = 0, materialOccupations = 0;	
+	for (ResourceAllocation resourceAllocation : getResourceAllocations()) {
+	    if(resourceAllocation.isEventSpaceOccupation()) {
+		eventOccupations++;
+	    } else if(resourceAllocation.isPersonSpaceOccupation()) {
+		personOccupations++;
+	    } else if(resourceAllocation.isUnitSpaceOccupation()) {
+		unitOccupations++;
+	    } else if(resourceAllocation.isMaterialSpaceOccupation()) {
+		materialOccupations++;
+	    }	    
+	}
+	
+	builder.append(eventOccupations).append(" (Events)").append(", ");
+	builder.append(personOccupations).append(" (Persons)").append(", ");
+	builder.append(unitOccupations).append(" (Units)").append(", ");
+	builder.append(materialOccupations).append(" (Material)");
+	return builder.toString();
+    }  
 }
+

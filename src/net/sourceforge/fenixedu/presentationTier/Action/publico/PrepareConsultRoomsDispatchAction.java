@@ -11,10 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.Util;
-import net.sourceforge.fenixedu.util.TipoSala;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,12 +74,8 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
         List buildings = Util.readExistingBuldings("*", null);
         request.setAttribute("publico.buildings", buildings);
 
-        //TODO: No futuro, os tipos de salas devem ser lidos da BD
-        List types = new ArrayList();
-        types.add(new LabelValueBean("*", null));
-        types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));
-        types.add(new LabelValueBean("Laboratório", (new Integer(TipoSala.LABORATORIO)).toString()));
-        types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
+        //TODO: No futuro, os tipos de salas devem ser lidos da BD        
+        List types = Util.readTypesOfRooms("*", null);
         request.setAttribute("publico.types", types);
 
         return mapping.findForward("Sucess");

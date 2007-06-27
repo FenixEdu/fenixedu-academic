@@ -18,6 +18,14 @@ public class AccountabilityType extends AccountabilityType_Base {
         setType(accountabilityTypeEnum);
     }
 
+    @Override
+    public void setType(AccountabilityTypeEnum type) {
+	if(type == null) {
+	    throw new DomainException("error.accountabilityType.empty.type");
+	}
+	super.setType(type);
+    }  
+    
     public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum) {
         List<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
         for (AccountabilityType accountabilityType : allAccountabilityTypes) {
@@ -26,13 +34,5 @@ public class AccountabilityType extends AccountabilityType_Base {
             }
         }
         return null;
-    }
-
-    @Override
-    public void setType(AccountabilityTypeEnum type) {
-	if(type == null) {
-	    throw new DomainException("error.accountabilityType.empty.type");
-	}
-	super.setType(type);
     }        
 }   

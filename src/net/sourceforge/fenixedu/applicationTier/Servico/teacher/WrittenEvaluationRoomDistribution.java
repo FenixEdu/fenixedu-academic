@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -29,7 +29,7 @@ public class WrittenEvaluationRoomDistribution extends Service {
         } else {
             studentsToDistribute = readAllStudentsAttendingExecutionCourses(writtenEvaluation);
         }
-        final List<OldRoom> selectedRooms = readRooms(writtenEvaluation, roomIDs);
+        final List<AllocatableSpace> selectedRooms = readRooms(writtenEvaluation, roomIDs);
         if (!selectedRooms.containsAll(writtenEvaluation.getAssociatedRooms())) {
             // if the selected rooms are different of the evaluation rooms
             // then the user probably selected repeated rooms
@@ -41,15 +41,14 @@ public class WrittenEvaluationRoomDistribution extends Service {
         }
     }
     
-    private List<OldRoom> readRooms(final WrittenEvaluation writtenEvaluation,
-            final List<Integer> roomIDs) throws ExcepcaoPersistencia {
-        
+    private List<AllocatableSpace> readRooms(final WrittenEvaluation writtenEvaluation, final List<Integer> roomIDs) throws ExcepcaoPersistencia {
+	
         List<Integer> selectedRoomIDs = removeDuplicatedEntries(roomIDs);
-        final List<OldRoom> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();        
-        final List<OldRoom> selectedRooms = new ArrayList<OldRoom>(selectedRoomIDs.size());
+        final List<AllocatableSpace> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();        
+        final List<AllocatableSpace> selectedRooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
         
         for (final Integer roomID : selectedRoomIDs) {
-            for (final OldRoom room : writtenEvaluationRooms) {
+            for (final AllocatableSpace room : writtenEvaluationRooms) {
                 if (room.getIdInternal().equals(roomID)) {
                     selectedRooms.add(room);
                     break;

@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

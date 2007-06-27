@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -63,7 +63,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
             }
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+            if (lesson.getFrequency().intValue() == EventSpaceOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else if (showOccupation instanceof InfoExam) {

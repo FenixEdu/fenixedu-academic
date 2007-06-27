@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -77,13 +77,13 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         			    this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
         			} else {
         			    this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-        			    final OldRoom room = registration.getRoomFor(writtenEvaluation);
+        			    final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
         			    getStudentRooms().put(writtenEvaluation.getIdInternal(),
         				    room != null ? room.getNome() : "-");
         			}
         		    } catch (final DomainException e) {
         			getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-        			final OldRoom room = registration.getRoomFor(writtenEvaluation);
+        			final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
         			getStudentRooms().put(writtenEvaluation.getIdInternal(),
         				room != null ? room.getNome() : "-");
         		    } finally {

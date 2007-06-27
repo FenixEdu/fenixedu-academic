@@ -191,6 +191,28 @@
     <setter signature="editLimitedRoomCharacteristics(blueprintNumber, identification, description, roomClassification, observations, validFrom, validUntil, doorNumber)" />
 </schema>
 
+<schema name="RoomSubdivisionFactoryCreator" type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryCreator" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>
+</schema>
+<schema name="RoomSubdivisionFactoryEditor" type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryEditor" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="end"/>	
+</schema>
+<schema name="ViewRoomSubdivisionInformation" type="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" bundle="SPACE_RESOURCES">	
+	<slot name="identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+</schema>
+<schema name="EditRoomSubdivisionInformation" type="net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation" bundle="SPACE_RESOURCES">
+	<slot name="identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validFrom" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="validUntil"/>
+	<setter signature="editRoomSubdivisionCharacteristics(identification, validFrom, validUntil)" />
+</schema>
+
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
 	<slot name="code" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
@@ -347,11 +369,10 @@
 	<slot name="end" />					
 </schema>
 <schema name="ChooseMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
-	<slot name="materialType" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.MaterialTypes"/>
-		<property name="eachLayout" value="label-to-space-management"/>
-		<property name="destination" value="postBack"/>
-		<property name="saveOptions" value="true"/>	
+	<slot name="materialType" layout="menu-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="excludedValues" value="FIRE_EXTINGUISHER" />	
+		<property name="bundle" value="SPACE_RESOURCES"/>
+		<property name="destination" value="postBack"/>			
     </slot>        
 </schema>
 <schema name="AddNewMaterialSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
@@ -385,7 +406,24 @@
 	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="classes" value="list2 liinline" />
 	</slot>
-</schema>	
+</schema>
+<schema name="AddPersistentGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="persistentGroupMembers" layout="menu-select" key="label.access.persistent.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.PersistentGroupMembersProvider"/>
+		<property name="format"	value="${name}" />  
+	</slot>		
+	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>		
+<schema name="AddRoleTypeGroup" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean" bundle="SPACE_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="roleType" key="label.role.type.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />		
+	<slot name="maintainElements" layout="radio" key="label.maintain.elements" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>		
 
 <!-- Move Space -->
 <schema name="SpaceMoveUp" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
@@ -401,4 +439,25 @@
 		<property name="format"	value="${spaceInformation.presentationName}" />  
      </slot>        
 </schema>	
+
+<!-- Merge Rooms -->
+<schema name="FindMergeDestinationRoom" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceName" key="label.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />						         
+</schema>	
+
+<schema name="ViewDestinationRoomInfo" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.identification" key="label.identification"/>	
+	<slot name="spaceFloor.spaceInformation.presentationName" key="label.room.floor"/>
+	<slot name="spaceBuilding.spaceInformation.presentationName" key="label.room.building"/>
+	<slot name="spaceCampus.spaceInformation.presentationName" key="label.room.campus"/>	         
+</schema>	
+
+<schema name="ViewRoomImportantAssociationsBeforeMerge" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="containedSpacesCount" key="label.room.subspaces"/>	
+	<slot name="resourceAllocationsResume" key="label.room.resource.allocations"/>
+	<slot name="spaceResponsibilityCount" key="label.room.responsibility"/>
+	<slot name="associatedInquiriesRoomsCount" key="label.room.inquiries"/>	
+	<slot name="writtenEvaluationEnrolmentsCount" key="label.room.written.evaluation.enrolments"/>
+	<slot name="associatedSummariesCount" key="label.room.summaries"/>	
+</schema>
 

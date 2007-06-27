@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurri
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 import org.apache.commons.beanutils.BeanComparator;

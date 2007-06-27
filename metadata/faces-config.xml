@@ -714,106 +714,106 @@
 	<!-- BEGIN: SOP Navigation Rules -->
 
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/showExecutionCourses.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/showExecutionCourses.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>createWrittenEvaluation</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
 		</navigation-case>			
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 		
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/commentExecutionCourse.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 		
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>associateRoomToWrittenEvaluation</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>associateExecutionCourseToWrittenEvaluation</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>WrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>Exam</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>createWrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>editWrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/editWrittenTest.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>createWrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/createWrittenTest.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/createWrittenTest.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>editWrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/editWrittenTest.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/editWrittenTest.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/editWrittenTest.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>associateRoomToWrittenEvaluation</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateRoomToWrittenEvaluation.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>associateExecutionCourseToWrittenEvaluation</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/associateExecutionCourseToWrittenEvaluation.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>WrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>Exam</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/sop/writtenEvaluations/deleteWrittenEvaluation.jsp</from-view-id>
+		<from-view-id>/resourceAllocationManager/writtenEvaluations/deleteWrittenEvaluation.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>WrittenTest</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
 			<from-outcome>writtenEvaluationCalendar</from-outcome>
-			<to-view-id>/sop/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
+			<to-view-id>/resourceAllocationManager/writtenEvaluations/writtenEvaluationCalendar.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

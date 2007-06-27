@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -25,7 +25,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
             OccupationPeriod period, String description) {
         
     	super();
@@ -51,7 +51,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
             OccupationPeriod period, String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);
@@ -136,7 +136,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
-        return requestor.hasRoleType(RoleType.TIME_TABLE_MANAGER);
+        return requestor.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
     }
     
     public EvaluationType getEvaluationType() {

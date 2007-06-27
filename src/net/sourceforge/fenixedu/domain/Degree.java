@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;

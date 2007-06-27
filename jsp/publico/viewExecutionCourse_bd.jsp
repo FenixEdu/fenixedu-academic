@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <logic:notPresent name="siteView">
 	<span class="error"><!-- Error messages go here --><p><bean:message key="errors.invalidSiteExecutionCourse"/></p></span>
 </logic:notPresent>

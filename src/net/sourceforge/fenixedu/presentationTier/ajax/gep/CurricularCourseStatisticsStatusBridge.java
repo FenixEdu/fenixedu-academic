@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import uk.ltd.getahead.dwr.ExecutionContext;
 
 /**

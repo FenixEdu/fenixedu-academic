@@ -16,7 +16,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;

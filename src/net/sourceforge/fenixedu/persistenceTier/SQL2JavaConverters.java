@@ -84,8 +84,7 @@ public class SQL2JavaConverters {
     public static FieldConversion JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion();
     public static FieldConversion JavaTipoCurso2SqlTipoCursoFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion();
     public static FieldConversion JavaByteArray2SqlByteArrayFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaByteArray2SqlByteArrayFieldConversion();
-    public static FieldConversion JavaRoleType2SqlRoleTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRoleType2SqlRoleTypeFieldConversion();
-    public static FieldConversion TipoSala2EnumTipoSalaFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TipoSala2EnumTipoSalaFieldConversion();
+    public static FieldConversion JavaRoleType2SqlRoleTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRoleType2SqlRoleTypeFieldConversion();    
     public static FieldConversion JavaGuideSituation2SqlGuideSituationFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGuideSituation2SqlGuideSituationFieldConversion();
     public static FieldConversion TimeStamp2DateTimeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion();
     public static FieldConversion HourMinuteSecond2TimeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.HourMinuteSecond2TimeFieldConversion();

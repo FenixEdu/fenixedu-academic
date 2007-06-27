@@ -8,7 +8,7 @@
 	import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType"%>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
 
 <bean:define id="institutionUrl" type="java.lang.String">
 	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES" />

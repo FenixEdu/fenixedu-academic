@@ -28,6 +28,15 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
+    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole() {
+	Person loggedPerson = AccessControl.getPerson();	
+	final Group group = getAccessGroup();
+	if (group != null && group.isMember(loggedPerson)) {
+	    return;
+	}	
+	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+    } 
+    
     public Space getSpace() {
 	return (Space) getResource();
     }
@@ -39,9 +48,9 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	    throw new DomainException("error.allocation.invalid.resource.type");
 	}
     }
-    
+          
     @Override
     public boolean isSpaceOccupation() {
         return true;
-    }
+    }       
 }

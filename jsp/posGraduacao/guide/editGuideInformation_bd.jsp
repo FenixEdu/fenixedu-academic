@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 <%@ page import="net.sourceforge.fenixedu.domain.DocumentType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>

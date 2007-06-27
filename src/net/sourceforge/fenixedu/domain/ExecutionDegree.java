@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -176,10 +177,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public boolean canBeDeleted() {
 	return (!hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
 		&& !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
-		&& (getPeriodLessonsFirstSemester() == null || getPeriodLessonsFirstSemester().getRoomOccupations().isEmpty())
-		&& (getPeriodLessonsSecondSemester() == null || getPeriodLessonsSecondSemester().getRoomOccupations().isEmpty())
-		&& (getPeriodExamsFirstSemester() == null || getPeriodExamsFirstSemester().getRoomOccupations().isEmpty())
-		&& (getPeriodExamsSecondSemester() == null || getPeriodExamsSecondSemester().getRoomOccupations().isEmpty()));
+		&& (getPeriodLessonsFirstSemester() == null || getPeriodLessonsFirstSemester().getEventSpaceOccupations().isEmpty())
+		&& (getPeriodLessonsSecondSemester() == null || getPeriodLessonsSecondSemester().getEventSpaceOccupations().isEmpty())
+		&& (getPeriodExamsFirstSemester() == null || getPeriodExamsFirstSemester().getEventSpaceOccupations().isEmpty())
+		&& (getPeriodExamsSecondSemester() == null || getPeriodExamsSecondSemester().getEventSpaceOccupations().isEmpty()));
     }
 
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,

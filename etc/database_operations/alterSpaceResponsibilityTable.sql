@@ -1,0 +1,12 @@
+rename table SPACE_RESPONSIBILITY to RESOURCE_RESPONSIBILITY;
+
+alter table RESOURCE_RESPONSIBILITY add column `OJB_CONCRETE_CLASS` text;
+update RESOURCE_RESPONSIBILITY set OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.SpaceResponsibility';
+
+alter table RESOURCE_RESPONSIBILITY change column KEY_SPACE KEY_RESOURCE int(11) NOT NULL default '0';
+alter table RESOURCE_RESPONSIBILITY drop key KEY_SPACE;
+alter table RESOURCE_RESPONSIBILITY add key KEY_RESOURCE (KEY_RESOURCE);
+
+alter table RESOURCE_RESPONSIBILITY change column KEY_UNIT KEY_PARTY int(11) NOT NULL default '0';
+alter table RESOURCE_RESPONSIBILITY drop key KEY_UNIT;
+alter table RESOURCE_RESPONSIBILITY add key KEY_PARTY (KEY_PARTY);

@@ -56,7 +56,7 @@
 								<c:out value="${pageIndex}"/>		
 							</c:when>
 							<c:otherwise>
-								<a href="<c:out value="${url}"/> ">
+								<a href="<c:out value="${url}"/>">
 									<c:out value="${pageIndex}" />
 								</a>	
 							</c:otherwise>
@@ -68,7 +68,7 @@
 								<c:out value="${pageIndex},"/>		
 							</c:when>
 							<c:otherwise>
-								<a href="<c:out value="${url}"/> ">
+								<a href="<c:out value="${url}"/>">
 									<c:out value="${pageIndex}," />
 								</a>	
 							</c:otherwise>
@@ -85,7 +85,7 @@
 		<c:forEach items="${managerFunctionsManagementBackingBean.personsList}" var="person">
 			<c:url var="url" value="/manager/functionsManagement/listPersonFunctions.faces?personID=${person.idInternal}" />
 			<c:out value="<li>" escapeXml="false"/>
-			<a href=" <c:out value="${url}"/> ">
+			<a href="<c:out value="${url}"/>">
 				<c:out value="${person.name}" />
 			</a>
 			<c:out value="</li>" escapeXml="false"/>										

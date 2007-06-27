@@ -29,7 +29,8 @@
     <!ENTITY student SYSTEM "student-schemas.xml">
     <!ENTITY departmentMember SYSTEM "departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "manager-schemas.xml">
-    <!ENTITY sop SYSTEM "sop-schemas.xml">
+    <!ENTITY resourceAllocationManager SYSTEM "resourceAllocationManager-schemas.xml">
+    <!ENTITY resourceManager SYSTEM "resourceManager-schemas.xml">
     <!ENTITY teacher SYSTEM "teacher-schemas.xml">
     <!ENTITY departmentAdmOffice SYSTEM "departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "coordinator-schemas.xml">
@@ -705,7 +706,7 @@
     &student;
     &departmentMember;
     &manager;
-    &sop;
+    &resourceAllocationManager;
     &teacher;
     &departmentAdmOffice;
     &coordinator;
@@ -716,4 +717,6 @@
     &boardSchemas;
     &inquirySchemas;
     &librarySchemas;
+    &resourceManager;
+    
 </schemas>

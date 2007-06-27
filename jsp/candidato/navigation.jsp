@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <bean:define id="candidateID" name="candidateID" />
 

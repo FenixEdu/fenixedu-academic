@@ -4,10 +4,10 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
@@ -32,7 +32,7 @@ public class EditExecutionDegree extends Service {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = rootDomainObject.readCampusByOID(campusID);
+        final Campus campus = (Campus) rootDomainObject.readResourceByOID(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

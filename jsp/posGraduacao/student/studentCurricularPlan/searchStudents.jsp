@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <h2 align="left"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
 

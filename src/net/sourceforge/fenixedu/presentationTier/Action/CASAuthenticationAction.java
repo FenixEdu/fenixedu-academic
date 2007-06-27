@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;

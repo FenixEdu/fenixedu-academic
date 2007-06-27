@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 /**
  * @author Tânia Pousão
@@ -20,15 +20,14 @@ public class InfoExamWithRoomOccupations extends InfoExam {
     public void copyFromDomain(Exam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
-            setAssociatedRoomOccupation(copyIRoomOccupation2InfoRoomOccupation(exam
-                    .getAssociatedRoomOccupation()));
+            setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(exam.getWrittenEvaluationSpaceOccupations()));
         }
     }
     
-    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
+    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
         final List<InfoRoomOccupation> infoRoomOccupations = new ArrayList<InfoRoomOccupation>(associatedRoomOccupation.size());
-        for (final Iterator iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {
-            final RoomOccupation roomOccupation = (RoomOccupation) iterator.next();
+        for (final Iterator<WrittenEvaluationSpaceOccupation> iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {
+            final WrittenEvaluationSpaceOccupation roomOccupation = iterator.next();
             final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             if (infoRoomOccupation != null) {
                 infoRoomOccupations.add(infoRoomOccupation);

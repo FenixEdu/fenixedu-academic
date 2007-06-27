@@ -35,13 +35,13 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
         List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.TIME_TABLE_MANAGER);
+        roles.add(RoleType.RESOURCE_ALLOCATION_MANAGER);
         roles.add(RoleType.COORDINATOR);
         return roles;
     }
 
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-        if (id.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
+        if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 

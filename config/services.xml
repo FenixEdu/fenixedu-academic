@@ -32,92 +32,74 @@
 	</service>
 	<service>
 		<name>AddSchoolClassesToShift</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddSchoolClassesToShift</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddSchoolClassesToShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>AddShiftsToSchoolClass</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddShiftsToSchoolClass</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddShiftsToSchoolClass</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>DeleteRoom</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteRoom</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>ApagarTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ApagarTurma</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>CreateLesson</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateLesson</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>CriarSala</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CriarSala</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>CriarTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CriarTurma</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		<filterChains>
 		</filterChains>
 	</service>
 	<service>
 		<name>CriarTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CriarTurno</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DeleteClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteClasses</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteClasses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DeleteLessons</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteLessons</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -138,38 +120,38 @@
 	</service>		
 	<service>
 		<name>DeleteShift</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteShift</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DeleteShifts</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteShifts</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShifts</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DefineExamComment</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DefineExamComment</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>EditExamRooms</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditExamRooms</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExamRooms</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -192,83 +174,83 @@
 	</service>
 	<service>
 		<name>EditLesson</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditLesson</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>EditExecutionCourse</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditExecutionCourse</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>EditarSala</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarSala</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarSala</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>EditarTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurma</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>EditarTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurno</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>	
 	<service>
 		<name>LerAlunosDeTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAlunosDeTurno</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>LerAulasDeDisciplinaExecucao</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeDisciplinaExecucao</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeDisciplinaExecucao</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>LerAulasDeSalaEmSemestre</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeSalaEmSemestre</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeSalaEmSemestre</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>LerSala</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerSala</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerSala</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadAllExecutionPeriods</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAllExecutionPeriods</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllExecutionPeriods</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -277,136 +259,136 @@
 	<service>
 		<name>ReadDegreesClassesLessons</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadDegreesClassesLessons</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadDegreesClassesLessons</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadPavillionsRoomsLessons</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadPavillionsRoomsLessons</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadPavillionsRoomsLessons</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadClassByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadClassByOID</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassByOID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadEmptyRoomsForExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadEmptyRoomsForExam</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadEmptyRoomsForExam</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadLessonByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadLessonByOID</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonByOID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadRoomByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadRoomByOID</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadShiftByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadShiftByOID</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>LerTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerTurma</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>RemoverAula</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.RemoverAula</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverAula</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>RemoverTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.RemoverTurno</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>LerSalas</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerSalas</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerSalas</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>LerTurmas</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerTurmas</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurmas</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
 		<name>LerAulasDeTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeTurno</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurno</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>LerAulasDeTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeTurma</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadExamsMap</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExamsMap</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsMap</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadAllRoomsExamsMap</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAllRoomsExamsMap</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllRoomsExamsMap</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadClassesByExecutionCourse</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadClassesByExecutionCourse</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassesByExecutionCourse</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -416,17 +398,17 @@
 	<service>
 		<name>ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadExecutionDegreesByExecutionYear</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExecutionDegreesByExecutionYear</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -434,7 +416,7 @@
 	<service>
 		<name>ReadExecutionDegreesByExecutionYearId</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadExecutionDegreesByExecutionYearId</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYearId</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -442,81 +424,81 @@
 	<service>
 		<name>LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>LerTurnosDeDisciplinaExecucao</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.LerTurnosDeDisciplinaExecucao</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurnosDeDisciplinaExecucao</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadAvailableShiftsForClass</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAvailableShiftsForClass</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableShiftsForClass</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadRoomsWithNoExamsInDayAndBeginning</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadRoomsWithNoExamsInDayAndBeginning</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomsWithNoExamsInDayAndBeginning</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadShiftsByClass</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadShiftsByClass</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByClass</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>RemoveClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.RemoveClasses</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveClasses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>RemoveShifts</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.RemoveShifts</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>SearchExecutionCourses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.SearchExecutionCourses</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -536,7 +518,7 @@
 	<service>
 		<name>ReadNonMasterExecutionDegreesByExecutionYear</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadNonMasterExecutionDegreesByExecutionYear</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadNonMasterExecutionDegreesByExecutionYear</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -544,7 +526,7 @@
 	<service>
 		<name>ReadShiftsByExecutionCourseID</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadShiftsByExecutionCourseID</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionCourseID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3923,21 +3905,21 @@
 	</service>
 	<service>
 		<name>ReadAllClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAllClasses</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllClasses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadAvailableClassesForShift</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAvailableClassesForShift</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableClassesForShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6012,7 +5994,7 @@
 	</service>
 	<service>
 		<name>EditExecutionCourseByManager</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditExecutionCourse</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6021,7 +6003,7 @@
 	</service>
 	<service>
 		<name>CreateWrittenEvaluation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.CreateWrittenEvaluation</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6058,7 +6040,7 @@
 	</service>
 	<service>
 		<name>EditWrittenEvaluation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.EditWrittenEvaluation</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6118,16 +6100,16 @@
 	</service>
 	<service>
 		<name>ReadExecutionCourseWithAssociatedCurricularCourses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExecutionCourseWithAssociatedCurricularCourses</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>ReadFilteredExamsMap</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6136,7 +6118,7 @@
 	</service>
 	<service>
 		<name>ReadFilteredExamsMapList</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMapList</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMapList</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -6145,23 +6127,23 @@
 	</service>
 	<service>
 		<name>ReadExamByOID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExamByOID</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamByOID</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains></filterChains>
 	</service>
 	<service>
 		<name>ReadAvailableRoomsForExam</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadAvailableRoomsForExam</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
 		<name>DeleteWrittenEvaluation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.DeleteWrittenEvaluation</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>
@@ -6171,7 +6153,7 @@
 	</service>
 	<service>
 		<name>ReadBuildings</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadBuildings</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>
@@ -6179,21 +6161,21 @@
 	</service>
 	<service>
 		<name>SearchRooms</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.SearchRooms</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.SearchRooms</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadExamsMapByRooms</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExamsMapByRooms</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamsMapByRooms</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>ReadExamsByDate</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExamsByDate</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamsByDate</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -6611,7 +6593,7 @@
 	</service>
 	<service>
 		<name>ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -6907,11 +6889,11 @@
 	</service>
 	<service>
 		<name>ChangeStudentsShift</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ChangeStudentsShift</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -7652,35 +7634,7 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>
-
-	<service>
-		<name>CreateBuildingOld</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateBuilding</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditOldBuilding</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditOldBuilding</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeleteBuilding</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteBuilding</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>ReadDegreeCurricularPlansByDegreeType</name>
 		<implementationClass> 
@@ -7803,11 +7757,11 @@
 	</service>	
     <service>
         <name>SwitchPublishedExamsFlag</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.SwitchPublishedExamsFlag</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SwitchPublishedExamsFlag</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
+            <chain name="ResourceAllocationManagerAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -11496,20 +11450,20 @@
     </service>
 	<service>
     	<name>CreateRoomsPunctualScheduling</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateRoomsPunctualScheduling</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
         </filterChains>     
     </service>
 	<service>
     	<name>EditRoomsPunctualScheduling</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditRoomsPunctualScheduling</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
         </filterChains>     
     </service>
 	<service>
@@ -11518,7 +11472,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
         </filterChains>     
     </service>
     <service>
@@ -11550,25 +11504,25 @@
 	</service>  
 	<service>
 		<name>OpenPunctualRoomsOccupationRequest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.OpenPunctualRoomsOccupationRequest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>  	
 	<service>
 		<name>ClosePunctualRoomsOccupationRequest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ClosePunctualRoomsOccupationRequest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
+			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service> 	  	
 	<service>
 		<name>MarkPunctualRoomsOccupationCommentsAsRead</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.MarkPunctualRoomsOccupationCommentsAsRead</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -11637,6 +11591,20 @@
         <isTransactional>true</isTransactional>  
         <filterChains/>
     </service>   
+    <service>
+        <name>SearchAllActiveInternalUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>   
+    <service>
+        <name>SearchAllActivePartiesByName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>
+    </service>    
     <service>
         <name>DeleteThesis</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis</implementationClass>
@@ -11771,7 +11739,25 @@
 		<filterChains>
 			<chain name="ManagerAuthorization" />
 		</filterChains>
-    </service> 
+    </service>
+    <service>
+        <name>DeletePersistentGroupInManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersistentGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+    </service>        
+    <service>
+        <name>RemovePersistentGroupMemberInManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistentGroupMember</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+    </service>     
     <service>
         <name>CreateResearchUnitSite</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateResearchUnitSite</implementationClass>
@@ -12082,7 +12068,79 @@
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
     </service>
+    <service>
+    	<name>MergeRooms</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.MergeRooms</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="SpaceAdministratorAuthorization"></chain>
+		</filterChains>
+    </service>
+    <service>
+		<name>CreateMaterial</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateMaterial</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceManagerAuthorization" />
+		</filterChains>
+	</service>
+    <service>
+		<name>DeleteMaterial</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteMaterial</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceManagerAuthorization" />
+		</filterChains>
+	</service>
 	<service>
+		<name>CreateVehicle</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateVehicle</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceManagerAuthorization" />
+		</filterChains>
+	</service>
+    <service>
+		<name>DeleteVehicle</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteVehicle</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceManagerAuthorization" />
+		</filterChains>
+	</service>	
+	<service>
+    	<name>DeleteExtraWorkRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteExtraWorkRequest</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization"/>
+		</filterChains>
+    </service>
+    <service>
+    	<name>CreateVehicleAllocation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateVehicleAllocation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResourceAllocationManagerAuthorization"/>
+		</filterChains>
+    </service>    
+    <service>
+    	<name>DeleteVehicleAllocation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteVehicleAllocation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ResourceAllocationManagerAuthorization"/>
+		</filterChains>
+    </service>    
+    <service>
     	<name>CreateStudentCurricularPlanEquivalencePlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan</implementationClass>
         <description/>

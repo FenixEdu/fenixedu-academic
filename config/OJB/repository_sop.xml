@@ -1,9 +1,3 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldBuilding" table="RESOURCE">
-</class-descriptor>
-
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldRoom" table="RESOURCE">
-</class-descriptor>
-
 <!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.SchoolClass" table="CLASS">      
 </class-descriptor>
@@ -53,10 +47,6 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.FinalMark -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.FinalMark" table="MARK">      
 </class-descriptor> 
-
-<!-- Definitions for net.sourceforge.fenixedu.domain.space.RoomOccupation -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomOccupation" table="ROOM_OCCUPATION">     
-</class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.OccupationPeriod -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.OccupationPeriod" table="PERIOD">

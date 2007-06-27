@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" />
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 	<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">

@@ -63,8 +63,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.curriculum.CurriculumEntry;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -388,11 +388,11 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    public OldRoom getRoomFor(final WrittenEvaluation writtenEvaluation) {
+    public AllocatableSpace getRoomFor(final WrittenEvaluation writtenEvaluation) {
 	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
 		.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
-		return (OldRoom) writtenEvaluationEnrolment.getRoom();
+		return (AllocatableSpace) writtenEvaluationEnrolment.getRoom();
 	    }
 	}
 	return null;

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -20,8 +20,7 @@ public class InquiriesRoom extends InquiriesRoom_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected InquiriesRoom(InquiriesCourse inquiriesCourse, OldRoom room,
-	    InfoInquiriesRoom infoInquiriesRoom) {
+    protected InquiriesRoom(InquiriesCourse inquiriesCourse, AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
 	this();
 	if ((inquiriesCourse == null) || (room == null))
 	    throw new DomainException("The inquiriesCourse and room should not be null!");

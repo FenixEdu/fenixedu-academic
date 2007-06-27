@@ -7,20 +7,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
 	public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
-		final Campus campus = rootDomainObject.readCampusByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+		final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
 		if (campus == null) {
 			throw new NonExistingServiceException("message.nonExistingCampus", null);
 		}

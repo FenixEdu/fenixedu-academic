@@ -2261,6 +2261,15 @@
 			<forward name="seeChoosedUnit" path="see-choosed-unit-to-merge"/>				
 			<forward name="goToConfirmation" path="confirmation-to-merge"/>							
 		</action>
+		
+		<!-- =================== Access Control Persistent Groups Management =================== -->
+		<action path="/accessControlPersistentGroupsManagement"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.AccessControlPersistentGroupsManagementDA"
+				scope="request">
+			<forward name="seeAllPersistentGroups" path="see-all-persistent-groups"/>
+			<forward name="prepareCreateNewPersistentGroup" path="prepare-create-new-persistent-group"/>																
+		</action>
       
       <!-- =================== Research Activity =================== -->
       
@@ -2348,7 +2357,7 @@
 	<!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResourcesSOP" key="SOP_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
 	<message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false"/>
     <message-resources parameter="resources.FunctionalityResources" key="FUNCTIONALITY_RESOURCES" null="false"/>
 	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>

@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.util.TipoSala;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
 
 public class InfoRoomEditor extends InfoObject implements Comparable {
 
@@ -9,27 +11,33 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
 
     protected String _edificio;
 
-    protected Integer _piso;
+    protected Integer _pisoReference;
+    
+    protected DomainReference<RoomClassification> _tipoReference;
 
     protected Integer _capacidadeNormal;
 
     protected Integer _capacidadeExame;
+   
+    private DomainReference<AllocatableSpace> roomReference;
+    
+    public InfoRoomEditor() { }
 
-    protected TipoSala _tipo;
-
-    public InfoRoomEditor() {
-    }
-
-    public InfoRoomEditor(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal,
-            Integer capacidadeExame) {
+    public InfoRoomEditor(String nome, String edificio, Integer piso, RoomClassification tipo, Integer capacidadeNormal, Integer capacidadeExame) {
         setNome(nome);
         setEdificio(edificio);
         setPiso(piso);
-        setTipo(tipo);
+        setTipoReference(new DomainReference<RoomClassification>(tipo));
         setCapacidadeNormal(capacidadeNormal);
         setCapacidadeExame(capacidadeExame);
     }
-
+    
+    public InfoRoomEditor(Integer capacidadeNormal, Integer capacidadeExame, AllocatableSpace room) {        
+        setCapacidadeNormal(capacidadeNormal);
+        setCapacidadeExame(capacidadeExame);
+        setRoomReference(new DomainReference<AllocatableSpace>(room));
+    }
+    
     public String getNome() {
         return _nome;
     }
@@ -47,21 +55,25 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
     }
 
     public Integer getPiso() {
-        return _piso;
+        return _pisoReference;
     }
 
     public void setPiso(Integer piso) {
-        _piso = piso;
+        _pisoReference = piso;
     }
 
-    public TipoSala getTipo() {
-        return _tipo;
+    public RoomClassification getTipo() {
+        return this._tipoReference == null ? null : this._tipoReference.getObject();
     }
 
-    public void setTipo(TipoSala tipo) {
-        _tipo = tipo;
+    public void setTipoReference(DomainReference<RoomClassification> tipo) {
+	_tipoReference = tipo;
     }
-
+    
+    public AllocatableSpace getRoom() {
+        return getRoomReference() == null ? null : getRoomReference().getObject();
+    }
+    
     public Integer getCapacidadeNormal() {
         return _capacidadeNormal;
     }
@@ -78,49 +90,45 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
         _capacidadeExame = capacidadeExame;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoRoomEditor) {
-            InfoRoomEditor infoSala = (InfoRoomEditor) obj;
-            resultado = (getNome().equals(infoSala.getNome()));
-        }
-        return resultado;
-    }
-
     public String toString() {
         String result = "[INFOROOM";
-        result += ", nome=" + _nome;
-        result += ", edificio=" + _edificio;
-        result += ", piso=" + _piso;
-        result += ", tipo=" + _tipo;
         result += ", capacidadeNormal=" + _capacidadeNormal;
         result += ", capacidadeExame=" + _capacidadeExame;
         result += "]";
         return result;
-    }
+    }  
 
-    public int compareTo(Object obj) {
-        return getNome().compareTo(((InfoRoomEditor) obj).getNome());
-    }
-
-    public void copyFromDomain(OldRoom sala) {
+    public void copyFromDomain(AllocatableSpace sala) {
         super.copyFromDomain(sala);
-        if (sala != null) {
-            setNome(sala.getNome());
-            setEdificio(sala.getBuilding().getName());
-            setPiso(sala.getPiso());
-            setTipo(sala.getTipo());
+        if (sala != null) {     
             setCapacidadeNormal(sala.getCapacidadeNormal());
             setCapacidadeExame(sala.getCapacidadeExame());
+            setRoomReference(new DomainReference<AllocatableSpace>(sala));
         }
     }
 
-    public static InfoRoomEditor newInfoFromDomain(OldRoom sala) {
+    public static InfoRoomEditor newInfoFromDomain(Room sala) {
         InfoRoomEditor infoRoom = null;
         if (sala != null) {
             infoRoom = new InfoRoomEditor();
             infoRoom.copyFromDomain(sala);
         }
         return infoRoom;
+    }
+
+    public boolean equals(Object obj) {        
+        return (obj instanceof InfoRoomEditor) ? getRoom().equals(((InfoRoomEditor)obj).getRoom()) : false;
+    }
+       
+    public int compareTo(Object o) {
+	return 0;
+    }
+
+    public DomainReference<AllocatableSpace> getRoomReference() {
+        return roomReference;
+    }
+
+    public void setRoomReference(DomainReference<AllocatableSpace> roomReference) {
+        this.roomReference = roomReference;
     }
 }

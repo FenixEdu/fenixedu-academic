@@ -65,7 +65,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public List getAssociatedRooms() {
-        return (List) CollectionUtils.collect(super.getAssociatedRoomOccupation(), new Transformer() {
+        return (List) CollectionUtils.collect(super.getWrittenEvaluationSpaceOccupations(), new Transformer() {
 
             public Object transform(Object arg0) {
                 InfoRoomOccupation roomOccupation = (InfoRoomOccupation) arg0;

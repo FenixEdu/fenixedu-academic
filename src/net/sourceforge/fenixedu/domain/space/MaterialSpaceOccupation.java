@@ -18,21 +18,31 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("begin"));
 	((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
-    public abstract Material getMaterial();
-    
-    public MaterialSpaceOccupation() {
+        
+    protected MaterialSpaceOccupation() {
         super();        
     }
     
+    public void delete() {
+	super.setMaterial(null);
+	super.delete();
+    }
+    
+    @Override
+    public void setMaterial(Material material) {
+        if(material == null) {
+            throw new DomainException("error.Material.empty.material");
+        }
+	super.setMaterial(material);
+    }
+    
     public boolean isActive(YearMonthDay currentDate) {
-        return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
-                .isBefore(currentDate)));
+        return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }       
     
     @Override
     public void setBegin(YearMonthDay beginDate) {
-	if (beginDate == null) {
+	if (beginDate == null || (getEnd() != null && getEnd().isBefore(beginDate))) {
 	    throw new DomainException("error.materialSpaceOccupation.inexistent.beginDate");
 	}
 	super.setBegin(beginDate);

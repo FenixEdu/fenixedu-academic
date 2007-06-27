@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.stm.Transaction;
 
 /**

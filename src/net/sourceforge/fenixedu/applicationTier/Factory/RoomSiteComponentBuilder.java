@@ -28,8 +28,11 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
 /**
@@ -51,7 +54,7 @@ public class RoomSiteComponentBuilder {
 	return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, OldRoom room,
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, AllocatableSpace room,
 	    ExecutionPeriod executionPeriod) throws Exception {
 
 	if (component instanceof InfoSiteRoomTimeTable) {
@@ -67,7 +70,7 @@ public class RoomSiteComponentBuilder {
     // FIXME duplicated code: this method is (almost?) identical to
         // ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-	    OldRoom room, ExecutionPeriod executionPeriod) throws Exception {
+	    AllocatableSpace room, ExecutionPeriod executionPeriod) throws Exception {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -81,12 +84,12 @@ public class RoomSiteComponentBuilder {
 	InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
 	if (this.intersectPeriods(day, endDay, lessonsInfoPeriod)) {
 	    // adicionar as aulas
-	    List lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
+	    List lessonList = room.getAssociatedLessons(executionPeriod);
 	    Iterator iterator = lessonList.iterator();
 
 	    while (iterator.hasNext()) {
 		Lesson aula = (Lesson) iterator.next();
-		RoomOccupation roomOccupation = aula.getRoomOccupation();
+		LessonSpaceOccupation roomOccupation = aula.getLessonSpaceOccupation();
 
 		OccupationPeriod period = roomOccupation.getPeriod();
 		InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
@@ -94,14 +97,14 @@ public class RoomSiteComponentBuilder {
 		if (this.intersectPeriods(day, endDay, infoPeriod)) {
 
 		    boolean add = true;
-		    if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
-			    && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period.getStartDate(),
+		    if ((roomOccupation.getFrequency().intValue() == EventSpaceOccupation.QUINZENAL)
+			    && (!EventSpaceOccupation.periodQuinzenalContainsWeekPeriod(period.getStartDate(),
 				    period.getEndDate(), roomOccupation.getWeekOfQuinzenalStart()
 					    .intValue(), roomOccupation.getDayOfWeek(), day, endDay,
 				    null))) {
 			add = false;
 		    }
-		    if (roomOccupation.getFrequency().intValue() == RoomOccupation.SEMANAL) {
+		    if (roomOccupation.getFrequency().intValue() == EventSpaceOccupation.SEMANAL) {
 			Calendar dayOfLesson = Calendar.getInstance();
 			dayOfLesson.setTimeInMillis(day.getTimeInMillis());
 			dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana()
@@ -124,19 +127,20 @@ public class RoomSiteComponentBuilder {
 
 	final Date startDate = startDay.getTime();
 	final Date endDate = endDay.getTime();
-	for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
-	    final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
-	    if (writtenEvaluation != null) {
+	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
+	    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {
+		final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();
 		final Date evaluationDate = writtenEvaluation.getDayDate();
 		if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
-		    if (writtenEvaluation instanceof Exam) {
-			final Exam exam = (Exam) writtenEvaluation;
-			infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-		    } else if (writtenEvaluation instanceof WrittenTest) {
-			final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
-			infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
-		    }
-		}
+    		   if (writtenEvaluation instanceof Exam) {
+    			final Exam exam = (Exam) writtenEvaluation;
+    			infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+    		    
+    		   } else if (writtenEvaluation instanceof WrittenTest) {
+    		       final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
+    		       infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+    		   }
+    	    	}
 	    }
 	}
 

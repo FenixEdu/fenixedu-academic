@@ -113,5 +113,16 @@
 			}
 		%>
 	</logic:equal>
+	
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">		
+		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
+		<fr:edit id="editRoomSubdivision" name="selectedSpaceInformation" schema="EditRoomSubdivisionInformation" action="<%= url %>">
+			<fr:destination name="invalid" path="<%= invalidLink %>"/>
+			<fr:destination name="exception" path="<%= invalidLink %>"/>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+			</fr:layout>
+		</fr:edit>		
+	</logic:equal>
 
 </logic:present>

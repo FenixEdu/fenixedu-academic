@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SiteTemplate;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -42,7 +41,7 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
             ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
 
-        OldRoom room = OldRoom.findOldRoomByName(roomKey.getNomeSala());
+        AllocatableSpace room = AllocatableSpace.findActiveAllocatableSpaceForEducationByName(roomKey.getNomeSala());
         RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
         bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionPeriod);
 

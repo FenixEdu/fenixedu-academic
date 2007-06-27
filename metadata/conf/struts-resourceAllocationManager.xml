@@ -1,0 +1,1479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+    
+    <form-bean name="addShiftToClasses"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+         <form-property name="classesList" type="java.lang.String[]" />  
+      </form-bean>
+      <!-- AUTORIZACAO -->
+      <!-- Dynamic-FormBean para Autorizacao -->
+      <form-bean name="autenticacaoSOPForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="utilizador" type="java.lang.String" />
+        <form-property name="password" type="java.lang.String" />
+      </form-bean>
+		
+	  <!-- CONTEXTO -->
+      <!-- Dynamic-FormBean para EscolherContexto -->
+      <form-bean name="chooseScheduleContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="executionDegreeOID" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.String"/>
+      </form-bean>
+
+      <form-bean name="escolherContextoForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="anoCurricular" type="java.lang.Integer"/>
+        <!--        <form-property name="semestre" type="java.lang.Integer"/> -->
+      </form-bean>
+
+      <!-- Dynamic-FormBean for Choose Context -->
+      <form-bean name="chooseContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+
+      <!-- Dynamic-FormBean for searchExecutionCourse -->
+      <form-bean name="searchExecutionCourse"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="executionDegreeOID" type="java.lang.String"/>
+        <form-property name="curricularYearOID" type="java.lang.String"/>
+        <form-property name="executionCourseName" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean for searchExecutionCourse -->
+      <form-bean name="editExecutionCourseForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="theoreticalHours" type="java.lang.String"/>
+        <form-property name="theoPratHours" type="java.lang.String"/>
+        <form-property name="praticalHours" type="java.lang.String"/>
+        <form-property name="labHours" type="java.lang.String"/>
+        <form-property name="seminaryHours" type="java.lang.String"/>
+        <form-property name="problemsHours" type="java.lang.String"/>
+        <form-property name="fieldWorkHours" type="java.lang.String"/>
+        <form-property name="trainingPeriodHours" type="java.lang.String"/>
+        <form-property name="tutorialOrientationHours" type="java.lang.String"/>
+      </form-bean>
+
+	  <!-- Dynamic-FormBean for Create Shift -->
+      <form-bean name="createShiftForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="nome" type="java.lang.String"/>
+        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="tipoAula" type="java.lang.String"/>
+        <form-property name="lotacao" type="java.lang.Integer"/>
+      </form-bean>
+
+      <form-bean name="changShiftOfStudents"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="oldShiftId" type="java.lang.String"/>
+		<form-property name="newShiftId" type="java.lang.String"/>
+		<form-property name="studentIDs" type="java.lang.String[]"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean for lesson manipulation -->
+      <form-bean name="manageLessonForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="diaSemana" type="java.lang.String"/>
+        <form-property name="horaInicio" type="java.lang.String"/>
+        <form-property name="minutosInicio" type="java.lang.String"/>
+        <form-property name="horaFim" type="java.lang.String"/>
+        <form-property name="minutosFim" type="java.lang.String"/>
+        <form-property name="nomeSala" type="java.lang.String"/>
+        <form-property name="quinzenal" type="java.lang.Boolean"/>
+        <form-property name="week" type="java.lang.String"/>
+      </form-bean>
+
+	  <!-- Dynamic-FormBean for adding shifts to class -->
+      <form-bean name="selectMultipleItemsForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="selectedItems" type="java.lang.String[]" size="0"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para EscolherDisciplinaExecucao -->
+      <form-bean name="chooseExecutionCourseForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>        
+      </form-bean>
+
+	  <!-- SALAS -->
+      <!-- Dynamic-FormBean para CriarSala -->
+      <form-bean name="roomForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="executionPeriodId" type="java.lang.Integer"/>        
+        <form-property name="name" type="java.lang.String"/>
+        <form-property name="building" type="java.lang.String"/>
+        <form-property name="floor" type="java.lang.String"/>
+        <form-property name="type" type="java.lang.String"/>
+        <form-property name="capacityNormal" type="java.lang.String"/>
+        <form-property name="capacityExame" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para PesquisarSalas -->
+      <form-bean name="posicaoFormBean"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="posicao" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <form-bean name="salaFormBean"
+                 type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom"
+                 dynamic="true">
+      </form-bean>
+      
+      <form-bean name="indexForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="indexWeek" type="java.lang.Integer"/>
+		<form-property name="selectedExecutionPeriodOID" type="java.lang.String"/>
+      </form-bean>
+
+	  <form-bean name="searchEmptyRoomsForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+	        <form-property name="executionPeriodIndex" type="java.lang.Integer"/>
+	        <form-property name="weekDay" type="java.lang.String"/>
+	        <form-property name="startHour" type="java.lang.String"/>
+	        <form-property name="endHour" type="java.lang.String"/>
+	        <form-property name="startMinutes" type="java.lang.String"/>
+			<form-property name="endMinutes" type="java.lang.String"/>	        	        
+	        <form-property name="normalCapacity" type="java.lang.String"/>
+	        <form-property name="page" type="java.lang.Integer"/>
+	        <form-property name="startDay" type="java.lang.String"/>
+			<form-property name="startMonth" type="java.lang.String"/>
+	        <form-property name="startYear" type="java.lang.String"/>
+	        <form-property name="endDay" type="java.lang.String"/>
+	        <form-property name="endMonth" type="java.lang.String"/>
+			<form-property name="endYear" type="java.lang.String"/>
+	        	        	        	        	        	        
+	  </form-bean>
+
+	  <!-- TURNOS -->
+      <form-bean name="shiftNameForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="name" type="java.lang.String"/>
+      </form-bean>
+      
+      <form-bean name="shiftForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="shiftOID" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para EscolherDisciplinaETipo -->
+      <form-bean name="escolherDisciplinaETipoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="indexDisciplinaExecucao" type="java.lang.Integer"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para EditarTurno -->
+      <form-bean name="editarTurnoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="nome" type="java.lang.String"/>
+        <form-property name="lotacao" type="java.lang.Integer"/>
+      </form-bean>
+      
+	  <!-- TURMAS -->
+	      <!-- Dynamic-FormBean para Criar Turma -->
+     <form-bean name="classForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+        <form-property name="className" type="java.lang.String"/>
+        <form-property name="method" type="java.lang.String" initial="createClass"/>
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
+      </form-bean>
+      
+	  <!-- ========== EXAMS ========== -->
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="chooseDayAndShiftForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginning" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
+      <!-- Dynamic-FormBean for Exam -->
+     <form-bean name="examForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginning" type="java.lang.String"/>
+        <form-property name="season" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
+     <form-bean name="examCommentForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="comment" type="java.lang.String"/>
+        <form-property name="executionCourseCode" type="java.lang.String"/>
+        <form-property name="executionPeriodName" type="java.lang.String"/>
+        <form-property name="executionYear" type="java.lang.String"/>
+     </form-bean>
+
+      <!-- Dynamic-FormBean for Choose Context-->
+      <form-bean name="chooseExamsMapContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+
+      <form-bean name="pagedIndexForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+      
+      <form-bean name="editExamRoomsForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedRooms" type="java.lang.String[]" size="0"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+      
+      <form-bean name="chooseViewAllClassesSchedulesContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedDegrees" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllDegrees" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>      
+
+      <form-bean name="chooseViewAllRoomsSchedulesContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedPavillions" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllPavillions" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean> 
+
+
+	  <!-- ========== WORKING AREA ========== -->
+
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="createWorkingAreaForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="semesterToCreate" type="java.lang.String"/>
+        <form-property name="yearToCreate" type="java.lang.String"/>
+        <form-property name="semesterToExportDataFrom" type="java.lang.String"/>
+        <form-property name="yearToExportDataFrom" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
+	<!-- ===== NOVA GESTAO EXAMES ===== -->
+	<!-- Dynamic-FormBean for Choose Degree And Year Context-->
+      <form-bean name="showExamsManagementForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+       	<form-property name="executionDegree" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+
+	<!-- Dynamic-FormBean for chooseExamsContext -->
+      <form-bean name="chooseExamsContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="executionDegreeOID" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.String"/>
+      </form-bean>
+      
+      <form-bean name="chooseExamsExecutionPeriodForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="executionPeriod" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+      
+	<!-- Dynamic-FormBean for examNew -->
+      <form-bean name="examNewForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginningHour" type="java.lang.String"/>
+        <form-property name="beginningMinute" type="java.lang.String"/>
+        <form-property name="endHour" type="java.lang.String"/>
+        <form-property name="endMinute" type="java.lang.String"/>
+        <form-property name="season" type="java.lang.String"/>
+        <form-property name="scopes" type="java.lang.String[]"/>
+        <form-property name="executionCourses" type="java.lang.String[]"/>
+        <form-property name="rooms" type="java.lang.String[]"/>        
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionCourseID" type="java.lang.String"/>
+        <form-property name="executionDegreeOID" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.String"/>
+        <form-property name="sortBy" type="java.lang.String"/>
+		<form-property name="exam_oid" type="java.lang.String"/>
+        <form-property name="executionCourseToDissociateID" type="java.lang.String"/>
+      </form-bean>
+
+	<!-- Dynamic-FormBean for room search -->
+      <form-bean name="roomSearchForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginningHour" type="java.lang.String"/>
+        <form-property name="beginningMinute" type="java.lang.String"/>
+        <form-property name="endHour" type="java.lang.String"/>
+        <form-property name="endMinute" type="java.lang.String"/>
+        <form-property name="normal" type="java.lang.String"/>
+        <form-property name="exam" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="availableRoomsId" type="java.lang.String[]"/>        
+        <form-property name="sortParameter" type="java.lang.String"/>
+      </form-bean>
+      
+	<!-- Dynamic-FormBean for room exam search -->
+      <form-bean name="roomExamSearchForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="name" type="java.lang.String"/>
+        <form-property name="building" type="java.lang.String"/>
+        <form-property name="floor" type="java.lang.String"/>
+        <form-property name="type" type="java.lang.String"/>
+        <form-property name="normal" type="java.lang.String"/>
+        <form-property name="exam" type="java.lang.String"/>
+        <form-property name="roomsId" type="java.lang.String[]"/>
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+      </form-bean>
+
+      <form-bean name="examSearchByDegreeAndYearForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+
+      <form-bean name="searchWrittenEvaluationsByDegreeAndYearForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="executionDegreeID" type="java.lang.String"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="evaluationType" type="java.lang.String"/>
+      </form-bean>
+
+      <form-bean name="examSearchByDateForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="day" type="java.lang.String"/>
+        <form-property name="month" type="java.lang.String"/>
+        <form-property name="year" type="java.lang.String"/>
+        <form-property name="beginningHour" type="java.lang.String"/>
+        <form-property name="beginningMinute" type="java.lang.String"/>
+        <form-property name="endHour" type="java.lang.String"/>
+        <form-property name="endMinute" type="java.lang.String"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+      
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>		
+
+   		<form-bean name="chooseDegreesForExecutionCourseMerge"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceDegreeId" type="java.lang.Integer" />       
+				<form-property name="destinationDegreeId" type="java.lang.Integer" />
+				<form-property name="executionPeriodId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="mergeExecutionCoursesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceExecutionCourseId" type="java.lang.Integer" />       
+				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>      
+
+		<form-bean name="buildingForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="buildingID" type="java.lang.String" />
+				<form-property name="campusID" type="java.lang.String" />
+		</form-bean>      
+
+		<form-bean name="publishExamsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="executionPeriodOID" type="java.lang.String" />
+				<form-property name="switchPublishedState" type="java.lang.Boolean" />
+		</form-bean>      
+
+		<form-bean name="listExecutionCourseGroupingsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="executionPeriodID" type="java.lang.String" />
+		</form-bean>						
+				
+    </form-beans>
+
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+			key=""
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"
+			/>
+	</global-exceptions>
+
+    
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+      <forward name="index" path="/index.do" redirect="true"/>
+      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+ 	  <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+ 	  <forward name="redirect" path="/redirect.do" contextRelative="true"/>
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      <!-- page fronting actions -->
+      <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"/>
+      <action path="/index" forward="/autenticacaoSOP.jsp"/>
+      <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
+      <action path="/criarSala" forward="/criarSala.jsp"/>
+      <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
+      <action path="/principalAulas" forward="/principalAulas.jsp"/>
+      <action path="/principalTurnos" forward="/principalTurnos.jsp"/>
+      <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
+      <action path="/createExamComment" forward="/defineExamComment.jsp"/>
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+
+	  <action path="/manageSchedules" forward="/manageSchedules.jsp"/>
+
+      <action path="/principalSalas" 
+              type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
+              parameter="/resourceAllocationManager/principalSalas.jsp"/>
+    
+	  <!-- CONTEXTO -->	   	
+		
+	<action path="/chooseExecutionPeriod"
+			name="pagedIndexForm"
+			input="/chooseExecutionPeriod.do?method=prepare"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
+  		<forward name="choose" path="/chooseExecutionPeriod.jsp"/>
+  		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
+	</action>
+     
+	  <!-- Choose Context for Timetables Management-->
+      <action path="/prepararEscolherContexto"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PrepararEscolherContextoFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/escolherContexto.jsp"/>
+      </action>
+
+      <action attribute="escolherContextoForm"
+              input="/prepararEscolherContexto.do"
+              name="escolherContextoForm"
+              path="/escolherContextoForm"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.EscolherContextoFormAction">
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente"
+                   key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+                   path="/resourceAllocationManager/paginaPrincipal.do"/>
+        <forward name="Sucesso" path="/gestaoHorarios.do"/>
+        <forward name="Licenciatura execucao inexistente" path="/naoExecutado.do"/>
+      </action>
+
+
+     <!-- Gestao de Horarios -->
+     <!-- LISTAGENS -->
+	<action parameter="method"
+			path="/viewAllClassesSchedulesDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllClassesSchedulesDA"			
+			name="chooseViewAllClassesSchedulesContextForm"
+			input="/viewAllClassesSchedulesDA.do?method=choose&amp;page=0" 
+    		validate="true"
+    		scope="request"
+    		>
+    	<forward name="choose" path="/chooseDegreesToViewClassesSchedules.jsp"/>
+    	<forward name="list" path="/viewAllClassesSchedules.jsp"/>
+	</action>     
+     
+	<action parameter="method"
+			path="/viewAllRoomsSchedulesDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllRoomsSchedulesDA"			
+			name="chooseViewAllRoomsSchedulesContextForm"
+			input="/viewAllRoomsSchedulesDA.do?method=choose&amp;page=0" 
+    		validate="true"
+    		scope="request"
+    		>
+    	<forward name="choose" path="/choosePavillionsToViewRoomsSchedules.jsp"/>
+    	<forward name="list" path="/viewAllRoomsSchedules.jsp"/>
+	</action>     
+      
+      <action attribute="searchEmptyRoomsForm"
+              input="/searchEmptyRoomsDA.do?method=prepare&amp;page=0"
+              name="searchEmptyRoomsForm"
+              path="/searchEmptyRoomsDA"
+              scope="request"
+              parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.SearchEmptyRoomsDispatchAction"
+              validate="true"
+              >
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
+         	   key="resources.Action.exceptions.InvalidTimeIntervalActionException"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+               />
+              <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
+              <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
+      </action>
+
+	 <!-- Gestao de Salas -->
+      <action path="/prepararSalaForm"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PrepararCriarSalaFormAction"
+              scope="request"
+	      	  parameter="method">		      
+          <forward name="PesquisarSalas" path="/pesquisarSalas.jsp"/>
+   	  </action>
+   	  
+      <action attribute="roomForm"
+              input="/pesquisarSalas.jsp"
+              name="roomForm"
+              path="/pesquisarSala"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.SelectRoomsFormAction"
+              validate="false">
+        <forward name="Sucess" path="/manipularSalas.jsp" />
+      </action>
+
+      <action attribute="indexForm"
+      		  input="/manipularSalas.jsp"
+              name="indexForm"
+              path="/manipularSalas"
+              scope="session"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManipularSalasAction">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="resources.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+               />      
+        
+		<forward name="VerSala" path="/viewRoom.do" />
+        <forward name="EditarSala" path="/editarSala.jsp" />
+      </action>
+
+
+      <action attribute="criarSalaForm"
+      		  input="/editarSala.jsp"
+	          path="/editarSala"
+	          name="roomForm"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.EditarSalaAction">
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+         		    key="resources.Action.exceptions.ExistingActionException"
+                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                    />
+        <forward name="Sucesso" path="/pesquisarSalas.jsp" />
+      </action>
+
+      <action attribute="pesquisarSalaForm"
+              input="/pesquisarSala.jsp"
+              name="pesquisarSalaForm"
+              path="/pesquisarSalas"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
+        <forward name="Sucesso" path="/manipularSalas.jsp" />
+        <forward name="Voltar" path="/principalSalas.do"/>
+      </action>
+      
+      <action path="/prepareViewRoomOcupation"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectSemesterAction"
+              >
+          <forward name="Sucess" path="/chooseSemester.jsp"/>
+      </action>
+
+      <action attribute="indexForm"
+              input="/manipularSalas.jsp"
+              name="indexForm"
+      		  path="/viewRoom"
+              scope="session"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewRoomFormAction">
+          <forward name="Sucess" path="/sopViewRoom.jsp"/>
+      </action>
+<!-- Angela -->
+	<!-- executionCourseSite -->
+	<action 
+		path="/viewSite"	
+		parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.SiteViewerDispatchAction">  
+
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
+			       key="resources.Action.exceptions.NonExistingActionException"
+			       handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" /> 
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
+	               key="resources.Action.exceptions.FenixActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>  
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
+			       key="resources.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
+			       handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" /> 
+        <forward name="erro" path="/executionCourseNotFound.jsp"/>
+     	<forward name="sucess" path="/viewExecutionCourse.jsp"/>  
+      
+     	
+     	 
+   	</action>
+      
+     <!-- TURMAS -->      
+      <action parameter="method"
+		      path="/ClassesManagerDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ClassesManagerDispatchAction"
+		>
+        <forward name="listClasses" path="/listClasses.jsp"/>
+      </action>
+      
+     <action parameter="method"
+     		 input="/viewTimeTable.jsp"
+     		 name="classForm"
+		     path="/ClassManagerDA"
+             type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ClassManagerDispatchAction"
+             validate="true"
+             scope="request">
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+          			 key="resources.Action.exceptions.ExistingActionException"
+                     handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+           />
+             <forward name="viewTimeTable" path="/viewTimeTable.jsp"/>
+	         <forward name="listClasses" path="ClassesManagerDA.do?method=listClasses"/>             
+      </action>
+
+	  <!-- Choose Execution Course Form for lessons -->
+      <action name="chooseExecutionCourseForm"
+		      input="/escolherDisciplinaExecucao.jsp"
+              path="/escolherDisciplinaExecucaoForm"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExecutionCourseAction"
+              validate="true">
+        <forward name="forwardChoose" path="/escolherAulas.do"/>
+        <forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>        
+      </action>
+
+	  <!-- Choose Execution Course Form for shifts in timetables -->
+      <action name="chooseExecutionCourseForm"
+      		  input="/escolherDisciplinaExecucao.jsp"
+              path="/chooseExecutionCourse"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExecutionCourseAction"
+              validate="true"
+              >
+        <forward name="forwardChoose" path="/ClassShiftManagerDA.do?method=listAvailableShifts"/>
+        <forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>        
+      </action>
+      
+	  <!-- Choose Execution Course Form for Shifts -->   
+      <action input="/escolherDisciplinaExecucao.jsp"
+              name="chooseExecutionCourseForm"
+              path="/escolherDisciplinaETipoForm"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExecutionCourseAction"
+              validate="true"
+              >
+      	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
+      </action>
+     
+
+	<!-- ========== EXAMS ========== -->
+	<action path="/chooseDayAndShiftForm"
+			input="/chooseDayAndShiftForm.do?method=prepare&amp;nextPage=viewExams&amp;page=0"
+			name="chooseDayAndShiftForm"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+         <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
+         <forward name="viewExams" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="viewEmptyRooms" path="/viewEmptyRoomsInDayAndShift.do"/>
+	</action>
+
+	<action path="/viewExamsDayAndShiftForm"		
+			input="/viewExamsDayAndShift.jsp"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction"
+            parameter="method"
+            name="examForm"
+            validate="false"
+            >
+         <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
+         <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="Edit Exam" path="/editExam.jsp"/>
+         <forward name="Add Execution Course" path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam"/>
+	</action>
+	
+    <action	input="/viewEmptyRoomsInDayAndShift.jsp"
+      		path="/viewEmptyRoomsInDayAndShift"
+			type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewEmptyRoomsInDayAndShiftAction"
+        	>
+		<forward name="View" path="/viewEmptyRoomsInDayAndShift.jsp"/>
+      </action>
+	
+	
+    <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
+            name="chooseContextForm"
+            parameter="method"
+            path="/chooseExamsContextDA"
+            scope="request"
+            validate="true"
+            type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction"
+            >
+        <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
+        <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
+        <forward name="listByDegreeAndAcademicYear" path="/viewExamsByDegreeAndCurricularYear.do"/>
+        <forward name="addExecutionCourseToExam" path="/chooseExecutionCourseToAddToExam.do"/>
+    </action>
+
+	<!-- Choose Execution Course Form for exam -->
+    <action path="/chooseExecutionCourseForm"
+    		name="chooseExecutionCourseForm"
+			input="/chooseExecutionCourse.jsp"
+            scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExecutionCourseAction"
+            validate="false">
+        <forward name="forwardChoose" path="/createExam.do?method=prepare&amp;page=0"/>
+        <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
+    </action>
+
+    <action path="/chooseExecutionCourseToAddToExam"
+    		name="chooseExecutionCourseForm"
+			input="/chooseExecutionCourse.jsp"
+            scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExecutionCourseAction"
+            validate="false">
+        <forward name="forwardChoose" path="/addExecutionCourseToExam.do"/>
+        <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
+    </action>
+
+    <action input="/chooseExamsMapContextDA.do?method=prepare&amp;page=0"
+            name="chooseExamsMapContextForm"
+            parameter="method"
+            path="/chooseExamsMapContextDA"
+            scope="request"
+            validate="true"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamsMapContextDA"
+            >
+        <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
+        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
+    </action>
+
+    <action path="/viewExamsMap"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsMapDA"
+            parameter="method"
+            name="examForm"
+            validate="false"
+            >
+		<forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="createExam" path="/createExam.do?method=prepare&amp;page=0&amp;nextPage=viewExamsMap"/>
+        <forward name="editExam" path="/editExam.jsp"/>
+    </action>
+
+	<action path="/defineExamComment"
+			name="examCommentForm"
+			input="/defineExamComment.jsp"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.DefineExamCommentActionDA"
+    		parameter="method"
+    		validate="false"
+    		scope="request"
+    		>
+  		<forward name="defineExamComment" path="/defineExamComment.jsp"/>
+        <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
+	</action>
+
+	<action path="/mainExams"
+			name="pagedIndexForm"
+			input="/mainExams.do?method=prepare"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/mainExams.jsp"/>
+  		<forward name="choose" path="/mainExams.do?method=prepare"/>
+	</action>
+
+    <action parameter="method"
+            path="/editExamRooms"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.EditExamRoomsDA"
+			name="editExamRoomsForm"
+			input="/editExamRooms.do?method=prepare"
+			validate="false"
+			scope="request"
+            >
+        <forward name="ViewSelectRoomsForm" path="/selectRoomsForExam.jsp"/>
+        <forward name="ViewEditExamForm" path="/editExam.jsp"/>
+    </action>
+
+      <action path="/consultRoomsForExams"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ConsultRoomsForExamDA"
+              scope="request"
+		      parameter="method">
+          <forward name="Search Rooms" path="/searchRoomsForExams.jsp"/>
+      </action>
+
+      <action attribute="roomForm"
+              input="/searchRoomsForExams.jsp"
+              name="roomForm"
+              path="/chooseRoomToViewForExams"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.SelectRoomsFormAction"
+              validate="false">
+        <forward name="Sucess" path="/listRoomsForExams.jsp" />
+      </action>
+
+      <action attribute="indexForm"
+      		  input="/listRoomsForExams.jsp"
+              name="indexForm"
+              path="/selectRoomToViewForExams"
+              scope="request"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManipularSalasAction">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="resources.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+               />
+		<forward name="VerSala" path="/viewRoomForExams.do" />
+      </action>
+
+      <action path="/consultAllRoomsForExams"
+              type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllRoomsForExamsFormAction"
+              >
+          <forward name="Sucess" path="/viewAllRoomsForExams.jsp"/>
+      </action>
+
+	<!-- ========== SCHEDULE MANAGMENT ========== -->
+	<action path="/chooseContext"
+			input="/chooseContext.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseContextDA"
+            name="chooseScheduleContextForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowChooseForm" path="/chooseScheduleContext.jsp"/>
+        <forward name="ManageSchedules" path="/manageSchedules.do"/>
+	</action>
+
+	<action path="/manageShifts"
+			input="/manageShifts.do?method=listShifts&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageShiftsDA"
+            name="createShiftForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="resources.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="ShowShiftList" path="/manageShifts.jsp"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/manageShift"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageShiftDA"
+            name="createShiftForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="resources.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="EditShift" path="/manageShift.jsp"/>
+    	<forward name="ViewStudentsEnroled" path="/viewStudentsEnroledInShift.jsp"/>
+	</action>
+
+	<action path="/manageShiftStudents"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageShiftDA"
+            name="changShiftOfStudents"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift$UnableToTransferStudentsException"
+				   key="message.unable.to.transfer.students"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="Continue" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/manageLesson"
+			input="/manageLesson.do?method=findInput&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageLessonDA"
+            name="manageLessonForm"
+            parameter="method"
+            scope="request"
+            validate="true">
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="resources.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
+				   key="resources.Action.exceptions.InterceptingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
+				   key="resources.Action.exceptions.InvalidTimeIntervalActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="ShowLessonForm" path="/manageLesson.jsp"/>
+    	<forward name="ShowChooseRoomForm" path="/chooseRoomForLesson.jsp"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+    	<forward name="LessonDeleted" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/manageClasses"
+			input="/manageClasses.do?method=listClasses&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageClassesDA"
+            name="classForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="resources.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="ShowClassList" path="/manageClasses.jsp"/>
+	</action>
+
+	<action path="/manageClass"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageClassDA"
+            name="classForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+				   key="resources.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="EditClass" path="/manageClass.jsp"/>
+    	<forward name="AddShifts" path="/addShifts.jsp"/>
+    	<forward name="ViewSchedule" path="/viewClassSchedule.jsp"/>
+	</action>
+
+	<action path="/addShifts"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.AddShiftsDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/addClasses"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.AddClassesDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ListClasses" path="/addClasses.jsp"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/deleteShifts"
+			input="/manageShifts.do?method=listShifts&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageShiftsDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowShiftList" path="/manageShifts.do?method=listShifts&amp;page=0"/>
+	</action>
+
+	<action path="/manageShiftMultipleItems"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageShiftDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/deleteClasses"
+			input="/manageClasses.do?method=listClasses&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageClassesDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowShiftList" path="/manageClasses.do?method=listClasses&amp;page=0"/>
+	</action>
+
+	<action path="/removeShifts"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageClassDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/manageExecutionCourses"
+			input="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageExecutionCoursesDA"
+            name="searchExecutionCourse"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowSearchForm" path="/manageExecutionCourses.jsp"/>
+    	<forward name="showOccupancy" path="/showOccupancyLevels.jsp"/>
+    	<forward name="showLoads" path="/showLoads.jsp"/>
+    	<forward name="ManageExecutionCourse" path="/manageExecutionCourse.do?method=prepare&amp;page=0"/>
+    	
+	</action>
+
+	<action path="/manageExecutionCourse"
+			input="/manageExecutionCourse.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageExecutionCourseDA"
+            name="editExecutionCourseForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ManageExecutionCourse" path="/manageExecutionCourse.jsp"/>
+	</action>
+
+      <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
+	  <action path="/siteViewer"
+				input="/siteViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
+			<forward name="roomViewer" path="/sopViewRoom.jsp"/>
+		</action>
+		
+		
+		<!-- ========== NOVA INTERFACE DE GESTAO DE EXAMES ================================ -->
+	<action path="/mainExamsNew"
+			name="pagedIndexForm"
+			input="/mainExamsNew.do?method=prepare"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="df.page.mainExams"/>
+  		<forward name="choose" path="/mainExamsNew.do?method=prepare"/>
+	</action>
+
+	<action path="/publishExams"
+			name="publishExamsForm"
+			input="/mainExamsNew.do?method=prepare&amp;page=0"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PublishExams"
+    		parameter="method"
+    		validate="false"
+    		scope="request"
+    		>
+  		<forward name="switch" path="/mainExamsNew.do?method=prepare&amp;page=0"/>
+	</action>
+				
+	<action input="/chooseDegreeAndYearContext.do?method=prepare&amp;page=0"
+            parameter="method"
+            path="/chooseDegreeAndYearContext"
+            scope="request"
+            validate="true"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ChooseDegreeAndYearContextDA"
+            name="showExamsManagementForm"
+            >
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
+				   key="resources.Action.exceptions.FenixActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+        <forward name="chooseDegreeAndYearContext" path="df.page.chooseDegreeAndYear"/>
+        <forward name="viewExamsMap" path="/showExamsManagement.do?method=view"/>
+   </action>
+		
+	<action path="/showExamsManagement"
+			name="examNewForm"
+			input="/chooseDegreeAndYearContext.do?method=prepare"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ShowExamsManagement"
+            parameter="method"
+            scope="request"
+            validate="false"
+            >
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            key="error.exams.period.undefined" 
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
+		<!--<forward name="viewExamsMap" path="viewExamsMapOld"/>-->
+        <forward name="viewExamsMap" path="df.page.viewExamsMap"/>
+        <forward name="createExamByCourse" path="/createExamNew.do?method=prepare&amp;page=0&amp;nextPage=showExamsManagement"/>
+        <forward name="createExamByDay" path="/chooseExecutionCourseForExams.do?method=prepare&amp;page=0"/>
+        <forward name="editExam" path="/createExamNew.do?method=prepareForEdit&amp;page=0"/>
+        <forward name="deleteExam" path="/showExamsManagement.do?method=view&amp;page=0"/>
+    </action>
+ 
+ 	<action path="/chooseExamsContext"
+			input="/chooseExamsContext.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ChooseExamsContextDA"
+            name="chooseExamsContextForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+	     <forward name="ManageExams" path="/showExamsManagement.do?method=view"/> 
+	</action>
+ 
+	<action path="/chooseExamsPeriodContext"
+			input="/chooseExamsPeriodContext.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ChooseExamsExecutionPeriodContextDA"
+            name="chooseExamsExecutionPeriodForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+	    <forward name="ManageExams" path="/mainExamsNew.do?method=prepare&amp;page=0"/>	    
+	</action>
+	
+	<action path="/createExamNew"
+			input="/createExamNew.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.CreateExamDA"
+            name="examNewForm"
+            attribute="examNewForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="showCreateForm" path="df.page.exam"/>
+    	<forward name="Sucess" path="/showExamsManagement.do?method=view&amp;page=0"/>
+    	<forward name="associateExecutionCourse" path="/associateExecutionCourseToExam.do?method=prepare&amp;page=0"/>
+   		<forward name="associateRoom" path="/associateRoomToExam.do?method=prepare&amp;page=0"/>
+   		<forward name="dissociateExecutionCourse" path="/createExamNew.do?method=prepareAfterAssociateExecutionCourse&amp;page=0"/>
+   		<forward name="sucessSearchByDate" path="/ExamSearchByDate.do?method=prepareAfterEdit&amp;page=0"/>
+   	</action>
+   	
+	<action path="/chooseExecutionCourseForExams"
+			input="/chooseExecutionCourseForExams.do?page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ChooseExecutionCourseAction"
+            name="examNewForm"
+            parameter="method"
+            scope="request"
+            validate="false"
+            >
+        <forward name="forwardChoose" path="/createExamNew.do?method=prepare&amp;page=0"/>
+        <forward name="showForm" path="df.page.chooseExecutionCourse"/>        
+   	</action>
+	
+    <action path="/associateExecutionCourseToExam"
+			input="/associateExecutionCourseToExam.do?page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.AssociateExecutionCourseToExamAction"
+            name="examNewForm"
+            attribute="examNewForm"
+            parameter="method"
+            scope="request"
+            validate="false"
+            >
+        <forward name="forwardChoose" path="/createExamNew.do?method=prepareAfterAssociateExecutionCourse&amp;page=0"/>
+        <forward name="showForm" path="df.page.associateExecutionCourseToExam"/>        
+   	</action>
+
+	<action path="/defineComment"
+			input="/defineComment.do?page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.DefineCommentAction"
+            name="examCommentForm"
+            parameter="method"
+            scope="request"
+            validate="false"
+            >
+
+  		<forward name="defineExamComment" path="df.page.defineComment"/>
+        <forward name="showExamsMap" path="/showExamsManagement.do?method=view"/>
+	</action>
+		
+	<action path="/associateRoomToExam"
+			input="/associateRoomToExam.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.AssociateRoomToExamDA"
+            name="examNewForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="AssociateRoom" path="df.page.associateRoomToExam"/>
+    	<forward name="forwardChoose" path="/createExamNew.do?method=prepareAfterAssociateRoom&amp;page=0"/>
+   	</action>
+   	
+	<action path="/roomSearch"
+			input="/roomSearch.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.RoomSearchDA"
+            name="roomSearchForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="roomSearch" path="df.page.roomSearch"/>
+    	<forward name="showRooms" path="df.page.showRooms"/>
+   	</action>    
+   	
+	<action path="/roomExamSearch"
+			input="/roomExamSearch.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.RoomExamSearchDA"
+            name="roomExamSearchForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="roomSearch" path="df.page.selectRooms"/>
+    	<forward name="roomChoose" path="df.page.selectRoom"/>
+    	<forward name="showExamsMap" path="df.page.examSearchByRoom"/>
+   	</action>    
+
+	<action path="/ExamSearchByDegreeAndYear"
+			input="/ExamSearchByDegreeAndYear.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ExamSearchByDegreeAndYear"
+            name="examSearchByDegreeAndYearForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            key="error.exams.period.undefined" 
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
+    	<forward name="show" path="df.page.selectDegreeAndYear"/>
+    	<forward name="showExamsMap" path="df.page.degreeYearExamsMap"/>
+   	</action>  
+
+	<action path="/searchWrittenEvaluationsByDegreeAndYear"
+			input="/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.WrittenEvaluationsSearchByDegreeAndYear"
+            name="searchWrittenEvaluationsByDegreeAndYearForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="showForm" path="df.page.selectDegreeAndYearForWrittenEvaluationsSearch"/>
+    	<forward name="showMap" path="df.page.degreeYearWrittenEvaluationsMap"/>
+   	</action>  
+   	  
+	<action path="/ExamSearchByDate"
+			input="/ExamSearchByDate.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.ExamSearchByDate"
+            name="examSearchByDateForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="choose" path="df.page.examSearchByDate"/>
+    	<forward name="show" path="df.page.showExamsByDate"/>
+   	</action>    
+
+	<action path="/searchWrittenEvaluationsByDate"
+			input="/searchWrittenEvaluationsByDate.do?method=prepare&amp;page=0"
+            type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.writtenEvaluations.SearchWrittenEvaluationsByDate"
+            name="examSearchByDateForm"
+            attribute="examSearchByDateForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="show" path="df.page.showWrittenEvaluationsByDate"/>
+   	</action>    
+ 
+	<!-- ==================== View Curricular Course Historic ================== -->
+       	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		attribute="executionYearDegreeCurricularPlanForm"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+       		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+			<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+       	</action>
+
+		<action path="/showCurriculumHistoric"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+       		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
+ 
+		<!-- ========== Merge Execution Courses ========== -->	
+		<action	name="chooseDegreesForExecutionCourseMerge"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/chooseDegreesForExecutionCourseMerge"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<forward name="chooseDegreesAndExecutionPeriod" path="df.page.chooseDegreesForExecutionCourseMerge"/>
+			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
+		</action>	
+		<action	name="mergeExecutionCoursesForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/mergeExecutionCoursesForm"
+				parameter="method"
+				scope="request"
+				validate="false"
+				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
+				   key="message.merge.execution.courses.sourceIsSameAsDestination"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+                   />
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"
+         	       key="error.duplicate.shift.names"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
+		</action>	
+
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ListExecutionCoursesDA"
+				path="/listExecutionCourseGroupings"
+				name="listExecutionCourseGroupingsForm"
+				input="/listExecutionCourseGroupings.do?method=prepare"
+				parameter="method"
+				scope="request">
+			<forward name="show-choose-execution-period-page" path="/listExecutionCourseGroupings.jsp"/>
+		</action>
+				
+		<!-- =================== Rooms Punctual Scheduling  =================== -->
+		<action path="/roomsPunctualScheduling"	
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RoomsPunctualSchedulingDA"
+	    		parameter="method" 	    		
+	    		scope="request">    		
+	    		<forward name="prepareRoomsPunctualScheduling" path="prepare-rooms-punctual-scheduling"/>    		
+	    		<forward name="prepareCreateNewRoomPunctualScheduling" path="prepare-create-room-punctual-scheduling"/>    		    		
+	    		<forward name="prepareFinalizeCreation" path="prepare-finalize-creation-of-rooms-punctual-scheduling"/>    		
+	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>    
+	    		<forward name="seeHistory" path="see-rooms-punctual-scheduling-history"/>    	    					    		    			    	
+	   	</action> 		
+		
+		<action path="/roomsReserveManagement"	
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RoomsReservesManagementDA"
+	    		parameter="method" 	    		
+	    		scope="request">    		
+	    		<forward name="seeRoomsReserveRequests" path="see-rooms-reserve-requests"/>    		
+	    		<forward name="seeSpecifiedRoomsReserveRequest" path="see-specified-rooms-reserve-request"/>    			    			
+	    		<forward name="prepareCreateNewRoomPunctualScheduling" path="prepare-create-room-punctual-scheduling"/>    		    		    			    		    			    		
+	    		<forward name="prepareFinalizeCreation" path="prepare-finalize-creation-of-rooms-punctual-scheduling"/>	
+	    		<forward name="prepareViewRoomsPunctualScheduling" path="prepare-view-rooms-punctual-scheduling"/>		    		
+	   	</action> 	
+					
+		<!-- =================== Vehicle Management  =================== -->		
+		<action path="/vehicleManagement"	
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.VehicleManagementDA"
+	    		parameter="method" 	    		
+	    		scope="request">    		
+	    		<forward name="prepareVehicleManagement" path="prepare-vehicle-management"/>
+	    		<forward name="prepareCreate" path="prepare-create-vehicle-allocation"/>
+	    		<forward name="seeVehicleAllocationHistory" path="see-vehicle-allocation-history"/>
+	    		<forward name="seeVehicleAllocation" path="see-vehicle-allocation"/>	    			    			    		    			    				  
+	   	</action>
+					
+    </action-mappings>     
+
+    
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="resources.ResourceAllocationManagerResources" null="false"/>
+    <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>  
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+		
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-resourceAllocationManager.xml"/>
+    </plug-in>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/resourceAllocationManager/tiles-resourceAllocationManager-definitions.xml,/WEB-INF/tiles/resourceAllocationManager/tiles-resourceAllocationManager-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>
+</struts-config>

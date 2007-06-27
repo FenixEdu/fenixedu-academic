@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

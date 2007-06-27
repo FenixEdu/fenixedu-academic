@@ -216,7 +216,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final CurricularYear curricularYear = getCurricularYear();
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            if (curricularYear == null || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {
+            if (curricularYear == null || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {                
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                     if (executionCourse.getExecutionPeriod() == executionPeriod) {
                         for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
@@ -284,7 +284,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         stringBuilder.append(hourFormat.format(writtenEvaluation.getBeginningDate()));
         stringBuilder.append(")");
         return stringBuilder.toString();
-    }     
+    }
 
     public String getApplicationContext() {
         final String appContext = PropertiesManager.getProperty("app.context");

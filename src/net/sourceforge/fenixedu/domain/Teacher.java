@@ -1178,7 +1178,6 @@ public class Teacher extends Teacher_Base {
 
     public boolean hasLessons(DateTime begin, DateTime end, ExecutionYear executionYear) {
 	final Interval interval = new Interval(begin, end);
-
 	for (Professorship professorship : getProfessorships(executionYear)) {
 	    List<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
 	    for (Shift shift : associatedShifts) {

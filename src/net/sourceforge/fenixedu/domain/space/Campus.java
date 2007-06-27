@@ -1,33 +1,27 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
-import java.text.Collator;
-import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public class Campus extends Campus_Base {
-
-    public final static Comparator<Campus> CAMPUS_COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();
-    static {
-	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) CAMPUS_COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("idInternal"));
-    }
-
-    protected Campus() {
-	super();
-    }
-
+    
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
-	this();	
+	super();	
 	new CampusInformation(this, name, begin, end, blueprintNumber);
+    }  
+    
+    @Override
+    public void setSuroundingSpace(Space suroundingSpace) {
+	throw new DomainException("error.Space.invalid.suroundingSpace");
     }
     
     @Override
@@ -62,16 +56,16 @@ public class Campus extends Campus_Base {
 	return getSpaceInformation().getName();
     }
     
-    public static Campus readOldestCampus() {
-	Campus result = null;	
-	for (final Campus campus : Space.getAllCampus()) {
-	    if (result == null || result.getCreatedOn().isAfter(campus.getCreatedOn())) {
-		result = campus;
+    public static Campus readActiveCampusByName(String campusName) {
+	for (Resource space : RootDomainObject.getInstance().getResources()) {
+	    if (space.isCampus() && ((Campus)space).isActive() 
+		    && ((Campus)space).getSpaceInformation().getName().equals(campusName)) {
+		return (Campus) space;
 	    }
-	}	
-	return result;
+	}
+	return null;
     }
-    
+      
     public static Campus readCampusByName(String name) {
 	for (Campus campus : Space.getAllCampus()) {
 	    if(campus.getName().equalsIgnoreCase(name)) {
@@ -79,9 +73,8 @@ public class Campus extends Campus_Base {
 	    }
 	}
 	return null;
-    }
-    
-    
+    } 
+      
     @Override
     public boolean isCampus() {
 	return true;

@@ -18,15 +18,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Floor;
-import net.sourceforge.fenixedu.domain.space.OldBuilding;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
@@ -57,22 +62,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-
-	// Filter OldBuildings and OldRooms. These two classes will soon be
-	// removed from the source code.
-	// When this happens, spaces.addAll(rootDomainObject.getSpacesSet())
-	// will replace the following snip.
-	// ---> Start of snip <---
-	for (final Resource resource : rootDomainObject.getResources()) {
-	    if(resource.isSpace()) {
-		Space space = (Space) resource;
-		if (!(space instanceof OldBuilding) && !(space instanceof OldRoom) && !space.hasSuroundingSpace()) {
-		    spaces.add(space);
-	    	}
+	for (final Resource space : rootDomainObject.getResources()) {
+	    if (space.isSpace() && !((Space)space).hasSuroundingSpace()) {
+		spaces.add((Space) space);
 	    }
 	}
-	// ---> End of snip <---
-
 	request.setAttribute("spaces", spaces);
 	return mapping.findForward("ShowSpaces");
     }
@@ -94,9 +88,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request,
 	    final SpaceInformation spaceInformation) throws IOException {
-
-	final Space space = spaceInformation.getSpace();	
-	return returnToManageSpacePage(mapping, request, space, spaceInformation);
+	
+	return returnToManageSpacePage(mapping, request, spaceInformation);
     }
 
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -208,7 +201,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	request.setAttribute("selectedSpaceInformation", spaceInformation);
 	return mapping.findForward("ManageSpaceAccessGroups");
     }
-
+    
     public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
@@ -220,9 +213,23 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	AccessGroupPersonBean bean = (AccessGroupPersonBean) viewState.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
 
-	final Object[] args = { space, (bean != null) ? bean.getAccessGroupType() : null,
-		(bean != null) ? bean.getPerson() : null, true,
-		(bean != null) ? bean.getMaintainElements() : false };
+	String groupExpression = null;
+	Person person = (bean != null) ? bean.getPerson() : null;
+	PersistentGroupMembers persistentGroupMembers = (bean != null) ? bean.getPersistentGroupMembers() : null;	
+	RoleType roleType = (bean != null) ? bean.getRoleType() : null; 
+		
+	if(person != null) {
+	    groupExpression = new PersonGroup(person).getExpression();
+	} else if(persistentGroupMembers != null) {
+	    groupExpression = new PersistentGroup(persistentGroupMembers).getExpression();
+	} else if(roleType != null) {
+	    groupExpression = new RoleGroup(roleType).getExpression();
+	}
+		
+	final Object[] args = {
+		space, (bean != null) ? bean.getAccessGroupType() : null, true,		
+		(bean != null) ? bean.getMaintainElements() : false, groupExpression };
+	
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (DomainException e) {
@@ -237,11 +244,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final Space space = spaceInformation.getSpace();
-	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request
-		.getParameter("spaceAccessGroupType"));
-	final Person person = getPersonFromParameter(request);
+	final SpaceAccessGroupType groupType = SpaceAccessGroupType.valueOf(request.getParameter("spaceAccessGroupType"));
+	final String groupExpression = getGroupExpressionFromParameter(request);
 
-	final Object[] args = { space, groupType, person, false, false };
+	final Object[] args = { space, groupType, false, false, groupExpression };
 	try {
 	    executeService(request, "SpaceAccessGroupsManagement", args);
 	} catch (DomainException e) {
@@ -301,17 +307,69 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	
 	executeService("MoveSpace", new Object[]{bean});    	
 	Space space = bean.getSpace();
-	SpaceInformation spaceInformation = space.getSpaceInformation();	
-	return returnToManageSpacePage(mapping, request, space, spaceInformation);	
+	SpaceInformation spaceInformation = space.getSpaceInformation();
+	
+	return returnToManageSpacePage(mapping, request, spaceInformation);	
     }
-   
+        
+    public ActionForward prepareMergeRoom(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+        
+	SpaceInformation spaceInformationFromParameter = getSpaceInformationFromParameter(request);
+	Space space = spaceInformationFromParameter.getSpace();
+	request.setAttribute("moveSpaceBean", new MoveSpaceBean(space));
+	return mapping.findForward("PrepareMergeSpace");
+    }
+    
+    public ActionForward findDestinationRoomForProcessMerge(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+        
+	final IViewState viewState = RenderUtils.getViewState("findMergeDestinationRoomBean");
+	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
+	
+	String roomName = bean.getSpaceName();
+	List<Space> foundSpaces = AllocatableSpace.readAllAllocatableSpacesByName(roomName);
+	request.setAttribute("spaces", foundSpaces);
+	request.setAttribute("moveSpaceBean", bean);
+	
+	return mapping.findForward("PrepareMergeSpace");
+    }
+    
+    public ActionForward compareDestinationRoomWithFromRoom(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+        	
+	AllocatableSpace fromRoom = getFromRoomFromParameter(request);
+	AllocatableSpace destinationRoom = getDestinationRoomFromParameter(request);
+	
+	MoveSpaceBean bean = new MoveSpaceBean(fromRoom, destinationRoom);
+	request.setAttribute("spaceBean", bean);
+	
+	return mapping.findForward("CompareRoomsBeforeMerge");
+    } 
+    
+    public ActionForward mergeRooms(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+        
+	final IViewState viewState = RenderUtils.getViewState("mergeRoomsBean");
+	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
+	
+	Space fromRoom = bean.getSpace();
+	Space destinationRoom = bean.getSelectedParentSpace();
+	
+	executeService("MergeRooms", new Object[]{fromRoom, destinationRoom});    	
+	
+	return returnToManageSpacePage(mapping, request, destinationRoom.getSpaceInformation());
+    } 
+       
     // Private Methods
     
-    private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request, Space space, SpaceInformation spaceInformation) throws IOException {
+    private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request, SpaceInformation spaceInformation) throws IOException {
 	
 	MoveSpaceBean spaceBean = (MoveSpaceBean) getRenderedObject("subSpacesStateBeanID");
 	spaceBean = (spaceBean == null) ? new MoveSpaceBean(spaceInformation.getSpace()) : spaceBean;
-		
+	
+	Space space = spaceInformation.getSpace();
+	
 	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);	
 	spaces.addAll(space.getContainedSpacesByState(spaceBean.getSpaceState()));
 	setBlueprintTextRectangles(request, space);
@@ -365,9 +423,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
                 row.setCell(room.getSpaceInformation().getAgeQuality().toString());
                 
                 StringBuilder builder = new StringBuilder();
-                for (SpaceResponsibility responsibility : room.getSpaceResponsibilitySet()) {
-                    Unit unit = responsibility.getUnit();
-                    builder.append(unit.getPresentationName()).append("; ");
+                for (ResourceResponsibility responsibility : room.getResourceResponsibility()) {
+                    if(responsibility.isSpaceResponsibility()) {
+                	Unit unit = ((SpaceResponsibility)responsibility).getUnit();
+                	builder.append(unit.getPresentationName()).append("; ");
+                    }
 		}                
                 row.setCell(builder.toString());
                 
@@ -474,11 +534,10 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
-    private Person getPersonFromParameter(final HttpServletRequest request) {
-	final String personIDString = request.getParameterMap().containsKey("personID") ? request
-		.getParameter("personID") : (String) request.getAttribute("personID");
-	final Integer personID = personIDString != null ? Integer.valueOf(personIDString) : null;
-	return (Person) rootDomainObject.readPartyByOID(personID);
+    private String getGroupExpressionFromParameter(final HttpServletRequest request) {
+	final String groupExpression = request.getParameterMap().containsKey("expression") ? request
+		.getParameter("expression") : (String) request.getAttribute("expression");
+	return groupExpression;
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {
@@ -517,5 +576,17 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	final String spaceIDString = request.getParameter("spaceID");
 	final Integer spaceID = Integer.valueOf(spaceIDString);
 	return (Space) rootDomainObject.readResourceByOID(spaceID);
+    }
+    
+    private AllocatableSpace getDestinationRoomFromParameter(final HttpServletRequest request) {
+	final String spaceIDString = request.getParameter("destinationRoomID");
+	final Integer spaceID = Integer.valueOf(spaceIDString);
+	return (AllocatableSpace) rootDomainObject.readResourceByOID(spaceID);
+    }
+    
+    private AllocatableSpace getFromRoomFromParameter(final HttpServletRequest request) {
+	final String spaceIDString = request.getParameter("fromRoomID");
+	final Integer spaceID = Integer.valueOf(spaceIDString);
+	return (AllocatableSpace) rootDomainObject.readResourceByOID(spaceID);
     }
 }

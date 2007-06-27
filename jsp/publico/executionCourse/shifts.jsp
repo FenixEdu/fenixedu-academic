@@ -87,7 +87,7 @@
 					</dt:format>
 				</td>
 				<td>
-				    <logic:notEmpty name="lesson" property="roomOccupation.room">
+				    <logic:notEmpty name="lesson" property="roomOccupation">
 						<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="roomOccupation.room.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/>'>
 							<bean:write name="lesson" property="roomOccupation.room.name"/>
 						</a>

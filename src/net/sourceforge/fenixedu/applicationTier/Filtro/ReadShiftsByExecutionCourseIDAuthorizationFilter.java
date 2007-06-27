@@ -55,7 +55,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
         List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.TIME_TABLE_MANAGER);
+        roles.add(RoleType.RESOURCE_ALLOCATION_MANAGER);
         roles.add(RoleType.COORDINATOR);
         return roles;
     }
@@ -66,7 +66,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-        if (id.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
+        if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 

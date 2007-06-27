@@ -42,6 +42,7 @@
 		<html:option bundle="SPACE_RESOURCES" key="select.item.building" value="net.sourceforge.fenixedu.domain.space.Building"/>
 		<html:option bundle="SPACE_RESOURCES" key="select.item.floor" value="net.sourceforge.fenixedu.domain.space.Floor"/>
 		<html:option bundle="SPACE_RESOURCES" key="select.item.room" value="net.sourceforge.fenixedu.domain.space.Room"/>
+		<html:option bundle="SPACE_RESOURCES" key="select.item.roomSubdivision" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision"/>
 	</html:select>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
@@ -117,4 +118,19 @@
 	<%
 		}
 	%>	
+</logic:equal>
+
+<logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">
+    <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>	
+	<fr:create type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryCreator"
+			schema="RoomSubdivisionFactoryCreator"
+			action="/manageSpaces.do?method=executeFactoryMethod">
+		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+		<fr:destination name="invalid" path="<%= invalidLink %>"/>		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:create>
 </logic:equal>

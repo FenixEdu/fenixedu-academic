@@ -63,5 +63,11 @@
     </definition>  
     <definition name="prepare-move-space" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/moveSpace.jsp"></put>
-    </definition>                            	    
+    </definition>      
+    <definition name="prepare-merge-space" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/mergeRoom.jsp"></put>
+    </definition>                            	        
+    <definition name="compare-rooms-before-merge" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/compareRoomsBeforeMerge.jsp"></put>
+    </definition>                            	        
 </tiles-definitions>

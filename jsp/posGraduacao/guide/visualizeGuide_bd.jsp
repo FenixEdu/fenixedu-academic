@@ -7,7 +7,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.lang.Integer" %>
 
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>

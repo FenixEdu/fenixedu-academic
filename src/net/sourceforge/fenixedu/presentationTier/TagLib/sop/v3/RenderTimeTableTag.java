@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
