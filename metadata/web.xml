@@ -133,6 +133,14 @@
         	<param-name>researchURI</param-name>
         	<param-value>/publico/researchSite/viewResearchUnitSite.do?siteID=%s&amp;method=%s</param-value>
         </init-param>
+        <init-param>
+        	<param-name>pedagogicalCouncilURI</param-name>
+        	<param-value>/publico/pedagogicalCouncil/viewSite.do?method=%s&amp;unitID=%s</param-value>
+        </init-param>
+        <init-param>
+        	<param-name>scientificCouncilURI</param-name>
+        	<param-value>/publico/scientificCouncil/viewSite.do?method=%s&amp;unitID=%s</param-value>
+        </init-param>
     </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>

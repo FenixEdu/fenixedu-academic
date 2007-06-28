@@ -11,16 +11,16 @@
 <bean:define id="actionName" name="functionalityAction"/>
 <bean:define id="module" name="module"/>
 
-<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
 <ul>
-	<li>
-		<html:link page="<%= "/" + actionName + ".do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
-	</li>
+	<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
+		<li>
+			<html:link page="<%= "/" + actionName + ".do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
+		</li>
+	</logic:equal>
 	<li>
 		<a href="javascript:switchDisplay('instructions');">Instruções</a>
 	</li>
 </ul>
-</logic:equal>
 
 <div id="instructions" class="switchNone">
 <div class="infoop2 mbottom1 mtop05">
@@ -36,6 +36,7 @@
 <bean:define id="tags" value="<%= request.getParameter("selectedTags") != null ? request.getParameter("selectedTags") : "" %>" type="java.lang.String"/>
 <bean:define id="sortUrlParameter" value="<%= (request.getParameter("sort") == null ? "" : "&sort=" + request.getParameter("sort")) %>"/>
 
+<logic:notEmpty name="unit" property="unitFileTags">
 <fr:view name="unit" property="unitFileTags">
 	<fr:layout name="tag-search">
 		<fr:property name="classes" value="tcloud"/>
@@ -47,16 +48,14 @@
 		<fr:property name="selectedTags" value="<%= tags %>"/>
 	</fr:layout>
 </fr:view>
-
-
-
+</logic:notEmpty>
 
 <logic:notEmpty name="tags">
 	<bean:define id="separatedTags" value="<%= tags.replace(" ", " + ") %>"/>
 	<p class="mbottom05"><bean:message key="label.tagCloud.selectedTags" bundle="RESEARCHER_RESOURCES"/>: 
 		<span class="color888"><fr:view name="separatedTags"/></span>
 	</p>
-	<p class="mtop0 mbottom2"><html:link page="<%= "/researchUnitFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.tagCloud.cleanTags" bundle="RESEARCHER_RESOURCES"/></html:link> <span class="color888">(<bean:message key="label.showAllFiles" bundle="RESEARCHER_RESOURCES"/>mostra todos os ficheiros)</span></p>	
+	<p class="mtop0 mbottom2"><html:link page="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.tagCloud.cleanTags" bundle="RESEARCHER_RESOURCES"/></html:link> <span class="color888">(<bean:message key="label.showAllFiles" bundle="RESEARCHER_RESOURCES"/>)</span></p>	
 </logic:notEmpty>
 
 <logic:notEmpty name="files">

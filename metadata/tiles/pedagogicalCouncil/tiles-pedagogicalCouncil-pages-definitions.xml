@@ -13,4 +13,44 @@
 	<definition name="site.managers.choose-managers" extends="pedagogicalCouncil.masterPage">
 		<put name="body" value="/pedagogicalCouncil/site/chooseManagers.jsp" />
 	</definition>
+	
+    <definition name="pedagogical.communication.sendMail" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/communication/sendEmail.jsp"/>
+    </definition>
+	
+    <definition name="pedagogicalCouncil.communication" extends="pedagogicalCouncil.masterPage">
+    	<put name="body-context" value="/pedagogicalCouncil/communication/context.jsp"/>
+    </definition>
+	<definition name="manage-persisted-groups" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="pedagogical-upload-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="pedagogical-edit-uploaders" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>  
+    
+   	<definition name="pedagogical-upload-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="pedagogical-manage-files" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="pedagogical-edit-file" extends="pedagogicalCouncil.communication">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+
 </tiles-definitions>

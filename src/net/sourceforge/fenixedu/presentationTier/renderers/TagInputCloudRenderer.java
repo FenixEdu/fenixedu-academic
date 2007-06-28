@@ -120,7 +120,9 @@ public class TagInputCloudRenderer extends InputRenderer {
 						+ "var tags = element.value;\n"
 						+ "if (!tags.match('^' + tag + '$|\\\\s' + tag + '\\\\s|\\\\s' + tag + '$')) {\n" + "if (tags.length > 0) {\n"
 						+ "element.value = tags + ' ' + tag;\n" + "}\n" + "else {\n"
-						+ "element.value = tag;\n" + "}\n" + "}\n" + "}\n");
+						+ "element.value = tag;\n" + "}\n"
+						+ "element.focus();\n"
+						+ "}\n" + "}\n");
 				return script;
 			}
 

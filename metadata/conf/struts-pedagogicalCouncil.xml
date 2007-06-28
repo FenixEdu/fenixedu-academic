@@ -53,6 +53,27 @@
             <forward name="no-site" path="site.managers.no-site"/>
             <forward name="chooseManagers" path="site.managers.choose-managers"/>
  	    </action>
+
+  		<action path="/sendEmail" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailDA"
+  		        parameter="method">
+			<forward name="compose-mail" path="pedagogical.communication.sendMail"/>
+       		<forward name="success" path="pedagogical.communication.sendMail"/>
+   	    	<forward name="problem" path="pedagogical.communication.sendMail"/>
+ 	    </action>
+
+		<action path="/pedagogicalCouncilFiles"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ManageUnitFilesDA">
+			 <forward name="managePersistedGroups" path="manage-persisted-groups"/>
+	 		 <forward name="createPersistedGroup" path="create-persisted-group"/>
+			 <forward name="editPersistedGroup" path="edit-persisted-group"/>
+			 <forward name="uploadFile" path="pedagogical-upload-file"/>
+			 <forward name="manageFiles" path="pedagogical-manage-files"/>
+			 <forward name="editFile" path="pedagogical-edit-file"/>
+			 <forward name="editUploaders" path="pedagogical-edit-uploaders"/> 
+		 </action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
@@ -60,7 +81,11 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
+	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
+    <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

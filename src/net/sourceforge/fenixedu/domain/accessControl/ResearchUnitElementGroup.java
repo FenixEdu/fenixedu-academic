@@ -27,7 +27,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 	}
  	@Override
 	public Set<Person> getElements() {
-		return new HashSet<Person>(getObject().getAssociatedPeople());
+		return new HashSet<Person>(getObject().getPossibleGroupMembers());
 	}
 
 	@Override

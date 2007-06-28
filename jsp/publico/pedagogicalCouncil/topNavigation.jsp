@@ -7,7 +7,7 @@
 <ul>
 	<li>
 		<bean:define id="unitId" name="unit" property="idInternal"/>
-		<html:link page="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>">
+		<html:link page="<%= "/scientificCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>">
 			<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
 		</html:link>
 	</li>
@@ -15,7 +15,7 @@
 
 <fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-top-menu">
     <fr:layout>
-        <fr:property name="sectionUrl" value="/pedagogicalCouncil/viewSite.do?method=section"/>
+        <fr:property name="sectionUrl" value="/scientificCouncil/viewSite.do?method=section"/>
         <fr:property name="contextParam" value="unitID"/>
     </fr:layout>
 </fr:view>

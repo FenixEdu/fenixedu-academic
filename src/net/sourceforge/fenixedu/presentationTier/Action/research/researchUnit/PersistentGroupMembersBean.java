@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
@@ -12,32 +12,38 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class PersistentGroupMembersBean implements Serializable {
 
+	/**
+	 * Default serial id.
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private DomainReference<Unit> unit;
-	private List<DomainReference<Person>> people;
+	private DomainListReference<Person> people;
 	private DomainReference<PersistentGroupMembers> group;
 	
 	private String name;
 	private PersistentGroupMembersType type; 
-	
-	public PersistentGroupMembersType getType() {
-		return type;
-	}
 
-	public void setType(PersistentGroupMembersType type) {
-		this.type = type;
-	}
-
-	public PersistentGroupMembersBean(PersistentGroupMembers group) {
-		this.unit = new DomainReference<Unit>(group.getUnit());
+	private void init(PersistentGroupMembers group, Unit unit) {
+		this.unit = new DomainReference<Unit>(unit);
 		this.group = new DomainReference<PersistentGroupMembers>(group);
-		this.people = new ArrayList<DomainReference<Person>>();
-		this.name = group.getName();
+		this.people = new DomainListReference<Person>();
+	}
+	
+	public PersistentGroupMembersBean(PersistentGroupMembers group) {
+		init(group, group.getUnit());
+		
+		setName(group.getName());
 		setPeople(group.getPersons());
 	}
 	
-	public PersistentGroupMembersBean(Unit unit) {
-		this.unit = new DomainReference<Unit>(unit);
-		this.people = new ArrayList<DomainReference<Person>>();
+	public PersistentGroupMembersBean(Unit unit, PersistentGroupMembersType type) {
+		init(null, unit);
+		this.type = type;
+	}
+	
+	public PersistentGroupMembersType getType() {
+		return type;
 	}
 
 	public PersistentGroupMembers getGroup() {
@@ -57,20 +63,12 @@ public class PersistentGroupMembersBean implements Serializable {
 	}
 
 	public List<Person> getPeople() {
-		List<Person> people = new ArrayList<Person>();
-		for(DomainReference<Person> person : this.people) {
-			people.add(person.getObject());
-		}
-		return people; 
+		return this.people;
 	}
 
 	public void setPeople(List<Person> people) {
 		this.people.clear();
-		for(Person person : people) {
-			this.people.add(new DomainReference<Person>(person));
-		}
+		this.people.addAll(people);
 	}
-	
-	
 	
 }

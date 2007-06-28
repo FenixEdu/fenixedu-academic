@@ -1017,6 +1017,45 @@
         <action path="/pedagogicalCouncil/eventsRSS" parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilEventsRSS"/>
 
+   <!--============ Scientific Council site ============-->
+        <action path="/scientificCouncil/viewSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ViewScientificCouncilSiteDA">
+            <forward name="frontPage-BANNER_INTRO" path="scientificCouncil-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="scientificCouncil-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="scientificCouncil-site-front-page-intro-float"/>
+            <forward name="site-section" path="scientificCouncil-section"/>
+            <forward name="site-section-deny" path="scientificCouncil-site-section-deny"/>
+            <forward name="site-section-adviseLogin" path="scientificCouncil-site-section-adviseLogin"/>
+            <forward name="site-item" path="scientificCouncil-site-item"/>
+            <forward name="site-item-deny" path="scientificCouncil-site-item-deny"/>
+            <forward name="site-item-adviseLogin" path="scientificCouncil-site-item-adviseLogin"/>
+
+            <forward name="announcementsAction" path="/scientificCouncil/announcements.do"/>
+            <forward name="eventsAction" path="/scientificCouncil/announcements.do"/>
+            <forward name="announcementsRSSAction" path="/scientificCouncil/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/scientificCouncil/eventsRSS.do"/>
+        </action>
+
+        <action path="/scientificCouncil/announcements"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ScientificCouncilAnnouncementsDA">
+            <forward name="listAnnouncements" path="public-scientificCouncil-list-announcements"/>
+            <forward name="viewAnnouncement" path="scientificCouncil-view-announcement"/>
+        </action>
+        
+        <action path="/scientificCouncil/events"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ScientificCouncilEventsDA">
+            <forward name="listAnnouncements" path="public-scientificCouncil-list-events"/>
+            <forward name="viewAnnouncement" path="scientificCouncil-view-event"/>
+        </action>
+
+        <action path="/scientificCouncil/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ScientificCouncilAnnouncementsRSS"/>
+        <action path="/scientificCouncil/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ScientificCouncilEventsRSS"/>
+
        <!-- ===== ResearchUnit Site Visualization ===== -->
        <action path="/researchSite/viewResearchUnitSite"
         parameter="method"

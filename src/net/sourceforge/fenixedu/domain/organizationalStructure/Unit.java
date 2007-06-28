@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
@@ -1061,16 +1062,16 @@ public class Unit extends Unit_Base {
     }
 
     public boolean isUserAllowedToUploadFiles(Person person) {
-	return getAllowedPeopleToUploadFiles().contains(person);
+    	return getAllowedPeopleToUploadFiles().contains(person);
     }
 
     public boolean isCurrentUserAllowedToUploadFiles() {
-	return isUserAllowedToUploadFiles(AccessControl.getPerson());
+    	return isUserAllowedToUploadFiles(AccessControl.getPerson());
     }
 
     public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople) {
-	getAllowedPeopleToUploadFiles().clear();
-	getAllowedPeopleToUploadFiles().addAll(allowedPeople);
+    	getAllowedPeopleToUploadFiles().clear();
+    	getAllowedPeopleToUploadFiles().addAll(allowedPeople);
     }
 
     public MultiLanguageString getNameI18n() {
@@ -1134,9 +1135,40 @@ public class Unit extends Unit_Base {
         }
         return extraWorkRequestList;
     }
-
+    
     @Override
     public String getPartyPresentationName() {
-	return getPresentationNameWithParents();
+		return getPresentationNameWithParents();
     }
+    
+    
+	public List<IGroup> getGroups() {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		groups.addAll(getDefaultGroups());
+		groups.addAll(getUserDefinedGroups());
+		return groups;
+	}
+
+	protected List<IGroup> getDefaultGroups() {
+		return new ArrayList<IGroup>();
+	}
+
+	public boolean isUserAbleToDefineGroups(Person person) {
+		UnitSite site = getSite();
+		return (site == null) ? false : site.getManagers().contains(person); 
+	}
+
+	public boolean isCurrentUserAbleToDefineGroups() {
+		return isUserAbleToDefineGroups(AccessControl.getPerson());
+	}
+
+	public Collection<Person> getPossibleGroupMembers() {
+		List<Person> people = new ArrayList<Person>();
+		
+		for (Employee employee : getAllWorkingEmployees(new YearMonthDay(), null)) {
+			people.add(employee.getPerson());
+		}
+		
+		return people;
+	}
 }

@@ -3635,6 +3635,12 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
 		}
 
+		class net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+		}
+
+		class net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+		}
+
 class net.sourceforge.fenixedu.domain.person.PersonName extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Boolean isExternalPerson;
@@ -4902,6 +4908,9 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	}
 
 	class net.sourceforge.fenixedu.domain.PedagogicalCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
+	}
+
+	class net.sourceforge.fenixedu.domain.ScientificCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
 	}
 
 //

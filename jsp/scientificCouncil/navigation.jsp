@@ -1,10 +1,16 @@
 <%@ page language="java"%>
+<%@ page import="net.sourceforge.fenixedu.domain.ScientificCouncilSite"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<html:xhtml/>
 
 <logic:present role="SCIENTIFIC_COUNCIL">
+	<%
+		request.setAttribute("site", ScientificCouncilSite.getSite());
+		request.setAttribute("unit", ScientificCouncilSite.getSite().getUnit());
+	%>
+
 	<ul>
 		<li class="navheader">
 			<bean:message key="bolonha.process"/>
@@ -121,5 +127,49 @@
 			  	</html:link>
 			</li>		
 		<%}%>
+
+		<%-- Site --%>
+		<li class="navheader">
+			<bean:message key="title.section.site"/>
+		</li>
+		<li>
+			<logic:notEmpty name="site">
+				<bean:define id="unitId" name="site" property="unit.idInternal"/>
+				
+				<html:link module="/publico" action="<%= "/scientificCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
+					<bean:message key="link.site.view"/>
+				</html:link>
+			</logic:notEmpty>
+		</li>
+		<li>
+			<html:link page="/manageSitePermissions.do?method=chooseManagers">
+				<bean:message key="link.site.manage.managers"/>
+			</html:link>
+		</li>
+		
+		<%-- Communication --%>
+		<li class="navheader">
+			<bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/>
+		</li>
+		
+		<bean:define id="unitId" name="unit" property="idInternal"/>
+		<li>
+			<html:link page="<%= "/sendEmail.do?method=prepare&unitId=" + unitId %>">
+				<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>	
+		<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+			<li>
+				<html:link page="<%= "/scientificCouncilFiles.do?method=configureGroups&unitId=" + unitId %>">
+					<bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+				</html:link>
+			</li>
+		</logic:equal>
+		<li>
+			<html:link page="<%= "/scientificCouncilFiles.do?method=manageFiles&unitId=" + unitId %>">
+				<bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
+		
 	</ul> 
 </logic:present>

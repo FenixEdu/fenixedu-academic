@@ -491,6 +491,56 @@
         <put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
     </definition>
    
+	<!-- ========== SCIENTIFIC COUNCIL SITE -->
+    <definition name="scientificCouncil-site-front-page-banner-intro" extends="definition.public.scientificCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+    </definition>
+    
+    <definition name="scientificCouncil-site-front-page-intro-banner" extends="definition.public.scientificCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+    </definition>
+    
+    <definition name="scientificCouncil-site-front-page-intro-float" extends="definition.public.scientificCouncil.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="useFlags" value="false"/>
+    </definition>
+
+    <definition name="definition.public.scientificCouncil.site" extends="definition.public.scientificCouncil">
+        <put name="body-context" value="/publico/scientificCouncil/siteContext.jsp"/>
+    </definition>
+    
+    <definition name="scientificCouncil-section" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-section-deny" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-section-adviseLogin" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-item" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-item-deny" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-item-adviseLogin" extends="definition.public.scientificCouncil.site">
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
+    
+    <definition name="public-scientificCouncil-list-announcements" extends="definition.public.scientificCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/listAnnouncements.jsp"/>
+    </definition>
+    <definition name="public-scientificCouncil-list-events" extends="definition.public.scientificCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/listEvents.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-view-announcement" extends="definition.public.scientificCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/showAnnouncement.jsp" />
+    </definition>
+    <definition name="scientificCouncil-view-event" extends="definition.public.scientificCouncil">
+        <put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
+    </definition>
+   
 	<!--  ===== RESEARCH UNIT SITE ======== -->
 	<definition name="research-site-front-page-banner-intro" extends="definition.public.researchUnit.noPaddingLayout">
 		<put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>

@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create specific unit Pedagogical Council" createPedagogicalCouncilUnit.sql
+execute "Create specific unit Scientific Council" createScientificCouncilUnit.sql

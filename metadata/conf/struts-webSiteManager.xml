@@ -202,6 +202,50 @@
         <forward name="edit" path="pedagogicalCouncil-announcements-edit-announcement"/>
     </action>
 
+    <action path="/manageScientificCouncilSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ScientificCouncilSiteManagementDA">
+        <forward name="start" path="scientificCouncil-start"/>
+        <forward name="editIntroduction" path="scientificCouncil-edit-introduction"/>
+        <forward name="editConfiguration" path="scientificCouncil-edit-configuration"/>
+        <forward name="editSideBanner" path="scientificCouncil-edit-side-banner"/>
+        <forward name="editLogo" path="scientificCouncil-edit-logo"/>
+        <forward name="editBanners" path="scientificCouncil-edit-banners"/>
+        <forward name="editTopNavigation" path="scientificCouncil-edit-top-navigation"/>
+        <forward name="editFooterNavigation" path="scientificCouncil-edit-footer-navigation"/>
+        <forward name="organizeTopLinks" path="scientificCouncil-edit-organizeTopLinks"/>
+        <forward name="organizeFooterLinks" path="scientificCouncil-edit-organizeFooterLinks"/>
+        <forward name="createSection" path="scientificCouncil-createSection"/>
+        <forward name="sectionsManagement" path="scientificCouncil-sectionsManagement"/>
+        <forward name="section" path="scientificCouncil-section"/>
+        <forward name="editSection" path="scientificCouncil-editSection"/>
+        <forward name="createItem" path="scientificCouncil-createItem"/>
+        <forward name="editItem" path="scientificCouncil-editItem"/>
+        <forward name="uploadFile" path="scientificCouncil-uploadFile"/>
+        <forward name="editFile" path="scientificCouncil-editFile"/>          
+        <forward name="organizeItems" path="scientificCouncil-organizeItems"/>
+        <forward name="organizeFiles" path="scientificCouncil-organizeFiles"/>
+        <forward name="confirmSectionDelete" path="scientificCouncil-confirmSectionDelete"/>
+        <forward name="editSectionPermissions" path="scientificCouncil-editSectionPermissions"/>
+        <forward name="editItemPermissions" path="scientificCouncil-editItemPermissions"/>
+        <forward name="editFile" path="scientificCouncil-editFile"/>
+        <forward name="chooseIntroductionSections" path="scientificCouncil-chooseIntroductionSections"/>
+        <forward name="addInstitutionSection" path="scientificCouncil-addInstitutionSection"/>
+        <forward name="functionalitySection" path="scientificCouncil-functionalitySection"/>
+        <forward name="editFunctionalitySection" path="scientificCouncil-editFunctionalitySection"/>
+    </action>
+
+    <action path="/manageScientificCouncilAnnouncements"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ScientificCouncilAnnouncementsDA"
+            scope="request">
+        <forward name="noBoards" path="scientificCouncil-announcements-no-boards"/>
+        <forward name="viewAnnouncementsRedirect" path="/manageScientificCouncilAnnouncements.do?method=viewAnnouncements&amp;tabularVersion=true"/>
+        <forward name="listAnnouncementBoards" path="scientificCouncil-announcements-list-boards"/>
+        <forward name="listAnnouncements" path="scientificCouncil-announcements-list-announcements"/>
+        <forward name="add" path="scientificCouncil-announcements-add-announcement"/>
+        <forward name="viewAnnouncement" path="scientificCouncil-announcements-view-announcement"/>
+        <forward name="edit" path="scientificCouncil-announcements-edit-announcement"/>
+    </action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

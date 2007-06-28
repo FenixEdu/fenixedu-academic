@@ -9,9 +9,11 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -28,6 +30,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class UnitFunctionalities extends FenixDispatchAction {
+
+	/**
+	 * Default page size for the unit's files list. 
+	 */
+	protected static final int PAGE_SIZE = 20;
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -229,13 +236,28 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		return mapping.findForward("editUploaders");
 	}
 
-	protected abstract Integer getPageSize();
+	protected Integer getPageSize() {
+		return PAGE_SIZE;
+	}
 
-	protected abstract UnitFile getUnitFile(HttpServletRequest request);
+	protected UnitFile getUnitFile(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "fid");
+		return (UnitFile) RootDomainObject.getInstance().readFileByOID(id);
+	}
 
-	protected abstract Unit getUnit(HttpServletRequest request);
+	protected Unit getUnit(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "unitId");
+		return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+	}
 
-	protected abstract PersistentGroupMembers getGroup(HttpServletRequest request);
+	protected PersistentGroupMembers getGroup(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "groupId");
+		return (PersistentGroupMembers) RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
+	}
 
-	protected abstract PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request);
+	protected PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request) {
+		Unit unit = getUnit(request);
+		return new PersistentGroupMembersBean(unit, PersistentGroupMembersType.UNIT_GROUP);
+	}
+	
 }

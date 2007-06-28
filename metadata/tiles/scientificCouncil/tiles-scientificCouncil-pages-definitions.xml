@@ -225,5 +225,52 @@
     <definition name="search-protocols" extends="scientificCouncil.masterPage">
         <put name="body" value="/protocols/searchProtocols.jsp"/>
     </definition>  
+
+	<!-- site -->
+	<definition name="site.managers.no-site" extends="scientificCouncil.masterPage">
+		<put name="body" value="/scientificCouncil/site/no-site.jsp" />
+	</definition>
+	<definition name="site.managers.choose-managers" extends="scientificCouncil.masterPage">
+		<put name="body" value="/scientificCouncil/site/chooseManagers.jsp" />
+	</definition>
+	
+    <definition name="scientific.communication.sendMail" extends="scientificCouncil.masterPage">
+       <put name="body" value="/scientificCouncil/communication/sendEmail.jsp"/>
+    </definition>
+	
+    <definition name="scientificCouncil.communication" extends="scientificCouncil.masterPage">
+    	<put name="body-context" value="/scientificCouncil/communication/context.jsp"/>
+    </definition>
+	<definition name="manage-persisted-groups" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
     
+	<definition name="create-persisted-group" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="scientific-upload-file" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="scientific-edit-uploaders" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>  
+    
+   	<definition name="scientific-upload-file" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="scientific-manage-files" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="scientific-edit-file" extends="scientificCouncil.communication">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+   
 </tiles-definitions>

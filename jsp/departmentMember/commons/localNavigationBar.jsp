@@ -97,7 +97,7 @@
 		<bean:define id="unitID" name="unit" property="idInternal"/>
 		
 		<ul>	
-		<li class="navheader">Comunicação</li>
+		<li class="navheader"><bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/></li>
 			<ul>
 				<li>
 					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + unitID %>">

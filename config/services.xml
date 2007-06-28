@@ -11866,6 +11866,24 @@
 			<chain name="PedagogicalCouncilAuthorization" />
 		</filterChains>
     </service>
+	<service>
+        <name>AddScientificSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+    </service>
+	<service>
+        <name>RemoveScientificSiteManager</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+    </service>
     <service>
         <name>AddResearchUnitSiteManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>

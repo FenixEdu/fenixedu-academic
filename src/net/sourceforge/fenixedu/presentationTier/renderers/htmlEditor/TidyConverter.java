@@ -45,14 +45,18 @@ public abstract class TidyConverter extends Converter {
         parseDocument(outStream, tidy, document);
 
         try {
-            return new String(outStream.toByteArray(), ENCODING);
+            return filterOutput(new String(outStream.toByteArray(), ENCODING));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new ConversionException("tidy.converter.ending.notSupported.critical");
         }
     }
 
-    private Tidy createTidyParser() {
+    protected String filterOutput(String output) {
+		return output;
+	}
+
+	private Tidy createTidyParser() {
         Tidy tidy = new Tidy();
 
         Properties properties = new Properties();

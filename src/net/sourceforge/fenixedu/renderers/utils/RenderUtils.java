@@ -209,6 +209,17 @@ public class RenderUtils {
         return format.format(args);
     }
     
+    public static String getFormatedResourceString(String bundle, String key, Object ... args) {
+    	String text = getResourceString(bundle, key);
+    	
+    	if (text == null) {
+    		return key;
+    	}
+    	
+    	MessageFormat format = new MessageFormat(text);
+    	return format.format(args);
+    }
+    
     @Deprecated
     public static String getFormatedProperties(String format, Object object) {
         return getFormattedProperties(format, object);

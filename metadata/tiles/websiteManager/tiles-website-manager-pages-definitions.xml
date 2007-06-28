@@ -466,4 +466,128 @@
     <definition name="pedagogicalCouncil-announcements-edit-announcement" extends="definition.pedagogicalCouncil.site.announcements.management">
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>
+
+       <!-- ==== Scientific Council Site === -->
+    <definition name="definition.scientificCouncil.site.management" extends="definition.websiteManager.masterPage">
+        <put name="body-context" value="/webSiteManager/scientificCouncilSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/scientificCouncilSite/siteMenu.jsp"/>
+    </definition>
+    
+    <definition name="scientificCouncil-start" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/start.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-introduction" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-introduction.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-configuration" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-configuration.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-side-banner" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-side-banner.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-logo" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-logo.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-banners" extends="definition.scientificCouncil.site.management">
+        <put name="head" value="/webSiteManager/commons/colorPickerHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/edit-banners.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-top-navigation" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-top-navigation.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-footer-navigation" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/edit-footer-navigation.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-organizeTopLinks" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-top-links.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-edit-organizeFooterLinks" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/organize-footer-links.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-sectionsManagement" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/sectionsManagement.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-section" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-editSection" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-createSection" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/createSection.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-createItem" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/createItem.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-editItem" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editItem.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-uploadFile" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/uploadFile.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-editFile" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>             
+    <definition name="scientificCouncil-organizeItems" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeItems.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-organizeFiles" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/commons/sites/organizeFiles.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-confirmSectionDelete" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/confirmSectionDelete.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-editSectionPermissions" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editSectionPermissions.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-editItemPermissions" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editItemPermissions.jsp"/>
+    </definition>   
+    <definition name="scientificCouncil-editFile" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFile.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-chooseIntroductionSections" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/chooseIntroductionSections.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-addInstitutionSection" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-functionalitySection" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-editFunctionalitySection" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
+    </definition>
+        <!-- announcements -->
+
+    <definition name="definition.scientificCouncil.site.announcements.management" extends="definition.websiteManager.masterPage">
+        <put name="body-context" value="/webSiteManager/scientificCouncilSite/siteContext.jsp"/>
+        <put name="navLocalExtra" value="/webSiteManager/scientificCouncilSite/siteMenu.jsp"/>
+    </definition>
+        
+    <definition name="scientificCouncil-announcements-no-boards" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-list-boards" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-list-announcements" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-add-announcement" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-view-announcement" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-edit-announcement" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
+    </definition>
+    
 </tiles-definitions>

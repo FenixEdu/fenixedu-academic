@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
@@ -44,10 +42,7 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     }
     
     /**
-	 * This method searchs for an instance of a PedagogicalCouncilSite and
-	 * checks that the unit associated with that site has the correct
-	 * {@link UnitClassification#PEDAGOGICAL_COUNCIL} classification. However,
-	 * if the situation where more than one site exists is not detected.
+	 * This method searchs for the first instance of a PedagogicalCouncilSite.
 	 * 
 	 * @return the site associated with the Pedagogical Council or
 	 *         <code>null</code> if there is no such site
@@ -55,17 +50,11 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     public static PedagogicalCouncilSite getSite() {
 		for (Site site : RootDomainObject.getInstance().getSites()) {
 			if (site instanceof PedagogicalCouncilSite) {
-				PedagogicalCouncilSite pedagogicalCouncilSite = (PedagogicalCouncilSite) site;
-				
-				UnitClassification classification = pedagogicalCouncilSite.getUnit().getClassification();
-				if (classification == null || !classification.equals(UnitClassification.PEDAGOGICAL_COUNCIL)) {
-					throw new DomainException("error.site.pedagogicalCouncil.unit.badClassification");
-				}
-				
-				return pedagogicalCouncilSite;
+				return (PedagogicalCouncilSite) site;
 			}
 		}
 		
 		return null;
     }
+    
 }

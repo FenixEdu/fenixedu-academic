@@ -170,4 +170,16 @@
 		<put name="body-context" value="/publico/pedagogicalCouncil/siteContext.jsp" />
     </definition>
 
+    <definition name="definition.public.scientificCouncil.frontPage" extends="definition.public.noPaddingLayout">
+        <put name="profile_navigation" value="/publico/scientificCouncil/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/scientificCouncil/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/scientificCouncil/siteContext.jsp" />
+    </definition>
+
+    <definition name="definition.public.scientificCouncil" extends="definition.public.paddingLayout">
+        <put name="profile_navigation" value="/publico/scientificCouncil/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/scientificCouncil/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/cientificCouncil/siteContext.jsp" />
+    </definition>
+
 </tiles-definitions>

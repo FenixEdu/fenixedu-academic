@@ -9,7 +9,7 @@
 <logic:present name="site">
    <fr:view name="site" layout="unit-side-menu">
         <fr:layout>
-            <fr:property name="sectionUrl" value="/pedagogicalCouncil/viewSite.do?method=section"/>
+            <fr:property name="sectionUrl" value="/scientificCouncil/viewSite.do?method=section"/>
             <fr:property name="contextParam" value="unitID"/>
         </fr:layout>
     </fr:view>

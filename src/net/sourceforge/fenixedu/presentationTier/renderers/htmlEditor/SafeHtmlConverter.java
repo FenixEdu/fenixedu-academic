@@ -24,12 +24,23 @@ import org.w3c.tidy.Tidy;
 
 public class SafeHtmlConverter extends TidyConverter {
 
-    @Override
+    /**
+	 * Default serial id. 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void parseDocument(OutputStream outStream, Tidy tidy, Document document) {
         filterDocument(document);
         tidy.pprint(document, outStream);
     }
 
+    @Override
+    protected String filterOutput(String output) {
+    	// tidy escapes the ampersand when used with numerical entities.
+    	return output.replaceAll("&amp;#([0-9]+);", "&#$1;");
+    }
+    
     private void filterDocument(Node node) {
         switch (node.getNodeType()) {
         case Node.DOCUMENT_NODE:
