@@ -5,6 +5,29 @@ alter table RESOURCE add column LESSON_OCCUPATIONS_ACCESS_GROUP text;
 alter table RESOURCE add column WRITTEN_EVALUATION_OCCUPATIONS_ACCESS_GROUP text;
 alter table RESOURCE add column GENERIC_EVENT_OCCUPATIONS_ACCESS_GROUP text;
 
+insert into SPACE_INFORMATION (ID_INTERNAL, OJB_CONCRETE_CLASS, KEY_SPACE, DESCRIPTION, KEY_ROOM_CLASSIFICATION)
+select ID_INTERNAL, 'net.sourceforge.fenixedu.domain.space.RoomInformation', ID_INTERNAL, NAME, 2
+from RESOURCE
+where RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldRoom';
+
+update RESOURCE set
+RESOURCE.CREATED_ON = left(now(), 10),
+RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.Room',
+RESOURCE.KEY_SUROUNDING_SPACE = RESOURCE.KEY_BUILDING
+where RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldRoom';
+
+insert into SPACE_INFORMATION (ID_INTERNAL, OJB_CONCRETE_CLASS, KEY_SPACE, NAME)
+select ID_INTERNAL, 'net.sourceforge.fenixedu.domain.space.BuildingInformation', ID_INTERNAL, NAME
+from RESOURCE
+where RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+
+update RESOURCE set
+RESOURCE.CREATED_ON = left(now(), 10),
+RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.Building',
+RESOURCE.KEY_SUROUNDING_SPACE = RESOURCE.KEY_CAMPUS
+where RESOURCE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+
+
 alter table RESOURCE drop column CAPACIDADE_NORMAL;
 alter table RESOURCE drop column CAPACIDADE_EXAME;
 alter table RESOURCE drop column TIPO;
@@ -31,6 +54,6 @@ alter table RESOURCE_ALLOCATION add key `KEY_GENERIC_EVENT` (`KEY_GENERIC_EVENT`
 delete from RESOURCE where OJB_CONCRETE_CLASS like '%OldRoom%';
 delete from RESOURCE where OJB_CONCRETE_CLASS like '%OldBuilding%';
 
-drop table CAMPUS;
+-- drop table CAMPUS;
 drop table BUILDING;
 drop table ROOM;
