@@ -37,7 +37,7 @@ public class EditLesson extends Service {
             AllocatableSpace salaNova = null;
             
             if(infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
-                salaNova = AllocatableSpace.findActiveAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
+                salaNova = AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
             }
             
             result = valid(begin, end);

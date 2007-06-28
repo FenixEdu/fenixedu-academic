@@ -41,7 +41,7 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
             ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
 
-        AllocatableSpace room = AllocatableSpace.findActiveAllocatableSpaceForEducationByName(roomKey.getNomeSala());
+        AllocatableSpace room = AllocatableSpace.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());                
         RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
         bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionPeriod);
 

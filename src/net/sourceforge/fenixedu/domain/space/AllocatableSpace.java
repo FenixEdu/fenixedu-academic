@@ -129,12 +129,20 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 		(writtenEvaluationGroup != null && writtenEvaluationGroup.getElementsCount() > 0);
     }
     
-    public static AllocatableSpace findActiveAllocatableSpaceForEducationByName(String name) {
+    public static AllocatableSpace findAllocatableSpaceForEducationByName(String name) {
         for (Resource space : RootDomainObject.getInstance().getResources()) {
-            if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive() && ((AllocatableSpace)space).isForEducation() 
+            if (space.isAllocatableSpace() && ((AllocatableSpace)space).isForEducation() 
         	    && ((AllocatableSpace)space).getIdentification().equalsIgnoreCase(name)) {
         	return (AllocatableSpace) space;
             }
+        }
+        return null;
+    }
+    
+    public static AllocatableSpace findActiveAllocatableSpaceForEducationByName(String name) {
+        AllocatableSpace allocatableSpace = findAllocatableSpaceForEducationByName(name);
+        if(allocatableSpace != null && allocatableSpace.isActive()) {
+            return allocatableSpace;
         }
         return null;
     }

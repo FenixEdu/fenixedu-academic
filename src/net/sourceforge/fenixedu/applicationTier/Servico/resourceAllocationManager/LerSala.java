@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerSala extends Service {
 
     public Object run(RoomKey keySala) throws ExcepcaoPersistencia {
-	final AllocatableSpace sala = AllocatableSpace.findActiveAllocatableSpaceForEducationByName(keySala.getNomeSala());
+	final AllocatableSpace sala = AllocatableSpace.findAllocatableSpaceForEducationByName(keySala.getNomeSala());
 	return sala == null ? null : InfoRoom.newInfoFromDomain(sala);
     }
 

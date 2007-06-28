@@ -55,7 +55,7 @@ public class CreateLesson extends Service {
                     if(infoRoomOccupation != null) {                 	
 
                         AllocatableSpace sala = infoRoomOccupation.getInfoRoom() != null ?
-                    	    AllocatableSpace.findActiveAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;                                                                                
+                    	    AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;                                                                                
                     	    
                 	final OccupationPeriod period = 
                 	    rootDomainObject.readOccupationPeriodByOID(infoRoomOccupation.getInfoPeriod().getIdInternal());                	

@@ -65,8 +65,8 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	setOwner(person);
     }
     
-    public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {	
-	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);			
+    public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {		
+	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);			
 	if(commentOwner.equals(getRequestor())) {
 	    setTeacherReadComments(getCommentsCount());	    
 	} else {
@@ -74,18 +74,28 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    setEmployeeReadComments(getCommentsCount());	    
 	}	
     }
-    
+       
     public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
-	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);	
+	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);	
 	openRequestWithoutAssociateOwner(instant);	
 	setTeacherReadComments(getCommentsCount());	
     }
     
     public void createNewEmployeeCommentAndCloseRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
-	new PunctualRoomsOccupationComment(this, null, description, commentOwner, instant);	
+	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);	
 	closeRequestWithoutAssociateOwner(instant);
 	setOwner(commentOwner);
 	setEmployeeReadComments(getCommentsCount());	
+    }
+    
+    private MultiLanguageString getCommentSubject() {
+	StringBuilder subject = new StringBuilder();
+	subject.append("Re: ");
+	PunctualRoomsOccupationComment firstComment = getFirstComment();	
+	if(firstComment != null) {
+	    subject.append(firstComment.getSubject().getContent());
+	}
+	return new MultiLanguageString(subject.toString());
     }
     
     @Override

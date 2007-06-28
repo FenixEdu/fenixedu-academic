@@ -33,7 +33,7 @@ public class ViewRoomFormAction extends FenixContextAction {
         //List infoRooms = (List) request.getAttribute("publico.infoRooms");
         String roomName = (String) indexForm.get("nome");
 
-        InfoRoom argRoom = new InfoRoom(AllocatableSpace.findActiveAllocatableSpaceForEducationByName(roomName));
+        InfoRoom argRoom = new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName(roomName));
         Object[] args = { argRoom };
 
         InfoRoom infoRoom = null;

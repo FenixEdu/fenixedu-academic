@@ -242,7 +242,7 @@ public class ManageLessonDA extends
 
 	InfoRoom infoSala = null;	
 	if (!StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-	    infoSala = new InfoRoom(AllocatableSpace.findActiveAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
+	    infoSala = new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
 	} 
 	
 	ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
@@ -428,7 +428,7 @@ public class ManageLessonDA extends
 
 	InfoRoom infoSala = null;
 	if (!StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-	    infoSala = new InfoRoom(AllocatableSpace.findActiveAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
+	    infoSala = new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
 	}
 
 	ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
