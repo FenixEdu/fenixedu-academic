@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Support
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -68,7 +66,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -121,9 +118,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassificatio
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
-import net.sourceforge.fenixedu.domain.space.OldBuilding;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -148,7 +143,6 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -377,7 +371,7 @@ public class CreateTestData {
 	}
                 
         System.out.println("Deleting campi.");
-        for (final Set<Campus> campi = rootDomainObject.getCampussSet(); !campi.isEmpty(); campi.iterator().next().delete());
+        for (final List<Campus> campi = Space.getAllCampus(); !campi.isEmpty(); campi.iterator().next().delete());
 
         System.out.println("Deleting administrative offices.");
         for (final Set<AdministrativeOffice> administrativeOffices = rootDomainObject.getAdministrativeOfficesSet(); !administrativeOffices.isEmpty(); administrativeOffices.iterator().next().delete());
@@ -471,23 +465,23 @@ public class CreateTestData {
     }
 
     private static void createRooms() {
-	final Campus campus = RootDomainObject.getInstance().getCampussSet().iterator().next();
+	final Campus campus = Space.getAllCampus().iterator().next();
 	for (int b = 1; b <= 10; b++) {
-	    final OldBuilding oldBuilding = new OldBuilding();
-	    oldBuilding.setCampus(campus);
-	    oldBuilding.setName("Edifício" + b);
-	    for (int r = 1; r <= 100; r++) {
-		final OldRoom oldRoom = new OldRoom();
-		oldRoom.setBuilding(oldBuilding);
-		oldRoom.setName("Sala" + b + r);
-		oldRoom.setCapacidadeNormal(Integer.valueOf(50));
-		oldRoom.setCapacidadeExame(Integer.valueOf(25));
-		oldRoom.setPiso(Integer.valueOf(0));
-		oldRoom.setTipo(new TipoSala(TipoSala.PLANA));
-		lessonRoomManager.push(oldRoom);
-		examRoomManager.add(oldRoom);
-		writtenTestsRoomManager.add(oldRoom);
-	    }
+//	    final OldBuilding oldBuilding = new OldBuilding();
+//	    oldBuilding.setCampus(campus);
+//	    oldBuilding.setName("Edifício" + b);
+//	    for (int r = 1; r <= 100; r++) {
+//		final OldRoom oldRoom = new OldRoom();
+//		oldRoom.setBuilding(oldBuilding);
+//		oldRoom.setName("Sala" + b + r);
+//		oldRoom.setCapacidadeNormal(Integer.valueOf(50));
+//		oldRoom.setCapacidadeExame(Integer.valueOf(25));
+//		oldRoom.setPiso(Integer.valueOf(0));
+//		oldRoom.setTipo(new TipoSala(TipoSala.PLANA));
+//		lessonRoomManager.push(oldRoom);
+//		examRoomManager.add(oldRoom);
+//		writtenTestsRoomManager.add(oldRoom);
+//	    }
 	}
     }
 
@@ -677,14 +671,13 @@ public class CreateTestData {
     }
 
     private static void createCampus() {
-        final Campus campus = new Campus();
-        campus.setName("Herdade do Conhecimento");
+        final Campus campus = new Campus("Herdade do Conhecimento", new YearMonthDay(), new YearMonthDay().plusYears(10),"");
     }
 
     private static void createDegrees() {
         final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Campus campus = RootDomainObject.getInstance().getCampussSet().iterator().next();
+        final Campus campus = Space.getAllCampus().iterator().next();
 
         int i = 0;
         for (final DegreeType degreeType : DegreeType.values()) {
@@ -730,7 +723,7 @@ public class CreateTestData {
             createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
             createEnrolmentPeriods(degreeCurricularPlan, executionYear);
-            executionDegree.setCampus(RootDomainObject.getInstance().getCampussSet().iterator().next());
+            executionDegree.setCampus(Space.getAllCampus().iterator().next());
 
             createAgreementsAndPostingRules(executionYear, degreeCurricularPlan);
         }
@@ -902,12 +895,12 @@ public class CreateTestData {
 	final Calendar cStart = toCalendar(start);
 	final Calendar cEnd = toCalendar(end);
 	final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
-	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
+//	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
 	final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
 	final OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
-	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1, occupationPeriod);              
-	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
-        lesson.setExecutionPeriod(executionPeriod);
+//	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1, occupationPeriod);              
+//	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
+//      lesson.setExecutionPeriod(executionPeriod);
     }
 
     private static Calendar toCalendar(final HourMinuteSecond hourMinuteSecond) {
@@ -1038,35 +1031,35 @@ public class CreateTestData {
     private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final String name) {
 	final DateTime startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
 	final DateTime endDateTime = startDateTime.plusMinutes(120);
-	final OldRoom oldRoom = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
+//	final OldRoom oldRoom = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	executionCourses.add(executionCourse);
 	final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 	    degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
 	}
-	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
-	oldRooms.add(oldRoom);
+//	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
+//	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
-	final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
-        createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
+//	final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, name);
+//      createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
     }
 
     private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
 	final DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
 	final DateTime endDateTime = startDateTime.plusMinutes(180);
-	final OldRoom oldRoom = examRoomManager.getNextOldRoom(executionPeriod);
+//	final OldRoom oldRoom = examRoomManager.getNextOldRoom(executionPeriod);
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	executionCourses.add(executionCourse);
 	final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 	    degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
 	}
-	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
-	oldRooms.add(oldRoom);
+//	final List<OldRoom> oldRooms = new ArrayList<OldRoom>();
+//	oldRooms.add(oldRoom);
 	final OccupationPeriod occupationPeriod = new OccupationPeriod(startDateTime.toYearMonthDay(), endDateTime.toYearMonthDay());
-	final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
-        createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
+//	final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes, oldRooms, occupationPeriod, season);
+//      createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
     }
 
     private static void createWrittenEvaluationEnrolmentPeriodAndVigilancies(final ExecutionPeriod executionPeriod, final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
