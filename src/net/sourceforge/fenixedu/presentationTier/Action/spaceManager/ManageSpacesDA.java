@@ -62,9 +62,9 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-	for (final Resource space : rootDomainObject.getResources()) {
-	    if (space.isSpace() && !((Space)space).hasSuroundingSpace()) {
-		spaces.add((Space) space);
+	for (final Resource resource : rootDomainObject.getResources()) {
+	    if (resource.isSpace() && !((Space)resource).hasSuroundingSpace()) {
+		spaces.add((Space) resource);
 	    }
 	}
 	request.setAttribute("spaces", spaces);
@@ -99,6 +99,13 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	return manageSpace(mapping, request, spaceInformation);
     }
 
+    public ActionForward viewSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	Space space = getSpaceFromParameter(request);		
+	return manageSpace(mapping, request, space.getSpaceInformation());
+    }
+    
     public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 

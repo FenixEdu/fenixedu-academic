@@ -15,7 +15,7 @@
 		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
 		<li>		
 			<html:link page="/roomClassification.do?method=viewRoomClassifications">
-				<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/>
+				<bean:message key="space.manager.room.classification.title" bundle="SPACE_RESOURCES"/>
 			</html:link>
 		</li>
 		<%
@@ -23,11 +23,16 @@
 		%>	
 		<li>		
 			<html:link page="/listChangesInTheSpaces.do?method=changesList">
-				<bean:message bundle="SPACE_RESOURCES" key="space.list.changes.in.the.spaces.title"/>
+				<bean:message key="space.list.changes.in.the.spaces.title" bundle="SPACE_RESOURCES"/>
 			</html:link>
 		</li>
 		<%
 			}
 		%>
+		<li>		
+			<html:link page="/searchSpace.do?method=prepare">
+				<bean:message key="label.search.spaces" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
 	</ul>	
 </logic:present>

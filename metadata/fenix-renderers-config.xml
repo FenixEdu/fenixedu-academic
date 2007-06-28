@@ -859,7 +859,10 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>
-  
+
+	<renderer type="net.sourceforge.fenixedu.domain.space.Space" layout="spaceInformation-presentationName-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+        <property name="format" value="${spaceInformation.presentationName}"/>
+    </renderer>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.domain.student.Student" layout="by-number" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentByNumberInputRenderer"/>
     

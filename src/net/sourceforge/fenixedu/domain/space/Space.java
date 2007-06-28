@@ -38,6 +38,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 public abstract class Space extends Space_Base {
 
     public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();   
@@ -336,6 +338,53 @@ public abstract class Space extends Space_Base {
 	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
     }
 
+    public static List<Space> getAllSpacesByPresentationName(String name) {
+	List<Space> result = new ArrayList<Space>();	
+	String[] identificationWords = getIdentificationWords(name);
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {	    
+	    if (resource.isSpace() && ((Space)resource).verifyNameEquality(identificationWords)) {
+		result.add((Space) resource);
+	    }
+	}
+	return result;
+    }
+    
+    private boolean verifyNameEquality(String[] nameWords) {
+	if (nameWords != null) {	
+	    String spacePresentationName = getSpaceInformation().getPresentationName();
+	    if (spacePresentationName != null) {
+		String[] spaceIdentificationWords = spacePresentationName.trim().split(" ");
+		StringNormalizer.normalize(spaceIdentificationWords);
+		int j, i;
+		for (i = 0; i < nameWords.length; i++) {
+		    if (!nameWords[i].equals("")) {
+			for (j = 0; j < spaceIdentificationWords.length; j++) {
+			    if (spaceIdentificationWords[j].equals(nameWords[i])) {
+				break;
+			    }
+			}
+			if (j == spaceIdentificationWords.length) {
+			    return false;
+			}
+		    }
+		}
+		if (i == nameWords.length) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    private static String[] getIdentificationWords(String name) {
+	String[] identificationWords = null;
+	if (name != null && !StringUtils.isEmpty(name.trim())) {
+	    identificationWords = name.trim().split(" ");
+	    StringNormalizer.normalize(identificationWords);
+	}
+	return identificationWords;
+    }
+    
     public static List<Campus> getAllCampus() {
 	return (List<Campus>) getAllSpacesByClass(Campus.class, null);
     }

@@ -16,6 +16,9 @@ public class MoveSpaceBean implements Serializable {
     
     private String spaceName;
     
+    public MoveSpaceBean() {
+    }
+    
     public MoveSpaceBean(Space thisSpace) {
 	setSpace(thisSpace);
 	setSpaceState(SpaceState.ACTIVE);

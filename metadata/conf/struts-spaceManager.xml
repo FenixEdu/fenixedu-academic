@@ -116,6 +116,13 @@
         		parameter="method">
        		<forward name="ViewRoomClassifications" path="room-classification-form"/>
         </action>
+        
+        <action path="/searchSpace"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.SearchSpacesDA"
+        		parameter="method">
+       		<forward name="prepareSearch" path="prepare-search-spaces"/>
+        </action>
+                        
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

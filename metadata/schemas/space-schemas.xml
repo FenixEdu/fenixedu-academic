@@ -461,3 +461,23 @@
 	<slot name="associatedSummariesCount" key="label.room.summaries"/>	
 </schema>
 
+<!-- Search Spaces Schemas -->
+<schema name="SearchSpace" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
+	<slot name="spaceName" key="label.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />						         
+</schema>	
+
+<schema name="FoundSpaceInfo" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.presentationName" key="label.identification"/>	
+	<slot name="spaceFloor" key="label.room.floor" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>
+	<slot name="spaceBuilding" key="label.room.building" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>
+	<slot name="spaceCampus" key="label.room.campus" layout="null-as-label">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="spaceInformation-presentationName-label" />
+	</slot>	         
+</schema>

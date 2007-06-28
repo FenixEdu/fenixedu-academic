@@ -69,5 +69,8 @@
     </definition>                            	        
     <definition name="compare-rooms-before-merge" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/compareRoomsBeforeMerge.jsp"></put>
-    </definition>                            	        
+    </definition>        
+    <definition name="prepare-search-spaces" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/searchSpaces.jsp"></put>
+    </definition>                            	            
 </tiles-definitions>
