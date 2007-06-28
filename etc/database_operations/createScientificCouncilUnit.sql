@@ -1,6 +1,8 @@
 UPDATE PARTY 
-SET OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit"
-WHERE NAME = "Conselho Científico";
+SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit'
+WHERE NAME = 'Conselho Científico';
+
+update PARTY set KEY_PARTY_TYPE = (select ID_INTERNAL from PARTY_TYPE where TYPE = 'SCIENTIFIC_COUNCIL') where OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit';
 
 INSERT INTO SITE (OJB_CONCRETE_CLASS, KEY_ROOT_DOMAIN_OBJECT, KEY_UNIT)
 SELECT 'net.sourceforge.fenixedu.domain.ScientificCouncilSite', 1, U.ID_INTERNAL 

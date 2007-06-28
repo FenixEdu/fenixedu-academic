@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
@@ -14,6 +15,12 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     
     protected ScientificCouncilUnit() {
         super();
+        super.setType(PartyTypeEnum.SCIENTIFIC_COUNCIL);
+    }
+    
+    @Override
+    public void setType(PartyTypeEnum partyTypeEnum) {
+        throw new DomainException("unit.impossible.set.type");
     }
     
     @Override

@@ -3594,6 +3594,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyRootDomainObjectForEarthUnit;
 		Integer keySite;
 		Integer keyUnitName;
+		Integer keyCampus;
 	}
 					
 		class net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
@@ -3618,7 +3619,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		}
 		
 		class net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
-	}
+		}
 
 		class net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {					
 		}
@@ -7605,6 +7606,13 @@ relation PersonNamePersonNamePart {
 		multiplicity *;
 	}	
 	net.sourceforge.fenixedu.domain.person.PersonNamePart playsRole personNamePart {
+		multiplicity *;
+	}
+}
+
+relation UnitCampus {
+	net.sourceforge.fenixedu.domain.space.Campus playsRole campus;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
 		multiplicity *;
 	}
 }

@@ -152,15 +152,15 @@ public class Unit extends Unit_Base {
 
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
-		&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnyVigilantGroups()		
-		&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
-		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
-		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
-		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-		&& !hasAnyParticipations() && !hasAnyBoards()
-		&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
-		&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
+	&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnyVigilantGroups()		
+	&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
+	&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
+	&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
+	&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
+	&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
+	&& !hasAnyParticipations() && !hasAnyBoards()
+	&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
+	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
     }
 
     public boolean isInternal() {
@@ -252,13 +252,13 @@ public class Unit extends Unit_Base {
 
     final public Collection<Function> getFunctions(final FunctionType functionType) {
 	final Collection<Function> result = new HashSet<Function>();
-	
+
 	for (final Function function : getFunctionsSet()) {
-            if (function.getFunctionType() == functionType) {
-        	result.add(function);
-            }
-        }
-	
+	    if (function.getFunctionType() == functionType) {
+		result.add(function);
+	    }
+	}
+
 	return result;
     }
 
@@ -269,24 +269,24 @@ public class Unit extends Unit_Base {
 	} else if (possibleCoordinators.size() > 1) {
 	    throw new DomainException("Unit.more.than.one.person.entitled.to.be.unit.coordinator");
 	}
-	
+
 	return possibleCoordinators.iterator().next();
     }
-    
+
     final public Person getActiveUnitCoordinator() {
 	return getActiveUnitCoordinator(new YearMonthDay());
     }
-    
+
     final public Person getActiveUnitCoordinator(final YearMonthDay yearMonthDay) {
 	for (final Accountability accountability : getUnitCoordinatorFunction().getAccountabilitiesSet()) {
 	    if (accountability.isPersonFunction() && accountability.isActive(yearMonthDay)) {
 		return ((PersonFunction)accountability).getPerson();
 	    }
 	}
-	
+
 	return null;
     }
-    
+
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
 	return getSubUnitsByState(currentDate, false);
     }
@@ -683,7 +683,7 @@ public class Unit extends Unit_Base {
 			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
 			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) 
 			|| partyTypeEnum.equals(PartyTypeEnum.SCHOOL)
-		    || partyTypeEnum.equals(PartyTypeEnum.RESEARCH_UNIT)	
+			|| partyTypeEnum.equals(PartyTypeEnum.RESEARCH_UNIT)	
 		)) {
 
 	    for (Unit unit : readAllUnits()) {
@@ -760,7 +760,7 @@ public class Unit extends Unit_Base {
 
 	if (Party.readByContributorNumber(contributorNumber) != null) {
 	    throw new DomainException(
-		    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
+	    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
 	}
 
 	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
@@ -854,13 +854,13 @@ public class Unit extends Unit_Base {
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
-        return getParentUnitsPresentationName(applicationResourcesBundle.getString("label.html.breakLine"));
+	return getParentUnitsPresentationName(applicationResourcesBundle.getString("label.html.breakLine"));
     }
 
     public String getParentUnitsPresentationName() {
 	return getParentUnitsPresentationName(" - ");
     }
-   
+
     private String getParentUnitsPresentationName(String separator) {
 	StringBuilder builder = new StringBuilder();
 	List<Unit> parentUnits = getParentUnitsPath();
@@ -912,15 +912,15 @@ public class Unit extends Unit_Base {
     }
 
     public String getDirectParentUnitsPresentationName() {
-        StringBuilder builder = new StringBuilder();
-        for (Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit()) {
-                builder.append(unit.getNameWithAcronym());
-            }
-        }
-        return builder.toString();
+	StringBuilder builder = new StringBuilder();
+	for (Unit unit : getParentUnits()) {
+	    if (!unit.isAggregateUnit()) {
+		builder.append(unit.getNameWithAcronym());
+	    }
+	}
+	return builder.toString();
     }
-    
+
     public String getShortPresentationName() {
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Unit unit : getParentUnits()) {
@@ -958,7 +958,7 @@ public class Unit extends Unit_Base {
 	}
 
 	Collection<? extends Accountability> externalContracts = fromUnit
-		.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+	.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
 	List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();
 	List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();
 	List<Guide> payedGuides = fromUnit.getPayedGuides();
@@ -1062,16 +1062,16 @@ public class Unit extends Unit_Base {
     }
 
     public boolean isUserAllowedToUploadFiles(Person person) {
-    	return getAllowedPeopleToUploadFiles().contains(person);
+	return getAllowedPeopleToUploadFiles().contains(person);
     }
 
     public boolean isCurrentUserAllowedToUploadFiles() {
-    	return isUserAllowedToUploadFiles(AccessControl.getPerson());
+	return isUserAllowedToUploadFiles(AccessControl.getPerson());
     }
 
     public void setAllowedPeopleToUploadFiles(List<Person> allowedPeople) {
-    	getAllowedPeopleToUploadFiles().clear();
-    	getAllowedPeopleToUploadFiles().addAll(allowedPeople);
+	getAllowedPeopleToUploadFiles().clear();
+	getAllowedPeopleToUploadFiles().addAll(allowedPeople);
     }
 
     public MultiLanguageString getNameI18n() {
@@ -1092,7 +1092,7 @@ public class Unit extends Unit_Base {
 	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
 		DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
 	Partial hoursDonePartialDate = new Partial().with(DateTimeFieldType.year(), hoursDoneInYear)
-		.with(DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
+	.with(DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
 	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
 	    if (extraWorkRequest.getPartialPayingDate().equals(partialDate)
@@ -1124,51 +1124,51 @@ public class Unit extends Unit_Base {
 	return this.equals(RootDomainObject.getInstance().getEarthUnit());
     }
 
-     public List<ExtraWorkRequest> getExtraWorkRequestsDoneIn(Integer year, Month month) {
-        Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
-                DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
-        List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-        for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-            if (extraWorkRequest.getHoursDoneInPartialDate().equals(partialDate)) {
-                extraWorkRequestList.add(extraWorkRequest);
-            }
-        }
-        return extraWorkRequestList;
+    public List<ExtraWorkRequest> getExtraWorkRequestsDoneIn(Integer year, Month month) {
+	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
+		DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
+	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(partialDate)) {
+		extraWorkRequestList.add(extraWorkRequest);
+	    }
+	}
+	return extraWorkRequestList;
     }
-    
+
     @Override
     public String getPartyPresentationName() {
-		return getPresentationNameWithParents();
+	return getPresentationNameWithParents();
     }
-    
-    
-	public List<IGroup> getGroups() {
-		List<IGroup> groups = new ArrayList<IGroup>();
-		groups.addAll(getDefaultGroups());
-		groups.addAll(getUserDefinedGroups());
-		return groups;
+
+
+    public List<IGroup> getGroups() {
+	List<IGroup> groups = new ArrayList<IGroup>();
+	groups.addAll(getDefaultGroups());
+	groups.addAll(getUserDefinedGroups());
+	return groups;
+    }
+
+    protected List<IGroup> getDefaultGroups() {
+	return new ArrayList<IGroup>();
+    }
+
+    public boolean isUserAbleToDefineGroups(Person person) {
+	UnitSite site = getSite();
+	return (site == null) ? false : site.getManagers().contains(person); 
+    }
+
+    public boolean isCurrentUserAbleToDefineGroups() {
+	return isUserAbleToDefineGroups(AccessControl.getPerson());
+    }
+
+    public Collection<Person> getPossibleGroupMembers() {
+	List<Person> people = new ArrayList<Person>();
+
+	for (Employee employee : getAllWorkingEmployees(new YearMonthDay(), null)) {
+	    people.add(employee.getPerson());
 	}
 
-	protected List<IGroup> getDefaultGroups() {
-		return new ArrayList<IGroup>();
-	}
-
-	public boolean isUserAbleToDefineGroups(Person person) {
-		UnitSite site = getSite();
-		return (site == null) ? false : site.getManagers().contains(person); 
-	}
-
-	public boolean isCurrentUserAbleToDefineGroups() {
-		return isUserAbleToDefineGroups(AccessControl.getPerson());
-	}
-
-	public Collection<Person> getPossibleGroupMembers() {
-		List<Person> people = new ArrayList<Person>();
-		
-		for (Employee employee : getAllWorkingEmployees(new YearMonthDay(), null)) {
-			people.add(employee.getPerson());
-		}
-		
-		return people;
-	}
+	return people;
+    }
 }

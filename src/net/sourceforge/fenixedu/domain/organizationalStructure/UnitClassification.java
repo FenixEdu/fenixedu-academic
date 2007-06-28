@@ -18,7 +18,6 @@ public enum UnitClassification {
     PARTICIPATED_IST_INSTITUTION,
     DIVERSE_CONSTRUCTION_BUILDING,
     RESEARCH_UNIT,
-    PEDAGOGICAL_COUNCIL,
     OUT;
     
     public String getName() {
