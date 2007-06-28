@@ -26,6 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-execute "Alter table Unit" alterTableUnit.sql
-execute "Create specific unit Pedagogical Council" createPedagogicalCouncilUnit.sql
-execute "Create specific unit Scientific Council" createScientificCouncilUnit.sql

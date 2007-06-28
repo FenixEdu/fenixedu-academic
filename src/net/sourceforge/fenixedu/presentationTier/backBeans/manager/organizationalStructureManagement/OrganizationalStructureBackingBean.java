@@ -64,6 +64,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private HashMap<Integer, String> unitRelationsAccountabilityTypes;
 
     private Boolean toRemoveParentUnit, viewExternalUnits, institutionUnit, externalInstitutionUnit, earthUnit, canBeResponsibleOfSpaces;
+    
+    private Boolean viewUnitsWithoutParents;
+    
 
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
@@ -88,6 +91,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 	if (getViewExternalUnits() == null) {
 	    setViewExternalUnits(Boolean.FALSE);
+	}
+	if (getViewUnitsWithoutParents() == null) {
+	    setViewUnitsWithoutParents(Boolean.FALSE);
 	}
     }
 
@@ -214,17 +220,25 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+	
 	StringBuilder buffer = new StringBuilder();
-	List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
+	List<Unit> unitsToShow = null;
 	YearMonthDay currentDate = new YearMonthDay();
 
-	if (getViewExternalUnits()) {
-	    Collections.sort(allUnitsWithoutParent, Unit.COMPARATOR_BY_NAME_AND_ID);
+	if (getViewExternalUnits()) {	    	    
+	    unitsToShow = new ArrayList<Unit>();
+	    unitsToShow.add(UnitUtils.readExternalInstitutionUnit());
+	    
+	} else if(getViewUnitsWithoutParents()){
+	    unitsToShow = UnitUtils.readAllUnitsWithoutParents();
+	    
 	} else {
-	    allUnitsWithoutParent.remove(UnitUtils.readExternalInstitutionUnit());
+	    unitsToShow = new ArrayList<Unit>();
+	    unitsToShow.add(UnitUtils.readEarthUnit());
 	}
 	
-	for (Unit unit : allUnitsWithoutParent) {
+	Collections.sort(unitsToShow, Unit.COMPARATOR_BY_NAME_AND_ID);
+	for (Unit unit : unitsToShow) {
 	    boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
 	    if (active) {
 		if (unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
@@ -1273,6 +1287,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public void setViewExternalUnits(Boolean viewExternalUnits) {
 	this.viewExternalUnits = viewExternalUnits;
     }
+    
+    public Boolean getViewUnitsWithoutParents() {
+        return viewUnitsWithoutParents;
+    }
+
+    public void setViewUnitsWithoutParents(Boolean viewUnitsWithoutParents) {
+        this.viewUnitsWithoutParents = viewUnitsWithoutParents;
+    }     
 
     public Boolean getExternalInstitutionUnit() throws FenixFilterException, FenixServiceException {
 	if (getUnit() != null && UnitUtils.readExternalInstitutionUnit() != null
@@ -1361,5 +1383,5 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    index++;	    	   
 	}
 	return result.toString();
-    }         
+    }      
 }

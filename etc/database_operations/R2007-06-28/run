@@ -29,3 +29,7 @@ function executeWithTempFile() {
 
 execute "Modify Prize Name to MultiLanguageString" modifyPrizeTable.sql
 execute "Create File Delete Request" createFileDeleteRequest.sql
+
+execute "Alter table Unit" alterTableUnit.sql
+execute "Create specific unit Pedagogical Council" createPedagogicalCouncilUnit.sql
+execute "Create specific unit Scientific Council" createScientificCouncilUnit.sql
