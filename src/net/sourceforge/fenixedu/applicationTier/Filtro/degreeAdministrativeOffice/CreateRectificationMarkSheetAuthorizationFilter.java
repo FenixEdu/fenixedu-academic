@@ -15,6 +15,10 @@ public class CreateRectificationMarkSheetAuthorizationFilter extends MarkSheetAu
 
 	authorizedEmployees.add("3068");
 	authorizedEmployees.add("2973");
+	
+        //TAGUS
+        authorizedEmployees.add("3821");
+
 
 	return authorizedEmployees;
     }
