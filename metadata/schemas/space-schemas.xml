@@ -449,7 +449,11 @@
 	<slot name="spaceInformation.identification" key="label.identification"/>	
 	<slot name="spaceFloor.spaceInformation.presentationName" key="label.room.floor"/>
 	<slot name="spaceBuilding.spaceInformation.presentationName" key="label.room.building"/>
-	<slot name="spaceCampus.spaceInformation.presentationName" key="label.room.campus"/>	         
+	<slot name="spaceCampus.spaceInformation.presentationName" key="label.room.campus"/>
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	         
 </schema>	
 
 <schema name="ViewRoomImportantAssociationsBeforeMerge" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
