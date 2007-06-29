@@ -24,7 +24,7 @@
 
 <div id="instructions" class="switchNone">
 <div class="infoop2 mbottom1 mtop05">
-<p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong><bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
+<p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong> <bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
 <table>
 <tr><td><img src="<%= request.getContextPath() + "/images/tag_selected.gif"%>" style="border: 1px solid #eee; padding: 4px; background: #fff;"/></td><td><bean:message key="label.tagCloud.selected.explanation" bundle="RESEARCHER_RESOURCES"/></td></tr>
 <tr><td><img src="<%= request.getContextPath() + "/images/tag_nearby.gif" %>" style="border: 1px solid #eee; padding: 4px; background: #fff;"/></td><td><bean:message key="label.tagCloud.neighbour.explanation" bundle="RESEARCHER_RESOURCES"/></td></tr>
@@ -74,7 +74,7 @@
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight"/>
-				<fr:property name="columnClasses" value=",smalltxt,smalltxt width100px acenter,,smalltxt,smalltxt color888,width100px"/>
+				<fr:property name="columnClasses" value="nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt nowrap,smalltxt color888 nowrap,width100px"/>
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />
@@ -112,8 +112,12 @@ pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 </logic:notEmpty>
 
 <logic:empty name="files">
-	<bean:message key="label.noFilesAvailable" bundle="RESEARCHER_RESOURCES"/>
+
+	<p>
+		<em><bean:message key="label.noFilesAvailable" bundle="RESEARCHER_RESOURCES"/></em>
+	</p>
 </logic:empty>
+
 
 <script type="text/javascript" language="javascript">
 switchGlobal();
