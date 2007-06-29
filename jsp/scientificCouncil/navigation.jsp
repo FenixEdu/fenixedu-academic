@@ -28,6 +28,12 @@
 			</html:link>
 		</li>
 
+		<li>
+			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan" %>">
+			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</li>
+
         <li class="navheader">
             <bean:message key="scientificCouncil.thesis.process"/>
         </li>

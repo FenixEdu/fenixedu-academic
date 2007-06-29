@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +12,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -25,7 +29,16 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	if (degreeCurricularPlan == null) {
+	    final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+	    degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+	    degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+	    degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	    request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+	} else {
+	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+	}
 	return super.execute(mapping, actionForm, request, response);
     }
 
@@ -121,12 +134,20 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private Student getStudent(final HttpServletRequest request) {
-	StudentSearchBean studentSearchBean = (StudentSearchBean) getRenderedObject(StudentSearchBean.class.getName());
+	StudentSearchBean studentSearchBean = (StudentSearchBean) getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+	if (studentSearchBean == null) {
+	    studentSearchBean = (StudentSearchBean) getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
+	}
 	if (studentSearchBean == null) {
 	    studentSearchBean = new StudentSearchBean();
 	    final String studentNumber = request.getParameter("studentNumber");
 	    if (studentNumber != null && studentNumber.length() > 0) {
 		studentSearchBean.setStudentNumber(Integer.valueOf(studentNumber));
+	    }
+	} else {
+	    final DegreeCurricularPlan degreeCurricularPlan = studentSearchBean.getDegreeCurricularPlan();
+	    if (degreeCurricularPlan != null) {
+		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
 	    }
 	}
 	request.setAttribute("studentSearchBean", studentSearchBean);

@@ -8,24 +8,37 @@
 <br/>
 <h2><bean:message key="title.student.equivalency.plan"/></h2>
 
-<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
-		name="studentSearchBean"
-		type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
-		schema="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
-		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-    </fr:layout>
-</fr:edit>
+<logic:present name="degreeCurricularPlan">
+	<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
+			name="studentSearchBean"
+			type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
+			schema="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+    	</fr:layout>
+	</fr:edit>
+</logic:present>
+<logic:notPresent name="degreeCurricularPlan">
+	<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan"
+			name="studentSearchBean"
+			type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean"
+			schema="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thright thlight thmiddle"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+    	</fr:layout>
+	</fr:edit>	
+</logic:notPresent>
 <br/>
 <br/>
 <logic:present name="studentSearchBean" property="studentNumber">
 	<logic:notPresent name="student">
-		<bean:message key="message.student.does.not.exist"/>
+		<bean:message key="message.student.does.not.exist" bundle="APPLICATION_RESOURCES"/>
 	</logic:notPresent>
 	<logic:present name="student">
 		<logic:notPresent name="studentCurricularPlanEquivalencePlan">
-			<bean:message key="message.student.does.not.have.equivalence.plan"/>
+			<bean:message key="message.student.does.not.have.equivalence.plan" bundle="APPLICATION_RESOURCES"/>
 		</logic:notPresent>
 		<logic:present name="studentCurricularPlanEquivalencePlan">
 			<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
@@ -37,7 +50,7 @@
 						+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
 						+ student.getNumber() 
 						%>">
-					<bean:message key="link.equivalency.view.table"/>
+					<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 				<br/>
 				<br/>
@@ -52,7 +65,7 @@
 						+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
 						+ student.getNumber() 
 						%>">
-					<bean:message key="link.equivalency.view.plan"/>
+					<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 				<br/>
 				<br/>

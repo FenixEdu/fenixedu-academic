@@ -2346,7 +2346,22 @@
 	      <forward name="showResearchUnits" path="show-research-units"/>
 	      <forward name="editResearchUnitSiteManagers" path="edit-research-site-managers"/>
          </action>
-          
+
+        <action path="/degreeCurricularPlan/equivalencyPlan"
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA"
+            parameter="method">
+            <forward name="showPlan" path="show-equivalency.plan"/>
+            <forward name="addEquivalency" path="add-equivalency"/>
+            <forward name="addCourseGroupEquivalency" path="add-course-group-equivalency"/>
+        </action>
+
+        <action path="/degreeCurricularPlan/studentEquivalencyPlan"
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.StudentEquivalencyPlanDA"
+            parameter="method">
+            <forward name="showPlan" path="show-student-equivalency.plan"/>
+            <forward name="addEquivalency" path="add-student-equivalency"/>
+        </action>
+
 	</action-mappings>
 
  
@@ -2365,7 +2380,8 @@
 	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>    
+    <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 			

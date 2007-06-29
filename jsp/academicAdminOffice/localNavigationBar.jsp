@@ -9,6 +9,16 @@
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/createStudent.do?method=prepareCreateStudent"><bean:message key="link.studentOperations.createStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 		<li><html:link page="/students.do?method=prepareSearch"><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
+		<li>
+<!--
+			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan" %>">
+			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+-->
+			<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan" %>">
+			    <bean:message key="link.equivalency.plan.student" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</li>
 
 		<li class="navheader"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>

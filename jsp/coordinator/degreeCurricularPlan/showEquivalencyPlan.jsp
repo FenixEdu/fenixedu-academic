@@ -6,13 +6,14 @@
 <html:xhtml/>
 
 <br/>
-<h2><bean:message key="title.equivalency.plan"/></h2>
+<h2><bean:message key="title.equivalency.plan" bundle="APPLICATION_RESOURCES"/></h2>
 
+<logic:present name="degreeCurricularPlan">
 <logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
 	<div class='simpleblock4'>
-		<bean:message key="message.no.equivalency.table.exists"/>
+		<bean:message key="message.no.equivalency.table.exists" bundle="APPLICATION_RESOURCES"/>
 		<br/>
-		<bean:message key="label.create.equivalency.table.for.degree.curricular.plan"/>
+		<bean:message key="label.create.equivalency.table.for.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
 		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 				schema="degreeCurricularPlan.createEquivalencyPlan">
 		    <fr:layout>
@@ -25,7 +26,7 @@
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
 	<p class="mvert15">
 		<strong>
-			<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
+			<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
 			<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 		</strong>
 	</p>
@@ -39,7 +40,7 @@
 		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
 				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.view.table"/>
+			<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 		<br/>
 		<br/>
@@ -55,7 +56,7 @@
 		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
 				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.view.plan"/>
+			<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 		<br/>
 		<br/>
@@ -71,3 +72,28 @@
 		</logic:notPresent>
 	</logic:present>
 </logic:present>
+</logic:present>
+
+<logic:notPresent name="degreeCurricularPlan">
+	<table class="tstyle4">
+		<logic:iterate id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlans">
+			<tr>
+				<td>
+					<bean:write name="degreeCurricularPlan" property="name"/>
+				</td>
+				<td>
+					<bean:write name="degreeCurricularPlan" property="degree.degreeType.localizedName"/>
+				</td>
+				<td>
+					<bean:write name="degreeCurricularPlan" property="degree.name"/>
+				</td>
+				<td>
+					<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal"/>
+					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+</logic:notPresent>

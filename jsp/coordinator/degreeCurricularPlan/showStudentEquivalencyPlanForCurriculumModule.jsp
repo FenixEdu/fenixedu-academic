@@ -29,13 +29,13 @@
 							+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
 							+ curriculumModule.getIdInternal() + "&amp;studentNumber="
 								+ student.getNumber() %>">
-						<bean:message key="link.equivalency.add"/>
+						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</td>
 				<td class="smalltxt" align="right" style="width: 22em;">
 					<logic:empty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
 						<span style="color: #888">
-							<bean:message key="message.curricular.course.has.no.equivalencies"/>
+							<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
 						</span>
 					</logic:empty>
 					<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
@@ -45,7 +45,7 @@
 								+ curriculumModule.getIdInternal() + "&amp;studentNumber="
 								+ student.getNumber() 
 								%>">
-							<bean:message key="link.equivalencies.for.curricular.course.view"/>
+							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEmpty>
 				</td>
@@ -69,13 +69,13 @@
 							+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
 							+ curriculumModule.getIdInternal() + "&amp;studentNumber="
 								+ student.getNumber() %>">
-						<bean:message key="link.equivalency.add"/>
+						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</th>
 				<th class="smalltxt" align="right" style="width: 22em;">
 					<logic:empty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
 						<span style="color: #888">
-							<bean:message key="message.curricular.course.has.no.equivalencies"/>
+							<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
 						</span>
 					</logic:empty>
 					<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
@@ -85,7 +85,7 @@
 								+ curriculumModule.getIdInternal() + "&amp;studentNumber="
 								+ student.getNumber() 
 								%>">
-							<bean:message key="link.equivalencies.for.curricular.course.view"/>
+							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEmpty>
 				</th>

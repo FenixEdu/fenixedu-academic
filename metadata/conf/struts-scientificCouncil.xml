@@ -539,8 +539,8 @@
    	       <forward name="prepareCreate-protocol-responsibles" path="prepareCreate-protocol-responsibles"/>
    	       <forward name="prepareCreate-protocol-units" path="prepareCreate-protocol-units"/>
    	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/> 
-		   <forward name="view-protocol" path="view-protocol"/>
-	    </action>    	    	    	    
+		   <forward name="view-protocol" path="view-protocol"/> 	       
+	    </action>
 
   		<action path="/manageSitePermissions" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ManageSiteManagersDA"
   		        parameter="method">
@@ -567,6 +567,15 @@
 			 <forward name="editFile" path="scientific-edit-file"/>
 			 <forward name="editUploaders" path="scientific-edit-uploaders"/> 
 		 </action>
+
+        <action path="/degreeCurricularPlan/equivalencyPlan"
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA"
+            parameter="method">
+            <forward name="showPlan" path="show-equivalency.plan"/>
+            <forward name="addEquivalency" path="add-equivalency"/>
+            <forward name="addCourseGroupEquivalency" path="add-course-group-equivalency"/>
+        </action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

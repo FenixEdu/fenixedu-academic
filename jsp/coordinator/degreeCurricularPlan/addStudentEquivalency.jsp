@@ -8,18 +8,18 @@
 <bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 <bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
 
-<h2><bean:message key="link.equivalency.plan.create.equivalence"/></h2>
+<h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
 
 <p class="mvert15">
 	<strong>
-		<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
+		<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
 		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 	</strong>
 </p>
 
 <fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal()  
 			+ "&amp;studentNumber=" + student.getNumber() %>">
-	<p class="mtop2"><bean:message key="message.set.non.list.fields"/>:</p>
+	<p class="mtop2"><bean:message key="message.set.non.list.fields" bundle="APPLICATION_RESOURCES"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -40,7 +40,7 @@
 			</td>
 		</tr>
 	</table>
-	<p class="mtop2"><bean:message key="message.origin.degree.module"/>:</p>
+	<p class="mtop2"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -59,7 +59,7 @@
 			</td>
 		</tr>
 	</table>
-	<p class="mtop2"><bean:message key="message.destination.degree.module"/>:</p>
+	<p class="mtop2"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -84,7 +84,7 @@
 <logic:notEmpty name="studentEquivalencyPlanEntryCreator" property="originDegreeModules">
 <logic:notEmpty name="studentEquivalencyPlanEntryCreator" property="destinationDegreeModules">
 
-	<p class="mtop2"><bean:message key="label.equivalency.to.create"/></p>	
+	<p class="mtop2"><bean:message key="label.equivalency.to.create" bundle="APPLICATION_RESOURCES"/></p>	
 	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
 		<logic:iterate id="degreeModuleFromList1" indexId="i1" name="studentEquivalencyPlanEntryCreator" property="originDegreeModules">
 			<span style="border-bottom: 1px dotted #aaa;">
@@ -107,7 +107,7 @@
 				<bean:write name="degreeModuleFromList2" property="name"/>
 			</span>
 		</logic:iterate>
-		(<bean:write name="studentEquivalencyPlanEntryCreator" property="ectsCredits"/> <bean:message key="label.credits"/>)
+		(<bean:write name="studentEquivalencyPlanEntryCreator" property="ectsCredits"/> <bean:message key="label.credits" bundle="APPLICATION_RESOURCES"/>)
 	</div>
 
 	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() 

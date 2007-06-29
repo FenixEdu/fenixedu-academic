@@ -7,17 +7,17 @@
 
 <bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 
-<h2><bean:message key="link.equivalency.plan.create.equivalence"/></h2>
+<h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
 
 <p class="mvert15">
 	<strong>
-		<bean:message key="message.equivalency.table.from.degree.curricular.plan"/>
+		<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
 		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 	</strong>
 </p>
 
 <fr:form action="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() %>">
-	<p class="mtop2"><bean:message key="message.select.course.groups"/>:</p>
+	<p class="mtop2"><bean:message key="message.select.course.groups" bundle="APPLICATION_RESOURCES"/>:</p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>

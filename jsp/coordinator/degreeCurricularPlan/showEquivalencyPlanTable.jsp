@@ -12,14 +12,14 @@
 		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
 				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.add"/>
+			<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 		<br/>
 		<br/>
-	<bean:message key="message.degree.module.equivalencies"/>:
+	<bean:message key="message.degree.module.equivalencies" bundle="APPLICATION_RESOURCES"/>:
 	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
 		<logic:empty name="entries">
-			<bean:message key="message.curricular.course.has.no.equivalencies"/>
+			<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
 		</logic:empty>
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" indexId="n" name="entries">
 			<logic:notEqual name="n" value="0">
@@ -54,7 +54,7 @@
 					+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 					+ equivalencePlan.getIdInternal() + "&amp;equivalencePlanEntryID="
 					+ entry.getIdInternal() %>">
-				<bean:message key="link.delete"/>
+				<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</logic:iterate>
 	</div>

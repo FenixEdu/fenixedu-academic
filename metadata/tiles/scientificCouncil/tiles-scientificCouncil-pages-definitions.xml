@@ -13,7 +13,17 @@
 	<definition name="df.page.insert-professorShip-by-number" extends="scientificCouncil.masterPage" >
 		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
 	</definition>
-		
+
+	<definition name="show-equivalency.plan" extends="scientificCouncil.masterPage">
+		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+	</definition>
+	<definition name="show-student-equivalency.plan" extends="scientificCouncil.masterPage">
+		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+	</definition>
+	<definition name="add-equivalency" extends="scientificCouncil.masterPage">
+		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
+	</definition>
+
 	<!-- Credits -->	
 	<definition name="teacher-search-layout" page="/credits/commons/searchTeacherPageLayout.jsp">
 		<put name="searchTitle" value="/commons/blank.jsp"></put>

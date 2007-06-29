@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -23,7 +25,16 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	if (degreeCurricularPlan == null) {
+	    final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+	    degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+	    degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+	    degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	    request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+	} else {
+	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+	}
 	return super.execute(mapping, actionForm, request, response);
     }
 

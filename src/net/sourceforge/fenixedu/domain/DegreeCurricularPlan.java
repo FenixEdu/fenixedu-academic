@@ -1601,7 +1601,24 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (rootCourseGroup != null) {
 	    rootCourseGroup.getAllDegreeModules(degreeModules);
 	}
+	degreeModules.addAll(super.getCurricularCoursesSet());
 	return degreeModules;
+    }
+
+    public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final Set<DegreeType> degreeTypes) {
+	final Set<DegreeCurricularPlan> degreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
+	for (final DegreeType degreeType : degreeTypes) {
+	    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+		if (degreeTypes.contains(degree.getDegreeType())) {
+		    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+			if (degreeCurricularPlan.isActive()) {
+			    degreeCurricularPlans.add(degreeCurricularPlan);
+			}
+		    }
+		}
+	    }
+	}
+	return degreeCurricularPlans;
     }
     
 }

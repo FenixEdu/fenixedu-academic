@@ -26,7 +26,7 @@
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 							+ curricularCourse.getIdInternal() %>">
-						<bean:message key="link.equivalency.add"/>
+						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</td>
 				<td class="smalltxt" align="right" style="width: 22em;">
@@ -37,7 +37,7 @@
 					<bean:size id="numElements" name="equivalencePlanEntries"/>
 					<logic:equal name="numElements" value="0">
 						<span style="color: #888">
-							<bean:message key="message.curricular.course.has.no.equivalencies"/>
+							<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
 						</span>
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
@@ -45,7 +45,7 @@
 								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 								+ curricularCourse.getIdInternal() %>">
-							<bean:message key="link.equivalencies.for.curricular.course.view"/>
+							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>
 				</td>
@@ -70,7 +70,7 @@
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 							+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 							+ courseGroup.getIdInternal() %>">
-						<bean:message key="link.equivalency.add"/>
+						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</th>
 				<th class="smalltxt" align="right" style="width: 22em;">
@@ -81,7 +81,7 @@
 					<bean:size id="numElements" name="equivalencePlanEntries"/>
 					<logic:equal name="numElements" value="0">
 						<span style="color: #888">
-							<bean:message key="message.course.group.has.no.equivalencies"/>
+							<bean:message key="message.course.group.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
 						</span>
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
@@ -89,7 +89,7 @@
 								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
 								+ courseGroup.getIdInternal() %>">
-							<bean:message key="link.equivalencies.for.course.group.view"/>
+							<bean:message key="link.equivalencies.for.course.group.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>
 				</th>

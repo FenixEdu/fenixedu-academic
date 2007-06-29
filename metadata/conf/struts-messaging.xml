@@ -122,11 +122,12 @@
 		>
 		<forward name="findPerson" path="find-person"/>		
 	</action>
-      
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+
     <!-- ========== Message Resources Definitions ============================ -->
 
     <!-- ========== Plug Ins Configuration ================================= -->

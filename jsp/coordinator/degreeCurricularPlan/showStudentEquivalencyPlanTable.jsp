@@ -59,7 +59,7 @@
 						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
 						+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
 						+ student.getNumber() %>">
-					<bean:message key="link.delete"/>
+					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 			</logic:equal>
 			<logic:notEqual name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
@@ -68,7 +68,7 @@
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
 							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
 							+ student.getNumber() %>">
-						<bean:message key="link.activate"/>
+						<bean:message key="link.activate" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</logic:equal>
 				<logic:notEqual name="entry" property="removalEntry" value="true">
@@ -76,7 +76,7 @@
 							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
 							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
 							+ student.getNumber() %>">
-						<bean:message key="link.deactivate"/>
+						<bean:message key="link.deactivate" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</logic:notEqual>
 			</logic:notEqual>
