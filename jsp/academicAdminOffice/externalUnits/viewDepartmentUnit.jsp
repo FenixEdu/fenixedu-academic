@@ -8,7 +8,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.externalUnits.department" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="unitResultBean" property="unit.name"/> </h2>
+<h2><bean:message key="label.externalUnits.department" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="unitResultBean" property="unit.name"/> </h2>
 
 <fr:view name="unitResultBean" schema="AbstractExternalUnitResultBean.view-breadCrumbs-path">
 	<fr:layout name="flow">
@@ -20,9 +20,6 @@
 <bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.idInternal"/></bean:define>
 <ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalCurricularCourse" + unitId %>"><bean:message key="label.externalUnits.createExternalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
-</ul>
-
-<ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareEditUnit" + unitId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 

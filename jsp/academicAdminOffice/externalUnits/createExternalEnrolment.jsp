@@ -24,7 +24,7 @@
 		 action="/externalUnits.do?method=createExternalEnrolment">
 		 
 	<fr:layout name="tabular-editable">
-		<fr:property name="classes" value="tstyle4 thlight thright"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	

@@ -8,7 +8,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.externalUnits.externalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.name"/> </h2>
+<h2><bean:message key="label.externalUnits.externalCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.name"/> </h2>
 
 <fr:view name="externalCurricularCourseBean" schema="AbstractExternalUnitResultBean.view-breadCrumbs-path">
 	<fr:layout name="flow">
@@ -20,9 +20,6 @@
 
 <ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalEnrolment" + externalCurricularCourseId  %>"><bean:message key="label.externalUnits.createExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
-</ul>
-
-<ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareEditExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 
@@ -31,13 +28,12 @@
 </table>
 
 
-<h3 class="mtop15 mbottom05"><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</h3>
+<h3 class="mtop15 mbottom05"><bean:message key="label.externalUnits.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <logic:notEmpty name="externalEnrolments">
 	<fr:view name="externalEnrolments" schema="ExternalEnrolment.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
-			<fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
-			
+			<fr:property name="columnClasses" value="acenter,acenter,aleft,acenter,acenter,acenter,acenter"/>
 			<fr:property name="linkFormat(edit)" value="/externalUnits.do?method=prepareEditExternalEnrolment&oid=${idInternal}" />
 			<fr:property name="key(edit)" value="label.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
