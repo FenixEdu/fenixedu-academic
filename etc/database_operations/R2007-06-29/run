@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table CREDITS_DISMISSAL" alterTableCreditsDismissal.sql
