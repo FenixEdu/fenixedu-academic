@@ -684,52 +684,66 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     /**
-     * -> Temporary overrides due migrations
-     * 	  - Filter 'InTransition' registrations
-     * -> Do not use this method to add new registrations directly (use {@link addRegistrations} method)
+     * -> Temporary overrides due migrations - Filter 'InTransition'
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
      */
     @Override
     public List<Registration> getRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
-            if (!registration.isTransition()) {
-        	result.add(registration);
-            }
-        }
-        return Collections.unmodifiableList(result);
+	for (final Registration registration : super.getRegistrations()) {
+	    if (!registration.isTransition()) {
+		result.add(registration);
+	    }
+	}
+	return Collections.unmodifiableList(result);
     }
-    
+
     @Override
     public Set<Registration> getRegistrationsSet() {
-        final Set<Registration> result = new HashSet<Registration>();
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (!registration.isTransition()) {
-        	result.add(registration);
-            }
-        }
-        return Collections.unmodifiableSet(result);
+	final Set<Registration> result = new HashSet<Registration>();
+	for (final Registration registration : super.getRegistrationsSet()) {
+	    if (!registration.isTransition()) {
+		result.add(registration);
+	    }
+	}
+	return Collections.unmodifiableSet(result);
     }
-    
+
     @Override
     public Iterator<Registration> getRegistrationsIterator() {
-        return getRegistrationsSet().iterator();
+	return getRegistrationsSet().iterator();
     }
-    
+
     @Override
     public int getRegistrationsCount() {
-        return getRegistrations().size();
+	return getRegistrations().size();
     }
-    
+
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwner")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
-            if (registration.isTransition()) {
-        	result.add(registration);
-            }
-        }
-        return result;
+	for (final Registration registration : super.getRegistrations()) {
+	    if (registration.isTransition()) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
+    @Checked("StudentPredicates.checkIfLoggedPersonIsCoordinator")
+    public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(
+	    final Person coordinator) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : super.getRegistrations()) {
+	    if (registration.isTransition()
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
+			    ExecutionYear.readCurrentExecutionYear())) {
+		result.add(registration);
+	    }
+	}
+	return result;
     }
 }
