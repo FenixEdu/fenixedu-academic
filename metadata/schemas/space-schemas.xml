@@ -483,5 +483,9 @@
 	<slot name="spaceCampus" key="label.room.campus" layout="null-as-label">
 		<property name="label" value="-"/>
 		<property name="subLayout" value="spaceInformation-presentationName-label" />
-	</slot>	         
+	</slot>	    
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	     
 </schema>
