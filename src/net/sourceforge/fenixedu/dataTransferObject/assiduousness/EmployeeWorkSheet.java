@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.Duration;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
+import org.joda.time.YearMonthDay;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
@@ -39,6 +41,8 @@ public class EmployeeWorkSheet implements Serializable {
     Duration nextHoursExtraWork;
 
     Duration balanceToCompensate;
+
+    AssiduousnessStatusHistory lastAssiduousnessStatusHistory;
 
     public EmployeeWorkSheet() {
     }
@@ -173,6 +177,14 @@ public class EmployeeWorkSheet implements Serializable {
 	return fmt.print(finalWeeklyRestExtraWork);
     }
 
+    public String getHolidayRestString() {
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalHolidayRestExtraWork = new MutablePeriod(getHolidayRest().getMillis(),
+		PeriodType.time());
+	return fmt.print(finalHolidayRestExtraWork);
+    }
+
     public Duration getFirstHourExtraWork() {
 	return firstHourExtraWork;
     }
@@ -203,5 +215,27 @@ public class EmployeeWorkSheet implements Serializable {
 
     public void setBalanceToCompensate(Duration balanceToCompensate) {
 	this.balanceToCompensate = balanceToCompensate;
+    }
+
+    public AssiduousnessStatusHistory getLastAssiduousnessStatusHistory() {
+	return lastAssiduousnessStatusHistory;
+    }
+
+    public void setLastAssiduousnessStatusHistory(YearMonthDay beginDate, YearMonthDay endDate) {
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getEmployee().getAssiduousness()
+		.getStatusBetween(beginDate, endDate)) {
+	    if (assiduousnessStatusHistory.getEndDate() != null) {
+		if (lastAssiduousnessStatusHistory == null
+			|| assiduousnessStatusHistory.getEndDate().isAfter(
+				lastAssiduousnessStatusHistory.getEndDate())) {
+		    this.lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
+		}
+	    } else {
+		this.lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
+		break;
+	    }
+
+	}
+
     }
 }

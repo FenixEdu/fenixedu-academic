@@ -100,6 +100,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
 	Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
 	Duration totalWeeklyRestBalance = Duration.ZERO;
+	Duration totalHolidayBalance = Duration.ZERO;
 	Duration totalBalanceToCompensate = Duration.ZERO;
 
 	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
@@ -156,13 +157,14 @@ public class ReadAssiduousnessWorkSheet extends Service {
 				.plus(workDaySheet.getComplementaryWeeklyRest());
 			totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
 				.getWeeklyRest());
+			totalHolidayBalance = totalHolidayBalance.plus(workDaySheet.getHolidayRest());
 		    }
 		    for (final Leave leave : leavesList) {
 			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
 				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
-                                && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
+				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
 			    if (notes.length() != 0) {
 				notes.append(" / ");
 			    }
@@ -185,6 +187,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
 	employeeWorkSheet.setWorkDaySheetList(workSheet);
 	employeeWorkSheet.setEmployee(assiduousness.getEmployee());
+	employeeWorkSheet.setLastAssiduousnessStatusHistory(beginDate, endDate);
 	Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
 	EmployeeContract lastMailingContract = (EmployeeContract) assiduousness.getEmployee()
 		.getLastContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
@@ -202,6 +205,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
 	employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
 	employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
+	employeeWorkSheet.setHolidayRest(totalHolidayBalance);
 
 	employeeWorkSheet.setBalanceToCompensate(totalBalanceToCompensate);
 	return employeeWorkSheet;

@@ -36,6 +36,10 @@
 	<field name="unitCode" class="java.lang.String"/>
 	<field name="totalBalanceString" class="java.lang.String"/>
 	<field name="unjustifiedBalanceString" class="java.lang.String"/>
+	<field name="lastAssiduousnessStatusHistory.assiduousnessStatus.description" class="java.lang.String"/>
+	<field name="weeklyRestString" class="java.lang.String"/>
+	<field name="complementaryWeeklyRestString" class="java.lang.String"/>
+	<field name="holidayRestString" class="java.lang.String"/>
 
 
 		<group  name="pageBreak" isStartNewPage="true" >
@@ -66,7 +70,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="299"  isSplitAllowed="true" >
+			<band height="372"  isSplitAllowed="true" >
 				<elementGroup><!--  Start: 1 !-->
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -142,7 +146,7 @@
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="7"
-						y="145"
+						y="159"
 						width="514"
 						height="110"
 						key="subreport-1"/>
@@ -152,9 +156,9 @@
 				</elementGroup><!-- End 1 !-->
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="5"
-						y="260"
-						width="260"
+						x="7"
+						y="274"
+						width="254"
 						height="18"
 						key="textField-3"
 						positionType="FixRelativeToBottom"/>
@@ -166,8 +170,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="5"
-						y="280"
+						x="7"
+						y="292"
 						width="254"
 						height="18"
 						key="textField-4"
@@ -180,9 +184,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="8"
-						y="127"
-						width="513"
+						x="6"
+						y="141"
+						width="515"
 						height="18"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -190,6 +194,61 @@
 						<font fontName="Verdana" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{yearMonth}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="124"
+						width="227"
+						height="14"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lastAssiduousnessStatusHistory.assiduousnessStatus.description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="310"
+						width="254"
+						height="18"
+						key="textField-5"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total domingos: "+$F{weeklyRestString}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="328"
+						width="254"
+						height="18"
+						key="textField-6"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total sábados: "+$F{complementaryWeeklyRestString}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="345"
+						width="254"
+						height="18"
+						key="textField-7"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total feriados: "+$F{holidayRestString}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
