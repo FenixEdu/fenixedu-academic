@@ -17,7 +17,7 @@
 <table>
 	<tr>
 		<td>
-			<span class="warning0">Pretende apagar esta dispensa?</span>
+			<span class="warning0"><bean:message key="label.notNeedToEnrol.deleteQuestion" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 		</td>
 		<td>
 			<fr:form action="/notNeedToEnrolEnrolments.do">
@@ -28,7 +28,6 @@
 		</td>
 	</tr>
 </table>
-
 
 
 <fr:form action="/notNeedToEnrolEnrolments.do">
