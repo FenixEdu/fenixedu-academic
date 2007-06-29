@@ -233,6 +233,10 @@
 	</definition>
 	
 	<!-- ************* Master Degree Thesis ************* -->
+	<definition name="masterDegree.thesis.chooseSCP" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/thesis/chooseSCP.jsp"/>
+		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
+	</definition>
 	<definition name="showMasterDegreeThesisList" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/lists/listMasterDegreeThesis.jsp"/>
 		<put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />

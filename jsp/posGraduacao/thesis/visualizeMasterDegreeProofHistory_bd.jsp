@@ -3,11 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
 <bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
@@ -24,7 +25,7 @@
 </h2>
 <h2 align="center">
 	<bean:message key="label.masterDegree.administrativeOffice.modifiedBy"/>: 
-	<bean:write name="responsibleEmployee" property="person.nome" />
+	<bean:write name="responsibleEmployee" property="person.name" />
 </h2>	
 		
 <center>
@@ -43,7 +44,7 @@
 				<bean:write name="student" property="number"/>
 			</td>
 			<td align="left">
-				<bean:write name="student" property="infoPerson.nome"/>
+				<bean:write name="student" property="person.name"/>
 			</td>			
 		</tr>
 		<tr> 
@@ -116,7 +117,7 @@
 				<logic:iterate id="jury" name="juriesList">
 					<tr>
 						<td align="left" ><bean:write name="jury" property="teacherNumber"/></td>
-						<td align="left"><bean:write name="jury" property="infoPerson.nome"/></td>					
+						<td align="left"><bean:write name="jury" property="person.name"/></td>					
 					</tr>				
 				</logic:iterate>
 				<tr> 
@@ -137,10 +138,10 @@
 			</tr>					
 			<logic:iterate id="externalJury" name="externalJuriesList">
 				<tr>
-					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left" ><bean:write name="externalJury" property="person.name"/></td>
 					<td align="left">
-						<logic:notEmpty name="externalJury" property="infoInstitution" >
-							<bean:write name="externalJury" property="infoInstitution.name"/>
+						<logic:notEmpty name="externalJury" property="institution" >
+							<bean:write name="externalJury" property="institutionUnit.name"/>
 						</logic:notEmpty>
 						&nbsp;					
 					</td>					
@@ -154,10 +155,10 @@
 			
 <%
 	java.util.Hashtable paramsVisuzalize = new java.util.Hashtable();
-	InfoStudent infoStudent = (InfoStudent) student;
+	Registration infoStudent = (Registration) student;
 	
 	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().toString());
-	paramsVisuzalize.put("studentNumber", infoStudent.getNumber());
+	paramsVisuzalize.put("scpID", scpID);
 	paramsVisuzalize.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersVisuzalize", paramsVisuzalize, PageContext.PAGE_SCOPE);
 %>	

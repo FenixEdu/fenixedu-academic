@@ -2,34 +2,35 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
 
 <%
 	java.util.Hashtable paramsChange = new java.util.Hashtable();
 	java.util.Hashtable paramsVisuzalize = new java.util.Hashtable();
 	java.util.Hashtable paramsChangeProof = new java.util.Hashtable();
 	java.util.Hashtable paramsVisuzalizeProof = new java.util.Hashtable();
-	InfoStudent infoStudent = (InfoStudent) student;
+	Registration registration = (Registration) student;
 	
-	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().toString());
-	paramsVisuzalize.put("studentNumber", infoStudent.getNumber());
+	paramsVisuzalize.put("degreeType", registration.getDegreeType().toString());
+	paramsVisuzalize.put("scpID", scpID);
 	paramsVisuzalize.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 	pageContext.setAttribute("parametersVisuzalize", paramsVisuzalize, PageContext.PAGE_SCOPE);
 	
-	paramsChange.put("degreeType", infoStudent.getDegreeType().toString());
-	paramsChange.put("studentNumber", infoStudent.getNumber());
+	paramsChange.put("degreeType", registration.getDegreeType().toString());
+	paramsChange.put("scpID", scpID);
 	paramsChange.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 	pageContext.setAttribute("parametersChange", paramsChange, PageContext.PAGE_SCOPE);
 	
-	paramsChangeProof.put("degreeType", infoStudent.getDegreeType().toString());
-	paramsChangeProof.put("studentNumber", infoStudent.getNumber());
+	paramsChangeProof.put("degreeType", registration.getDegreeType().toString());
+	paramsChangeProof.put("scpID", scpID);
 	paramsChangeProof.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersChangeProof", paramsChangeProof, PageContext.PAGE_SCOPE);
 	
-	paramsVisuzalizeProof.put("degreeType", infoStudent.getDegreeType().toString());
-	paramsVisuzalizeProof.put("studentNumber", infoStudent.getNumber());
+	paramsVisuzalizeProof.put("degreeType", registration.getDegreeType().toString());
+	paramsVisuzalizeProof.put("scpID", scpID);
 	paramsVisuzalizeProof.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersVisuzalizeProof", paramsVisuzalizeProof, PageContext.PAGE_SCOPE);
 	

@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 
@@ -16,7 +16,7 @@
 <br/>
 
 <html:form action="/changeMasterDegreeThesisLookup.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" value="<%= ((InfoStudent)student).getNumber().toString()%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="scpID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="MASTER_DEGREE"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
@@ -31,7 +31,7 @@
 				<bean:write name="student" property="number"/>
 			</td>
 			<td align="left">
-				<bean:write name="student" property="infoPerson.nome"/>
+				<bean:write name="student" property="person.name"/>
 			</td>			
 		</tr>
 		<tr> 
@@ -66,10 +66,10 @@
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="guider" name="guidersList">
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.guidersNumbers" property="guidersNumbers" value="<%= ((InfoTeacher)guider).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.guidersNumbers" property="guidersNumbers" value="<%= ((Teacher)guider).getTeacherNumber().toString() %>"/>
 					<tr>
 						<td align="left"><bean:write name="guider" property="teacherNumber"/></td>
-						<td align="left"><bean:write name="guider" property="infoPerson.nome"/></td>
+						<td align="left"><bean:write name="guider" property="person.name"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedGuidersNumbers" property="removedGuidersNumbers">
@@ -114,11 +114,11 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalGuider" name="externalGuidersList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalGuidersIDs" property="externalGuidersIDs" value="<%= ((InfoExternalPerson)externalGuider).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalGuidersIDs" property="externalGuidersIDs" value="<%= ((ExternalContract)externalGuider).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>
+					<td align="left"><bean:write name="externalGuider" property="person.name"/></td>
+					<td align="left"><bean:write name="externalGuider" property="institutionUnit.name"/></td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalGuidersIDs" property="removedExternalGuidersIDs">
 							<bean:write name="externalGuider" property="idInternal"/>
@@ -187,8 +187,8 @@
 			<logic:iterate id="externalGuider" name="externalGuidersSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>						
+					<td align="left"><bean:write name="externalGuider" property="person.name"/></td>
+					<td align="left"><bean:write name="externalGuider" property="institutionUnit.name"/></td>						
 					<td>
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalGuidersIDs" idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
 					</td>
@@ -222,10 +222,10 @@
 				<td>&nbsp;</td>						
 			</tr>
 			<logic:iterate id="assistentGuider" name="assistentsGuidersList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.assistentGuidersNumbers" property="assistentGuidersNumbers" value="<%= ((InfoTeacher)assistentGuider).getTeacherNumber().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.assistentGuidersNumbers" property="assistentGuidersNumbers" value="<%= ((Teacher)assistentGuider).getTeacherNumber().toString() %>"/>
 				<tr>
 					<td align="left"><bean:write name="assistentGuider" property="teacherNumber"/></td>
-					<td align="left"><bean:write name="assistentGuider" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="assistentGuider" property="person.name"/></td>
 					<td>&nbsp;</td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedAssistentGuidersNumbers" property="removedAssistentGuidersNumbers">
@@ -269,11 +269,11 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalAssistentGuidersIDs" property="externalAssistentGuidersIDs" value="<%= ((InfoExternalPerson)externalAssistentGuider).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalAssistentGuidersIDs" property="externalAssistentGuidersIDs" value="<%= ((ExternalContract)externalAssistentGuider).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>
+					<td align="left"><bean:write name="externalAssistentGuider" property="person.name"/></td>
+					<td align="left"><bean:write name="externalAssistentGuider" property="institutionUnit.name"/></td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalAssistentGuidersIDs" property="removedExternalAssistentGuidersIDs">
 							<bean:write name="externalAssistentGuider" property="idInternal"/>
@@ -342,8 +342,8 @@
 			<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>						
+					<td align="left"><bean:write name="externalAssistentGuider" property="person.name"/></td>
+					<td align="left"><bean:write name="externalAssistentGuider" property="institutionUnit.name"/></td>						
 					<td>
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalAssistentGuidersIDs" idName="externalAssistentGuider" property="externalAssistentGuidersIDs" value="idInternal"/>	
 					</td>

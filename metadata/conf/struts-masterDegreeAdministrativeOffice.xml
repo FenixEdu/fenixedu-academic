@@ -31,7 +31,8 @@
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.Integer"/>
+			<form-property name="scpID" type="java.lang.Integer"/>
 		</form-bean>
 		
 		<form-bean name="getStudentByNumberAndGraduationTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -462,6 +463,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
+            <form-property name="scpID" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
@@ -482,6 +484,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
+            <form-property name="scpID" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
@@ -502,6 +505,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
+            <form-property name="scpID" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
@@ -821,6 +825,7 @@
 						key="resources.Action.exceptions.NonExistingActionException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="success" path="/thesis/indexThesis.jsp"/>
+			<forward name="chooseSCP" path="masterDegree.thesis.chooseSCP"/>
 			<forward name="createThesis" path="/thesis/indexCreateThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 		</action>

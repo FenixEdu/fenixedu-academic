@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" %>
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
@@ -19,7 +19,7 @@
 <br/>
 
 <html:form action="/changeMasterDegreeProofLookup.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="scpID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
@@ -37,7 +37,7 @@
 				<bean:write name="student" property="number"/>
 			</td>
 			<td align="left">
-				<bean:write name="student" property="infoPerson.nome"/>
+				<bean:write name="student" property="person.name"/>
 			</td>			
 		</tr>
 		<tr> 
@@ -153,10 +153,10 @@
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="jury" name="juriesList">
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.juriesNumbers" property="juriesNumbers" value="<%= ((InfoTeacher)jury).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.juriesNumbers" property="juriesNumbers" value="<%= ((Teacher)jury).getTeacherNumber().toString() %>"/>
 					<tr>
 						<td align="left"><bean:write name="jury" property="teacherNumber"/></td>
-						<td align="left"><bean:write name="jury" property="infoPerson.nome"/></td>
+						<td align="left"><bean:write name="jury" property="person.name"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedJuriesNumbers" property="removedJuriesNumbers">
@@ -202,13 +202,13 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalJury" name="externalJuriesList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalJuriesIDs" property="externalJuriesIDs" value="<%= ((InfoExternalPerson)externalJury).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalJuriesIDs" property="externalJuriesIDs" value="<%= ((ExternalContract)externalJury).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="person.name"/></td>
 					<td align="left">
-						<logic:notEmpty name="externalJury" property="infoInstitution" >
-							<bean:write name="externalJury" property="infoInstitution.name"/>
+						<logic:notEmpty name="externalJury" property="institutionUnit" >
+							<bean:write name="externalJury" property="institutionUnit.name"/>
 						</logic:notEmpty>&nbsp;
 					</td>
 					<td align="center">
@@ -279,10 +279,10 @@
 			<logic:iterate id="externalJury" name="externalJuriesSearchResultsList">
 				<tr>
 					<td>&nbsp;</td>
-					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="person.name"/></td>
 					<td align="left">
-						<logic:notEmpty name="externalJury" property="infoInstitution" >
-							<bean:write name="externalJury" property="infoInstitution.name"/>
+						<logic:notEmpty name="externalJury" property="institutionUnit" >
+							<bean:write name="externalJury" property="institutionUnit.name"/>
 						</logic:notEmpty>&nbsp;
 					</td>						
 					<td>

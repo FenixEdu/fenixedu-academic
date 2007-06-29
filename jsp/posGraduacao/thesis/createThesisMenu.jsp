@@ -2,15 +2,16 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
 
 <%
 	java.util.Hashtable params = new java.util.Hashtable();
-	InfoStudent infoStudent = (InfoStudent) student;
-	params.put("degreeType", infoStudent.getDegreeType().toString());
-	params.put("studentNumber", infoStudent.getNumber());
+	Registration registration = (Registration) student;
+	params.put("degreeType", registration.getDegreeType().toString());
+	params.put("scpID", scpID);
 	params.put("method", "getStudentForCreateMasterDegreeThesis");
 	pageContext.setAttribute("parameters", params, PageContext.PAGE_SCOPE);
 %>

@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -12,6 +12,7 @@
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
 <logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
@@ -44,7 +45,7 @@
 				<bean:write name="student" property="number"/>
 			</td>
 			<td align="left">
-				<bean:write name="student" property="infoPerson.nome"/>
+				<bean:write name="student" property="person.name"/>
 			</td>			
 		</tr>
 		<tr> 
@@ -131,7 +132,7 @@
 				<logic:iterate id="jury" name="juriesList">
 					<tr>
 						<td align="left" ><bean:write name="jury" property="teacherNumber"/></td>
-						<td align="left"><bean:write name="jury" property="infoPerson.nome"/></td>					
+						<td align="left"><bean:write name="jury" property="person.name"/></td>					
 					</tr>				
 				</logic:iterate>
 			</logic:present >				
@@ -152,10 +153,10 @@
 			</tr>					
 			<logic:iterate id="externalJury" name="externalJuriesList">
 				<tr>
-					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left" ><bean:write name="externalJury" property="person.name"/></td>
 					<td align="left">
-						<logic:notEmpty name="externalJury" property="infoInstitution" >
-							<bean:write name="externalJury" property="infoInstitution.name"/>
+						<logic:notEmpty name="externalJury" property="institutionUnit" >
+							<bean:write name="externalJury" property="institutionUnit.name"/>
 						</logic:notEmpty>
 						&nbsp;
 					</td>					
@@ -171,7 +172,7 @@
 				<bean:message key="label.masterDegree.administrativeOffice.lastModification"/>
 				<bean:write name="lastModification" /><br/>
 				<bean:message key="label.masterDegree.administrativeOffice.employee"/>
-				<bean:write name="responsibleEmployee" property="person.nome" />
+				<bean:write name="responsibleEmployee" property="person.name" />
 			</td>
 		</tr>
 		
@@ -201,10 +202,10 @@
 				String formattedModification = null;
 				
 				java.util.Hashtable paramsHistory = null;
-				InfoStudent infoStudent = (InfoStudent) student;
+				Registration infoStudent = (Registration) student;
 			%>
 			
-			<logic:iterate id="masterDegreeProofVersion" name="masterDegreeProofHistory" type="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion" >
+			<logic:iterate id="masterDegreeProofVersion" name="masterDegreeProofHistory" type="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion" >
 				
 				
 				<%
@@ -213,7 +214,7 @@
 					
 					paramsHistory = new java.util.Hashtable();
 					paramsHistory.put("degreeType", infoStudent.getDegreeType().toString());
-					paramsHistory.put("studentNumber", infoStudent.getNumber());
+					paramsHistory.put("scpID", scpID);
 					paramsHistory.put("masterDegreeProofVersionID", masterDegreeProofVersion.getIdInternal());
 					paramsHistory.put("method", "getStudentAndMasterDegreeProofVersion");
 					pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
@@ -225,7 +226,7 @@
 				<tr>
 					<td align="left" colspan="4" >
 						<html:link page="/visualizeMasterDegreeProofHistory.do" name="parametersHistory">
-							<%= formattedModification %> - <%= masterDegreeProofVersion.getInfoResponsibleEmployee().getPerson().getNome() %>
+							<%= formattedModification %> - <%= masterDegreeProofVersion.getResponsibleEmployee().getPerson().getName() %>
 						</html:link>
 					</td>				
 				</tr>		

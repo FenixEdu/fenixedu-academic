@@ -3,15 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
+<%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" scope="request"/>
 <bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
@@ -34,7 +35,7 @@
 			<bean:write name="student" property="number"/>
 		</td>
 		<td align="left">
-			<bean:write name="student" property="infoPerson.nome"/>
+			<bean:write name="student" property="person.name"/>
 		</td>			
 	</tr>
 	<tr> 
@@ -73,7 +74,7 @@
 		<logic:iterate id="guider" name="guidersList">
 			<tr>
 				<td align="left"><bean:write name="guider" property="teacherNumber"/></td>
-				<td align="left"><bean:write name="guider" property="infoPerson.nome"/></td>
+				<td align="left"><bean:write name="guider" property="person.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
 			</tr>				
@@ -102,8 +103,8 @@
 		<logic:iterate id="externalGuider" name="externalGuidersList">
 			<tr>
 				<td>&nbsp;</td>
-				<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>
+				<td align="left"><bean:write name="externalGuider" property="person.name"/></td>
+				<td align="left"><bean:write name="externalGuider" property="institutionUnit.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
 			</tr>				
@@ -130,7 +131,7 @@
 		<logic:iterate id="assistentGuider" name="assistentsGuidersList">
 			<tr>
 				<td align="left"><bean:write name="assistentGuider" property="teacherNumber"/></td>
-				<td align="left"><bean:write name="assistentGuider" property="infoPerson.nome"/></td>
+				<td align="left"><bean:write name="assistentGuider" property="person.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
 			</tr>				
@@ -159,8 +160,8 @@
 		<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
 			<tr>
 				<td>&nbsp;</td>
-				<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>
+				<td align="left"><bean:write name="externalAssistentGuider" property="person.name"/></td>
+				<td align="left"><bean:write name="externalAssistentGuider" property="institutionUnit.name"/></td>
 				<td>&nbsp;</td>						
 			</tr>				
 		</logic:iterate>
@@ -175,7 +176,7 @@
 			<bean:message key="label.masterDegree.administrativeOffice.lastModification"/>
 			<bean:write name="lastModification" /><br/>
 			<bean:message key="label.masterDegree.administrativeOffice.employee"/>
-			<bean:write name="responsibleEmployee" property="person.nome" />
+			<bean:write name="responsibleEmployee" property="person.name" />
 		</td>
 	</tr>			
 	<tr> 
@@ -207,10 +208,10 @@
 			String formattedModification = null;
 			
 			java.util.Hashtable paramsHistory = null;
-			InfoStudent infoStudent = (InfoStudent) student;
+			Registration infoStudent = (Registration) student;
 		%>
 		
-		<logic:iterate id="masterDegreeThesisDataVersion" name="masterDegreeThesisHistory" type="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion" >
+		<logic:iterate id="masterDegreeThesisDataVersion" name="masterDegreeThesisHistory" type="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion" >
 			
 			
 			<%
@@ -219,7 +220,7 @@
 				
 				paramsHistory = new java.util.Hashtable();
 				paramsHistory.put("degreeType", infoStudent.getDegreeType().toString());
-				paramsHistory.put("studentNumber", infoStudent.getNumber());
+				paramsHistory.put("scpID", scpID);
 				paramsHistory.put("masterDegreeThesisDataVersionID", masterDegreeThesisDataVersion.getIdInternal());
 				paramsHistory.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 				pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
@@ -231,7 +232,7 @@
 			<tr>
 				<td align="left" colspan="4" >
 					<html:link page="/visualizeMasterDegreeThesisHistory.do" name="parametersHistory">
-						<%= formattedModification %> - <%= masterDegreeThesisDataVersion.getInfoResponsibleEmployee().getPerson().getNome() %>
+						<%= formattedModification %> - <%= masterDegreeThesisDataVersion.getResponsibleEmployee().getPerson().getName() %>
 					</html:link>
 				</td>				
 			</tr>		

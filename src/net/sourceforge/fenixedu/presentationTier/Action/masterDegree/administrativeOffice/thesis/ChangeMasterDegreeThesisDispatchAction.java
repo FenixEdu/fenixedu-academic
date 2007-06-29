@@ -3,18 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -34,79 +27,33 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
     public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject
+		.readStudentCurricularPlanByOID(scpID);
 
-        //Integer degreeType = (Integer) request.getAttribute("degreeType");
-        //Integer studentNumber = (Integer)
-        // request.getAttribute("studentNumber");
-        String degreeType = request.getParameter("degreeType");
-        Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request,
+		new ActionErrors(), studentCurricularPlan);
 
-        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-        ActionErrors actionErrors = new ActionErrors();
-        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+	MasterDegreeThesisDataVersion thesisDataVersion = studentCurricularPlan.getMasterDegreeThesis()
+		.getActiveMasterDegreeThesisDataVersion();
 
-        if (isSuccess == false) {
-            throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
-                    mapping.findForward("error"));
+	if (!thesisDataVersion.getGuiders().isEmpty())
+	    request.setAttribute(SessionConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
 
-        }
+	if (!thesisDataVersion.getAssistentGuiders().isEmpty())
+	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion
+		    .getAssistentGuiders());
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+	if (!thesisDataVersion.getExternalAssistentGuiders().isEmpty())
+	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, thesisDataVersion
+		    .getExternalAssistentGuiders());
 
-        /* * * get student curricular plan * * */
-        Object argsStudentCurricularPlan[] = { studentNumber, DegreeType.valueOf(degreeType) };
-        try {
-            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
-                    userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                    argsStudentCurricularPlan);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	if (!thesisDataVersion.getExternalGuiders().isEmpty())
+	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion
+		    .getExternalGuiders());
 
-        if (infoStudentCurricularPlan == null) {
-            throw new NonExistingActionException(
-                    "error.exception.masterDegree.nonExistentActiveStudentCurricularPlan", mapping
-                            .findForward("error"));
-        }
-
-        /* * * get master degree thesis data * * */
-        Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
-        try {
-            infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils
-                    .executeService(userView,
-                            "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-                            argsMasterDegreeThesisDataVersion);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(
-                    "error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping
-                            .findForward("error"));
-
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        if (infoMasterDegreeThesisDataVersion.getInfoGuiders().isEmpty() == false)
-            request.setAttribute(SessionConstants.GUIDERS_LIST, infoMasterDegreeThesisDataVersion
-                    .getInfoGuiders());
-
-        if (infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders().isEmpty() == false)
-            request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST,
-                    infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders());
-
-        if (infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders().isEmpty() == false)
-            request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-                    infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
-
-        if (infoMasterDegreeThesisDataVersion.getInfoExternalGuiders().isEmpty() == false)
-            request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST,
-                    infoMasterDegreeThesisDataVersion.getInfoExternalGuiders());
-
-        //DynaActionForm changeMasterDegreeThesisForm = new DynaActionForm();
-        DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-        changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion
-                .getDissertationTitle());
+	DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
+	changeMasterDegreeThesisForm.set("dissertationTitle", thesisDataVersion.getDissertationTitle());
 
         return mapping.findForward("start");
 

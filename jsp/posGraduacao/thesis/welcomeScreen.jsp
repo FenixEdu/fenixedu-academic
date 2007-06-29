@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
@@ -24,7 +24,7 @@
 			<bean:write name="student" property="number"/>
 		</td>
 		<td align="left">
-			<bean:write name="student" property="infoPerson.nome"/>
+			<bean:write name="student" property="person.name"/>
 		</td>			
 	</tr>
 	
