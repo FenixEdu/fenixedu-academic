@@ -44,16 +44,18 @@ import org.apache.struts.util.LabelValueBean;
 
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
-    private final static ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+    private final static ResourceBundle applicationResources = ResourceBundle.getBundle(
+	    "resources.ApplicationResources", LanguageUtils.getLocale());
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        RenderUtils.invalidateViewState();
-	
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+
 	Registration registration = null;
-	
+
 	final Integer registrationOID = getRegistrationOID(request);
 	final Student loggedStudent = getUserView(request).getPerson().getStudent();
-	
+
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
 	} else if (loggedStudent != null) {
@@ -71,14 +73,17 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    return getStudentCP(registration, mapping, request);
 	}
     }
-    
-    public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        RenderUtils.invalidateViewState();
-	
+
+    public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+
 	DynaActionForm actionForm = (DynaActionForm) form;
-	String studentNumber = (String) actionForm.get("studentNumber");
-	List<Registration> registrations = Registration.readByNumber(Integer.valueOf(studentNumber));
-	
+	// String studentNumber = (String) actionForm.get("studentNumber");
+	// List<Registration> registrations =
+	// Registration.readByNumber(Integer.valueOf(studentNumber));
+	final List<Registration> registrations = getStudent(actionForm).getRegistrations();
+
 	if (registrations.isEmpty()) {
 	    return mapping.findForward("NotAuthorized");
 	} else {
@@ -86,43 +91,63 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
     }
 
+    private Student getStudent(DynaActionForm form) {
+	final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
+
+	return Student.readStudentByNumber(studentNumber);
+
+    }
 
     private Integer getRegistrationOID(HttpServletRequest request) {
 	String registrationOID = request.getParameter("registrationOID");
 	if (registrationOID == null || !StringUtils.isNumeric(registrationOID)) {
 	    registrationOID = (String) request.getAttribute("registrationOID");
 	}
-	
-	return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
+
+	return (registrationOID == null || registrationOID.equals("") || !StringUtils
+		.isNumeric(registrationOID)) ? null : Integer.valueOf(registrationOID);
     }
 
-    private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, final HttpServletRequest request) {
+    private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping,
+	    final HttpServletRequest request) {
 	request.setAttribute("registration", registration);
-	
-	request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(registration, request));
-	request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration.getStudentCurricularPlans()));
-        request.setAttribute("enrollmentOptions", EnrollmentStateSelectionType.getLabelValueBeanList());
-        request.setAttribute("enrolmentStateSelectionType", request.getParameter("select") == null ? EnrollmentStateSelectionType.ALL_TYPE : Integer.valueOf(request.getParameter("select")));
-	request.setAttribute("organizedBy", request.getParameter("organizedBy") == null ? "executionYears" : request.getParameter("organizedBy"));
 
-	if (request.getParameter("degreeCurricularPlanID") == null || Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
+	request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(
+		registration, request));
+	request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration
+		.getStudentCurricularPlans()));
+	request.setAttribute("enrollmentOptions", EnrollmentStateSelectionType.getLabelValueBeanList());
+	request.setAttribute("enrolmentStateSelectionType",
+		request.getParameter("select") == null ? EnrollmentStateSelectionType.ALL_TYPE : Integer
+			.valueOf(request.getParameter("select")));
+	request.setAttribute("organizedBy",
+		request.getParameter("organizedBy") == null ? "executionYears" : request
+			.getParameter("organizedBy"));
+
+	if (request.getParameter("degreeCurricularPlanID") == null
+		|| Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
 	    return mapping.findForward("ShowStudentCurriculum");
 	} else {
-	    request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
+	    request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request
+		    .getParameter("degreeCurricularPlanID")));
 	    return mapping.findForward("ShowStudentCurriculumForCoordinator");
 	}
     }
 
-    private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(final Registration registration, final HttpServletRequest request) {
+    private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(
+	    final Registration registration, final HttpServletRequest request) {
 	final List<StudentCurricularPlan> selectedStudentCurricularPlans;
 	final String studentCPID = getStudentCPID(request);
-	final StudentCurricularPlanIDDomainType scpIdType = studentCPID == null ? StudentCurricularPlanIDDomainType.NEWEST : new StudentCurricularPlanIDDomainType(studentCPID);
+	final StudentCurricularPlanIDDomainType scpIdType = studentCPID == null ? StudentCurricularPlanIDDomainType.NEWEST
+		: new StudentCurricularPlanIDDomainType(studentCPID);
 	if (scpIdType.isNewest()) {
-	    selectedStudentCurricularPlans = Collections.singletonList(registration.getLastStudentCurricularPlan());
+	    selectedStudentCurricularPlans = Collections.singletonList(registration
+		    .getLastStudentCurricularPlan());
 	} else if (scpIdType.isAll()) {
 	    selectedStudentCurricularPlans = getSortedStudentCurricularPlans(registration);
 	} else {
-	    selectedStudentCurricularPlans = Collections.singletonList(getStudentCurricularPlan(registration, Integer.valueOf(studentCPID)));
+	    selectedStudentCurricularPlans = Collections.singletonList(getStudentCurricularPlan(
+		    registration, Integer.valueOf(studentCPID)));
 	}
 	return selectedStudentCurricularPlans;
     }
@@ -132,7 +157,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	if (result == null) {
 	    result = (String) request.getAttribute("studentCPID");
 	}
-	
+
 	return result;
     }
 
@@ -144,13 +169,15 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	return result;
     }
 
-    private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final Integer scpId) {
-	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+    private StudentCurricularPlan getStudentCurricularPlan(final Registration registration,
+	    final Integer scpId) {
+	for (final StudentCurricularPlan studentCurricularPlan : registration
+		.getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.getIdInternal().equals(scpId)) {
 		return studentCurricularPlan;
 	    }
 	}
-	
+
 	return null;
     }
 
@@ -187,9 +214,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
 	return result;
     }
-    
+
     public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws ExistingActionException, FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) throws ExistingActionException,
+	    FenixFilterException, FenixServiceException {
 
 	// get and set the degreeCurricularPlanID from the request and onto the
 	// request
