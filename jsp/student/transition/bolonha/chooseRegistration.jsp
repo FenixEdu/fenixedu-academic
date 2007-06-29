@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-<logic:present role="STUDENT">
+<logic:present role="COORDINATOR">
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>
 
@@ -21,7 +21,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd" />
 				<fr:property name="columnClasses" value=",tdhl1,," />
-				<fr:property name="linkFormat(view)" value="/bolonhaTransitionManagement.do?method=showStudentCurricularPlan&amp;registrationId=${idInternal}" />
+				<fr:property name="linkFormat(view)" value="/bolonhaTransitionManagement.do?method=showStudentCurricularPlan&amp;registrationId=${idInternal}&amp;studentId=${student.idInternal}" />
 				<fr:property name="key(view)" value="label.view"/>
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="contextRelative(view)" value="true"/>

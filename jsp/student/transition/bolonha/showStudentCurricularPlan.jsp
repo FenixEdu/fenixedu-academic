@@ -5,14 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-<logic:present role="STUDENT">
+<logic:present role="COORDINATOR">
 	<h2><bean:message key="label.curricularPlan"
-		bundle="APPLICATION_RESOURCES" /></h2>
+		bundle="APPLICATION_RESOURCES" /> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h2>
 
-	<div class="infoop2">
-		<bean:message  key="label.transition.bolonha.message.part1" bundle="STUDENT_RESOURCES"/>
-		<bean:message  key="label.transition.bolonha.message.part2" bundle="STUDENT_RESOURCES"/>
-	</div>
 	<br/>	
 	<logic:notEmpty name="registration" property="lastStudentCurricularPlan.credits">
 		<fr:view	name="registration" 

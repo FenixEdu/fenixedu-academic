@@ -332,4 +332,14 @@
         <put name="body" value="/coordinator/scientificCommission/manageScientificCommission.jsp"/>
     </definition>
     
+    
+    <!-- Begin: Bolonha Transition Management -->
+	<definition name="transition.bolonha.chooseRegistration" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/transition/bolonha/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/transition/bolonha/showStudentCurricularPlan.jsp"/>
+	</definition>
+	<!-- End: Bolonha Transition Management -->
+    
 </tiles-definitions>

@@ -276,7 +276,7 @@
 	    </form-bean>
 	    
 	    
-	    <!-- transitionRegistrationsManagementForm -->
+	    <!-- bolonhaTransitionManagementForm -->
 		<form-bean name="bolonhaTransitionManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="registrationId" type="java.lang.Integer" />
