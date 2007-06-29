@@ -29,6 +29,8 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("idInternal"));    
     }
     
+    public abstract List<ResourceAllocation> getResourceAllocationsForCheck();
+    
     public abstract String getIdentification();
 
     public abstract RoomClassification getRoomClassification();
@@ -204,7 +206,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
 	    Boolean dailyFrequencyMarkSunday) {
 	
-	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {
+	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
 		if (occupation.alreadyWasOccupied(startDate, endDate, startTime, endTime, 
@@ -220,7 +222,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
 	    Boolean dailyFrequencyMarkSunday, EventSpaceOccupation occupationToNotCheck) {
 	
-	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {
+	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
 		if (!occupation.equals(occupationToNotCheck) && occupation.alreadyWasOccupied(startDate, endDate, startTime, endTime, 

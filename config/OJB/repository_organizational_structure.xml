@@ -1,7 +1,21 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Party -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Party" table="PARTY">	
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.Person"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Party" table="PARTY">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.Person"/>    		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>    
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit"/>	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
@@ -81,7 +95,10 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Accountability -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Accountability" table="ACCOUNTABILITY">	
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction"/>	
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>	       
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Contract"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract"/>	       
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation"/>	     
 </class-descriptor>
 
@@ -136,7 +153,6 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.Function" table="ACCOUNTABILITY_TYPE">
 
 </class-descriptor>
-
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction" table="ACCOUNTABILITY_TYPE">
 

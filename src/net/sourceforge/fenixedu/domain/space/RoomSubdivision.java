@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -11,8 +10,6 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.YearMonthDay;
 
@@ -49,18 +46,14 @@ public class RoomSubdivision extends RoomSubdivision_Base {
     }  
     
     @Override
-    public List<ResourceAllocation> getResourceAllocations() {
-        List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
-        result.addAll(super.getResourceAllocations());
+    public List<ResourceAllocation> getResourceAllocationsForCheck() {
+	List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();        
+	result.addAll(getResourceAllocations());        
         Room suroundingSpace = (Room) getSuroundingSpace();
-        result.addAll(suroundingSpace.getResourceAllocationsWithoutRoomSubdivionsAllocations());
-	return result;
+        result.addAll(suroundingSpace.getResourceAllocations());	
+        return result;
     }
-         
-    public List<ResourceAllocation> getResourceAllocationsWithoutSuroundingSpaceAllocations() {
-	return super.getResourceAllocations();
-    }   
-    
+                
     @Override
     public boolean isRoomSubdivision() {
         return true;
@@ -180,5 +173,5 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	public RoomSubdivisionInformation execute() {
 	    return new RoomSubdivisionInformation(getIdentification(), getSpace(), getBegin(), getEnd());
 	}
-    }
+    }  
 }

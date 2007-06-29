@@ -66,25 +66,19 @@ public class Room extends Room_Base {
     public boolean isRoom() {
 	return true;
     }
-          
+         
     @Override
-    public List<ResourceAllocation> getResourceAllocations() {
-        List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
-        if(roomSubdivisions.isEmpty()) {
-            return super.getResourceAllocations();
-        } else {
-            List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
-            result.addAll(super.getResourceAllocations());
+    public List<ResourceAllocation> getResourceAllocationsForCheck() {
+	List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();		
+	result.addAll(getResourceAllocations());        
+	List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
+	if(!roomSubdivisions.isEmpty()) {                       
             for (RoomSubdivision roomSubdivision : roomSubdivisions) {
-		result.addAll(roomSubdivision.getResourceAllocationsWithoutSuroundingSpaceAllocations());
-	    }
-            return result;
-        }
-    }
-    
-    public List<ResourceAllocation> getResourceAllocationsWithoutRoomSubdivionsAllocations() {
-	return super.getResourceAllocations();
-    }     
+		result.addAll(roomSubdivision.getResourceAllocations());
+	    }            
+        }	
+        return result;
+    }   
     
     private List<RoomSubdivision> getRoomSubdivisions() {	
 	List<RoomSubdivision> result = new ArrayList<RoomSubdivision>(); 

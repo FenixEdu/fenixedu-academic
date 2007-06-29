@@ -94,8 +94,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateTimeIntervals() {
 	final HourMinuteSecond start = getStartTimeDateHourMinuteSecond();
-	final HourMinuteSecond end = getEndTimeDateHourMinuteSecond();
-	System.out.println("I am... I am called...");
+	final HourMinuteSecond end = getEndTimeDateHourMinuteSecond();	
 	return start != null && end != null && start.isBefore(end);
     }
 
