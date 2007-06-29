@@ -261,6 +261,16 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
+    public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
+	for (final ICurricularRule curricularRule : getCurricularRules(executionYear)) {
+	    if (curricularRule.getCurricularRuleType() == ruleType) {
+		result.add(curricularRule);
+	    }
+	}
+	return result;
+    }
+
     public Double getMaxEctsCredits() {
 	return getMaxEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
     }

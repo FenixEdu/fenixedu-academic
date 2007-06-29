@@ -10,6 +10,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -126,5 +127,15 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
         return Collections.EMPTY_SET;
     }
     
+    @Override
+    public boolean isConcluded(ExecutionYear executionYear) {
+        return true;
+    }
+    
+    @Override
+    public Double getCreditsConcluded(ExecutionYear executionYear) {
+        return Double.valueOf(0d);
+    }
+   
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
 }

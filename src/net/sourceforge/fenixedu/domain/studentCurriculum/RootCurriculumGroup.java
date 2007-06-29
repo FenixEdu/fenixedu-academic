@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.Set;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
@@ -84,6 +88,76 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    super.addChildCurriculumGroups(rootCourseGroup, executionPeriod);
 	}
 
+    }
+    
+    public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if(curriculumModule.isCycleCurriculumGroup()) {
+		CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) curriculumModule;
+		if(cycleCurriculumGroup.isCycle(cycleType)) {
+		    return cycleCurriculumGroup;
+		}
+	    }
+	}
+	return null;
+    }
+    
+    public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
+	Collection<CycleCurriculumGroup> cycleCurriculumGroups = new HashSet<CycleCurriculumGroup>();
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if(curriculumModule.isCycleCurriculumGroup()) {
+		cycleCurriculumGroups.add((CycleCurriculumGroup) curriculumModule);
+	    }
+	}
+	return cycleCurriculumGroups;
+    }
+    
+    public DegreeType getDegreeType() {
+	return getStudentCurricularPlan().getDegreeType();
+    }
+    
+    public boolean hasConcludedCycle(CycleType cycleType, ExecutionYear executionYear) {
+	/*if(cycleType == null) {
+	    for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
+		CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+		if(cycleCurriculumGroup != null) {
+		    if(!cycleCurriculumGroup.isConcluded(executionYear)) {
+			return false;
+		    }
+		} else {
+		    return false;
+		}
+	    }
+	    
+	    return true;
+	} else {
+	    if(getDegreeType().getCycleTypes().contains(cycleType)) {
+		CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+		if(cycleCurriculumGroup != null) {
+		    return cycleCurriculumGroup.isConcluded(executionYear);
+		}
+	    }
+	    return false;
+	}
+	*/
+	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
+	    if(cycleType == null || degreeCycleType == cycleType) {
+		if(!isConcluded(degreeCycleType, executionYear)) {
+		    return false;
+		}
+	    }
+	}
+	
+	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
+    }
+    
+    private boolean isConcluded(CycleType cycleType, ExecutionYear executionYear) {
+	CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+	if(cycleCurriculumGroup != null) {
+	    return cycleCurriculumGroup.isConcluded(executionYear);
+	} else {
+	    return false;
+	}	
     }
 
 }

@@ -1680,28 +1680,28 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasConcludedFirstCycle() {
-	return hasConcludedCycle(CycleType.FIRST_CYCLE);
+	return hasConcludedCycle(CycleType.FIRST_CYCLE, null);
     }
     
     final public boolean hasConcludedSecondCycle() {
-	return hasConcludedCycle(CycleType.SECOND_CYCLE);
+	return hasConcludedCycle(CycleType.SECOND_CYCLE, null);
     }
 
-    final public boolean hasConcludedCycle(final CycleType cycleType) {
-	// TODO:
-	if (cycleType == null) {
-
-	} else {
-	    
+    final public boolean hasConcludedCycle(final CycleType cycleType, ExecutionYear executionYear) {
+	
+	StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	
+	if(lastStudentCurricularPlan == null) {
+	    throw new DomainException("error.registration.has.no.student.curricular.plan");
 	}
 	
-	return true;
+	return lastStudentCurricularPlan.hasConcludedCycle(cycleType, executionYear);
     }
     
     final public List<CycleType> getConcludedCycles() {
 	final List<CycleType> result = new ArrayList<CycleType>();
 	for (final CycleType cycleType : CycleType.getSortedValues()) {
-	    if (hasConcludedCycle(cycleType)) {
+	    if (hasConcludedCycle(cycleType, null)) {
 		result.add(cycleType);
 	    }
 	}

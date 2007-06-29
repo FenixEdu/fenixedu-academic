@@ -89,7 +89,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().hasConcludedCycle(getRequestedCycle())) {
+	    if (!getRegistration().hasConcludedCycle(getRequestedCycle(), null)) {
 		throw new DomainException("DiplomaRequest.registration.hasnt.concluded.requested.cycle");
 	    }
 	    

@@ -1028,6 +1028,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return false;
 	}
     }
+
+    public boolean isAproved(final ExecutionYear executionYear) {
+	return getExecutionYear().isBeforeOrEquals(executionYear) && isApproved();
+    }
     
     protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
@@ -1312,5 +1316,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return null;
     }
+    
+    @Override
+    public boolean isConcluded(ExecutionYear executionYear) {
+	return isAproved(executionYear);
+    }
+    
+    @Override
+    public Double getCreditsConcluded(ExecutionYear executionYear) {
+	if(isAproved(executionYear)) {
+	    return getEctsCredits();
+	}
+        return Double.valueOf(0d);
+    }
+    
 
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -37,6 +38,19 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 		    "error.curriculumGroup.CycleParentDegreeModuleCanOnlyBeCycleCourseGroup");
 	}
 	super.setDegreeModule(degreeModule);
+    }
+
+    @Override
+    public boolean isCycleCurriculumGroup() {
+        return true;
+    }
+    
+    public boolean isCycle(CycleType cycleType) {
+	return ((CycleCourseGroup)getDegreeModule()).getCycleType() == cycleType;
+    }
+    
+    public boolean isFirstCycle() {
+	return isCycle(CycleType.FIRST_CYCLE);
     }
 
 }
