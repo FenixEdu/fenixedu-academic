@@ -90,25 +90,15 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         }
 	super.setPeriod(period);
     }
-    
-    @Override
-    public void setStartTimeDateHourMinuteSecond(HourMinuteSecond startTime) {
-        if(startTime == null || (getEndTimeDateHourMinuteSecond() != null 
-        	&& !startTime.isBefore(getEndTimeDateHourMinuteSecond()))) {
-            throw new DomainException("error.EventSpaceOccupation.invalid.startTime");
-        }
-	super.setStartTimeDateHourMinuteSecond(startTime);
+
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateTimeIntervals() {
+	final HourMinuteSecond start = getStartTimeDateHourMinuteSecond();
+	final HourMinuteSecond end = getEndTimeDateHourMinuteSecond();
+	System.out.println("I am... I am called...");
+	return start != null && end != null && start.isBefore(end);
     }
-    
-    @Override
-    public void setEndTimeDateHourMinuteSecond(HourMinuteSecond endTime) {
-	if(endTime == null || (getStartTimeDateHourMinuteSecond() != null 
-		&& !getStartTimeDateHourMinuteSecond().isBefore(endTime))) {
-            throw new DomainException("error.EventSpaceOccupation.invalid.startTime");
-        }
-	super.setEndTimeDateHourMinuteSecond(endTime);
-    }
-    
+
     @Override
     public boolean isEventSpaceOccupation() {
 	return true;

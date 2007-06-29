@@ -52,7 +52,7 @@ public class EditLesson extends Service {
         	LessonSpaceOccupation roomOccupation = aula.getLessonSpaceOccupation();        	
                 aula.edit(weekDay, begin, end, infoShift.getTipo(), frequency, weekOfQuinzenalStart);                                            
                 
-                if(salaNova != null) {                    
+                if(salaNova != null) {
                     try {                
                 	if(roomOccupation == null) {
                 	    final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(infoRoomOccupation.getInfoPeriod().getIdInternal());                	                    	
@@ -62,7 +62,7 @@ public class EditLesson extends Service {
                 	    roomOccupation.edit(salaNova, HourMinuteSecond.fromCalendarFields(begin), HourMinuteSecond.fromCalendarFields(end), weekDay);
                 	}
                     } catch (DomainException e) {
-                	throw new InterceptingServiceException();
+                	throw new InterceptingServiceException(e);
                     }
                 } else {
                     if(roomOccupation != null) {

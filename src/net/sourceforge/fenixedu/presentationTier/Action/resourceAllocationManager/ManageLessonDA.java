@@ -187,7 +187,6 @@ public class ManageLessonDA extends
 			    .getInfoRoomOccupation() != null) {
 		
 		InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
-		infoLesson.getInfoRoomOccupation().getInfoRoom();
 		emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
 		
 		// Permit selection of current room only if the day didn't

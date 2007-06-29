@@ -3,6 +3,8 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Building" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.AllocatableSpace" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomSubdivision" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.AllocatableSpace" table="RESOURCE">
@@ -38,9 +40,13 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceOccupation" table="RESOURCE_ALLOCATION">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.EventSpaceOccupation" />	
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.EventSpaceOccupation" table="RESOURCE_ALLOCATION">
