@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class TemporarySubstitution extends TemporarySubstitution_Base {
     
-    protected  TemporarySubstitution() {
+    public TemporarySubstitution() {
         super();
     }
     
