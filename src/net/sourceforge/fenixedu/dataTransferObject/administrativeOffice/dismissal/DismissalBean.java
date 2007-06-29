@@ -7,6 +7,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 public class DismissalBean implements Serializable {
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private DomainReference<ExecutionPeriod> executionPeriod;
     private Collection<SelectedCurricularCourse> dismissals;
     private DomainReference<CourseGroup> courseGroup;
     private Collection<SelectedEnrolment> enrolments;
@@ -55,6 +57,14 @@ public class DismissalBean implements Serializable {
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null;
     }
+    
+    public ExecutionPeriod getExecutionPeriod() {
+	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    }
+
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    }    
     
     public DismissalType getDismissalType() {
         return dismissalType;

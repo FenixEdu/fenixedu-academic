@@ -583,6 +583,10 @@
 
 <schema name="DismissalBean.DismissalType.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -595,7 +599,11 @@
 </schema>
 
 <schema name="DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean">
+	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+	</slot>	
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
 		<property name="maxLength" value="5" />
 		<property name="required" value="false" />
@@ -655,7 +663,10 @@
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="equivalence.view" />
 	</slot>
-	<slot name="grade" key="label.studentDismissal.grade"/>	
+	<slot name="grade" key="label.studentDismissal.grade"/>
+	<slot name="executionPeriod" key="label.executionPeriod" layout="format">
+		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
+	</slot>		
 </schema>
 
 <schema name="Dismissal.with.fullPath" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal" >

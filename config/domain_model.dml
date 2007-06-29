@@ -1536,6 +1536,7 @@ class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sour
 	String ojbConcreteClass;
 	Double givenCredits;
 	Integer keyStudentCurricularPlan;
+	Integer keyExecutionPeriod;
 }
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
@@ -6459,6 +6460,13 @@ relation CreditsDismissalEquivalence {
 	}
 }
 
+relation CreditsExecutionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	
+	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
+		multiplicity *;
+	}
+}
 
 relation EnrolmentPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {

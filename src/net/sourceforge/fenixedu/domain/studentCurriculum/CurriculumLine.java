@@ -121,4 +121,5 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	degreeModules.add(getDegreeModule());
     }
 
+    public abstract ExecutionPeriod getExecutionPeriod();
 }

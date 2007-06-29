@@ -55,6 +55,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     public abstract boolean isRoot();
 
+    public boolean isCycleCurriculumGroup() {
+	return false;
+    }
+
     public boolean isEnrolment() {
 	return false;
     }
@@ -155,5 +159,9 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void collectDismissals(final List<Dismissal> result);
 
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
+    
+    abstract public boolean isConcluded(ExecutionYear executionYear);
+    abstract public Double getCreditsConcluded(ExecutionYear executionYear);
+    
 
 }

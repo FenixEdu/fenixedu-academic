@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedExternalEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -113,6 +114,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
+	dismissalBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
 	request.setAttribute("dismissalBean", dismissalBean);
 	
 	try {
@@ -159,14 +161,14 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
 		executeService("CreateNewCreditsDismissal", new Object[] { dismissalBean.getStudentCurricularPlan(),
 			dismissalBean.getCourseGroup(), dismissalBean.getDismissals(),
-			dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits() });
+			dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(), dismissalBean.getExecutionPeriod() });
 
 	    } else {
 		
 		executeService("CreateNewEquivalenceDismissal", new Object[] { dismissalBean.getStudentCurricularPlan(),
 			dismissalBean.getCourseGroup(), dismissalBean.getDismissals(),
 			dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
-			dismissalBean.getGrade() });
+			dismissalBean.getGrade(), dismissalBean.getExecutionPeriod() });
 	    }
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());

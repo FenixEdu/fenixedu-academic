@@ -23,22 +23,30 @@ public class Credits extends Credits_Base {
 	setOjbConcreteClass(this.getClass().getName());
     }
     
-    public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments) {
+    public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
 	this();
-	init(studentCurricularPlan, dismissals, enrolments);
+	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
     }
     
-    public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments, Double credits) {
+    public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
 	this();
-	init(studentCurricularPlan, courseGroup, enrolments, credits);
+	init(studentCurricularPlan, courseGroup, enrolments, credits, executionPeriod);
+    }
+    
+    protected void initExecutionPeriod(ExecutionPeriod executionPeriod) {
+	if(executionPeriod == null) {
+	    throw new DomainException("error.credits.wrong.arguments");
+	}
+	setExecutionPeriod(executionPeriod);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments, Double credits) {
+    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
 	if(studentCurricularPlan == null || courseGroup == null || credits == null) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
 
 	checkGivenCredits(studentCurricularPlan, courseGroup, credits);
+	initExecutionPeriod(executionPeriod);
 	
 	setStudentCurricularPlan(studentCurricularPlan);
 	setGivenCredits(credits);
@@ -71,12 +79,13 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments) {
+    protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
 	if(studentCurricularPlan == null || dismissals == null || dismissals.isEmpty()) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
+	
+	initExecutionPeriod(executionPeriod);
 	setStudentCurricularPlan(studentCurricularPlan);
-
 	addEnrolments(enrolments);
 	
 	for (final SelectedCurricularCourse selectedCurricularCourse : dismissals) {

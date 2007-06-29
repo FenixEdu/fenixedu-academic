@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -104,7 +105,7 @@ public class Dismissal extends Dismissal_Base {
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         if(hasCurricularCourse()) {
-            return getCurricularCourse().isEquivalent(curricularCourse);
+            return getExecutionPeriod().isBeforeOrEquals(executionPeriod) && getCurricularCourse().isEquivalent(curricularCourse);
         } else {
             return false;
         }
@@ -168,4 +169,22 @@ public class Dismissal extends Dismissal_Base {
         removeCredits();
         super.delete();
     }
+    
+    @Override
+    public boolean isConcluded(ExecutionYear executionYear) {
+	return getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+    }
+
+    @Override
+    public Double getCreditsConcluded(ExecutionYear executionYear) {
+	if(isConcluded(executionYear)) {
+	    return getEctsCredits();
+	}
+        return Double.valueOf(0d);
+    }
+
+    @Override
+    public ExecutionPeriod getExecutionPeriod() {
+	return getCredits().getExecutionPeriod();
+    }    
 }
