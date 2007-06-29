@@ -16,7 +16,7 @@ public class DeleteExtraWorkRequest extends Service {
 	    UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit()
 		    .getUnitExtraWorkAmountByYear(
 			    extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()));
-	    unitExtraWorkAmount.sumSpent(extraWorkRequest.getAmount());
+	    unitExtraWorkAmount.subtractSpent(extraWorkRequest.getAmount());
 	}
 	extraWorkRequest.delete();
     }
