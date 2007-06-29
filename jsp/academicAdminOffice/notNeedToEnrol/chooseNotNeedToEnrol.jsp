@@ -10,14 +10,15 @@
 <fr:view name="bean" schema="notNeedToEnroll.student.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thright mvert15"/>
+		<fr:property name="rowClasses" value="tdhl1,"/>
 	</fr:layout>
 </fr:view>
 
 <fr:form action="/notNeedToEnrolEnrolments.do?method=chooseNotNeedToEnrol">
 	<fr:edit id="showNotNeedToEnrol" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean">
 		<fr:layout name="pages">
-			<fr:property name="classes" value="tstyle1 thlight"/>
-			<fr:property name="columnClasses" value=",,acenter,acenter,,"/>
+			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="columnClasses" value="acenter,acenter,aleft,acenter,inobullet,"/>
 			<fr:property name="paged" value="false"/>
 			<fr:property name="subSchema" value="notNeedToEnroll.view.notNeedToEnroll"/>
 			<fr:property name="buttonLabel" value="button.edit"/>
