@@ -286,8 +286,4 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	return getNewDegreeModulesCount() > 0;
     }
 
-    public CourseGroup getPreviousCourseGroupForNewCurricularCourses() {
-	throw new Error("not.implemented");
-    }
-
 }
