@@ -11,6 +11,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.contrib.HSSFCellUtil;
 import org.apache.poi.hssf.util.CellReference;
+import org.joda.time.DateTime;
+import org.joda.time.TimeOfDay;
+import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class StyledExcelSpreadsheet {
     private HSSFWorkbook workbook;
@@ -19,11 +24,29 @@ public class StyledExcelSpreadsheet {
 
     private ExcelStyle excelStyle;
 
+    private boolean wrapText;
+
+    private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+
+    private static final DateTimeFormatter dateTimeFormat = DateTimeFormat
+	    .forPattern("dd/MM/yyyy HH:mm");
+
+    private static final DateTimeFormatter timeFormat = DateTimeFormat.forPattern("HH:mm");
+
     public StyledExcelSpreadsheet(final String sheetName) {
 	workbook = new HSSFWorkbook();
 	excelStyle = new ExcelStyle(workbook);
 	sheet = workbook.createSheet(sheetName);
 	sheet.setGridsPrinted(false);
+	wrapText = true;
+    }
+
+    public StyledExcelSpreadsheet(final String sheetName, final boolean wrapText) {
+	workbook = new HSSFWorkbook();
+	excelStyle = new ExcelStyle(workbook);
+	sheet = workbook.createSheet(sheetName);
+	sheet.setGridsPrinted(false);
+	this.wrapText = wrapText;
     }
 
     public ExcelStyle getExcelStyle() {
@@ -107,43 +130,63 @@ public class StyledExcelSpreadsheet {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(value);
-	cell.setCellStyle(excelStyle.getValueStyle());
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
     }
 
     public void addCell(String value, HSSFCellStyle newStyle) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(value);
-	cell.setCellStyle(newStyle);
+	cell.setCellStyle(getExcelStyle(newStyle));
     }
 
     public void addCell(Double value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(value);
-	cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellStyle(getExcelStyle(excelStyle.getDoubleStyle()));
     }
 
     public void addCell(Double value, HSSFCellStyle newStyle) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(value);
-	cell.setCellStyle(newStyle);
+	cell.setCellStyle(getExcelStyle(newStyle));
     }
 
     public void addCell(Double value, HSSFCellStyle newStyle, int columnNumber) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(newStyle);
+	cell.setCellStyle(getExcelStyle(newStyle));
     }
 
     public void addCell(Integer value, int columnNumber) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(excelStyle.getValueStyle());
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+    }
 
+    public void addDateTimeCell(DateTime value) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
+	cell.setCellValue(dateTimeFormat.print(value));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+    }
+
+    public void addDateCell(YearMonthDay value) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
+	cell.setCellValue(dateFormat.print(value));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+    }
+
+    public void addTimeCell(TimeOfDay value) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
+	cell.setCellValue(timeFormat.print(value));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
     }
 
     public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn,
@@ -153,7 +196,7 @@ public class StyledExcelSpreadsheet {
 	    CellReference cellRef2 = new CellReference(lastRow, col);
 	    HSSFRow currentRow = getRow();
 	    HSSFCell cell = currentRow.createCell((short) col);
-	    cell.setCellStyle(newStyle);
+	    cell.setCellStyle(getExcelStyle(newStyle));
 	    cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
 	}
     }
@@ -167,7 +210,7 @@ public class StyledExcelSpreadsheet {
 	    }
 	    HSSFRow currentRow = sheet.getRow(row);
 	    HSSFCell cell = currentRow.createCell((short) (lastColumn + 1));
-	    cell.setCellStyle(newStyle);
+	    cell.setCellStyle(getExcelStyle(newStyle));
 	    StringBuilder formula = new StringBuilder();
 	    for (int index = 0; index < refs.length; index++) {
 		if (refs[index] != null) {
@@ -224,4 +267,10 @@ public class StyledExcelSpreadsheet {
 	getSheet().setMargin(HSSFSheet.RightMargin, 0.10);
     }
 
+    private HSSFCellStyle getExcelStyle(HSSFCellStyle style) {
+	if (!wrapText) {
+	    style.setWrapText(false);
+	}
+	return style;
+    }
 }

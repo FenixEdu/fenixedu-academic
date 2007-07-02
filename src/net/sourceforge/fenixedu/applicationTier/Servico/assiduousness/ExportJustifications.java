@@ -14,16 +14,8 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.YearMonthDay;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class ExportJustifications extends Service {
-    private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
-
-    private static final DateTimeFormatter dateTimeFormat = DateTimeFormat
-	    .forPattern("dd/MM/yyyy hh:mm");
-
-    private static final DateTimeFormatter timeFormat = DateTimeFormat.forPattern("hh:mm");
 
     public StyledExcelSpreadsheet run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
@@ -31,7 +23,7 @@ public class ExportJustifications extends Service {
 	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
 		LanguageUtils.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle
-		.getString("link.justifications"));
+		.getString("link.justifications"), false);
 	HashMap<Assiduousness, List<Justification>> justificationsMap = assiduousnessExportChoices
 		.getAllJustificationMap();
 	spreadsheet.newHeaderRow();
@@ -52,18 +44,17 @@ public class ExportJustifications extends Service {
 			    spreadsheet.addCell(justification.getAssiduousness().getEmployee()
 				    .getEmployeeNumber().toString());
 			    if (justification.getJustificationMotive().getJustificationType() == JustificationType.TIME) {
-				spreadsheet.addCell(dateTimeFormat.print(justification.getDate()));
-				spreadsheet.addCell(dateTimeFormat.print(((Leave) justification)
-					.getEndDate()));
+				spreadsheet.addDateTimeCell(justification.getDate());
+				spreadsheet.addDateTimeCell(((Leave) justification).getEndDate());
 				if (justification.getJustificationMotive().getJustificationType() == JustificationType.BALANCE) {
-				    spreadsheet.addCell(dateFormat.print(justification.getDate()));
-				    spreadsheet.addCell(timeFormat.print(((Leave) justification)
-					    .getEndDate()));
+				    spreadsheet.addDateCell(justification.getDate().toYearMonthDay());
+				    spreadsheet.addTimeCell(((Leave) justification).getEndDate()
+					    .toTimeOfDay());
 				}
 			    } else {
-				spreadsheet.addCell(dateFormat.print(justification.getDate()));
-				spreadsheet.addCell(dateFormat.print(((Leave) justification)
-					.getEndDate()));
+				spreadsheet.addDateCell(justification.getDate().toYearMonthDay());
+				spreadsheet.addDateCell(((Leave) justification).getEndDate()
+					.toYearMonthDay());
 			    }
 			    spreadsheet.addCell(justification.getJustificationMotive().getAcronym());
 			    spreadsheet.addCell(enumBundle.getString(justification
@@ -78,13 +69,13 @@ public class ExportJustifications extends Service {
 			    YearMonthDay end = assiduousnessExportChoices.getEndDate().isBefore(
 				    justificationDate) ? assiduousnessExportChoices.getEndDate()
 				    : justificationDate;
-			    spreadsheet.addCell(dateFormat.print(begin));
-			    spreadsheet.addCell(dateFormat.print(end));
+			    spreadsheet.addDateCell(begin);
+			    spreadsheet.addDateCell(end);
 			} else if (justification.isMissingClocking()) {
 			    spreadsheet.newRow();
 			    spreadsheet.addCell(justification.getAssiduousness().getEmployee()
 				    .getEmployeeNumber().toString());
-			    spreadsheet.addCell(dateTimeFormat.print(justification.getDate()));
+			    spreadsheet.addDateTimeCell(justification.getDate());
 			    spreadsheet.addCell("");
 			    spreadsheet.addCell(justification.getJustificationMotive().getAcronym());
 			}

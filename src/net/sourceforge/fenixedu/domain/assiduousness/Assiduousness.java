@@ -640,8 +640,12 @@ public class Assiduousness extends Assiduousness_Base {
     public List<ExtraWorkRequest> getExtraWorkRequestsByUnit(Unit unit, int year) {
 	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
-	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year
-		    && request.getUnit().equals(unit) && request.getApproved()) {
+	    if ((request.getPartialPayingDate().get(DateTimeFieldType.year()) == (year - 1)
+		    && request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12
+		    && request.getUnit().equals(unit) && request.getApproved())
+		    || (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year
+			    && request.getUnit().equals(unit) && request.getApproved())
+		    && request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) != 12) {
 		result.add(request);
 	    }
 	}

@@ -151,17 +151,18 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 		getExtraWorkAuthorization().getPayingUnit(), year);
 	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
 	    Integer oldValue = getOldValue(spreadsheet,
-		    extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2)
+		    extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2 + 2)
 		    .intValue();
 	    Double oldDouble = getOldValue(spreadsheet, extraWorkRequest.getPartialPayingDate().get(
-		    DateTimeFieldType.monthOfYear()) * 2 + 1);
+		    DateTimeFieldType.monthOfYear()) * 2 + 3);
 
-	    spreadsheet.addCell(new Integer(extraWorkRequest.getTotalHours() + oldValue),
-		    (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2));
+	    spreadsheet
+		    .addCell(new Integer(extraWorkRequest.getTotalHours() + oldValue), (extraWorkRequest
+			    .getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2 + 2));
 	    spreadsheet.addCell(new Double(decimalFormat
 		    .format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet.getExcelStyle()
 		    .getDoubleStyle(), (extraWorkRequest.getPartialPayingDate().get(
-		    DateTimeFieldType.monthOfYear()) * 2) + 1);
+		    DateTimeFieldType.monthOfYear()) * 2) + 3);
 	}
     }
 

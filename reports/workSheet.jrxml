@@ -45,7 +45,7 @@
 		<group  name="pageBreak" isStartNewPage="true" >
 			<groupExpression><![CDATA[$F{employee.employeeNumber}]]></groupExpression>
 			<groupHeader>
-			<band height="16"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 			</groupHeader>
 			<groupFooter>
@@ -58,7 +58,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="13"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</title>
 		<pageHeader>
@@ -66,17 +66,17 @@
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="10"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="372"  isSplitAllowed="true" >
+			<band height="399"  isSplitAllowed="true" >
 				<elementGroup><!--  Start: 1 !-->
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Transparent"
 						x="249"
-						y="110"
+						y="144"
 						width="114"
 						height="15"
 						forecolor="#000000"
@@ -92,7 +92,7 @@
 					<reportElement
 						mode="Transparent"
 						x="249"
-						y="52"
+						y="86"
 						width="243"
 						height="26"
 						forecolor="#000000"
@@ -107,7 +107,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="249"
-						y="81"
+						y="115"
 						width="243"
 						height="26"
 						key="textField"/>
@@ -120,7 +120,7 @@
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="378"
-						y="110"
+						y="144"
 						width="114"
 						height="15"
 						key="textField"/>
@@ -133,7 +133,7 @@
 				<staticText>
 					<reportElement
 						x="249"
-						y="36"
+						y="70"
 						width="99"
 						height="14"
 						key="staticText-1"/>
@@ -146,7 +146,7 @@
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="7"
-						y="159"
+						y="193"
 						width="514"
 						height="110"
 						key="subreport-1"/>
@@ -157,7 +157,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="274"
+						y="308"
 						width="254"
 						height="18"
 						key="textField-3"
@@ -171,7 +171,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="292"
+						y="326"
 						width="254"
 						height="18"
 						key="textField-4"
@@ -185,7 +185,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="6"
-						y="141"
+						y="175"
 						width="515"
 						height="18"
 						key="textField"/>
@@ -198,7 +198,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="124"
+						y="158"
 						width="227"
 						height="14"
 						key="textField"/>
@@ -211,7 +211,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="310"
+						y="344"
 						width="254"
 						height="18"
 						key="textField-5"
@@ -225,7 +225,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="328"
+						y="362"
 						width="254"
 						height="18"
 						key="textField-6"
@@ -239,7 +239,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="7"
-						y="345"
+						y="379"
 						width="254"
 						height="18"
 						key="textField-7"
@@ -253,19 +253,15 @@
 			</band>
 		</detail>
 		<columnFooter>
-			<band height="11"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="7"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</pageFooter>
-		<lastPageFooter>
-			<band height="6"  isSplitAllowed="true" >
-			</band>
-		</lastPageFooter>
 		<summary>
-			<band height="4"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</summary>
 </jasperReport>

@@ -96,10 +96,14 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
 	int lastColumn = spreadsheet.getMaxiumColumnNumber();
+	int firstRow = 3;
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
-	spreadsheet.sumColumn(3, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.sumColumn(firstRow, lastRow, 2, lastColumn, spreadsheet.getExcelStyle()
+		.getDoubleStyle());
+	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet
+		.getMaxiumColumnNumber() + 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet) {
@@ -137,9 +141,13 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     private Double getMonthValue(Month month) {
 	Double monthTotal = 0.0;
 	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == getYear()
-		    && extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == month
-			    .getNumberOfMonth() && extraWorkRequest.getApproved()) {
+	    if (((extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == getYear() - 1 && extraWorkRequest
+		    .getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12) && month
+		    .getNumberOfMonth() == 1)
+		    || (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == getYear()
+			    && extraWorkRequest.getPartialPayingDate().get(
+				    DateTimeFieldType.monthOfYear()) + 1 == month.getNumberOfMonth() && extraWorkRequest
+			    .getApproved())) {
 		monthTotal += extraWorkRequest.getAmount();
 	    }
 	}

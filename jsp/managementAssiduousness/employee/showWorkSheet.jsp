@@ -99,7 +99,9 @@
 		<logic:present name="employeeWorkSheet" property="weeklyRest">
 			<p class="mvert05"><bean:message key="label.totalSunday" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></p>
 		</logic:present>
-		
+		<logic:present name="employeeWorkSheet" property="holidayRest">
+			<p class="mvert05"><bean:message key="label.totalHoliday" />: <b><bean:write name="employeeWorkSheet" property="holidayRestString"/></b></p>
+		</logic:present>
 	</logic:notEmpty>
 	</logic:present>
 </logic:present>

@@ -23,9 +23,9 @@
 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.justifications" />
-<%-- 	</html:link>, <html:link
+ 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showBalanceResume&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-		<bean:message key="link.balanceResume" /> --%>
+		<bean:message key="link.balanceResume" />
 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showVacations&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.vacations" />
