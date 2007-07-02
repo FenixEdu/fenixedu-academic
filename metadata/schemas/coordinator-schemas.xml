@@ -265,7 +265,7 @@
 
 <schema name="degreeCurricularPlan.createEquivalencyPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES">
     <slot name="sourceDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-    		layout="menu-select">
+    		layout="menu-select" key="label.choose.curricularPlan">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlanProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />

@@ -5,28 +5,30 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<br/>
+<em><bean:message key="title.scientificCouncil.portalTitle"/></em>
 <h2><bean:message key="title.equivalency.plan" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:present name="degreeCurricularPlan">
 <logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
-	<div class='simpleblock4'>
-		<bean:message key="message.no.equivalency.table.exists" bundle="APPLICATION_RESOURCES"/>
-		<br/>
-		<bean:message key="label.create.equivalency.table.for.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
+
+		<p class="mtop2">
+			<em><bean:message key="message.no.equivalency.table.exists" bundle="APPLICATION_RESOURCES"/></em>
+		</p>
+		
+		<p class="mbottom05"><strong><bean:message key="label.create.equivalency.table.for.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/></strong></p>
 		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 				schema="degreeCurricularPlan.createEquivalencyPlan">
 		    <fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em"/>
-	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
+	    	    <fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+	        	<fr:property name="columnClasses" value="tdclear,,t"/>
 		    </fr:layout>
 		</fr:edit>
-	</div>
+
 </logic:notPresent>
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
 	<p class="mvert15">
-		<strong>
-			<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
+		<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
+		<strong class="highlight1">
 			<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 		</strong>
 	</p>
@@ -53,13 +55,15 @@
 	</logic:notPresent>
 
 	<logic:present name="viewTable">
-		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
-				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-		<br/>
-		<br/>
+		<ul class="mbottom05">
+			<li>
+				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
+						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+						+ equivalencePlan.getIdInternal() %>">
+					<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
+				</html:link>
+			</li>
+		</ul>
 		<logic:present name="equivalencePlanEntries">
 			<bean:define id="entries" name="equivalencePlanEntries" toScope="request"/>
 			<jsp:include page="showEquivalencyPlanTable.jsp"/>
