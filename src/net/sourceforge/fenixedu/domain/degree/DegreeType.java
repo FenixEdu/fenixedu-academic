@@ -80,7 +80,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
+    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, false,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true, true) {
 		
 	@Override
@@ -100,7 +100,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
+    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, false,
 	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false, false) {
 		
 	@Override
