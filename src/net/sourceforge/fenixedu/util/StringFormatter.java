@@ -3,10 +3,14 @@
  */
 package net.sourceforge.fenixedu.util;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.sourceforge.fenixedu.domain.Language;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -27,7 +31,18 @@ public class StringFormatter {
     private static Set<String> allLowerSet = new HashSet<String>();
 
     private static Set<String> allCapSet = new HashSet<String>();
+    
+    static final private Map<Language, Map<String, String>> personNameDictionaries = new HashMap<Language, Map<String, String>>();
 
+    static {
+	// pt
+	final Map<String, String> ptPersonNameDictionary = new HashMap<String, String>();
+	ptPersonNameDictionary.put("ramoa", "ramôa");
+	ptPersonNameDictionary.put("gonçalves", "goncalves");
+	ptPersonNameDictionary.put("jose", "josé");
+	personNameDictionaries.put(Language.pt, ptPersonNameDictionary);
+    }
+    
     static {
 	// PT
 	// artigos
@@ -210,6 +225,29 @@ public class StringFormatter {
 	}
 
 	return capitalizedName.toString().substring(0, capitalizedName.length() - 1);
+    }
+
+    static final public String personNameValidator(String uglyDuckling, final Language language) {
+
+	if (StringUtils.isEmpty(uglyDuckling) || !personNameDictionaries.containsKey(language)) {
+	    return uglyDuckling;
+	}
+
+	uglyDuckling = removeDuplicateSpaces(uglyDuckling.trim());
+	final Map<String, String> personNameDictionary = personNameDictionaries.get(language);
+	final String[] lowerCaseName = uglyDuckling.toLowerCase().split(" ");
+	final StringBuffer capitalizedName = new StringBuffer();
+
+	for (int i = 0; i < lowerCaseName.length; i++) {
+
+	    if (containsNoneSpecialChars(lowerCaseName[i])) {
+		capitalizedName.append(personNameDictionary.containsKey(lowerCaseName[i]) ?  personNameDictionary.get(lowerCaseName[i]) : lowerCaseName[i]);
+	    }
+	    
+	    capitalizedName.append(" ");
+	}
+
+	return StringFormatter.prettyPrint(capitalizedName.toString().substring(0, capitalizedName.length() - 1));
     }
 
     /**
