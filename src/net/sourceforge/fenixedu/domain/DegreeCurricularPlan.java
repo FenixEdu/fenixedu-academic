@@ -411,7 +411,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return null;
     }
-    
+
     public ExecutionDegree getExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear && executionDegree.getCampus() == campus) {
@@ -433,7 +433,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return result;
 	}
 
-	final List<ExecutionDegree> sortedExecutionDegrees = getExecutionDegrees();
+	final List<ExecutionDegree> sortedExecutionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
 	Collections.sort(sortedExecutionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	
 	if(!sortedExecutionDegrees.isEmpty() 
@@ -1604,7 +1604,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	degreeModules.addAll(super.getCurricularCoursesSet());
 	return degreeModules;
     }
-
+    
     public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final Set<DegreeType> degreeTypes) {
 	final Set<DegreeCurricularPlan> degreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
 	for (final DegreeType degreeType : degreeTypes) {
