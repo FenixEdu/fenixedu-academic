@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,8 +34,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
@@ -58,12 +55,8 @@ public class SearchCoursesInformationAction extends SearchAction {
                 final InfoSiteCourseInformation information1 = (InfoSiteCourseInformation) o1;
                 final InfoSiteCourseInformation information2 = (InfoSiteCourseInformation) o2;
                 
-                final ComparatorChain comparatorChain = new ComparatorChain();
-                comparatorChain.addComparator(InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_AND_BRANCH);
-                comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
-                
-                final SortedSet<InfoCurricularCourseScope> infoScopes1 = getFilteredAndSortedInfoScopes(comparatorChain, information1);
-                final SortedSet<InfoCurricularCourseScope> infoScopes2 = getFilteredAndSortedInfoScopes(comparatorChain, information2);
+                final SortedSet<InfoCurricularCourseScope> infoScopes1 = getFilteredAndSortedInfoScopes(information1);
+                final SortedSet<InfoCurricularCourseScope> infoScopes2 = getFilteredAndSortedInfoScopes(information2);
 
                 if (infoScopes1.isEmpty() && infoScopes2.isEmpty()) {
                     return 0;
@@ -72,12 +65,12 @@ public class SearchCoursesInformationAction extends SearchAction {
                 } else if (infoScopes1.isEmpty() && !infoScopes2.isEmpty()) {
                     return 1;
                 } else {
-                    return comparatorChain.compare(infoScopes1.first(), infoScopes2.first());
+                    return InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_BRANCH_AND_NAME.compare(infoScopes1.first(), infoScopes2.first());
                 }
             }
         
-            private SortedSet<InfoCurricularCourseScope> getFilteredAndSortedInfoScopes(final ComparatorChain comparatorChain, final InfoSiteCourseInformation infoSiteCourseInformation) {
-        	final SortedSet<InfoCurricularCourseScope> result = new TreeSet<InfoCurricularCourseScope>(comparatorChain);
+            private SortedSet<InfoCurricularCourseScope> getFilteredAndSortedInfoScopes(final InfoSiteCourseInformation infoSiteCourseInformation) {
+        	final SortedSet<InfoCurricularCourseScope> result = new TreeSet<InfoCurricularCourseScope>(InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_BRANCH_AND_NAME);
                 
                 for (final InfoCurricularCourse infoCurricularCourse : infoSiteCourseInformation.getInfoCurricularCourses()) {
                     if (infoDegreeCurricularPlan == null || infoDegreeCurricularPlan.equals(infoCurricularCourse.getInfoDegreeCurricularPlan())) {
