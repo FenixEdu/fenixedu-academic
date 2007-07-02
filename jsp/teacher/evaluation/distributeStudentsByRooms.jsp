@@ -45,7 +45,7 @@
 						valueChangeListener="#{evaluationManagementBackingBean.changeRoom}" >
 					<f:selectItems value="#{evaluationManagementBackingBean.names}" />
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID1' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 				<h:outputText value=" #{bundle['label.distribute.position']} " />			
 				<h:selectOneMenu value="#{evaluationManagementBackingBean.newRoomPosition}" onchange="this.form.submit();"
 						valueChangeListener="#{evaluationManagementBackingBean.changePosition}">

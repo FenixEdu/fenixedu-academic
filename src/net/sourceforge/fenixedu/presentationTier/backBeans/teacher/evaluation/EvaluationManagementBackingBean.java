@@ -827,7 +827,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final Map<Integer, Integer> evaluationRooms = new TreeMap();
         final List<WrittenEvaluationSpaceOccupation> roomOccupations = new ArrayList(((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations());
-        Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.capacidadeExame")));
+        Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.examCapacity")));
         int count = 0;
         for (final WrittenEvaluationSpaceOccupation roomOccupation : roomOccupations) {
             evaluationRooms.put(roomOccupation.getRoom().getIdInternal(), Integer.valueOf(++count));
@@ -862,7 +862,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
-        final List<SelectItem> result = new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
+        final List<SelectItem> result = new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsCount());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations()) {
             result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((AllocatableSpace)roomOccupation.getRoom())
                     .getNome()));

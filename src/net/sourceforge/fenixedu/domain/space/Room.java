@@ -110,6 +110,16 @@ public class Room extends Room_Base {
 	return getExamCapacity();
     }
     
+    @Override
+    public Integer getNormalCapacity() {
+	return super.getNormalCapacity() != null ? super.getNormalCapacity() : Integer.valueOf(0);
+    }
+    
+    @Override
+    public Integer getExamCapacity() {
+	return super.getExamCapacity() != null ? super.getExamCapacity() : Integer.valueOf(0);
+    }
+    
     public String getIdentification() {
 	return getSpaceInformation().getIdentification(); 
     }
