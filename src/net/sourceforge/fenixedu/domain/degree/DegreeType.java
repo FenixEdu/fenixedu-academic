@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -26,8 +28,16 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
-	    AdministrativeOfficeType.DEGREE, false, false, false, true) {
+    DEGREE(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.FIVE_YEAR, 
+	    true, 				// canCreateStudent
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.DEGREE, 
+	    false,				// isFirstCycle 
+	    false,				// isSecondCycle 
+	    false,				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -36,8 +46,16 @@ public enum DegreeType {
 	
     },
 
-    MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false, true) {
+    MASTER_DEGREE(
+	    GradeScale.TYPE5, 
+	    CurricularPeriodType.TWO_YEAR, 
+	    false, 				// canCreateStudent
+	    true,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.MASTER_DEGREE, 
+	    false, 				// isFirstCycle
+	    false,				// isSecondCycle 
+	    false,				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 	
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -46,8 +64,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, true, false,
-	    AdministrativeOfficeType.DEGREE, true, false, false, true) {
+    BOLONHA_DEGREE(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.THREE_YEAR, 
+	    true, 				// canCreateStudent 
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.DEGREE, 
+	    true, 				// isFirstCycle 
+	    false, 				// isSecondCycle 
+	    false, 				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -56,8 +82,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, true, false,
-	    AdministrativeOfficeType.DEGREE, false, true, false, true) {
+    BOLONHA_MASTER_DEGREE(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.TWO_YEAR, 
+	    true, 				// canCreateStudent 
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.DEGREE, 
+	    false, 				// isFirstCycle  
+	    true, 				// isSecondCycle 
+	    false, 				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -66,8 +100,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, false,
-	    AdministrativeOfficeType.DEGREE, true, true, false, true) {
+    BOLONHA_INTEGRATED_MASTER_DEGREE(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.FIVE_YEAR, 
+	    true, 				// canCreateStudent 
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.DEGREE, 
+	    true, 				// isFirstCycle 
+	    true, 				// isSecondCycle 
+	    false, 				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -80,8 +122,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, false,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true, true) {
+    BOLONHA_PHD_PROGRAM(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.YEAR, 
+	    true, 				// canCreateStudent 
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.MASTER_DEGREE, 
+	    false, 				// isFirstCycle 
+	    false, 				// isSecondCycle 
+	    true, 				// isThirdCycle 
+	    true) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -90,8 +140,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, true,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, true, false) {
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.YEAR, 
+	    true, 				// canCreateStudent 
+	    true,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.MASTER_DEGREE, 
+	    false, 				// isFirstCycle 
+	    false, 				// isSecondCycle 
+	    true, 				// isThirdCycle 
+	    false) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -100,8 +158,16 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, false,
-	    AdministrativeOfficeType.MASTER_DEGREE, false, false, false, false) {
+    BOLONHA_SPECIALIZATION_DEGREE(
+	    GradeScale.TYPE20, 
+	    CurricularPeriodType.YEAR, 
+	    true, 				// canCreateStudent 
+	    false,				// canCreateStudentOnlyWithCandidacy
+	    AdministrativeOfficeType.MASTER_DEGREE, 
+	    false, 				// isFirstCycle 
+	    false, 				// isSecondCycle 
+	    false, 				// isThirdCycle 
+	    false) {				// qualifiesForGraduateTitle
 		
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -237,12 +303,41 @@ public enum DegreeType {
 	return qualifiesForGraduateTitle;
     }
 	   
-    final public String getSeniorTitle() {
+    @Deprecated
+    final public String getGraduateTitle() {
+    	return getGraduateTitle();
+    }
+
+    final public String getGraduateTitle() {
 	if (getQualifiesForGraduateTitle()) {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + ".senior.title");
+	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + ".graduate.title");
 	}
 	
-	throw new DomainException("DegreeType.is.not.qualified.for.graduate.title");
+	return StringUtils.EMPTY;
+    }
+
+    final public String getGraduateTitle(final CycleType cycleType) {
+	if (getQualifiesForGraduateTitle()) {
+	
+	    if (cycleType == null) {
+		return getGraduateTitle();
+	    }
+    	
+	    if (getCycleTypes().isEmpty()) {
+    	    	throw new DomainException("DegreeType.has.no.cycle.type");
+	    }
+    	
+	    if (!hasCycleTypes(cycleType)) {
+    	    	throw new DomainException("DegreeType.doesnt.have.such.cycle.type");
+	    }
+    	
+	    if (getQualifiesForGraduateTitle()) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName() + (isComposite() ? "." + cycleType.name() : "") + ".graduate.title");
+	    }
+	
+	}
+	
+	return StringUtils.EMPTY;
     }
 
    public static List<DegreeType> getBolonhaDegreeTypes() {
