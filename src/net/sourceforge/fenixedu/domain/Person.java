@@ -82,8 +82,10 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -162,8 +164,12 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    final public String getValidatedName() {
+	return StringFormatter.personNameValidator(super.getName(), LanguageUtils.getLanguage());
+    }
+
     @Override
-    public void setName(final String name) {
+    final public void setName(final String name) {
 	super.setName(name);
 	PersonName personName = getPersonName();
 	if (personName == null) {
