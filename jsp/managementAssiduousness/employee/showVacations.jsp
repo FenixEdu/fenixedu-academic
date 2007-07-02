@@ -44,8 +44,8 @@
 	<logic:notEmpty name="vacations">
 		<fr:view name="vacations" schema="show.vacations">
 			<fr:layout name="nice-details-table">
-				<fr:property name="classes" value="tstyle1 taleft printborder" />
-				<fr:property name="columnClasses" value="aleft, aleft" />
+				<fr:property name="classes" value="tstyle2 thlight thleft printborder" />
+				<fr:property name="columnClasses" value="aleft,aright" />
 				<fr:property name="labelTerminator" value=":" />
 			</fr:layout>
 		</fr:view>

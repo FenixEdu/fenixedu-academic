@@ -14,7 +14,9 @@
 <schema name="show.employeeStatus" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory">
 	<slot name="assiduousnessStatus.description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="beginDate"/>
-	<slot name="endDate"/>
+	<slot name="endDate" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 </schema>
 
 <schema name="show.status" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus">

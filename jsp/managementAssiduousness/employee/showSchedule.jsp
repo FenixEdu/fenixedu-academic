@@ -8,7 +8,6 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="label.schedule" /></h2>
 
-
 <bean:define id="month" name="yearMonth" property="month" />
 <bean:define id="year" name="yearMonth" property="year" />
 <bean:define id="employeeNumber" name="employeeScheduleBean" property="employee.employeeNumber" />
@@ -36,7 +35,7 @@
 	</logic:present>
 </logic:present>
 
-		<span class="mbottom0"><h3><bean:message key="link.schedules" bundle="ASSIDUOUSNESS_RESOURCES"/>:</h3></span>
+		<h3 class="mbottom05"><bean:message key="link.schedules" bundle="ASSIDUOUSNESS_RESOURCES"/></h3>
 		<p>
 			<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateExceptionWorkSchedule&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
 				<bean:message key="link.associateExceptionSchedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -50,8 +49,11 @@
 			</tr>				
 			<logic:iterate id="schedule" name="scheduleList" type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
 			<tr>
-				<td><bean:write name="schedule" property="beginDate"/></td>
-				<td><bean:write name="schedule" property="endDate"/></td>
+				<td class="acenter"><bean:write name="schedule" property="beginDate"/></td>
+				<td class="acenter">
+					<logic:empty name="schedule" property="endDate">-</logic:empty>
+					<logic:notEmpty name="schedule" property="endDate"><bean:write name="schedule" property="endDate"/></logic:notEmpty>
+				</td>
 				<td>
 					<logic:equal name="schedule" property="isEditable" value="true">
 						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
@@ -94,10 +96,14 @@
 	<table class="width600px">
 		<tr>
 			<td align="center">
-				<strong><bean:message key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/></strong>:
+				<strong><bean:message key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong>
 				<bean:write name="employeeScheduleBean" property="schedule.beginDate"/> 
-				<strong><bean:message key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"/></strong>:
-				<bean:write name="employeeScheduleBean" property="schedule.endDate"/>
+				&nbsp;
+				<strong><bean:message key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"/>:</strong>
+				<logic:notEmpty name="employeeScheduleBean" property="schedule.endDate">
+					<bean:write name="employeeScheduleBean" property="schedule.endDate"/>
+				</logic:notEmpty>
+				<logic:empty name="employeeScheduleBean" property="schedule.endDate">-</logic:empty>
 			</td>
 		</tr>
 	</table>

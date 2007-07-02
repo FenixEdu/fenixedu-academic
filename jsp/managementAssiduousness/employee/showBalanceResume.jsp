@@ -33,26 +33,59 @@
 			</html:messages>
 		</logic:messagesPresent>
 		
+		
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.monthly" /></strong></p>
+		<table class="tstyle2 mtop05" style="width: 300px;">
 		<logic:present name="employeeBalanceResume" property="monthlyBalance">
-			<p class="mvert05"><bean:message key="label.monthlyBalance" />: <b><bean:write name="employeeBalanceResume" property="monthlyBalanceString"/></b></p>
+			<tr>
+			<td><bean:message key="label.monthlyBalance" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="monthlyBalanceString"/></b></td>
+			</tr>
 		</logic:present>
 		<logic:present name="employeeBalanceResume" property="monthlyBalanceToCompensate">
-			<p class="mvert05"><bean:message key="label.monthlyBalanceToCompensate" />: <b><bean:write name="employeeBalanceResume" property="monthlyBalanceToCompensateString"/></b></p>
+			<tr>
+			<td><bean:message key="label.monthlyBalanceToCompensate" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="monthlyBalanceToCompensateString"/></b></td>
+			</tr>
 		</logic:present>
 		<logic:present name="employeeBalanceResume" property="finalMonthlyBalance">
-			<p class="mvert05"><bean:message key="label.finalMonthlyBalance" />: <b><bean:write name="employeeBalanceResume" property="finalMonthlyBalanceString"/></b></p>
+			<tr>
+			<td><bean:message key="label.finalMonthlyBalance" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="finalMonthlyBalanceString"/></b></td>
+			</tr>
 		</logic:present>
+		</table>
+		
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.annual" /></strong></p>
+		<table class="tstyle2 mtop05" style="width: 300px;">
     	<logic:present name="employeeBalanceResume" property="anualBalance">
-			<p class="mvert05"><bean:message key="label.anualBalance" />: <b><bean:write name="employeeBalanceResume" property="anualBalanceString"/></b></p>
+	    	<tr>
+			<td><bean:message key="label.anualBalance" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="anualBalanceString"/></b></td>
+			</tr>
 		</logic:present>
 		<logic:present name="employeeBalanceResume" property="anualBalanceToCompensate">
-			<p class="mvert05"><bean:message key="label.anualBalanceToCompensate" />: <b><bean:write name="employeeBalanceResume" property="anualBalanceToCompensateString"/></b></p>
+			<tr>
+			<td><bean:message key="label.anualBalanceToCompensate" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="anualBalanceToCompensateString"/></b></td>
+			</tr>
 		</logic:present>
 		<logic:present name="employeeBalanceResume" property="finalAnualBalance">
-			<p class="mvert05"><bean:message key="label.finalAnualBalance" />: <b><bean:write name="employeeBalanceResume" property="finalAnualBalanceString"/></b></p>
+			<tr>
+			<td><bean:message key="label.finalAnualBalance" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="finalAnualBalanceString"/></b></td>
+			</tr>
 		</logic:present>
+		</table>
+		
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.future" /></strong></p>
+		<table class="tstyle2 mtop05" style="width: 300px;">
 		<logic:present name="employeeBalanceResume" property="finalMonthlyBalance">
-			<p class="mvert05"><bean:message key="label.futureBalanceToCompensate" />: <b><bean:write name="employeeBalanceResume" property="futureBalanceToCompensateString"/></b></p>
+			<tr>
+			<td><bean:message key="label.futureBalanceToCompensate" />:</td>
+			<td class="aright"><b><bean:write name="employeeBalanceResume" property="futureBalanceToCompensateString"/></b></td>
+			</tr>
 		</logic:present>
+		</table>
 	</logic:present>
 </logic:present>

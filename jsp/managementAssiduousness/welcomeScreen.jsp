@@ -1,2 +1,4 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<bean:message key="message.welcome.managementAssiduousness" />
+
+<h2><bean:message key="title.assiduousness.management" /></h2>
+<p><bean:message key="message.welcome.managementAssiduousness" /></p>
