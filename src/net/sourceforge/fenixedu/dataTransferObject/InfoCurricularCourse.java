@@ -6,6 +6,8 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +25,13 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent {
 
+    static final public Comparator<InfoCurricularCourse> COMPARATOR_BY_NAME_AND_ID = new Comparator<InfoCurricularCourse>() {
+	public int compare(InfoCurricularCourse o1, InfoCurricularCourse o2) {
+	    int result = Collator.getInstance().compare(o1.getName(), o2.getName());
+	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+	}
+    };
+    
     private final DomainReference<CurricularCourse> curricularCourseDomainReference;
 
     private final boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en); 
