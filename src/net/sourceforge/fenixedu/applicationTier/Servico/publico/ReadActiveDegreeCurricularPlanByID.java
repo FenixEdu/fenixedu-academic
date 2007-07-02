@@ -77,16 +77,8 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         List result = new ArrayList();
         List<InfoCurricularCourseScope> temp = new ArrayList<InfoCurricularCourseScope>();
 
-        ComparatorChain comparatorChain = new ComparatorChain();
-
-        comparatorChain.addComparator(new BeanComparator(
-                "infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain.addComparator(new BeanComparator("infoBranch.name"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-
         List<InfoCurricularCourseScope> scopesAux = new ArrayList<InfoCurricularCourseScope>(scopes);
-        Collections.sort(scopesAux, comparatorChain);
+        Collections.sort(scopesAux, InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_BRANCH_AND_NAME);
 
         if (scopesAux != null && scopesAux.size() > 0) {
             ListIterator iter = scopesAux.listIterator();
