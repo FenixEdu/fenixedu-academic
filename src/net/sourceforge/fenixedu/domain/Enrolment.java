@@ -1030,7 +1030,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isAproved(final ExecutionYear executionYear) {
-	return getExecutionYear().isBeforeOrEquals(executionYear) && isApproved();
+	return (executionYear == null || getExecutionYear().isBeforeOrEquals(executionYear)) && isApproved();
     }
     
     protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
