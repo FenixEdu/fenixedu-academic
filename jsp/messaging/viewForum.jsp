@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="message" message="true" bundle="MESSAGING_RESOURCES">
-	<span class="error">
+	<span class="error0">
 		<bean:write name="message"/>
 	</span>
 </html:messages>
@@ -53,7 +53,9 @@
 	</logic:equal>
 
 	<logic:empty name="conversationThreads">
-		<span class="error"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></span>
+		<p class="mvert15">
+			<em class="error0"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></em>
+		</p>
 	</logic:empty>
 	<logic:notEmpty name="conversationThreads">
 		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
