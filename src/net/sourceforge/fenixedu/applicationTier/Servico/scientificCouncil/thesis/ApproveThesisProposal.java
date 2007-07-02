@@ -74,7 +74,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         String vowel3Affiliation = affiliation(thesis.getVowels(), 2);
 
         String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
-        String currentPersonName = currentPerson.getName();
+        String currentPersonName = currentPerson.getNickname();
         
         bean.setSubject(getMessage(SUBJECT_KEY, title));
         bean.setMessage(getMessage(BODY_KEY,
