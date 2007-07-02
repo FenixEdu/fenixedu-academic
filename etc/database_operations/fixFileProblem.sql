@@ -1,1 +1,0 @@
-delete FROM FILE where ID_INTERNAL=231980;
