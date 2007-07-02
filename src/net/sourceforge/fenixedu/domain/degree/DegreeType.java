@@ -304,7 +304,7 @@ public enum DegreeType {
     }
 	   
     @Deprecated
-    final public String getGraduateTitle() {
+    final public String getSeniorTitle() {
     	return getGraduateTitle();
     }
 
