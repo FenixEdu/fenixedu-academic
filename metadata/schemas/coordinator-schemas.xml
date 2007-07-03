@@ -324,7 +324,9 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />
     </slot>
-	<slot name="studentNumber"/>
+	<slot name="studentNumber">
+		<property name="size" value="10"/>
+	</slot>
 </schema>
 
 <schema name="StudentEquivalencyPlanEntryCreator.addOrigin" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">

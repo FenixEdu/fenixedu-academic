@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<br/>
 <h2><bean:message key="title.student.equivalency.plan"/></h2>
 
 <logic:present name="degreeCurricularPlan">
@@ -19,6 +18,7 @@
     	</fr:layout>
 	</fr:edit>
 </logic:present>
+
 <logic:notPresent name="degreeCurricularPlan">
 	<fr:edit id="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan"
 			name="studentSearchBean"
@@ -30,15 +30,19 @@
     	</fr:layout>
 	</fr:edit>	
 </logic:notPresent>
-<br/>
-<br/>
+
+
 <logic:present name="studentSearchBean" property="studentNumber">
 	<logic:notPresent name="student">
-		<bean:message key="message.student.does.not.exist" bundle="APPLICATION_RESOURCES"/>
+		<p>
+			<em><bean:message key="message.student.does.not.exist" bundle="APPLICATION_RESOURCES"/></em>
+		</p>
 	</logic:notPresent>
 	<logic:present name="student">
 		<logic:notPresent name="studentCurricularPlanEquivalencePlan">
-			<bean:message key="message.student.does.not.have.equivalence.plan" bundle="APPLICATION_RESOURCES"/>
+			<p class="mtop2">
+				<em><bean:message key="message.student.does.not.have.equivalence.plan" bundle="APPLICATION_RESOURCES"/></em>
+			</p>
 		</logic:notPresent>
 		<logic:present name="studentCurricularPlanEquivalencePlan">
 			<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>

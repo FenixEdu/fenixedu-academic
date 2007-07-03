@@ -79,7 +79,8 @@
 </logic:present>
 
 <logic:notPresent name="degreeCurricularPlan">
-	<table class="tstyle4">
+	<p class="mbottom05"><bean:message key="label.equivalency.plan.choose.degree" bundle="APPLICATION_RESOURCES"/>:</p>
+	<table class="tstyle4 mtop05">
 		<logic:iterate id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlans">
 			<tr>
 				<td>
