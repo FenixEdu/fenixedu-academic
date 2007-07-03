@@ -14,7 +14,7 @@
 			<bean:message key="label.coordinator.studentInformation"/>
 		</li>
 		<li>
-			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+			<html:link page="<%= "/viewStudentCurriculum.do?method=prepare&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.curriculum" /></html:link>
 		</li>
 		<li>

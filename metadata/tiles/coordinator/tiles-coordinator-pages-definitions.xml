@@ -341,5 +341,15 @@
 		<put name="body" value="/coordinator/transition/bolonha/showStudentCurricularPlan.jsp"/>
 	</definition>
 	<!-- End: Bolonha Transition Management -->
+	
+	
+	<!-- Begin: View Student Curriculum -->
+	<definition name="student.curriculum.chooseStudent" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/curriculum/chooseStudent.jsp"/>
+	</definition>
+	<definition name="student.curriculum.chooseCurriculumType" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/student/curriculum/chooseCurriculumType.jsp"/>
+	</definition>
+	<!-- End: View Student Curriculum -->
     
 </tiles-definitions>

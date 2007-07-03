@@ -677,6 +677,28 @@
 	<slot name="description"/>
 </schema>
 
+
+<schema name="student.Dismissal.view.dismissals.for.bolonha.transition" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.studentCurriculum.Credits" >
+	<slot name="dismissals" key="label.studentDismissal.dismissals" layout="list">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="Dismissal.with.fullPath" />
+	</slot>
+	<slot name="givenCredits" key="label.ects"/>
+	<slot name="IEnrolments" key="label.studentDismissal.dismissals.enrolments" layout="list" >
+		<property name="eachLayout" value="values-comma" />
+		<property name="eachSchema" value="equivalence.view.with.grade" />
+	</slot>
+	<slot name="temporary" key="label.credits.temporarySubstitution" />
+</schema>
+
+
+<schema name="equivalence.view.with.grade" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.IEnrolment" >
+	<slot name="description"/>
+	<slot name="grade"/>
+</schema>
+
+
 <schema name="Enrolment.edit-extra-curricular-status" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Enrolment" >
 	<slot name="isExtraCurricular"/>
 </schema>

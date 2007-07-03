@@ -16,5 +16,10 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
     public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
 	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
-    }    
+    }
+    
+    @Override
+    public boolean isTemporary() {
+	return true;
+    }
 }

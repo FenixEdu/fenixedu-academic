@@ -892,6 +892,5 @@ Documentation:
 		<property name="gradeScaleClasses" value="color888 smalltxt"/>
     </renderer>
               
-	
 
 </renderers-config>

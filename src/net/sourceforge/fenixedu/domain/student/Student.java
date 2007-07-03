@@ -722,6 +722,16 @@ public class Student extends Student_Base {
 	return getRegistrations().size();
     }
 
+    public boolean hasTransitionRegistrations() {
+	for (final Registration registration : super.getRegistrations()) {
+	    if (registration.isTransition()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwner")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();

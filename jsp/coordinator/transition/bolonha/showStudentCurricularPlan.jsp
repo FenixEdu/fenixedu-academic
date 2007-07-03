@@ -8,12 +8,19 @@
 <logic:present role="COORDINATOR">
 	<h2><bean:message key="label.curricularPlan"
 		bundle="APPLICATION_RESOURCES" /> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h2>
+		
 
-	<br/>	
+
+	
 	<logic:notEmpty name="registration" property="lastStudentCurricularPlan.credits">
+		<div class="infoop2">
+			<bean:message  key="label.coordinator.transition.bolonha.message.part1" bundle="APPLICATION_RESOURCES"/>
+			<bean:message  key="label.coordinator.transition.bolonha.message.part2" bundle="APPLICATION_RESOURCES"/>
+		</div>
+		<br/>	
 		<fr:view	name="registration" 
 					property="lastStudentCurricularPlan.credits" 
-					schema="student.Dismissal.view.dismissals">
+					schema="student.Dismissal.view.dismissals.for.bolonha.transition">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter" />
 				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />

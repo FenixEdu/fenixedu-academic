@@ -346,6 +346,16 @@
 			<form-property name="registrationId" type="java.lang.Integer" />
 			<form-property name="studentId" type="java.lang.Integer" />
 	    </form-bean>
+	    
+	    <!-- viewStudentCurriculumForm -->
+		<form-bean name="viewStudentCurriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String" />
+			<form-property name="executionDegreeId" type="java.lang.Integer" />
+			<form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+	    </form-bean>
+	    
+	    
 
     </form-beans>
     
@@ -771,9 +781,12 @@
 	</action>
 		
 	<action path="/viewStudentCurriculum"
-	   	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
-       	parameter="method">
-		<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>
+	   	type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.student.curriculum.ViewStudentCurriculumDA"
+       	parameter="method"
+       	name="viewStudentCurriculumForm" 
+       	scope="request">
+		<forward name="chooseStudent" path="student.curriculum.chooseStudent"/>
+		<forward name="chooseCurriculumType" path="student.curriculum.chooseCurriculumType"/>
     </action>
       	
 	<action path="/viewCurriculum"
