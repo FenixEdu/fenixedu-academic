@@ -22,55 +22,70 @@
 	<p class="mtop15 mbottom05">
 		<bean:message key="message.degree.module.equivalencies" bundle="APPLICATION_RESOURCES"/>:
 	</p>
-	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #555;">
+	
+	
+	
+
 		<logic:empty name="entries">
 			<em><bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/></em>
 		</logic:empty>
+
+		<table class="tstyle4 mtop05">
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" indexId="n" name="entries">
+			<tr>
+			<td>
 			<logic:notEqual name="n" value="0">
-				<br/>
-				<br/>
 			</logic:notEqual>
+			
 			<logic:iterate id="degreeModuleFromList1" indexId="i1" name="entry" property="oldDegreeModules">
-				<span style="padding: 0 0.5em;">
-					<logic:notEqual name="i1" value="0">
-						<strong>
-							<bean:message name="entry" property="sourceDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
-						</strong>
-					</logic:notEqual>
-				</span>
-				<span style="border-bottom: 1px solid #aaa;">
+				<logic:notEqual name="i1" value="0">
+					<strong style="padding: 0 0.5em;">
+						<bean:message name="entry" property="sourceDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
+					</strong>
+				</logic:notEqual>
+				<span style="border-bottom: 1px solid #ccc;">
 					<bean:write name="degreeModuleFromList1" property="name"/>
 				</span>
 			</logic:iterate>
-			
-			<span style="padding-left: 1em;">==></span>
-			
+			</td>
+	
+			<td>
+				<span>==></span>
+			</td>
+	
+			<td>		
 			<logic:iterate id="degreeModuleFromList2" indexId="i2" name="entry" property="newDegreeModules">
-				<span style="padding: 0 0.5em;">
-					<logic:notEqual name="i2" value="0">
-						<strong>
-							<bean:message name="entry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
-						</strong>
-					</logic:notEqual>
-				</span>
-				<span style="border-bottom: 1px solid #aaa;">
+				<logic:notEqual name="i2" value="0">
+					<strong style="padding: 0 0.5em;">
+						<bean:message name="entry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
+					</strong>
+				</logic:notEqual>
+				<span style="border-bottom: 1px solid #ccc;">
 					<bean:write name="degreeModuleFromList2" property="name"/>
 				</span>
 			</logic:iterate>
+			</td>
 			
+			<td class="acenter nowrap">
 			<logic:notEmpty name="entry" property="ectsCredits">
-				(<bean:write name="entry" property="ectsCredits"/> <bean:message key="label.credits"/>)
+				<bean:write name="entry" property="ectsCredits"/> <bean:message key="label.credits" bundle="APPLICATION_RESOURCES"/>
 			</logic:notEmpty>
+			<logic:empty name="entry" property="ectsCredits">
+				-
+			</logic:empty>
+			</td>
 			
-			<span style="padding-left: 0.5em;">
-				(<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
+			<td>
+			<span>
+				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
 						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 						+ equivalencePlan.getIdInternal() + "&amp;equivalencePlanEntryID="
 						+ entry.getIdInternal() %>">
 					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
-				</html:link>)
+				</html:link>
 			</span>
+			</td>
+		</tr>
 		</logic:iterate>
-	</div>
+	</table>
 	</logic:present>
