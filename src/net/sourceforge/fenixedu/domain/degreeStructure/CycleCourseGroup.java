@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
     
@@ -31,4 +36,25 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     public boolean isCycleCourseGroup() {
         return true;
     }
+    
+    final public String getGraduateTitle() {
+	final StringBuilder result = new StringBuilder();
+	
+	result.append(getDegreeType().getGraduateTitle(getCycleType()));
+	
+	final String degreeFilteredName = getDegree().getFilteredName();
+	final String in = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString("label.in");
+	result.append(" ").append(in);
+	
+	final String graduateTitleSuffix = getGraduateTitleSuffix();
+	if (!StringUtils.isEmpty(graduateTitleSuffix) && !degreeFilteredName.contains(graduateTitleSuffix.trim())) {
+	    result.append(" ").append(graduateTitleSuffix);
+	    result.append(" -");
+	}
+	
+	result.append(" ").append(degreeFilteredName);
+	
+	return result.toString();
+    }
+    
 }
