@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -51,6 +52,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -1537,6 +1539,35 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CycleCourseGroup getLastCycleCourseGroup() {
 	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastCycleType()) : null;
+    }
+
+    final public String getGraduateTitle() {
+	if (isBolonhaDegree()) {
+	    return getLastCycleCourseGroup().getGraduateTitle();
+	} else {
+	    final StringBuilder result = new StringBuilder(getDegreeType().getGraduateTitle());
+	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString("label.in");
+	    result.append(" ").append(in);
+	    result.append(" ").append(getDegree().getFilteredName());
+	    
+	    return result.toString();
+	}
+    }
+
+    final public String getGraduateTitle(final CycleType cycleType) {
+	if (cycleType == null) {
+	    return getGraduateTitle();
+	}
+	
+	if (getDegreeType().getCycleTypes().isEmpty()) {
+	    throw new DomainException("DegreeCurricularPlan.has.no.cycle.type");
+	}
+	
+	if (!getDegreeType().hasCycleTypes(cycleType)) {
+	    throw new DomainException("DegreeCurricularPlan.doesnt.have.such.cycle.type");
+	}
+	
+	return getCycleCourseGroup(cycleType).getGraduateTitle();
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses() {
