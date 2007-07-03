@@ -279,10 +279,7 @@ public class Registration extends Registration_Base {
 
     public StudentCurricularPlan getActiveOrConcludedOrLastStudentCurricularPlan() {
 	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedStudentCurricularPlan();
-	if (studentCurricularPlan == null) {
-	    studentCurricularPlan = getLastStudentCurricularPlan();
-	}
-	return studentCurricularPlan;
+	return studentCurricularPlan == null ? studentCurricularPlan = getLastStudentCurricularPlan() : studentCurricularPlan;
     }
 
     public boolean attends(final ExecutionCourse executionCourse) {
