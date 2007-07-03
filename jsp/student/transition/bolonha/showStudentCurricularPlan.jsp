@@ -1,5 +1,5 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml />
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -9,12 +9,13 @@
 	<h2><bean:message key="label.curricularPlan"
 		bundle="APPLICATION_RESOURCES" /> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h2>
 
-	<div class="infoop2">
-		<bean:message  key="label.transition.bolonha.message.part1" bundle="STUDENT_RESOURCES"/>
-		<bean:message  key="label.transition.bolonha.message.part2" bundle="STUDENT_RESOURCES"/>
-	</div>
-	<br/>	
+	
 	<logic:notEmpty name="registration" property="lastStudentCurricularPlan.credits">
+		<div class="infoop2">
+			<bean:message  key="label.transition.bolonha.message.part1" bundle="STUDENT_RESOURCES"/>
+			<bean:message  key="label.transition.bolonha.message.part2" bundle="STUDENT_RESOURCES"/>
+		</div>
+		<br/>
 		<fr:view	name="registration" 
 					property="lastStudentCurricularPlan.credits" 
 					schema="student.Dismissal.view.dismissals.for.bolonha.transition">

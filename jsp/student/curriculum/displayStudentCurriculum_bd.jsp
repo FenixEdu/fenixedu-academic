@@ -109,12 +109,6 @@
 				<p class="mbottom05">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Consultar Média</a>
-					&nbsp;&nbsp;				
-					<logic:present role="COORDINATOR">
-						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						<bean:define id="studentId" name="registration" property="student.idInternal" />
-						<html:link action="<%="/bolonhaTransitionManagement.do?method=prepare&amp;studentId=" + studentId.toString()%>"><bean:message  key="label.bolonhaTransition" bundle="STUDENT_RESOURCES"/></html:link>
-					</logic:present>
 				</p>
 			
 				<div id="instructions" class="dblock mvert0">
