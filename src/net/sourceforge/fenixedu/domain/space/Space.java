@@ -400,7 +400,7 @@ public abstract class Space extends Space_Base {
     private static List<? extends Space> getAllSpacesByClass(Class<? extends Space> clazz, Boolean active){
 	List<Space> result = new ArrayList<Space>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
-	    if (space.isSpace() && space.getClass().equals(clazz) && 
+	    if (space.getClass().equals(clazz) && 
 		    (active == null || ((Space)space).isActive() == active.booleanValue())) {
 		result.add((Space) space);
 	    }

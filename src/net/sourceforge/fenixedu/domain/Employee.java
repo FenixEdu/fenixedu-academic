@@ -62,7 +62,7 @@ public class Employee extends Employee_Base {
 	    throw new DomainException("error.employee.already.exists.one.employee.with.same.number");
 	}
     }
-    
+
     public List<EmployeeProfessionalSituation> getEmployeeProfessionalSituations() {
 	List<EmployeeProfessionalSituation> result = new ArrayList<EmployeeProfessionalSituation>();
 	for (ProfessionalSituation professionalSituation : getProfessionalSituations()) {
@@ -239,31 +239,27 @@ public class Employee extends Employee_Base {
 	return null;
     }
 
-    public Campus getCurrentCampus() {
-	final YearMonthDay now = new YearMonthDay();
-	final List<Campus> campus = getAssiduousness().getCampusForInterval(now, now);
-	if (campus.size() > 1) {
-	    throw new DomainException("Employee.with.more.than.one.campus.for.same.day");
-	} else if (!campus.isEmpty()) {
-	    return campus.iterator().next();
-	}
-
+    public Campus getCurrentCampus() {		
+	Unit currentWorkingPlace = getCurrentWorkingPlace();
+	
+	if(currentWorkingPlace != null) {
+	    return currentWorkingPlace.getCampus();
+	}	
+	
 	return null;
     }
 
     public void delete() {
-	removePerson();
+	super.setPerson(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null
-		: getCurrentWorkingPlace().getAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
 	if (administrativeOffice == null) {
 	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
-		if (personFunction.getFunction().getFunctionType().equals(
-			FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
+		if (personFunction.getFunction().getFunctionType().equals(FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
 			&& personFunction.getUnit().getAdministrativeOffice() != null) {
 		    administrativeOffice = personFunction.getUnit().getAdministrativeOffice();
 		}
@@ -281,9 +277,7 @@ public class Employee extends Employee_Base {
     }
 
     public String getRoleLoginAlias() {
-	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(
-		getRoleType());
-
+	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
 	if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
 	    return "F" + getEmployeeNumber();
 	} else {
@@ -291,27 +285,27 @@ public class Employee extends Employee_Base {
 	}
     }
 
-	public Unit getCurrentSectionOrScientificArea() {
-		return getSectionOrScientificArea(getCurrentWorkingPlace());
+    public Unit getCurrentSectionOrScientificArea() {
+	return getSectionOrScientificArea(getCurrentWorkingPlace());
+    }
+
+    private Unit getSectionOrScientificArea(Unit unit) {
+	if (unit == null) {
+	    return null;
 	}
-	
-	private Unit getSectionOrScientificArea(Unit unit) {
-		if (unit == null) {
-			return null;
-		}
-		
-		if (unit.isScientificAreaUnit() || unit.isSectionUnit()) {
-			return unit;
-		}
-		
-		for (Unit parent : unit.getParentUnits()) {
-			Unit parentUnit = getSectionOrScientificArea(parent);
-			
-			if (parentUnit != null) {
-				return parentUnit;
-			}
-		}
-		
-		return null;
+
+	if (unit.isScientificAreaUnit() || unit.isSectionUnit()) {
+	    return unit;
 	}
+
+	for (Unit parent : unit.getParentUnits()) {
+	    Unit parentUnit = getSectionOrScientificArea(parent);
+
+	    if (parentUnit != null) {
+		return parentUnit;
+	    }
+	}
+
+	return null;
+    }
 }

@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -17,10 +18,11 @@ public class DegreeUnit extends DegreeUnit_Base {
         
     public static DegreeUnit createNewInternalDegreeUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
-	    String webAddress, Degree degree, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {
+	    String webAddress, Degree degree, UnitClassification classification, Boolean canBeResponsibleOfSpaces, 
+	    Campus campus) {
 	
 	DegreeUnit degreeUnit = new DegreeUnit();	
-	degreeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);
+	degreeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
 	degreeUnit.setDegree(degree);		
 	degreeUnit.addParentUnit(parentUnit, accountabilityType);
 	
@@ -32,9 +34,10 @@ public class DegreeUnit extends DegreeUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification, 
-            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
+            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+            Campus campus) {
         
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
         setDegree(degree);
         
         checkIfAlreadyExistsOneDegreeWithSameAcronym(this);        

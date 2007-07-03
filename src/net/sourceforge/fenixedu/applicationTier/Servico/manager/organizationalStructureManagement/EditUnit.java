@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.YearMonthDay;
@@ -17,7 +18,7 @@ public class EditUnit extends Service {
 
     public void run(Integer unitID, String unitName, String unitCostCenter, String acronym,
 	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces)
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID)
     		throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
 
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
@@ -30,8 +31,9 @@ public class EditUnit extends Service {
         Degree degree = rootDomainObject.readDegreeByOID(degreeID);
         Department department = rootDomainObject.readDepartmentByOID(departmentID);        
         AdministrativeOffice administrativeOffice = rootDomainObject.readAdministrativeOfficeByOID(administrativeOfficeID);
-        
-        unit.edit(unitName, costCenterCode, acronym, begin, end, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);	                 
+        Campus campus = (Campus) rootDomainObject.readResourceByOID(campusID);
+                
+        unit.edit(unitName, costCenterCode, acronym, begin, end, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);	                 
     }
     
     private Integer getCostCenterCode(String unitCostCenter) {

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
@@ -14,10 +15,10 @@ public class SectionUnit extends SectionUnit_Base {
     public static Unit createNewSectionUnit(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
-	    Boolean canBeResponsibleOfSpaces) {
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 			
 	SectionUnit sectionUnit = new SectionUnit();	
-	sectionUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
+	sectionUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);	
 	sectionUnit.addParentUnit(parentUnit, accountabilityType);	
 	
 	return sectionUnit;

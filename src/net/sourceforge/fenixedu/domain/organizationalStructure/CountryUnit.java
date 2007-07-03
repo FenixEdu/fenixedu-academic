@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -21,10 +22,10 @@ public class CountryUnit extends CountryUnit_Base {
     
     public static Unit createNewCountryUnit(String countryName, Integer costCenterCode, String countryAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification, 
-	    Boolean canBeResponsibleOfSpaces) {	
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {	
 		
 	CountryUnit countryUnit = new CountryUnit();
-	countryUnit.init(countryName, costCenterCode, countryAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
+	countryUnit.init(countryName, costCenterCode, countryAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);	
 	countryUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	
 	checkIfAlreadyExistsOneCountryWithSameAcronymAndName(countryUnit);
@@ -41,9 +42,10 @@ public class CountryUnit extends CountryUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
+            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+            Campus campus) {
      	
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	
 	checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
     }

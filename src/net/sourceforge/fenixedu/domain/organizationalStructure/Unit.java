@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
@@ -32,7 +31,6 @@ import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
@@ -42,6 +40,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -66,7 +65,7 @@ public class Unit extends Unit_Base {
 
     protected void init(String name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces) {
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	setName(name);
 	setAcronym(acronym);
@@ -75,6 +74,7 @@ public class Unit extends Unit_Base {
 	setEndDateYearMonthDay(endDate);
 	setClassification(classification);
 	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
+	setCampus(campus);
 	updateDefaultWebAddress(webAddress);
     }
 
@@ -96,10 +96,10 @@ public class Unit extends Unit_Base {
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification,
 	    Department department, Degree degree, AdministrativeOffice administrativeOffice,
-	    Boolean canBeResponsibleOfSpaces) {
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces);
+		canBeResponsibleOfSpaces, campus);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Unit extends Unit_Base {
     }
 
     @jvstm.cps.ConsistencyPredicate
-    protected boolean checkDateIntervals() {
+    protected boolean checkDateInterval() {
 	final YearMonthDay start = getBeginDateYearMonthDay();
 	final YearMonthDay end = getEndDateYearMonthDay();	
 	return start != null && (end == null || !start.isAfter(end));
@@ -152,6 +152,23 @@ public class Unit extends Unit_Base {
 	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
     }
 
+    @Override
+    public Campus getCampus() {
+        
+	Campus campus = super.getCampus();        
+	
+	if(campus != null) {
+	    return campus;
+	}
+
+	Collection<Unit> parentUnits = getParentUnits();
+	if(parentUnits.size() == 1) {
+	    campus = parentUnits.iterator().next().getCampus();
+	}
+	
+	return campus;
+    }
+    
     public boolean isInternal() {
 	if (this.equals(UnitUtils.readInstitutionUnit())) {
 	    return true;
@@ -718,11 +735,10 @@ public class Unit extends Unit_Base {
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces) {
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	Unit unit = new Unit();
-	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces);
+	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
@@ -736,10 +752,8 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
-	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null,
-		null, null);
-	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null, null, null, null);
+	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
     }

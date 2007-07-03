@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -21,10 +22,10 @@ public class SchoolUnit extends SchoolUnit_Base {
     
     public static Unit createNewSchoolUnit(String schoolName, Integer costCenterCode, String schoolAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, 
-	    UnitClassification classification, Boolean canBeResponsibleOfSpaces) {	
+	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {	
 	
 	SchoolUnit schoolUnit = new SchoolUnit();
-	schoolUnit.init(schoolName, costCenterCode, schoolAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);
+	schoolUnit.init(schoolName, costCenterCode, schoolAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
 			
 	if(parentUnit.isCountryUnit()) {
 	    schoolUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
@@ -46,9 +47,10 @@ public class SchoolUnit extends SchoolUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
+            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+            Campus campus) {
 	
-        super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+        super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
         
         checkIfAlreadyExistsOneSchoolWithSameAcronymAndName(this);
     }

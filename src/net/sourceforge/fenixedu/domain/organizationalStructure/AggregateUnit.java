@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
@@ -14,10 +15,10 @@ public class AggregateUnit extends AggregateUnit_Base {
     public static Unit createNewAggregateUnit(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
-	    Boolean canBeResponsibleOfSpaces) {
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	AggregateUnit aggregateUnit = new AggregateUnit();
-	aggregateUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
+	aggregateUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);	
 	aggregateUnit.addParentUnit(parentUnit, accountabilityType);
 
 	return aggregateUnit;

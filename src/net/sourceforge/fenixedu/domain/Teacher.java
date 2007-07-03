@@ -1167,7 +1167,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public void delete() {
-	removePerson();
+	super.setPerson(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }

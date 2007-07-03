@@ -99,10 +99,15 @@
 				<f:selectItems value="#{organizationalStructureBackingBean.administrativeOffices}"/>				
 			</fc:selectOneMenu>
 			
+			<h:outputText value="<b>#{bundle['message.campus']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.campusID}">
+				<f:selectItems value="#{organizationalStructureBackingBean.campuss}"/>				
+			</fc:selectOneMenu>
+			
 			<h:outputText value="<b>#{bundle['title.relation.type']}:</b>" escape="false" />		
 			<fc:selectOneMenu value="#{organizationalStructureBackingBean.unitRelationTypeValue}">
 				<f:selectItems value="#{organizationalStructureBackingBean.unitRelationTypes}"/>				
-			</fc:selectOneMenu>
+			</fc:selectOneMenu>			
 		
 		</h:panelGrid>				
 		

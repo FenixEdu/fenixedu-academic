@@ -86,6 +86,11 @@
 				<f:selectItems value="#{organizationalStructureBackingBean.degrees}"/>				
 			</fc:selectOneMenu>
 			
+			<h:outputText value="<b>#{bundle['message.campus']}</b>" escape="false"/>
+			<fc:selectOneMenu value="#{organizationalStructureBackingBean.campusID}">
+				<f:selectItems value="#{organizationalStructureBackingBean.campuss}"/>				
+			</fc:selectOneMenu>
+			
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>" escape="false" />	

@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
@@ -16,10 +17,11 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
     
     public static AdministrativeOfficeUnit createNewAdministrativeOfficeUnit(String unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
-	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
+	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, 
+	    Campus campus) {
 	
 	AdministrativeOfficeUnit administrativeOfficeUnit = new AdministrativeOfficeUnit();	
-	administrativeOfficeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);	
+	administrativeOfficeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);	
 	administrativeOfficeUnit.setAdministrativeOffice(administrativeOffice);	
 	administrativeOfficeUnit.addParentUnit(parentUnit, accountabilityType);	
 		
@@ -30,9 +32,9 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice,
-            Boolean canBeResponsibleOfSpaces) {
+            Boolean canBeResponsibleOfSpaces, Campus campus) {
         
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
         setAdministrativeOffice(administrativeOffice); 
     }
            

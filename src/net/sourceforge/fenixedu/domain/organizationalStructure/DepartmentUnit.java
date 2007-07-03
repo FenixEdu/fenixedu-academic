@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecuti
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,13 +30,13 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     public static DepartmentUnit createNewInternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces) {
+	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces);
+	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
 	departmentUnit.setDepartment(department);
 	departmentUnit.addParentUnit(parentUnit, accountabilityType);		
-
+	
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
 
 	return departmentUnit;
@@ -44,7 +45,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName, final String departmentAcronym, final Unit parentUnit) {							
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, null, departmentAcronym, new YearMonthDay(), null, null, null, null);
+	departmentUnit.init(departmentName, null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
 	if(parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
@@ -64,9 +65,9 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, 
-	    Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces) {
+	    Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces);
+	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	if(isInternal()) {
 	    setDepartment(department);
 	}
