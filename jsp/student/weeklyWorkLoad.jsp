@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
 <div class="infoop2">

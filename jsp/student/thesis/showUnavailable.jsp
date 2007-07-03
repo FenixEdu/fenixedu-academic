@@ -5,10 +5,9 @@
 
 <html:xhtml/>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.submission"/></h2>
 
-<div class="infoop2">
-    <p>
-        <bean:message key="label.student.thesis.unavailable"/>
-    </p>
-</div>
+<p>
+    <em><bean:message key="label.student.thesis.unavailable"/></em>
+</p>

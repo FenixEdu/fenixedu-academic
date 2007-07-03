@@ -9,12 +9,13 @@
 	<span class="error"><!-- Error messages go here --><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
 </noscript>
 
-<h2>
-	<bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/>	
-</h2>
+<em><bean:message key="title.student.portalTitle"/></em>
+<h2><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:present name="inquiryMessageKey">
-	<span class="error"><bean:message name="inquiryMessageKey" bundle="INQUIRIES_RESOURCES"/></span>
+	<p>
+		<span class="warning0"><bean:message name="inquiryMessageKey" bundle="INQUIRIES_RESOURCES"/></span>
+	</p>
 </logic:present>
 
 <logic:present name="executionPeriod">
@@ -54,17 +55,23 @@
 				</ul>
 			</logic:notEmpty>
 		</logic:present>
+		
 		<logic:notPresent name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 			<logic:present name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>'>
 				<bean:define id="messageKey" name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>' />
 				<p><strong class="attention"><bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/></strong></p>
 			</logic:present>
 		</logic:notPresent>
+
 	</logic:present>
+
 	<logic:notPresent name="executionPeriod" property="inquiryResponsePeriod">
-		<bean:message key="message.inquiries.period.not.defined" bundle="INQUIRIES_RESOURCES"/>
+		<p>
+			<bean:message key="message.inquiries.period.not.defined" bundle="INQUIRIES_RESOURCES"/>
+		</p>
 	</logic:notPresent>
+
 </logic:present>
-<br/>
+
 
 

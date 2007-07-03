@@ -5,66 +5,73 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.finalDegreeWork.attribution"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:form action="/finalDegreeWorkAttribution">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="confirmAttribution"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<logic:present name="infoGroup">
-		<bean:message key="label.finalDegreeWork.group"/>:
-		<br />
+		<p class="mtop15 mbottom05">
+			<bean:message key="label.finalDegreeWork.group"/>
+		</p>
 		<logic:present name="infoGroup" property="groupStudents">
-			<table>
+			<table class="tstyle4 thlight mtop05">
 				<tr>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="label.finalDegreeWork.group.username"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="label.finalDegreeWork.group.name"/>
 					</th>
 				</tr>
 			<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
 				<bean:define id="student" name="groupStudent" property="student"/>
 				<tr>
-					<td class="listClasses">
+					<td>
 						<bean:write name="student" property="infoPerson.username"/>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="student" property="infoPerson.nome"/>
 					</td>
 				</tr>
 			</logic:iterate>
 			</table>
 		</logic:present>
-		<br />
-		<bean:message key="label.finalDegreeWork.groupProposals"/>:
-		<br />
+
+		<p class="mtop15 mbottom05">
+			<bean:message key="label.finalDegreeWork.groupProposals"/>:
+		</p>
 		<logic:present name="infoGroup" property="groupProposals">
-			<table>
+			<table class="tstyle4 thlight mtop05">
 				<tr>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="label.finalDegreeWork.proposal.orderOfPreference"/>
 					</th>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.number"/>
 					</th>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.title"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
 					</th>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
 					</th>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.attribution.byTeacher"/>
 					</th>
 					<logic:present name="infoGroup" property="groupStudents">
 						<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
-							<th class="listClasses-header" rowspan="2">
+							<th rowspan="2">
 								<bean:message key="finalDegreeWorkProposalHeader.student.confirmation"/>
 								<bean:write name="groupStudent" property="student.infoPerson.username"/>
 							</th>							
@@ -72,39 +79,39 @@
 					</logic:present>
 				</tr>
 				<tr>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
 					</th>
 				</tr>
 				<logic:iterate id="groupProposal" name="infoGroup" property="groupProposals">
 
 					<tr>
-						<td class="listClasses" rowspan="2">
+						<td rowspan="2">
 							<bean:write name="groupProposal" property="orderOfPreference"/>
 						</td>
-						<td class="listClasses" rowspan="2">
+						<td rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.proposalNumber"/>
 						</td>
-						<td class="listClasses" rowspan="2">
+						<td rowspan="2">
 							<bean:define id="proposalID" name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
 							<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + proposalID.toString() %>">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.title"/>
 					        </html:link>
 						</td>
-						<td class="listClasses">
+						<td>
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.orientator.person.name"/>
 						</td>
-						<td class="listClasses" rowspan="2">
+						<td rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.companionName"/>
 						</td>
-						<td class="listClasses" rowspan="2">
+						<td rowspan="2">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributedByTeacher" property="attributedByTeacher" disabled="true">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
 							</html:multibox>
 						</td>
 						<logic:present name="infoGroup" property="groupStudents">
 							<logic:iterate id="groupStudent" indexId="i" name="infoGroup" property="groupStudents">
-								<td class="listClasses" rowspan="2">
+								<td rowspan="2">
 									<bean:define id="username"><%= net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils.getUserView(request).getUtilizador() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<bean:define id="onChange">
@@ -129,7 +136,7 @@
 						</logic:present>
 					</tr>
 					<tr>
-						<td class="listClasses">
+						<td>
 							<logic:present name="groupProposal" property="finalDegreeWorkProposal.coorientator">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.coorientator.person.name"/>
 							</logic:present>

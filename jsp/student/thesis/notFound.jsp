@@ -4,19 +4,17 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
-
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.submission"/></h2>
 
-<div class="infoop2">
-    <p>
-    	<logic:present name="noEnrolment">
-	        <bean:message key="label.student.thesis.notFound"/>
-        </logic:present>
-    	<logic:present name="noThesis">
-	        <bean:message key="label.student.thesis.jury.notFound"/>
-        </logic:present>
-    </p>
-</div>
+<p>
+	<logic:present name="noEnrolment">
+		<em><bean:message key="label.student.thesis.notFound"/></em>
+	</logic:present>
+	<logic:present name="noThesis">
+		<em><bean:message key="label.student.thesis.jury.notFound"/></em>
+	</logic:present>
+</p>
 
 <logic:notEmpty name="proposal">
 	<h3><bean:message key="title.student.thesis.proposal"/></h3>

@@ -5,14 +5,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 <bean:define id="listSeminaries" type="java.util.List" scope="request" name="seminaries"/> 
+
+<em><bean:message key="title.student.portalTitle"/></em>
+<h2><bean:message key="link.seminaries.enrolment"/></h2>
+		
 <logic:empty name="listSeminaries" >
-		<h2><bean:message key="message.no.seminaries.to.enroll"/></h2>
+	<p><em><bean:message key="message.no.seminaries.to.enroll"/></em></p>
 </logic:empty>
+
 <logic:notEmpty name="listSeminaries" >
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
-	<h2 class="redtxt">Informações de utilização:</h2>
+	<p class="redtxt">Informações de utilização:</p>
 	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
-	<h2><bean:message key="label.seminariesToEnroll"/></h2>
+	<p><bean:message key="label.seminariesToEnroll"/></p>
 	<table width="90%" align="center">
 	<tr>
 		<th class="listClasses-header" ><bean:message key="label.seminaryTitle"/></th>
@@ -37,8 +42,9 @@
 	</logic:iterate>
 	</table>
 </logic:notEmpty>
+
 <logic:notEmpty name="currentCandidacies" >
-	<h2><bean:message key="label.currentCandidacies"/></h2>
+	<p><bean:message key="label.currentCandidacies"/></p>
 	<bean:define id="currentCandidacies" type="java.util.List" scope="request" name="currentCandidacies"/>
 	<table width="90%" align="center">
 		<tr>

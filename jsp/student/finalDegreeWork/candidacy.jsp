@@ -5,11 +5,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
 
-<div class="mvert15">
-<!-- Error messages go here -->
-<html:errors />
+<div class="inobullet mvert15">
+	<!-- Error messages go here -->
+	<html:errors />
 </div>
 
 <logic:notPresent name="infoExecutionDegrees">
@@ -26,8 +27,9 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 
-	<bean:message key="label.finalDegreeWork.degree"/>:
-	<br />
+	<p class="mbottom05">
+		<bean:message key="label.finalDegreeWork.degree"/>:
+	</p>
 	<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
 				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
 		<html:option value=""><!-- w3c complient--></html:option>

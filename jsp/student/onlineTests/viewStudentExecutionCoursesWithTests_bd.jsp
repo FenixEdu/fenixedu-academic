@@ -5,8 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <logic:present name="studentExecutionCoursesList">
+	<em><bean:message key="title.student.portalTitle"/></em>
+	<h2>
+		<bean:message key="link.tests"/>
+	</h2>
+
 	<logic:empty name="studentExecutionCoursesList">
-		<p><strong><bean:message key="message.noStudentTests"/></strong></p>
+		<p class="mvert15"><em><bean:message key="message.noStudentTests"/></em></p>
 	</logic:empty>
 	
 	<logic:notEmpty name="studentExecutionCoursesList" >

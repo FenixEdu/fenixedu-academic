@@ -6,6 +6,7 @@
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['label.evaluations.enrolment']}</h2>" escape="false" />
 	<h:outputText value="<p><em>#{bundle['label.do.enrolment']}:</em> " escape="false" />
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1">

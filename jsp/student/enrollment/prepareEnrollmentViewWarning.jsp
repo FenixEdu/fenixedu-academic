@@ -5,20 +5,25 @@
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
-<div  align="center"  >
-	<span class="error"><!-- Error messages go here --><html:errors />Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2006</span>
-	<logic:messagesPresent message="true">
-		<ul>
-			<html:messages id="messages" message="true">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
-		<br />
-	</logic:messagesPresent>
-	<br />
-	<h2 style="text-align:center"><bean:message key="title.student.shift.enrollment" /></h2>
+<div align="center">
 
-	<div class="infoselected" style="text-align: left">
+	<h2 class="acenter"><bean:message key="title.student.shift.enrollment" /></h2>
+
+	<div class="inobullet">
+		<!-- Error messages go here --><html:errors />
+	</div>
+	
+	<p>
+		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2006</span>
+	</p>
+
+	<logic:messagesPresent message="true">
+		<html:messages id="messages" message="true">
+			<p><span class="error0"><bean:write name="messages" /></span></p>
+		</html:messages>
+	</logic:messagesPresent>
+
+	<div class="infoop4" style="text-align: left">
 	<ul>
 		<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 		<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>

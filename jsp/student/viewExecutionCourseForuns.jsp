@@ -7,6 +7,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
+<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.viewExecutionCourseForuns.title" /></h2>
 
 <logic:iterate id="attend" name="attendsForExecutionPeriod">
