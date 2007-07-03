@@ -43,14 +43,24 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="clockings">
+	<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
+		if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 		<fr:view name="clockings" schema="show.clockingsDaySheet.assiduosunessManager">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder" />
-				<fr:property name="columnClasses"
-					value="bgcolor3 acenter,acenter,aleft,aleft" />
+				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
 		</fr:view>
+	<%}else{ %>
+		<fr:view name="clockings" schema="show.clockingsDaySheet">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 printborder" />
+				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
+				<fr:property name="headerClasses" value="acenter" />
+			</fr:layout>
+		</fr:view>	
+	<%}%>
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="clockings">
