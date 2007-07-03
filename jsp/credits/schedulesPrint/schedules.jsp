@@ -68,7 +68,7 @@
 								      </dt:format> 
 									<bean:message key="label.time.separator" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>  <dt:format patternId="hoursPattern">
 									      <bean:write name="lesson" property="fim.timeInMillis"/>
-									   </dt:format> , <bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
+									   </dt:format> , <bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <logic:notEmpty name="lesson" property="sala"><bean:write name="lesson" property="sala.nome"/></logic:notEmpty>)
 								      ,
 							    </logic:iterate>
 						    </td>						    						    
@@ -101,7 +101,7 @@
 									      </dt:format> 
 										<bean:message key="label.time.separator" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>  <dt:format patternId="hoursPattern">
 										      <bean:write name="lesson" property="fim.timeInMillis"/>
-										   </dt:format> ,<bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
+										   </dt:format> ,<bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <logic:notEmpty name="lesson" property="sala"><bean:write name="lesson" property="sala.nome"/></logic:notEmpty>)
 									      ,
 								    </logic:iterate>
 							    </td>							    						    
