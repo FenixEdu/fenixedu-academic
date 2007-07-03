@@ -8,11 +8,13 @@
 <h2><bean:message key="documents.requirement.consult"/></h2>
 
 <logic:messagesPresent message="true">
-	<span class="error0"><!-- Error messages go here -->
-		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
-			<bean:write name="message"/>
-		</html:messages>
-	</span>
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	</p>
 </logic:messagesPresent>
 
 
@@ -22,13 +24,13 @@
 
 <fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight" />
+		<fr:property name="classes" value="tstyle4 thlight tdcenter" />
+		<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt,smalltxt,smalltxt,aleft smalltxt nowrap,smalltxt,smalltxt,smalltxt,smalltxt,nowrap" />
 		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
 		<fr:property name="key(view)" value="view"/>
 		<fr:property name="linkFormat(cancel)" value="/documentRequest.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
 		<fr:property name="key(cancel)" value="cancel"/>
 		<fr:property name="visibleIf(cancel)" value="studentCanCancel"/>
-			
 		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
 	</fr:layout>
 </fr:view>

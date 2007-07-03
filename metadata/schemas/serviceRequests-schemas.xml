@@ -187,7 +187,9 @@
 
 <schema name="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentPurposeType" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose"/>
-	<slot name="otherPurpose" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose"/>	
+	<slot name="otherPurpose" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose">
+		<property name="size" value="50"/>
+	</slot>
 	<setter signature="setPurpose(chosenDocumentPurposeType,otherPurpose)"/>
 </schema>
 

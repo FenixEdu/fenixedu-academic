@@ -3,7 +3,8 @@
 <html:xhtml/>
 
 <h2><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></h2>
-<br/>
 
+<p>
 <bean:message key="administrative.office.services.intro" bundle="STUDENT_RESOURCES"/>
+</p>
 
