@@ -118,8 +118,8 @@ public class GiafInterface {
                 query.append(" and a.ano_pag=");
                 query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
                 query.append(" and a.mes_pag=");
-                if (extraWorkRequest.getPartialPayingDate() != extraWorkRequest
-                        .getHoursDoneInPartialDate()) {
+                if (!extraWorkRequest.getPartialPayingDate().equals(extraWorkRequest
+                        .getHoursDoneInPartialDate())) {
                     query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
                             DateTimeFieldType.monthOfYear()));
                 } else {
