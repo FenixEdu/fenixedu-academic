@@ -43,6 +43,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
@@ -293,8 +294,11 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		Object[] args = { employee.getAssiduousness(), beginDate, endDate };
 		EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
 			userView, "ReadEmployeeWorkSheet", args);
-		employeeBalanceResume.setEmployeeBalanceResume(employeeWorkSheet.getTotalBalance(),
-			employeeWorkSheet.getBalanceToCompensate(), yearMonth.getPartial());
+		employeeBalanceResume.setEmployeeBalanceResume(
+			employeeWorkSheet.getTotalBalance() == null ? Duration.ZERO : employeeWorkSheet
+				.getTotalBalance(),
+			employeeWorkSheet.getBalanceToCompensate() == null ? Duration.ZERO
+				: employeeWorkSheet.getBalanceToCompensate(), yearMonth.getPartial());
 		request.setAttribute("employeeBalanceResume", employeeBalanceResume);
 	    }
 	    request.setAttribute("employeeBalanceResume", employeeBalanceResume);
