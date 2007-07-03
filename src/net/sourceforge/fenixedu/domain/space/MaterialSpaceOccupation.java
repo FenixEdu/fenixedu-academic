@@ -39,21 +39,12 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
     public boolean isActive(YearMonthDay currentDate) {
         return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }       
-    
-    @Override
-    public void setBegin(YearMonthDay beginDate) {
-	if (beginDate == null || (getEnd() != null && getEnd().isBefore(beginDate))) {
-	    throw new DomainException("error.materialSpaceOccupation.inexistent.beginDate");
-	}
-	super.setBegin(beginDate);
-    }
-
-    @Override
-    public void setEnd(YearMonthDay endDate) {
-	if (getBegin() == null || (endDate != null && endDate.isBefore(getBegin()))) {
-	    throw new DomainException("error.materialSpaceOccupation.endDate.before.beginDate");
-	}
-	super.setEnd(endDate);
+       
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBegin();
+	final YearMonthDay end = getEnd();	
+	return start != null && (end == null || !start.isAfter(end));
     }
     
     @Override

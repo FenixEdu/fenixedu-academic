@@ -117,24 +117,13 @@ public class Unit extends Unit_Base {
 	super.setCostCenterCode(costCenterCode);
     }
 
-    @Override
-    public void setBeginDateYearMonthDay(YearMonthDay beginDateYearMonthDay) {
-	if (beginDateYearMonthDay == null || 
-		(getEndDateYearMonthDay() != null && getEndDateYearMonthDay().isBefore(beginDateYearMonthDay))) {
-	    throw new DomainException("error.unit.no.beginDate");
-	}
-	super.setBeginDateYearMonthDay(beginDateYearMonthDay);
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateIntervals() {
+	final YearMonthDay start = getBeginDateYearMonthDay();
+	final YearMonthDay end = getEndDateYearMonthDay();	
+	return start != null && (end == null || !start.isAfter(end));
     }
-
-    @Override
-    public void setEndDateYearMonthDay(YearMonthDay endDateYearMonthDay) {
-	if (getBeginDateYearMonthDay() == null
-		|| (endDateYearMonthDay != null && endDateYearMonthDay.isBefore(getBeginDateYearMonthDay()))) {
-	    throw new DomainException("error.unit.endDateBeforeBeginDate");
-	}
-	super.setEndDateYearMonthDay(endDateYearMonthDay);
-    }
-
+       
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
@@ -957,18 +946,12 @@ public class Unit extends Unit_Base {
 	    throw new DomainException("error.merge.external.units.invalid.units");
 	}
 
-	Collection<? extends Accountability> externalContracts = fromUnit
-	.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
-	List<NonAffiliatedTeacher> nonAffiliatedTeachers = fromUnit.getAssociatedNonAffiliatedTeachers();
-	List<ResultUnitAssociation> resultUnitAssociations = fromUnit.getResultUnitAssociations();
-	List<Guide> payedGuides = fromUnit.getPayedGuides();
-	List<Receipt> payedReceipts = fromUnit.getPayedReceipts();
-
-	destinationUnit.getPayedReceipts().addAll(payedReceipts);
-	destinationUnit.getPayedGuides().addAll(payedGuides);
-	destinationUnit.getResultUnitAssociations().addAll(resultUnitAssociations);
-	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(nonAffiliatedTeachers);
-	destinationUnit.getChilds().addAll(externalContracts);
+	Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);	
+	destinationUnit.getChilds().addAll(externalContracts);	
+	destinationUnit.getPayedReceipts().addAll(fromUnit.getPayedReceipts());
+	destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
+	destinationUnit.getResultUnitAssociations().addAll(fromUnit.getResultUnitAssociations());
+	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
 
 	fromUnit.delete();
     }

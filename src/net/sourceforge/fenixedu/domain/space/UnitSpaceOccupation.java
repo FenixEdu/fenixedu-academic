@@ -73,14 +73,12 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
     @Override
     public void setBegin(YearMonthDay begin) {
-	checkUnitSpaceOccupationIntersection(begin, getEnd(), getSpace(), getUnit());
-	super.setBegin(begin);
+	throw new DomainException("error.invalid.operation");
     }
 
     @Override
     public void setEnd(YearMonthDay end) {
-	checkUnitSpaceOccupationIntersection(getBegin(), end, getSpace(), getUnit());
-	super.setEnd(end);
+	throw new DomainException("error.invalid.operation");
     }
     
     public boolean isActive(YearMonthDay currentDate) {

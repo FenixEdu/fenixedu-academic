@@ -349,7 +349,7 @@ public abstract class Space extends Space_Base {
 	return result;
     }
     
-    private boolean verifyNameEquality(String[] nameWords) {
+    protected boolean verifyNameEquality(String[] nameWords) {
 	if (nameWords != null) {	
 	    String spacePresentationName = getSpaceInformation().getPresentationName();
 	    if (spacePresentationName != null) {
@@ -376,7 +376,7 @@ public abstract class Space extends Space_Base {
 	return false;
     }
     
-    private static String[] getIdentificationWords(String name) {
+    protected static String[] getIdentificationWords(String name) {
 	String[] identificationWords = null;
 	if (name != null && !StringUtils.isEmpty(name.trim())) {
 	    identificationWords = name.trim().split(" ");

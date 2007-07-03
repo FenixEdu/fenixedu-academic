@@ -77,24 +77,20 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
     @Override      
     public void setBegin(YearMonthDay begin) {
-	checkPersonSpaceOccupationIntersection(begin, getEnd(), getPerson(), getSpace());
-	super.setBegin(begin);
+	 throw new DomainException("error.invalid.operation");
     }
 
     @Override     
     public void setEnd(YearMonthDay end) {
-	checkPersonSpaceOccupationIntersection(getBegin(), end, getPerson(), getSpace());
-	super.setEnd(end);
+	 throw new DomainException("error.invalid.operation");
     }
     
     public boolean contains(YearMonthDay currentDate) {
-	return (!this.getBegin().isAfter(currentDate) && (this.getEnd() == null || !this.getEnd()
-		.isBefore(currentDate)));
+	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
 
     public Unit getPersonWorkingPlace() {
-	return (getPerson().getEmployee() != null) ? getPerson().getEmployee().getLastWorkingPlace(
-		getBegin(), getEnd()) : null;
+	return (getPerson().getEmployee() != null) ? getPerson().getEmployee().getLastWorkingPlace(getBegin(), getEnd()) : null;
     }
 
     @Override
@@ -116,8 +112,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     }
 
     private boolean occupationsIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBegin().isAfter(end)) && (this.getEnd() == null || !this
-		.getEnd().isBefore(begin)));
+	return ((end == null || !getBegin().isAfter(end)) && (getEnd() == null || !getEnd().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {

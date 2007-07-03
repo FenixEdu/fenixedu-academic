@@ -23,25 +23,7 @@ public class Function extends Function_Base {
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
     }
-
-    @Override
-    public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
-	if (beginDate == null || 
-		(getEndDateYearMonthDay() != null && getEndDateYearMonthDay().isBefore(beginDate))) {
-	    throw new DomainException("error.function.no.beginDate");
-	}
-	super.setBeginDateYearMonthDay(beginDate);
-    }
-
-    @Override
-    public void setEndDateYearMonthDay(YearMonthDay endDate) {
-	if (getBeginDateYearMonthDay() == null
-		|| (endDate != null && endDate.isBefore(getBeginDateYearMonthDay()))) {
-	    throw new DomainException("error.endDateBeforeBeginDate");
-	}
-	super.setEndDateYearMonthDay(endDate);
-    }
-
+      
     @Override
     public void setUnit(Unit unit) {
 	if (unit == null) {
@@ -63,19 +45,22 @@ public class Function extends Function_Base {
     }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
-	return ((endDate == null || !this.getBeginDateYearMonthDay().isAfter(endDate)) && (this
-		.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(beginDate)));
+	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) 
+		&& (getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(beginDate)));
     }
 
     public void delete() {
-	if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {
-	    removeParentInherentFunction();
-	    super.setUnit(null);
-	    removeRootDomainObject();
-	    super.deleteDomainObject();
-	} else {
+	if(!canBeDeleted()) {
 	    throw new DomainException("error.delete.function");
-	}
+	}	
+	removeParentInherentFunction();
+	super.setUnit(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+    
+    private boolean canBeDeleted() {
+	return !hasAnyAccountabilities() && !hasAnyInherentFunctions();
     }
 
     public List<PersonFunction> getPersonFunctions() {
@@ -98,5 +83,12 @@ public class Function extends Function_Base {
 	}
 	removeParentInherentFunction();
 	setParentInherentFunction(parentInherentFunction);
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBeginDateYearMonthDay();
+	final YearMonthDay end = getEndDateYearMonthDay();	
+	return start != null && (end == null || !start.isAfter(end));
     }
 }

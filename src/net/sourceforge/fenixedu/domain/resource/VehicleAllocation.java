@@ -54,14 +54,12 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     
     @Override
     public void setBeginDateTime(DateTime beginDateTime) {
-	checkAllocationIntersection(beginDateTime, getEndDateTime());
-	super.setBeginDateTime(beginDateTime);
+	throw new DomainException("error.invalid.operation");
     }
         
     @Override
     public void setEndDateTime(DateTime endDateTime) {
-	checkAllocationIntersection(getBeginDateTime(), endDateTime);
-	super.setEndDateTime(endDateTime);
+	throw new DomainException("error.invalid.operation");
     }
     
     public void setAllocationInterval(DateTime begin, DateTime end) {

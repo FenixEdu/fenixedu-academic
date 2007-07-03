@@ -13,25 +13,14 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType, Employee employee) {
-	setOccupationInterval(beginDate, endDate);
+    public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType, Employee employee) {	
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
 	setSituationType(type);
 	setRegimeType(regimenType);
 	setEmployee(employee);
     }
-    
-    @Override
-    public void setBeginDateYearMonthDay(YearMonthDay beginDate) {
-	checkBeginDateAndEndDate(beginDate, getEndDateYearMonthDay());	
-	super.setBeginDateYearMonthDay(beginDate);
-    }
-
-    @Override
-    public void setEndDateYearMonthDay(YearMonthDay endDate) {
-	checkBeginDateAndEndDate(getBeginDateYearMonthDay(), endDate);	
-	super.setEndDateYearMonthDay(endDate);
-    }
-    
+       
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate))
 		&& (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay().isBefore(beginDate)));
@@ -39,12 +28,6 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 
     public boolean isActive(YearMonthDay currentDate) {
 	return belongsToPeriod(currentDate, currentDate);
-    }
-
-    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
-	checkBeginDateAndEndDate(beginDate, endDate);	
-	super.setBeginDateYearMonthDay(beginDate);
-	super.setEndDateYearMonthDay(endDate);
     }
     
     @Override
@@ -68,16 +51,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
-    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.ProfessionalSituation.no.beginDate");
-	}
-	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.ProfessionalSituation.endDateBeforeBeginDate");
-	}
-    }
-    
+ 
     public boolean isTeacherProfessionalSituation() {
 	return false;
     }
@@ -88,5 +62,12 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     
     public boolean isEmployeeProfessionalSituation() {
 	return false;
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBeginDateYearMonthDay();
+	final YearMonthDay end = getEndDateYearMonthDay();	
+	return start != null && (end == null || !start.isAfter(end));
     }
 }

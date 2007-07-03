@@ -35,7 +35,8 @@ public abstract class Contract extends Contract_Base {
     protected void init(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit) {
 	setParentParty(unit);
 	setChildParty(person);		
-	setOccupationInterval(beginDate, endDate);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
     }
     
     @Override
@@ -52,24 +53,6 @@ public abstract class Contract extends Contract_Base {
             throw new DomainException("error.invalid.parent.party");
         }
 	super.setParentParty(parentParty);
-    }
-    
-    @Override
-    public void setBeginDate(YearMonthDay beginDate) {
-	checkBeginDateAndEndDate(beginDate, getEndDate());	
-	super.setBeginDate(beginDate);
-    }
-
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-	checkBeginDateAndEndDate(getBeginDate(), endDate);
-	super.setEndDate(endDate);
-    }
-
-    public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
-	checkBeginDateAndEndDate(beginDate, endDate);
-	super.setBeginDate(beginDate);
-	super.setEndDate(endDate);
     }
 
     public Person getPerson() {
@@ -90,14 +73,5 @@ public abstract class Contract extends Contract_Base {
     
     public Employee getEmployee() {
 	return null;
-    }
-    
-    private void checkBeginDateAndEndDate(YearMonthDay beginDate, YearMonthDay endDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.contract.no.beginDate");
-	}
-	if (endDate != null && endDate.isBefore(beginDate)) {
-	    throw new DomainException("error.contract.endDateBeforeBeginDate");
-	}
-    }       
+    }      
 }

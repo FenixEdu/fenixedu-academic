@@ -69,14 +69,12 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
           
     @Override    
     public void setBegin(YearMonthDay begin) {
-	checkExtensionSpaceOccupationIntersection(begin, getEnd(), getExtension());
-	super.setBegin(begin);
+	throw new DomainException("error.invalid.operation");
     }
 
     @Override    
     public void setEnd(YearMonthDay end) {
-	checkExtensionSpaceOccupationIntersection(getBegin(), end, getExtension());
-	super.setEnd(end);
+	throw new DomainException("error.invalid.operation");
     }
     
     @Override

@@ -88,13 +88,13 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }   
            
     public static List<Space> readAllAllocatableSpacesByName(String name){
-	List<Space> result = new ArrayList<Space>();
-	for (Resource resource : RootDomainObject.getInstance().getResources()) {
-	    if(resource.isAllocatableSpace() && ((AllocatableSpace)resource).getIdentification() != null &&
-		    ((AllocatableSpace)resource).getIdentification().equalsIgnoreCase(name)) {		  			
+	List<Space> result = new ArrayList<Space>();	
+	String[] identificationWords = getIdentificationWords(name);
+	for (Resource resource : RootDomainObject.getInstance().getResources()) {	    
+	    if (resource.isAllocatableSpace() && ((Space)resource).verifyNameEquality(identificationWords)) {
 		result.add((Space) resource);
 	    }
-	}	
+	}
 	return result;
     }                   
     

@@ -38,8 +38,8 @@ public class Accountability extends Accountability_Base {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
-    public Boolean isPersonFunction() {
-	return getAccountabilityType() instanceof Function && getParentParty() instanceof Unit && this instanceof PersonFunction;
+    public boolean isPersonFunction() {
+	return false;
     }
 
     public Date getBeginDateInDateType() {
@@ -74,19 +74,10 @@ public class Accountability extends Accountability_Base {
 	super.setAccountabilityType(accountabilityType);
     }
 
-    @Override
-    public void setBeginDate(YearMonthDay beginDate) {
-	if (beginDate == null || (getEndDate() != null && getEndDate().isBefore(beginDate))) {
-	    throw new DomainException("error.accountability.inexistent.beginDate");
-	}
-	super.setBeginDate(beginDate);
-    }
-
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-	if (getBeginDate() == null || (endDate != null && endDate.isBefore(getBeginDate()))) {
-	    throw new DomainException("error.accountability.endDate.before.beginDate");
-	}
-	super.setEndDate(endDate);
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBeginDate();
+	final YearMonthDay end = getEndDate();	
+	return start != null && (end == null || !start.isAfter(end));
     }
 }

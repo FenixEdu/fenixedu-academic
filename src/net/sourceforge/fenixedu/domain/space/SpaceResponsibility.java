@@ -61,14 +61,12 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     
     @Override
     public void setBegin(YearMonthDay begin) {
-	checkSpaceResponsabilityIntersection(begin, getEnd(), getUnit(), getSpace());
-	super.setBegin(begin);
+	throw new DomainException("error.invalid.operation");
     }
 
     @Override
     public void setEnd(YearMonthDay end) {
-	checkSpaceResponsabilityIntersection(getBegin(), end, getUnit(), getSpace());
-	super.setEnd(end);
+	throw new DomainException("error.invalid.operation");
     }
 
     @Override

@@ -52,25 +52,23 @@ public class PersonFunction extends PersonFunction_Base {
         }
 	super.setParentParty(parentParty);
     }
-
-    @Override
-    public void setBeginDate(YearMonthDay beginDate) {
-	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate, getEndDate());
-	super.setBeginDate(beginDate);
-    }
-
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), getBeginDate(), endDate);
-	super.setEndDate(endDate);
-    }
-    
+      
     public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
 	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate, endDate);
 	super.setBeginDate(beginDate);
 	super.setEndDate(endDate);
     }     
 
+    @Override
+    public void setBeginDate(YearMonthDay beginDate) {
+        throw new DomainException("error.invalid.operation");
+    }
+    
+    @Override
+    public void setEndDate(YearMonthDay endDate) {
+	throw new DomainException("error.invalid.operation");
+    }
+    
     @Override
     public Double getCredits() {
 	if (super.getCredits() == null) {
@@ -91,6 +89,11 @@ public class PersonFunction extends PersonFunction_Base {
 	return (Function) getAccountabilityType();
     }
     
+    @Override
+    public boolean isPersonFunction() {
+        return true;
+    }
+        
     private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function, YearMonthDay begin, YearMonthDay end) {
 	checkBeginDateAndEndDate(begin, end);
 	for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
