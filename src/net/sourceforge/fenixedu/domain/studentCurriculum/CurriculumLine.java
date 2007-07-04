@@ -66,7 +66,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    final public StudentCurricularPlan getStudentCurricularPlan() {
+    public StudentCurricularPlan getStudentCurricularPlan() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null;
     }
 
