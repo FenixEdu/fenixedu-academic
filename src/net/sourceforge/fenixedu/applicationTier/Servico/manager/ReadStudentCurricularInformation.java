@@ -5,11 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -22,37 +20,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentCurricularInformation extends Service {
 
-    public List run(final Integer studentNumber, final DegreeType degreeType) throws ExcepcaoPersistencia {
-        final List infoStudentCurricularPlans = new ArrayList();
+    public List run(final Integer studentNumber, final DegreeType degreeType)
+	    throws ExcepcaoPersistencia {
 
-        InfoStudent infoStudent = null;
+	final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
-        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        if(registration != null) {
-        	final List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans(); 
-	        for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
-	            final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
-	                    .next();
-	
-	            if (infoStudent == null) {
-	                infoStudent = constructInfoStudent(registration);
-	            }
-	
-	            final InfoStudentCurricularPlan infoStudentCurricularPlan = constructInfoStudentCurricularPlan(studentCurricularPlan);
-	
-	            infoStudentCurricularPlans.add(infoStudentCurricularPlan);
-	        }
-        }
-        return infoStudentCurricularPlans;
-    }
+	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber,
+		degreeType)) {
+	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+		infoStudentCurricularPlans
+			.add(constructInfoStudentCurricularPlan(studentCurricularPlan));
+	    }
+	}
 
-    protected InfoStudent constructInfoStudent(final Registration registration) {
-        return InfoStudent.newInfoFromDomain(registration);
+	return infoStudentCurricularPlans;
     }
 
     protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
-            final StudentCurricularPlan studentCurricularPlan) {
-        return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+	    final StudentCurricularPlan studentCurricularPlan) {
+	return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
     }
 
 }
