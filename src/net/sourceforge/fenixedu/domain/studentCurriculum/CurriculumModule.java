@@ -67,9 +67,9 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return false;
     }
 
-    public abstract StringBuilder print(String tabs);
+    abstract public StringBuilder print(String tabs);
 
-    public abstract List<Enrolment> getEnrolments();
+    abstract public List<Enrolment> getEnrolments();
 
     public abstract StudentCurricularPlan getStudentCurricularPlan();
 
@@ -161,7 +161,9 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
     
     abstract public boolean isConcluded(ExecutionYear executionYear);
+    
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
     
-
+    abstract public boolean isPropaedeutic();
+    
 }

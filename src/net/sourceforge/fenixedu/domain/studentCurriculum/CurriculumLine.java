@@ -22,15 +22,32 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public boolean isLeaf() {
+    @Override
+    final public boolean isLeaf() {
 	return true;
     }
 
     @Override
-    public boolean isRoot() {
+    final public boolean isRoot() {
+	return false;
+    }
+    
+    @Override
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	return false;
     }
 
+    @Override
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
+	    ExecutionPeriod executionPeriod) {
+	return false;
+    }
+
+    @Override
+    public boolean isPropaedeutic() {
+	return getCurriculumGroup().isPropaedeutic();
+    }
+    
     protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup,
 	    CurricularCourse curricularCourse) {
 	if (!curriculumGroup.getDegreeModule().validate(curricularCourse)) {
@@ -49,19 +66,8 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public StudentCurricularPlan getStudentCurricularPlan() {
+    final public StudentCurricularPlan getStudentCurricularPlan() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : null;
-    }
-
-    @Override
-    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	return false;
-    }
-
-    @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod) {
-	return false;
     }
 
     @Override
@@ -70,11 +76,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	return false;
     }
 
-    public CurricularCourse getCurricularCourse() {
+    final public CurricularCourse getCurricularCourse() {
 	return (CurricularCourse) getDegreeModule();
     }
 
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
+    final public void setCurricularCourse(CurricularCourse curricularCourse) {
 	setDegreeModule(curricularCourse);
     }
 
@@ -86,7 +92,7 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	super.setDegreeModule(degreeModule);
     }
 
-    public boolean hasCurricularCourse() {
+    final public boolean hasCurricularCourse() {
 	return hasDegreeModule();
     }
 
@@ -117,9 +123,10 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+    final public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
 	degreeModules.add(getDegreeModule());
     }
 
-    public abstract ExecutionPeriod getExecutionPeriod();
+    abstract public ExecutionPeriod getExecutionPeriod();
+    
 }

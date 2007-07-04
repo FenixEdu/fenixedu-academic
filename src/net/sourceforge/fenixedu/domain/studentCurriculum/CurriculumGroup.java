@@ -630,4 +630,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
     }
 
+    @Override
+    public boolean isPropaedeutic() {
+	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();
+    }
+    
 }
