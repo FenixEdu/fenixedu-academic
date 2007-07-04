@@ -15,6 +15,7 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
     
     public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
+	this();
 	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
     }
     
