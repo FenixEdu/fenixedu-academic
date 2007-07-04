@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
@@ -71,7 +72,7 @@ public class SQLUpdateGenerator {
 	    this.tablename = tablename;
 
 	    final Statement statement = connection.createStatement();
-	    try {
+
 		final ResultSet resultSet = statement.executeQuery("show create table " + tablename);
 		resultSet.next();
 		final String[] tableParts = extractParts(normalize(resultSet.getString(2)));
@@ -102,9 +103,7 @@ public class SQLUpdateGenerator {
 			columns.add(columnName);
 		    }
 		}
-	    } catch (final MySQLSyntaxErrorException mySQLSyntaxErrorException) {
-		throw new TableDoesNotExistException();
-	    }
+
 	}
 
 	private void getSet(final Set<String> set, final String tablePart) {
@@ -248,7 +247,8 @@ public class SQLUpdateGenerator {
     private static void generate() throws Exception {
 	final String destinationFilename = "etc/database_operations/updates.sql";
 
-	final StringBuilder stringBuilder = new StringBuilder();
+	final StringBuilder stringBuilderForSingleLineInstructions = new StringBuilder();
+	final StringBuilder stringBuilderForMultiLineInstructions = new StringBuilder();
 
 	final Set<String> processedIndirectionTables = new HashSet<String>();
 
@@ -257,11 +257,11 @@ public class SQLUpdateGenerator {
 
             final String tableName = classDescriptor.getFullTableName();
             if (tableName != null && !tableName.startsWith("OJB")) {
-        	try {
+        	if (exists(tableName)) {        	    
         	    final TableInfo tableInfo = new TableInfo(tableName);
-        	    tableInfo.appendAlterTables(stringBuilder, classDescriptor);
-        	} catch (final TableDoesNotExistException tableDoesNotExistException) {
-        	    createTable(stringBuilder, classDescriptor);
+        	    tableInfo.appendAlterTables(stringBuilderForSingleLineInstructions, classDescriptor);
+        	} else {
+        	    createTable(classDescriptor);
         	}
             }
 
@@ -270,12 +270,15 @@ public class SQLUpdateGenerator {
                 final String indirectionTablename = collectionDescriptor.getIndirectionTable();
                 if (indirectionTablename != null && !processedIndirectionTables.contains(indirectionTablename) && !exists(indirectionTablename)) {
                     processedIndirectionTables.add(indirectionTablename);
-            	    appendIndirectionTable(stringBuilder, collectionDescriptor, indirectionTablename);
+            	    appendIndirectionTable(stringBuilderForMultiLineInstructions, collectionDescriptor, indirectionTablename);
                 }
             }
         }
 
-	writeFile(destinationFilename, getOutputString(stringBuilder));
+        appendCreateTables(stringBuilderForMultiLineInstructions);
+
+	writeFile(destinationFilename, getOutputStringForSingleLineInstructions(stringBuilderForSingleLineInstructions)
+		+ "\n\n" + stringBuilderForMultiLineInstructions.toString());
     }
 
     private static void appendIndirectionTable(final StringBuilder stringBuilder,
@@ -311,12 +314,25 @@ public class SQLUpdateGenerator {
 	    }
     }
 
-    private static void createTable(final StringBuilder stringBuilder, final ClassDescriptor classDescriptor) {
-	final SqlTable sqlTable = new SqlTable(classDescriptor.getFullTableName());
+    private static Map<String, SqlTable> sqlTables = new TreeMap<String, SqlTable>();
+    private static void createTable(final ClassDescriptor classDescriptor) {
+	final String tablename = classDescriptor.getFullTableName();
+	final SqlTable sqlTable;
+	if (sqlTables.containsKey(tablename)) {
+	    sqlTable = sqlTables.get(tablename);
+	} else {
+	    sqlTable = new SqlTable(tablename);
+	    sqlTables.put(tablename, sqlTable);
+	}
 	addColumns(sqlTable, classDescriptor.getFieldDescriptions());
 	setPrimaryKey(sqlTable, classDescriptor.getPkFields());
 	addIndexes(sqlTable, classDescriptor);
-	sqlTable.appendCreateTableMySql(stringBuilder);
+    }
+
+    private static void appendCreateTables(final StringBuilder stringBuilder) {
+	for (final SqlTable sqlTable : sqlTables.values()) {
+	    sqlTable.appendCreateTableMySql(stringBuilder);
+	}
     }
 
     private static void addColumns(final SqlTable sqlTable, final FieldDescriptor[] fieldDescriptions) {
@@ -345,7 +361,7 @@ public class SQLUpdateGenerator {
         }
     }
 
-    private static String getOutputString(final StringBuilder stringBuilder) {
+    private static String getOutputStringForSingleLineInstructions(final StringBuilder stringBuilder) {
 	final Set<String> strings = new TreeSet<String>();
 	for (final String string : stringBuilder.toString().split("\n")) {
 	    strings.add(string);

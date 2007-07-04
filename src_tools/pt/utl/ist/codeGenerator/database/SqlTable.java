@@ -133,7 +133,7 @@ public class SqlTable {
         }
         stringBuilder.append("\n");
 
-        stringBuilder.append(") type=InnoDB ;");
+        stringBuilder.append(") type=InnoDB ;\n\n");
     }
 
 }
