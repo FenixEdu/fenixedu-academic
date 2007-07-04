@@ -48,7 +48,7 @@ import org.joda.time.YearMonthDay;
 public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
+        final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
@@ -64,7 +64,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     };
     
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
+        final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
@@ -74,7 +74,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     };
     
     static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
+        final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME);
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
@@ -84,13 +84,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     };
     
     static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
+        final public int compare(Enrolment o1, Enrolment o2) {
             return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(), o2.getLatestEnrolmentEvaluation());
         }
     };
     
     static final public Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID = new Comparator<Enrolment>() {
-        public int compare(Enrolment o1, Enrolment o2) {
+        final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
@@ -124,11 +124,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public boolean isEnrolment() {
+    final public boolean isEnrolment() {
 	return true;
     }
     
-    public boolean isBolonhaDegree() {
+    final public boolean isBolonhaDegree() {
 	return getStudentCurricularPlan().isBolonhaDegree();
     }
     
@@ -136,37 +136,54 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * Temporary method, after all degrees migration this is no longer necessary
      * @return
      */
-    public boolean isBoxStructure() {
+    final public boolean isBoxStructure() {
 	return getStudentCurricularPlan().isBoxStructure();
     }
    
+    public boolean isOptional() {
+	return false;
+    }
+    
+    final public boolean isExternalEnrolment() {
+	return false;
+    }
+
+    @Override
+    final public boolean isPropaedeutic() {
+	return getCurricularCourse().isPropaedeutic() || super.isPropaedeutic();
+    }
+    
+    final public boolean isExtraCurricular() {
+	return getIsExtraCurricular() != null && getIsExtraCurricular();
+    }
+
     @Deprecated
-    public EnrollmentCondition getCondition() {
+    final public EnrollmentCondition getCondition() {
 	return getEnrolmentCondition();
     }
 
     @Deprecated
-    public void setCondition(EnrollmentCondition enrollmentCondition) {
+    final public void setCondition(EnrollmentCondition enrollmentCondition) {
 	setEnrolmentCondition(enrollmentCondition);
     }
 
-    public boolean isFinal() {
+    final public boolean isFinal() {
 	return getEnrolmentCondition() == EnrollmentCondition.FINAL;
     }
 
-    public boolean isInvisible() {
+    final public boolean isInvisible() {
 	return getEnrolmentCondition() == EnrollmentCondition.INVISIBLE;
     }
 
-    public boolean isTemporary() {
+    final public boolean isTemporary() {
 	return getEnrolmentCondition() == EnrollmentCondition.TEMPORARY;
     }
     
-    public boolean isImpossible() {
+    final public boolean isImpossible() {
 	return getEnrolmentCondition() == EnrollmentCondition.IMPOSSIBLE;
     }
 
-    public boolean isSpecialSeason() {
+    final public boolean isSpecialSeason() {
 	return hasSpecialSeason();
     }
 
@@ -222,11 +239,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     // end
 
-    public Integer getAccumulatedWeight() {
+    final public Integer getAccumulatedWeight() {
 	return accumulatedWeight;
     }
 
-    public void setAccumulatedWeight(Integer accumulatedWeight) {
+    final public void setAccumulatedWeight(Integer accumulatedWeight) {
 	this.accumulatedWeight = accumulatedWeight;
     }
 
@@ -261,7 +278,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	setStudentCurricularPlan(studentCurricularPlan);
     }
 
-    public void unEnroll() throws DomainException {
+    final public void unEnroll() throws DomainException {
 
 	for (EnrolmentEvaluation eval : getEvaluationsSet()) {
 
@@ -278,6 +295,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	delete();
     }
 
+    @Override
     public void delete() {
 	createEnrolmentLog(EnrolmentAction.UNENROL);
 	// TODO: falta ver se é dos antigos enrolments ou dos novos
@@ -384,7 +402,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     }
 
-    public Collection<Enrolment> getBrothers() {
+    final public Collection<Enrolment> getBrothers() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
 	
 	result.addAll(getStudentCurricularPlan().getEnrolments(getCurricularCourse()));
@@ -393,12 +411,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+    final public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
 	    final EnrolmentEvaluationType evaluationType, final String grade) {
 
 	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
-	    public boolean evaluate(Object o) {
+	    final public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 		String evaluationGrade = enrolmentEvaluation.getGradeValue();
 
@@ -410,11 +428,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	});
     }
 
-    public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+    final public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
 	    final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
 	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
-	    public boolean evaluate(Object o) {
+	    final public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 		return (enrolmentEvaluation.getEnrolmentEvaluationState().equals(state) && enrolmentEvaluation
 			.getEnrolmentEvaluationType().equals(type));
@@ -423,7 +441,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	});
     }
 
-    public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(
+    final public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationState(
 	    final EnrolmentEvaluationState evaluationState) {
 	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
@@ -434,7 +452,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationType(
+    final public List<EnrolmentEvaluation> getEnrolmentEvaluationsByEnrolmentEvaluationType(
 	    final EnrolmentEvaluationType evaluationType) {
 	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
@@ -445,7 +463,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    public EnrolmentEvaluation submitEnrolmentEvaluation(
+    final public EnrolmentEvaluation submitEnrolmentEvaluation(
 	    EnrolmentEvaluationType enrolmentEvaluationType, Mark publishedMark, Employee employee,
 	    Person personResponsibleForGrade, Date evaluationDate, String observation) {
 
@@ -533,7 +551,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public void createAttends(final Registration registration, final ExecutionCourse executionCourse) {
+    final public void createAttends(final Registration registration, final ExecutionCourse executionCourse) {
 	final Attends attendsFor = this.getAttendsFor(executionCourse.getExecutionPeriod());
 	if (attendsFor != null) {
 	    try {
@@ -547,7 +565,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this.addAttends(attends);
     }
 
-    public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
+    final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee, executionPeriod);
 	createAttendForImprovement(executionPeriod);
 	return enrolmentEvaluation;
@@ -560,7 +578,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
 		getCurricularCourse().getAssociatedExecutionCourses(), new Predicate() {
 
-		    public boolean evaluate(Object arg0) {
+		    final public boolean evaluate(Object arg0) {
 			ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 			if (executionCourse.getExecutionPeriod().equals(executionPeriod))
 			    return true;
@@ -591,7 +609,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public void unEnrollImprovement(final ExecutionPeriod executionPeriod) throws DomainException {
+    final public void unEnrollImprovement(final ExecutionPeriod executionPeriod) throws DomainException {
 	final EnrolmentEvaluation temporaryImprovement = getImprovementEvaluation();
 	if (temporaryImprovement == null) {
 	    throw new DomainException("error.enrolment.cant.unenroll.improvement");
@@ -604,12 +622,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
     
-    public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
+    final public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
 	return getCurricularCourse().hasAssociatedExecutionCourses(executionCourse)
 		&& getExecutionPeriod() != executionCourse.getExecutionPeriod();
     }
 
-    public boolean isImprovingInExecutionPeriodFollowingApproval(final ExecutionPeriod improvementExecutionPeriod) {
+    final public boolean isImprovingInExecutionPeriodFollowingApproval(final ExecutionPeriod improvementExecutionPeriod) {
 	final DegreeModule degreeModule = getDegreeModule();
 	if (hasImprovement() || !isApproved() || !degreeModule.hasAnyParentContexts(improvementExecutionPeriod)) {
 	    throw new DomainException("Enrolment.is.not.in.improvement.conditions");
@@ -633,7 +651,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
     
-    public EnrolmentEvaluation createSpecialSeasonEvaluation(final Employee employee) {
+    final public EnrolmentEvaluation createSpecialSeasonEvaluation(final Employee employee) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
 	    setEnrollmentState(EnrollmentState.ENROLLED);
@@ -645,7 +663,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public void deleteSpecialSeasonEvaluation() {
+    final public void deleteSpecialSeasonEvaluation() {
 	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && hasSpecialSeason()) {
 	    setEnrolmentCondition(EnrollmentCondition.FINAL);
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
@@ -665,7 +683,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
+    final public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
 	final List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
@@ -686,11 +704,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
-    public boolean hasImprovement() {
+    final public boolean hasImprovement() {
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.IMPROVEMENT);
     }
     
-    public boolean hasImprovementFor(ExecutionPeriod executionPeriod) {
+    final public boolean hasImprovementFor(ExecutionPeriod executionPeriod) {
 	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
 	    if(enrolmentEvaluation.isImprovment() && enrolmentEvaluation.getExecutionPeriod() != null &&
 		    enrolmentEvaluation.getExecutionPeriod().equals(executionPeriod)) {
@@ -700,11 +718,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
-    public boolean hasSpecialSeason() {
+    final public boolean hasSpecialSeason() {
 	return hasEnrolmentEvaluationByType(EnrolmentEvaluationType.SPECIAL_SEASON);
     }
 
-    public boolean hasSpecialSeasonInExecutionYear() {
+    final public boolean hasSpecialSeasonInExecutionYear() {
 	for (final Enrolment enrolment : getBrothers()) {
 	    if (enrolment.getExecutionYear() == getExecutionYear() && enrolment.hasSpecialSeason()) {
 		return true;
@@ -714,60 +732,68 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return hasSpecialSeason();
     }
 
-    public boolean isNotEvaluated() {
+    final public boolean isNotEvaluated() {
 	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return latestEnrolmentEvaluation == null || latestEnrolmentEvaluation.isNotEvaluated();
     }
 
-    public boolean isFlunked() {
+    final public boolean isFlunked() {
 	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isFlunked();
     }
 
-    public boolean isApproved() {
+    final public boolean isApproved() {
+	if (isAnnulled()) {
+	    return false;
+	}
+	
 	final EnrolmentEvaluation latestEnrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isApproved();
     }
 
-    public boolean isEnroled() {
+    final public boolean isEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
 
     @Deprecated
-    public boolean isEnrolmentStateApproved() {
+    final public boolean isEnrolmentStateApproved() {
 	return this.getEnrollmentState() == EnrollmentState.APROVED;
     }
 
     @Deprecated
-    public boolean isEnrolmentStateNotApproved() {
+    final public boolean isEnrolmentStateNotApproved() {
 	return this.getEnrollmentState() == EnrollmentState.NOT_APROVED;
     }
 
     @Deprecated
-    public boolean isEnrolmentStateNotEvaluated() {
+    final public boolean isEnrolmentStateNotEvaluated() {
 	return this.getEnrollmentState() == EnrollmentState.NOT_EVALUATED;
     }
 
-    public boolean isAnnulled() {
+    final public boolean isAnnulled() {
 	return this.getEnrollmentState() == EnrollmentState.ANNULED;
     }
 
-    public boolean isTemporarilyEnroled() {
+    final public boolean isTemporarilyEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED;
     }
 
-    public boolean isEvaluated() {
+    final public boolean isEvaluated() {
 	return isEnrolmentStateApproved() || isEnrolmentStateNotApproved();
     }
 
-    public Boolean isFirstTime() {
+    final public boolean isActive() {
+	return !isAnnulled() && !isTemporarilyEnroled();
+    }
+
+    final public Boolean isFirstTime() {
 	if (getIsFirstTime() == null) {
 	    resetIsFirstTimeEnrolment();
 	}
 	return getIsFirstTime();
     }
 
-    public void resetIsFirstTimeEnrolment() {
+    final public void resetIsFirstTimeEnrolment() {
 	if (getStudentCurricularPlan() != null && getCurricularCourse() != null
 		&& getExecutionPeriod() != null && getEnrollmentState() != null) {
 	    getStudentCurricularPlan().resetIsFirstTimeEnrolmentForCurricularCourse(getCurricularCourse());
@@ -777,39 +803,35 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public void setDegreeModule(DegreeModule degreeModule) {
+    final public void setDegreeModule(DegreeModule degreeModule) {
 	super.setDegreeModule(degreeModule);
 	resetIsFirstTimeEnrolment();
     }
 
     @Override
-    public void setEnrollmentState(EnrollmentState enrollmentState) {
+    final public void setEnrollmentState(EnrollmentState enrollmentState) {
 	super.setEnrollmentState(enrollmentState);
 	resetIsFirstTimeEnrolment();
     }
 
     @Override
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+    final public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 	super.setExecutionPeriod(executionPeriod);
 	resetIsFirstTimeEnrolment();
     }
 
     @Override
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+    final public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	super.setStudentCurricularPlan(studentCurricularPlan);
 	resetIsFirstTimeEnrolment();
     }
 
-    public boolean isActive() {
-	return !isAnnulled() && !isTemporarilyEnroled();
-    }
-
-    public int getNumberOfTotalEnrolmentsInThisCourse() {
+    final public int getNumberOfTotalEnrolmentsInThisCourse() {
 	return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(
 		this.getCurricularCourse());
     }
 
-    public int getNumberOfTotalEnrolmentsInThisCourse(ExecutionPeriod untilExecutionPeriod) {
+    final public int getNumberOfTotalEnrolmentsInThisCourse(ExecutionPeriod untilExecutionPeriod) {
 	return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(
 		this.getCurricularCourse(), untilExecutionPeriod);
     }
@@ -833,7 +855,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return builder;
     }
 
-    public EnrolmentEvaluation addNewEnrolmentEvaluation(
+    final public EnrolmentEvaluation addNewEnrolmentEvaluation(
 	    EnrolmentEvaluationState enrolmentEvaluationState,
 	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String grade,
 	    Date availableDate, Date examDate, ExecutionPeriod executionPeriod) {
@@ -845,7 +867,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return enrolmentEvaluation;
     }
 
-    public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
+    final public boolean hasAssociatedMarkSheet(MarkSheetType markSheetType) {
 	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
 	    if (enrolmentEvaluation.hasMarkSheet()
 		    && enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType
@@ -856,7 +878,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
-    public boolean hasAssociatedMarkSheetOrFinalGrade(MarkSheetType markSheetType) {
+    final public boolean hasAssociatedMarkSheetOrFinalGrade(MarkSheetType markSheetType) {
 	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
 	    if (enrolmentEvaluation.getEnrolmentEvaluationType() == markSheetType
 		    .getEnrolmentEvaluationType() && (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal())) {
@@ -867,7 +889,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
 
-    public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType) {
+    final public List<EnrolmentEvaluation> getConfirmedEvaluations(MarkSheetType markSheetType) {
 	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
 	for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
 	    if (evaluation.hasMarkSheet()
@@ -881,7 +903,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return evaluations;
     }
 
-    public Attends getAttendsByExecutionCourse(ExecutionCourse executionCourse) {
+    final public Attends getAttendsByExecutionCourse(ExecutionCourse executionCourse) {
 	for (Attends attends : this.getAttendsSet()) {
 	    if (attends.getExecutionCourse() == executionCourse) {
 		return attends;
@@ -890,7 +912,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return null;
     }
 
-    public boolean hasAttendsFor(ExecutionPeriod executionPeriod) {
+    final public boolean hasAttendsFor(ExecutionPeriod executionPeriod) {
 	for (final Attends attends : this.getAttendsSet()) {
 	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		return true;
@@ -899,7 +921,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
-    public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
+    final public Attends getAttendsFor(final ExecutionPeriod executionPeriod) {
 	Attends result = null;
 	
 	for (final Attends attends : getAttendsSet()) {
@@ -915,7 +937,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    public ExecutionCourse getExecutionCourseFor(final ExecutionPeriod executionPeriod) {
+    final public ExecutionCourse getExecutionCourseFor(final ExecutionPeriod executionPeriod) {
 	for (final Attends attend : getAttends()) {
 	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		return attend.getExecutionCourse();
@@ -926,11 +948,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Deprecated
-    public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
 	return getLatestEnrolmentEvaluation();
     }
 
-    public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
 	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? 
 		getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations()) : getLatestEnrolmentEvalution(getEvaluationsSet());
     }
@@ -941,23 +963,23 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		.max(enrolmentEvaluations);
     }
 
-    public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
+    final public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
 	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
     }
 
-    public EnrolmentEvaluation getLatestNormalEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getLatestNormalEnrolmentEvaluation() {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL);
     }
 
-    public EnrolmentEvaluation getLatestSpecialSeasonEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getLatestSpecialSeasonEnrolmentEvaluation() {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON);
     }
 
-    public EnrolmentEvaluation getLatestImprovementEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getLatestImprovementEnrolmentEvaluation() {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT);
     }
 
-    public EnrolmentEvaluation getImprovementEvaluation() {
+    final public EnrolmentEvaluation getImprovementEvaluation() {
 	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestImprovementEnrolmentEvaluation();
 	
 	if (latestImprovementEnrolmentEvaluation != null && latestImprovementEnrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
@@ -967,16 +989,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return null;
     }
 
-    public EnrolmentEvaluation getLatestEquivalenceEnrolmentEvaluation() {
+    final public EnrolmentEvaluation getLatestEquivalenceEnrolmentEvaluation() {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
-    public String getGradeValue() {
+    final public String getGradeValue() {
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGradeValue();
     }
 
-    public Grade getGrade() {
+    final public Grade getGrade() {
 	final String gradeValue = getGradeValue();
 	if (gradeValue == null || gradeValue.length() == 0) {
 	    return Grade.createEmptyGrade();
@@ -985,36 +1007,36 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return Grade.createGrade(gradeValue, getCurricularCourse().getGradeScaleChain());
     }
 
-    public Integer getFinalGrade() {
+    final public Integer getFinalGrade() {
 	final String grade = getGradeValue();
 	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null
 		: Integer.valueOf(grade);
     }
 
-    public Double getAccumulatedEctsCredits() {
+    final public Double getAccumulatedEctsCredits() {
 	return accumulatedEctsCredits;
     }
 
-    public void setAccumulatedEctsCredits(Double ectsCredits) {
+    final public void setAccumulatedEctsCredits(Double ectsCredits) {
 	this.accumulatedEctsCredits = ectsCredits;
     }
 
     @Override
-    public List<Enrolment> getEnrolments() {
+    final public List<Enrolment> getEnrolments() {
 	return Collections.singletonList(this);
     }
 
     @Override
-    public StudentCurricularPlan getStudentCurricularPlan() {
+    final public StudentCurricularPlan getStudentCurricularPlan() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : super
 		.getStudentCurricularPlan();
     }
 
-    public Registration getRegistration() {
+    final public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
     }
     
-    public ExecutionYear getExecutionYear() {
+    final public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
     }
     
@@ -1029,7 +1051,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public boolean isAproved(final ExecutionYear executionYear) {
+    final public boolean isAproved(final ExecutionYear executionYear) {
 	return (executionYear == null || getExecutionYear().isBeforeOrEquals(executionYear)) && isApproved();
     }
     
@@ -1058,26 +1080,26 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isValid(executionPeriod) && this.getCurricularCourse().equals(curricularCourse);
     }
 
-    public boolean isValid(final ExecutionPeriod executionPeriod) {
+    final public boolean isValid(final ExecutionPeriod executionPeriod) {
 	return getExecutionPeriod() == executionPeriod
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod.getExecutionYear());
     }
     
     @Override
-    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    final public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) && isEnroled();
     }
     
-    public List<ExecutionCourse> getExecutionCourses() {
+    final public List<ExecutionCourse> getExecutionCourses() {
 	return this.getCurricularCourse().getAssociatedExecutionCourses();
     }
 
-    public boolean isEnrolmentTypeNormal() {
+    final public boolean isEnrolmentTypeNormal() {
 	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE
 		&& !isExtraCurricular() && !isOptional();
     }
 
-    public String getEnrolmentTypeName() {
+    final public String getEnrolmentTypeName() {
 	if (isExtraCurricular()) {
 	    return "EXTRA_CURRICULAR_ENROLMENT";
 	} else if (isOptional()) {
@@ -1087,11 +1109,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public boolean isOptional() {
-	return false;
-    }
-
-    public static class DeleteEnrolmentExecutor implements FactoryExecutor {
+    final public static class DeleteEnrolmentExecutor implements FactoryExecutor {
 
 	private DomainReference<Enrolment> enrolment;
 
@@ -1181,31 +1199,23 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isApproved() ? getEctsCredits() : Double.valueOf(0d);
     }
 
-    public boolean isExtraCurricular() {
-	return getIsExtraCurricular() != null && getIsExtraCurricular();
-    }
-
-    final public boolean isExternalEnrolment() {
-	return false;
-    }
-
     @Override
-    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+    final public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
     }
     
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    final public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
     }
     
     @Override
-    public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
+    final public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
         return isAproved(curricularCourse) ? this : null;
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
+    final public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
 	if (!isValid(executionPeriod)) {
 	    return Collections.EMPTY_SET;
 	}
@@ -1214,7 +1224,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
     
-    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+    final public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
 	if(!isBolonhaDegree()) {
 	    return accumulatedEctsCredits;
 	}	
@@ -1225,15 +1235,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod, getCurricularCourse());
     }
     
-    public boolean isImprovementEnroled() {
+    final public boolean isImprovementEnroled() {
 	return isEnrolmentStateApproved() && getImprovementEvaluation() != null;
     }
     
-    public boolean canBeImproved() {
+    final public boolean canBeImproved() {
 	return isEnrolmentStateApproved() && !hasImprovement();
     }
 
-    public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {
+    final public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {
 	return getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && 
 		getExecutionPeriod().getExecutionYear() == executionYear && getTempSpecialSeasonEvaluation() != null;
     }
@@ -1248,14 +1258,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return null;
     }
 
-    public boolean canBeSpecialSeasonEnroled(ExecutionYear executionYear) {
+    final public boolean canBeSpecialSeasonEnroled(ExecutionYear executionYear) {
 	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
 	    && getExecutionPeriod().getExecutionYear() == executionYear
 	    && !isApproved();
     }
     
     @Override
-    public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
+    final public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear) {
 	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON
 		    && getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 	    return Collections.singleton(this);
@@ -1263,7 +1273,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return Collections.emptySet();
     }
     
-    public String getDescription() {
+    final public String getDescription() {
 	return getStudentCurricularPlan().getDegree().getPresentationName() + " > " + getName().getContent();
     }
 
@@ -1274,7 +1284,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * 
      * @return the first non evaluated Thesis for this Enrolment
      */
-    public Thesis getThesis() {
+    final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 
 	switch (theses.size()) {
@@ -1294,11 +1304,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
-    public boolean isBefore(final Enrolment enrolment) {
+    final public boolean isBefore(final Enrolment enrolment) {
 	return getExecutionPeriod().isBefore(enrolment.getExecutionPeriod());
     }
 
-    public Proposal getDissertationProposal() {
+    final public Proposal getDissertationProposal() {
 	final ExecutionYear previousExecutionYear = getExecutionYear().getPreviousExecutionYear();
 	if (previousExecutionYear == null) {
 	    return null;
@@ -1306,11 +1316,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getRegistration().getDissertationProposal(previousExecutionYear);
     }
 
-    public Unit getAcademicUnit() {
+    final public Unit getAcademicUnit() {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
 
-    public String getCode() {
+    final public String getCode() {
 	if(hasDegreeModule()) {
 	    return getDegreeModule().getCode();
 	}
@@ -1318,12 +1328,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
     
     @Override
-    public boolean isConcluded(ExecutionYear executionYear) {
+    final public boolean isConcluded(ExecutionYear executionYear) {
 	return isAproved(executionYear);
     }
     
     @Override
-    public Double getCreditsConcluded(ExecutionYear executionYear) {
+    final public Double getCreditsConcluded(ExecutionYear executionYear) {
 	if(isAproved(executionYear)) {
 	    return getEctsCredits();
 	}
