@@ -2262,6 +2262,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isBoxStructure() ? getRoot().findEnrolmentFor(curricularCourse, executionPeriod) : null;
     }
+    
+    public List<Enrolment> findEnrolmentsFor(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+	if (!isBoxStructure()) {
+	    return Collections.emptyList();
+	}
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    final Enrolment enrolment = getRoot().findEnrolmentFor(curricularCourse, executionPeriod);
+	    if (enrolment != null) {
+		result.add(enrolment);
+	    }
+	}
+	return result;
+    }
 
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedEnrolment(curricularCourse) : null;
