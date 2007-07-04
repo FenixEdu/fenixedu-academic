@@ -66,13 +66,14 @@ public class HtmlText extends HtmlComponent {
     
     @Override
     public HtmlTag getOwnTag(PageContext context) {
-        	HtmlTag tag = super.getOwnTag(context);
-        
-        	if (tag.hasVisibleAttributes() || hasEffect()) {
-        	    tag.setName(getTagName());
-        	} else {
-        	    tag.setName(null);
-        	}
+    	HtmlTag tag = super.getOwnTag(context);
+    
+    	if (tag.hasVisibleAttributes() || hasEffect()) {
+    	    String tagName = getTagName();
+			tag.setName(tagName == null ? "span" : tagName);
+    	} else {
+    	    tag.setName(null);
+    	}
         
         if (this.text == null) {
             return tag;
@@ -83,7 +84,7 @@ public class HtmlText extends HtmlComponent {
         
         tag.setText(finalText);
         
-        	return tag;
+        return tag;
     }
 
 	private boolean hasEffect() {
@@ -96,7 +97,7 @@ public class HtmlText extends HtmlComponent {
 	    	case STRONG:     return "strong";
 	    	case MONOSPACED: return "tt";
 	    	default:
-	    		return "span";
+	    		return null;
     	}
 	}
 
