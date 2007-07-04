@@ -114,6 +114,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	getNotNeedToEnrollCurricularCourses().clear();
 	super.deleteDomainObject();
     }
+    
+    final public boolean isApproved() {
+        return true;
+    }
 
     final public boolean isExternalEnrolment() {
 	return true;
