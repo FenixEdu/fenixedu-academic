@@ -17,4 +17,10 @@ public class PropaedeuticsCurriculumGroup extends PropaedeuticsCurriculumGroup_B
     public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType() {
         return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
     }
+    
+    @Override
+    final public boolean isPropaedeutic() {
+	return true;
+    }
+    
 }
