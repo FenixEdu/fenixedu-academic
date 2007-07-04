@@ -7,7 +7,6 @@
 
 <bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 
-<em><bean:message key="title.scientificCouncil.portalTitle"/></em>
 <h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
 
 <p class="mvert15">
@@ -30,12 +29,8 @@
      			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    </fr:layout>
 	</fr:edit>
-	<p class="mtop05">
-		<html:submit><bean:message key="label.set" bundle="APPLICATION_RESOURCES"/></html:submit>
-	</p>
 
-
-	<p class="mtop2 mbottom05"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/></p>
+	<p class="mtop1 mbottom05"><bean:message key="message.origin.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -49,13 +44,10 @@
 				    </fr:layout>
 				</fr:edit>
 			</td>
-			<td>
-				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
-			</td>
 		</tr>
 	</table>
 	
-	<p class="mtop2 mbottom05"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/></p>
+	<p class="mtop1 mbottom05"><bean:message key="message.destination.degree.module" bundle="APPLICATION_RESOURCES"/></p>
 	<table class="mtop0 tdmiddle">
 		<tr>
 			<td>
@@ -69,19 +61,22 @@
 				    </fr:layout>
 				</fr:edit>
 			</td>
-			<td>
-				<html:submit><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:submit>
-			</td>
 		</tr>
 	</table>
+
+	<p>
+		<html:submit><bean:message key="label.update" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</p>
+
 </fr:form>
+
 
 
 <logic:notEmpty name="equivalencePlanEntryCreator" property="originDegreeModules">
 <logic:notEmpty name="equivalencePlanEntryCreator" property="destinationDegreeModules">
 
 	<p class="mtop2"><bean:message key="label.equivalency.to.create" bundle="APPLICATION_RESOURCES"/></p>	
-	<div style="background: #fafafa; border: 2px solid #eee; padding: 1em; color: #333; line-height: 2em;">
+	<div style="background: #fafaf5; border: 2px solid #eed; padding: 1em; color: #333; line-height: 2em;">
 		<logic:iterate id="degreeModuleFromList1" indexId="i1" name="equivalencePlanEntryCreator" property="originDegreeModules">
 			<span style="padding: 0 0.5em;">
 				<logic:notEqual name="i1" value="0">

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="title.scientificCouncil.portalTitle"/></em>
 <h2><bean:message key="title.equivalency.plan" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:present name="degreeCurricularPlan">
