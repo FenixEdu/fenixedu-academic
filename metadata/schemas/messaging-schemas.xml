@@ -184,3 +184,20 @@
 <schema name="researchUnitGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
 	<slot name="name"/>
 </schema>
+
+<schema name="messaging.file.sourceGroup" type="net.sourceforge.fenixedu.presentationTier.Action.person.PersonFileSourceGroupBean">
+	<slot name="name"/>
+	<slot name="count" layout="format">
+		<property name="format" value="(${})"/>
+	</slot>
+</schema>
+
+<schema name="messaging.file.source" type="net.sourceforge.fenixedu.presentationTier.Action.person.PersonFileSourceBean">
+	<slot name="name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="files.view"/>
+	</slot>
+	<slot name="count" layout="format">
+		<property name="format" value="(${})"/>
+	</slot>
+</schema>

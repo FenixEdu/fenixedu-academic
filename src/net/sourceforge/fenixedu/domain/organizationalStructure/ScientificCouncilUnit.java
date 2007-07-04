@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,7 +14,10 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     
-    protected ScientificCouncilUnit() {
+    private static final String COORDINATION_COMMITTEE_NAME = "Comissão Coordenadora";
+	private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";	
+
+	protected ScientificCouncilUnit() {
         super();
         super.setType(PartyTypeEnum.SCIENTIFIC_COUNCIL);
     }
@@ -30,8 +34,44 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     	groups.add(new ScientificCouncilMembersGroup());
     	groups.add(new WebSiteManagersGroup(getSite()));
     	
-		return groups;
+    	Function function = getCoordinationCommitteeMembersFunction();
+    	if (function != null) {
+    		groups.add(new PersonsInFunctionGroup(function));
+    	}
+
+    	return groups;
     }
+    
+    private Function getCoordinationCommitteeMembersFunction() {
+    	Unit subUnit = getSubUnitWithName(COORDINATION_COMMITTEE_NAME);
+    	
+    	if (subUnit == null) {
+    		return null;
+    	}
+    	else {
+    		return getFunctionWithName(subUnit, COORDINATION_COMMITTEE_MEMBER_NAME);
+    	}
+	}
+
+	private Unit getSubUnitWithName(String name) {
+		for (Unit sub : getSubUnits()) {
+			if (sub.getName().equals(name)) {
+				return sub;
+			}
+		}
+		
+		return null;
+	}
+
+	private Function getFunctionWithName(Unit unit, String name) {
+		for (Function function : unit.getFunctions()) {
+			if (function.getName().equals(name)) {
+				return function;
+			}
+		}
+		
+		return null;
+	}
     
     @Override
     public Collection<Person> getPossibleGroupMembers() {

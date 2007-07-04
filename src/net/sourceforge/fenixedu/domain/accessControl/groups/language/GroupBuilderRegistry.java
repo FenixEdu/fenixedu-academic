@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
@@ -172,6 +173,7 @@ public class GroupBuilderRegistry {
         register("researchUnitMembers",ResearchUnitMembersGroup.class, new ResearchUnitMembersGroup.Builder());
         register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
         register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
+        register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
         registerGroupsWithNoArguments();
     }
 

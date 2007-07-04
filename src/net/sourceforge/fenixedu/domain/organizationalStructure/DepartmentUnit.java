@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -9,6 +10,8 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
@@ -180,19 +183,26 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	    }
 	}
     }
-
-    @Override
-    public List<IGroup> getDefaultGroups() {
-	List<IGroup> groups = super.getDefaultGroups();
-
-	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-	Department department = this.getDepartment();
-
-	groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
-	groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear, department));
-	groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
-
-	return groups;
-    }
-
+    
+	@Override
+	public List<IGroup> getDefaultGroups() {
+		List<IGroup> groups = super.getDefaultGroups();
+		
+		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+		Department department = this.getDepartment();
+		
+		groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
+		//groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear, department));
+		groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
+		
+		SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+		degrees.addAll(getDepartment().getDegrees());
+		
+		for (Degree degree : degrees) {
+			groups.add(new DegreeStudentsGroup(degree));
+		}
+		
+		return groups;
+	}
+	
 }

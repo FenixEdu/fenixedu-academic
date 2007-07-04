@@ -2816,6 +2816,25 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="uploader.firstAndLastName" key="label.uploader"/>
 </schema>
 
+<schema name="show.unit.files.noPermission" type="net.sourceforge.fenixedu.domain.UnitFile" bundle="RESEARCHER_RESOURCES">
+	<slot name="displayName" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="${downloadUrl}"/>
+		<property name="contextRelative" value="false"/>
+	</slot>
+	<slot name="description" key="label.fileDescription" layout="null-as-label">
+		<property name="subLayout" value="short"/>
+	</slot>
+	<slot name="uploadTime"/>
+	<slot name="unitFileTags" layout="flowLayout">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="unitFileTag.name"/>
+		<property name="emptyMessageKey" value="label.null"/>
+		<property name="emptyMessageBundle" value="APPLICATION_RESOURCES"/>
+	</slot>
+	<slot name="uploader.firstAndLastName" key="label.uploader"/>
+</schema>
+
 <schema name="unitFileTag.name" type="net.sourceforge.fenixedu.domain.UnitFileTag" bundle="RESEARCHER_RESOURCES">
 	<slot name="name"/>
 </schema>

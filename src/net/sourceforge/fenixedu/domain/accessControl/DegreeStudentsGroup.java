@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class DegreeStudentsGroup extends DegreeGroup {
 
@@ -61,6 +62,12 @@ public class DegreeStudentsGroup extends DegreeGroup {
         };
     }
 
+    @Override
+    public String getName() {
+		return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES",
+				"label.name." + getClass().getSimpleName(), getObject().getPresentationName()); 
+    }
+    
     public static class Builder implements GroupBuilder {
 
         public Group build(Object[] arguments) {

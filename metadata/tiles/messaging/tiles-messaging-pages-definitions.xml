@@ -65,5 +65,14 @@
 		<put name="body" value="/person/findPerson/findPerson.jsp" />
 	</definition>	
 	<!-- ========== END: FIND PERSON MANAGEMENT ========== -->
-	
+
+	<!-- === Files === -->
+	<definition name="files.showSources" extends="definition.messaging.masterPage" >
+		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/messaging/files/showSources.jsp" />
+	</definition>
+	<definition name="files.showFiles" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/files/showFiles.jsp" />
+	</definition>
+
 </tiles-definitions>

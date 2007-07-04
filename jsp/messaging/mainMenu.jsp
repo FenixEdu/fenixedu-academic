@@ -27,6 +27,13 @@
 		</html:link>
 	</li>
 --%>
+	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.files"/></li>
+	<li>
+		<html:link page="/viewFiles.do?method=showSources">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.files.view"  />
+		</html:link>
+	</li>
+
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.search"  /></li>
 	<li>
 		<html:link page="/findPerson.do?method=prepareFindPerson">
