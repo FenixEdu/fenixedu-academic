@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 
-    protected ExternalCurriculumGroup() {
+    public ExternalCurriculumGroup() {
 	super();
     }
     
