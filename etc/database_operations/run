@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove After Deploy" changeCCAC1CodeName.sql
