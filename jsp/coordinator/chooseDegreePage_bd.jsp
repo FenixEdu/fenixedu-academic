@@ -12,13 +12,15 @@
 <bean:define id="coordinatedInfoDegreeCurricularPlans" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="session" />
 <bean:define id="link">/chooseDegree.do?degreeCurricularPlanID=</bean:define>
 
-<p><span class="emphasis"><%= ((List) coordinatedInfoDegreeCurricularPlans).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></p>
-<p><bean:message key="label.masterDegree.chooseOne"/></p>
+<h2><bean:message key="title.coordinator.main"/></h2>
 
-<table>
+<p><span class="emphasis"><%= ((List) coordinatedInfoDegreeCurricularPlans).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></p>
+<p class="mbottom05"><bean:message key="label.masterDegree.chooseOne"/></p>
+
+<table class="tstyle4 thlight mtop05">
 	<tr>
-		<th class="listClasses-header">Nome</th>
-		<th class="listClasses-header">Plano Curricular</th>
+		<th>Nome</th>
+		<th>Plano Curricular</th>
 	</tr>
 	
 	<logic:iterate id="infoDegreeCurricularPlan" name="coordinatedInfoDegreeCurricularPlans">
@@ -27,12 +29,12 @@
 		</bean:define>            	
 
 		<tr>
-		   <td class="listClasses">
+		   <td>
 				<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoDegreeCurricularPlan) infoDegreeCurricularPlan).getInfoDegree().getTipoCurso().toString()%>" />
 				<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
 				<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 		   </td>
-		   <td class="listClasses">
+		   <td class="acenter">
 				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
 					<bean:write name="infoDegreeCurricularPlan" property="name" /> 
 				</html:link>
@@ -41,5 +43,3 @@
 	</logic:iterate>
 
 </table>
-
-<br/><br/>
