@@ -42,9 +42,9 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	super.deleteDomainObject();
     }
 
-    public CurriculumGroup getRootCurriculumGroup() {
+    public RootCurriculumGroup getRootCurriculumGroup() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup()
-		: (CurriculumGroup) this;
+		: (RootCurriculumGroup) this;
     }
 
     public StudentCurricularPlan getRootStudentCurricularPlan() {
