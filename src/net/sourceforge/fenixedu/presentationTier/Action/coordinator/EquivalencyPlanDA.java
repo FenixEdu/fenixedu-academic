@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntry
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -67,7 +68,10 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 	    equivalencePlanEntryCreator.addDestination(degreeModule);
 	} else {
 	    equivalencePlan = equivalencePlanEntryCreator.getEquivalencePlan();
+	    equivalencePlanEntryCreator.setDestinationDegreeModuleToAdd(null);
+	    equivalencePlanEntryCreator.setOriginDegreeModuleToAdd(null);
 	}
+	RenderUtils.invalidateViewState();
 	request.setAttribute("equivalencePlan", equivalencePlan);
 	request.setAttribute("equivalencePlanEntryCreator", equivalencePlanEntryCreator);
 	return mapping.findForward("addEquivalency");

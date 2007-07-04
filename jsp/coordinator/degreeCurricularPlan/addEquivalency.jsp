@@ -125,6 +125,7 @@
 		</fr:edit>
 		<p class="mtop15 mbottom0">
 			<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+			<html:cancel><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/></html:cancel>
 		</p>
 	</fr:form>
 </logic:notEmpty>
