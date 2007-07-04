@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
@@ -17,7 +19,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class Dismissal extends Dismissal_Base {
     
-    protected Dismissal() {
+    public Dismissal() {
         super();
     }
     
@@ -81,31 +83,30 @@ public class Dismissal extends Dismissal_Base {
 
 
     static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
-	if (curricularCourse.hasOnlyOneParentCourseGroup()) {
-	    final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(getFirstParentCourseGroup(curricularCourse));
+	final List<CurriculumGroup> curriculumGroups = new ArrayList<CurriculumGroup>(curricularCourse.getParentContextsCount());
+	for (final Context context : curricularCourse.getParentContexts()) {
+	    final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(context.getParentCourseGroup());
 	    if (curriculumGroup != null && !curriculumGroup.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
-		return curriculumGroup;
+		curriculumGroups.add(curriculumGroup);
 	    }
 	}
-	return getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
-    }
-
-    private static CourseGroup getFirstParentCourseGroup(final CurricularCourse curricularCourse) {
-	return curricularCourse.getParentContexts().get(0).getParentCourseGroup();
+	return curriculumGroups.size() == 1 ? curriculumGroups.get(0) : getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan); 
     }
 
     @Override
     public StringBuilder print(String tabs) {
 	final StringBuilder builder = new StringBuilder();
 	builder.append(tabs);
-	builder.append("[D ").append(hasDegreeModule() ? getDegreeModule().getName() :  "").append(" ]\n");
+	builder.append("[D ").append(hasDegreeModule() ? getDegreeModule().getName() :  "").append(" ");
+	builder.append(getEctsCredits()).append(" ects ]\n");
 	return builder;
     }
     
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         if(hasCurricularCourse()) {
-            return getExecutionPeriod().isBeforeOrEquals(executionPeriod) && getCurricularCourse().isEquivalent(curricularCourse);
+            return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod))
+		    && getCurricularCourse().isEquivalent(curricularCourse);
         } else {
             return false;
         }
@@ -171,8 +172,8 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public boolean isConcluded(ExecutionYear executionYear) {
-	return getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+    public boolean isConcluded(final ExecutionYear executionYear) {
+	return executionYear == null || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override
