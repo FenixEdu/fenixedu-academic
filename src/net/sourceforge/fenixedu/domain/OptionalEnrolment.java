@@ -47,7 +47,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
 	    return (isCurricularCourseEquivalente(curricularCourse, executionPeriod) 
 		    || isOptionalCurricularCourseEquivalente(curricularCourse, executionPeriod))
@@ -66,7 +66,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
     
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
+    final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {
 	return this.getExecutionPeriod().equals(executionPeriod)
 		&& (this.getCurricularCourse().equals(curricularCourse) || this
@@ -106,7 +106,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public void delete() {
+    final public void delete() {
 	removeOptionalCurricularCourse();
 	super.delete();
     }

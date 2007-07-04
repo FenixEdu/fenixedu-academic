@@ -29,7 +29,7 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
     }
     
     @Override
-    public boolean isOptional() {
+    final public boolean isOptional() {
 	return true;
     }
 

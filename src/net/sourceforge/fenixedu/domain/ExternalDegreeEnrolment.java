@@ -48,7 +48,7 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
     }
     
     @Override
-    public StringBuilder print(String tabs) {
+    final public StringBuilder print(String tabs) {
 	final StringBuilder builder = new StringBuilder();
 	builder.append(tabs);
 	builder.append("[E ").append(getDegreeModule().getName()).append(" (");
