@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -1463,8 +1462,19 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getRegime() != null;
     }
 
+    /**
+     * Maintened for legacy code compatibility purposes only.
+     * Makes no sense to check an Enrolment concept in a CurricularCourse.
+     * 
+     * @return true if CurricularCourseType checks accordingly
+     */
+    @Deprecated
+    final public boolean isPropaedeutic() {
+	return getType().equals(CurricularCourseType.P_TYPE_COURSE);
+    }
+
     @Override
-    public boolean isOptional() {
+    final public boolean isOptional() {
 	return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
     }
 
