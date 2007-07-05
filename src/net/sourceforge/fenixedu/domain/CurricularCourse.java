@@ -561,6 +561,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return false;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester,
 	    final Branch branch) {
 	
@@ -831,6 +832,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
 	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
@@ -841,6 +843,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	});
     }
 
+    @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionYear(final ExecutionYear executionYear) {
 	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
 	    public boolean evaluate(Object o) {
@@ -1470,6 +1473,10 @@ public class CurricularCourse extends CurricularCourse_Base {
      */
     @Deprecated
     final public boolean isPropaedeutic() {
+	if (isBolonhaDegree()) {
+	    throw new DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment");
+	}
+	
 	return getType().equals(CurricularCourseType.P_TYPE_COURSE);
     }
 
