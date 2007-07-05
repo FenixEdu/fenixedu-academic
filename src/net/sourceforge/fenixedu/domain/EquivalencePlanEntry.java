@@ -212,15 +212,6 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	deleteDomainObject();
     }
 
-    public boolean hasAnyDestinationDegreeModuleFor(final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final DegreeModule degreeModule : getNewDegreeModules()) {
-	    if (degreeCurricularPlan.hasDegreeModule(degreeModule)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final DegreeModule degreeModule : getNewDegreeModulesSet()) {
 	    if (degreeModule.getParentDegreeCurricularPlan() == degreeCurricularPlan) {
