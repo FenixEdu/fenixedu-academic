@@ -9,7 +9,7 @@
 
 
 <fr:form action="/notNeedToEnrolEnrolments.do?method=readNotNeedToEnrol">
-	<table class="thlight thmiddle mtop15 mbottom0">
+	<table class="thlight thmiddle mbottom0">
 		<tr>
 			<td>
 				<fr:edit id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsBean" 
