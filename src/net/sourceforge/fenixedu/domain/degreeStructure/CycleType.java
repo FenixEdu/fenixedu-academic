@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public enum CycleType {
 
-    FIRST_CYCLE(1),
+    FIRST_CYCLE(1, 180d),
 
-    SECOND_CYCLE(2),
+    SECOND_CYCLE(2, 120d),
 
-    THIRD_CYCLE(3);
+    THIRD_CYCLE(3, 300d);
 
     public static final Comparator<CycleType> CYCLE_TYPE_COMPARATOR = new Comparator<CycleType>() {
 	public int compare(CycleType o1, CycleType o2) {
@@ -23,22 +23,28 @@ public enum CycleType {
     };
 
     private Integer weight;
+    
+    private Double ectsCredits;
 
-    private CycleType(Integer weight) {
+    private CycleType(Integer weight, Double ectsCredits) {
 	this.weight = weight;
+	this.ectsCredits = ectsCredits;
     }
 
     public Integer getWeight() {
 	return weight;
     }
 
+    public Double getDefaultEcts() {
+	return ectsCredits;
+    }
+    
     public String getQualifiedName() {
 	return this.getClass().getSimpleName() + "." + name();
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
-		.getString(name());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(name());
     }
 
     static final public Collection<CycleType> getSortedValues() {
@@ -46,5 +52,4 @@ public enum CycleType {
 	result.addAll(Arrays.asList(values()));
 	return result;
     }
-    
 }
