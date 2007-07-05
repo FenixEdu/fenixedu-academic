@@ -6,13 +6,14 @@
 
 
 <logic:present role="STUDENT">
+	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>
 
 	<logic:empty name="registrations">
-		<span class="error0"> <bean:message bundle="STUDENT_RESOURCES"
-			key="label.transition.bolonha.registrationsInTransition.noRegistrations" />
-		</span>
+		<em><bean:message bundle="STUDENT_RESOURCES"
+			key="label.transition.bolonha.registrationsInTransition.noRegistrations" />.
+		</em>
 	</logic:empty>
 
 	<logic:notEmpty name="registrations">

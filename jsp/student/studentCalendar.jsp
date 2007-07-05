@@ -46,10 +46,10 @@
 				<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 			</h:selectOneMenu>
 		</h:panelGrid>
-		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="<br/>" escape="false"/>
 		
 		<h:panelGroup rendered="#{empty studentCalendar.calendarStartDate || empty studentCalendar.calendarEndDate}">
-			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="success0" />
+			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="warning0" />
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{!empty studentCalendar.calendarStartDate && !empty studentCalendar.calendarEndDate}">		

@@ -62,7 +62,7 @@
 					
 				    <p class="mbottom0">
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>	
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>: 
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
 						<logic:equal name="currentPageNumberString" value="<%=pageNumber.toString()%>">
 							<bean:write name="pageNumber"/>
@@ -80,7 +80,7 @@
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
 							<fr:layout>
 								<fr:property name="style" value="width:100%"/>
-							    <fr:property name="classes" value="tstyle4 thlight thright mbottom0"/>
+							    <fr:property name="classes" value="tstyle4 thlight thright mbottom0 thtop forumthread"/>
 							    <fr:property name="columnClasses" value="width8em,"/>
 							</fr:layout>
 						</fr:view>
@@ -94,7 +94,7 @@
 						</logic:equal>
 					</logic:iterate>
 
-<!--
+<%--
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
 					<bean:define id="currentPageNumberString"><bean:write name="currentPageNumber"/></bean:define>
 					<logic:iterate id="pageNumber" name="pageNumbers" type="java.lang.Integer">
@@ -107,7 +107,7 @@
 							</html:link>			
 						</logic:notEqual>
 					</logic:iterate>
--->
+--%>
 
 				</logic:present>
 		</logic:present>

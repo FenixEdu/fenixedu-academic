@@ -10,29 +10,47 @@
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.viewExecutionCourseForuns.title" /></h2>
 
+
+<logic:notEmpty name="attendsForExecutionPeriod">
+<table>
 <logic:iterate id="attend" name="attendsForExecutionPeriod">
-<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
+	<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
 
-	<p class="mtop2 mbottom0"><strong><bean:write name="executionCourse" property="nome"/></strong></p>
-	<table>
-		<logic:notEmpty name="executionCourse" property="foruns">
-			<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
-				<tr>
-					<td><bean:write name="executionCourseForum" property="name"/></td>
-					<td><html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
-	 					<bean:message key="link.viewExecutionCourseForuns.viewForum"/>
-					</html:link>
-					</td>
-				</tr>
-			</logic:iterate>
-		</logic:notEmpty>
-		<logic:empty name="executionCourse" property="foruns">
+	<tr>
+		<td style="padding: 16px 0px 4px 0px;"><strong><bean:write name="executionCourse" property="nome"/></strong></td>
+		<td></td>
+	</tr>
+	
+	<logic:notEmpty name="executionCourse" property="foruns">
+		<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
+			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
 			<tr>
-			<td><span class="error"><!-- Error messages go here --><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" /></span></td>
+				<td>
+					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
+						<bean:write name="executionCourseForum" property="name"/>
+					</html:link>
+				</td>
+				<td>
+					<span class="color888">Tópicos:</span> <bean:write name="threadsCount"/>
+				</td>
 			</tr>
-		</logic:empty>
-	</table>		
+		</logic:iterate>
+	</logic:notEmpty>
+		
+	<logic:empty name="executionCourse" property="foruns">
+		<tr>
+			<td><span class="error"><!-- Error messages go here --><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" /></span></td>
+		</tr>
+	</logic:empty>
+	
 </logic:iterate>
+</table>
+</logic:notEmpty>
 
-
-  
+<logic:empty name="attendsForExecutionPeriod">
+	<div>
+		<p>
+			<span class="error">#</span>
+		</p>
+	</div>
+</logic:empty>
