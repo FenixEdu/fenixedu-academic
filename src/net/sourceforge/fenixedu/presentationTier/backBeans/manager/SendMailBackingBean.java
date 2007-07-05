@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -84,24 +85,43 @@ public class SendMailBackingBean extends FenixBackingBean {
             }
         }
 
-        final Boolean degreeStudents = getDegreeStudents();
-        final Boolean masterDegreeStudents = getMasterDegreeStudents();
-        if (degreeStudents.booleanValue() || masterDegreeStudents.booleanValue()) {
-        	final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
-            for (final Person person : role.getAssociatedPersons()) {
-                Registration registration = null;
-                if (degreeStudents.booleanValue()) {
-                    registration = person.getStudentByType(DegreeType.DEGREE);
-                }
-                if (registration == null && masterDegreeStudents.booleanValue()) {
-                    registration = person.getStudentByType(DegreeType.MASTER_DEGREE);
-                }
-                if (registration != null && person.getEmail() != null && person.getEmail().length() > 0) {
-                    emails.add(person.getEmail());
-                }
-            }
-        }
+        boolean includeDegreeStudents = getDegreeStudents();
+        boolean includeMasterDegreeStudents = getMasterDegreeStudents();
 
+        List<Registration> registrations = RootDomainObject.getInstance().getRegistrations();
+        for (Registration registration : registrations) {
+        	if (! registration.isActive()) {
+				continue;
+			}
+        	
+			switch(registration.getDegreeType()) {
+			case DEGREE:
+			case BOLONHA_DEGREE:
+			case BOLONHA_SPECIALIZATION_DEGREE:
+				if (includeDegreeStudents) {
+					String email = registration.getPerson().getEmail();
+					if (email != null && email.length() > 0) {
+						emails.add(email);
+					}
+				}
+				break;
+				
+			case MASTER_DEGREE:
+			case BOLONHA_MASTER_DEGREE:
+			case BOLONHA_INTEGRATED_MASTER_DEGREE:
+				if (includeMasterDegreeStudents) {
+					String email = registration.getPerson().getEmail();
+					if (email != null && email.length() > 0) {
+						emails.add(email);
+					}
+				}
+				break;
+				
+			default:
+				break;
+			}
+		}
+        
         final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
         if (executionCourseResponsibles.booleanValue()) {
             final Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
