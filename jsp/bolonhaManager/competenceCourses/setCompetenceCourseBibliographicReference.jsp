@@ -90,8 +90,8 @@
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
 					<h:outputText value="<ul class='nobullet cboth mbottom05'>" escape="false"/>					
 					<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px'>#{bolonhaBundle['title']}:</span>" escape="false"/>
-					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
-					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
+					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{!empty bibliographicReference.url && bibliographicReference.url != 'http://' && bibliographicReference.url != 'null'}" escape="false"/>
+					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{empty bibliographicReference.url || bibliographicReference.url == 'http://' || bibliographicReference.url == 'null'}" escape="false"/>
 					
 					<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px'>#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -148,8 +148,8 @@
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
 					<h:outputText value="<ul class='nobullet cboth mbottom05'>" escape="false"/>					
 					<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px'>#{bolonhaBundle['title']}:</span>" escape="false"/>
-					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
-					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
+					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{!empty bibliographicReference.url && bibliographicReference.url != 'http://' && bibliographicReference.url != 'null'}" escape="false"/>
+					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{empty bibliographicReference.url || bibliographicReference.url == 'http://' || bibliographicReference.url == 'null'}" escape="false"/>
 					
 					<h:outputText value="<li><span class='fleft width100px' style='padding-right: 10px'>#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
