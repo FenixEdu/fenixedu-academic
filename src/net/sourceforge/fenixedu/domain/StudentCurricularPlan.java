@@ -101,15 +101,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public static final Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
 	    "startDateYearMonthDay");
-
+    
     public static Comparator<StudentCurricularPlan> DATE_COMPARATOR = new Comparator<StudentCurricularPlan>() {
 	public int compare(StudentCurricularPlan leftState, StudentCurricularPlan rightState) {
 	    int comparationResult = leftState.getStartDateYearMonthDay().compareTo(
 		    rightState.getStartDateYearMonthDay());
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(
 		    rightState.getIdInternal()) : comparationResult;
-	}
-    };
+		}
+	};
 
     private Map<ExecutionPeriod, Map<String, Integer>> acumulatedEnrollments; // For
 
@@ -186,6 +186,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     }
 
+    final public boolean hasClassification() {
+	return getClassification() != null && getClassification().doubleValue() != 0d;
+    }
+    
     public Integer getCreditsInSecundaryArea() {
 	// only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
 	// return a value
@@ -909,7 +913,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private Set getCurricularCoursesInCurricularCourseEquivalences(
 	    final CurricularCourse curricularCourse) {
-
+	
 	final Set<CurricularCourse> curricularCoursesEquivalent = new HashSet<CurricularCourse>();
 	final List<CurricularCourse> sameCompetenceCurricularCourses;
 
@@ -1349,17 +1353,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return null;
     }
-
+    
     public Enrolment getEnrolment(ExecutionPeriod executionPeriod, String code) {
 	for (Enrolment enrolment : this.getEnrolmentsSet()) {
 	    if (enrolment.getCurricularCourse().getCode().equals(code)
-		    && enrolment.getExecutionPeriod() == executionPeriod) {
+		    && enrolment.getExecutionPeriod() == executionPeriod){
 		return enrolment;
 	    }
 	}
 	return null;
     }
-
+    
     public void setStudentAreasWithoutRestrictions(Branch specializationArea, Branch secundaryArea)
 	    throws DomainException {
 
@@ -1985,13 +1989,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isBolonhaDegree() {
 	return getDegreeCurricularPlan().isBolonhaDegree();
     }
-
+    
     /**
          * Temporary method, after all degrees migration this is no longer
          * necessary
          * 
-         * @return
-         */
+     * @return
+     */
     public boolean isBoxStructure() {
 	return hasRoot();
     }
@@ -2186,6 +2190,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+
     public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
 	    Double givenCredits, Grade givenGrade, ExecutionPeriod executionPeriod) {
@@ -2201,7 +2206,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return new Equivalence(this, dismissals, enrolments, givenGrade, executionPeriod);
 	}
     }
-
+    
     public Substitution createSubstitution(final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
 	return new Substitution(this, dismissals, enrolments, executionPeriod);
@@ -2228,9 +2233,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Override
     final public boolean hasEnrolments(final Enrolment enrolment) {
-	return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
+        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
     }
-
+    
     public boolean hasEnrolments(final ExecutionYear executionYear) {
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
@@ -2282,7 +2287,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedEnrolment(curricularCourse) : null;
     }
-
+    
     public Dismissal getDismissal(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getDismissal(curricularCourse) : null;
     }
@@ -2409,7 +2414,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Collection<Enrolment> getDissertationEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-
+	
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getCurricularCourse().isDissertation()) {
 		result.add(enrolment);
@@ -2425,22 +2430,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	result.addAll(getDissertationEnrolments());
 	return result.isEmpty() ? null : result.last();
     }
-
+    
     final public RegistrationStateType getRegistrationStateType() {
 
 	if (this.getCurrentState().equals(StudentCurricularPlanState.PAST)
 		&& this.getRegistration().getActiveState().getStateType().equals(
 			RegistrationStateType.REGISTERED)) {
-	    return null;
-	}
+			return null;
+		}
 	if (this.getCurrentState().equals(StudentCurricularPlanState.INCOMPLETE)
 		&& this.getRegistration().getActiveState().getStateType().equals(
 			RegistrationStateType.REGISTERED)) {
-	    return RegistrationStateType.INTERNAL_ABANDON;
-	}
+			return RegistrationStateType.INTERNAL_ABANDON;
+		}
 
-	return this.getRegistration().getActiveState().getStateType();
-    }
+		
+		return this.getRegistration().getActiveState().getStateType();
+	}
 
     public StudentCurricularPlanEquivalencePlan createStudentCurricularPlanEquivalencePlan() {
 	return new StudentCurricularPlanEquivalencePlan(this);
@@ -2478,9 +2484,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return degreeModules;
     }
-
+    
     public boolean hasConcludedCycle(CycleType cycleType, ExecutionYear executionYear) {
 	return getRoot().hasConcludedCycle(cycleType, executionYear);
     }
+    
 
 }
