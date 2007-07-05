@@ -11,7 +11,7 @@
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />		
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>" />
 
-	<h2 class="mbottom2"><bean:message key="title.coordinator.degreeSite.edit" /> <bean:write name="currentDegreeInfo" property="executionYear.year"/></h2>
+	<h2 class="mbottom15"><bean:message key="title.coordinator.degreeSite.edit" /> <bean:write name="currentDegreeInfo" property="executionYear.year"/></h2>
 
 	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
@@ -22,8 +22,8 @@
 	<logic:equal name="info" value="description">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.description" nested="true">
 		    <fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
-	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
+	    	    <fr:property name="classes" value="tstyle2 thlight thright thtop mbottom2"/>
+	        	<fr:property name="columnClasses" value="width10em,pbottom1,tdclear tderror1 valigntop"/>
 		    </fr:layout>
 		</fr:edit>
 	</logic:equal>
@@ -31,8 +31,8 @@
 	<logic:equal name="info" value="acess">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.access" nested="true">
 			<fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
-	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
+	    	    <fr:property name="classes" value="tstyle2 thlight thright thtop mbottom2"/>
+	        	<fr:property name="columnClasses" value="width10em,pbottom1,tdclear tderror1 valigntop"/>
 		    </fr:layout>
 		</fr:edit>
 	</logic:equal>
@@ -40,8 +40,8 @@
 	<logic:equal name="info" value="professionalStatus">
 		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.professional.status" nested="true">
 			<fr:layout>
-	    	    <fr:property name="classes" value="thtop width8em mbottom2"/>
-	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
+	    	    <fr:property name="classes" value="tstyle2 thlight thright thtop mbottom2"/>
+	        	<fr:property name="columnClasses" value="width10em,pbottom1,tdclear tderror1 valigntop"/>
 		    </fr:layout>
 		</fr:edit>
 	</logic:equal>
