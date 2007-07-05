@@ -207,7 +207,10 @@ public class MenuRenderer extends OutputRenderer {
      * If the fuctionality is parameterized then the required parameters are appended to the link. 
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
-		HtmlComponent component = new HtmlText(functionality.getName().getContent());
+		HtmlText text = new HtmlText(functionality.getName().getContent());
+		text.setFace(HtmlText.Face.STANDARD);
+		
+		HtmlComponent component = text;
         
         String path = functionality.getPublicPath();
         if (path != null && canMakeLink && functionality.isAvailable(context)) {

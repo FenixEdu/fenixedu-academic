@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 public class HtmlText extends HtmlComponent {
 
 	public static enum Face {
+		STANDARD,
 		STRONG,
 		EMPHASIS,
 		MONOSPACED
@@ -96,6 +97,7 @@ public class HtmlText extends HtmlComponent {
     	}
     	
     	switch (getTextFace()) {
+    		case STANDARD: 	 return "span";
 	    	case EMPHASIS:   return "em";
 	    	case STRONG:     return "strong";
 	    	case MONOSPACED: return "tt";
