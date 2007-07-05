@@ -20,6 +20,7 @@ public class Accountability extends Accountability_Base {
 	setParentParty(parentParty);
 	setChildParty(childParty);
 	setAccountabilityType(accountabilityType);
+	setBeginDate(new YearMonthDay());
     }
 
     public void delete() {
