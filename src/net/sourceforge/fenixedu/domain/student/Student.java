@@ -311,8 +311,8 @@ public class Student extends Student_Base {
     }
 
     public boolean getHasRegistrationForOffice() {
-	Unit workingPlace = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace();
-	return hasRegistrationForOffice(workingPlace.getAdministrativeOffice());
+	return hasRegistrationForOffice(AccessControl.getPerson().getEmployee()
+		.getAdministrativeOffice());
     }
 
     public boolean attends(ExecutionCourse executionCourse) {
