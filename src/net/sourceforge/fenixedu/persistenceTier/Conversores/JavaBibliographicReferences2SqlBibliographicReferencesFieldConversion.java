@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion implements FieldConversion {
@@ -46,7 +47,7 @@ public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversi
         stringBuilder.append(reference.getTitle()).append(ELEMENT_SEPARATOR);
         stringBuilder.append(reference.getAuthors()).append(ELEMENT_SEPARATOR);
         stringBuilder.append(reference.getReference()).append(ELEMENT_SEPARATOR);
-        stringBuilder.append(reference.getUrl()).append(ELEMENT_SEPARATOR);
+        stringBuilder.append(StringUtils.isEmpty(reference.getUrl()) ? "" : reference.getUrl()).append(ELEMENT_SEPARATOR);
         stringBuilder.append(reference.getType()).append(ELEMENT_SEPARATOR);
         stringBuilder.append(reference.getOrder());
     }
