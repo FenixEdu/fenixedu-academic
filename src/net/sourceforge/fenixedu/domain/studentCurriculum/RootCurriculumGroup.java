@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -49,7 +48,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void setDegreeModule(DegreeModule degreeModule) {
-	if (!(degreeModule instanceof RootCourseGroup)) {
+	if (degreeModule != null && !(degreeModule instanceof RootCourseGroup)) {
 	    throw new DomainException(
 		    "error.curriculumGroup.RootCurriculumGroup.degreeModuleMustBeRootCourseGroup");
 	}
