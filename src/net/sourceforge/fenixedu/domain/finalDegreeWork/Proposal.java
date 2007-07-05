@@ -15,7 +15,7 @@ public class Proposal extends Proposal_Base {
     }
 
     public boolean isProposalConfirmedByTeacherAndStudents(final Group group) {
-	return getGroupAttributedByTeacher() == group && group.isConfiremByStudents(this);
+	return getGroupAttributedByTeacher() == group && group.isConfirmedByStudents(this);
     }
 
 }

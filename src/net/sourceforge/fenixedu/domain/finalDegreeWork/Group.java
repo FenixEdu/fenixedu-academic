@@ -26,17 +26,14 @@ public class Group extends Group_Base {
 		return CollectionUtils.constructSortedSet(getGroupProposalsSet(), net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal.COMPARATOR_BY_PREFERENCE_ORDER);
 	}
 
-	public boolean isConfiremByStudents(final Proposal proposal) {
-	    return !isConfiremByStudents(proposal);
-	}
-
-	public boolean isNotConfiremByStudents(final Proposal proposal) {
-	    for (GroupStudent groupStudent : getGroupStudentsSet()) {
-		if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposal) {
-		    return true;
+	public boolean isConfirmedByStudents(final Proposal proposal) {
+		for (GroupStudent groupStudent : getGroupStudentsSet()) {
+			if (groupStudent.getFinalDegreeWorkProposalConfirmation() != proposal) {
+				return false;
+			}
 		}
-	    }
-	    return false;
+
+		return true;
 	}
 
 }
