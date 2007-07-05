@@ -8,8 +8,8 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup" table="CURRICULUM_MODULE">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" />	
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" />	
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup" />	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup" table="CURRICULUM_MODULE">
