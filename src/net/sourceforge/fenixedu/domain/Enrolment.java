@@ -150,7 +150,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public boolean isPropaedeutic() {
-	return getCurricularCourse().isPropaedeutic() || super.isPropaedeutic();
+	return (isBoxStructure() && super.isPropaedeutic()) || (!isBolonhaDegree() && getCurricularCourse().isPropaedeutic());
     }
     
     final public boolean isExtraCurricular() {
@@ -957,6 +957,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations()) : getLatestEnrolmentEvalution(getEvaluationsSet());
     }
 
+    @SuppressWarnings("unchecked")
     private EnrolmentEvaluation getLatestEnrolmentEvalution(
 	    Collection<EnrolmentEvaluation> enrolmentEvaluations) {
 	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
@@ -1153,7 +1154,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     
     @Override
     final public Double getWeigth() {
-	if (isExtraCurricular()) {
+	if (isExtraCurricular() || isPropaedeutic()) {
 	    return Double.valueOf(0);
 	}
 	
@@ -1172,7 +1173,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private Double getBaseWeigth() {
-	return (super.getWeigth() == null || super.getWeigth() == 0) ? getCurricularCourse().getWeigth() : super.getWeigth();
+	return (super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth() : super.getWeigth();
     }
     
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
