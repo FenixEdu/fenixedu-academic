@@ -2,4 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
    <html:errors/>
-   <center> <b><bean:message key="error.exception.notAuthorized"/></b> </center>
+
+<p>
+	<span class="warning0"><bean:message key="error.exception.notAuthorized"/></span>
+</p>

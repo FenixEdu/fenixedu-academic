@@ -8,9 +8,9 @@
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal"/>
 <bean:define id="executionDegreeId" name="executionDegreeId"/>
 
-<h3>
+<h2>
     <bean:message key="title.coordinator.degreeCurricularPlan.scientificCommissionTeam"/>
-</h3>
+</h2>
 
 <div class="dinline forminline">
     <fr:form action="<%= "/scientificCommissionTeamDA.do?method=manage&amp;degreeCurricularPlanID=" + degreeCurricularPlanId %>">
@@ -19,7 +19,6 @@
                 <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear"/>
             </fr:layout>
-            
             <fr:destination name="chooseExecutionDegree" path="<%= "/scientificCommissionTeamDA.do?method=manage&degreeCurricularPlanID=" + degreeCurricularPlanId %>"/>
         </fr:edit>
         
@@ -30,7 +29,7 @@
 </div>
 
 <logic:present name="executionDegree">
-    <div class="mtop2">
+    <div class="mtop15">
         <logic:empty name="members">
             <em><bean:message key="label.coordinator.degreeCurricularPlan.scientificCommissionTeam.empty"/></em>
         </logic:empty>
@@ -42,13 +41,15 @@
                 </div>
         
                 <logic:present name="updateContactConfirmation">
-                    <span class="success0"><bean:message key="label.coordinator.scientificCommision.contact.updated"/></span>
+                	<p class="mtop15">
+	                    <span class="success0"><bean:message key="label.coordinator.scientificCommision.contact.updated"/></span>
+                    </p>
                 </logic:present>
             
                 <logic:present name="responsible">
                     <fr:edit id="membersContacts" name="members" schema="coordinator.commissionTeam.manage.contacts">
                         <fr:layout name="tabular-editable">
-                            <fr:property name="classes" value="tstyle1"/>
+                            <fr:property name="classes" value="tstyle1 thlight"/>
                             <fr:property name="columnClasses" value=",acenter,"/>
                                 
                                 <fr:property name="link(delete)" value="<%= String.format("/scientificCommissionTeamDA.do?method=removeMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>"/>
@@ -76,11 +77,11 @@
     </div>
     
     <logic:present name="responsible">
-        <div class="mtop2">
-            <strong><bean:message key="title.coordinator.scientificCommision.add"/></strong>
+
+            <p class="mtop2 mbottom05"><strong><bean:message key="title.coordinator.scientificCommision.add"/></strong></p>
             
-            <p>
-                <em><bean:message key="label.coordinator.scientificCommision.add.message"/></em>
+            <p class="mvert05">
+                <span class="color888"><bean:message key="label.coordinator.scientificCommision.add.message"/></span>
             </p>
         
             <logic:messagesPresent message="true" property="addError">
@@ -92,7 +93,7 @@
             <fr:form action="<%= String.format("/scientificCommissionTeamDA.do?method=addMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>">
                 <fr:edit id="usernameChoice" name="usernameBean" schema="coordinator.commissionTeam.addMember">
                     <fr:layout name="tabular">
-                        <fr:property name="classes" value="tstyle5 tdmiddle thlight thright thmiddle mbottom0"/>
+                        <fr:property name="classes" value="tstyle5 thlight thright thmiddle mvert05"/>
                         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
                     </fr:layout>
                     
@@ -103,7 +104,7 @@
                     <bean:message key="button.add"/> 
                 </html:submit>
             </fr:form>
-        </div>
+
     </logic:present>
 </logic:present>
 
