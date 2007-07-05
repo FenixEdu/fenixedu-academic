@@ -27,7 +27,7 @@
 
 <div id="instructions" class="switchNone">
 <div class="infoop2 mbottom1 mtop05">
-<p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong><bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
+<p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong> <bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
 <table>
 <tr><td><img src="<%= request.getContextPath() + "/images/tag_selected.gif"%>" style="border: 1px solid #eee; padding: 4px; background: #fff;"/></td><td><bean:message key="label.tagCloud.selected.explanation" bundle="RESEARCHER_RESOURCES"/></td></tr>
 <tr><td><img src="<%= request.getContextPath() + "/images/tag_nearby.gif" %>" style="border: 1px solid #eee; padding: 4px; background: #fff;"/></td><td><bean:message key="label.tagCloud.neighbour.explanation" bundle="RESEARCHER_RESOURCES"/></td></tr>
@@ -77,7 +77,7 @@
 		<fr:view name="files" schema="show.unit.files.noPermission">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight"/>
-				<fr:property name="columnClasses" value=",smalltxt,smalltxt width100px acenter,,smalltxt color888"/>
+				<fr:property name="columnClasses" value="nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt nowrap,smalltxt color888 nowrap,width100px"/>
 				<fr:property name="sortParameter" value="sort"/>
 				<fr:property name="sortIgnored" value="true"/>
 				<fr:property name="sortBy" value="<%= request.getParameter("sort") == null ? "displayName" : request.getParameter("sort")%>"/>

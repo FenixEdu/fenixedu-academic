@@ -8,13 +8,15 @@
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message key="title.files.sources" bundle="MESSAGING_RESOURCES"/></h2>
 
-<div class="infoop2 mbottom2">
+<div class="infoop2">
 	<p class="mvert0"><bean:message key="message.files.sources" bundle="MESSAGING_RESOURCES"/></p>
 </div>
 
 <logic:empty name="sources">
-	<em><bean:message key="message.files.sources.empty" bundle="MESSAGING_RESOURCES"/></em>
+	<p><em><bean:message key="message.files.sources.empty" bundle="MESSAGING_RESOURCES"/></em></p>
 </logic:empty>
+
+<br/>
 
 <logic:notEmpty name="sources">
 	<fr:view name="sources">
