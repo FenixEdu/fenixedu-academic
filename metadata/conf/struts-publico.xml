@@ -1032,7 +1032,7 @@
             <forward name="site-item-adviseLogin" path="scientificCouncil-site-item-adviseLogin"/>
 
             <forward name="announcementsAction" path="/scientificCouncil/announcements.do"/>
-            <forward name="eventsAction" path="/scientificCouncil/announcements.do"/>
+            <forward name="eventsAction" path="/scientificCouncil/events.do"/>
             <forward name="announcementsRSSAction" path="/scientificCouncil/announcementsRSS.do"/>
             <forward name="eventsRSSAction" path="/scientificCouncil/eventsRSS.do"/>
         </action>
