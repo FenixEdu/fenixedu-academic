@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -36,6 +40,10 @@ public enum RegistrationStateType {
 
     public String getFullyQualifiedName() {
 	return RegistrationStateType.class.getName() + "." + name();
+    }
+    
+    public String getDescription() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
     }
 
 }
