@@ -103,8 +103,8 @@
 						</th>
 					</tr>
 
-				<logic:iterate id="infoEnrollmentGrade" name="infoStudentCurricularPlan" property="infoEnrolments">
-					<bean:define id="enrollmentId" name="infoEnrollmentGrade" property="infoEnrollment.idInternal"/>
+				<logic:iterate id="enrolment" name="infoStudentCurricularPlan" property="studentCurricularPlan.enrolments">
+					<bean:define id="enrollmentId" name="enrolment" property="idInternal"/>
 					<bean:define id="enrollmentIdString" type="java.lang.String"><bean:write name="enrollmentId"/></bean:define>
 
 					<%
@@ -120,22 +120,22 @@
 
 					<tr>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoExecutionPeriod.infoExecutionYear.year"/>
+							<bean:write name="enrolment" property="executionPeriod.executionYear.year"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoExecutionPeriod.semester"/>
+							<bean:write name="enrolment" property="executionPeriod.semester"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
+							<bean:write name="enrolment" property="curricularCourse.degreeCurricularPlan.degree.sigla"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoCurricularCourse.code"/>
+							<bean:write name="enrolment" property="curricularCourse.code"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="infoEnrollment.infoCurricularCourse.name"/>
+							<bean:write name="enrolment" property="curricularCourse.name"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollmentGrade" property="gradeValue"/>
+							<bean:write name="enrolment" property="gradeValue"/>
 						</td>
 					</tr>
 
@@ -153,8 +153,6 @@
 		<br />
 		<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans">
 			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="idInternal" type="java.lang.Integer"/>
-
-			<logic:notEqual name="studentCurricularPlanForm" property="selectedStudentCurricularPlanId" value="<%= studentCurricularPlanId.toString() %>">
 
 			<table>
 				<tr>
@@ -206,9 +204,17 @@
 					</td>
 				</tr>
 			</table>
+			
+			<logic:equal name="infoStudentCurricularPlan" property="studentCurricularPlan.boxStructure" value="true">
+				<logic:iterate id="curriculumGroup" name="infoStudentCurricularPlan" property="studentCurricularPlan.root.allCurriculumGroups" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup">
+					<bean:write name="curriculumGroup" property="fullPath" />
+					<html:radio property="selectedCurriculumGroupID" value="<%= curriculumGroup.getIdInternal().toString() %>" />
+					<br/>
+				</logic:iterate>
+			</logic:equal>
+			
 			<br />
 			
-			</logic:notEqual>
 		</logic:iterate>
 	</logic:present>
 

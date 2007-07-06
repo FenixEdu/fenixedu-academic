@@ -489,6 +489,7 @@
 			<form-property name="degreeCurricularPlanId" type="java.lang.String"/>
 			<form-property name="startDate" type="java.lang.String"/>
 			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
+			<form-property name="selectedCurriculumGroupID" type="java.lang.Integer"/>
 		</form-bean>
 
 		<form-bean name="enrolementPeriodsForm"

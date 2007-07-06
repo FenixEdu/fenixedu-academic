@@ -387,6 +387,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public Set<CurriculumGroup> getAllCurriculumGroups() {
+	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (!curriculumModule.isLeaf()) {
+		result.add((CurriculumGroup) curriculumModule);
+		result.addAll(((CurriculumGroup) curriculumModule).getAllCurriculumGroups());
+	    }
+	}
+	return result;
+    }
+    
     public Integer getChildOrder() {
 	return getChildOrder(null);
     }
