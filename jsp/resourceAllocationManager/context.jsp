@@ -6,9 +6,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <logic:present name="executionDegree">
-	<table>
+	<table class="tstyle5 thlight thright mtop05">
 		<tr>
-			<td colspan="2">
+			<th>Curso:</th>
+			<td>
 				<html:form action="/chooseContext">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
@@ -31,6 +32,7 @@
 			</td>
 		</tr>
 		<tr>
+			<th>Ano:</th>
 			<td>
 				<html:form action="/chooseContext">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -45,12 +47,15 @@
 			       		<html:options collection="anosCurriculares"
 		    	   					  property="value"
 		       						  labelProperty="label"/>
-			       	</html:select> Ano
+			       	</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message key="button.submit"/>
 					</html:submit>
 				</html:form>
 			</td>
+		</tr>
+		<tr>
+			<th>Período execução</th>
 			<td>
 				<html:form action="/chooseExecutionPeriod">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>

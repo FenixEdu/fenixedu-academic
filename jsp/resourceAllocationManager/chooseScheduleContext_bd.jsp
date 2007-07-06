@@ -3,11 +3,18 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<h2>
-	<bean:message key="title.manage.schedule"/>
-</h2>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="title.manage.schedule"/></h2>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+<p class="mtop15 mbottom05">
+	<bean:message key="label.chooseDegreeAndYear" />:
+</p>
+
 
 <html:form action="/chooseContext" focus="executionDegreeOID">
 
@@ -16,38 +23,25 @@
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
-	<table width="98%" border="0" cellpadding="0" cellspacing="0">
-    	<tr>
-        	<td bgcolor="#FFFFFF" class="infoop">
-        		Por favor, proceda &agrave; escolha do curso pretendido.
-        	</td>
-        </tr>
-    </table>
 
-	<br />
-	<p>
-		<bean:message key="property.context.degree"/>:
-		<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1">
-       		<html:options collection="licenciaturas"
-       					  property="value"
-       					  labelProperty="label"/>
-       </html:select>
-	</p>
-
-	<br />
-	<table width="98%" border="0" cellpadding="0" cellspacing="0">
+	<table class="tstyle5 thlight thright mtop05">
 		<tr>
-			<td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYear" /></td>
-		</tr>
-	</table>
-
-	<br />   
-	<table border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td nowrap class="formTD">
-				<bean:message key="property.context.curricular.year"/>:
+			<th>
+				<bean:message key="property.context.degree"/>:
+			</th>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1">
+		       		<html:options collection="licenciaturas"
+		       					  property="value"
+		       					  labelProperty="label"/>
+				</html:select>
 			</td>
-			<td nowrap class="formTD">
+		</tr>
+		<tr>
+			<th>
+				<bean:message key="property.context.curricular.year"/>:
+			</th>
+			<td>
 				<html:select bundle="HTMLALT_RESOURCES" property="curricularYear" size="1">
 		       		<html:options collection="anosCurriculares"
 		       					  property="value"
@@ -57,7 +51,7 @@
 		</tr>
 	</table>
 
-	<br />
+
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
              <bean:message key="label.next"/>

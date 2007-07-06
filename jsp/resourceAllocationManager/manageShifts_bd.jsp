@@ -7,27 +7,22 @@
 <%@ page import="java.util.List"%>
 
 <html:xhtml/>
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
 
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-			<jsp:include page="context.jsp"/>
-     	</td>
-    </tr>
-</table>
+<jsp:include page="context.jsp"/>
 
-<br/><br/>
+
 <span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 
-<br/><br/>
+
 <jsp:include page="createShift.jsp"/>
 
-<br/><br/><br/><br/>
-<h2><bean:message key="title.manage.turnos"/></h2>
 
-<br/>
+<h3 class="mtop2 mbottom05"><bean:message key="title.manage.turnos"/></h3>
+
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
   <html:form action="/deleteShifts">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteShifts"/>
@@ -44,42 +39,42 @@
 		return confirm('<bean:message key="message.confirm.delete.shift"/>')
 	</bean:define>
 
-	<table>
+	<table class="tstyle4 mtop05">
 		<tr>
-			<th class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 			</th>
-			<th class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 				<bean:message key="property.executionCourse"/>
 			</th>
-			<th class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 				<bean:message key="property.shift.name"/>
 			</th>
-	        <th class="listClasses-header" rowspan="2">
+	        <th rowspan="2">
 	        	<bean:message key="property.shift.type"/>
 	        </th>
-			<th class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 				<bean:message key="property.shift.capacity"/>
 			</th>
-			<th class="listClasses-header" colspan="5">
+			<th colspan="5">
 	        	<bean:message key="property.lessons"/>
 	        </th>
-			<th class="listClasses-header" rowspan="2">
+			<th rowspan="2">
 	        </th>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="property.weekday"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="property.time.start"/>
 			</th>
-		       <th class="listClasses-header">
+		       <th>
 		       	<bean:message key="property.time.end"/>
 	    	   </th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="property.room"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 		       	<bean:message key="property.capacity"/>
 		       </th>
 		</tr>

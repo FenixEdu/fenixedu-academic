@@ -5,36 +5,48 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2>Listagem de Horários por Salas</h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:form action="/viewAllRoomsSchedulesDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
-    <table width="100%">
-    	<tr>
-			<td class="infoop"><bean:message key="label.select.pavillions" /></td>
-        </tr>
-    </table>
+
+	<p class="mbottom2">
+		<bean:message key="label.select.pavillions" />
+	</p>
 	
-	<br />
-   	<bean:message key="property.context.pavillion"/>:
-   	<br /><br />
+	<p>
+	   	<bean:message key="property.context.pavillion"/>:
+   	</p>
+
 	
 	<logic:present name="<%= SessionConstants.PAVILLIONS_NAMES_LIST %>" scope="request">
+		<p>
 		<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.selectAllPavillions" property="selectAllPavillions">
-			<bean:message key="checkbox.show.all.pavillions"/><br />
+			<strong><bean:message key="checkbox.show.all.pavillions"/></strong>
 		</html:checkbox>
-		<br />
+		</p>
+
 		<logic:iterate id="item" name="<%= SessionConstants.PAVILLIONS_NAMES_LIST %>">
-			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedPavillions" property="selectedPavillions">
+			<p class="mvert025">
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedPavillions" property="selectedPavillions">
+					<bean:write name="item"/>
+				</html:multibox>
 				<bean:write name="item"/>
-			</html:multibox>
-			<bean:write name="item"/><br />
+			</p>
 		</logic:iterate>
 	</logic:present>
-	<br />
-   <p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
-   		<bean:message key="label.list"/>
-   </html:submit></p>
+
+	<p class="mtop15">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
+			<bean:message key="label.list"/>
+		</html:submit>
+	</p>
 </html:form>

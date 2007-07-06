@@ -3,6 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <bean:define id="dotTitle"type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
+
+<h2><bean:message key="title.resourceAllocationManager.management"/></h2>
+
 <bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 
 
