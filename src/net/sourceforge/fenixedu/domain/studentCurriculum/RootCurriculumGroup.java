@@ -57,7 +57,9 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	throw new DomainException("error.curriculumGroup.RootCurriculumGroupCannotHaveParent");
+	if (curriculumGroup != null) {
+	    throw new DomainException("error.curriculumGroup.RootCurriculumGroupCannotHaveParent");
+	}
     }
 
     @Override
