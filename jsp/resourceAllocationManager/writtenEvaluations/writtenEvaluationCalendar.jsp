@@ -11,6 +11,7 @@
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
+	<h:outputFormat value="<em>#{bundleSOP['title.resourceAllocationManager.management']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bundleSOP['link.writtenEvaluation.map']}</h2>" escape="false"/>
 
 	<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
@@ -28,42 +29,65 @@
 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-		<h:panelGrid columns="2" styleClass="infotable">
-			<h:outputText value="<b><i>#{bundleSOP['title.selected.degree']}:</b></i>" escape="false"/>
-			<h:outputText value="&nbsp;" escape="false"/>
-			
+		
+		<h:outputText value="<p class='mbottom05'>#{bundleSOP['title.selected.degree']}:</p>" escape="false"/>
+
+		<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom2'>" escape="false"/>			
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: " />
+		<h:outputText value="</th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 	 		<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionPeriodID}" 
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionPeriods}" />
 			</h:selectOneMenu>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-			
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.degree']}: " />
+		<h:outputText value="</th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 			<h:selectOneMenu id="executionDegreeID" value="#{SOPEvaluationManagementBackingBean.executionDegreeID}"
 							disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.period']}: " />
+		<h:outputText value="</th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 			<h:selectOneMenu id="calendarPeriod" value="#{SOPEvaluationManagementBackingBean.calendarPeriod}"
 							disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCalendarPeriod}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.calendarPeriodItems}"/>
 			</h:selectOneMenu>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " />
+		<h:outputText value="</th>" escape="false"/>
+		<h:outputText value="<td class='tstylebordernone'>" escape="false"/>
 			<h:selectManyCheckbox id="curricularYearIDs"  value="#{SOPEvaluationManagementBackingBean.curricularYearIDs}"
 					disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
 					onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCurricularYearIDs}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</h:selectManyCheckbox>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID4' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-		</h:panelGrid>
-		<h:outputText value="<br/>" escape="false"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		<h:outputText value="</table>" escape="false"/>
+
 
 	 	<h:panelGroup rendered="#{SOPEvaluationManagementBackingBean.renderContextSelection}">
 
@@ -75,9 +99,9 @@
 		 		editLinkParameters="#{SOPEvaluationManagementBackingBean.writtenTestsCalendarLink}"
 		 	/>
 
-			<h:outputText value="<br/><i>#{bundleSOP['label.defined.written.evaluations']}:</i><br/>" escape="false" styleClass="boldFontClass"/>
+			<h:outputText value="<p class='mtop2'><b>#{bundleSOP['label.defined.written.evaluations']}:</b></p>" escape="false"/>
 			<h:panelGroup rendered="#{empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
-				<h:outputText value="<i>#{bundleSOP['label.no.defined.written.evaluations']}</i><br/>" escape="false" />
+				<h:outputText value="<p><em>#{bundleSOP['label.no.defined.written.evaluations']}</em></p>" escape="false" />
 			</h:panelGroup>
 
 		<h:panelGroup rendered="#{!empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
@@ -212,18 +236,17 @@
 			</f:verbatim>
 			</h:panelGroup>
 
-			<h:outputText value="<br/><br/><i>#{bundleSOP['label.execution.courses.without.written.evaluations']}:</i><br/>" escape="false" styleClass="boldFontClass"/>
+			<h:outputText value="<p class='mtop2'><b>#{bundleSOP['label.execution.courses.without.written.evaluations']}:</b></p>" escape="false"/>
 			<h:panelGroup rendered="#{empty SOPEvaluationManagementBackingBean.executionCoursesWithoutWrittenEvaluations}">
-				<h:outputText value="<i>#{bundleSOP['label.no.execution.courses.without.written.evaluations']}</i><br/>" escape="false" />
+				<h:outputText value="<p><em>#{bundleSOP['label.no.execution.courses.without.written.evaluations']}</em></p>" escape="false" />
 			</h:panelGroup>
 			<h:panelGroup rendered="#{!empty SOPEvaluationManagementBackingBean.executionCoursesWithoutWrittenEvaluations}">
 				<f:verbatim>
 					<table class="executionCoursesWithoutWrittenEvaluations">
 						<c:forEach items="${SOPEvaluationManagementBackingBean.executionCoursesWithoutWrittenEvaluations}" var="executionCourse">
 							<tr>
-								<td><b>
+								<td>
 									<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
-									</b>
 								</td>
 								<td>
 									<c:url var="creationURL" value="showExecutionCourses.faces">

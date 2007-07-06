@@ -1,23 +1,34 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2>Gest&atilde;o de Avaliações Escritas</h2>
-<p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o das avaliações escritas. <br />
-Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2>Avaliações Escritas</h2>
+<p>
+	Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o das avaliações escritas.
+	Em baixo pode alterar o período de execu&ccedil&atilde;o seleccionado.
+</p>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:form action="/mainExamsNew">
-	<table border="0" cellspacing="0" cellpadding="0">
+
+	<table class="tstyle5 thlight thmiddle mvert05">
 	  <tr>
-	    <td nowrap="nowrap" width="125"><bean:message key="property.executionPeriod"/>:</td>
-	    <td nowrap="nowrap"><jsp:include page="../selectExecutionPeriodList.jsp"/></td>
+	    <th><bean:message key="property.executionPeriod"/>:</th>
+	    <td><jsp:include page="../selectExecutionPeriodList.jsp"/></td>
 	  </tr>
 	</table>
-	<br />
+
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="label.choose"/>
-	</html:submit>
+	<p class="mtop05">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="label.choose"/>
+		</html:submit>
+	</p>
 </html:form>
 
 <br/>
@@ -28,15 +39,15 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 	<html:hidden alt="<%= net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
+	<p>
 	<bean:message key="publish.exams.map" />
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.change.published.state"/>
 	</html:submit>
+	</p>
 	
-	<br /><br />
-
 	<logic:present name="executionDegrees">
-		<table>
+		<table class="tstyle4">
 			<tr>
 				<th>
 					<bean:message key="label.manager.degree.tipoCurso"/>
@@ -47,7 +58,7 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 				<th>
 					<bean:message key="label.exams.map.temp.state"/>
 				</th>
-			</tr>			
+			</tr>
 			<logic:iterate id="executionDegree" name="executionDegrees">
 				<tr>
 					<td>

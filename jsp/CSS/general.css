@@ -159,6 +159,8 @@ table.tstylenone { margin: 0; padding: 0; }
 table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em; }
 table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em; }
 
+.tstylebordernone table tr td { border: none; }
+
 /* --------------------- */
 /* General table classes */
 
@@ -1281,7 +1283,7 @@ text-align: left;
 margin: 3em 1em;
 padding: 1em;
 float: right;
-width: 300px;
+width: 350px;
 border: 1px solid #ccc;
 background: #f8f8f8;
 }
@@ -2041,4 +2043,11 @@ ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
 display: block;
 padding-top: 1em;
 padding-bottom: 1em;
+}
+
+.forumthread blockquote {
+background: #fff;
+border: 1px solid #ddd;
+font-style: italic;
+padding: 5px;
 }
