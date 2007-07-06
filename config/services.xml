@@ -12083,7 +12083,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="CoordinatorAuthorization"/>
+			<chain name="ScientificCouncilAuthorization"/>
 		</filterChains>
     </service>
     <service>
