@@ -78,7 +78,9 @@ public class Lesson extends Lesson_Base {
 
 	removeExecutionPeriod();	
 	removeShift();
-	getLessonSpaceOccupation().delete();
+	if(hasLessonSpaceOccupation()) {
+	    getLessonSpaceOccupation().delete();
+	}
 	removeRootDomainObject();
 	deleteDomainObject();
     }
