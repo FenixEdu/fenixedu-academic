@@ -58,16 +58,17 @@ public class Thesis extends Thesis_Base {
 				
 				List<Thesis> theses = enrolment.getTheses();
 		        
+        		String number = enrolment.getStudentCurricularPlan().getRegistration().getNumber().toString();
 				switch (theses.size()) {
 		        case 0: // can have at least one
 		            return; 
 		        case 1: // can have another if existing is not final
 			        Thesis existing = theses.iterator().next();
 		        	if (existing.isFinalThesis() || !existing.isEvaluated()) {
-		        		throw new DomainException("thesis.enrolment.thesis.notEvaluated");
+						throw new DomainException("thesis.enrolment.thesis.notEvaluated", number);
 		        	}
 		        default: // never more than 2
-		        	throw new DomainException("thesis.enrolment.hasFinalThesis");
+		        	throw new DomainException("thesis.enrolment.hasFinalThesis", number);
 				}
 			}
 			
