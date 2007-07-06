@@ -60,7 +60,7 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['program']}: </label>" escape="false"/>
 		<h:panelGrid columns="2">
 			<h:inputTextarea id="program" value="#{CompetenceCourseManagement.program}" cols="60" rows="10">
-				<f:validateLength maximum="1800" />
+				<f:validateLength maximum="1820" />
 			</h:inputTextarea>
 			<h:outputText value="(#{bolonhaBundle['max']} 1800 #{bolonhaBundle['characters']})" />
 			<h:message for="program" styleClass="error0"/>
@@ -91,7 +91,7 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['programEn']}: </label>" escape="false"/>
 		<h:panelGrid columns="2">
 			<h:inputTextarea id="programEn" value="#{CompetenceCourseManagement.programEn}" cols="60" rows="10">
-				<f:validateLength maximum="1800" />
+				<f:validateLength maximum="1820" />
 			</h:inputTextarea>	
 			<h:outputText value="(#{bolonhaBundle['max']} 1800 #{bolonhaBundle['characters']})" />
 			<h:message for="programEn" styleClass="error0"/>
