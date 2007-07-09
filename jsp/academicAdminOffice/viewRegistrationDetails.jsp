@@ -146,14 +146,14 @@
 			<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
-	<logic:equal name="registration" property="active" value="true">
+<%--	<logic:equal name="registration" property="active" value="true">
 		<span class="pleft1">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link action="/addNewStudentCurricularPlan.do?method=prepareCreateSCP" paramName="registration" paramProperty="idInternal" paramId="registrationId">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.registration.newSCP" />
 			</html:link>
 		</span>
-	</logic:equal>
+	</logic:equal> --%>
 </p>
 
 
