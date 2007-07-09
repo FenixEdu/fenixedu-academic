@@ -150,6 +150,7 @@ public class Credits extends Credits_Base {
     public void delete() {
 	removeStudentCurricularPlan();
 	removeRootDomainObject();
+	removeExecutionPeriod();
 
 	for (; hasAnyDismissals(); getDismissals().get(0).delete())
 	    ;
