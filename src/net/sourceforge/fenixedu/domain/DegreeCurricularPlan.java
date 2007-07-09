@@ -1446,6 +1446,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return false;
     }
 
+    private Set<ExecutionYear> getEnrolmentPeriodsExecutionYears(Class clazz) {
+	Set<ExecutionYear> result = new HashSet<ExecutionYear>();
+	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
+	    if (clazz == null || enrolmentPeriod.getClass().equals(clazz)) {
+		result.add(enrolmentPeriod.getExecutionPeriod().getExecutionYear());
+	    }
+	}
+	return result;
+    }
+
+    public Set<ExecutionYear> getCandidacyPeriodsExecutionYears() {
+	return getEnrolmentPeriodsExecutionYears(CandidacyPeriodInDegreeCurricularPlan.class);
+    }
+
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
 	final Collection<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
 
@@ -1601,7 +1615,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     // this slot is a hack to allow renderers to call the setter. Don't
-        // delete
+    // delete
     // it.
     private DegreeCurricularPlan sourceDegreeCurricularPlan = null;
 

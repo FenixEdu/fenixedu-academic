@@ -14,7 +14,7 @@
 	<fr:edit id="executionDegree"
 			 name="candidacyBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
-			 schema="candidacy.choose.executionDegree">
+			 schema="candidacy.choose.executionDegree.toCreate">
 		<fr:destination name="degreePostBack" path="/dfaCandidacy.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/dfaCandidacy.do?method=chooseDegreeCurricularPlanPostBack"/>		
 		<fr:destination name="invalid" path="/dfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>		

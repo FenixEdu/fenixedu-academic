@@ -12,14 +12,15 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class DegreeCurricularPlansForDegree implements DataProvider {
+public class DegreeCurricularPlansForDegreeAndExecutionYear implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
 	final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	if (dfaCandidacyBean.getDegree() != null) {
-	    result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansSet());
+	if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getExecutionYear() != null) {
+	    result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansForYear(
+		    dfaCandidacyBean.getExecutionYear()));
 	    Collections.sort(result, new BeanComparator("name"));
 	} else {
 	    dfaCandidacyBean.setDegreeCurricularPlan(null);

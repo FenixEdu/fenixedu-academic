@@ -19,12 +19,40 @@
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegreeAndExecutionYear" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreeCurricularPlanPostBack"/>		
+	</slot>
+</schema>
+<schema name="candidacy.choose.executionDegree.toCreate"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<slot name="degree" key="label.degree" 
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DFATypeDegrees" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreePostBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegree" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreeCurricularPlanPostBack"/>		
 	</slot>
+	<slot name="executionYear" layout="menu-select-postback" key="label.executionYear" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForCandidacyProvider"/>
+		<property name="format" value="${year}"/>
+		<property name="destination" value="degreeCurricularPlanPostBack"/>				
+	</slot>	
 </schema>
 <schema name="candidacy.create.choose.person"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
