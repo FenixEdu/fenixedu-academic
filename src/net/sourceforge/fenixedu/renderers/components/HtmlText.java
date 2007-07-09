@@ -6,13 +6,6 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
 public class HtmlText extends HtmlComponent {
 
-	public static enum Face {
-		STANDARD,
-		STRONG,
-		EMPHASIS,
-		MONOSPACED
-	}
-	
     private String text;
     private boolean escaped;
     private boolean newLineAware;

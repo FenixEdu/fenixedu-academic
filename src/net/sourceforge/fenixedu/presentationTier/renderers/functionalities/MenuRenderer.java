@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
+import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.HtmlText.Face;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -208,7 +208,7 @@ public class MenuRenderer extends OutputRenderer {
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
 		HtmlText text = new HtmlText(functionality.getName().getContent());
-		text.setFace(HtmlText.Face.STANDARD);
+		text.setFace(Face.STANDARD);
 		
 		HtmlComponent component = text;
         
