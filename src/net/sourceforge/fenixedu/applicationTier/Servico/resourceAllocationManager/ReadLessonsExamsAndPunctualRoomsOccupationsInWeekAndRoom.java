@@ -54,96 +54,101 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List<InfoObject> run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
-    	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
 
-        List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
+	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
-        Calendar startDay = Calendar.getInstance();
-        startDay.setTimeInMillis(day.getTimeInMillis());
-        startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
-        Calendar endDay = Calendar.getInstance();
-        endDay.setTimeInMillis(startDay.getTimeInMillis());
-        endDay.add(Calendar.DATE, 6);
-        //OccupationPeriod weekPeriod = new OccupationPeriod(day, endDay);
+	Calendar startDay = Calendar.getInstance();
+	startDay.setTimeInMillis(day.getTimeInMillis());
+	startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
+	Calendar endDay = Calendar.getInstance();
+	endDay.setTimeInMillis(startDay.getTimeInMillis());
+	endDay.add(Calendar.DATE, 6);
+	//OccupationPeriod weekPeriod = new OccupationPeriod(day, endDay);
 
-        InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
-        
-        if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
-            //adicionar as aulas
-        	
-            List<Lesson> lessonList = room.getAssociatedLessons(executionPeriod);
-            Iterator<Lesson> iterator = lessonList.iterator();
+	InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
 
-            while (iterator.hasNext()) {
-                Lesson aula = iterator.next();
-                LessonSpaceOccupation roomOccupation = aula.getLessonSpaceOccupation();
+	if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
+	    //adicionar as aulas
 
-                OccupationPeriod period = roomOccupation.getPeriod();
-                InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+	    List<Lesson> lessonList = room.getAssociatedLessons(executionPeriod);
+	    Iterator<Lesson> iterator = lessonList.iterator();
 
-                if (this.intersectPeriods(day, endDay, infoPeriod)) {
+	    while (iterator.hasNext()) {
+		Lesson aula = iterator.next();
+		LessonSpaceOccupation roomOccupation = aula.getLessonSpaceOccupation();
 
-                    boolean add = true;
-                    if ((roomOccupation.getFrequency().intValue() == EventSpaceOccupation.QUINZENAL)
-                            && (!EventSpaceOccupation.periodQuinzenalContainsWeekPeriod(period.getStartDate(), period.getEndDate(), 
-	                            roomOccupation.getWeekOfQuinzenalStart().intValue(),
-                                    roomOccupation.getDayOfWeek(), day, endDay, null))) {
-                        add = false;
-                    }
-                    if (roomOccupation.getFrequency().intValue() == EventSpaceOccupation.SEMANAL) {
-                        Calendar dayOfLesson = Calendar.getInstance();
-                        dayOfLesson.setTimeInMillis(day.getTimeInMillis());
-                        dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana().intValue() - Calendar.MONDAY);
-                        if (!this.intersectPeriods(dayOfLesson, dayOfLesson, infoPeriod)) {
-                            add = false;
-                        }
-                    }
-                    if (add) {
-                        Shift shift = aula.getShift();
-                        if (shift == null) {
-                            continue;
-                        }
-                        infoShowOccupations.add(InfoLesson.newInfoFromDomain(aula));
-                    }
-                }
-            }
-        }
+		OccupationPeriod period = roomOccupation.getPeriod();
+		InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
 
-        final Date startDate = startDay.getTime();
-        final Date endDate = endDay.getTime();
-        
-        final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromDateFields(startDate);
-        final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromDateFields(endDate).minusDays(1);
-        
-        for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {            
-            
-            if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {                
-                final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();                                   
-                getWrittenEvaluationRoomOccupations(infoShowOccupations, startDate, endDate, writtenEvaluation);
-            }
-            
-            if(roomOccupation.isGenericEventSpaceOccupation()) {            
-                final GenericEvent genericEvent = ((GenericEventSpaceOccupation)roomOccupation).getGenericEvent();            
-                getGenericEventRoomOccupations(infoShowOccupations, startDay, endDay, weekStartYearMonthDay, weekEndYearMonthDay, genericEvent);
-            }        
-        }
+		if (this.intersectPeriods(day, endDay, infoPeriod)) {
 
-        return infoShowOccupations;
+		    boolean add = true;
+		    if ((roomOccupation.getFrequency().intValue() == EventSpaceOccupation.QUINZENAL)
+			    && (!EventSpaceOccupation.periodQuinzenalContainsWeekPeriod(period.getStartDate(), period.getEndDate(), 
+				    roomOccupation.getWeekOfQuinzenalStart().intValue(),
+				    roomOccupation.getDayOfWeek(), day, endDay, null))) {
+			add = false;
+		    }
+		    if (roomOccupation.getFrequency().intValue() == EventSpaceOccupation.SEMANAL) {
+			Calendar dayOfLesson = Calendar.getInstance();
+			dayOfLesson.setTimeInMillis(day.getTimeInMillis());
+			dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana().intValue() - Calendar.MONDAY);
+			if (!this.intersectPeriods(dayOfLesson, dayOfLesson, infoPeriod)) {
+			    add = false;
+			}
+		    }
+		    if (add) {
+			Shift shift = aula.getShift();
+			if (shift == null) {
+			    continue;
+			}
+			infoShowOccupations.add(InfoLesson.newInfoFromDomain(aula));
+		    }
+		}
+	    }
+	}
+
+	final Date startDate = startDay.getTime();
+	final Date endDate = endDay.getTime();
+
+	final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromDateFields(startDate);
+	final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromDateFields(endDate).minusDays(1);
+
+	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {            
+
+	    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {                
+		final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();                                   
+		getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, writtenEvaluation);
+	    }
+
+	    if(roomOccupation.isGenericEventSpaceOccupation()) {            
+		final GenericEvent genericEvent = ((GenericEventSpaceOccupation)roomOccupation).getGenericEvent();            
+		getGenericEventRoomOccupations(infoShowOccupations, startDay, endDay, weekStartYearMonthDay, weekEndYearMonthDay, genericEvent);
+	    }        
+	}
+
+	return infoShowOccupations;
     }
 
-    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations, final Date startDate, final Date endDate, final WrittenEvaluation writtenEvaluation) {
+    private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations, final YearMonthDay weekStartYearMonthDay,
+	    final YearMonthDay weekEndYearMonthDay, final WrittenEvaluation writtenEvaluation) {
+
 	if (writtenEvaluation != null) {
-	    final Date evaluationDate = writtenEvaluation.getDayDate();
-	    if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
-	        if (writtenEvaluation instanceof Exam) {
-	            final Exam exam = (Exam) writtenEvaluation;
-	            infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-	        } else if (writtenEvaluation instanceof WrittenTest) {
-	            final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
-	            infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
-	        }
+
+	    final YearMonthDay evaluationDate = writtenEvaluation.getDayDateYearMonthDay();
+	    if (!evaluationDate.isBefore(weekStartYearMonthDay) && !evaluationDate.isAfter(weekEndYearMonthDay)) {
+
+		if (writtenEvaluation instanceof Exam) {
+		    final Exam exam = (Exam) writtenEvaluation;
+		    infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+
+		} else if (writtenEvaluation instanceof WrittenTest) {
+		    final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
+		    infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+		}
 	    }                
 	}
     }
@@ -151,10 +156,10 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
     private void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations, Calendar startDay,
 	    Calendar endDay, final YearMonthDay weekStartYearMonthDay,
 	    final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
-	
+
 	if (genericEvent != null) {	    
 	    if(genericEvent.getOccupationPeriod().nestedOccupationPeriodsIntersectDates(startDay, endDay)) {
-		
+
 		List<Interval> genericEventIntervals = genericEvent.getGenericEventIntervals(weekStartYearMonthDay, weekEndYearMonthDay);
 		TimeOfDay eightAM = new TimeOfDay(8, 0, 0, 0);
 
@@ -208,54 +213,54 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
     }
 
     private boolean intersectPeriods(Calendar startDate, Calendar endDate, InfoPeriod secondPeriod) {
-        while (secondPeriod != null) {
-            if (CalendarUtil.intersectDates(startDate, endDate, secondPeriod
-                    .getStartDate(), secondPeriod.getEndDate())) {
-                return true;
-            }
-            secondPeriod = secondPeriod.getNextPeriod();
-        }
-        return false;
+	while (secondPeriod != null) {
+	    if (CalendarUtil.intersectDates(startDate, endDate, secondPeriod
+		    .getStartDate(), secondPeriod.getEndDate())) {
+		return true;
+	    }
+	    secondPeriod = secondPeriod.getNextPeriod();
+	}
+	return false;
     }
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws FenixServiceException {
-            int semester = executionPeriod.getSemester().intValue();
+	int semester = executionPeriod.getSemester().intValue();
 
-            String year = executionPeriod.getExecutionYear().getYear();
-            List<ExecutionDegree> executionDegreesList = ExecutionDegree.getAllByExecutionYear(year);
-            ExecutionDegree executionDegree = executionDegreesList.get(0);
+	String year = executionPeriod.getExecutionYear().getYear();
+	List<ExecutionDegree> executionDegreesList = ExecutionDegree.getAllByExecutionYear(year);
+	ExecutionDegree executionDegree = executionDegreesList.get(0);
 
-            Calendar startSeason1 = null;
-            Calendar endSeason2 = null;
-            if (semester == 1) {
-                startSeason1 = executionDegree.getPeriodLessonsFirstSemester().getStartDate();
-                endSeason2 = executionDegree.getPeriodLessonsFirstSemester().getEndDateOfComposite();
-            } else {
-                startSeason1 = executionDegree.getPeriodLessonsSecondSemester().getStartDate();
-                endSeason2 = executionDegree.getPeriodLessonsSecondSemester().getEndDateOfComposite();
-            }
+	Calendar startSeason1 = null;
+	Calendar endSeason2 = null;
+	if (semester == 1) {
+	    startSeason1 = executionDegree.getPeriodLessonsFirstSemester().getStartDate();
+	    endSeason2 = executionDegree.getPeriodLessonsFirstSemester().getEndDateOfComposite();
+	} else {
+	    startSeason1 = executionDegree.getPeriodLessonsSecondSemester().getStartDate();
+	    endSeason2 = executionDegree.getPeriodLessonsSecondSemester().getEndDateOfComposite();
+	}
 
-            for (int i = 1; i < executionDegreesList.size(); i++) {
-                executionDegree = (ExecutionDegree) executionDegreesList.get(i);
-                Calendar startLessons;
-                Calendar endLessons;
-                if (semester == 1) {
-                    startLessons = executionDegree.getPeriodLessonsFirstSemester().getStartDate();
-                    endLessons = executionDegree.getPeriodLessonsFirstSemester().getEndDateOfComposite();
-                } else {
-                    startLessons = executionDegree.getPeriodLessonsSecondSemester().getStartDate();
-                    endLessons = executionDegree.getPeriodLessonsSecondSemester()
-                            .getEndDateOfComposite();
-                }
-                if (startLessons.before(startSeason1)) {
-                    startSeason1 = startLessons;
-                }
-                if (endLessons.after(endSeason2)) {
-                    endSeason2 = endLessons;
-                }
+	for (int i = 1; i < executionDegreesList.size(); i++) {
+	    executionDegree = (ExecutionDegree) executionDegreesList.get(i);
+	    Calendar startLessons;
+	    Calendar endLessons;
+	    if (semester == 1) {
+		startLessons = executionDegree.getPeriodLessonsFirstSemester().getStartDate();
+		endLessons = executionDegree.getPeriodLessonsFirstSemester().getEndDateOfComposite();
+	    } else {
+		startLessons = executionDegree.getPeriodLessonsSecondSemester().getStartDate();
+		endLessons = executionDegree.getPeriodLessonsSecondSemester()
+		.getEndDateOfComposite();
+	    }
+	    if (startLessons.before(startSeason1)) {
+		startSeason1 = startLessons;
+	    }
+	    if (endLessons.after(endSeason2)) {
+		endSeason2 = endLessons;
+	    }
 
-            }
-            return new InfoPeriod(startSeason1, endSeason2);
+	}
+	return new InfoPeriod(startSeason1, endSeason2);
     }
 
 }
