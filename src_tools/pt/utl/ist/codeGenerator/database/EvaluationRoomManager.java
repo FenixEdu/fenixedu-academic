@@ -3,13 +3,12 @@ package pt.utl.ist.codeGenerator.database;
 import java.util.Set;
 import java.util.Stack;
 
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
-public class EvaluationRoomManager extends Stack<OldRoom> {
+public class EvaluationRoomManager extends Stack<Room> {
 
     private final DateTime startDateTime;
     private final DateTime endDateTime;
@@ -18,7 +17,7 @@ public class EvaluationRoomManager extends Stack<OldRoom> {
 
     private DateTime nextDateTime;
 
-    public EvaluationRoomManager(final DateTime startDateTime, final DateTime endDateTime, final int evaluationDurationInMinutes, Set<OldRoom> oldRooms) {
+    public EvaluationRoomManager(final DateTime startDateTime, final DateTime endDateTime, final int evaluationDurationInMinutes, Set<Room> oldRooms) {
 	this.startDateTime = startDateTime.withField(DateTimeFieldType.hourOfDay(), 8);
 	this.endDateTime = endDateTime.withField(DateTimeFieldType.hourOfDay(), 20);
 	this.nextDateTime = startDateTime;
@@ -42,7 +41,7 @@ public class EvaluationRoomManager extends Stack<OldRoom> {
 	return nextDateTime;
     }
 
-    public OldRoom getNextOldRoom() {
+    public Room getNextOldRoom() {
 	return peek();
     }
 

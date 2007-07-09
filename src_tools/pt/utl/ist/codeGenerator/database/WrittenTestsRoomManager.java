@@ -6,12 +6,11 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 import org.joda.time.DateTime;
 
-public class WrittenTestsRoomManager extends HashSet<OldRoom> {
+public class WrittenTestsRoomManager extends HashSet<Room> {
 
     private final Map<ExecutionPeriod, EvaluationRoomManager> evaluationRoomManagerMap = new HashMap<ExecutionPeriod, EvaluationRoomManager>();
 
@@ -25,19 +24,19 @@ public class WrittenTestsRoomManager extends HashSet<OldRoom> {
 	}
 
         DateTime dateTime;
-        OldRoom oldRoom;
+        Room room;
         OccupationPeriod occupationPeriod;
         do {
             dateTime = evaluationRoomManager.getNextDateTime();
-            oldRoom = evaluationRoomManager.getNextOldRoom();
+            room = evaluationRoomManager.getNextOldRoom();
             occupationPeriod = new OccupationPeriod(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay());
-        } while (!oldRoom.isFree(occupationPeriod, dateTime.toCalendar(null), dateTime.plusMinutes(120).getHourOfDay() == 0 ? dateTime.plusMinutes(119).toCalendar(null) : dateTime.plusMinutes(120).toCalendar(null), 
-        	new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE));
+        } while ( false /*!room.isFree(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), dateTime.toCalendar(null), dateTime.plusMinutes(120).getHourOfDay() == 0 ? dateTime.plusMinutes(119).toCalendar(null) : dateTime.plusMinutes(120).toCalendar(null), 
+        	new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE)*/);
 
         return dateTime;
     }
 
-    public OldRoom getNextOldRoom(final ExecutionPeriod executionPeriod) {
+    public Room getNextOldRoom(final ExecutionPeriod executionPeriod) {
 	final EvaluationRoomManager evaluationRoomManager = evaluationRoomManagerMap.get(executionPeriod);
 	return evaluationRoomManager.getNextOldRoom();
     }

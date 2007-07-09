@@ -2,10 +2,10 @@ package pt.utl.ist.codeGenerator.database;
 
 import java.util.Stack;
 
-import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-public class LessonRoomManager extends Stack<OldRoom> {
+public class LessonRoomManager extends Stack<Room> {
 
     private int nextWeekDay = 2;
 
@@ -32,7 +32,7 @@ public class LessonRoomManager extends Stack<OldRoom> {
         return nextHourMinuteSecond;
     }
 
-    public OldRoom getNextOldRoom() {
+    public Room getNextOldRoom() {
 	return peek();
     }
 

@@ -404,7 +404,7 @@ public class CreateTestData {
     private static void createInstitutionalUnit() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
         final Unit institutionUnit = Unit.createNewUnit(
-        	"Escola do Galo", null, "Fenix", new YearMonthDay().minusYears(10), null, null, null, null, null, Boolean.TRUE);
+        	"Escola do Galo", null, "Fenix", new YearMonthDay().minusYears(10), null, null, null, null, null, Boolean.TRUE, null);
         rootDomainObject.setInstitutionUnit(institutionUnit);
         institutionUnit.setType(PartyTypeEnum.SCHOOL);
     }
@@ -416,7 +416,7 @@ public class CreateTestData {
 		"Secretaria Academica " + someNumber, Integer.valueOf(2001 + someNumber), "SA" + someNumber, new YearMonthDay().minusMonths(1), null,
 		RootDomainObject.getInstance().getInstitutionUnit(),
 		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null,
-		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree, false);
+		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree, false, null);
 
         final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(unit);
         new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
@@ -436,14 +436,14 @@ public class CreateTestData {
 	return DepartmentUnit.createNewInternalDepartmentUnit(
 		"Department Name " + someNumber, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
 		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
-		null, department, null, Boolean.FALSE);
+		null, department, null, Boolean.FALSE, null);
     }
 
     private static DegreeUnit createNewDegreeUnit(int i, Degree degree) {
 	return DegreeUnit.createNewInternalDegreeUnit(
 		degree.getName() + " " + i, Integer.valueOf(5020 + i), degree.getSigla() + (1000 + i), new YearMonthDay().minusYears(1), null,
 		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
-		null, degree, null, Boolean.FALSE);
+		null, degree, null, Boolean.FALSE, null);
     }
 
     private static void createAdminPostingRules(AdministrativeOfficeServiceAgreementTemplate agreementTemplate) {
