@@ -21,7 +21,7 @@
 		</p>
 	</logic:messagesPresent>
 	
-	<ul class="mvert15">
+	<ul class="mtop15">
 		<li>
 			<html:link page="/vehicleManagement.do?method=prepare">		
 				<bean:message bundle="SOP_RESOURCES" key="label.back"/>

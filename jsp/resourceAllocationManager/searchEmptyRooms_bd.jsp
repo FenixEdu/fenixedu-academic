@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+
+<em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="title.search.empty.rooms"/></h2>
 
 <p>
@@ -13,7 +15,8 @@
 	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
     	<input alt="input.method" type="hidden" name="method" value="doSearch"/>
-   	<table cellspacing="0">
+    	
+   	<table class="tstyle5 thlight thright">
 <!--
 		<tr>
         	<td nowrap class="formTD"><bean:message key="property.executionPeriod"/></td>
@@ -25,8 +28,8 @@
 -->
        	<!-- added by rspl -->
 	    <tr>
-        	<td nowrap="nowrap" class="formTD"> De </td>
-            <td nowrap="nowrap">
+        	<th> De:</th>
+            <td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDay" maxlength="2" size="2" property="startDay"/>
 			   	/
 		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.startMonth" maxlength="2" size="2" property="startMonth"/>
@@ -41,8 +44,8 @@
 			</td>
       	</tr>
 	    <tr>
-        	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/></td>
-        	<td nowrap class="formTD">
+        	<th><bean:message key="property.aula.weekDay"/>:</th>
+        	<td>
      			<html:select bundle="HTMLALT_RESOURCES" property="weekDay"  size="1">
                 <!-- TODO : Change query to allow wildcards with weekdays (all weekdays)-->
                 	<option value="1" selected="selected"><!--  w3c Complient --></option>
@@ -51,8 +54,8 @@
            	</td>
        	</tr>                
         <tr>
-        	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.begining"/></td>
-            <td nowrap="nowrap">
+        	<th><bean:message key="property.aula.time.begining"/>:</th>
+            <td>
             	<html:select bundle="HTMLALT_RESOURCES" property="startHour"  size="1">
                 	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                     <html:options name="hours"/>
@@ -64,8 +67,8 @@
            	</td>
       	</tr>
         <tr>
-        	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.end"/></td>
-           	<td nowrap="nowrap">
+        	<th><bean:message key="property.aula.time.end"/>:</th>
+           	<td>
             	<html:select bundle="HTMLALT_RESOURCES" property="endHour" size="1">
                 	<option value="" selected="selected"><!--  w3c Complient --></option>                        
                   	<html:options name="hours"/>
@@ -77,15 +80,18 @@
           	</td> 
         </tr> 
         <tr>
-        	<td nowrap="nowrap" class="formTD"><bean:message key="property.room.capacity.normal"/>:</td>
-           	<td nowrap="nowrap" class="formTD"><html:text bundle="HTMLALT_RESOURCES" altKey="text.normalCapacity" property="normalCapacity" size="3" maxlength="4"/></td>
+        	<th><bean:message key="property.room.capacity.normal"/>:</th>
+           	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.normalCapacity" property="normalCapacity" size="3" maxlength="4"/></td>
        	</tr>
 	</table>
-<br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
-	<bean:message key="label.save"/>
-</html:submit>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton">
-	<bean:message key="label.clear"/>
-</html:reset>
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
+		<bean:message key="label.save"/>
+	</html:submit>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>
+</p>
+
 </html:form>

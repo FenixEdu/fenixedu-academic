@@ -8,11 +8,11 @@
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
-	<h:outputText value="<h2>#{bundleSOP['title.insert.comment']}</h2><br/>" escape="false"/>
+	<h:outputFormat value="<em>#{bundleSOP['link.writtenEvaluationManagement']}</em>" escape="false"/>
+	<h:outputText value="<h2>#{bundleSOP['title.insert.comment']}</h2>" escape="false"/>
 
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
-
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
@@ -20,16 +20,13 @@
 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-		<h:panelGrid styleClass="infoselected">
-			<h:outputText value="#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}" escape="false"/>
-			
-			<h:outputText value="#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}" escape="false"/>
-			
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}" escape="false"/>
-			
-			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b>" escape="false"/>
-		</h:panelGrid>
-		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="<div class='infoop2 mtop05'>" escape="false"/>
+			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}</p>" escape="false"/>
+			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}</p>" escape="false"/>
+			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</p>" escape="false"/>
+			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>
+
 
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[SOPEvaluationManagementBackingBean.errorMessage]}"/>
@@ -37,10 +34,9 @@
 
 		<h:panelGrid columns="1" border="0">
 			<h:outputText value="#{bundleSOP['label.comment']}:" escape="false"/>
-			<h:inputTextarea rows="2" cols="56" value="#{SOPEvaluationManagementBackingBean.comment}"/>
+			<h:inputTextarea rows="4" cols="60" value="#{SOPEvaluationManagementBackingBean.comment}"/>
 		</h:panelGrid>
 
-		<h:outputText value="<br/>" escape="false"/>
  		<h:commandButton alt="#{htmlAltBundle['commandButton.insert']}" 	styleClass="inputbutton"
 							value="#{bundleSOP['button.insert']}" 
 							action="#{SOPEvaluationManagementBackingBean.commentExecutionCourse}" 

@@ -27,7 +27,8 @@
 			<h2><bean:message key="label.create.vehicle.allocation" bundle="SOP_RESOURCES"/></h2>				
 			<fr:edit id="createVehicleAllocationBeanID" name="allocationBean" action="/vehicleManagement.do?method=createAllocation" schema="CreateVehicleAllocation">
 				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle1"/>		        
+					<fr:property name="classes" value="tstyle5 thlight thright"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
 				<fr:destination name="invalid" path="/vehicleManagement.do?method=prepareCreate"/>	
 				<fr:destination name="cancel" path="/vehicleManagement.do?method=prepare"/>						
@@ -42,7 +43,8 @@
 		<h2><bean:message key="label.edit.vehicle.allocation" bundle="SOP_RESOURCES"/></h2>		
 		<fr:edit id="vehicleAllocationEditID" name="vehicleAllocation" schema="EditVehicleAllocation" action="/vehicleManagement.do?method=prepare">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>		        
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="cancel" path="/vehicleManagement.do?method=prepare"/>			
 		</fr:edit>		

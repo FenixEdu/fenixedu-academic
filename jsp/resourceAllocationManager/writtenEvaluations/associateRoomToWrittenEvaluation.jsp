@@ -8,7 +8,8 @@
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
-	<h:outputText value="<h2>#{bundleSOP['written.evaluation.associate.rooms']}</h2><br/>" escape="false"/>
+	<h:outputFormat value="<em>#{bundleSOP['link.writtenEvaluationManagement']}</em>" escape="false"/>
+	<h:outputText value="<h2>#{bundleSOP['written.evaluation.associate.rooms']}</h2>" escape="false"/>
 
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
@@ -40,16 +41,17 @@
 		<h:outputText escape="false" value="<input alt='input.endHour' id='endHour' name='endHour' type='hidden' value='#{SOPEvaluationManagementBackingBean.endHour}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.endMinute' id='endMinute' name='endMinute' type='hidden' value='#{SOPEvaluationManagementBackingBean.endMinute}'/>"/>
 	
-		<h:panelGrid styleClass="infotable">
-			<h:outputText value="#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b>" escape="false"/>
-			<h:outputText value="#{bundleSOP['label.day']}: #{SOPEvaluationManagementBackingBean.selectedDateString}" escape="false"/>
-			<h:outputText value="#{bundleSOP['label.hours']}: #{SOPEvaluationManagementBackingBean.selectedBeginHourString} #{bundleSOP['label.at']} #{SOPEvaluationManagementBackingBean.selectedEndHourString}" escape="false"/>
-		</h:panelGrid>
-
-		<h:outputText value="<br/>" escape="false"/>
+		<h:outputText value="<div class='infoop2 mtop05'>" escape="false"/>
+			<h:outputText value="<p>#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b></p>" escape="false"/>
+			<h:outputText value="<p>#{bundleSOP['label.day']}: #{SOPEvaluationManagementBackingBean.selectedDateString}</p>" escape="false"/>
+			<h:outputText value="<p>#{bundleSOP['label.hours']}: #{SOPEvaluationManagementBackingBean.selectedBeginHourString} #{bundleSOP['label.at']} #{SOPEvaluationManagementBackingBean.selectedEndHourString}</p>" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>
+		
+		<h:outputText value="<p>" escape="false"/>
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
 
 		<h:panelGrid columns="2">
 			<h:outputText value="#{bundleSOP['written.evaluation.order.rooms.by']}: " escape="false"/>
@@ -59,10 +61,11 @@
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 
-		<h:outputText value="<br/>" escape="false"/>
+
 		<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.chosenRoomsIDs}" layout="pageDirection" >
 			<f:selectItems value="#{SOPEvaluationManagementBackingBean.roomsSelectItems}" />	
 		</h:selectManyCheckbox>
+
 
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.choose']}" action="#{SOPEvaluationManagementBackingBean.associateRoomToWrittenEvaluation}" styleClass="inputbutton" value="#{bundleSOP['button.choose']}"/>

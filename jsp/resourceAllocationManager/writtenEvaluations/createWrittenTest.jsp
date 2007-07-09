@@ -7,11 +7,13 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
-
-	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+	
+	<h:outputFormat value="<em>#{bundleSOP['link.writtenEvaluationManagement']}</em>" escape="false"/>
+	
+	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
 		<f:param value="#{bundle['label.written.test']}" />
 	</h:outputFormat>
-	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
 		<f:param value="#{bundle['label.exam']}" />
 	</h:outputFormat>
 
@@ -28,13 +30,10 @@
 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-		<h:panelGrid styleClass="infoselected">
-			<h:outputText value="#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}" escape="false"/>
-			
-			<h:outputText value="#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}" escape="false"/>
-			
-			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}" escape="false"/>
-			
+		<h:outputText value="<div class='infoop2 mtop05'>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b><br/>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b><br/>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b>#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.courses']}: " escape="false"/>
 			<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
 				<h:column>
@@ -42,14 +41,13 @@
 				</h:column>
 			</h:dataTable>
 			<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b>" escape="false"/>		
-			
-		</h:panelGrid>
-		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>
 	
-	
-		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
-			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
-		<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
+		<h:outputText value="<p class='mvert15'>" escape="false"/>
+			<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
+				value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
+			<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
 		
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:panelGroup>
@@ -109,36 +107,43 @@
 			</h:panelGroup>
 		</h:panelGrid>
 
-		<h:outputText value="<br/>" escape="false"/>
-		<h:panelGrid columns="1">
+
+		<h:outputText value="<p class='mtop15'>" escape="false"/>
 			<h:commandLink action="associateRoomToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associateRooms']}" escape="false"/>
 				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
 			</h:commandLink>
+		<h:outputText value="<br/>" escape="false"/>
 			<h:commandLink action="associateExecutionCourseToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associate']}" escape="false"/>
 				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
 			</h:commandLink>
-		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText value="<br/>" escape="false"/>
-		<h:outputFormat value="<i>#{bundleSOP['lable.associated.rooms']}:</i> <br/><b>#{SOPEvaluationManagementBackingBean.associatedRooms}</b><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+
+		<h:outputText value="<p class='mvert15'>" escape="false"/>
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
 			<f:param value="#{bundle['label.written.test']}"/>
 		</h:outputFormat>
-		<h:outputFormat value="<i>#{bundleSOP['lable.associated.rooms']}:</i> <br/><b>#{SOPEvaluationManagementBackingBean.associatedRooms}</b><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p class='mvert15'>" escape="false"/>
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.rooms']}:</b> <br/><em>#{SOPEvaluationManagementBackingBean.associatedRooms}</em><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
+			<f:param value="#{bundle['label.exam']}"/>
+		</h:outputFormat>
+		<h:outputText value="</p>" escape="false"/>
+
+
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
+			<f:param value="#{bundle['label.written.test']}"/>
+		</h:outputFormat>
+		<h:outputFormat value="<b>#{bundleSOP['lable.associated.curricular.courses']}:</b>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
 			<f:param value="#{bundle['label.exam']}"/>
 		</h:outputFormat>
 
-		<h:outputText value="<br/>" escape="false"/>
-		<h:outputFormat value="<i>#{bundleSOP['lable.associated.curricular.courses']}:</i><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
-			<f:param value="#{bundle['label.written.test']}"/>
-		</h:outputFormat>
-		<h:outputFormat value="<i>#{bundleSOP['lable.associated.curricular.courses']}:</i><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}" escape="false">
-			<f:param value="#{bundle['label.exam']}"/>
-		</h:outputFormat>
 		<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
 			<h:column>
-				<h:outputText value="<b>#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}</b> " escape="false"/>
+				<h:outputText value="#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}" escape="false"/>
 				<h:commandLink action="#{SOPEvaluationManagementBackingBean.disassociateExecutionCourse}">
 					<h:outputText value="#{bundleSOP['property.exam.dissociate']}" escape="false"/>
 					<f:param name="executionCourseToDisassociate" value="#{associatedExecutionCourseID}" />

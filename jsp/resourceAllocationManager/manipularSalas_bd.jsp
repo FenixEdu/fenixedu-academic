@@ -12,35 +12,42 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_CapacityNormal" property="selectRoomCriteria_CapacityNormal" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityNormal")%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_CapacityExame" property="selectRoomCriteria_CapacityExame" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityExame")%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= ""+request.getAttribute("executionPeriodId")%>"/>	
+	
+<em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="manipularSalas.titleSuccess"/></h2>
-  <br/>
-  <span class="error"><!-- Error messages go here --><html:errors /></span>
-  <logic:present name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
-    <table border="0" cellpadding="5">
-      <%! int i; %>
-      <% i = 0; %>
-      <logic:iterate id="infoRoom" name="<%= SessionConstants.SELECTED_ROOMS%>">
-        <tr align="center">
-          <td>
-            <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.index" property="index" value="<%= (new Integer(i)).toString()%>"/>
-          </td>
-          <td><bean:write name="infoRoom" property="nome"/></td>
-        </tr>
-        <% i++; %>
-      </logic:iterate>
-    </table>
-    <br/>
-    
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.editarSalaOperation"/></html:submit>
-  </logic:present>
-  <logic:notPresent name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
-    <table>
-      <tr>
-        <td>
-          <span class="error"><!-- Error messages go here --><bean:message key="manipularSalas.titleInsuccess"/></span>
-        </td>
-      </tr>
-    </table>
-  </logic:notPresent>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+<logic:present name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
+	<table class="tstyle2">
+	<%! int i; %>
+	<% i = 0; %>
+		<logic:iterate id="infoRoom" name="<%= SessionConstants.SELECTED_ROOMS%>">
+			<tr align="center">
+				<td>
+					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.index" property="index" value="<%= (new Integer(i)).toString()%>"/>
+				</td>
+				<td>
+					<bean:write name="infoRoom" property="nome"/>
+				</td>
+			</tr>
+			<% i++; %>
+		</logic:iterate>
+	</table>
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.editarSalaOperation"/></html:submit>
+</p>
+
+</logic:present>
+
+<logic:notPresent name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
+<p>
+	<span class="error"><!-- Error messages go here --><bean:message key="manipularSalas.titleInsuccess"/></span>
+</p>
+</logic:notPresent>
+
 </html:form>

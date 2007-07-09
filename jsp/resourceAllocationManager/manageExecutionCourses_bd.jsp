@@ -6,41 +6,45 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="java.util.List"%>
+
+<em><bean:message key="label.manager.executionCourses"/></em>
 <h2>Gestão de Disciplinas</h2>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:form action="/manageExecutionCourses" focus="executionDegreeOID">
-<table border="0" cellspacing="0" cellpadding="0">
+
+		<div class="infoop3">
+			<p class="mvert025">Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da disciplina.</p>
+			<p class="mvert025">Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong></p>
+			<p class="mvert025">Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong></p>
+		</div>
+
+<table class="tstyle5 thlight thright">
 	<tr>
-		<td colspan="2" class="infoop">
-			Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da disciplina.<br />
-			Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong><br />
-			Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong><br />
-		</td>
-	</tr>
-	<tr><td colspan="2"><br /><br /></td></tr>
-  <tr>
-    <td nowrap="nowrap">
-    	<bean:message key="property.executionPeriod"/>:
-    </td>
-    <td nowrap="nowrap">
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodOID" property="executionPeriodOID"
-					 size="1"
-					 onchange="this.form.method.value='changeExecutionPeriod';this.form.page.value='0';this.form.submit();">
-			<html:options	property="value" 
-     						labelProperty="label" 
-							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
-		</html:select>
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
-    </td>
+		<th>
+	    	<bean:message key="property.executionPeriod"/>:
+	    </th>
+	    <td>
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodOID" property="executionPeriodOID"
+						 size="1"
+						 onchange="this.form.method.value='changeExecutionPeriod';this.form.page.value='0';this.form.submit();">
+				<html:options	property="value" 
+	     						labelProperty="label" 
+								collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
+			</html:select>
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.submit"/>
+			</html:submit>
+	    </td>
   </tr>
   <tr>
-    <td nowrap="nowrap">
+    <th>
     	<bean:message key="property.executionDegree"/>:
-    </td>
-    <td nowrap="nowrap">
+    </th>
+    <td>
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1">
 			<html:options	property="value" 
      						labelProperty="label" 
@@ -49,10 +53,10 @@
     </td>
   </tr>
   <tr>
-    <td nowrap="nowrap">
+    <th>
     	<bean:message key="property.curricularYear"/>:
-    </td>
-    <td nowrap="nowrap">
+    </th>
+    <td>
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYearOID" property="curricularYearOID" size="1">
 			<html:options	property="value" 
      						labelProperty="label" 
@@ -61,20 +65,25 @@
     </td>
   </tr>
   <tr>
-    <td nowrap="nowrap">
+    <th>
     	<bean:message key="property.executionCourse.name"/>:
-    </td>
-    <td nowrap="nowrap">
+    </th>
+    <td>
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.executionCourseName" property="executionCourseName" size="30"/>
     </td>
   </tr>
 </table>
-<br />
+
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-<bean:message key="label.choose"/>
-</html:submit>
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="label.choose"/>
+	</html:submit>
+</p>
+
 </html:form>    
-<br />
+
+
 <jsp:include page="listExecutionCourses.jsp"/>

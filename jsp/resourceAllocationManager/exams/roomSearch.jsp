@@ -7,13 +7,19 @@
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+
+	<em><bean:message key="link.writtenEvaluationManagement"/></em>
 	<h2><bean:message key="link.exams.searchAvailableRooms"/></h2>
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
-	<table>
+
+	<p>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	</p>
+
+	<table class="tstyle5 thlight thright">
 		<tr>
-			<td>
+			<th>
 			   	<bean:message key="property.exam.date"/>:
-			</td>
+			</th>
 			<td>
    				<html:text bundle="HTMLALT_RESOURCES" altKey="text.day" maxlength="2" size="2" property="day"/>
 			   	/
@@ -24,9 +30,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
 			    <bean:message key="property.exam.beginning"/>:
-			</td>
+			</th>
 			<td>
 		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginningHour" maxlength="2" size="2" property="beginningHour"/>
    				:
@@ -34,9 +40,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
     			<bean:message key="property.exam.end"/>:
-			</td>
+			</th>
 			<td>
 			   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.endHour" maxlength="2" size="2" property="endHour"/>
 			   	:
@@ -44,27 +50,28 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
     			<bean:message key="property.room.capacity.normal"/>:			
-			</td>
+			</th>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.normal" maxlength="3" size="3" property="normal"/> (facultativo)
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
     			<bean:message key="property.room.capacity.exame"/>:
-			</td>
+			</th>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.exam" maxlength="3" size="3" property="exam"/> (facultativo)
 			</td>
 		</tr>
 	</table>
-	<br/>
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="lable.choose"/>
-	</html:submit>
+
+	<p>	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="lable.choose"/>
+		</html:submit>
+	</p>
 	
 <%--
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" value="Cancelar" styleClass="inputbutton">

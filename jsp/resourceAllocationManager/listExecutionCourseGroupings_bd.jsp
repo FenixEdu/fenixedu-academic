@@ -7,6 +7,7 @@
 <html:form action="/listExecutionCourseGroupings">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionPeriod"/>
 
+	<em><bean:message key="label.manager.executionCourses"/></em>
 	<h2><bean:message key="label.execution.course.groupings" bundle="SOP_RESOURCES"/></h2>
 
 	<p class="mtop2">
@@ -23,8 +24,11 @@
 </html:form>
 
 <logic:present name="executionPeriod">
-	<html:link page="/listExecutionCourseGroupings.do?method=downloadExecutionCourseGroupings"
-			paramId="executionPeriodID" paramName="executionPeriod" paramProperty="idInternal">
-		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"/>
-	</html:link>
+	<p>
+		<html:link page="/listExecutionCourseGroupings.do?method=downloadExecutionCourseGroupings"
+				paramId="executionPeriodID" paramName="executionPeriod" paramProperty="idInternal">
+			<bean:message key="link.downloadExcelSpreadSheet"/>
+			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"/>
+		</html:link>
+	</p>
 </logic:present>

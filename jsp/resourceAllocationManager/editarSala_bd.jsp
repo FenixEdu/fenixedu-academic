@@ -4,9 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
-<center><font color='#034D7A' size='5'> <b> <bean:message key="title.editarSala"/> </b> </font></center>
-<br/>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<em><bean:message key="title.manage.rooms"/></em>
+<h2><bean:message key="title.editarSala"/></h2>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:form action="/editarSala">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_Name" property="selectRoomCriteria_Name" value="<%= ""+request.getAttribute("selectRoomCriteria_Name")%>"/>            
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_Building" property="selectRoomCriteria_Building" value="<%= ""+request.getAttribute("selectRoomCriteria_Building")%>"/>
@@ -16,23 +20,21 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_CapacityExame" property="selectRoomCriteria_CapacityExame" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityExame")%>"/>
 	<html:hidden alt="<%= SessionConstants.SELECTED_ROOM_INDEX%>" property="<%= SessionConstants.SELECTED_ROOM_INDEX%>" value="<%= ""+request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX)%>"/>	
 	
-  <table align="center" cellspacing="10">    
+  <table class="tstyle5 thlight thright">
     <tr>
-      <td align="right" height="40"><bean:message key="sala.normalCapacity"/></td>
-      <td align="left" height="40"><html:text bundle="HTMLALT_RESOURCES" altKey="text.capacityNormal" property="capacityNormal" size="3" maxlength="4"/></td>
+      <th><bean:message key="sala.normalCapacity"/></th>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.capacityNormal" property="capacityNormal" size="3" maxlength="4"/></td>
     </tr>
     <tr>
-      <td align="right" height="40"><bean:message key="sala.examinationCapacity"/></td>
-      <td align="left" height="40"><html:text bundle="HTMLALT_RESOURCES" altKey="text.capacityExame" property="capacityExame" size="3" maxlength="4"/></td>
+      <th><bean:message key="sala.examinationCapacity"/></th>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.capacityExame" property="capacityExame" size="3" maxlength="4"/></td>
     </tr>
   </table>
-  <br/>
-  <table align="center">
-    <tr align="center">
-      <td><html:submit>Guardar</html:submit></td>
-      <td width="20"></td>
-      <td><html:reset>Limpar</html:reset></td>
-    </tr>
-  </table>
+
+<p>
+	<html:submit>Guardar</html:submit>
+	<html:reset>Limpar</html:reset>
+</p>
+
 </html:form>
 

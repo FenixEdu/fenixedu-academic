@@ -4,6 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="title.chooseRooms"/></h2>
 
 <html:errors/>

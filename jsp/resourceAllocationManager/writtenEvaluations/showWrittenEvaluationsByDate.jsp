@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
+<em><bean:message key="link.writtenEvaluationManagement"/></em>
 <h2><bean:message key="link.written.evaluations.search.by.date"/></h2>
 
 <html:form action="/searchWrittenEvaluationsByDate" focus="day">
@@ -14,13 +15,15 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= request.getAttribute("executionPeriodOID").toString() %>"/>
 
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<p>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	</p>
 
-	<table>
+	<table class="tstyle5 thlight thright">
 		<tr>
-			<td>
+			<th>
 			   	<bean:message key="property.exam.date"/>:
-			</td>
+			</th>
 			<td>
    				<html:text bundle="HTMLALT_RESOURCES" altKey="text.day" maxlength="2" size="2" property="day"/>
 			   	/
@@ -31,9 +34,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
 			    <bean:message key="property.exam.beginning"/>:
-			</td>
+			</th>
 			<td>
 		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginningHour" maxlength="2" size="2" property="beginningHour"/>
    				:
@@ -42,9 +45,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
     			<bean:message key="property.exam.end"/>:
-			</td>
+			</th>
 			<td>
 			   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.endHour" maxlength="2" size="2" property="endHour"/>
 			   	:
@@ -53,16 +56,16 @@
 			</td>
 		</tr>
 	</table>
-	<br/>
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="lable.choose"/>
-	</html:submit>
+
+	<p>	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="lable.choose"/>
+		</html:submit>
+	</p>
 
 </html:form>
 
 <logic:present name="writtenEvaluations">
-	<br/>
 	<table width="100%" border="1">
 		<tr>
 			<th class="listClasses-header"><bean:message key="lable.execution.course"/></th>

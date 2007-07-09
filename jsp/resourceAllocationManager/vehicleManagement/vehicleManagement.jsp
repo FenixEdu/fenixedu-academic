@@ -33,13 +33,13 @@
 			</html:link>
 		</li>
 	</ul>
-			
+		
 	<p class="mtop2"><strong><bean:message key="label.active.vehicle.allocations" bundle="SOP_RESOURCES"/></strong></p>		
 	<logic:notEmpty name="activeAllocations">
 		<fr:view schema="SeeVehicleAllocation" name="activeAllocations">	
 			<fr:layout name="tabular">
 			      			
-	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
 	   
 	   			<fr:property name="link(view)" value="/vehicleManagement.do?method=seeVehicleAllocation"/>
 	            <fr:property name="param(view)" value="idInternal/allocationID"/>
@@ -62,16 +62,17 @@
 	    	</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 	<logic:empty name="activeAllocations">
-		<em><bean:message key="label.empty.active.vehicle.allocations" bundle="SOP_RESOURCES"/></em>	
+		<p><em><bean:message key="label.empty.active.vehicle.allocations" bundle="SOP_RESOURCES"/></em></p>
 	</logic:empty>		
 			
-	<p class="mtop1"><strong><bean:message key="label.other.vehicle.allocations" bundle="SOP_RESOURCES"/></strong></p>
+	<p class="mtop15"><strong><bean:message key="label.other.vehicle.allocations" bundle="SOP_RESOURCES"/></strong></p>
 	<logic:notEmpty name="futureAllocations">
 		<fr:view schema="SeeVehicleAllocation" name="futureAllocations">
 			<fr:layout name="tabular">
 			      			
-	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
 	   
 	      		<fr:property name="link(view)" value="/vehicleManagement.do?method=seeVehicleAllocation"/>
 	            <fr:property name="param(view)" value="idInternal/allocationID"/>
@@ -94,8 +95,9 @@
 	    	</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 	<logic:empty name="futureAllocations">
-		<em><bean:message key="label.empty.future.vehicle.allocations" bundle="SOP_RESOURCES"/></em>	
+		<p><em><bean:message key="label.empty.future.vehicle.allocations" bundle="SOP_RESOURCES"/></em></p>
 	</logic:empty>	
 		
 </logic:present>	
