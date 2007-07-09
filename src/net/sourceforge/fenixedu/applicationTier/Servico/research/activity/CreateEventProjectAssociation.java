@@ -15,7 +15,7 @@ public class CreateEventProjectAssociation extends Service  {
     /**
      * Service responsible for creating an association between a project and an event
      * @param bean - Bean responsible for carrying the information from the presentation to the services layer
-     * @param eventId - the identifier of the Event for whom the association is being created 
+     * @param eventId - the identifier of the ResearchEvent for whom the association is being created 
      * @return the newly created ProjectEventAssociation
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.
@@ -37,7 +37,7 @@ public class CreateEventProjectAssociation extends Service  {
     /**
      * Service responsible for creating an association between a project and an event
      * @param bean - Bean responsible for carrying the information from the presentation to the services layer
-     * @param eventId - the identifier of the Event for whom the association is being created 
+     * @param eventId - the identifier of the ResearchEvent for whom the association is being created 
      * @return the newly created ProjectEventAssociation
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.

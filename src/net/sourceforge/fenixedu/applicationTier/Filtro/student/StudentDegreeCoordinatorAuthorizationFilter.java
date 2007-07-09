@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -65,7 +65,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
         for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
             Registration registration = (Registration) studentsIterator.next();
 
-            Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+            FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
 
             if (group != null) {
                 ExecutionDegree executionDegree = group.getExecutionDegree();

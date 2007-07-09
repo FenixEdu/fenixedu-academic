@@ -145,7 +145,7 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.Event"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="5"/>
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -171,7 +171,7 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.Event"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -235,7 +235,7 @@
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.Event"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -286,7 +286,7 @@ extends="eventCreation">
 	<slot name="nickname"/>
 </schema>
 
-<schema name="researchEventParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="researchEventParticipation.summary" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
@@ -385,7 +385,7 @@ extends="eventCreation">
 	<slot name="role"/>
 </schema>
 
-<schema name="Event.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="Event.view-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name" key="label.event.name" layout="link">
 		<property name="linkFormat" value="/showEvents.do?method=showEvent&amp;eventId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
@@ -404,7 +404,7 @@ extends="eventCreation">
 	</slot>
 </schema>
 
-<schema name="showEventName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="showEventName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name"/>
 </schema>
 
@@ -597,7 +597,7 @@ extends="eventCreation">
 	<slot name="participation.role"/>
 </schema>
 
-<schema name="Event.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="Event.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name" key="label.event.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
 	</slot>
@@ -804,7 +804,7 @@ extends="eventCreation">
 <schema name="country.name" type="net.sourceforge.fenixedu.domain.Country">
 	<slot name="name"/>
 </schema>
-<schema name="event.name" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="event.name" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name"/>
 </schema>
 
@@ -1142,7 +1142,7 @@ extends="eventCreation">
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.Event"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -1738,7 +1738,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.Event"/>				
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent"/>				
 		<property name="minChars" value="3"/>
 	</slot>
 </schema>
@@ -2680,11 +2680,11 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 </schema>
 
-<schema name="presentEventName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="presentEventName" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name"/>
 </schema>
 
-<schema name="presentEvent" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+<schema name="presentEvent" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name"/>
 	<slot name="url">
 		<property name="link" value="true"/>

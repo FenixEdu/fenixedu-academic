@@ -10,7 +10,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,7 +27,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service
     public List run(Integer groupOID) throws ExcepcaoPersistencia {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-	final Group group = rootDomainObject.readGroupByOID(groupOID);
+	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 
 	if (group != null && group.getExecutionDegree() != null) {
 	    final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling()

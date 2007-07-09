@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -16,9 +16,9 @@ public class EventEditionsForEventProvider implements DataProvider {
     }
 
     public Object provide(Object source, Object currentValue) {
-	Event event;
+	ResearchEvent event;
 	try {
-		event = (Event) MethodUtils.invokeMethod(source, "getEvent", null);
+		event = (ResearchEvent) MethodUtils.invokeMethod(source, "getEvent", null);
 	}catch(Exception e) {
 		throw new RuntimeException(e);
 	}

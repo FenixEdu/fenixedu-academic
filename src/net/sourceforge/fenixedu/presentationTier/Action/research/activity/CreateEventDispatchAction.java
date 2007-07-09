@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -86,9 +86,9 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
         if(bean == null)
     		return prepareEventSearch(mapping, form, request, response);
         
-        Event event = null;
+        ResearchEvent event = null;
         try {
-        	event = (Event) executeService(request, "CreateResearchEvent", new Object[] {bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl()} );
+        	event = (ResearchEvent) executeService(request, "CreateResearchEvent", new Object[] {bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl()} );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person});
         } catch (DomainException e) {
         	addActionMessage(request, e.getMessage(), null);

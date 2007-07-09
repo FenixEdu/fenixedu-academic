@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
@@ -576,23 +576,23 @@ public abstract class Party extends Party_Base {
 	return getEventParticipations(null);
     }
 
-    public Set<Event> getAssociatedEvents(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-	Set<Event> events = new HashSet<Event>();
+    public Set<ResearchEvent> getAssociatedEvents(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+	Set<ResearchEvent> events = new HashSet<ResearchEvent>();
 	for (EventParticipation participation : getEventParticipations(type, begin, end)) {
 	    events.add(participation.getEvent());
 	}
 	return events;
     }
 
-    public Set<Event> getAssociatedEvents(ExecutionYear begin, ExecutionYear end) {
+    public Set<ResearchEvent> getAssociatedEvents(ExecutionYear begin, ExecutionYear end) {
 	return getAssociatedEvents(null, begin, end);
     }
 
-    public Set<Event> getAssociatedEvents(ScopeType type) {
+    public Set<ResearchEvent> getAssociatedEvents(ScopeType type) {
 	return getAssociatedEvents(type, null, null);
     }
 
-    public Set<Event> getAssociatedEvents() {
+    public Set<ResearchEvent> getAssociatedEvents() {
 	return getAssociatedEvents(null);
     }
 

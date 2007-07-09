@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.resea
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 
 public class MergeEvents extends Service {
     
     public void run(MergeEventPageContainerBean mergeEventPageContainerBean) {
-	Event event = new Event(mergeEventPageContainerBean.getName(), mergeEventPageContainerBean.getEventType(), 
+	ResearchEvent event = new ResearchEvent(mergeEventPageContainerBean.getName(), mergeEventPageContainerBean.getEventType(), 
 		mergeEventPageContainerBean.getResearchActivityLocationType());
 	event.setUrl(mergeEventPageContainerBean.getUrl());
 	
 	for (DomainObject domainObject : mergeEventPageContainerBean.getSelectedObjects()) {
-	    Event event2 = (Event) domainObject;
+	    ResearchEvent event2 = (ResearchEvent) domainObject;
 	    event.getEventEditions().addAll(event2.getEventEditions());
 	    
 	    for (EventParticipation eventParticipation : event2.getParticipationsSet()) {

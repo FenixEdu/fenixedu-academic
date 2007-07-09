@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
 public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
-	final Group group = rootDomainObject.readGroupByOID(groupOID);
+	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
 	if (groupProposal != null) {
 	    if (group.getProposalAttributed() == groupProposal.getFinalDegreeWorkProposal()) {
@@ -32,7 +32,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
 
     }
 
-    private GroupProposal findGroupProposal(final Group group, final Integer groupProposalOID) {
+    private GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final Integer groupProposalOID) {
 	for (final GroupProposal groupProposal : group.getGroupProposalsSet()) {
 	    if (groupProposal.getIdInternal().equals(groupProposalOID)) {
 		return groupProposal;

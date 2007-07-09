@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class EventParticipation extends EventParticipation_Base {
     
-    public  EventParticipation(Party party, ResearchActivityParticipationRole role, Event event, MultiLanguageString roleMessage) {
+    public  EventParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event, MultiLanguageString roleMessage) {
 	super();
 	if(alreadyHasParticipation(party, role, event)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
@@ -20,7 +20,7 @@ public class EventParticipation extends EventParticipation_Base {
 	super.setRoleMessage(roleMessage);
     }
     
-    private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, Event event) {
+    private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
 	for(EventParticipation participation : party.getEventParticipations()) {
 	    if(participation.match(party,role,event)) {
 		return true;
@@ -29,12 +29,12 @@ public class EventParticipation extends EventParticipation_Base {
 	return false;	
     }
     
-    public boolean match(Party party, ResearchActivityParticipationRole role, Event event) {
+    public boolean match(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
 	return this.getParty().equals(party) && this.getRole().equals(role) && this.getEvent() .equals(event);
     }
 
     @Override
-    public void setEvent(Event event) {
+    public void setEvent(ResearchEvent event) {
 	if(alreadyHasParticipation(getParty(), getRole(), event)) {
 	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
 	}

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -14,7 +14,7 @@ public class AttributeFinalDegreeWork extends Service {
             Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
-            Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+            FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             for (GroupProposal otherGroupProposal : group.getGroupProposals()) {
                 if (!(otherGroupProposal == groupProposal)
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null

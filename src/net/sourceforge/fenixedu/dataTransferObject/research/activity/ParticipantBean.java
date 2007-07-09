@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ParticipationsInterface;
@@ -155,9 +155,9 @@ public abstract class ParticipantBean implements Serializable {
     public static ParticipantBean getParticipantBean(ParticipationsInterface objectWithParticipations) {
 	
 	ParticipantBean bean = null;
-	if (objectWithParticipations instanceof Event) {
+	if (objectWithParticipations instanceof ResearchEvent) {
 	    bean = new EventParticipantBean();
-	    ((EventParticipantBean) bean).setEvent((Event) objectWithParticipations);
+	    ((EventParticipantBean) bean).setEvent((ResearchEvent) objectWithParticipations);
 	}
 	if (objectWithParticipations instanceof EventEdition) {
 	    bean = new EventEditionParticipantBean();

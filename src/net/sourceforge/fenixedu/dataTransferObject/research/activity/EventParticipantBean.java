@@ -5,24 +5,24 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public class EventParticipantBean extends ParticipantBean implements Serializable {
 
-    DomainReference<Event> event;
+    DomainReference<ResearchEvent> event;
     
     public EventParticipantBean() {
 	super();
 	this.setEvent(null);
     }
     
-    public Event getEvent() {
+    public ResearchEvent getEvent() {
 	return this.event.getObject();
     }
     
-    public void setEvent(Event event) {
-	this.event = new DomainReference<Event>(event);
+    public void setEvent(ResearchEvent event) {
+	this.event = new DomainReference<ResearchEvent>(event);
     }
 
     @Override

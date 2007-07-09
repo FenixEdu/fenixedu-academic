@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 
@@ -20,7 +20,7 @@ public class TeacherAttributeFinalDegreeWork extends Service {
 
 	if (groupProposal != null) {
 	    final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-	    final Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+	    final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
 
 	    if (proposal != null && group != null) {
 		final Proposal proposalAttributedToGroup = group.getProposalAttributedByTeacher();

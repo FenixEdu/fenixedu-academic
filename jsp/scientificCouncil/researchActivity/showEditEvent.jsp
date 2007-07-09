@@ -11,7 +11,7 @@
 <br />
 <div class="forminline dinline">
 	<fr:form action="/editEvent.do?method=prepare">
-		<fr:edit schema="event.edit" id="edit" name="pageContainerBean" property="selected" type="net.sourceforge.fenixedu.domain.research.activity.Event">
+		<fr:edit schema="event.edit" id="edit" name="pageContainerBean" property="selected" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 			<fr:destination name="invalid" path="/editEvent.do?method=invalid"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
+import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
@@ -39,6 +40,8 @@ import dml.Slot;
  * 
  */
 public class OJBMetadataGenerator {
+
+    private static final String DOMAIN_OBJECT_CLASSNAME = "net.sourceforge.fenixedu.domain.DomainObject";
 
     private static final Set<String> unmappedObjectReferenceAttributesInDML = new TreeSet<String>();
 
@@ -96,29 +99,89 @@ public class OJBMetadataGenerator {
     public static void updateOJBMappingFromDomainModel(Map ojbMetadata, DomainModel domainModel)
             throws Exception {
 
+	final DescriptorRepository descriptorRepository = MetadataManager.getInstance().getGlobalRepository();
+
         for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
             final DomainClass domClass = (DomainClass) iterator.next();
+            final String classname = domClass.getFullName();
+            if (!classname.equals(DOMAIN_OBJECT_CLASSNAME)) {
+        	final Class clazz = Class.forName(classname);
+        	final ClassDescriptor classDescriptor = new ClassDescriptor(descriptorRepository);
+        	classDescriptor.setClassOfObject(clazz);
+        	classDescriptor.setTableName(getExpectedTableName(domClass));
+        	ojbMetadata.put(domClass.getFullName(), classDescriptor);
+        	MetadataManager.getInstance().getRepository().getDescriptorTable().put(classname, classDescriptor);
+            }
+        }
 
-            final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(domClass
-                    .getFullName());
+       for (final Iterator iterator = domainModel.getClasses(); iterator.hasNext();) {
+            final DomainClass domClass = (DomainClass) iterator.next();
+            final String classname = domClass.getFullName();
+            if (!classname.equals(DOMAIN_OBJECT_CLASSNAME)) {
 
-            if (classDescriptor != null) {
+        	final Class clazz = Class.forName(classname);
+        	final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(classname);
 
-                setFactoryMethodAndClass(classDescriptor);
+        	addClassExtentOfAncesterClassDescriptors(ojbMetadata, domClass.getSuperclass(), clazz);
 
-                final Class clazz = Class.forName(domClass.getFullName());
-                updateFields(classDescriptor, domClass, ojbMetadata, clazz);
-                if (!Modifier.isAbstract(clazz.getModifiers())) {
-                    updateRelations(classDescriptor, domClass, ojbMetadata, clazz);
-                }
+        	if (classDescriptor != null) {
+        	    setFactoryMethodAndClass(classDescriptor);
+
+        	    updateFields(classDescriptor, domClass, ojbMetadata, clazz);
+        	    if (!Modifier.isAbstract(clazz.getModifiers())) {
+        		updateRelations(classDescriptor, domClass, ojbMetadata, clazz);
+        	    }
                 
-                if (classToDebug != null && classDescriptor.getClassNameOfObject().contains(classToDebug)) {
-                    System.out.println(classDescriptor.toXML());
-                }
+        	    if (classToDebug != null && classDescriptor.getClassNameOfObject().contains(classToDebug)) {
+        		System.out.println(classDescriptor.toXML());
+        	    }
+        	}
             }
 
         }
 
+    }
+
+    private static void addClassExtentOfAncesterClassDescriptors(final Map ojbMetadata, final DomainEntity domainEntity, final Class clazz) {
+	if (domainEntity != null && domainEntity instanceof DomainClass) {
+	    final DomainClass domainClass = (DomainClass) domainEntity;
+	    final String ancesterClassname = domainClass.getFullName();
+	    if (!ancesterClassname.equals(DOMAIN_OBJECT_CLASSNAME)) {
+		final ClassDescriptor classDescriptor = (ClassDescriptor) ojbMetadata.get(ancesterClassname);
+		classDescriptor.addExtentClass(clazz);
+		addClassExtentOfAncesterClassDescriptors(ojbMetadata, domainClass.getSuperclass(), clazz);
+	    }
+	}
+    }
+
+    private static String getExpectedTableName(final DomainClass domainClass) {
+	if (domainClass.getFullName().equals(DOMAIN_OBJECT_CLASSNAME)) {
+	    return null;
+	}
+	if (domainClass.getSuperclass() == null ||
+		(domainClass.getSuperclass() instanceof DomainClass && domainClass.getSuperclass().getFullName().equals(DOMAIN_OBJECT_CLASSNAME))) {
+	    return getTableName(domainClass.getName());
+	}
+	return domainClass.getSuperclass() instanceof DomainClass ? getExpectedTableName((DomainClass) domainClass.getSuperclass()) : null;
+    }
+
+    private static String getTableName(final String name) {
+	final StringBuilder stringBuilder = new StringBuilder();
+	boolean isFirst = true;
+	for (final char c : name.toCharArray()) {
+	    if (isFirst) {
+		isFirst = false;
+		stringBuilder.append(Character.toUpperCase(c));
+	    } else {
+		if (Character.isUpperCase(c)) {
+		    stringBuilder.append('_');
+		    stringBuilder.append(c);
+		} else {
+		    stringBuilder.append(Character.toUpperCase(c));
+		}
+	    }
+	}
+	return stringBuilder.toString();
     }
 
     private static void setFactoryMethodAndClass(ClassDescriptor cld) {

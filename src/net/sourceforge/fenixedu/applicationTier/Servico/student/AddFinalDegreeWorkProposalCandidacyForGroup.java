@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -21,7 +21,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
     public boolean run(Integer groupOID, Integer proposalOID) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        Group group = rootDomainObject.readGroupByOID(groupOID);
+        FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
         Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {

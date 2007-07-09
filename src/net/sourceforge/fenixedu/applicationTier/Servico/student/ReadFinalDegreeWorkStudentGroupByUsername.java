@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -25,7 +25,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 	    return null;
 	}
 
-	final Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+	final FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         return InfoGroup.newInfoFromDomain(group);
     }
 

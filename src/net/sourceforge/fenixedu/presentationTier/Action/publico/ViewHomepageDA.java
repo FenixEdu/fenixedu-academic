@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
@@ -433,9 +433,9 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     private void setParticipationsInRequest(HttpServletRequest request, Person person) {
-	request.setAttribute("national-events", new ArrayList<Event>(person
+	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.NATIONAL)));
-	request.setAttribute("international-events", new ArrayList<Event>(person
+	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.INTERNATIONAL)));
 	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
 		.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));

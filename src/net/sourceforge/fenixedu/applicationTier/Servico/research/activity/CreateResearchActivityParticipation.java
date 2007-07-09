@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateResearchActivityParticipation extends Service {
 	
-	public void run(Event event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
+	public void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
 			throws ExcepcaoPersistencia, FenixServiceException {
 
 		new EventParticipation(person, role, event, roleMessage);
@@ -43,7 +43,7 @@ public class CreateResearchActivityParticipation extends Service {
 		new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
 	}
 	
-	public void run(Event event, ParticipantBean bean) throws ExcepcaoPersistencia,
+	public void run(ResearchEvent event, ParticipantBean bean) throws ExcepcaoPersistencia,
 		FenixServiceException {
 	
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());

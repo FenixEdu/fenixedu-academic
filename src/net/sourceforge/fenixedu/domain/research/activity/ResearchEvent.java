@@ -12,15 +12,15 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArt
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class Event extends Event_Base implements ParticipationsInterface {
+public class ResearchEvent extends ResearchEvent_Base implements ParticipationsInterface {
 
-    public Event() {
+    public ResearchEvent() {
 	super();
 	setStage(ResearchActivityStage.DRAFT);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Event(String name, EventType type, ScopeType scope) {
+    public ResearchEvent(String name, EventType type, ScopeType scope) {
 	this();
 
 	if (name == null)

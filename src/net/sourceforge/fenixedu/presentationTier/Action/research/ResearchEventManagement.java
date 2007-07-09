@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.research;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.research.activity.Event;
-import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -18,7 +17,7 @@ public class ResearchEventManagement extends FenixDispatchAction {
 	
 	String eventId  = request.getParameter("eventId");
 	if(eventId!=null) {
-	    Event event = rootDomainObject.readEventByOID(Integer.valueOf(eventId));
+	    ResearchEvent event = rootDomainObject.readResearchEventByOID(Integer.valueOf(eventId));
 	    request.setAttribute("event",event);
 	}
 	

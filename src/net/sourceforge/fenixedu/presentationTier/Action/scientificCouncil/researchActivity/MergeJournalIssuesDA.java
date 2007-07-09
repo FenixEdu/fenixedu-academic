@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeJournalIssuePageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;

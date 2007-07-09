@@ -5,17 +5,17 @@ import org.joda.time.YearMonthDay;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 
 public class CreateResearchEventEdition extends Service {
 
     public EventEdition run(ResultEventAssociationBean eventBean) {
 
-	Event event = null;
+	ResearchEvent event = null;
 	if (eventBean.getEvent() == null) {
 	    CreateResearchEvent service = new CreateResearchEvent();
-	    event = (Event) service.run(eventBean.getEventName(), eventBean.getEventType(), eventBean
+	    event = (ResearchEvent) service.run(eventBean.getEventName(), eventBean.getEventType(), eventBean
 		    .getLocationType(), eventBean.getEventUrl());
 	} else {
 	    event = eventBean.getEvent();
@@ -26,7 +26,7 @@ public class CreateResearchEventEdition extends Service {
 		.getEventEditionUrl());
     }
 
-    public EventEdition run(Event event, String edition, String eventLocation, YearMonthDay startDate,
+    public EventEdition run(ResearchEvent event, String edition, String eventLocation, YearMonthDay startDate,
 	    YearMonthDay endDate, String organization, String url) {
 
 	EventEdition eventEdition = new EventEdition(event);
@@ -40,7 +40,7 @@ public class CreateResearchEventEdition extends Service {
 	return eventEdition;
     }
     
-    public EventEdition run(Event event, ResearchEventEditionCreationBean bean) {
+    public EventEdition run(ResearchEvent event, ResearchEventEditionCreationBean bean) {
 	return run(event,bean.getEventEditionName(), bean.getEventLocation(), bean.getStartDate(),
 	    bean.getEndDate(), bean.getOrganization(), bean.getEditionUrl());
     }

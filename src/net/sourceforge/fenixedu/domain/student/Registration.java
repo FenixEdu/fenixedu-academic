@@ -50,7 +50,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -976,9 +976,9 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    public Group findFinalDegreeWorkGroupForCurrentExecutionYear() {
+    public FinalDegreeWorkGroup findFinalDegreeWorkGroupForCurrentExecutionYear() {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
+	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final ExecutionDegree executionDegree = group.getExecutionDegree();
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	    if (executionYear != null && executionYear.getState().equals(PeriodState.CURRENT)) {
@@ -2111,7 +2111,7 @@ public class Registration extends Registration_Base {
 
     public Proposal getDissertationProposal(final ExecutionYear executionYear) {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-	    final Group group = groupStudent.getFinalDegreeDegreeWorkGroup();
+	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
 	    if (proposalAttributedByCoordinator != null
 		    && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {

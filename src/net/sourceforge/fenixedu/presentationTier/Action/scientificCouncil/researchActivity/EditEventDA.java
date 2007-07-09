@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeJournalIssuePageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.PageContainerBean;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -24,7 +24,7 @@ public class EditEventDA extends EditResearchActivityDA {
     
     @Override
     protected List getObjects() {
-	List<Event> events = new ArrayList<Event>(rootDomainObject.getEvents());
+	List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
         return events;
     }
@@ -35,7 +35,7 @@ public class EditEventDA extends EditResearchActivityDA {
 	RenderUtils.invalidateViewState();
 
 	MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean = new MergeEventEditionPageContainerBean(
-		(Event) pageContainerBean.getSelected());
+		(ResearchEvent) pageContainerBean.getSelected());
 	request.setAttribute("mergeBean", mergeEventEditionPageContainerBean);
 
 	return mapping.findForward("prepareChooseEventEditionToMerge");

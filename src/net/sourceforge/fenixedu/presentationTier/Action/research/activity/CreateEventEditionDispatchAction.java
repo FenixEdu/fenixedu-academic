@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -93,7 +93,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 	private ActionForward createNewEditionParticipation(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
-		Event event = bean.getEvent();
+		ResearchEvent event = bean.getEvent();
 		try {
 			EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition",
 					new Object[] { event, bean });
@@ -117,7 +117,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 		ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
 
 		try {
-			Event event = (Event) executeService("CreateResearchEvent", new Object[] {
+			ResearchEvent event = (ResearchEvent) executeService("CreateResearchEvent", new Object[] {
 					bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl() });
 			EventEdition edition = (EventEdition) executeService("CreateResearchEventEdition",
 					new Object[] { event, bean });

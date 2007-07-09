@@ -17,10 +17,10 @@ import dml.runtime.RelationAdapter;
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
 
     static {
-	EventEventEdition.addListener(new RelationAdapter<EventEdition, Event>() {
+	EventEventEdition.addListener(new RelationAdapter<EventEdition, ResearchEvent>() {
 	    
 	    @Override
-	    public void afterRemove(EventEdition edition, Event event) {
+	    public void afterRemove(EventEdition edition, ResearchEvent event) {
 	        super.afterRemove(edition, event);
 	        if(edition!=null && event!=null && !event.hasAnyEventEditions() && !event.hasAnyParticipations()) {
 	            event.delete();
@@ -29,7 +29,7 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
 	});
     }
     
-    public EventEdition(Event event) {
+    public EventEdition(ResearchEvent event) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	this.setEvent(event);

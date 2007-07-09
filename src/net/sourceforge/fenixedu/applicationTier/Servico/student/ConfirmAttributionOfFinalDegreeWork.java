@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,14 +26,14 @@ public class ConfirmAttributionOfFinalDegreeWork extends Service {
         GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
         if (groupProposal != null) {
-            Group groupAttributed = groupProposal.getFinalDegreeWorkProposal()
+            FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
                     .getGroupAttributedByTeacher();
 
             if (groupAttributed == null) {
                 throw new NoAttributionToConfirmException();
             }
 
-            Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+            FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             if (group != null) {
                 if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
                     throw new NoAttributionToConfirmException();

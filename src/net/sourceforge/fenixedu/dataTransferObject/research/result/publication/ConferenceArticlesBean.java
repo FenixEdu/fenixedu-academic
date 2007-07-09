@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -28,7 +28,7 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
     
     private DomainReference<EventEdition> eventEdition;
     
-    private DomainReference<Event> event;
+    private DomainReference<ResearchEvent> event;
 
     @Override
     public void setCreateEvent(Boolean createEvent) {
@@ -100,11 +100,11 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
 		this.eventEdition = (eventEdition != null) ? new DomainReference<EventEdition>(eventEdition) : null;
 	}
 	
-	public Event getEvent() {
+	public ResearchEvent getEvent() {
 		return (event != null) ? event.getObject() : null;
 	}
 
-	public void setEvent(Event event) {
-		this.event = (event != null) ? new DomainReference<Event>(event) : null;
+	public void setEvent(ResearchEvent event) {
+		this.event = (event != null) ? new DomainReference<ResearchEvent>(event) : null;
 	}
 }

@@ -7,13 +7,13 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 
 public class SearchEventsByType extends SearchObjectsByMultiLanguageString{
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        if (type != Event.class)
+        if (type != ResearchEvent.class)
             return null;
         
         final Collection objects = super.run(type, value, limit, arguments);
@@ -28,7 +28,7 @@ public class SearchEventsByType extends SearchObjectsByMultiLanguageString{
         }
         
         for (Object object : objects) {
-            Event event = (Event) object;
+            ResearchEvent event = (ResearchEvent) object;
             if (event.getEventType() == eventType)
                 result.add(event);
         }

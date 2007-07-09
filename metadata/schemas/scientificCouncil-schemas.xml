@@ -158,7 +158,7 @@
 	</slot>
 </schema>
 
-<schema name="event.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="event.merge.list" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" layout="event-stage">
 		<property name="enumClasses(DRAFT)" value=""/>
 		<property name="enumClasses(APPROVED)" value=""/>
@@ -166,7 +166,7 @@
 	<slot name="eventType" key="label.event.eventType"/>
 </schema>
 
-<schema name="event.merge.list.with.journal.issue.number" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="event.merge.list.with.journal.issue.number" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" layout="event-stage">
 		<property name="enumClasses(DRAFT)" value=""/>
 		<property name="enumClasses(APPROVED)" value=""/>
@@ -175,7 +175,7 @@
 	<slot name="eventEditionsCount" key="label.event.editions.count"/>
 </schema>
 
-<schema name="event.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="event.merge.list.full" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" layout="event-stage">
 		<property name="enumClasses(DRAFT)" value=""/>
 		<property name="enumClasses(APPROVED)" value=""/>
@@ -199,7 +199,7 @@
 	<slot name="researchActivityLocationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.scientific.journal.locationType"/>
 	<slot name="stage" key="label.research.activity.stage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
-<schema name="event.edit" type="net.sourceforge.fenixedu.domain.research.activity.Event" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+<schema name="event.edit" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>

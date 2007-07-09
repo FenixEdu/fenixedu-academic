@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.util.Month;
 import bibtex.dom.BibtexEntry;
 
 /**
- * Used for relation of Inproceedings and Proceedings with Event Required
- * fields: Conference (Event)
+ * Used for relation of Inproceedings and Proceedings with ResearchEvent Required
+ * fields: Conference (ResearchEvent)
  */
 public abstract class ConferenceArticles extends ConferenceArticles_Base {
 

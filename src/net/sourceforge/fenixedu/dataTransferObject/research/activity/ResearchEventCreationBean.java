@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResearchEventCreationBean implements Serializable {
-    private DomainReference<Event> event;
+    private DomainReference<ResearchEvent> event;
     private ResearchActivityParticipationRole role;
     private String eventName;
     private EventType eventType;
@@ -62,12 +62,12 @@ public class ResearchEventCreationBean implements Serializable {
         this.eventType = eventType;
     }
 
-    public Event getEvent() {
+    public ResearchEvent getEvent() {
 		return event.getObject();
 	}
 
-	public void setEvent(Event event) {
-		this.event = new DomainReference<Event>(event);
+	public void setEvent(ResearchEvent event) {
+		this.event = new DomainReference<ResearchEvent>(event);
 	}
 	
 	public String getUrl() {

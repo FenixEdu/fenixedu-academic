@@ -48,7 +48,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -1310,10 +1310,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	private void fillGroupsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
 		final Scheduleing scheduleing = executionDegree.getScheduling();
-		final SortedSet<Group> groups = scheduleing.getGroupsWithProposalsSortedByStudentNumbers();
+		final SortedSet<FinalDegreeWorkGroup> groups = scheduleing.getGroupsWithProposalsSortedByStudentNumbers();
 		int numberGroups = 0;
 		int maxNumStudentsPerGroup = 0;
-		for (final Group group : groups) {
+		for (final FinalDegreeWorkGroup group : groups) {
 			final Row row = spreadsheet.addRow();
 			row.setCell(Integer.toString(++numberGroups));
 			final SortedSet<GroupStudent> groupStudents = CollectionUtils.constructSortedSet(group.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
@@ -1326,7 +1326,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		for (int i = 0; i < maxNumStudentsPerGroup; spreadsheet.setHeader("Aluno " + ++i));
 		int groupCounter = 0;
 		int maxNumberGroupProposals = 0;
-		for (final Group group : groups) {
+		for (final FinalDegreeWorkGroup group : groups) {
 			final Row row = spreadsheet.getRow(groupCounter++);
 			for (int i = group.getGroupStudentsSet().size(); i++ < maxNumStudentsPerGroup; row.setCell(""));
 			final SortedSet<GroupProposal> groupProposals = group.getGroupProposalsSortedByPreferenceOrder();
@@ -1371,7 +1371,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 //		final SortedSet<Registration> students = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
 		for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
-			for (final Group group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+			for (final FinalDegreeWorkGroup group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
 						final Registration registration = groupStudent.getRegistration();

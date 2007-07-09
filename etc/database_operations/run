@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix Mappings and Normalize Table Names" fixMappingsAndNormalizeTableNames.sql

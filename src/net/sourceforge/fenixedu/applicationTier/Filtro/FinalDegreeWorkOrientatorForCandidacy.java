@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -45,7 +45,7 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 
 	for (final Proposal proposal : proposals) {
 	    for (final GroupProposal groupProposal : proposal.getGroupProposals()) {
-		final Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+		final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
 		for (final GroupStudent groupStudent : group.getGroupStudents()) {
 		    final Registration registration = groupStudent.getRegistration();
 		    for (final StudentCurricularPlan studentCurricularPlan : registration

@@ -127,18 +127,18 @@ public class Scheduleing extends Scheduleing_Base {
 	return findProposalsByStatus(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
     }
 
-    public SortedSet<Group> getGroupsSortedByStudentNumbers() {
-	final SortedSet<Group> groups = new TreeSet<Group>(Group.COMPARATOR_BY_STUDENT_NUMBERS);
+    public SortedSet<FinalDegreeWorkGroup> getGroupsSortedByStudentNumbers() {
+	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroupsSet());
 	}
 	return groups;
     }
 
-    public SortedSet<Group> getGroupsWithProposalsSortedByStudentNumbers() {
-	final SortedSet<Group> groups = new TreeSet<Group>(Group.COMPARATOR_BY_STUDENT_NUMBERS);
+    public SortedSet<FinalDegreeWorkGroup> getGroupsWithProposalsSortedByStudentNumbers() {
+	final SortedSet<FinalDegreeWorkGroup> groups = new TreeSet<FinalDegreeWorkGroup>(FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    for (final Group group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+	    for (final FinalDegreeWorkGroup group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 		if (!group.getGroupProposalsSet().isEmpty()) {
 		    groups.add(group);
 		}

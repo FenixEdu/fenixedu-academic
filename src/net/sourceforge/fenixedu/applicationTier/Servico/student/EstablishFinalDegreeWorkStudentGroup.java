@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,9 +28,9 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
     	if (registration == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}
-        Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+        FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         if (group == null) {
-            group = new Group();
+            group = new FinalDegreeWorkGroup();
                 GroupStudent groupStudent = new GroupStudent();
                 groupStudent.setRegistration(registration);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);

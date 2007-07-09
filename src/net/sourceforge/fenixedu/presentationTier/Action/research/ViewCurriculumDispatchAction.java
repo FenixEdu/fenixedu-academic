@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
@@ -161,9 +161,9 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(otherPublication));
 	request.setAttribute("unstructureds", unstructured);
 	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
-	request.setAttribute("national-events", new ArrayList<Event>(person
+	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.NATIONAL,firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-events", new ArrayList<Event>(person
+	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));
 	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
 		.getAssociatedEventEditions(ScopeType.INTERNATIONAL,firstExecutionYear, finaltExecutionYear)));

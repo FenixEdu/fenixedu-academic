@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
@@ -27,9 +27,9 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Person person = getLoggedPerson(request);
 
-	request.setAttribute("national-events", new ArrayList<Event>(person
+	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.NATIONAL)));
-	request.setAttribute("international-events", new ArrayList<Event>(person
+	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person
 		.getAssociatedEvents(ScopeType.INTERNATIONAL)));
 	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
 		.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));
@@ -159,8 +159,8 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 		.valueOf(request.getParameter("activityId")));
     }
 
-    protected Event getEventFromRequest(HttpServletRequest request) {
-	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, Integer.valueOf(request
+    protected ResearchEvent getEventFromRequest(HttpServletRequest request) {
+	return (ResearchEvent) RootDomainObject.readDomainObjectByOID(ResearchEvent.class, Integer.valueOf(request
 		.getParameter("activityId")));
     }
 

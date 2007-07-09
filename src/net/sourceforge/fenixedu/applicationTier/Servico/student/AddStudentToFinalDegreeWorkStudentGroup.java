@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -31,7 +31,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
-        Group group = rootDomainObject.readGroupByOID(groupOID);
+        FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
         Registration registration = Registration.readByUsername(username);
         if (group == null
                 || registration == null

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -158,7 +158,7 @@ public class Proceedings extends Proceedings_Base {
 		return usedSchema;
 	}
 	
-	public Event getEvent() {
+	public ResearchEvent getEvent() {
 		return this.getEventEdition().getEvent();
 	}
 	

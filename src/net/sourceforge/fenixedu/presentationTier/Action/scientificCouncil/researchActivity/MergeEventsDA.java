@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
-import net.sourceforge.fenixedu.domain.research.activity.Event;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -23,7 +23,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
     public ActionForward chooseEvent(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	MergeEventPageContainerBean researchActivityPageContainerBean = (MergeEventPageContainerBean) getRenderedObject("mergeList");
-	Event event = (Event) researchActivityPageContainerBean.getSelected();
+	ResearchEvent event = (ResearchEvent) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
 
 	copyProperties(event, researchActivityPageContainerBean);
@@ -33,7 +33,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 	return mapping.findForward("show-research-activity-merge-list");
     }
 
-    private void copyProperties(Event event,
+    private void copyProperties(ResearchEvent event,
 	    MergeEventPageContainerBean researchActivityPageContainerBean) {
 	researchActivityPageContainerBean.setName(event.getName());
 	researchActivityPageContainerBean.setResearchActivityLocationType(event.getLocationType());
@@ -54,7 +54,7 @@ public class MergeEventsDA extends MergeResearchActivityDA {
 
     @Override
     protected List getObjects(MergeResearchActivityPageContainerBean researchActivityPageContainerBean) {
-	List<Event> events = new ArrayList<Event>(rootDomainObject.getEvents());
+	List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
 	Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
 	return events;
     }

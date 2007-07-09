@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -65,7 +65,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
 	Registration registration = studentCurricularPlan.getRegistration();
 
-	Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+	FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
 	if (group != null) {
 	    ExecutionDegree executionDegree = group.getExecutionDegree();
 	    for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {

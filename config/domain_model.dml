@@ -2094,7 +2094,7 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
     Boolean penaltyApplicable;
 }
 
-class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionDegree;
 	Integer keyProposalAttributed;
     Integer keyProposalAttributedByTeacher;
@@ -4432,7 +4432,7 @@ class net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation
 }
 
 
-class net.sourceforge.fenixedu.domain.research.activity.Event extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.research.activity.ResearchEvent extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	EventType eventType;
 	String url;
@@ -7023,7 +7023,7 @@ relation GratuityValuesExecutionDegree {
 
 relation GroupProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributed;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole groupAttributed;
 }
 
 relation GroupProposalProposal {
@@ -7036,12 +7036,12 @@ relation GroupProposalProposal {
 
 relation GroupProposalByTeacher {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributedByTeacher;
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributedByTeacher;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole groupAttributedByTeacher;
 }
 
 
 relation GroupExecutionDegree {
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole associatedFinalDegreeWorkGroups {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole associatedFinalDegreeWorkGroups {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
@@ -7049,7 +7049,7 @@ relation GroupExecutionDegree {
 
 
 relation GroupGroupStudent {
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeDegreeWorkGroup;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole groupStudents {
 		multiplicity *;
 	}
@@ -7057,7 +7057,7 @@ relation GroupGroupStudent {
 
 
 relation GroupGroupProposal {
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeDegreeWorkGroup;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal playsRole groupProposals {
 		multiplicity *;
 	}
@@ -9180,7 +9180,7 @@ relation ParticipationParty{
 }
 
 relation ParticipationsInEvent {
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event ;
+	net.sourceforge.fenixedu.domain.research.activity.ResearchEvent playsRole event ;
 	net.sourceforge.fenixedu.domain.research.activity.EventParticipation playsRole participations {
 		multiplicity *;
 	}
@@ -9215,7 +9215,7 @@ relation ParticipationsInCooperation {
 }
 	
 relation EventEventEdition {
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole event;
+	net.sourceforge.fenixedu.domain.research.activity.ResearchEvent playsRole event;
 	net.sourceforge.fenixedu.domain.research.activity.EventEdition playsRole eventEditions {
 		multiplicity *;
 	}
@@ -11147,7 +11147,7 @@ relation RootDomainObjectScientificJournal {
 
 relation RootDomainObjectEvent {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.activity.Event playsRole events {
+	net.sourceforge.fenixedu.domain.research.activity.ResearchEvent playsRole events {
 		multiplicity *;
 	}
 }
@@ -11266,7 +11266,7 @@ relation RootDomainObjectReimbursementGuideSituation {
 
 relation RootDomainObjectGroup {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groups {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup playsRole groups {
 		multiplicity *;
 	}
 }

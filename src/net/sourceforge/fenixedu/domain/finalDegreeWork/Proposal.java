@@ -14,7 +14,7 @@ public class Proposal extends Proposal_Base {
 	deleteDomainObject();
     }
 
-    public boolean isProposalConfirmedByTeacherAndStudents(final Group group) {
+    public boolean isProposalConfirmedByTeacherAndStudents(final FinalDegreeWorkGroup group) {
 	return getGroupAttributedByTeacher() == group && group.isConfirmedByStudents(this);
     }
 
