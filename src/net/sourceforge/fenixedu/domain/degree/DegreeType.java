@@ -253,6 +253,10 @@ public enum DegreeType {
 	return this == DegreeType.DEGREE || this == DegreeType.BOLONHA_DEGREE;
     }
 
+    public boolean isMasterDegree() {
+	return this == DegreeType.MASTER_DEGREE || this == DegreeType.BOLONHA_MASTER_DEGREE;
+    }
+
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
 	return this.isDegree() || this == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
     }
