@@ -43,6 +43,11 @@ public class GetEnrolmentList extends Service {
 
     public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
 	    Boolean pTypeEnrolments) {
+	return run(studentCurricularPlanID, enrollmentState, pTypeEnrolments, Boolean.FALSE);
+    }
+    
+    public List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
+	    Boolean pTypeEnrolments, Boolean includeExtraCurricular) {
 
 	if (!pTypeEnrolments.booleanValue()) {
 	    return this.run(studentCurricularPlanID, enrollmentState);
@@ -52,7 +57,7 @@ public class GetEnrolmentList extends Service {
 
 	for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID)
 		.getEnrolmentsByState(enrollmentState)) {
-	    if (enrolment.isExtraCurricular()) {
+	    if (enrolment.isExtraCurricular() && !includeExtraCurricular) {
 		continue;
 	    }
 	    result.add(InfoEnrolment.newInfoFromDomain(enrolment));

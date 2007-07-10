@@ -165,7 +165,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     if ((certificate.equals("Aproveitamento"))
                             || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
                         Object args[] = { infoStudentCurricularPlan.getIdInternal(),
-                                EnrollmentState.APROVED, new Boolean(true) };
+				EnrollmentState.APROVED, Boolean.TRUE, Boolean.TRUE };
                         try {
                             enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
                                     "GetEnrolmentList", args);
@@ -187,7 +187,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                             result = iterator.next();
                             InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
                            
-                            if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
+                            if (infoEnrolment2.getEnrolment().isExtraCurricular()) {
                                 extraEnrolment.add(infoEnrolment2);
                                 anoLectivo = ((InfoEnrolment) extraEnrolment.get(0))
                                         .getInfoExecutionPeriod().getInfoExecutionYear().getYear();
