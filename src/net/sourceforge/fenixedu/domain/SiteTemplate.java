@@ -19,8 +19,17 @@ public class SiteTemplate extends SiteTemplate_Base {
         this();
         
         setSiteType(type.getName());
+        updateSites(type);
     }
     
+    private void updateSites(final Class type) {
+	for (final Site site : RootDomainObject.getInstance().getSites()) {
+	    if (site.getClass().isAssignableFrom(type)) {
+		site.setTemplate(this);		
+	    }
+	}
+    }
+
     public Class getType() {
         try {
             return Class.forName(getSiteType());

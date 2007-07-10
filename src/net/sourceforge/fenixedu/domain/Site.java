@@ -34,6 +34,7 @@ public abstract class Site extends Site_Base {
         
         setOjbConcreteClass(this.getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
+        setTemplate(SiteTemplate.getTemplateForType(getClass()));
     }
 
     public Section createSection(MultiLanguageString sectionName, Section parentSection,
@@ -79,23 +80,6 @@ public abstract class Site extends Site_Base {
     
     public List<Section> getTopLevelSections() {
         return getAssociatedSections(null);
-    }
-    
-    @Override
-    public Site getTemplate() {
-    	Site template = super.getTemplate();
-    	
-    	if (template != null) {
-            return template;
-        }
-
-        template = SiteTemplate.getTemplateForType(getClass());
-        if (template != null) {
-            //setTemplate(template); // can only happen in a write tx 
-            return template;
-        }
-        
-        return null;
     }
     
     public List<Section> getAssociatedSections(final Section parentSection) {
