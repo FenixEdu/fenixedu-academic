@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update site template" updateSiteTemplate.sql
+execute "Remove equivalence plan from LEC" deleteEquivalencePlanFromLEC.sql
