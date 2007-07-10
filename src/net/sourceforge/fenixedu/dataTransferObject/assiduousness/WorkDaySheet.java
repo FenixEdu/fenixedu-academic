@@ -68,6 +68,7 @@ public class WorkDaySheet implements Serializable {
 	    List<AssiduousnessRecord> clockings, List<Leave> list) {
 	setBalanceTime(Duration.ZERO.toPeriod());
 	setUnjustifiedTime(Duration.ZERO);
+        setBalanceToCompensate(Duration.ZERO);
 	setDate(day);
 	setWorkSchedule(workSchedule);
 	setLeaves(list);

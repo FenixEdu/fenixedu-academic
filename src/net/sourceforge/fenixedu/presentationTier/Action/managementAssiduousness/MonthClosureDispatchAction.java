@@ -132,6 +132,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     private StyledExcelSpreadsheet getSpreadSheet(ClosedMonth closedMonth) {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Listagem Fecho Mês");
+        spreadsheet.newHeaderRow();
 	spreadsheet.addHeader("Nº Mec");
 	spreadsheet.addHeader("Saldo");
 	spreadsheet.addHeader("Inj/V");
