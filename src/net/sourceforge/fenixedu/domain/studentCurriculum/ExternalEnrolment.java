@@ -118,6 +118,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     final public boolean isApproved() {
         return true;
     }
+    
+    final public boolean isEnroled() {
+	return true;
+    }
 
     final public boolean isExternalEnrolment() {
 	return true;
