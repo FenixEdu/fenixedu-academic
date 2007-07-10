@@ -188,6 +188,9 @@ table.thcenter th { text-align: center; }
 
 /* background-color */
 table.thbgnone th { background: none; }
+tr.trhighlight1 td { background: #ffa; }
+tr.selected td { background: #fdfbdd; }
+
 
 /* delete? */
 table .aleft  { text-align: left; }
@@ -2051,3 +2054,18 @@ border: 1px solid #ddd;
 font-style: italic;
 padding: 5px;
 }
+
+.draft {
+color: #bb5;
+}
+
+.published {
+color: #569;	
+}
+			
+.approved {
+color: #595;	
+}
+
+
+

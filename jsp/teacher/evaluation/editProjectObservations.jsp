@@ -21,12 +21,6 @@
 </html:link>
 </li>
 <li>
-<html:link page="<%= "/projectSubmissionsManagement.do?method=sendCommentThroughEmail&studentGroupID=" + studentGroupID + "&amp;projectID=" + projectID +"&amp;executionCourseID=" + executionCourseID + "&amp;edit=false"%>">
-			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.sendObsByEmail"/>
-</html:link>
-</li>
-
-<li>
 <html:link page="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&amp;edit=true&amp;studentGroupID=" + studentGroupID + "&amp;projectID=" +  projectID + "&executionCourseID=" + executionCourseID %>">
 			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.editObservation"/>
 </html:link>
@@ -37,10 +31,16 @@
 <logic:equal name="edit" value="false">
 <fr:view name="projectSubmission" schema="projectSubmission.viewObservation">
 	<fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle2 "/>
+        <fr:property name="classes" value="tstyle2"/>
         <fr:property name="rowClasses" value="aleft,aleft,aleft,"/>
     </fr:layout>
 </fr:view>
+
+<p class="mtop05 mbottom05"><bean:message key="label.teacher.executionCourseManagement.evaluation.project.sendObsByEmail"/>:</p>
+<fr:form action="<%= "/projectSubmissionsManagement.do?method=sendCommentThroughEmail&studentGroupID=" + studentGroupID + "&amp;projectID=" + projectID +"&amp;executionCourseID=" + executionCourseID + "&amp;edit=false"%>">
+	<html:submit><bean:message key="link.coordinator.sendMail"/></html:submit>
+</fr:form>
+
 </logic:equal>
 
 <logic:equal name="edit" value="true">
@@ -50,5 +50,6 @@
         <fr:property name="rowClasses" value="aleft,aleft,aleft,"/>
     </fr:layout>
     <fr:destination name="cancel" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectID=" + projectID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+	<fr:destination name="success" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectID=" + projectID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
 </fr:edit>
 </logic:equal>

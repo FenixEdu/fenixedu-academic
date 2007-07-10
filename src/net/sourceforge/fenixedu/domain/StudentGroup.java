@@ -75,4 +75,13 @@ public class StudentGroup extends StudentGroup_Base {
 	this.setShift(shift);
     }
 
+    public boolean isPersonInStudentGroup(Person person) {
+	
+	for(Attends attend : getAttends()) {
+	    if(attend.getRegistration().getStudent().getPerson().equals(person)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

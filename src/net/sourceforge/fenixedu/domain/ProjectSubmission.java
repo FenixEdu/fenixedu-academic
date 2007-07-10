@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import dml.runtime.RelationAdapter;
@@ -83,6 +84,10 @@ public class ProjectSubmission extends ProjectSubmission_Base {
         removeRootDomainObject();
         super.deleteDomainObject();
 
+    }
+    
+    public boolean isTeacherObservationAvailable() {
+	return !StringUtils.isEmpty(this.getTeacherObservation());
     }
 
 }

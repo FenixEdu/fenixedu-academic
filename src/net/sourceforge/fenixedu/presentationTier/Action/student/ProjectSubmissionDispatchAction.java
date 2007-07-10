@@ -82,6 +82,33 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
 	}
 
+	public ActionForward viewObservation(ActionMapping mapping, ActionForm form,
+		HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+		FenixFilterException, FenixServiceException {
+	
+	    ProjectSubmission submission = getProjectSubmission(request);
+	           	    
+	    if(submission != null && submission.getStudentGroup().isPersonInStudentGroup(getLoggedPerson(request))) {
+		Attends attends = getAttends(request);
+		Project project = getProject(request);
+		StudentGroup studentGroup = project.getGrouping().getStudentGroupByAttends(attends);
+		String rowClasses = "";
+		for (ProjectSubmission oneSubmission : getProjectSubmissionsForStudentGroupSortedByMostRecent(project,studentGroup)) {
+			if(oneSubmission.equals(submission)) {
+			    rowClasses += "selected,";
+			}
+			else {
+			    rowClasses += ",";
+			}
+		 }
+
+		request.setAttribute("submission", submission);
+		request.setAttribute("rowClasses", rowClasses);
+	    }
+	    
+	    return viewProjectSubmissions(mapping, form, request, response);
+	}
+	
 	private List<ProjectSubmission> getProjectSubmissionsForStudentGroupSortedByMostRecent(
 			final Project project, final StudentGroup studentGroup) {
 		final List<ProjectSubmission> projectSubmissionsSortedByMostRecent = new ArrayList<ProjectSubmission>(
@@ -151,6 +178,16 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 		saveMessages(request, actionMessages);
 	}
 
+	private ProjectSubmission getProjectSubmission(HttpServletRequest request) {
+	    Integer projectSubmissionId = getRequestParameterAsInteger(request, "projectSubmissionId");
+
+		if (projectSubmissionId != null) {
+			return (ProjectSubmission) rootDomainObject.readProjectSubmissionByOID(projectSubmissionId);
+		} else {
+			return null;
+		}
+	    
+	}
 	private Project getProject(HttpServletRequest request) {
 		Integer projectId = getRequestParameterAsInteger(request, "projectId");
 

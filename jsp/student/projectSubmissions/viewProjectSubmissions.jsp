@@ -14,6 +14,9 @@
 	</p>
 </html:messages>
 
+<bean:define id="attendsId" name="attends" property="idInternal" />
+<bean:define id="projectId" name="project" property="idInternal" />
+		
 <fr:view name="project"
 	schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">
@@ -22,28 +25,53 @@
 	</fr:layout>
 </fr:view>
 
+
+
 <logic:notPresent name="noStudentGroupForGrouping">
+
+	<logic:notEqual name="project" property="submissionPeriodOpen" value="true">
+		<p>
+		 	<span class="warning0"><!-- Error messages go here --><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/>.</span>
+	 	</p>
+	</logic:notEqual>
+
+	<logic:present name="submission">
+		<div style="border: 1px solid #ddd; padding: 0.5em 1em; background: #fafafa;">
+			<p class="mvert05"><strong><bean:message key="label.projectSubmissions.observations"/></strong>:</p>
+			<p class="mvert05">
+				<fr:view name="submission" property="teacherObservation"/>	
+			</p>
+		</div>
+	</logic:present>
+
 	<logic:empty name="projectSubmissions">
 		<p class="mvert15">
 			<span class="warning0"><!-- Error messages go here --> <bean:message
-				key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />
+				key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />.
 			</span>
 		</p>
 	</logic:empty>
 
 	<logic:notEmpty name="projectSubmissions">		
+		<bean:define id="classForRow" value="" type="java.lang.String" toScope="request"/>
+		<logic:present name="rowClasses">
+				<bean:define id="classForRow" name="rowClasses" type="java.lang.String" toScope="request"/>
+		</logic:present>
+		
 		<fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2" />
+				<fr:property name="classes" value="tstyle2 thlight width100" />
+				<fr:property name="rowClasses" value="<%= classForRow %>"/>
 				<fr:property name="columnClasses" value=",,,acenter" />
+				<fr:property name="linkFormat(observation)" value="<%="/projectSubmission.do?method=viewObservation&attendsId="  + attendsId + "&projectId=" + projectId + "&projectSubmissionId=${idInternal}" %>"/>
+				<fr:property name="key(observation)" value="label.projectSubmissions.seeTeacherObservation"/>
+				<fr:property name="visibleIf(observation)" value="teacherObservationAvailable"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
 	
 
 	<logic:equal name="project" property="submissionPeriodOpen" value="true">
-		<bean:define id="attendsId" name="attends" property="idInternal" />
-		<bean:define id="projectId" name="project" property="idInternal" />
 		<ul class="list5">
 			<li>
 				<html:link action="<%="/projectSubmission.do?method=prepareProjectSubmission&amp;attendsId="  + attendsId + "&amp;projectId=" + projectId %>">
@@ -52,11 +80,7 @@
 			</li>
 		</ul>
 	</logic:equal>
-	<logic:notEqual name="project" property="submissionPeriodOpen" value="true">
-		<p>
-		 	<span class="error0"><!-- Error messages go here --><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/></span>
-	 	</p>
-	</logic:notEqual>
+
 </logic:notPresent>
 
 <logic:present name="noStudentGroupForGrouping">
