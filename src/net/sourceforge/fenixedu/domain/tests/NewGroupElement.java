@@ -9,7 +9,6 @@ public class NewGroupElement extends NewGroupElement_Base {
 	public NewGroupElement() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(getClass().getName());
 	}
 
 	public void deleteUp() {
