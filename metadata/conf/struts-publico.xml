@@ -1030,11 +1030,11 @@
             <forward name="frontPage-INTRO_BANNER" path="scientificCouncil-site-front-page-intro-banner"/>
             <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="scientificCouncil-site-front-page-intro-float"/>
             <forward name="site-section" path="scientificCouncil-section"/>
-            <forward name="site-section-deny" path="scientificCouncil-site-section-deny"/>
-            <forward name="site-section-adviseLogin" path="scientificCouncil-site-section-adviseLogin"/>
-            <forward name="site-item" path="scientificCouncil-site-item"/>
-            <forward name="site-item-deny" path="scientificCouncil-site-item-deny"/>
-            <forward name="site-item-adviseLogin" path="scientificCouncil-site-item-adviseLogin"/>
+            <forward name="site-section-deny" path="scientificCouncil-section-deny"/>
+            <forward name="site-section-adviseLogin" path="scientificCouncil-section-adviseLogin"/>
+            <forward name="site-item" path="scientificCouncil-item"/>
+            <forward name="site-item-deny" path="scientificCouncil-item-deny"/>
+            <forward name="site-item-adviseLogin" path="scientificCouncil-item-adviseLogin"/>
 
             <forward name="announcementsAction" path="/scientificCouncil/announcements.do"/>
             <forward name="eventsAction" path="/scientificCouncil/events.do"/>
