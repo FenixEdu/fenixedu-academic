@@ -20,50 +20,44 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
     }
 
     @Override
-    public Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear) {
-        final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
+    final public Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear) {
+        final StudentCurricularPlan studentCurricularPlan = getRegistration().getStudentCurricularPlan(executionYear);
         if (studentCurricularPlan == null) {
             return null;
         }
 
-        final EnrolmentSet approvedEnrolments = getApprovedEnrolments(executionYear);
+        final Collection<CurriculumEntry> result = new HashSet<CurriculumEntry>();
 
-        final Collection<CurriculumEntry> curriculumEntries = new HashSet<CurriculumEntry>();
+        addCurricularEnrolments(result, studentCurricularPlan, getApprovedEnrolments(executionYear));
+        addNotNeedToEnrols(result, studentCurricularPlan);
+        addDismissals(result, studentCurricularPlan);
+        addCredits(result, studentCurricularPlan);
 
-        addCurricularEnrolments(curriculumEntries, studentCurricularPlan, approvedEnrolments);
-
-        addNotNeedToEnrols(curriculumEntries, studentCurricularPlan);
-        addDismissals(curriculumEntries, studentCurricularPlan);
-        addCredits(curriculumEntries, studentCurricularPlan);
-
-        return curriculumEntries;
+        return result;
     }
 
     @Override
-    protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
-	final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
-	
-	final Registration registration = getRegistration();
-        
-        registration.addApprovedEnrolments(approvedEnrolments);
-        return approvedEnrolments;
+    final protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
+	final EnrolmentSet result = new EnrolmentSet(executionYear);
+	getRegistration().addApprovedEnrolments(result);
+        return result;
     }
 
-    private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries,
+    final private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries,
 	    final StudentCurricularPlan studentCurricularPlan, final EnrolmentSet approvedEnrolments) {
         for (final Enrolment enrolment : approvedEnrolments) {
             curriculumEntries.add(new NotInDegreeCurriculumCurriculumEntry(enrolment));
         }
     }
 
-    private void addNotNeedToEnrols(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
+    final private void addNotNeedToEnrols(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
         for (final NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : studentCurricularPlan.getNotNeedToEnrollCurricularCoursesSet()) {
             final CurricularCourse curricularCourse = notNeedToEnrollInCurricularCourse.getCurricularCourse();
             curriculumEntries.add(new NotNeedToEnrolCurriculumEntry(curricularCourse, notNeedToEnrollInCurricularCourse));
         }
     }
     
-    private void addCredits(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
+    final private void addCredits(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
 	for (final CreditsInAnySecundaryArea creditsInAnySecundaryArea : studentCurricularPlan.getCreditsInAnySecundaryAreasSet()) {
 	    curriculumEntries.add(new CreditsInAnySecundaryAreaCurriculumEntry(creditsInAnySecundaryArea));
 	}
@@ -73,7 +67,7 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
 	}
     }
     
-    private void addDismissals(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
+    final private void addDismissals(Collection<CurriculumEntry> curriculumEntries, StudentCurricularPlan studentCurricularPlan) {
 	for (final Dismissal dismissal : studentCurricularPlan.getDismissals()) {
             curriculumEntries.add(new DismissalEntry(dismissal));
         }	
