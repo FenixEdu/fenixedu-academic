@@ -82,7 +82,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	final ExecutionYear executionYear = getExecutionYear();
 	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getRegistration().getStudentCurricularPlan(executionYear);
 	final int numberEnrolments = studentCurricularPlan.countEnrolments(executionYear);
 
 	final StringBuilder stringBuilder = new StringBuilder();
