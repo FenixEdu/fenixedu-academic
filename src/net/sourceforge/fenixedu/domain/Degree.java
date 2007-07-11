@@ -943,4 +943,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public boolean isSecondCycle() {
 	return getDegreeType().isSecondCycle();
     }
+    
+    /**
+     * Provide {@link #hasAnyThesis()} with a standard getter signature. 
+     */
+    public boolean isAnyThesisAvailable() {
+    	return hasAnyThesis();
+    }
 }

@@ -11,16 +11,12 @@
 
 	<logic:present name="bibtex">
 	<bean:define id="bibtex" name="bibtex" type="java.lang.String"/>
-	<pre>
-	<%= bibtex %>	
-	</pre>
+	<pre><%= bibtex %></pre>
 	</logic:present>
 		
 	<logic:notEmpty name="bibtexList">
 		<logic:iterate id="bibtex" name="bibtexList" type="java.lang.String">
-			<pre>
-			<%= bibtex %>
-			</pre>
+			<pre><%= bibtex %></pre>
 		</logic:iterate>
 	</logic:notEmpty>
 

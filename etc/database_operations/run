@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove announcements section" changeDegreeSections.sql
+execute "Add dissertation section" createDegreeSection.sql

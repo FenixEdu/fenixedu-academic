@@ -653,6 +653,11 @@
 	     <forward name="viewDegreeEvaluation" path="viewDegreeEvaluation"/>  	  
      </action>
 
+     <action path="/showDegreeTheses" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeThesesDA" parameter="method">
+	     <forward name="showTheses" path="degree-showDegreeTheses"/>
+	     <forward name="showResult" path="degree-showResult"/>
+     </action>
+
      <action path="/showDegreeAnnouncements"
              type="net.sourceforge.fenixedu.presentationTier.Action.publico.DegreeAnnouncementsDA" 
              parameter="method"

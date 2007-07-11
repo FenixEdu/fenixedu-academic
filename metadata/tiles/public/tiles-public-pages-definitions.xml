@@ -627,5 +627,13 @@
 	  	<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>		
 
+    <definition name="degree-showDegreeTheses" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/publico/degreeSite/showDegreeTheses.jsp"/>
+    </definition>
+    <definition name="degree-showResult" extends="definition.public.mainPageIST">
+        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+        <put name="body" value="/publico/degreeSite/showDegreeResult.jsp"/>
+    </definition>
 	
 </tiles-definitions>

@@ -41,7 +41,6 @@
 				    				</html:link>
 				    			</li>
 							</logic:notEqual>
-						</li>
 					</logic:notEqual>
 				</logic:notEqual>
 			</logic:notEqual>
