@@ -991,11 +991,11 @@
             <forward name="frontPage-INTRO_BANNER" path="pedagogicalCouncil-site-front-page-intro-banner"/>
             <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="pedagogicalCouncil-site-front-page-intro-float"/>
             <forward name="site-section" path="pedagogicalCouncil-section"/>
-            <forward name="site-section-deny" path="pedagogicalCouncil-site-section-deny"/>
-            <forward name="site-section-adviseLogin" path="pedagogicalCouncil-site-section-adviseLogin"/>
-            <forward name="site-item" path="pedagogicalCouncil-site-item"/>
-            <forward name="site-item-deny" path="pedagogicalCouncil-site-item-deny"/>
-            <forward name="site-item-adviseLogin" path="pedagogicalCouncil-site-item-adviseLogin"/>
+            <forward name="site-section-deny" path="pedagogicalCouncil-section-deny"/>
+            <forward name="site-section-adviseLogin" path="pedagogicalCouncil-section-adviseLogin"/>
+            <forward name="site-item" path="pedagogicalCouncil-item"/>
+            <forward name="site-item-deny" path="pedagogicalCouncil-item-deny"/>
+            <forward name="site-item-adviseLogin" path="pedagogicalCouncil-item-adviseLogin"/>
 
             <forward name="announcementsAction" path="/pedagogicalCouncil/announcements.do"/>
             <forward name="eventsAction" path="/pedagogicalCouncil/announcements.do"/>
