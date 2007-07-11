@@ -44,7 +44,7 @@ public enum CycleType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(name());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
     }
 
     static final public Collection<CycleType> getSortedValues() {
