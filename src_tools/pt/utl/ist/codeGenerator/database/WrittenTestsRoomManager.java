@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 
@@ -24,14 +26,18 @@ public class WrittenTestsRoomManager extends HashSet<Room> {
 	}
 
         DateTime dateTime;
-        Room room;
-        OccupationPeriod occupationPeriod;
+        Room oldRoom;
+        
         do {
             dateTime = evaluationRoomManager.getNextDateTime();
-            room = evaluationRoomManager.getNextOldRoom();
-            occupationPeriod = new OccupationPeriod(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay());
-        } while ( false /*!room.isFree(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), dateTime.toCalendar(null), dateTime.plusMinutes(120).getHourOfDay() == 0 ? dateTime.plusMinutes(119).toCalendar(null) : dateTime.plusMinutes(120).toCalendar(null), 
-        	new DiaSemana(dateTime.getDayOfWeek() + 1), Integer.valueOf(1), Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE)*/);
+            oldRoom = evaluationRoomManager.getNextOldRoom();
+            
+        } while (!oldRoom.isFree(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay(), 
+        	new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()),
+        	dateTime.plusMinutes(120).getHourOfDay() == 0 ?
+        		new HourMinuteSecond(dateTime.plusMinutes(119).getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime.plusMinutes(119).getSecondOfMinute()) :
+        		    new HourMinuteSecond(dateTime.plusMinutes(120).getHourOfDay(),dateTime.plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120).getSecondOfMinute()),  
+        	new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE));
 
         return dateTime;
     }
@@ -40,5 +46,4 @@ public class WrittenTestsRoomManager extends HashSet<Room> {
 	final EvaluationRoomManager evaluationRoomManager = evaluationRoomManagerMap.get(executionPeriod);
 	return evaluationRoomManager.getNextOldRoom();
     }
-
 }

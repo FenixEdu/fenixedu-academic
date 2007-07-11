@@ -13,19 +13,20 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.HourMinuteSecond;
+
+import org.joda.time.YearMonthDay;
 
 public class EditLesson extends Service {
 
-    public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, Integer frequency, 
+    public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency, 
     		Integer weekOfQuinzenalStart, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift)
     		throws FenixServiceException {
         
@@ -49,24 +50,22 @@ public class EditLesson extends Service {
             InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), begin, end);
             if (result.isSUCESS() && infoShiftServiceResult.isSUCESS()) {
          
-        	LessonSpaceOccupation roomOccupation = aula.getLessonSpaceOccupation();        	
-                aula.edit(weekDay, begin, end, infoShift.getTipo(), frequency, weekOfQuinzenalStart);                                            
+        	LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();        	
+                aula.edit(new YearMonthDay(), weekDay, begin, end, infoShift.getTipo(), frequency, weekOfQuinzenalStart);                                            
                 
                 if(salaNova != null) {
                     try {                
-                	if(roomOccupation == null) {
-                	    final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(infoRoomOccupation.getInfoPeriod().getIdInternal());                	                    	
-                	    roomOccupation = new LessonSpaceOccupation(salaNova, HourMinuteSecond.fromCalendarFields(begin),
-                		    HourMinuteSecond.fromCalendarFields(end), weekDay, period, aula);   
+                	if(lessonSpaceOccupation == null) {                	                    	                    
+                	    lessonSpaceOccupation = new LessonSpaceOccupation(salaNova, aula);   
                 	} else {
-                	    roomOccupation.edit(salaNova, HourMinuteSecond.fromCalendarFields(begin), HourMinuteSecond.fromCalendarFields(end), weekDay);
+                	    lessonSpaceOccupation.edit(salaNova);
                 	}
                     } catch (DomainException e) {
                 	throw new InterceptingServiceException(e);
                     }
                 } else {
-                    if(roomOccupation != null) {
-                	roomOccupation.delete();
+                    if(lessonSpaceOccupation != null) {
+                	lessonSpaceOccupation.delete();
                     }
                 }
 

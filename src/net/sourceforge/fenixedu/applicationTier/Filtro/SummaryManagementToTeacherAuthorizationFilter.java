@@ -47,13 +47,11 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 	    }
 	    if (executionCourseResponsibleLogged
-		    && (summary.getProfessorship() != null && (!summary.getProfessorship().equals(
-			    professorshipLogged)))) {
+		    && (summary.getProfessorship() != null && (!summary.getProfessorship().equals(professorshipLogged)))) {
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 
-	    } else if (!executionCourseResponsibleLogged
-		    && (summary.getProfessorship() == null || (!summary.getProfessorship().equals(
-			    professorshipLogged)))) {
+	    } else if (!executionCourseResponsibleLogged 
+		    && (summary.getProfessorship() == null || (!summary.getProfessorship().equals(professorshipLogged)))) {
 		throw new NotAuthorizedFilterException("error.summary.not.authorized");
 	    }
 

@@ -36,23 +36,12 @@ public class LoginPeriod extends LoginPeriod_Base {
 	setEndDate(end);
     }
 
-    @Override
-    public void setBeginDate(YearMonthDay beginDate) {
-	if (beginDate == null) {
-	    throw new DomainException("error.LoginPeriods.empty.beginDateTime");
-	}
-	super.setBeginDate(beginDate);
-    }
-
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-	if (getBeginDate() == null
-		|| (endDate != null && !endDate.isAfter(getBeginDate()))) {
-	    throw new DomainException("error.LoginPeriods.endDateBeforeBeginDate");
-	}
-	super.setEndDate(endDate);
-    }
-
+    public void delete() {
+	super.setLogin(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();	
+    }   
+    
     @Override
     public void setLogin(Login login) {
 	if (login == null) {
@@ -61,9 +50,15 @@ public class LoginPeriod extends LoginPeriod_Base {
 	super.setLogin(login);
     }
 
-    public void delete() {
-	super.setLogin(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();	
-    }    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBeginDate();
+	final YearMonthDay end = getEndDate();	
+	return start != null && (end == null || !start.isAfter(end));
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasLogin(); 	
+    }     
 }

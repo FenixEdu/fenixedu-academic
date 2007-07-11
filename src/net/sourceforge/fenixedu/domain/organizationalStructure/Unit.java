@@ -56,8 +56,7 @@ import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
 
-    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(
-	    "resources.ApplicationResources", new Locale("pt"));
+    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
 
     protected Unit() {
 	super();
@@ -69,7 +68,9 @@ public class Unit extends Unit_Base {
 
 	setName(name);
 	setAcronym(acronym);
-	setCostCenterCode(costCenterCode);
+	if(getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
+	    setCostCenterCode(costCenterCode);
+	}
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setClassification(classification);

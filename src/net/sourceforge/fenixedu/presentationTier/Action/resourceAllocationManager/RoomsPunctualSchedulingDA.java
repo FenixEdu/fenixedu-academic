@@ -111,8 +111,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	} else {
 	    bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();	    	   	    
 	}
-	
-	if(bean.getFrequency() != null && bean.getPeriodType().equals(PeriodType.WITH_FREQUENCY)) {
+		
+	if(bean.getPeriodType() != null && bean.getFrequency() != null && bean.getPeriodType().equals(PeriodType.WITH_FREQUENCY)) {
 	    RenderUtils.invalidateViewState("roomsPunctualSchedulingWithInfo");
 	}
 	   		
@@ -126,16 +126,12 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 	request.setAttribute("roomsPunctualSchedulingBean", bean);
 	
-	if (bean.getBegin() != null && bean.getEnd() != null) {
-	    try {
-		executeService("CreateOccupationPeriod", new Object[] { bean.getBegin(), bean.getEnd() });
-	    } catch (DomainException domainException) {
-		saveMessages(request, domainException);
-		return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
-	    }
+	if (bean.getBegin() == null || bean.getEnd() == null ||	bean.getBegin().isAfter(bean.getEnd())) {	
+	    saveMessages(request, "error.occupationPeriod.invalid.dates");	    
+	    return mapping.findForward("prepareCreateNewRoomPunctualScheduling");	    
 	}
 	
-	if(!bean.getBeginTime().isBefore(bean.getEndTime())) {
+	if(bean.getBeginTime() == null || bean.getEndTime() == null || !bean.getBeginTime().isBefore(bean.getEndTime())) {
 	    saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
 	    return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
 	}

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -30,7 +31,7 @@ public class InfoRoomOccupation extends InfoObject {
 	return roomOccupationDomainReference == null ? null : roomOccupationDomainReference.getObject();
     }
     
-    public Integer getFrequency() {
+    public FrequencyType getFrequency() {
         return getRoomOccupation().getFrequency();
     }
 
@@ -57,13 +58,6 @@ public class InfoRoomOccupation extends InfoObject {
      */
     public Calendar getStartTime() {
         return getRoomOccupation().getStartTime();
-    }
-
-    /**
-     * @return Returns the infoPeriod.
-     */
-    public InfoPeriod getInfoPeriod() {
-        return InfoPeriod.newInfoFromDomain(getRoomOccupation().getPeriod());
     }
 
     /**

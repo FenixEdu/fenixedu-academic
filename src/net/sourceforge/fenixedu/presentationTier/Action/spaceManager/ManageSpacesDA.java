@@ -335,7 +335,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	MoveSpaceBean bean = (MoveSpaceBean) viewState.getMetaObject().getObject();
 	
 	String roomName = bean.getSpaceName();
-	List<Space> foundSpaces = AllocatableSpace.readAllAllocatableSpacesByName(roomName);
+	List<AllocatableSpace> foundSpaces = AllocatableSpace.readAllAllocatableSpacesByName(roomName);
 	request.setAttribute("spaces", foundSpaces);
 	request.setAttribute("moveSpaceBean", bean);
 	

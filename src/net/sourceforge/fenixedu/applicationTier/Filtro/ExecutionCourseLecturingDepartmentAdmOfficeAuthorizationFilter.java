@@ -9,8 +9,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
-public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter extends
-	AuthorizationByRoleFilter {
+public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 
     @Override
     protected RoleType getRoleType() {

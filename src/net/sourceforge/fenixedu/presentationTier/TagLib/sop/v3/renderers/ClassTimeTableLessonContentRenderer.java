@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -31,8 +30,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append(infoExecutionCourse.getIdInternal());
             
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>")
-                    .append("</a>");
+            strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");
@@ -44,12 +42,32 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
                             .append("</a>");
             }
 
-            //TODO(rspl): Will it stay like this the interface for showing
-            // it is a quinzenal lesson?
             if (lesson.getInfoRoomOccupation() != null && lesson.getInfoRoomOccupation().getFrequency() != null &&
-                        lesson.getInfoRoomOccupation().getFrequency().intValue() == EventSpaceOccupation.QUINZENAL) {
+                        lesson.getInfoRoomOccupation().getFrequency().equals(FrequencyType.BIWEEKLY)) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
+        } else if (showOccupation instanceof InfoLessonInstance) {
+            
+            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+
+            InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+            strBuffer.append("<a href='");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append(infoExecutionCourse.getIdInternal());
+            
+            InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
+            strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(" <a href='");
+                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
+                            .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
+                            .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
+                            .append("&amp;executionPeriodOID=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
+                            .append("&amp;shift=true").append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
+                            .append("</a>");
+            }         
+            
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {

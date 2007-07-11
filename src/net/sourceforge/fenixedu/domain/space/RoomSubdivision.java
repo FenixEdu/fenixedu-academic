@@ -27,6 +27,11 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	super.delete();
     }
     
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasSuroundingSpace(); 	
+    }    
+    
     @Override
     public RoomSubdivisionInformation getSpaceInformation() {
 	return (RoomSubdivisionInformation) super.getSpaceInformation();

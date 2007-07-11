@@ -1,11 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,7 +28,7 @@ public class Login extends Login_Base {
 	for (; !getLoginPeriods().isEmpty(); getLoginPeriods().get(0).delete());
 	super.delete();
     }
-
+    
     public LoginPeriod readLoginPeriodByTimeInterval(YearMonthDay begin, YearMonthDay end) {
 	for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 	    if (loginPeriod.getBeginDate().equals(begin)
@@ -160,8 +157,7 @@ public class Login extends Login_Base {
     }
 
     public Set<LoginAlias> getLoginAliasOrderByImportance() {
-	Set<LoginAlias> result = new TreeSet<LoginAlias>(
-		LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
+	Set<LoginAlias> result = new TreeSet<LoginAlias>(LoginAlias.COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS);
 	result.addAll(getAlias());
 	return result;
     }
@@ -189,8 +185,6 @@ public class Login extends Login_Base {
 	}
 	return loginPeriods;
     }
-
-    private static final Map<String, SoftReference<LoginAlias>> loginMap = new Hashtable<String, SoftReference<LoginAlias>>();
 
     public static Login readLoginByUsername(String username) {
 	final LoginAlias loginAlias = LoginAlias.readLoginByUsername(username);

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -87,12 +88,12 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	return !StringUtils.isEmpty(getIdentification());
     }   
            
-    public static List<Space> readAllAllocatableSpacesByName(String name){
-	List<Space> result = new ArrayList<Space>();	
+    public static List<AllocatableSpace> readAllAllocatableSpacesByName(String name){
+	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();	
 	String[] identificationWords = getIdentificationWords(name);
 	for (Resource resource : RootDomainObject.getInstance().getResources()) {	    
 	    if (resource.isAllocatableSpace() && ((Space)resource).verifyNameEquality(identificationWords)) {
-		result.add((Space) resource);
+		result.add((AllocatableSpace) resource);
 	    }
 	}
 	return result;
@@ -167,7 +168,8 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducation() {	
         List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (Resource space : RootDomainObject.getInstance().getResources()) {
-            if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive() && ((AllocatableSpace)space).isForEducation()) {
+            if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive()
+        	    && ((AllocatableSpace)space).isForEducation()) {
         	result.add((AllocatableSpace) space);
             }
         }
@@ -201,39 +203,36 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}
 	return result;
     } 
-       
-    public boolean isFree(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, HourMinuteSecond endTime, 
-	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
-	    Boolean dailyFrequencyMarkSunday) {
+    
+    public boolean isFree(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, 
+	    HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Integer week,
+	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 	
 	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
-		if (occupation.alreadyWasOccupied(startDate, endDate, startTime, endTime, 
-			    dayOfWeek, frequency, week, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
+		if (occupation.alreadyWasOccupiedIn(startDate, endDate, startTime, endTime, dayOfWeek,
+			frequency, week, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
 		    return false;
 		}
 	    }
-	}	
+	}		
 	return true;
     }
     
-    public boolean isFree(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, HourMinuteSecond endTime, 
-	    DiaSemana dayOfWeek, Integer frequency, Integer week, Boolean dailyFrequencyMarkSaturday,
-	    Boolean dailyFrequencyMarkSunday, EventSpaceOccupation occupationToNotCheck) {
-	
+    public boolean isFree(EventSpaceOccupation occupationToNotCheck) {	
 	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
-		if (!occupation.equals(occupationToNotCheck) && occupation.alreadyWasOccupied(startDate, endDate, startTime, endTime, 
-			    dayOfWeek, frequency, week, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
+		if (!occupation.equals(occupationToNotCheck) 
+			&& occupation.alreadyWasOccupiedBy(occupationToNotCheck)) {
 		    return false;
 		}
 	    }
 	}	
 	return true;
     }
-      
+                 
     public List<Lesson> getAssociatedLessons(final ExecutionPeriod executionPeriod) {
 	final List<Lesson> lessons = new ArrayList<Lesson>();
 	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {

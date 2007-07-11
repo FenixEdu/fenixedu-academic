@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -21,8 +22,8 @@ import org.joda.time.YearMonthDay;
 public class ReadAvailableRoomsForExam extends Service {
 
     public List<InfoRoom> run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
-	    DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
-	    Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
+	    DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Integer weekOfStart,
+	    Boolean withLabs) throws ExcepcaoPersistencia {
 
 	final Collection<AllocatableSpace> rooms = new HashSet<AllocatableSpace>();
 	final List<AllocatableSpace> roomsToCheck = new ArrayList<AllocatableSpace>();

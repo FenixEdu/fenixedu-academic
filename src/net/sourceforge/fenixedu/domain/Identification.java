@@ -25,10 +25,15 @@ public abstract class Identification extends Identification_Base {
         super.deleteDomainObject();
     }
 
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasUser(); 	
+    }
+    
     public boolean isLogin() {
         return false;
     }
-    
+           
     @Override
     public void setUser(User user) {
 	if(user == null) {
@@ -38,8 +43,7 @@ public abstract class Identification extends Identification_Base {
     }
 
     public boolean belongsToPeriod(DateTime begin, DateTime end) {
-	return ((end == null || !this.getBeginDateDateTime().isAfter(end)) && (this.getEndDateDateTime() == null || !this
-		.getEndDateDateTime().isBefore(begin)));
+	return ((end == null || !getBeginDateDateTime().isAfter(end)) && (getEndDateDateTime() == null || !getEndDateDateTime().isBefore(begin)));
     }
     
     public boolean isActive(DateTime currentDate) {

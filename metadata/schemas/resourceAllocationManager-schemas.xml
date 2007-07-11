@@ -29,6 +29,7 @@
 	<slot name="frequency" key="label.frequency" layout="menu-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >	
 		<property name="destination" value="postBack"/>	
 	</slot>		
+	<setter signature="editFrequencyTypeWithoutDailyFrequency(begin, beginTime, end, endTime, frequency)"/>
 </schema>
 
 <schema name="CreateFrequencyWithDailyFrequencyRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
@@ -41,13 +42,15 @@
 	</slot>		
 	<slot name="markSaturday" key="label.mark.saturday" />
 	<slot name="markSunday" key="label.mark.sunday" />
+	<setter signature="editFrequencyTypeWithDailyFrequency(begin, beginTime, end, endTime, frequency, markSaturday, markSunday)"/>
 </schema>
 
 <schema name="CreateContinuousRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
 	<slot name="begin" key="label.day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="beginTime" key="label.begin.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end" key="label.until" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+	<slot name="endTime" key="label.end.hour" layout="hour-minute" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="editContinuousType(begin, beginTime, end, endTime)"/>		
 </schema>
 
 <schema name="AddNewRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	

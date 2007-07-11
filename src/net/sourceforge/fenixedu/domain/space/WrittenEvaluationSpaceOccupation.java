@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -9,43 +8,29 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.YearMonthDay;
+
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
       
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace, HourMinuteSecond startTime,
-	    HourMinuteSecond endTime, DiaSemana dayOfWeek, 
-	    OccupationPeriod period, WrittenEvaluation writtenEvaluation) {	
+    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace, WrittenEvaluation writtenEvaluation) {	
         
-	super();	
+	super();		
+
+	setWrittenEvaluation(writtenEvaluation);
 	
-	if(period != null && allocatableSpace != null && startTime != null && endTime != null && dayOfWeek != null) {
-	    if(!allocatableSpace.isFree(period.getStartYearMonthDay(), period.getEndYearMonthDay(),
-		    startTime, endTime, dayOfWeek, null, null, Boolean.TRUE, Boolean.TRUE, this)) {		
-		throw new DomainException("error.roomOccupied", getRoom().getName());
-	    }
+	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {		
+	    throw new DomainException("error.roomOccupied", getRoom().getName());
 	}
-	
-        setResource(allocatableSpace);
-        setOccupationInterval(startTime, endTime);
-        setDayOfWeek(dayOfWeek);
-        setWrittenEvaluation(writtenEvaluation);
-        setPeriod(period);
+
+        setResource(allocatableSpace);                		       		  
     }    
     
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public void edit(HourMinuteSecond startTime,
-	    HourMinuteSecond endTime, DiaSemana dayOfWeek, OccupationPeriod period) {
-	
-	if(period != null && startTime != null && endTime != null && dayOfWeek != null) {
-	    if(!getRoom().isFree(period.getStartYearMonthDay(), period.getEndYearMonthDay(),
-		    startTime, endTime, dayOfWeek, null, null, Boolean.TRUE, Boolean.TRUE, this)) {		
-		throw new DomainException("error.roomOccupied", getRoom().getName());
-	    }
-	}
-	
-	setOccupationInterval(startTime, endTime);
-	setDayOfWeek(dayOfWeek);
-	setPeriod(period);
+    public void edit() {	
+	if(!getRoom().isFree(this)) {		
+	    throw new DomainException("error.roomOccupied", getRoom().getName());
+	}	
     }
           
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
@@ -54,14 +39,11 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	super.delete();    
     }
     
-    public void setOccupationInterval(final HourMinuteSecond begin, final HourMinuteSecond end) {
-	if(begin == null || end == null || !begin.isBefore(end)) {
-	    throw new DomainException("error.EventSpaceOccupation.invalid.time");
-	}	
-	super.setStartTimeDateHourMinuteSecond(begin);
-	super.setEndTimeDateHourMinuteSecond(end);
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasWrittenEvaluation();	
     }
-    
+
     @Override
     public boolean isWrittenEvaluationSpaceOccupation() {
 	return true;
@@ -74,9 +56,49 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	}
 	super.setWrittenEvaluation(writtenEvaluation);
     }
+        
+    @Override
+    public Group getAccessGroup() {
+	return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
+    }
+        
+    @Override
+    public YearMonthDay getBeginDate() {
+	return getWrittenEvaluation().getDayDateYearMonthDay();
+    }
+
+    @Override
+    public YearMonthDay getEndDate() {
+	return getWrittenEvaluation().getDayDateYearMonthDay();
+    }
     
     @Override
-    public Integer getFrequency() {
+    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+	return getWrittenEvaluation().getBeginningDateHourMinuteSecond();
+    }
+       
+    @Override
+    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+	return getWrittenEvaluation().getEndDateHourMinuteSecond();
+    }
+
+    @Override
+    public Boolean getDailyFrequencyMarkSaturday() {
+	return null;
+    }
+
+    @Override
+    public Boolean getDailyFrequencyMarkSunday() {
+	return null;
+    }
+
+    @Override
+    public DiaSemana getDayOfWeek() {
+	return null;
+    }    
+    
+    @Override
+    public FrequencyType getFrequency() {
 	return null;
     }
 
@@ -84,24 +106,4 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     public Integer getWeekOfQuinzenalStart() {
 	return null;
     }
-
-    @Override
-    public void setFrequency(Integer frequency) {
-	// Do Nothing
-    }
-
-    @Override
-    public void setFrequency(FrequencyType type) {
-	// Do Nothing
-    }
-
-    @Override
-    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-	// Do Nothing
-    }
-
-    @Override
-    public Group getAccessGroup() {
-	return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
-    }      
 }

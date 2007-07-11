@@ -81,4 +81,9 @@ public class Accountability extends Accountability_Base {
 	final YearMonthDay end = getEndDate();	
 	return start != null && (end == null || !start.isAfter(end));
     }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasChildParty() && hasParentParty() && hasAccountabilityType(); 	
+    }
 }

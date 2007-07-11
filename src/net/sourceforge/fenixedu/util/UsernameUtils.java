@@ -55,8 +55,7 @@ public class UsernameUtils extends FenixUtil {
 	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER && person.hasGrantOwner()) {
 		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
 
-	    } else if (mostImportantRole != null && 
-		    (mostImportantRole.getRoleType() == RoleType.STUDENT || mostImportantRole.getRoleType() == RoleType.ALUMNI)) {
+	    } else if (mostImportantRole != null && (mostImportantRole.getRoleType() == RoleType.STUDENT || mostImportantRole.getRoleType() == RoleType.ALUMNI)) {
 		
 		if (person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
 		    final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();

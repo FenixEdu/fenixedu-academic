@@ -4,8 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str"%>
-<%@ page import="java.util.Calendar"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPeriod"%>
+
 <table>
 	<tr>
 		<logic:present name="infoDegreeCurricularPlan">

@@ -26,12 +26,12 @@ public class WrittenTest extends WrittenTest_Base {
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
-            OccupationPeriod period, String description) {
+            String description) {
         
     	super();
         checkEvaluationDate(testDate, executionCoursesToAssociate);
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
-                executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
+                executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
 
         this.setOjbConcreteClass(WrittenTest.class.getName());
         this.setDescription(description);
@@ -52,15 +52,14 @@ public class WrittenTest extends WrittenTest_Base {
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
-            OccupationPeriod period, String description) {
+            String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);
 
         this.getAssociatedExecutionCourses().clear();
         this.getAssociatedCurricularCourseScope().clear();
 
-        setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
-                executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
+        setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
         this.setDescription(description);
         checkIntervalBetweenEvaluations();
     }

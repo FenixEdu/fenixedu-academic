@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
@@ -32,115 +33,99 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author tfc130
  */
-public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction
-{
+public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException
-    {
-        try
-        {
-            super.execute(mapping, form, request, response);
-        } catch (Exception e2)
-        {
-            e2.printStackTrace();
-        }
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	try {
+	    super.execute(mapping, form, request, response);
+	} catch (Exception e2) {
+	    e2.printStackTrace();
+	}
 
-        DynaActionForm indexForm = (DynaActionForm) form;
-        Integer indexWeek = (Integer) indexForm.get("indexWeek");
-        String selectedExecutionPeriodOIDString = (String) indexForm.get("selectedExecutionPeriodOID");
-        Integer selectedExecutionPeriodOID = (selectedExecutionPeriodOIDString != null && selectedExecutionPeriodOIDString
-                .length() > 0) ? new Integer(selectedExecutionPeriodOIDString) : null;
-        request.removeAttribute(SessionConstants.INFO_SECTION);
+	DynaActionForm indexForm = (DynaActionForm) form;
+	Integer indexWeek = (Integer) indexForm.get("indexWeek");
+	String selectedExecutionPeriodOIDString = (String) indexForm.get("selectedExecutionPeriodOID");
+	Integer selectedExecutionPeriodOID = (selectedExecutionPeriodOIDString != null && selectedExecutionPeriodOIDString
+		.length() > 0) ? new Integer(selectedExecutionPeriodOIDString) : null;
+		
+	request.removeAttribute(SessionConstants.INFO_SECTION);
+	IUserView userView = SessionUtils.getUserView(request);
+	setListOfExecutionPeriods(request, userView);
 
-        IUserView userView = SessionUtils.getUserView(request);
+	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(SessionConstants.SELECTED_ROOMS);
+	InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
 
-        setListOfExecutionPeriods(request, userView);
+	if (indexWeek != null) {
+	    String roomOidString = request.getParameter(SessionConstants.ROOM_OID);
+	    if (roomOidString != null) {
+		Integer roomOid = new Integer(Integer.parseInt(roomOidString));
+		infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+			new Object[] { roomOid });
 
-        List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
-        InfoRoom infoRoom = (InfoRoom) infoRooms.get(((Integer) indexForm.get("index")).intValue());
+	    } else {
+		indexWeek = null;
+	    }
 
-        if (indexWeek != null)
-        {
-            String roomOidString = request.getParameter(SessionConstants.ROOM_OID);
-            if (roomOidString != null)
-            {
-                Integer roomOid = new Integer(Integer.parseInt(roomOidString));
-                infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
-                        new Object[] { roomOid });
+	}
 
-            } else
-            {
-                indexWeek = null;
-            }
+	request.setAttribute(SessionConstants.ROOM, infoRoom);
+	request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());
 
-        }
+	List<Calendar> weeks = new ArrayList<Calendar>();
 
-        request.setAttribute(SessionConstants.ROOM, infoRoom);
-        request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());
+	// weeks
+	InfoExecutionPeriod executionPeriod = getExecutionPeriod(userView, selectedExecutionPeriodOID);
+	indexForm.set("selectedExecutionPeriodOID", executionPeriod.getIdInternal().toString());
 
-        ArrayList weeks = new ArrayList();
+	Calendar begin = Calendar.getInstance();
+	begin.setTime(executionPeriod.getBeginDate());
+	Calendar end = Calendar.getInstance();
+	end.setTime(executionPeriod.getEndDate());
+	List<LabelValueBean> weeksLabelValueList = new ArrayList<LabelValueBean>();
+	begin.add(Calendar.DATE, Calendar.MONDAY - begin.get(Calendar.DAY_OF_WEEK));
+	int i = 0;
+	boolean selectedWeek = false;
+	while (begin.before(end) || begin.before(Calendar.getInstance())) {
+	    Calendar day = Calendar.getInstance();
+	    day.setTimeInMillis(begin.getTimeInMillis());
+	    weeks.add(day);
+	    String beginWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+	    begin.add(Calendar.DATE, 5);
+	    String endWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+	    weeksLabelValueList.add(new LabelValueBean(beginWeekString + " - " + endWeekString, new Integer(i).toString()));
+	    begin.add(Calendar.DATE, 2);
+	    if (!selectedWeek && indexWeek == null && Calendar.getInstance().before(begin)) {
+		indexForm.set("indexWeek", new Integer(i));
+		selectedWeek = true;
+	    }
+	    i++;
+	}
 
-        // weeks
-        InfoExecutionPeriod executionPeriod = getExecutionPeriod(userView, selectedExecutionPeriodOID);
-        indexForm.set("selectedExecutionPeriodOID", executionPeriod.getIdInternal().toString());
+	Calendar today = null;
+	if (indexWeek == null) {
+	    today = Calendar.getInstance();
+	    if (!executionPeriod.getState().equals(PeriodState.CURRENT)) {
+		// today.setTime(executionPeriod.getBeginDate());
+		today = (Calendar) weeks.get(0);
+		indexForm.set("indexWeek", new Integer(0));
+	    }
+	} else {
+	    today = (Calendar) weeks.get(indexWeek.intValue());
+	}
 
-        Calendar begin = Calendar.getInstance();
-        begin.setTime(executionPeriod.getBeginDate());
-        Calendar end = Calendar.getInstance();
-        end.setTime(executionPeriod.getEndDate());
-        ArrayList weeksLabelValueList = new ArrayList();
-        begin.add(Calendar.DATE, Calendar.MONDAY - begin.get(Calendar.DAY_OF_WEEK));
-        int i = 0;
-        boolean selectedWeek = false;
-        while (begin.before(end) || begin.before(Calendar.getInstance()))
-        {
-            Calendar day = Calendar.getInstance();
-            day.setTimeInMillis(begin.getTimeInMillis());
-            weeks.add(day);
-            String beginWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
-            begin.add(Calendar.DATE, 5);
-            String endWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
-            weeksLabelValueList.add(new LabelValueBean(beginWeekString + " - " + endWeekString,
-                    new Integer(i).toString()));
-            begin.add(Calendar.DATE, 2);
-            if (!selectedWeek && indexWeek == null && Calendar.getInstance().before(begin))
-            {
-                indexForm.set("indexWeek", new Integer(i));
-                selectedWeek = true;
-            }
-            i++;
-        }
+	Object argsReadLessonsAndExams[] = { infoRoom, today, executionPeriod };
 
-        Calendar today = null;
-        if (indexWeek == null)
-        {
-            today = Calendar.getInstance();
-            if (!executionPeriod.getState().equals(PeriodState.CURRENT))
-            {
-                // today.setTime(executionPeriod.getBeginDate());
-                today = (Calendar) weeks.get(0);
-                indexForm.set("indexWeek", new Integer(0));
-            }
-        } else
-        {
-            today = (Calendar) weeks.get(indexWeek.intValue());
-        }
+	List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(userView,
+		"ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", argsReadLessonsAndExams);
 
-        Object argsReadLessonsAndExams[] = { infoRoom, today, executionPeriod };
+	if (showOccupations != null) {
+	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
+	}
 
-        List showOccupations = (List) ServiceUtils.executeService(userView,
-                "ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", argsReadLessonsAndExams);
+	request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
 
-        if (showOccupations != null)
-        {
-            request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
-        }
-
-        request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
-
-        return mapping.findForward("Sucess");
+	return mapping.findForward("Sucess");
     }
 
     /**
@@ -151,43 +136,40 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
      * @throws FenixFilterException
      */
     private InfoExecutionPeriod getExecutionPeriod(IUserView userView, Integer selectedExecutionPeriodOID)
-            throws FenixFilterException, FenixServiceException
-    {
-        if (selectedExecutionPeriodOID == null)
-        {
-            return (InfoExecutionPeriod) ServiceUtils.executeService(userView,
-                    "ReadCurrentExecutionPeriod", new Object[] {});
-        }
-        Object[] args = { selectedExecutionPeriodOID };
-        return (InfoExecutionPeriod) ServiceUtils.executeService(null, "ReadExecutionPeriodByOID", args);
+	    throws FenixFilterException, FenixServiceException {
+	if (selectedExecutionPeriodOID == null) {
+	    return (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+		    "ReadCurrentExecutionPeriod", new Object[] {});
+	}
+	Object[] args = { selectedExecutionPeriodOID };
+	return (InfoExecutionPeriod) ServiceUtils.executeService(null, "ReadExecutionPeriodByOID", args);
 
     }
 
     protected void setListOfExecutionPeriods(HttpServletRequest request, IUserView userView)
-            throws FenixServiceException, FenixFilterException
-    {
-        Object argsReadExecutionPeriods[] = {};
-        List executionPeriods;
-        executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-                "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
+	    throws FenixServiceException, FenixFilterException {
+	
+	Object argsReadExecutionPeriods[] = {};
+	List<InfoExecutionPeriod> executionPeriods;
+	executionPeriods = (ArrayList<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(userView,
+		"ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
 
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-        chainComparator.addComparator(new BeanComparator("semester"));
-        Collections.sort(executionPeriods, chainComparator);
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+	chainComparator.addComparator(new BeanComparator("semester"));
+	Collections.sort(executionPeriods, chainComparator);
 
-        List executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++)
-        {
-            InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod2.getName() + " - "
-                    + infoExecutionPeriod2.getInfoExecutionYear().getYear(), ""
-                    + infoExecutionPeriod2.getIdInternal()));
-        }
+	List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
+	for (int i = 0; i < executionPeriods.size(); i++) {
+	    InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
+	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod2.getName() + " - "
+		    + infoExecutionPeriod2.getInfoExecutionYear().getYear(), ""
+		    + infoExecutionPeriod2.getIdInternal()));
+	}
 
-        request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
+	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
 
-        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
     }
 
 }

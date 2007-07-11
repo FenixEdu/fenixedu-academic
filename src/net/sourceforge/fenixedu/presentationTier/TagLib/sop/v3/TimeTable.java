@@ -98,15 +98,12 @@ public class TimeTable {
 
         DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
-        int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes,
-                this.slotSize.intValue());
-        int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes,
-                this.slotSize.intValue());
+        int startIndex = getHourIndex(infoShowOccupation.getInicio(), this.minimumHourInMinutes, this.slotSize.intValue());
+        int endIndex = getHourIndex(infoShowOccupation.getFim(), this.minimumHourInMinutes, this.slotSize.intValue());
 
         /* break lesson in slots */
         for (int hourIndex = startIndex; hourIndex < endIndex; hourIndex++) {
-            LessonSlot lessonSlot = new LessonSlot(getInfoLessonWrapper(infoShowOccupation), startIndex,
-                    endIndex - 1);
+            LessonSlot lessonSlot = new LessonSlot(getInfoLessonWrapper(infoShowOccupation), startIndex, endIndex - 1);
             TimeTableSlot timeTableSlot = getTimeTableSlot(dayColumn, hourIndex);
             timeTableSlot.addLessonSlot(lessonSlot);
         }
@@ -116,18 +113,9 @@ public class TimeTable {
      * Method getInfoLessonWrapper.
      * 
      * @param infoLesson
-     */
-    /*
-     * private InfoLessonWrapper getInfoLessonWrapper(InfoLesson infoLesson) {
-     * InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper)
-     * this.infoLessonWrapperMap.get(infoLesson); if (infoLessonWrapper ==
-     * null){ infoLessonWrapper = new InfoLessonWrapper (infoLesson);
-     * this.infoLessonWrapperMap.put(infoLesson, infoLessonWrapper); } return
-     * infoLessonWrapper; }
-     */
+     */    
     private InfoLessonWrapper getInfoLessonWrapper(InfoShowOccupation infoShowOccupation) {
-        InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap
-                .get(infoShowOccupation);
+        InfoLessonWrapper infoLessonWrapper = (InfoLessonWrapper) this.infoLessonWrapperMap.get(infoShowOccupation);
         if (infoLessonWrapper == null) {
             infoLessonWrapper = new InfoLessonWrapper(infoShowOccupation);
             this.infoLessonWrapperMap.put(infoShowOccupation, infoLessonWrapper);

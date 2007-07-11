@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -40,10 +39,8 @@ public class CreateWrittenEvaluation extends Service {
                 curricularCourseContextIDs);
 
         List<AllocatableSpace> roomsToAssociate = null;
-        OccupationPeriod period = null;
         if (roomIDs != null) {
-            roomsToAssociate = readRooms(roomIDs);
-            period = readPeriod(writtenEvaluationDate);
+            roomsToAssociate = readRooms(roomIDs);        
         }
 
         // creating the new written evaluation, according to the service arguments
@@ -51,11 +48,11 @@ public class CreateWrittenEvaluation extends Service {
             new Exam(writtenEvaluationDate,
                     writtenEvaluationStartTime, writtenEvaluationEndTime,
                     executionCoursesToAssociate, curricularCourseScopesToAssociate, roomsToAssociate,
-                    period, examSeason);
+                    examSeason);
         } else if (writtenTestDescription != null) {
             new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime,
             		writtenEvaluationEndTime, executionCoursesToAssociate,
-                    curricularCourseScopesToAssociate, roomsToAssociate, period, writtenTestDescription);
+            		curricularCourseScopesToAssociate, roomsToAssociate, writtenTestDescription);
         } else {
             throw new InvalidArgumentsServiceException();
         }
@@ -110,16 +107,5 @@ public class CreateWrittenEvaluation extends Service {
             result.add(room);
         }
         return result;
-    }
-
-    private OccupationPeriod readPeriod(final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
-        OccupationPeriod period = OccupationPeriod.readByDates(
-                writtenEvaluationDate,
-                writtenEvaluationDate);
-        if (period == null) {
-            period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
-        }
-        return period;
-    }
-
+    }   
 }

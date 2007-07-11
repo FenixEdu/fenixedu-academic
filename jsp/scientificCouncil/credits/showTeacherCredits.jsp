@@ -56,18 +56,21 @@
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
 		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
-		<h4 style="display:inline">
-			<span class="bluetxt">		
-				<bean:write name="professorship" property="executionCourse.nome"/>				
-				<bean:size id="degreeSiglasSizeList" name="professorshipDTO" property="degreeSiglas"/>
-				(<logic:iterate id="sigla" name="professorshipDTO" property="degreeSiglas" indexId="index">
-					<bean:write name="sigla" /> 
-					<logic:notEqual name="degreeSiglasSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
-					,
-					</logic:notEqual>
-				</logic:iterate>)
-			</span>
-		</h4>
+		
+		<p class="mtop1">
+			<h4 style="display:inline">
+				<span class="bluetxt">		
+					<bean:write name="professorship" property="executionCourse.nome"/>				
+					<bean:size id="degreeSiglasSizeList" name="professorshipDTO" property="degreeSiglas"/>
+					(<logic:iterate id="sigla" name="professorshipDTO" property="degreeSiglas" indexId="index">
+						<bean:write name="sigla" /> 
+						<logic:notEqual name="degreeSiglasSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
+						,
+						</logic:notEqual>
+					</logic:iterate>)
+				</span>
+			</h4>
+		</p>
 <%-- ========================= DEGREE TEACHING SERVICES ========================== --%>
 		<bean:define id="professorshipID" name="professorship" property="idInternal"/>
 

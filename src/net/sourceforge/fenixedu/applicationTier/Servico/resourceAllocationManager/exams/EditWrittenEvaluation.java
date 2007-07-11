@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -53,11 +52,9 @@ public class EditWrittenEvaluation extends Service {
 	final List<DegreeModuleScope> curricularCourseScopeToAssociate = readCurricularCourseScopesAndContexts(
 		curricularCourseScopeIDs, curricularCourseContextIDs);
 
-	List<AllocatableSpace> roomsToAssociate = null;
-	OccupationPeriod period = null;
+	List<AllocatableSpace> roomsToAssociate = null;	
 	if (roomIDs != null) {
-	    roomsToAssociate = readRooms(roomIDs);
-	    period = readPeriod(writtenEvaluation, writtenEvaluationDate);
+	    roomsToAssociate = readRooms(roomIDs);	    
 	}
 
 	if (writtenEvaluation.hasAnyVigilancies()
@@ -70,37 +67,16 @@ public class EditWrittenEvaluation extends Service {
 	if (examSeason != null) {
 	    ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime,
 		    writtenEvaluationEndTime, executionCoursesToAssociate, curricularCourseScopeToAssociate,
-		    roomsToAssociate, period, examSeason);
+		    roomsToAssociate, examSeason);
 	} else if (writtenTestDescription != null) {
 	    ((WrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime,
 		    writtenEvaluationEndTime, executionCoursesToAssociate, curricularCourseScopeToAssociate,
-		    roomsToAssociate, period, writtenTestDescription);
+		    roomsToAssociate, writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-    }
-
-    private OccupationPeriod readPeriod(final WrittenEvaluation writtenEvaluation,
-	    final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
-	OccupationPeriod period = null;
-	if (!writtenEvaluation.getWrittenEvaluationSpaceOccupations().isEmpty()) {
-	    period = writtenEvaluation.getWrittenEvaluationSpaceOccupations().get(0).getPeriod();
-	    if (writtenEvaluation.getWrittenEvaluationSpaceOccupations().containsAll(period.getEventSpaceOccupations())) {
-		period.setStart(writtenEvaluationDate);
-		period.setEnd(writtenEvaluationDate);
-	    } else {
-		period = null;
-	    }
-	}
-	if (period == null) {
-	    period = OccupationPeriod.readByDates(writtenEvaluationDate, writtenEvaluationDate);
-	    if (period == null) {
-		period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
-	    }
-	}
-	return period;
-    }
+    }    
 
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws ExcepcaoPersistencia,
 	    FenixServiceException {

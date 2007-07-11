@@ -29,3 +29,11 @@ function executeWithTempFile() {
 
 execute "Remove announcements section" changeDegreeSections.sql
 execute "Add dissertation section" createDegreeSection.sql
+
+
+execute "Create Lesson Instance Table 1" createTableLessonInstance1.sql
+executeWithTempFile "Create Lesson Instance Table 2" createTableLessonInstance2.sql
+executeWithTempFile "Create Lesson Instance Table 3" createTableLessonInstance3.sql
+executeWithTempFile "Create Lesson Instance Table 4" createTableLessonInstance4.sql
+executeWithTempFile "Create Lesson Instance Table 5" createTableLessonInstance5.sql
+executeWithTempFile "Create Lesson Instance Table 6" createTableLessonInstance6.sql

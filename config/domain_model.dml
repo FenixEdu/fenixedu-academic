@@ -738,6 +738,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString description;
 		FrequencyType frequency;
 		MultiLanguageString title;
+		YearMonthDay beginDate;
+		YearMonthDay endDate;
+		HourMinuteSecond startTimeDateHourMinuteSecond;
+		HourMinuteSecond endTimeDateHourMinuteSecond;
+		Boolean dailyFrequencyMarkSunday;
+		Boolean dailyFrequencyMarkSaturday;
 	}
 
 	class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -835,11 +841,16 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		HourMinuteSecond beginHourMinuteSecond;
 		DiaSemana diaSemana;
 		HourMinuteSecond endHourMinuteSecond;
-		Integer frequency;
+		FrequencyType frequency;
 		ShiftType tipo;
 		Integer weekOfQuinzenalStart;
 	}
 
+	class net.sourceforge.fenixedu.domain.LessonInstance extends net.sourceforge.fenixedu.domain.DomainObject {
+		DateTime beginDateTime;
+		DateTime endDateTime;
+	}
+	
 	class net.sourceforge.fenixedu.domain.LessonPlanning extends net.sourceforge.fenixedu.domain.DomainObject {
 		ShiftType lessonType;
 		Integer orderOfPlanning;
@@ -3392,12 +3403,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourceforge.fenixedu.domain.resource.ResourceAllocation {
 		}
 
-			class net.sourceforge.fenixedu.domain.space.EventSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
-				Boolean dailyFrequencyMarkSaturday;
-				Boolean dailyFrequencyMarkSunday;
-				DiaSemana dayOfWeek;
-				HourMinuteSecond endTimeDateHourMinuteSecond;
-				HourMinuteSecond startTimeDateHourMinuteSecond;
+			class net.sourceforge.fenixedu.domain.space.EventSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {				
 			}
 
 				class net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation extends net.sourceforge.fenixedu.domain.space.EventSpaceOccupation {
@@ -3406,6 +3412,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.EventSpaceOccupation {
 				}
 
+				class net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation extends net.sourceforge.fenixedu.domain.space.EventSpaceOccupation {			
+				}
+				
 				class net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation extends net.sourceforge.fenixedu.domain.space.EventSpaceOccupation {
 				}
 
@@ -3425,7 +3434,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 				YearMonthDay begin;
 				YearMonthDay end;
-			}
+			}		
 
 	class net.sourceforge.fenixedu.domain.resource.ResourceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay begin;
@@ -6913,13 +6922,6 @@ relation LessonShift {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
-relation LessonSummary {
-	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
-}
-
 relation LoginAliasLogin {
 	net.sourceforge.fenixedu.domain.Login playsRole login;
 	net.sourceforge.fenixedu.domain.LoginAlias playsRole alias {
@@ -7462,13 +7464,6 @@ relation PaymentPhaseGratuityValues {
 relation PaymentTransactionGuideEntry {
 	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransaction;
 	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
-}
-
-relation PeriodEventSpaceOccupation {
-	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole period;
-	net.sourceforge.fenixedu.domain.space.EventSpaceOccupation playsRole eventSpaceOccupations {
-		multiplicity *;
-	}
 }
 
 relation PeriodNextPeriod {
@@ -12008,3 +12003,33 @@ relation YearStudentSpecialSeasonCodeStudent {
 	}
 }
 
+relation OccupationPeriodLesson {
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole period;
+	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
+		multiplicity *;
+	}
+}
+
+relation LessonInstanceRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstances {
+		multiplicity *;
+	}
+}
+
+relation LessonInstanceLesson {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstances {
+		multiplicity *;
+	}
+}
+
+relation LessonInstanceLessonInstanceSpaceOccupation {
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstance;
+	net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation playsRole lessonInstanceSpaceOccupation;
+}
+
+relation SummaryLessonInstance {
+	net.sourceforge.fenixedu.domain.Summary playsRole summary;
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstance;
+}

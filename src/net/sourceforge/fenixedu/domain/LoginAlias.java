@@ -19,10 +19,8 @@ public class LoginAlias extends LoginAlias_Base {
     public final static Comparator<LoginAlias> COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("type"));
-	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new Comparator() {
-	    public int compare(Object o1, Object o2) {
-		LoginAlias loginAlias1 = (LoginAlias) o1;
-		LoginAlias loginAlias2 = (LoginAlias) o2;
+	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new Comparator<LoginAlias>() {
+	    public int compare(LoginAlias loginAlias1, LoginAlias loginAlias2) {		
 		if (loginAlias1.getRoleType() != null && loginAlias2.getRoleType() != null) {
 		    List<RoleType> rolesImportance = RoleType.getRolesImportance();
 		    Integer indexOfRoleType1 = Integer.valueOf(rolesImportance.indexOf(loginAlias1.getRoleType()));
@@ -38,14 +36,7 @@ public class LoginAlias extends LoginAlias_Base {
 	});
 	((ComparatorChain) COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS).addComparator(new BeanComparator("alias", Collator.getInstance()));
     }
-    
-    public void editCustomAlias(String alias) {
-	if(this.getType().equals(LoginAliasType.CUSTOM_ALIAS)) {
-	   checkIfAliasAlreadyExists(alias, this.getLogin());
-	   setAlias(alias);
-	}
-    }
-
+        
     public static void createNewCustomLoginAlias(Login login, String alias) {
 	new LoginAlias(login, alias, LoginAliasType.CUSTOM_ALIAS);
     }
@@ -59,6 +50,7 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     private LoginAlias(Login login, String alias, LoginAliasType loginAliasType) {
+	
 	super();
 	checkIfAliasAlreadyExists(alias, login);
 	if (loginAliasType != null && loginAliasType.equals(LoginAliasType.INSTITUTION_ALIAS)) {
@@ -72,6 +64,7 @@ public class LoginAlias extends LoginAlias_Base {
     }
 
     private LoginAlias(Login login, String alias, RoleType roleType, LoginAliasType loginAliasType) {
+	
 	super();
 	checkIfAliasAlreadyExists(alias, login);
 	checkRoleTypeAlias(login, roleType);
@@ -83,11 +76,23 @@ public class LoginAlias extends LoginAlias_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public void editCustomAlias(String alias) {
+	if(getType().equals(LoginAliasType.CUSTOM_ALIAS)) {
+	   checkIfAliasAlreadyExists(alias, getLogin());
+	   setAlias(alias);
+	}
+    }
+    
     public void delete() {	
 	super.setLogin(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
+
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasLogin() && getType() != null && !StringUtils.isEmpty(getAlias()); 	
+    }  
 
     @Override
     public void setLogin(Login login) {
@@ -112,7 +117,7 @@ public class LoginAlias extends LoginAlias_Base {
 	}
 	super.setType(loginAliasType);
     }
-
+    
     @Override
     public void setRoleType(RoleType roleType) {
 	if (roleType == null) {
@@ -133,6 +138,15 @@ public class LoginAlias extends LoginAlias_Base {
 	}
     }
 
+    private void checkIfAliasAlreadyExists(String username, Login login) {
+	if (login != null && username != null) {
+	    final LoginAlias loginAlias = readLoginByUsername(username);
+	    if (loginAlias != null && loginAlias.getLogin() != login) {
+		throw new DomainException("error.alias.already.exists");
+	    }
+	}
+    }
+    
     /**
      * This map is a temporary solution until DML provides indexed
      * relations.
@@ -168,14 +182,5 @@ public class LoginAlias extends LoginAlias_Base {
 	    }
 	}
 	return null;
-    }
-
-    private void checkIfAliasAlreadyExists(String username, Login login) {
-	if (login != null && username != null) {
-	    final LoginAlias loginAlias = readLoginByUsername(username);
-	    if (loginAlias != null && loginAlias.getLogin() != login) {
-		throw new DomainException("error.alias.already.exists");
-	    }
-	}
-    }
+    } 
 }

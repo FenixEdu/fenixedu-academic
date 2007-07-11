@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -56,7 +57,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	final IViewState viewState = RenderUtils.getViewState();
 	ExecutionCourse executionCourse = null;
-	
+
 	if (viewState != null && viewState.getMetaObject().getObject() instanceof SummariesManagementBean) {
 	    executionCourse = ((SummariesManagementBean) viewState.getMetaObject().getObject()).getExecutionCourse();
 	} else if (viewState != null && viewState.getMetaObject().getObject() instanceof ShowSummariesBean) {
@@ -68,9 +69,17 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	}
 
 	String teacherNumber = request.getParameter("teacherNumber_");
-	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getLoggedPerson(request).getTeacher() : Teacher.readByNumber(Integer.valueOf(teacherNumber)));
-        System.out.println("logged teacher: " + loggedTeacher.getIdInternal() + " execution course: " + executionCourse.getIdInternal());
+
+	if(StringUtils.isEmpty(teacherNumber) && !getLoggedPerson(request).hasTeacher()) {
+	    throw new FenixActionException("error.summariesManagement.empty.loggedTeacher");	   
+	}
+
+	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getLoggedPerson(request).getTeacher() : Teacher.readByNumber(Integer.valueOf(teacherNumber)));        
 	Professorship loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
+
+	if(loggedProfessorship == null) {
+	    throw new FenixActionException("error.summariesManagement.empty.loggedProfessorship");
+	}
 
 	request.setAttribute("loggedTeacherProfessorship", loggedProfessorship);
 	request.setAttribute("loggedIsResponsible", loggedProfessorship.isResponsibleFor());
@@ -89,10 +98,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	request.setAttribute("summariesManagementBean",	new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY,	executionCourse, loggedProfessorship, null));
 	return mapping.findForward("prepareInsertSummary");
     }
-    
+
     public ActionForward goToInsertSummaryAgain(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -107,7 +116,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if(summaryViewState == null) {
 	    summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
 	}
-	
+
 	SummariesManagementBean bean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
 	LessonPlanning lessonPlanning = bean.getLessonPlanning();
 	if (lessonPlanning != null) {
@@ -115,7 +124,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lessonPlanning.getTitle());
 	    bean.setLastSummary(null);
 	}
-	
+
 	return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
     }
 
@@ -126,7 +135,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if(summaryViewState == null) {
 	    summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
 	}
-	
+
 	SummariesManagementBean bean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
 	Summary lastSummary = bean.getLastSummary();
 	if (lastSummary != null) {
@@ -134,7 +143,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setTitle(lastSummary.getTitle());
 	    bean.setLessonPlanning(null);
 	}
-	
+
 	return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
     }
 
@@ -145,7 +154,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
-		
+
 	return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
     }
 
@@ -155,7 +164,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState("summariesManagementBeanWithLessons");
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
 	bean.setSummaryDate(null);	
-	
+
 	return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
     }
 
@@ -165,7 +174,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	final IViewState viewState = RenderUtils.getViewState("summariesManagementBeanWithDate");
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
-		
+
 	return goToSummaryManagementPageAgain(mapping, request, dynaActionForm, bean);
     }
 
@@ -175,12 +184,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
-	
+
 	bean.setLesson(null);
 	bean.setSummaryDate(null);
 	bean.setSummaryRoom(null);
 	bean.setSummaryTime(null);
-		
+
 	return goToSummaryManagementPageAgain(mapping, request, dynaActionForm, bean);
     }
 
@@ -196,7 +205,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if (bean.getSummary() != null) {
 	    service = "EditSummary";
 	}
-	
+
 	final Object args[] = { bean };
 	try {
 	    executeService(request, service, args);
@@ -229,7 +238,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getMessage());
 	    return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
 	}
-	
+
 	RenderUtils.invalidateViewState();
 	return prepareInsertSummary(mapping, form, request, response);
     }
@@ -255,14 +264,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	RenderUtils.invalidateViewState();	
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	
+
 	Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
 	SummariesManagementBean newBean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, null);
 	newBean.setSummaryText(bean.getSummaryText());
 	newBean.setTitle(bean.getTitle());
-	
+
 	request.setAttribute("summariesManagementBean", newBean);	
 	return mapping.findForward("prepareInsertSummary");
     }
@@ -274,7 +283,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Professorship teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"));
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	Summary summary = getSummaryFromParameter(request);
-	
+
 	SummaryType summaryType;
 	if (summary.getIsExtraLesson()) {
 	    summaryType = SummaryType.EXTRA_SUMMARY;
@@ -303,7 +312,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Summary summary = getSummaryFromParameter(request);
 	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-	
+
 	final Object args[] = { executionCourse, summary, professorshipLogged.getTeacher() };
 	try {
 	    executeService(request, "DeleteSummary", args);
@@ -314,7 +323,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    addActionMessage(request, e.getMessage());
 	    return prepareShowSummaries(mapping, form, request, response);
 	}
-	
+
 	return prepareShowSummaries(mapping, form, request, response);
     }
 
@@ -325,7 +334,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	Set<Summary> teacherSummaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 	teacherSummaries.addAll(professorshipLogged.getAssociatedSummaries());
-	
+
 	readAndSaveNextPossibleSummaryLessonsAndDates(request, executionCourse);	
 	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged), executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
 	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
@@ -368,23 +377,28 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateComplexSummaryInSummariesCalendarMode(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 	Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	NextPossibleSummaryLessonsAndDatesBean nextSummaryDateBean = getNextSummaryDateBeanFromParameter(request);
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
 	
+	if(!executionCourse.getLessons().contains(nextSummaryDateBean.getLesson())) {
+	    throw new FenixActionException();
+	}
+	
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+
 	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleLessonsDates = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
 	nextPossibleLessonsDates.add(nextSummaryDateBean);
 	SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, nextPossibleLessonsDates);
 	bean.setShift(nextSummaryDateBean.getLesson().getShift());
-	
+
 	request.setAttribute("summariesManagementBean", bean);	
 	dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
 	return mapping.findForward("prepareInsertComplexSummary");
     }
-    
+
     public ActionForward prepareCreateComplexSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -394,15 +408,15 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	String[] selectedLessons = request.getParameterValues("selectedLessonAndDate");
 
 	if (selectedLessons == null || selectedLessons.length == 0) {
-	     return goToInsertComplexSummaryAgain(request, mapping, response, form);
-	    
+	    return goToInsertComplexSummaryAgain(request, mapping, response, form);
+
 	} else if (selectedLessons != null && selectedLessons.length != 0) {
-	    
+
 	    ShiftType shiftType = null;
 	    Shift shift = null;
 	    boolean uniqueType = true;	    
 	    List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleLessonsDates = new ArrayList<NextPossibleSummaryLessonsAndDatesBean>();
-	    
+
 	    for (int i = 0; i < selectedLessons.length; i++) {
 		String lessonRepresentation = selectedLessons[i];
 		NextPossibleSummaryLessonsAndDatesBean nextLesson = NextPossibleSummaryLessonsAndDatesBean.getNewInstance(lessonRepresentation);
@@ -416,7 +430,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		    uniqueType = false;
 		}
 	    }
-	    
+
 	    SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse, loggedProfessorship, nextPossibleLessonsDates);
 	    if (uniqueType && shift != null) {
 		bean.setShift(shift);
@@ -436,7 +450,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	final IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
 	SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
 	readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);
-	
+
 	for (NextPossibleSummaryLessonsAndDatesBean bean : summaryBean.getNextPossibleSummaryLessonsAndDatesBean()) {
 	    summaryBean.setShift(bean.getLesson().getShift());
 	    summaryBean.setLesson(bean.getLesson());
@@ -458,12 +472,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
     public ActionForward chooseLessonPlanningToCreateComplexSummary(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	
+
 	IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithLessonPlanning");
 	if(summaryViewState == null) {
 	    summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
 	}
-	
+
 	SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
 	LessonPlanning lessonPlanning = summaryBean.getLessonPlanning();
 	if (lessonPlanning != null) {
@@ -471,7 +485,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    summaryBean.setTitle(lessonPlanning.getTitle());
 	    summaryBean.setLastSummary(null);
 	}
-	
+
 	return returnToCreateComplexSummary(mapping, form, request, summaryBean, null);
     }
 
@@ -482,7 +496,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if(summaryViewState == null) {
 	    summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
 	}
-	
+
 	SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
 	Summary lastSummary = summaryBean.getLastSummary();
 	if (lastSummary != null) {
@@ -490,10 +504,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    summaryBean.setTitle(lastSummary.getTitle());
 	    summaryBean.setLessonPlanning(null);
 	}
-	
+
 	return returnToCreateComplexSummary(mapping, form, request, summaryBean, null);
     }
-    
+
     public ActionForward showSummariesCalendar(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -504,7 +518,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 		summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
 	    }
 	}			
-	
+
 	request.setAttribute("showSummariesCalendarBean", new SummariesCalendarBean(executionCourse));	
 	request.setAttribute("summariesCalendarResult", summariesCalendar);
 	return mapping.findForward("showSummariesCalendar");
@@ -512,7 +526,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
     public ActionForward showSummariesCalendarPostBack(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-		
+
 	final IViewState viewState = RenderUtils.getViewState();
 	SummariesCalendarBean bean = (SummariesCalendarBean) viewState.getMetaObject().getObject();
 
@@ -520,7 +534,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Shift shift = bean.getShift();
 	ShiftType shiftType = bean.getShiftType();
 	LessonCalendarViewType calendarViewType = bean.getCalendarViewType();
-	
+
 	Set<NextPossibleSummaryLessonsAndDatesBean> summariesCalendar = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 	for (Lesson lesson : executionCourse.getLessons()) {
 	    boolean insert = true;
@@ -536,23 +550,23 @@ public class SummariesManagementDA extends FenixDispatchAction {
 			    || (calendarViewType.equals(LessonCalendarViewType.PAST_LESSON_WITHOUT_SUMMARY) 
 				    && lesson.getSummaryByDate(lessonDate) == null) 
 				    && lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), lessonDate)) {
-			
-		    summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
+
+			summariesCalendar.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
 		    }
 		}
 	    }	    	   
 	}
-		
+
 	request.setAttribute("summariesCalendarResult", summariesCalendar);
 	request.setAttribute("showSummariesCalendarBean", bean);
 	return mapping.findForward("showSummariesCalendar");
     }
-    
+
     // -------- Private Methods --------- //
 
     private ActionForward goToInsertComplexSummaryAgain(HttpServletRequest request,
 	    ActionMapping mapping, HttpServletResponse response, ActionForm form) {
-	
+
 	final IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");	
 	if (summaryViewState != null) {	    	
 	    SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
@@ -561,7 +575,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	}
 	return prepareShowSummaries(mapping, form, request, response);
     }
-    
+
     private ActionForward returnToCreateComplexSummary(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, SummariesManagementBean summaryBean, Exception e) {
 
@@ -581,12 +595,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setProfessorship(professorship);
 	    bean.setTeacher(null);
 	    bean.setTeacherName("");
-	
+
 	} else if (dynaActionForm.getString("teacher").equals("-1") && !StringUtils.isEmpty(dynaActionForm.getString("teacherName"))) {
 	    bean.setTeacherName(dynaActionForm.getString("teacherName"));
 	    bean.setTeacher(null);
 	    bean.setProfessorship(null);
-	    
+
 	} else if (dynaActionForm.getString("teacher").equals("0") && !StringUtils.isEmpty(dynaActionForm.getString("teacherNumber"))) {
 	    Teacher teacher = null;
 	    try {
@@ -594,11 +608,11 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    } catch (NumberFormatException e) {
 		addActionMessage(request, "error.summary.teacherNumber.invalid");
 	    }
-	    
+
 	    if (teacher == null) {
 		addActionMessage(request, "error.summary.inexistent.teacher");
 	    }
-	    
+
 	    bean.setTeacher(teacher);
 	    bean.setTeacherName(null);
 	    bean.setProfessorship(null);
@@ -621,7 +635,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
     private ActionForward goToSummaryManagementPageAgain(ActionMapping mapping, HttpServletRequest request,
 	    DynaActionForm dynaActionForm, SummariesManagementBean bean) {
-	
+
 	setTeacherDataToFormBean(dynaActionForm, bean);
 	request.setAttribute("summariesManagementBean", bean);
 	return mapping.findForward("prepareInsertSummary");
@@ -652,7 +666,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	final Integer summaryID = summaryIDString != null ? Integer.valueOf(summaryIDString) : null;
 	return rootDomainObject.readSummaryByOID(summaryID);
     }    
-    
+
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
 	final String summaryDateString = request.getParameterMap().containsKey("summaryDate") ? request.getParameter("summaryDate") : (String) request.getAttribute("summaryDate");
 	return StringUtils.isEmpty(summaryDateString) ? null : NextPossibleSummaryLessonsAndDatesBean.getNewInstance(summaryDateString);

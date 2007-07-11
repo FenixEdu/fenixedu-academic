@@ -11439,15 +11439,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
-    <service>
-    	<name>CreateOccupationPeriod</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateOccupationPeriod</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>        	
-        </filterChains>     
-    </service>
+    </service>    
 	<service>
     	<name>CreateRoomsPunctualScheduling</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling</implementationClass>

@@ -16,8 +16,7 @@ public class CreateExternalUnit extends Service {
 	
 	if (externalUnitBean.getUnitType() == PartyTypeEnum.DEPARTMENT) {
 	    return DepartmentUnit.createNewOfficialExternalDepartmentUnit(
-		    externalUnitBean.getUnitName(), externalUnitBean.getUnitCode(), externalUnitBean
-			    .getParentUnit());
+		    externalUnitBean.getUnitName(), externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
 	} else {
 	    return new CreateUnit().run(externalUnitBean.getParentUnit(),
 		    externalUnitBean.getUnitName(), null, externalUnitBean.getUnitCode(), 

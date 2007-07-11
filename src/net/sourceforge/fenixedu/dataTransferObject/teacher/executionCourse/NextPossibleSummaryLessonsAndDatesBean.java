@@ -95,7 +95,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	}
 	YearMonthDay date = new YearMonthDay(year, month, day);
 	Integer lessonIdInternal = Integer.parseInt(value.substring(11));
-	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
+	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);	
 	return new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
     }
 }

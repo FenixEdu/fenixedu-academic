@@ -10,7 +10,13 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
         setOjbConcreteClass(getClass().getName());
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-
+      
+    public void delete() {
+	super.setResource(null);	
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }     
+    
     @Override
     public void setResource(Resource resource) {
 	if (resource == null) {
@@ -19,11 +25,10 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
 	super.setResource(resource);
     }
     
-    public void delete() {
-	super.setResource(null);	
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }     
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasResource(); 	
+    }    
     
     public boolean isSpaceOccupation() {
 	return false;
@@ -63,5 +68,9 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     
     public boolean isLessonSpaceOccupation() {
 	return false;
-    }     
+    }
+    
+    public boolean isLessonInstanceSpaceOccupation() {
+	return false;
+    }       
 }

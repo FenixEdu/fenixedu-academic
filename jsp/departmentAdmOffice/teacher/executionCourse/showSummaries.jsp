@@ -74,7 +74,7 @@
 			
 			<%-- Summary --%>
 			<h3 class="mtop2 mbottom05">
-				<fr:view name="summary" property="title" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+				<fr:view name="summary" property="title" type="net.sourceforge.fenixedu.util.MultiLanguageString" />
 				<%-- Order --%>	
 				<span class="greytxt1 fwnormal" style="font-size: 0.75em"><bean:write name="summary" property="order"/></span>
 			</h3>			

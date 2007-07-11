@@ -27,8 +27,9 @@ public class PossibleDatesToSummariesManagementProvider implements DataProvider 
 
 	if (summaryType != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
 	    if (lesson != null) {
-		possibleSummaryDates.addAll(lesson.getPossibleDatesToInsertSummary());
+		possibleSummaryDates.addAll(lesson.getAllPossibleDatesToInsertSummary());
 	    }
+	    
 	    // Show SummaryDate when edit summary
 	    if (summary != null) {
 		Shift summaryShift = summary.getShift();

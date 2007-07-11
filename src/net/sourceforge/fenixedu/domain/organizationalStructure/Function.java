@@ -91,4 +91,9 @@ public class Function extends Function_Base {
 	final YearMonthDay end = getEndDateYearMonthDay();	
 	return start != null && (end == null || !start.isAfter(end));
     }
+
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasUnit() && !StringUtils.isEmpty(getName()); 	
+    }
 }

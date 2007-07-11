@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
-import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -95,9 +95,10 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
                 return prepare(mapping, form, request, response);
             }
 
-            Object args[] = { startDate, endDate, start, end, weekDay, null, normalCapacity, new Integer(EventSpaceOccupation.SEMANAL), null, Boolean.TRUE };
+            Object args[] = { startDate, endDate, start, end, weekDay, normalCapacity, FrequencyType.WEEKLY, null, Boolean.TRUE };
             
-            List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils.getUserView(request), "ReadAvailableRoomsForExam", args);
+            List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        	    "ReadAvailableRoomsForExam", args);
 
             Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
             if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {

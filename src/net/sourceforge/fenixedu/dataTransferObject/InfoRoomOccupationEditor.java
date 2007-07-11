@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class InfoRoomOccupationEditor extends InfoObject {
@@ -16,22 +17,18 @@ public class InfoRoomOccupationEditor extends InfoObject {
 
     protected InfoPeriod infoPeriod;
 
-    protected Integer frequency;
+    protected FrequencyType frequency;
 
     protected Integer weekOfQuinzenalStart;
 
-    public Integer getFrequency() {
+    public FrequencyType getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(int frequency) {
-        this.frequency = new Integer(frequency);
-    }
-
-    public void setFrequency(Integer frequency) {
+    public void setFrequency(FrequencyType frequency) {
         this.frequency = frequency;
     }
-
+    
     public Integer getWeekOfQuinzenalStart() {
         return weekOfQuinzenalStart;
     }

@@ -27,13 +27,12 @@ public class Exam extends Exam_Base {
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, 
-            List<AllocatableSpace> rooms,
-            OccupationPeriod period, Season season) {
+            List<AllocatableSpace> rooms, Season season) {
     	super();
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
     	
         setAttributesAndAssociateRooms(examDay, examStartTime, examEndTime, executionCoursesToAssociate,
-                curricularCourseScopesToAssociate, rooms, period);
+                curricularCourseScopesToAssociate, rooms);
 
         this.setOjbConcreteClass(Exam.class.getName());
         this.setSeason(season);
@@ -67,17 +66,15 @@ public class Exam extends Exam_Base {
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, 
-            List<AllocatableSpace> rooms, OccupationPeriod period, Season season) {
+            List<AllocatableSpace> rooms, Season season) {
 
         // It's necessary to remove this associations before check some constrains
         this.getAssociatedExecutionCourses().clear();
         this.getAssociatedCurricularCourseScope().clear();
 
-        checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate,
-                season);
+        checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
 
-        super.edit(examDay, examStartTime, examEndTime, executionCoursesToAssociate,
-                curricularCourseScopesToAssociate, rooms, period);        
+        super.edit(examDay, examStartTime, examEndTime, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);        
         this.setSeason(season);
         checkIntervalBetweenEvaluations();
     }

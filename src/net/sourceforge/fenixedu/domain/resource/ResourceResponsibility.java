@@ -24,23 +24,7 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
     public boolean isActive(YearMonthDay currentDate) {
 	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
-    
-    @Override
-    public void setBegin(YearMonthDay beginDate) {
-	if (beginDate == null || (getEnd() != null && getEnd().isBefore(beginDate))) {
-	    throw new DomainException("error.ResourceResponsibility.empty.beginDate");
-	}
-	super.setBegin(beginDate);
-    }
-
-    @Override
-    public void setEnd(YearMonthDay endDate) {
-	if (getBegin() == null || (endDate != null && endDate.isBefore(getBegin()))) {
-	    throw new DomainException("error.ResourceResponsibility.endDate.before.beginDate");
-	}
-	super.setEnd(endDate);
-    }
-    
+              
     public boolean isSpaceResponsibility() {
 	return false;
     }
@@ -63,5 +47,17 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
             throw new DomainException("error.ResourceResponsibility.empty.party");
         }
 	super.setParty(party);
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasResource() && hasParty(); 	
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBegin();
+	final YearMonthDay end = getEnd();	
+	return start != null && (end == null || !start.isAfter(end));
     }
 }

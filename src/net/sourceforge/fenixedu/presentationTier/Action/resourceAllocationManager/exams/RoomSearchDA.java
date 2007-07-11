@@ -62,6 +62,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
             saveErrors(request, actionErrors);
             return prepare(mapping, form, request, response);
         }
+        
         // exam start time
         Calendar searchStartTime = Calendar.getInstance();
         Integer startHour = new Integer((String) roomSearchForm.get("beginningHour"));
@@ -93,10 +94,11 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek, null, null, null, null, Boolean.FALSE };
+        Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek, null, null, null, Boolean.FALSE };
         List<InfoRoom> availableInfoRoom = null;
         try {
             availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+            
         } catch (ExistingServiceException ex) {
 
             //throw new ExistingActionException("", ex);

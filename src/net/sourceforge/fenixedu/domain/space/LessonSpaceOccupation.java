@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -9,70 +12,89 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
+
 public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public LessonSpaceOccupation(AllocatableSpace allocatableSpace, HourMinuteSecond startTime, HourMinuteSecond endTime,
-	    DiaSemana dayOfWeek, OccupationPeriod occupationPeriod, Lesson lesson) {	       
+    public LessonSpaceOccupation(AllocatableSpace allocatableSpace, Lesson lesson) {	       
 	
 	super();
 	
-	if(lesson.getLessonSpaceOccupation() != null) {
+	if(lesson != null && lesson.getLessonSpaceOccupation() != null) {
 	    throw new DomainException("error.lesson.already.has.lessonSpaceOccupation");
 	}
 	
-	if(occupationPeriod != null && allocatableSpace != null && dayOfWeek != null && startTime != null && endTime != null) {
-	    if(!allocatableSpace.isFree(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(),
-		    startTime, endTime, dayOfWeek, lesson.getFrequency(), lesson.getWeekOfQuinzenalStart(),
-		    Boolean.TRUE, Boolean.TRUE, this)) {
-		
-		throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
-	    }
+	setLesson(lesson);        
+	
+	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
+	    throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
 	}
-		
-        setResource(allocatableSpace);
-        setOccupationInterval(startTime, endTime);
-        setDayOfWeek(dayOfWeek);        
-        setPeriod(occupationPeriod);
-        setLesson(lesson);
+	
+        setResource(allocatableSpace);                                   	
     }   
     
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public void edit(AllocatableSpace allocatableSpace, HourMinuteSecond startTime, HourMinuteSecond endTime, DiaSemana dayOfWeek) {
-	
-	if(allocatableSpace != null && dayOfWeek != null && startTime != null && endTime != null) {
-	    if(!allocatableSpace.isFree(getPeriod().getStartYearMonthDay(), getPeriod().getEndYearMonthDay(),
-		    startTime, endTime, dayOfWeek, getLesson().getFrequency(), getLesson().getWeekOfQuinzenalStart(),
-		    Boolean.TRUE, Boolean.TRUE, this)) {
-		
-		throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
-	    }
+    public void edit(AllocatableSpace allocatableSpace) {	
+
+	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
+	    throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
 	}
 	
-	setResource(allocatableSpace);
-	setOccupationInterval(startTime, endTime);
-	setDayOfWeek(dayOfWeek);        	        
+	setResource(allocatableSpace);						       	  
     }
     
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public void delete() {
-	super.setLesson(null);
+    public void delete() {	
+        super.setLesson(null);
 	super.delete();
-    }
-        
-    public void setOccupationInterval(final HourMinuteSecond begin, final HourMinuteSecond end) {
-	if(begin == null || end == null || !begin.isBefore(end)) {
-	    throw new DomainException("error.EventSpaceOccupation.invalid.time");
-	}	
-	super.setStartTimeDateHourMinuteSecond(begin);
-	super.setEndTimeDateHourMinuteSecond(end);
+    }          
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasLesson() && getLesson().hasPeriod();	
     }
     
+    public OccupationPeriod getPeriod() {
+	return getLesson().getPeriod();
+    }
+    
+    @Override
+    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+        return getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
+    }
+    
+    @Override    
+    public List<Interval> getEventSpaceOccupationIntervals() {
+
+	List<Interval> result = new ArrayList<Interval>();
+	OccupationPeriod occupationPeriod = getPeriod();        
+
+	if(getPeriod() != null) {
+	
+	    result.addAll(getEventSpaceOccupationIntervals(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), 
+		    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
+		    getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
+
+	    while(occupationPeriod.getNextPeriod() != null) {
+		result.addAll(getEventSpaceOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(), 
+			occupationPeriod.getNextPeriod().getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(),
+			getEndTimeDateHourMinuteSecond(), getFrequency(), null, getDayOfWeek(),
+			getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
+
+		occupationPeriod = occupationPeriod.getNextPeriod();             
+	    }
+	}
+	
+	return result;            			    
+    }
+              
     @Override
     public boolean isLessonSpaceOccupation() {
 	return true;
     }
-               
+    
     @Override
     public void setLesson(Lesson lesson) {
 	if(lesson == null) {
@@ -82,32 +104,52 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     @Override
-    public Integer getFrequency() {
+    public FrequencyType getFrequency() {
 	 return getLesson().getFrequency();
     }
-
-    @Override
-    public void setFrequency(Integer frequency) {
-	getLesson().setFrequency(frequency); 
-    }
-
-    @Override
-    public void setFrequency(FrequencyType type) {
-	// Do Nothing
-    }
-
+   
     @Override
     public Integer getWeekOfQuinzenalStart() {
 	return getLesson().getWeekOfQuinzenalStart();
     }
 
     @Override
-    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-	getLesson().setWeekOfQuinzenalStart(weekOfQuinzenalStart); 
+    public Group getAccessGroup() {
+	return getSpace().getLessonOccupationsAccessGroupWithChainOfResponsibility();
+    }
+        
+    @Override
+    public YearMonthDay getBeginDate() {
+	return getPeriod() != null ? getPeriod().getStartYearMonthDay() : null;
     }
 
     @Override
-    public Group getAccessGroup() {
-	return getSpace().getLessonOccupationsAccessGroupWithChainOfResponsibility();
-    }    
+    public YearMonthDay getEndDate() {
+	return getPeriod() != null ? getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay() : null;
+    }
+      
+    @Override
+    public DiaSemana getDayOfWeek() {
+	return getLesson().getDiaSemana();
+    }   
+
+    @Override
+    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+	return getLesson().getBeginHourMinuteSecond();
+    }
+    
+    @Override
+    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+	return getLesson().getEndHourMinuteSecond();
+    }
+    
+    @Override
+    public Boolean getDailyFrequencyMarkSaturday() {
+	return null;
+    }
+
+    @Override
+    public Boolean getDailyFrequencyMarkSunday() {
+	return null;
+    }
 }

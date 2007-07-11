@@ -5,9 +5,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 
 /**
@@ -26,10 +25,14 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
     }
 
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-        StringBuilder strBuffer = new StringBuilder();
+        
+	StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        
         if (showOccupation instanceof InfoLesson) {
+            
             InfoLesson lesson = (InfoLesson) showOccupation;
+            
             strBuffer.append("<a href=\"");
             strBuffer.append(getApplication());
             strBuffer.append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
@@ -44,8 +47,28 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
             }
+            
             return strBuffer;
+            
+        } else if(showOccupation instanceof InfoLessonInstance) {
+            
+            InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+            
+            strBuffer.append("<a href=\"");
+            strBuffer.append(getApplication());
+            strBuffer.append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
+            strBuffer.append("&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            }
+            
+            return strBuffer;            
         }
+        
         return new StringBuilder("");
     }
 

@@ -34,5 +34,10 @@ public class AccountabilityType extends AccountabilityType_Base {
             }
         }
         return null;
-    }        
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getType() != null; 	
+    }
 }   

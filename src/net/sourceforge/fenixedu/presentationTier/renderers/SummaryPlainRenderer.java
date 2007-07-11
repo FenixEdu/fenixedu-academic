@@ -26,25 +26,27 @@ public class SummaryPlainRenderer extends OutputRenderer {
 		Summary summary = (Summary) object;
 		StringBuilder builder = new StringBuilder();
 		Lesson lesson = null;
-		builder.append(summary.getSummaryDateYearMonthDay().getDayOfMonth()).append("/").append(
-			summary.getSummaryDateYearMonthDay().getMonthOfYear()).append("/").append(
-			summary.getSummaryDateYearMonthDay().getYear()).append(" - ").append(
-			RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
+		
+		builder.append(summary.getSummaryDateYearMonthDay().getDayOfMonth()).append("/");
+		builder.append(summary.getSummaryDateYearMonthDay().getMonthOfYear()).append("/");
+		builder.append(summary.getSummaryDateYearMonthDay().getYear());
+		builder.append(" - ").append(RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
 
 		if (summary.getIsExtraLesson()) {
-		    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(
-			    " ");
-		    builder.append(" (").append(summary.getSummaryHourHourMinuteSecond().getHour())
-			    .append(":").append(
-				    summary.getSummaryHourHourMinuteSecond().getMinuteOfHour()).append(
-				    ") ");
+		    
+		    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
+		    builder.append(" (").append(summary.getSummaryHourHourMinuteSecond().getHour());
+		    builder.append(":").append(summary.getSummaryHourHourMinuteSecond().getMinuteOfHour()).append(") ");
+		    
 		} else {
-		    lesson = summary.getLesson();
+		    
+		    lesson = summary.getLesson();		    		   
 		    if (lesson != null) {
-			builder.append(lesson.getDiaSemana().toString()).append(" (").append(
-			DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-")
-				.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime()))
-				.append(") ");
+			
+			builder.append(lesson.getDiaSemana().toString()).append(" (");
+			builder.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime()));
+			builder.append("-").append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime()));
+			builder.append(") ");
 		    }
 		}
 		if (lesson != null && lesson.hasSala()) {

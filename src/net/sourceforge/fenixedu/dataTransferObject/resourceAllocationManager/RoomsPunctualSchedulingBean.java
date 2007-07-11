@@ -65,8 +65,8 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	setRooms(genericEvent.getAssociatedRooms());
 	setBegin(genericEvent.getBeginDate());
 	setEnd(genericEvent.getEndDate());
-	setBeginTime(new Partial(genericEvent.getBeginTime()));
-	setEndTime(new Partial(genericEvent.getEndTime()));	
+	setBeginTime(new Partial(genericEvent.getStartTimeDateHourMinuteSecond()));
+	setEndTime(new Partial(genericEvent.getEndTimeDateHourMinuteSecond()));	
 	setFrequency(genericEvent.getFrequency());
 	setSmallDescription(genericEvent.getTitle());
 	setCompleteDescription(genericEvent.getDescription());
@@ -76,11 +76,48 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	setMarkSunday(genericEvent.getDailyFrequencyMarkSunday());
     }
   
+    public void editFrequencyTypeWithoutDailyFrequency(YearMonthDay begin, Partial beginTime, YearMonthDay end, Partial endTime,
+	    FrequencyType frequency) {
+	
+	setBegin(begin);
+	setEnd(end);
+	setBeginTime(beginTime);
+	setEndTime(endTime);
+	setFrequency(frequency);
+	setMarkSaturday(null);
+	setMarkSunday(null);
+    }
+    
+    public void editFrequencyTypeWithDailyFrequency(YearMonthDay begin, Partial beginTime, YearMonthDay end, Partial endTime,
+	    FrequencyType frequency, Boolean markSaturday, Boolean markSunday) {
+	
+	setBegin(begin);
+	setEnd(end);
+	setBeginTime(beginTime);
+	setEndTime(endTime);
+	setFrequency(frequency);
+	setMarkSaturday(markSaturday);
+	setMarkSunday(markSunday);
+    }
+    
+    public void editContinuousType(YearMonthDay begin, Partial beginTime, YearMonthDay end, Partial endTime) {
+	setBegin(begin);
+	setEnd(end);
+	setBeginTime(beginTime);
+	setEndTime(endTime);
+	setFrequency(null);
+	setMarkSaturday(null);
+	setMarkSunday(null);
+    }
+    
     public void editDailyType(YearMonthDay begin, Partial beginTime, Partial endTime) {
 	setBegin(begin);
 	setEnd(begin);
 	setBeginTime(beginTime);
-	setEndTime(endTime);	
+	setEndTime(endTime);
+	setFrequency(null);
+	setMarkSaturday(null);
+	setMarkSunday(null);
     }
     
     public enum PeriodType {

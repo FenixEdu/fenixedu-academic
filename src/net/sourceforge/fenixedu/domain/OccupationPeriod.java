@@ -121,13 +121,24 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
                
     public void delete() {	       
-	if (allNestedPeriodsAreEmpty()) {            	    	    	               
-	    removeNextPeriod();
-	    removePreviousPeriod();
-            removeRootDomainObject();
-            deleteDomainObject();	    	    	
+	if (allNestedPeriodsAreEmpty()) {            	    	    	               	    
+	    OccupationPeriod first = getFirstOccupationPeriodOfNestedPeriods();
+	    first.deleteAllNestedPeriods();	    	    	    
         }
     }   
+    
+    private void deleteAllNestedPeriods() {
+	OccupationPeriod nextPeriod = getNextPeriod();
+	
+	super.setNextPeriod(null);
+	super.setPreviousPeriod(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+	
+	if(nextPeriod != null) {
+	    nextPeriod.delete();   
+	}	
+    }
     
     public boolean allNestedPeriodsAreEmpty() {	
 	OccupationPeriod firstOccupationPeriod = getFirstOccupationPeriodOfNestedPeriods();
@@ -144,7 +155,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
     
     private boolean isEmpty() {
-        return getEventSpaceOccupations().isEmpty()
+        return getLessons().isEmpty()
         	&& getExecutionDegreesForExamsSpecialSeason().isEmpty()
                 && getExecutionDegreesForExamsFirstSemester().isEmpty()
                 && getExecutionDegreesForExamsSecondSemester().isEmpty()

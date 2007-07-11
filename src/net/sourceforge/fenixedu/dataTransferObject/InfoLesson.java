@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -49,7 +50,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         return getLesson().getTipo();
     }
 
-    public Integer getFrequency() {        
+    public FrequencyType getFrequency() {        
         return getLesson().getFrequency();
     }
     
