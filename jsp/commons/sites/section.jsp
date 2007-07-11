@@ -379,8 +379,8 @@
         	                        </bean:define>
            	                	</td>
             	                	
-            					<td class="nowrap">	
-        							<span class="pleft1">
+            					<td class="acenter nowrap">
+        							<span>
            		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
            			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
@@ -392,7 +392,7 @@
 								</td>
 								
 								<td>
-	                                <span class="pleft1" style="color: #888;">
+	                                <span style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
 	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                                        <fr:layout>
