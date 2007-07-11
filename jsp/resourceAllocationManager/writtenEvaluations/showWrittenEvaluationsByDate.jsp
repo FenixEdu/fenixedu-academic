@@ -66,21 +66,21 @@
 </html:form>
 
 <logic:present name="writtenEvaluations">
-	<table width="100%" border="1">
+	<table class="tstyle4">
 		<tr>
-			<th class="listClasses-header"><bean:message key="lable.execution.course"/></th>
-			<th class="listClasses-header"><bean:message key="lable.degree"/></th>
-			<th class="listClasses-header"><bean:message key="lable.season"/></th>
-			<th class="listClasses-header"><bean:message key="lable.hour"/></th>
-			<th class="listClasses-header"><bean:message key="lable.rooms"/></th>
-			<th class="listClasses-header"><bean:message key="lable.number.enroled.students"/></th>
-			<th class="listClasses-header"><bean:message key="lable.number.missing.seats"/></th>	
+			<th><bean:message key="lable.execution.course"/></th>
+			<th><bean:message key="lable.degree"/></th>
+			<th><bean:message key="lable.season"/></th>
+			<th><bean:message key="lable.hour"/></th>
+			<th><bean:message key="lable.rooms"/></th>
+			<th><bean:message key="lable.number.enroled.students"/></th>
+			<th><bean:message key="lable.number.missing.seats"/></th>	
 		</tr>
 		<logic:iterate id="writtenEvaluation" name="writtenEvaluations">
 			<bean:define id="evaluationID" name="writtenEvaluation" property="idInternal"/>
 			<bean:define id="evaluationTypeClassname" name="writtenEvaluation" property="class.name"/>
 			<tr>
-				<td class="listClasses">
+				<td>
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<bean:write name="executionCourse" property="nome"/><br />
 						<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
@@ -88,7 +88,7 @@
 						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.idInternal" type="java.lang.Integer"/>
 					</logic:iterate>
 				</td>
-				<td class="listClasses">
+				<td>
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<logic:iterate id="curricularCourse" name="executionCourse" property="associatedCurricularCourses">
 							<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/><br />
@@ -105,7 +105,7 @@
 						</logic:iterate>
 					</logic:iterate>
 				</td>
-				<td class="listClasses">
+				<td>
 				<bean:define id="selectedBegin"><logic:present name="examSearchByDateForm" property="beginningHour"><logic:notEmpty name="examSearchByDateForm" property="beginningHour">true</logic:notEmpty><logic:empty name="examSearchByDateForm" property="beginningHour">false</logic:empty></logic:present><logic:notPresent name="examSearchByDateForm" property="beginningHour">false</logic:notPresent></bean:define>
 				<bean:define id="selectedEnd"><logic:present name="examSearchByDateForm" property="endHour"><logic:notEmpty name="examSearchByDateForm" property="endHour">true</logic:notEmpty><logic:empty name="examSearchByDateForm" property="endHour">false</logic:empty></logic:present><logic:notPresent name="examSearchByDateForm" property="endHour">false</logic:notPresent></bean:define>
 
@@ -156,7 +156,7 @@
 						</logic:equal>
 					</html:link>
 				</td>
-				<td class="listClasses">
+				<td class="nowrap">
 					<dt:format pattern="HH:mm">
 						<bean:write name="writtenEvaluation" property="beginningDate.time"/>
 					</dt:format>
@@ -165,17 +165,17 @@
 						<bean:write name="writtenEvaluation" property="endDate.time"/>
 					</dt:format>
 				</td>
-				<td class="listClasses">
+				<td>
 					<logic:iterate id="roomOccupation" name="writtenEvaluation" property="writtenEvaluationSpaceOccupations">
 						<bean:write name="roomOccupation" property="room.nome"/>;
 					</logic:iterate>
 				</td>
-				<td class="listClasses">
+				<td class="acenter">
 					<bean:define id="countStudentsEnroledAttendingExecutionCourses" name="writtenEvaluation" property="countStudentsEnroledAttendingExecutionCourses"
 							type="java.lang.Integer"/>
 					<bean:write name="countStudentsEnroledAttendingExecutionCourses"/>
 				</td>
-				<td class="listClasses">
+				<td class="acenter">
 					<bean:define id="countNumberReservedSeats" name="writtenEvaluation" property="countNumberReservedSeats"
 							type="java.lang.Integer"/>
 					<%= "" + (countStudentsEnroledAttendingExecutionCourses.intValue() - countNumberReservedSeats.intValue()) %>

@@ -35,11 +35,13 @@
 			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b>#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.courses']}: " escape="false"/>
-			<h:dataTable value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
-				<h:column>
-					<h:outputText value="#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}<br/> " escape="false"/>
-				</h:column>
-			</h:dataTable>
+			
+			<h:outputText value="<ul class='mbottom05'>" escape="false"/>
+			<fc:dataRepeater value="#{SOPEvaluationManagementBackingBean.associatedExecutionCourses}" var="associatedExecutionCourseID">
+				<h:outputText value="<li>#{SOPEvaluationManagementBackingBean.associatedExecutionCoursesNames[associatedExecutionCourseID]}</li>" escape="false"/>
+			</fc:dataRepeater>
+			<h:outputText value="</ul>" escape="false"/>
+			
 			<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b>" escape="false"/>		
 		<h:outputText value="</div>" escape="false"/>
 	

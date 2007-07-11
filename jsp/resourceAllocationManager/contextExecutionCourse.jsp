@@ -5,12 +5,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<logic:present name="executionPeriod">
-	<bean:write name="executionPeriod" property="name"/> -
-	<bean:write name="executionPeriod" property="infoExecutionYear.year"/>
-</logic:present>
-<br />
 <logic:present name="executionCourse">
-	<bean:write name="executionCourse" property="sigla"/> - 
-	<bean:write name="executionCourse" property="nome"/>
+	<h3>
+		<bean:write name="executionCourse" property="nome"/>
+		(<bean:write name="executionCourse" property="sigla"/>)
+	</h3>
+</logic:present>
+
+<logic:present name="executionPeriod">
+	<p>
+		<bean:write name="executionPeriod" property="infoExecutionYear.year"/> - 
+		<bean:write name="executionPeriod" property="name"/>
+	</p>
 </logic:present>

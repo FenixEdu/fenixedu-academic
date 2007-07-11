@@ -7,9 +7,10 @@
 <html:form action="/roomSearch">
 		
 	<logic:iterate indexId="i" id="room" name="availableRooms" type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getIdInternal().toString() %>" />
 	</logic:iterate>
 
+	<em class="printhidden"><bean:message key="link.writtenEvaluationManagement"/></em>
 	<h2>Salas livres dia <bean:write name="<%=SessionConstants.DATE%>"/>
  		das <bean:write name="<%=SessionConstants.START_TIME%>"/>
  		às <bean:write name="<%=SessionConstants.END_TIME%>"/></h2>
@@ -19,7 +20,7 @@
 	
 	<logic:present name="<%=SessionConstants.AVAILABLE_ROOMS%>">		
 		<bean:define id="availableRooms" name="<%=SessionConstants.AVAILABLE_ROOMS%>"/>
-		<table border="1">
+		<table class="tstyle4 showborder">
 			<tr>
 				<th><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sortParameter" property="sortParameter" value="name" onclick="this.form.method.value='sort';this.form.submit();"/> Nome</th>
 				<th><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sortParameter" property="sortParameter" value="type" onclick="this.form.method.value='sort';this.form.submit();"/> Tipo</th>
@@ -39,13 +40,13 @@
 				<td>
 					 <bean:write name="infoRoom" property="edificio"/>
 				</td>
-				<td>
+				<td class="acenter">
 					 <bean:write name="infoRoom" property="piso"/>
 				</td>
-				<td>
+				<td class="aright">
 					<bean:write name="infoRoom" property="capacidadeNormal"/> lugares
 				</td>
-				<td>
+				<td class="aright">
 					<bean:write name="infoRoom" property="capacidadeExame"/> lugares
 				</td>
 			</tr>

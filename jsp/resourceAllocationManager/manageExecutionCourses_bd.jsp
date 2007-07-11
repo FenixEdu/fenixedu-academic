@@ -22,7 +22,7 @@
 			<p class="mvert025">Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong></p>
 		</div>
 
-<table class="tstyle5 thlight thright">
+<table class="tstyle5 thlight thright mtop15">
 	<tr>
 		<th>
 	    	<bean:message key="property.executionPeriod"/>:

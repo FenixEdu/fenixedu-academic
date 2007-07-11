@@ -6,18 +6,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="java.util.List"%>
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected">
-    		<strong><jsp:include page="contextExecutionCourse.jsp"/></strong>
-		</td>
-	</tr>
-</table>
 
+<em><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></h2>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br/><bean:message key="label.manage.execution.course.note" bundle="SOP_RESOURCES"/><br/>
+<jsp:include page="contextExecutionCourse.jsp"/>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+<p><span class="warning0"><bean:message key="label.manage.execution.course.note" bundle="SOP_RESOURCES"/></span></p>
+
 <html:form action="/manageExecutionCourse" focus="theoreticalHours">
 
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -25,62 +25,62 @@
 	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
 
-	<table>
+	<table class="tstyle4 tdcenter">
 			<tr>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.theoretical"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.theoretical_practical"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.practical"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.laboratorial"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.seminary"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.problems"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.fieldWork"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.trainingPeriod"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.hours.load.tutorialOrientation"/>
 				</th>
 			</tr>
 			<tr>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" name="executionCourse" property="theoreticalHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" name="executionCourse" property="theoPratHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" name="executionCourse" property="praticalHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.labHours" name="executionCourse" property="labHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.seminaryHours" name="executionCourse" property="seminaryHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.problemsHours" name="executionCourse" property="problemsHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.fieldWorkHours" name="executionCourse" property="fieldWorkHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.trainingPeriodHours" name="executionCourse" property="trainingPeriodHours" size="4"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorialOrientationHours" name="executionCourse" property="tutorialOrientationHours" size="4"/>
 				</td>
 				
@@ -94,14 +94,14 @@
 	</html:submit>
 </html:form>
 
-<br/><bean:message key="label.execution.course.classes" bundle="SOP_RESOURCES"/><br/>
+<p class="mtop15 mbottom05"><bean:message key="label.execution.course.classes"/>:</p>
 <logic:present name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
-	<table>
+	<table class="tstyle2 tdcenter mtop05">
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.degree.name"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.name"/>
 			</th>
 		</tr>
@@ -110,10 +110,10 @@
 			<bean:define id="curricularYearOID" name="infoClass" property="anoCurricular"/>
 			<bean:define id="executionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
 			<tr>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:link page="<%= "/manageClass.do?method=prepare&amp;"
 							+ SessionConstants.CLASS_VIEW_OID
 							+ "="

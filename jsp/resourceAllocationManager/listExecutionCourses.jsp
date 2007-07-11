@@ -11,10 +11,9 @@
 	<bean:size id="numberInfoExecutionCourses" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>"/>
 	<bean:define id="searchExecutionCourse" name="searchExecutionCourse"/>
 	<logic:notEqual name="numberInfoExecutionCourses" value="0">
-		<table>
+		<table class="tstyle4 tdcenter">
 			<tr>
-
-				<th class="listClasses-header">
+				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -36,7 +35,7 @@
 					</html:link>
 				</th>
 
-				<th class="listClasses-header">
+				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -57,7 +56,7 @@
 					<bean:message key="label.occupancy"/>
 					</html:link>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -83,7 +82,7 @@
 			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>">
 				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
 				<tr>
-					<td class="listClasses">
+					<td>
 						<html:link page="<%= "/manageExecutionCourse.do?method=prepare&amp;"
 								+ SessionConstants.EXECUTION_PERIOD_OID
 								+ "="
@@ -95,7 +94,7 @@
 							<bean:write name="executionCourse" property="nome"/>
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						<logic:notEqual name="executionCourse" property="occupancy" value="-1">
 
 						<html:link page="<%= "/manageExecutionCourses.do?method=showOccupancyLevels&amp;"
@@ -111,17 +110,17 @@
 						</logic:equal>
 					</td>
 
-					<td class="listClasses">
+					<td>
 						<bean:define id="equalLoad" name="executionCourse" property="equalLoad" />
 						<html:link page="<%= "/manageExecutionCourses.do?method=showLoads&amp;"
 								+ "executionCourseOID="
 								+ pageContext.findAttribute("executionCourseOID") %>">
 							<logic:equal name="executionCourse" property="equalLoad" value="true">
-								<font color="#008000"><bean:message key ="label.hours.load.equal" /></font>
+								<font color="#080"><bean:message key ="label.hours.load.equal" /></font>
 							</logic:equal>
 
 							<logic:equal name="executionCourse" property="equalLoad" value="false">	
-								<font color="#FF0000"><bean:message key ="label.hours.load.notEqual" /></font>
+								<font color="#a00"><bean:message key ="label.hours.load.notEqual" /></font>
 							</logic:equal>
 						</html:link>
 					</td>

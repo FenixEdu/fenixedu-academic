@@ -168,6 +168,7 @@ table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em;
 table.thtop th { vertical-align: top; }
 table.thmiddle th { vertical-align: middle; }
 table.tdtop td { vertical-align: top; }
+table.tdmiddle td { vertical-align: middle !important; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
 /* font-weight */
@@ -190,7 +191,6 @@ table.thcenter th { text-align: center; }
 table.thbgnone th { background: none; }
 tr.trhighlight1 td { background: #ffa; }
 tr.selected td { background: #fdfbdd; }
-
 
 /* delete? */
 table .aleft  { text-align: left; }

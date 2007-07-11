@@ -6,19 +6,25 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<span class="error"><!-- Error messages go here --><html:errors /></span>  
+
+<em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="title.view.room"/></h2>
-<br />
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>  
+</p>
+
+
 <html:form action="/viewRoom">
 	<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM%>" property="idInternal" scope="request"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
 	<html:hidden alt="<%= SessionConstants.ROOM_OID%>" property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
 	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />				
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<table border="0" cellspacing="0" cellpadding="0">
+	<table class="tstyle5 thlight thright">
 		<tr>
-		    <td nowrap="nowrap" width="125"><bean:message key="label.manager.executionPeriod"/>:</td>
-		    <td nowrap="nowrap">
+		    <th><bean:message key="label.manager.executionPeriod"/></th>
+		    <td>
 		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.selectedExecutionPeriodOID" property="selectedExecutionPeriodOID" size="1"
 		        		onchange="this.form.indexWeek.value='0';this.form.submit();">
      				<html:options property="value" 
@@ -31,8 +37,8 @@
 			</td>
 		</tr>
 		<tr>
-		    <td nowrap="nowrap" width="125"><bean:message key="property.week"/>:</td>
-		    <td nowrap="nowrap">
+		    <th><bean:message key="property.week"/>:</th>
+		    <td>
 		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.indexWeek" property="indexWeek" size="1" onchange="this.form.submit();">
      				<html:options property="value" 
      					labelProperty="label" 
@@ -45,64 +51,60 @@
 		</tr>
 	</table>
 </html:form> 
-<br />
+
 <logic:present name="<%= SessionConstants.ROOM%>" scope="request">
-            <table width="100%">
+            <table class="tstyle4 tdcenter mvert15">
                 <tr>
-                    <th class="listClasses-header">
+                    <th>
                         <bean:message key="property.room.name"/>
                     </th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="property.room.type"/>
 					</th>
-                    <th class="listClasses-header">
+                    <th>
                         <bean:message key="property.room.building"/>
                     </th>
-                    <th class="listClasses-header">
+                    <th>
                         <bean:message key="property.room.floor"/>
                     </th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="property.room.capacity.normal"/>
 					</th>
-					<th class="listClasses-header">
+					<th>
 						<bean:message key="property.room.capacity.exame"/>
 					</th>
                 </tr>
                 <tr>
-					<td class="listClasses">
+					<td>
 						<bean:write name="<%= SessionConstants.ROOM%>" property="nome"/>
 					</td>
-                    <td class="listClasses">
+                    <td>
                         <bean:write name="<%= SessionConstants.ROOM%>" property="tipo"/>
                     </td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="<%= SessionConstants.ROOM%>" property="edificio"/>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="<%= SessionConstants.ROOM%>" property="piso"/>
 					</td>
-                    <td class="listClasses">
+                    <td>
                          <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeNormal"/>
                     </td>
-                    <td class="listClasses">
+                    <td>
                         <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeExame"/>
                     </td>
                 </tr>
             </table>
-	<br />
-	<br />	
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"
 		/>
 	</div>
+
 	</logic:present>
+
 	<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
-		<table align="center">
-			<tr>
-				<td>
-					<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
-				</td>
-			</tr>
-		</table>
+		<p>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
+		</p>
 	</logic:notPresent>
