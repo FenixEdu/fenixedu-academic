@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -1158,15 +1159,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return Double.valueOf(0);
 	}
 	
+	if (getDegreeCurricularPlanOfStudent().getAverageType() == AverageType.SIMPLE) {
+	    return Double.valueOf(1);
+	}
+	
 	if (!isBolonhaDegree()) {
 	    
-	    if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
-		return getEctsCredits();
+	    if (getDegreeCurricularPlanOfStudent().getDegreeType().isDegree()) {
+		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
+		    return getEctsCredits();
+		}
+
+		if (isFromLMAC() || isFromLCI()) {
+		    return getBaseWeigth() * LMAC_AND_LCI_WEIGHT_FACTOR;
+		}
 	    }
 
-	    if (isFromLMAC() || isFromLCI()) {
-		return getBaseWeigth() * LMAC_AND_LCI_WEIGHT_FACTOR;
-	    }
 	}
 	
 	return getBaseWeigth();
@@ -1192,7 +1200,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     
     @Override
     final public Double getEctsCredits() {
-	return isExtraCurricular() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(getExecutionPeriod());
+	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
 
     @Override
