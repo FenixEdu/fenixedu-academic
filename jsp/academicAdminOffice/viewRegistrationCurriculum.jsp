@@ -78,7 +78,7 @@
 	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 	request.setAttribute("studentCurriculum", studentCurriculum);
 
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getRegistration().getStudentCurricularPlan(executionYear);
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
 	final Collection<CurriculumEntry> curriculumEntries = studentCurriculum.getCurriculumEntries(executionYear);

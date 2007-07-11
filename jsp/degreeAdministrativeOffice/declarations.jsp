@@ -69,7 +69,7 @@
 							request.setAttribute("studentCurriculum", studentCurriculum);
 							final Collection<StudentCurriculum.Entry> curriculumEntries = studentCurriculum.getCurriculumEntries(executionYear);
 							request.setAttribute("curriculumEntries", curriculumEntries);
-							final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(executionYear);
+							final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getRegistration().getStudentCurricularPlan(executionYear);
 							request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 							final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(executionYear);
 							request.setAttribute("totalEctsCredits", totalEctsCredits);

@@ -23,7 +23,7 @@
 	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 	request.setAttribute("studentCurriculum", studentCurriculum);
 
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getStudentCurricularPlan(null);
+	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getRegistration().getStudentCurricularPlan(null);
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
 	final Collection<CurriculumEntry> curriculumEntries = studentCurriculum.getCurriculumEntries(null);
