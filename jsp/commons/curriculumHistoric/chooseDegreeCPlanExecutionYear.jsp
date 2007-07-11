@@ -5,6 +5,7 @@
 
 <html:xhtml/>
 
+<em><bean:message key="label.curriculumHistoric"/></em>
 <h2><bean:message key="title.student.marksSheetConsult"/></h2>
 
 <p>
