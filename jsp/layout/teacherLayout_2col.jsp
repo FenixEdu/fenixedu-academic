@@ -45,7 +45,6 @@
 	
 	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
 	<ul>
-		<li style="display: none;"><a href="">Skip to Content</a> |</li>
 		<li class="support"><a href="<%= supportLink %>">Suporte</a></li>
 		<li class="logout"><a href="<%= request.getContextPath() %>/logoff.do">Logout</a></li>
 	</ul>
