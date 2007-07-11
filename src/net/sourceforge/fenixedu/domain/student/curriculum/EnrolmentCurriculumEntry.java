@@ -36,7 +36,7 @@ public class EnrolmentCurriculumEntry extends SimpleCurriculumEntry {
 
     @Override
     public Double getWeigthTimesClassification() {
-	final String grade = getEnrolment().getLatestEnrolmentEvaluation().getGradeValue();
+	final String grade = getEnrolment().getGradeValue();
 	return StringUtils.isNumeric(grade) ? Double.valueOf(getWeigth() * Integer.valueOf(grade)) : null;
     }
 
