@@ -298,7 +298,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean hasActiveScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	return !getActiveScopesInExecutionPeriod(executionPeriod).isEmpty();
+	return !getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).isEmpty();
     }
 
     public Set<CurricularCourseScope> getActiveScopesInExecutionYear(final ExecutionYear executionYear) {
