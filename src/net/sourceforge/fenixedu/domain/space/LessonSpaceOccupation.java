@@ -53,7 +53,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasLesson() && getLesson().hasPeriod();	
+	return hasLesson();	
     }
     
     public OccupationPeriod getPeriod() {
