@@ -1093,7 +1093,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getEctsCredits((ExecutionPeriod) null);
     }
 
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
+    final public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	if (isBolonhaDegree()) {
 	    if (hasCompetenceCourse()) {
 		return getCompetenceCourse().getEctsCredits(executionPeriod);
@@ -1101,12 +1101,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 		return Double.valueOf(0.0);
 	    }
 	} else {
-	    final Double ectsCredits = super.getEctsCredits();
-	    if (ectsCredits == null || ectsCredits == 0.0) {
-		return ECTS_CREDITS_FOR_PRE_BOLONHA;
+	    if (getDegreeType().isMasterDegree()) {
+		return getCredits();
 	    }
-
-	    return ectsCredits;
+	    
+	    final Double ectsCredits = super.getEctsCredits();
+	    return (ectsCredits == null || ectsCredits == 0.0) ? ECTS_CREDITS_FOR_PRE_BOLONHA : ectsCredits;
 	}
 
 	throw new DomainException("CurricularCourse.with.no.ects.credits");
@@ -1150,13 +1150,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return getEctsCredits();
 	}
 	
-	final Double baseWeight = super.getWeigth();
-	
-	if ((baseWeight == null || baseWeight.doubleValue() == 0d) && getDegreeType() == DegreeType.MASTER_DEGREE) {
-	    return getCredits();
-	}
-	
-	return baseWeight;
+	return getDegreeType().isMasterDegree() ? getCredits() : super.getWeigth();
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
