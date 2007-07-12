@@ -2355,6 +2355,14 @@ public class Person extends Person_Base {
 	}
 	return people;
     }
+    
+    public static Collection<Person> findExternalPerson(final String name) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final PersonName personName : PersonName.findExternalPerson(name, Integer.MAX_VALUE)) {
+	    people.add(personName.getPerson());
+	}
+	return people;
+    }
 
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
 	final Collection<Person> people = new ArrayList<Person>();

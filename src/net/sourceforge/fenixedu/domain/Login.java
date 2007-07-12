@@ -32,8 +32,7 @@ public class Login extends Login_Base {
     public LoginPeriod readLoginPeriodByTimeInterval(YearMonthDay begin, YearMonthDay end) {
 	for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 	    if (loginPeriod.getBeginDate().equals(begin)
-		    && ((loginPeriod.getEndDate() == null && end == null) || (loginPeriod.getEndDate()
-			    .equals(end)))) {
+		    && ((loginPeriod.getEndDate() == null && end == null) || (loginPeriod.getEndDate().equals(end)))) {
 		return loginPeriod;
 	    }
 	}

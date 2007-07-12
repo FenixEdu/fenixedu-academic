@@ -85,16 +85,15 @@ public class PersonManagementAction extends FenixDispatchAction {
 	}
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username,
-		documentIdNumber, null, null, null, null, null, null, null);
+		documentIdNumber, null, null, null, null, null, null, null, null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
 	Object[] args = { searchParameters, predicate };
 
-	CollectionPager result = null;
+	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
-		    "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -138,10 +137,28 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    throws Exception {
 
 	final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
-	AnyPersonSearchBean anyPersonSearchBean = (AnyPersonSearchBean) viewState.getMetaObject()
-		.getObject();
-	request.setAttribute("resultPersons", anyPersonSearchBean.search());
-	request.setAttribute("anyPersonSearchBean", anyPersonSearchBean);
+	AnyPersonSearchBean bean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
+	
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null,
+		bean.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null,
+		null, null, null, null, null, null, null);
+
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+	
+	IUserView userView = SessionUtils.getUserView(request);
+	CollectionPager<Person> result = null;
+	Object[] args = { searchParameters, predicate };
+	
+	try {
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
+
+	} catch (FenixServiceException e) {
+	    request.setAttribute("anyPersonSearchBean", bean);
+	    return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
+	}
+	
+	request.setAttribute("resultPersons", result.getCollection());
+	request.setAttribute("anyPersonSearchBean", bean);
 	return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
     }
 
@@ -375,7 +392,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null,
 		personBean.getUsername(), personBean.getDocumentIdNumber(), null, null, null, null,
-		null, null, null);
+		null, null, null, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
 	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson",

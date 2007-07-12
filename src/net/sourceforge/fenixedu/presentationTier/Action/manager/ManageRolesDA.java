@@ -83,7 +83,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
     private Person getPerson(final String username, final String documentIdNumber) throws FenixFilterException, FenixServiceException {
 	final SearchPerson.SearchParameters parameters = new SearchParameters(null, null,
-		username, documentIdNumber, null, null, null, null, null, null, null);
+		username, documentIdNumber, null, null, null, null, null, null, null, null);
 	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
 	final Collection<Person> persons = ((CollectionPager<Person>) executeService("SearchPerson",

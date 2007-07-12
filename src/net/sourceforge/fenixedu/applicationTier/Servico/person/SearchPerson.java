@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -50,26 +49,24 @@ public class SearchPerson extends Service {
 	private DegreeType degreeType;
 
 	private Boolean activePersons;
+	
+	private Boolean externalPersons;
 
 	private Integer studentNumber;
 
 	public SearchParameters(String name, String email, String username, String documentIdNumber,
 		String idDocumentType, String roleType, String degreeTypeString, Integer degreeId,
-		Integer departmentId, Boolean activePersons, Integer studentNumber) {
+		Integer departmentId, Boolean activePersons, Integer studentNumber, Boolean externalPersons){
 
 	    this.activePersons = activePersons;
 	    this.name = (name != null && !name.equals("")) ? name : null;
 	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
-	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim())
-		    : null;
-	    this.username = (username != null && !username.equals("")) ? StringNormalizer
-		    .normalize(username.trim()) : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber
-		    .trim().toLowerCase()
-		    : null;
-	    this.idDocumentType = StringUtils.isEmpty(idDocumentType) ? null : IDDocumentType
-		    .valueOf(idDocumentType);
+	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
+	    this.username = (username != null && !username.equals("")) ? StringNormalizer.normalize(username.trim()) : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber.trim().toLowerCase() : null;
+	    this.idDocumentType = StringUtils.isEmpty(idDocumentType) ? null : IDDocumentType.valueOf(idDocumentType);
 	    this.studentNumber = studentNumber;
+	    this.externalPersons = externalPersons;
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -153,9 +150,12 @@ public class SearchPerson extends Service {
 	    return studentNumber;
 	}
 
+	public Boolean getExternalPersons() {
+	    return externalPersons;
+	}
     }
 
-    public CollectionPager run(SearchParameters searchParameters, Predicate predicate)
+    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate)
 	    throws FenixServiceException {
 
 	if (searchParameters.emptyParameters()) {
@@ -166,49 +166,64 @@ public class SearchPerson extends Service {
 	List<Person> allValidPersons = new ArrayList<Person>();
 
 	if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
+	 
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
 	    persons = new ArrayList<Person>();
 	    if (person != null) {
 		persons.add(person);
 	    }
-	} else if (searchParameters.getDocumentIdNumber() != null
-		&& searchParameters.getDocumentIdNumber().length() > 0) {
+	    
+	} else if (searchParameters.getDocumentIdNumber() != null && searchParameters.getDocumentIdNumber().length() > 0) {
 	    persons = Person.findPersonByDocumentID(searchParameters.getDocumentIdNumber());
+	    
 	} else if (searchParameters.getStudentNumber() != null) {
+	    
 	    final Student student = Student.readStudentByNumber(searchParameters.getStudentNumber());
 	    persons = new ArrayList<Person>();
 	    if (student != null) {
 		persons.add(student.getPerson());
 	    }
+	    
 	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
+	   
 	    final Person person = Person.readPersonByEmailAddress(searchParameters.getEmail());
 	    persons = new ArrayList<Person>();
 	    if (person != null) {
 		persons.add(person);
 	    }
+	    
 	} else if (searchParameters.getName() != null) {
-	    persons = Person.findInternalPerson(searchParameters.getName());
-	    final Role roleBd = searchParameters.getRole();
-	    if (roleBd != null) {
-		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator
-			.hasNext();) {
-		    final Person person = peopleIterator.next();
-		    if (!person.hasPersonRoles(roleBd)) {
-			peopleIterator.remove();
+	 
+	    persons = new ArrayList<Person>();
+	    
+	    if(searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {		
+		
+		persons.addAll(Person.findInternalPerson(searchParameters.getName()));		
+		final Role roleBd = searchParameters.getRole();
+		if (roleBd != null) {
+		    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
+			final Person person = peopleIterator.next();
+			if (!person.hasPersonRoles(roleBd)) {
+			    peopleIterator.remove();
+			}
+		    }
+		}
+		final Department department = searchParameters.getDepartment();
+		if (department != null) {
+		    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
+			final Person person = peopleIterator.next();
+			final Teacher teacher = person.getTeacher();
+			if (teacher == null || teacher.getCurrentWorkingDepartment() != department) {
+			    peopleIterator.remove();
+			}
 		    }
 		}
 	    }
-	    final Department department = searchParameters.getDepartment();
-	    if (department != null) {
-		for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator
-			.hasNext();) {
-		    final Person person = peopleIterator.next();
-		    final Teacher teacher = person.getTeacher();
-		    if (teacher == null || teacher.getCurrentWorkingDepartment() != department) {
-			peopleIterator.remove();
-		    }
-		}
-	    }
+	    	    
+	    if(searchParameters.getExternalPersons() == null || searchParameters.getExternalPersons()) {		
+		persons.addAll(Person.findExternalPerson(searchParameters.getName()));		
+	    }	    
+	    
 	} else {
 	    persons = new ArrayList<Person>(0);
 	}
@@ -230,14 +245,13 @@ public class SearchPerson extends Service {
 	    Person person = (Person) arg0;
 
 	    return verifyActiveState(searchParameters.getActivePersons(), person)
-		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters
-			    .getDocumentIdNumber())
+		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
 		    && verifyIdDocumentType(searchParameters.getIdDocumentType(), person)
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
-		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(),
-			    person) && verifyStudentNumber(searchParameters.getStudentNumber(), person);
+		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
+		    && verifyStudentNumber(searchParameters.getStudentNumber(), person);
 	}
 
 	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
@@ -245,8 +259,7 @@ public class SearchPerson extends Service {
 	}
 
 	private boolean verifyStudentNumber(Integer studentNumber, Person person) {
-	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber()
-		    .equals(studentNumber)));
+	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber)));
 	}
 
 	private boolean verifyActiveState(Boolean activePersons, Person person) {
@@ -267,35 +280,28 @@ public class SearchPerson extends Service {
 	    return false;
 	}
 
-	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType,
-		final Person person) {
+	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType, final Person person) {
 	    return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
 	}
 
 	private boolean verifyDegreeType(final Degree degree, final Registration registrationByType) {
-	    return registrationByType != null
-		    && (degree == null || verifyDegree(degree, registrationByType));
+	    return registrationByType != null && (degree == null || verifyDegree(degree, registrationByType));
 	}
 
 	private boolean verifyDegree(final Degree degree, final Registration registrationByType) {
-	    final StudentCurricularPlan studentCurricularPlan = registrationByType
-		    .getActiveStudentCurricularPlan();
-	    return (studentCurricularPlan != null && degree == studentCurricularPlan
-		    .getDegreeCurricularPlan().getDegree());
+	    final StudentCurricularPlan studentCurricularPlan = registrationByType.getActiveStudentCurricularPlan();
+	    return (studentCurricularPlan != null && degree == studentCurricularPlan.getDegreeCurricularPlan().getDegree());
 	}
 
 	private boolean verifySimpleParameter(String parameter, String searchParameter) {
-	    return (searchParameter == null)
-		    || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
+	    return (searchParameter == null) || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
 	}
 
 	private boolean verifyParameter(String parameter, String searchParameter) {
-	    return (searchParameter == null)
-		    || (parameter != null && normalizeAndCompare(parameter, searchParameter));
+	    return (searchParameter == null) || (parameter != null && normalizeAndCompare(parameter, searchParameter));
 	}
 
-	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
-	    // String personParameter = parameter.trim().toLowerCase();
+	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) { 
 	    String personParameter = parameter;
 	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}

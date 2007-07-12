@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.UsernameCounter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -42,15 +43,36 @@ public class Invitation extends Invitation_Base {
 
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
 	super();
+	
 	AccountabilityType accountabilityType = getInvitationAccountabilityType();
 
 	setAccountabilityType(accountabilityType);
 	setChildParty(person);
 	setParentParty(unit);
 	setResponsible(responsible);
-	setInvitationInterval(begin, end);
+	setInvitationInterval(begin, end);	
+	
+	if(isActive(new YearMonthDay())) {
+	    person.addPersonRoleByRoleType(RoleType.PERSON);
+	}
     }
 
+    public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
+	checkInvitationDatesIntersection(getInvitedPerson(), beginDate, endDate);
+	if (getBeginDate() == null) {
+	    new LoginPeriod(beginDate, endDate, getInvitedPerson().getLoginIdentification());
+	} else {
+	    editLoginPeriod(getBeginDate(), getEndDate(), beginDate, endDate);
+	}
+	super.setBeginDate(beginDate);
+	super.setEndDate(endDate);
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return hasResponsible(); 	
+    }
+    
     @Override
     public void setChildParty(Party childParty) {
         if(!childParty.isPerson()) {
@@ -77,29 +99,14 @@ public class Invitation extends Invitation_Base {
 
     @Override
     public void setBeginDate(YearMonthDay beginDate) {
-	checkInvitationDatesIntersection(getInvitedPerson(), beginDate, getEndDate());
-	editLoginPeriod(getBeginDate(), getEndDate(), beginDate, getEndDate());
-	super.setBeginDate(beginDate);
+	throw new DomainException("error.Invitation.invalid.operation");
     }
 
     @Override
     public void setEndDate(YearMonthDay endDate) {
-	checkInvitationDatesIntersection(getInvitedPerson(), getBeginDate(), endDate);
-	editLoginPeriod(getBeginDate(), getEndDate(), getBeginDate(), endDate);
-	super.setEndDate(endDate);
+	throw new DomainException("error.Invitation.invalid.operation");
     }
-
-    public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
-	checkInvitationDatesIntersection(getInvitedPerson(), beginDate, endDate);
-	if (getBeginDate() == null) {
-	    new LoginPeriod(beginDate, endDate, getInvitedPerson().getLoginIdentification());
-	} else {
-	    editLoginPeriod(getBeginDate(), getEndDate(), beginDate, endDate);
-	}
-	super.setBeginDate(beginDate);
-	super.setEndDate(endDate);
-    }
-
+    
     public Unit getHostUnit() {
 	return (Unit) getParentParty();
     }
@@ -139,8 +146,7 @@ public class Invitation extends Invitation_Base {
     }
 
     private boolean hasDatesIntersection(YearMonthDay begin, YearMonthDay end) {
-	return ((end == null || !this.getBeginDate().isAfter(end)) && (this.getEndDate() == null || !this
-		.getEndDate().isBefore(begin)));
+	return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate().isBefore(begin)));
     }
 
     private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {

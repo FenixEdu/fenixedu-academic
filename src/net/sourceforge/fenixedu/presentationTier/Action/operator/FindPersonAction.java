@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -61,9 +62,9 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	Object[] args = { searchParameters, predicate };
 
-	CollectionPager result = null;
+	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView,
 		    "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
