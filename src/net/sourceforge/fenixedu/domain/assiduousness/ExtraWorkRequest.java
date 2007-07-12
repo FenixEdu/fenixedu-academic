@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;

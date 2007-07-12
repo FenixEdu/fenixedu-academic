@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class GiafInterface {
@@ -118,8 +119,8 @@ public class GiafInterface {
                 query.append(" and a.ano_pag=");
                 query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
                 query.append(" and a.mes_pag=");
-                if (!extraWorkRequest.getPartialPayingDate().equals(extraWorkRequest
-                        .getHoursDoneInPartialDate())) {
+                if (!extraWorkRequest.getPartialPayingDate().equals(
+                        extraWorkRequest.getHoursDoneInPartialDate())) {
                     query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
                             DateTimeFieldType.monthOfYear()));
                 } else {
@@ -156,5 +157,56 @@ public class GiafInterface {
             e.printStackTrace();
             throw new ExcepcaoPersistencia();
         }
+    }
+
+    public double getTotalMonthAmount(Partial closedYearMonth) throws ExcepcaoPersistencia {
+        PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+        try {
+            PreparedStatement stmt = persistentSuportOracle
+                    .prepareStatement("SELECT ano, mes FROM sltinfdivs");
+            ResultSet rs = stmt.executeQuery();
+            Integer year = 0;
+            Integer month = 0;
+            if (rs.next()) {
+                year = rs.getInt("ano");
+                month = rs.getInt("mes");
+            }
+            rs.close();
+            StringBuilder query = new StringBuilder();
+            if (closedYearMonth.get(DateTimeFieldType.year()) == year
+                    && closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1 == month) {
+                query
+                        .append("SELECT sum(a.sal_val_brt) as value FROM sldsalario a where a.mov_cod in (");
+                query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
+                query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
+                query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+                query.append(") and a.ano_pag=");
+                query.append(closedYearMonth.get(DateTimeFieldType.year()));
+                query.append(" and a.mes_pag=");
+                query.append(closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1);
+            } else {
+                query.append("SELECT sum(a.sal_val_brt) as value FROM slhsalario a where a.ano=");
+                query.append(closedYearMonth.get(DateTimeFieldType.year()));
+                query.append(" and a.mes=");
+                query.append(closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1);
+                query.append(" and a.mov_cod in (");
+                query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
+                query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
+                query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+                query.append(")");
+            }
+            stmt = persistentSuportOracle.prepareStatement(query.toString());
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("value");
+            }
+            rs.close();
+
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ExcepcaoPersistencia();
+        }
+        return 0;
     }
 }
