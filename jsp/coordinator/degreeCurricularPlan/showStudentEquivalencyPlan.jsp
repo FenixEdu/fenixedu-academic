@@ -49,33 +49,38 @@
 			<bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
 			<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="studentCurricularPlanEquivalencePlan"/>
 			<logic:present name="rootEquivalencyPlanEntryCurriculumModuleWrapper">
-				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-						+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
-						+ student.getNumber() 
-						%>">
-					<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
-				</html:link>
-				<br/>
-				<br/>
+
+				<p class="mvert15">
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() 
+							%>">
+						<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
+				</p>
+
 				<bean:define id="equivalencyPlanEntryCurriculumModuleWrapper" name="rootEquivalencyPlanEntryCurriculumModuleWrapper" toScope="request"/>
 				<bean:define id="indentLevel" type="java.lang.String" value="0" toScope="request"/>
 				<bean:define id="width" type="java.lang.String" value="70" toScope="request"/>
 				<jsp:include page="showStudentEquivalencyPlanForCurriculumModule.jsp"/>
 			</logic:present>
 			<logic:present name="equivalencePlanEntryWrappers">
-				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-						+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
-						+ student.getNumber() 
-						%>">
-					<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
-				</html:link>
-				<br/>
-				<br/>
+
+				<p class="mvert15">
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() 
+							%>">
+						<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
+				</p>
+
 				<bean:define id="equivalencePlanEntryWrappers" name="equivalencePlanEntryWrappers" toScope="request"/>
 				<bean:define id="indentLevel" type="java.lang.String" value="0" toScope="request"/>
 				<bean:define id="width" type="java.lang.String" value="70" toScope="request"/>
+
 				<jsp:include page="showStudentEquivalencyPlanTable.jsp"/>
 			</logic:present>
 		</logic:present>
