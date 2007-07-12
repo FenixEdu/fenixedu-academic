@@ -40,16 +40,8 @@ public class Campus extends Campus_Base {
 	super.delete();
     }
     
-    // TODO : fix this when the new spaces structure is introduced
-    // and the location of each campus is known.
-    public String getLocation() {
-	if (getSpaceInformation().getName().trim().equalsIgnoreCase("Alameda")) {
-	    return "Lisboa";
-	} else if (getSpaceInformation().getName().trim().replace("-", "").equalsIgnoreCase("Taguspark")) {
-	    return "Oeiras";
-	}
-	
-	return null;
+    public String getLocation() {	
+	return getSpaceInformation().hasLocality() ? getSpaceInformation().getLocality().getName() : null;	
     }
 
     public String getName() {
