@@ -11,6 +11,6 @@
 
 
 <p>
-Se pretende realizar alguma opera&ccedil;&atilde;o deve utilizar o men&uacute; lateral se
+Se pretende realizar alguma opera&ccedil;&atilde;o deve utilizar o menu lateral se
 a ac&ccedil;&atilde;o desejada est&aacute; relacionada com cria&ccedil;&atilde;o e/ou gest&atilde;o de turmas e
 turnos. Bom trabalho.</p>

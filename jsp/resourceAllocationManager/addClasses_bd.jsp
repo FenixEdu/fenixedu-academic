@@ -5,19 +5,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected">
-    		<p>O curso seleccionado &eacute;:</p>
-    		<strong><jsp:include page="context.jsp"/></strong>
-		</td>
-	</tr>
-</table>
 
-<br />
-<h2>Adicionar Turmas</h2>
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
 
-<br />
+<p class="mbottom05">O curso seleccionado &eacute;:</p>
+<strong><jsp:include page="context.jsp"/></strong>
+
+
+<h3>Adicionar Turmas</h3>
+
 <logic:present name="<%= SessionConstants.CLASSES %>" scope="request">
 	<html:form action="/addClasses" focus="selectedItems">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="add"/>
@@ -34,30 +31,30 @@
 		<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 					 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
-		<table>
+		<table class="tstyle4 thlight mtop05">
 			<tr>
-				<th class="listClasses-header">
+				<th>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.name"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.degree"/>
 				</th>
 			</tr>
 			<logic:iterate id="infoClass" name="<%= SessionConstants.CLASSES %>">
 				<bean:define id="infoClassOID" name="infoClass" property="idInternal"/>
 				<bean:define id="infoExecutionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
-				<tr align="center">
-	              	<td class="listClasses">
+				<tr>
+	              	<td>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 							<bean:write name="infoClass" property="idInternal"/>
 						</html:multibox>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="infoClass" property="nome"/>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/>
 					</td>
 				</tr>
@@ -71,5 +68,7 @@
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.CLASSES %>" scope="request">
-	<span class="error"><!-- Error messages go here --><bean:message key="errors.classes.none"/></span>	
+	<p>
+		<span class="warning0"><!-- Error messages go here --><bean:message key="errors.classes.none"/></span>	
+	</p>
 </logic:notPresent>

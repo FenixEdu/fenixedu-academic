@@ -7,20 +7,17 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected">
-    		<p>O curso seleccionado &eacute;:</p>
-    		<jsp:include page="context.jsp"/>
-		</td>
-	</tr>
-</table>
 
-<br />
-<h2>Manipular Turma</h2>
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
 
-<br />
-<table cellpadding="0" cellspacing="0" border="0">
+<p class="mbottom05">O curso seleccionado &eacute;:</p>
+<strong><jsp:include page="context.jsp"/></strong>
+
+
+<h3>Manipular Turma</h3>
+
+<table class="mbottom1">
 	<tr>
 		<td>
 			<html:form action="/manageClass">
@@ -41,7 +38,7 @@
 				</html:submit>			
 			</html:form>
 		</td>
-		<td width="10"></td>
+		<td></td>
 		<td>
 			<html:form action="/manageClass">
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
@@ -61,7 +58,7 @@
 				</html:submit>			
 			</html:form>
 		</td>
-		<td width="10"></td>
+		<td></td>
 		<td>
 			<html:form action="/manageClasses">
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="listClasses"/>
@@ -82,7 +79,7 @@
 	</tr>
 </table>
 
-<br />
+
 <html:form action="/manageClass" focus="className">
 
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -97,19 +94,20 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value= "1"/>
 
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
-   	<br />
+	<p>
+		<span class="warning"><!-- Error messages go here --><html:errors /></span>
+	</p>
+
    	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
-   	<br />
+
    	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
    		<bean:message key="label.change"/>
    	</html:submit>
 </html:form>
 
-<br />
-	<h2>Horï¿½rio da Turma</h2>
+
+	<h3 class="mtop15">Horário da Turma</h3>
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>
 	</div>
-<br />

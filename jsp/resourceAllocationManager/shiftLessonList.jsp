@@ -5,10 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<br />
-<br />
-Aulas já atribuidas ao turno
-<br />
+
+<p class="mtop2 mbottom05"><strong>Aulas já atribuidas ao turno:</strong></p>
+
 	<logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">
 
@@ -26,28 +25,28 @@ Aulas já atribuidas ao turno
 	<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
-		<table>
+		<table class="tstyle4 thlight tdcenter">
 			<tr>
-				<th class="listClasses-header">
+				<th>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="property.weekday"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="property.time.start"/>
 				</th>
-		        <th class="listClasses-header">
+		        <th>
 		        	<bean:message key="property.time.end"/>
 	    	    </th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="property.room"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 		        	<bean:message key="property.capacity"/>
 		        </th>
-				<th class="listClasses-header">
+				<th>
 		        </th>
-				<th class="listClasses-header">
+				<th>
 		        </th>
 			</tr>
 			<bean:define id="deleteConfirm">
@@ -55,36 +54,36 @@ Aulas já atribuidas ao turno
 			</bean:define>			
 			<logic:iterate id="lesson" name="shift" property="infoLessons">
 				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
-				<tr align="center">
-              		<td class="listClasses">
+				<tr>
+              		<td>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 							<bean:write name="lesson" property="idInternal"/>
 						</html:multibox>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="lesson" property="diaSemana"/>
 					</td>
-					<td class="listClasses">
+					<td>
 						<dt:format pattern="HH:mm">
 							<bean:write name="lesson" property="inicio.timeInMillis"/>
 						</dt:format>
 					</td>
-					<td class="listClasses">
+					<td>
 						<dt:format pattern="HH:mm">
 							<bean:write name="lesson" property="fim.timeInMillis"/>
 						</dt:format>
 					</td>
-					<td class="listClasses">
+					<td>
 						<logic:notEmpty name="lesson" property="infoSala">
 							<bean:write name="lesson" property="infoSala.nome"/>
 						</logic:notEmpty>	
 					</td>
-					<td class="listClasses">
+					<td>
 						<logic:notEmpty name="lesson" property="infoSala">
 							<bean:write name="lesson" property="infoSala.capacidadeNormal"/>
 						</logic:notEmpty>
 					</td>
-					<td class="listClasses">
+					<td>
 	               		<html:link page="<%= "/manageLesson.do?method=prepareEdit&amp;page=0&amp;"
     	           							+ SessionConstants.LESSON_OID
 				  							+ "="
@@ -112,7 +111,7 @@ Aulas já atribuidas ao turno
 							<bean:message key="link.edit"/>
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						<html:link page="<%= "/manageLesson.do?method=deleteLesson&amp;page=0&amp;"
     	           							+ SessionConstants.LESSON_OID
 				  							+ "="
@@ -144,14 +143,18 @@ Aulas já atribuidas ao turno
 				</tr>
 			</logic:iterate>
 		</table>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-			<bean:message key="link.delete"/>
-		</html:submit>
+		<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+				<bean:message key="link.delete"/>
+			</html:submit>
+		</p>
 	  </html:form>
 	</logic:present>
+
 	<logic:notPresent name="shift" property="infoLessons">
-		<span class="error"><!-- Error messages go here -->
-			<bean:message key="message.shift.lessons.none"/>
-		</span>
-		<br />
+		<p>
+			<span class="error"><!-- Error messages go here -->
+				<bean:message key="message.shift.lessons.none"/>
+			</span>
+		</p>
 	</logic:notPresent>

@@ -252,5 +252,7 @@
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.SHIFTS %>" scope="request">
-	<span class="error"><!-- Error messages go here --><bean:message key="errors.shifts.none"/></span>	
+	<p>
+		<em><!-- Error messages go here --><bean:message key="errors.shifts.none"/></em>	
+	</p>
 </logic:notPresent>

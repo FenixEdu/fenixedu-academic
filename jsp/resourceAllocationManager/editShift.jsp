@@ -5,11 +5,14 @@
 
 <html:xhtml/>
 
-<span class="error"><!-- Error messages go here -->
-	<html:errors/>
-</span>
+<p>
+	<span class="error"><!-- Error messages go here -->
+		<html:errors/>
+	</span>
+</p>
 
-<table cellpadding="0" cellspacing="0" border="0">
+
+<table>
 	<tr>
 		<td>
 			<html:form action="/manageLesson">
@@ -100,7 +103,7 @@
 	</tr>
 </table>
 
-<br />
+
 <html:form action="/manageShift" focus="nome">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editShift"/>
@@ -117,62 +120,57 @@
 	<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
-	<table cellpadding="0" cellspacing="0">
+	<table class="tstyle5 thlight thright mtop15">
 		<tr>
-			<td class="formTD">
-				<bean:message key="property.turno.name"/>
-				:
-			</td>
-			<td  class="formTD">
+			<th>
+				<bean:message key="property.turno.name"/>:
+			</th>
+			<td>
 				<bean:write name="createShiftForm" property="nome"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="formTD">
-				<bean:message key="property.turno.disciplina"/>
-				:
-			</td>
-			<td  class="formTD">
+			<th>
+				<bean:message key="property.turno.disciplina"/>:
+			</th>
+			<td>
 				<jsp:include page="selectExecutionCourseList.jsp"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="formTD">
-				<bean:message key="property.turno.type"/>
-				:
-			</td>
-			<td class="formTD">
+			<th>
+				<bean:message key="property.turno.type"/>:
+			</th>
+			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.tipoAula" property="tipoAula" size="1">
 					<html:options collection="tiposAula" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>
         <tr>
-            <td class="formTD">
-                <bean:message key="property.turno.capacity"/>
-                :
-            </td>
-            <td class="formTD">
+            <th>
+                <bean:message key="property.turno.capacity"/>:
+            </th>
+            <td>
                 <html:text bundle="HTMLALT_RESOURCES" altKey="text.lotacao" property="lotacao" size="11" maxlength="20"/>
             </td>
         </tr>			
 	</table>
 
-	<br />
-	<table align='left' cellpadding="0" cellspacing="0">
-		<tr align="center">
+	<table>
+		<tr>
 			<td>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.change"/>
 				</html:submit>
 			</td>
-			<td width="10">
+			<td>
 			</td>
 			<td>
 				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 					<bean:message key="label.clear"/>
 				</html:reset>
 			</td>
-		<tr />
+		<tr/>
 	</table>
 </html:form>

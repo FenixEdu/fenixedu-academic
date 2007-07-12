@@ -30,72 +30,67 @@ function invertSelect(){
 // -->
 </script>
 
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
 
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected">
-    		<p>O curso seleccionado &eacute;:</p>
-    		<strong><jsp:include page="context.jsp"/></strong>
-		</td>
-	</tr>
-</table>
+<p class="mbottom05">O curso seleccionado &eacute;:</p>
+<strong><jsp:include page="context.jsp"/></strong>
 
 <bean:define id="shiftName" name="<%= SessionConstants.SHIFT %>" property="nome"/>
 <bean:define id="shiftId" name="<%= SessionConstants.SHIFT %>" property="idInternal"/>
 <bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="tipo"/>
 
-<h2>
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
-	<bean:write name="<%= SessionConstants.EXECUTION_COURSE %>" property="nome"/>
-</logic:present> 
-<br /><br />
-Turno: <bean:write name="shiftName"/>
-<br />
-<br />
-Alunos Inscritos
-</h2>
-<br />
+<h3>Alunos Inscritos</h3>
+
+<p>
+	<logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
+		<bean:write name="<%= SessionConstants.EXECUTION_COURSE %>" property="nome"/>
+	</logic:present>
+</p>
+
+<p>Turno: <bean:write name="shiftName"/></p>
+
 
 <logic:present name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
 <html:form action="/manageShiftStudents">
 	<table>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.number"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.name"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.mail"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.degree"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 			</th>
 		</tr>
 		<logic:iterate id="shiftEnrolment" name="shift" property="shift.shiftEnrolmentsOrderedByDate">
 			<bean:define id="student" name="shiftEnrolment" property="registration"/>
-			<tr align="center">
-				<td class="listClasses">
+			<tr>
+				<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentIDs" property="studentIDs"><bean:write name="student" property="idInternal"/></html:multibox>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="student" property="number"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="student" property="student.person.name"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="student" property="student.person.email"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="student" property="activeOrConcludedStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<dt:format pattern="dd/MM/yyyy HH:mm:ss">
 						<bean:write name="shiftEnrolment" property="createdOn.millis"/>
 					</dt:format>
@@ -104,11 +99,13 @@ Alunos Inscritos
 		</logic:iterate>
 	</table>
 
-<br />
-<h2><bean:message key="title.transfer.students.shif"/></h2>
-<br />
-<span class="info"><bean:message key="message.transfer.students.shift.notice"/></span>
-<br />
+
+<p class="mtop2"><strong><bean:message key="title.transfer.students.shif"/></strong></p>
+
+<p>
+	<span class="info"><bean:message key="message.transfer.students.shift.notice"/></span>
+</p>
+
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentsShift"/>
@@ -127,9 +124,9 @@ Alunos Inscritos
 
 		<table>
 			<tr>
-				<th class="listClasses-header">
+				<th>
 				</th>
-				<th class="listClasses-header">
+				<th>
 				</th>
 			</tr>
 			<logic:iterate id="otherShift" name="<%= SessionConstants.SHIFTS %>">
@@ -139,12 +136,11 @@ Alunos Inscritos
 					<bean:define id="otherShiftType" name="otherShift" property="tipo"/>
 					<logic:equal name="shiftType"
 							value="<%= pageContext.findAttribute("otherShiftType").toString() %>">
-					
-						<tr align="center">
-							<td class="listClasses">
+						<tr>
+							<td>
 								<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.newShiftId" property="newShiftId" value="<%= pageContext.findAttribute("otherShiftId").toString() %>"/>
 							</td>
-							<td class="listClasses">
+							<td>
 								<bean:write name="otherShift" property="nome"/>
 							</td>
 						</tr>
@@ -152,13 +148,16 @@ Alunos Inscritos
 				</logic:notEqual>
 			</logic:iterate>
 		</table>
-
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.transfer"/></html:submit>
+		<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.transfer"/></html:submit>
+		</p>
 </logic:present>
 
 	</html:form> 
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
-	<span class="error"><!-- Error messages go here --><bean:message key="errors.students.none.in.shift"/></span>	
+	<p>
+		<span class="warning0"><!-- Error messages go here --><bean:message key="errors.students.none.in.shift"/></span>	
+	</p>
 </logic:notPresent>

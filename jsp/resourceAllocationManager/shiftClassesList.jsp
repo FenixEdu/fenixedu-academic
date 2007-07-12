@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-Turmas associadas ao turno:
-<br />
+
+<p class="mtop2 mbottom05"><strong>Turmas associadas ao turno:</strong></p>
+
 <logic:present name="shift" property="infoClasses">
   <html:form action="/manageShiftMultipleItems">
 
@@ -24,14 +25,14 @@ Turmas associadas ao turno:
 	<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
-	<table cellpadding="0" border="0">
+	<table class="tstyle4 thlight tdcenter">
 		<tr>
-			<th class="listClasses-header">
+			<th>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="label.name"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="link.schedules.remove"/>
 			</th>				
 		</tr>		
@@ -42,12 +43,12 @@ Turmas associadas ao turno:
 	<logic:iterate id="shiftClass" name="shift" property="infoClasses">
 		<bean:define id="classOID" name="shiftClass" property="idInternal"/>
 			<tr>
-              	<td class="listClasses">
+              	<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 						<bean:write name="shiftClass" property="idInternal"/>
 					</html:multibox>
 				</td>
-				<td nowrap="nowrap" class="listClasses">
+				<td>
 					<html:link page="<%= "/manageClass.do?method=prepare&amp;"
 							+ SessionConstants.CLASS_VIEW_OID
 							+ "="
@@ -69,7 +70,7 @@ Turmas associadas ao turno:
 						</div>
 					</html:link>
 				</td>
-				<td nowrap="nowrap" class="listClasses">
+				<td>
 					<div align="center">
 						<html:link page="<%= "/manageShift.do?method=removeClass&amp;"
 								+ SessionConstants.CLASS_VIEW_OID
@@ -103,13 +104,18 @@ Turmas associadas ao turno:
 			</tr>
 	</logic:iterate>
 	</table>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-		<bean:message key="link.schedules.remove"/>
-	</html:submit>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+			<bean:message key="link.schedules.remove"/>
+		</html:submit>
+	</p>
   </html:form>
 </logic:present>
+
 <logic:notPresent name="shift" property="infoClasses">
-	<span class="error"><!-- Error messages go here -->
-		<bean:message key="message.shift.classes.none"/>
-	</span>
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<bean:message key="message.shift.classes.none"/>
+		</span>
+	</p>
 </logic:notPresent>

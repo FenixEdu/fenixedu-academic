@@ -6,20 +6,16 @@
 
 <html:xhtml/>
 
-<table width="100%" cellspacing="0">
-	<tr>
-    	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-			<strong><jsp:include page="context.jsp"/></strong>
-        </td>
-  	</tr>
-</table>
-<h2><bean:message key="title.editTurno"/></h2>
-<br />
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
+
+<p class="mbottom05">O curso seleccionado &eacute;:</p>
+<jsp:include page="context.jsp"/>
+
+<h3><bean:message key="title.editTurno"/></h3>
 
 <jsp:include page="editShift.jsp"/>
 
-<br />
 <jsp:include page="shiftLessonList.jsp"/>
 
-<br />
 <jsp:include page="shiftClassesList.jsp"/>

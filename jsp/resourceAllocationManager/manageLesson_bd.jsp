@@ -7,19 +7,21 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
-<table width="100%" cellspacing="0">
-	<tr>
-    	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-			<strong><jsp:include page="context.jsp"/></strong>
-        </td>
-  	</tr>
-</table>
-<h2><bean:message key="title.manage.aulas"/></h2>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br />
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
+
+<p class="mbottom05">O curso seleccionado &eacute;:</p>
+<jsp:include page="context.jsp"/>
+
+<h3><bean:message key="title.manage.aulas"/></h3>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+
 <bean:message key="message.weekdays"/>
-<br />
+
 <html:form action="/manageLesson" focus="diaSemana">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRoom"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -42,48 +44,50 @@
 					 value="<%= pageContext.findAttribute("lessonOID").toString() %>"/>
 	</logic:present>
 
-	<table cellspacing="0">
+	<table class="tstyle5 thlight thright">
 		<tr>
-	      	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>	        
-	        <td nowrap class="formTD">
+	      	<th><bean:message key="property.aula.weekDay"/>:</th>
+	        <td>
     	    	<html:text bundle="HTMLALT_RESOURCES" altKey="text.diaSemana" property="diaSemana" size="2"/>
 	       	</td>
    		</tr>
 	   	<tr>
-    		<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.begining"/>: </td>
-        	<td nowrap="nowrap">
+    		<th><bean:message key="property.aula.time.begining"/>:</th>
+        	<td>
 	          	<html:text bundle="HTMLALT_RESOURCES" altKey="text.horaInicio" property="horaInicio"  size="2"/> :
     	        <html:text bundle="HTMLALT_RESOURCES" altKey="text.minutosInicio" property="minutosInicio" size="2"/>
 	     	</td>
    		</tr>
 	    <tr>
-	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.end"/>: </td>
-    	    <td nowrap="nowrap">
+	        <th><bean:message key="property.aula.time.end"/>:</th>
+    	    <td>
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.horaFim" property="horaFim"  size="2"/>
             		:
 	            <html:text bundle="HTMLALT_RESOURCES" altKey="text.minutosFim" property="minutosFim"  size="2"/>
     	    </td> 
 	 	</tr> 
 	 	<tr>
-	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.quinzenal"/>: </td>
-    	    <td nowrap="nowrap">
+	        <th><bean:message key="property.aula.time.quinzenal"/>:</th>
+    	    <td>
         	 	<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.quinzenal" property="quinzenal"/>
     	    </td> 
 	 	</tr>
 	 	<tr>
-	        <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.week"/>: </td>
-    	    <td nowrap="nowrap">
+	        <th><bean:message key="property.aula.time.week"/>:</th>
+    	    <td>
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="week" size="1"/>
     	    </td> 
 	 	</tr>
 	</table>
-	<br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="lable.chooseRoom"/>
-	</html:submit>
-	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>
+
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="lable.chooseRoom"/>
+		</html:submit>
+		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
+			<bean:message key="label.clear"/>
+		</html:reset>
+	</p>
 </html:form>
 
 <jsp:include page="shiftLessonList.jsp"/>
