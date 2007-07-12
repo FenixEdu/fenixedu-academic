@@ -9311,6 +9311,14 @@
         <filterChains>
         </filterChains>
     </service>
+    <service>
+        <name>SearchCurrentExecutionCourses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchCurrentExecutionCourses</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 	<service>
         <name>SearchPolymorphicObjects</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPolymorphicObjects</implementationClass>
@@ -12212,4 +12220,32 @@
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
     </service>
+    <service>
+    	<name>CreateCompetenceCourseInformationRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourseInformationChangeRequest</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteCompetenceCourseInformationChangeRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>        
+    <service>
+    	<name>ChangeCompetenceCourseInformationChangeRequestStatus</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.ChangeCompetenceCourseInformationChangeRequestStatus</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    
 </serviceDefinitions>

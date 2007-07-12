@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,7 +17,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic,
-            RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, Date endDate) {        
+            RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, ExecutionPeriod period) {        
         
         this();
         checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
@@ -24,8 +26,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setBasic(basic);
         setRegime(regimeType);
         setCompetenceCourseLevel(competenceCourseLevel);
-        setEndDate(endDate);
         setBibliographicReferences(new BibliographicReferences());
+        setExecutionPeriod(period);
     }
     
     private void checkParameters(String name, String nameEn, Boolean basic,
@@ -207,5 +209,27 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             }
         }
         return result;
+    }
+    
+    public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
+	List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest> ();
+	
+	for(CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse().getCompetenceCourseInformationChangeRequests()) {
+	    if(request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
+		requests.add(request);
+	    }
+	}
+	
+	return requests;
+    }
+    
+    public boolean isCompetenceCourseInformationChangeRequestDraftAvailable() {
+	for(CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequest()) {
+	    if (request.getApproved() == null) {
+		return true;
+	    }
+	}
+	
+	return false;
     }
 }

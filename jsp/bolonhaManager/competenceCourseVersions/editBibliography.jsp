@@ -1,0 +1,210 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<bean:define id="competecenceCourseID" name="bean" property="competenceCourse.idInternal"/>
+
+<em><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
+<h2><bean:message key="label.competenceCourse.createVersion" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>
+
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
+			<span class="error0"><bean:write name="messages" /></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>
+
+
+	<bean:message key="label.newBibliographicEntry" bundle="BOLONHA_MANAGER_RESOURCES"/>:
+	<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=createBibliographicReference" %>">
+	<fr:edit id="createReference" name="referenceBean" schema="create.reference.from.bean">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+	</fr:edit>
+		<fr:edit name="bean" id="editVersion" visible="false"/>
+		<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+		<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</fr:form>
+	
+	<logic:notEmpty name="bean" property="references">
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.primaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+	<logic:notEmpty name="bean" property="references.mainBibliographicReferences">
+	<logic:iterate id="reference" name="bean" property="references.mainBibliographicReferences">
+		<bean:define id="index" name="reference" property="order"/>	
+		<a name="<%= "biblio" + index %>"></a>
+		
+		<logic:notPresent name="edit">
+			<div class="mbottom15">
+				<fr:view name="reference" schema="view.reference">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle1 thlight thright thtop mtop05"/>
+					</fr:layout>
+				</fr:view>
+				<div class="dinline forminline">	
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=removeBibliography&index=" + index %>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				</div>			
+			</div>
+		</logic:notPresent>
+		
+		<logic:present name="edit">
+			<bean:define id="edit" name="edit"/>
+		
+			<logic:equal name="index" value="<%= edit.toString() %>">
+				<div class="dinline forminline">	
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=viewBibliography"%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<fr:edit name="reference" schema="edit.reference">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thlight thright"/>
+							<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+						</fr:layout>
+					</fr:edit>
+					<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>		
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=viewBibliography"%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				</div>
+			</logic:equal>
+			
+			<logic:notEqual name="index" value="<%= edit.toString() %>">
+				<div class="mbottom15">
+					<fr:view name="reference" schema="view.reference">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle1 thlight thright thtop"/>
+						</fr:layout>
+					</fr:view>					
+					<div class="dinline forminline">	
+					<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+						<fr:edit name="bean" id="editVersion" visible="false"/>
+						<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+						<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+					</fr:form>
+					<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=removeBibliography&index=" + index %>">
+						<fr:edit name="bean" id="editVersion" visible="false"/>
+						<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+						<html:submit><bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/></html:submit>
+					</fr:form>
+					</div>
+				</div>
+			</logic:notEqual>
+		</logic:present>
+
+
+	</logic:iterate>
+	</logic:notEmpty>
+
+	<logic:empty name="bean" property="references.mainBibliographicReferences">
+		<p><em><bean:message key="label.noPrimaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></em></p>
+	</logic:empty>
+	
+
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong>:</p>
+	<logic:notEmpty name="bean" property="references.secondaryBibliographicReferences">
+	<logic:iterate id="secondaryReference" name="bean" property="references.secondaryBibliographicReferences">
+		<bean:define id="index" name="secondaryReference" property="order"/>	
+		<a name="<%= "biblio" + index %>"></a>
+		
+		<logic:notPresent name="edit">
+			<fr:view name="secondaryReference" schema="view.reference">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thlight thright thtop"/>
+				</fr:layout>
+			</fr:view>
+			<div class="dinline forminline">	
+			<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+				<fr:edit name="bean" id="editVersion" visible="false"/>
+				<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+				<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+			</fr:form>
+			<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=removeBibliography&index=" + index %>">
+				<fr:edit name="bean" id="editVersion" visible="false"/>
+				<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+				<html:submit><bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/></html:submit>
+			</fr:form>
+			</div>			
+		</logic:notPresent>
+		
+		<logic:present name="edit">
+			<bean:define id="edit" name="edit"/>
+		
+			<logic:equal name="index" value="<%= edit.toString() %>">
+				<div class="dinline forminline">	
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=viewBibliography"%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<fr:edit name="secondaryReference" schema="edit.reference">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thright thlight"/>
+						</fr:layout>
+					</fr:edit>
+					<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>		
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=viewBibliography"%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				</div>
+			</logic:equal>
+			
+			<logic:notEqual name="index" value="<%= edit.toString() %>">
+				<fr:view name="secondaryReference" schema="view.reference"> 
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle1 thlight thright thtop"/>
+					</fr:layout>
+				</fr:view>					
+				<div class="dinline forminline">	
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=editBibliography&index=" + index + "#biblio" + index%>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=removeBibliography&index=" + index %>">
+					<fr:edit name="bean" id="editVersion" visible="false"/>
+					<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+					<html:submit><bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</fr:form>
+				</div>
+			</logic:notEqual>
+		</logic:present>
+
+
+	</logic:iterate>
+	</logic:notEmpty>
+
+	<logic:empty name="bean" property="references.secondaryBibliographicReferences">
+		<p><em><bean:message key="label.noSecundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></em></p>
+	</logic:empty>
+	</logic:notEmpty>
+	
+<p class="mtop15">
+	<div class="dinline forminline">	
+		<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=createVersion"%>">
+			<fr:edit name="bean" id="editVersion" visible="false"/>
+			<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+			<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+		</fr:form>
+		<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareCreateVersion"%>">
+			<fr:edit name="bean" id="editVersion" visible="false"/>
+			<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
+			<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
+		</fr:form>
+	</div>
+</p>

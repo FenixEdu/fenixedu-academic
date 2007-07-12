@@ -39,32 +39,38 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) studentCurricularPlan
 		.findEnrolmentFor(optionalCurricularCourse, executionPeriod);
 	if (optionalEnrolment != null && optionalEnrolment.isValid(executionPeriod)) {
-	    throw new DomainException(
-		    "error.OptionalEnrolment.duplicate.enrolment",
+	    throw new DomainException("error.OptionalEnrolment.duplicate.enrolment",
 		    optionalCurricularCourse.getName());
 
 	}
     }
 
     @Override
-    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    final public boolean isApproved(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return (isCurricularCourseEquivalente(curricularCourse, executionPeriod) 
-		    || isOptionalCurricularCourseEquivalente(curricularCourse, executionPeriod))
+	    return (isCurricularCourseEquivalente(curricularCourse, executionPeriod) || isOptionalCurricularCourseEquivalente(
+		    curricularCourse, executionPeriod))
 		    && isApproved();
 	} else {
 	    return false;
 	}
     }
-    
-    private boolean isCurricularCourseEquivalente(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(getCurricularCourse(), curricularCourse, executionPeriod);
+
+    private boolean isCurricularCourseEquivalente(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
+	return getCurricularCourse().isEquivalent(curricularCourse)
+		|| hasCurricularCourseEquivalence(getCurricularCourse(), curricularCourse,
+			executionPeriod);
     }
-    
-    private boolean isOptionalCurricularCourseEquivalente(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return getOptionalCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(getOptionalCurricularCourse(), curricularCourse, executionPeriod);
+
+    private boolean isOptionalCurricularCourseEquivalente(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
+	return getOptionalCurricularCourse().isEquivalent(curricularCourse)
+		|| hasCurricularCourseEquivalence(getOptionalCurricularCourse(), curricularCourse,
+			executionPeriod);
     }
-    
+
     @Override
     final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse,
 	    ExecutionPeriod executionPeriod) {
@@ -80,20 +86,10 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     @Override
     public MultiLanguageString getName() {
-	MultiLanguageString multiLanguageString = super.getName();
-	setNameContent(multiLanguageString, Language.pt, this.getOptionalCurricularCourse().getName());
-	setNameContent(multiLanguageString, Language.en, this.getOptionalCurricularCourse().getNameEn());
-	return multiLanguageString;
-    }
-
-    private void setNameContent(MultiLanguageString multiLanguageString, Language language,
-	    String content) {
-	if (content != null && content.length() > 0) {
-	    if (multiLanguageString.getContent(language) != null) {
-		multiLanguageString.setContent(language, multiLanguageString.getContent(language) + " ("
-			+ content + ")");
-	    }
-	}
+	ExecutionPeriod executionPeriod = getExecutionPeriod();
+	return MultiLanguageString.i18n().add("pt",
+		this.getOptionalCurricularCourse().getName(executionPeriod)).add("en",
+		this.getOptionalCurricularCourse().getNameEn(executionPeriod)).finish();
     }
 
     @Override

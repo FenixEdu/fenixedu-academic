@@ -5,4 +5,30 @@
     <definition name="index" extends="bolonhaManager.masterPage">
         <put name="body" value="/bolonhaManager/index.jsp"></put>
     </definition>
+    
+    <definition name="show-courses" extends="bolonhaManager.masterPage">
+    	<put name="body" value="/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp"/>
+    </definition>
+    
+    <definition name="create-version" extends="bolonhaManager.masterPage">
+    	<put name="body" value="/bolonhaManager/competenceCourseVersions/createVersion.jsp"/>
+    </definition>
+
+    <definition name="view-versions" extends="bolonhaManager.masterPage">
+    	<put name="body" value="/bolonhaManager/competenceCourseVersions/viewVersions.jsp"/>
+    </definition>
+    
+    <definition name="view-version-details" extends="bolonhaManager.masterPage">
+    	<put name="body" value="/bolonhaManager/competenceCourseVersions/viewVersionDetails.jsp"/>
+    </definition>
+
+    <definition name="edit-Biblio" extends="bolonhaManager.masterPage">
+        <put name="body" value="/bolonhaManager/competenceCourseVersions/editBibliography.jsp"/>
+    </definition>  
+
+    <definition name="view-information-details" extends="bolonhaManager.masterPage">
+        <put name="body" value="/bolonhaManager/competenceCourseVersions/viewCompetenceCourseInformation.jsp"/>
+    </definition>  
+        
+    
 </tiles-definitions>

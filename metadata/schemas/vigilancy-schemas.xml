@@ -626,7 +626,7 @@ extends="presentSimpleConvokesWithoutLink">
 			<property name="maxCount" value="30"/>
 			<property name="size" value="40"/>
 			<property name="labelField" value="nome"/>
-			<property name="serviceName" value="SearchObjects"/>
+			<property name="serviceName" value="SearchCurrentExecutionCourses"/>
 			<property name="serviceArgs" value="slot=nome"/>
 			<property name="className" value="net.sourceforge.fenixedu.domain.ExecutionCourse"/>				
 			<property name="minChars" value="3"/>	

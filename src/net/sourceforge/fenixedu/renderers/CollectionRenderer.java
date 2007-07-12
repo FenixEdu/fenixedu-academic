@@ -1024,134 +1024,7 @@ public class CollectionRenderer extends OutputRenderer {
                 return null;
             }
             
-            Object realObject = object.getObject();
-
-            if (tableLink.getVisibleIf() != null) {
-                try {
-                    Boolean visible = (Boolean) RendererPropertyUtils.getProperty(realObject, tableLink
-                            .getVisibleIf(), false);
-                    
-                    if (visible != null && !visible) {
-                        return null;
-                    }
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-            if (tableLink.getVisibleIfNot() != null) {
-                try {
-                    Boolean notVisible = (Boolean) RendererPropertyUtils.getProperty(realObject,
-                            tableLink.getVisibleIfNot(), false);
-                    
-                    if (notVisible != null && notVisible) {
-                        return null;
-                    }
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (tableLink.getCustom() != null) {
-                return new HtmlText(RenderUtils
-                        .getFormattedProperties(tableLink.getCustom(), realObject), false);
-            } else {
-                HtmlLink link = new HtmlLink();
-    
-                if (tableLink.isContextRelativeSet()) {
-                    link.setContextRelative(tableLink.isContextRelative());
-                }
-    
-                link.setText(getLinkText(tableLink));
-                link.setModule(tableLink.getModule());
-    
-                if (tableLink.getLinkFormat() != null) {
-                    link.setUrl(RenderUtils
-                            .getFormattedProperties(tableLink.getLinkFormat(), realObject));
-                } else {
-                    link.setUrl(tableLink.getLink());
-                    setLinkParameters(object, link, tableLink);
-                }
-    
-                return link;
-            }
-        }
-
-        protected String getLinkText(TableLink tableLink) {
-            String text = tableLink.getText();
-            
-            if (text != null) {
-                return text;
-            }
-            
-            String key = tableLink.getKey();
-            String bundle = tableLink.getBundle();
-            
-            if (key == null) {
-                return tableLink.getName();
-            }
-            
-            text = RenderUtils.getResourceString(bundle, key);
-            
-            if (text != null) {
-                return text;
-            }
-            
-            return tableLink.getName();
-        }
-
-        protected void setLinkParameters(MetaObject metaObject, HtmlLink link, TableLink tableLink) {
-            String linkParam = tableLink.getParam();
-            
-            if (linkParam == null) {
-                return;
-            }
-            
-            Object object = metaObject.getObject();
-            String parameters[] = tableLink.getParam().split(",");
-
-            // "a", "a=b", "a/b", "a/b=c" 
-            for (int i = 0; i < parameters.length; i++) {
-                String name = parameters[i];
-         
-                String slotName;
-                String realName;
-                String customValue;
-                
-                String[] parameterParts = name.split("=", -1);
-                if (parameterParts.length >= 1) {
-                    String[] nameParts = parameterParts[0].split("/");
-                    
-                    slotName = nameParts[0];
-                    
-                    if (nameParts.length == 2) {
-                        realName = nameParts[1];
-                    } else {
-                        realName = slotName;
-                    }
-                    
-                    if (parameterParts.length > 1) {
-                        customValue = parameterParts[1];
-                    } else {
-                        customValue = null;
-                    }
-                } else {
-                    slotName = parameterParts[0];
-                    realName = parameterParts[0];
-                    customValue = null;
-                }
-                
-                try {
-                    String value = customValue != null ? customValue : String.valueOf(PropertyUtils
-                            .getProperty(object, slotName));
-                    
-                    if (value != null) {
-                        link.setParameter(realName, value);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            return tableLink.generateLink(object.getObject());
         }
 
         protected HtmlComponent wrapPrefixAndSuffix(HtmlComponent component, int columnIndex) {
@@ -1180,7 +1053,7 @@ public class CollectionRenderer extends OutputRenderer {
 
     }
     
-    protected class TableLink implements Comparable<TableLink> {
+    public static class TableLink implements Comparable<TableLink> {
 
         private String name;
         private String link;
@@ -1343,6 +1216,132 @@ public class CollectionRenderer extends OutputRenderer {
             }
             
             return getOrder().compareTo(other.getOrder());
+        }
+        
+        public HtmlComponent generateLink(Object object) {
+            if (getVisibleIf() != null) {
+                try {
+                    Boolean visible = (Boolean) RendererPropertyUtils.getProperty(object, this.getVisibleIf(), false);
+                    
+                    if (visible != null && !visible) {
+                        return null;
+                    }
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            if (getVisibleIfNot() != null) {
+                try {
+                    Boolean notVisible = (Boolean) RendererPropertyUtils.getProperty(object,
+                            getVisibleIfNot(), false);
+                    
+                    if (notVisible != null && notVisible) {
+                        return null;
+                    }
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (getCustom() != null) {
+                return new HtmlText(RenderUtils.getFormattedProperties(getCustom(), object), false);
+            } else {
+                HtmlLink link = new HtmlLink();
+    
+                if (isContextRelativeSet()) {
+                    link.setContextRelative(isContextRelative());
+                }
+    
+                link.setText(getLinkText(this));
+                link.setModule(getModule());
+    
+                if (getLinkFormat() != null) {
+                    link.setUrl(RenderUtils
+                            .getFormattedProperties(getLinkFormat(), object));
+                } else {
+                    link.setUrl(getLink());
+                    setLinkParameters(object, link, this);
+                }
+    
+                return link;
+            }
+        }
+        
+        protected String getLinkText(TableLink tableLink) {
+            String text = tableLink.getText();
+            
+            if (text != null) {
+                return text;
+            }
+            
+            String key = tableLink.getKey();
+            String bundle = tableLink.getBundle();
+            
+            if (key == null) {
+                return tableLink.getName();
+            }
+            
+            text = RenderUtils.getResourceString(bundle, key);
+            
+            if (text != null) {
+                return text;
+            }
+            
+            return tableLink.getName();
+        }
+
+        protected void setLinkParameters(Object object, HtmlLink link, TableLink tableLink) {
+            String linkParam = tableLink.getParam();
+            
+            if (linkParam == null) {
+                return;
+            }
+            
+            String parameters[] = tableLink.getParam().split(",");
+
+            // "a", "a=b", "a/b", "a/b=c" 
+            for (int i = 0; i < parameters.length; i++) {
+                String name = parameters[i];
+         
+                String slotName;
+                String realName;
+                String customValue;
+                
+                String[] parameterParts = name.split("=", -1);
+                if (parameterParts.length >= 1) {
+                    String[] nameParts = parameterParts[0].split("/");
+                    
+                    slotName = nameParts[0];
+                    
+                    if (nameParts.length == 2) {
+                        realName = nameParts[1];
+                    } else {
+                        realName = slotName;
+                    }
+                    
+                    if (parameterParts.length > 1) {
+                        customValue = parameterParts[1];
+                    } else {
+                        customValue = null;
+                    }
+                } else {
+                    slotName = parameterParts[0];
+                    realName = parameterParts[0];
+                    customValue = null;
+                }
+                
+                try {
+                    String value = customValue != null ? customValue : String.valueOf(PropertyUtils
+                            .getProperty(object, slotName));
+                    
+                    if (value != null) {
+                        link.setParameter(realName, value);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     

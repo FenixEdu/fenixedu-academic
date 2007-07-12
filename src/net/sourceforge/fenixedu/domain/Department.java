@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -272,4 +273,31 @@ public class Department extends Department_Base {
     		.add("en", getRealNameEn())
     		.finish();
     }
+    
+    public Integer getCompetenceCourseInformationChangeRequestsCount() {
+	int count=0;
+	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+	    count += course.getCompetenceCourseInformationChangeRequestsCount();
+	}
+	
+	return count;
+    }
+    
+    public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
+	int count=0;
+	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+	    count += course.getDraftCompetenceCourseInformationChangeRequestsCount();
+	}
+	
+	return count;
+    }
+    
+    public boolean isUserMemberOfCompetenceCourseMembersGroup(Person person) {
+	return getCompetenceCourseMembersGroup().isMember(person);
+    }
+    
+    public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {
+	return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
+    }
+
 }

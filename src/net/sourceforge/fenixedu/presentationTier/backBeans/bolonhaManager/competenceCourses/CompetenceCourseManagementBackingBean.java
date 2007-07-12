@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -20,11 +21,15 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -37,6 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -46,8 +52,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     private Integer selectedDepartmentUnitID = null;
     private Integer competenceCourseID = null;
+    private Integer executionYearID = null;
     private Unit competenceCourseGroupUnit = null;
     private CompetenceCourse competenceCourse = null;
+    
     // Competence-Course-Information
     private String name;
     private String nameEn;
@@ -74,6 +82,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private UISelectItems departmentUnitItems;
     private UISelectItems scientificAreaUnitItems;
     private UISelectItems competenceCourseGroupUnitItems;
+    
+    private List<SelectItem> selectedYears = null;
     
     public String getAction() {
         return getAndHoldStringParameter("action");
@@ -113,7 +123,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) {
         DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit != null) {
-            return selectedDepartmentUnit.getDepartmentUnitCompetenceCourses(curricularStage);
+            return selectedDepartmentUnit.getCompetenceCourses(curricularStage);
         }
         return new ArrayList<CompetenceCourse>();
     }
@@ -168,7 +178,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getName() {      
         if (name == null && getCompetenceCourse() != null) {
-            name = getCompetenceCourse().getName();        
+            name = getCompetenceCourse().getName(getAssociatedExecutionPeriod());        
         }
         return name;
     }
@@ -179,7 +189,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getNameEn() {        
         if (nameEn == null && getCompetenceCourse() != null) {
-            nameEn = getCompetenceCourse().getNameEn();
+            nameEn = getCompetenceCourse().getNameEn(getAssociatedExecutionPeriod());
         }
         return nameEn;
     }
@@ -190,7 +200,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public String getAcronym() {
         if (acronym == null && getCompetenceCourse() != null) {
-            acronym = getCompetenceCourse().getAcronym();
+            acronym = getCompetenceCourse().getAcronym(getAssociatedExecutionPeriod());
         }
         return acronym;
     }
@@ -201,7 +211,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public Boolean getBasic() {
         if (basic == null && getCompetenceCourse() != null) {
-            basic = Boolean.valueOf(getCompetenceCourse().isBasic());
+            basic = getCompetenceCourse().isBasic(getAssociatedExecutionPeriod());
         }
         return basic;
     }
@@ -213,7 +223,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String getRegime() {
         if (getViewState().getAttribute("regime") == null) {
             if (getCompetenceCourse() != null) {
-                setRegime(getCompetenceCourse().getRegime().name());
+                ExecutionYear executionYear = getExecutionYear();
+        	setRegime(getCompetenceCourse().getRegime(getAssociatedExecutionPeriod()).getName());
             } else {
                 setRegime("SEMESTRIAL");
             }            
@@ -226,14 +237,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public String getCompetenceCourseLevel() {
-        if (getViewState().getAttribute("competenceCourseLevel") == null && getCompetenceCourse() != null) {
-            if (getCompetenceCourse().getCompetenceCourseLevel() != null) {
-                setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel().getName());
+        if (getCompetenceCourse() != null) {
+            if (getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()) != null) {
+        	setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()).getName());
             }
         }
         return (String) getViewState().getAttribute("competenceCourseLevel");
     }
-
+    
     public void setCompetenceCourseLevel(String competenceCourseLevel) {
         getViewState().setAttribute("competenceCourseLevel", competenceCourseLevel);
     }
@@ -255,7 +266,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public Integer getNumberOfPeriods() {
         if (getViewState().getAttribute("numberOfPeriods") == null) {
             if (getCompetenceCourse() != null && getCompetenceCourse().getCompetenceCourseLoads().size() > 0) {
-                setNumberOfPeriods(getCompetenceCourse().getCompetenceCourseLoads().size());
+        	setNumberOfPeriods(getCompetenceCourse().getCompetenceCourseLoads(getAssociatedExecutionPeriod()).size());
             } else {
                 setNumberOfPeriods(Integer.valueOf(1));
             }                    
@@ -385,6 +396,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
     }
     
+    
+    public void setExecutionYearID(Integer executionYearID) {
+        this.executionYearID = executionYearID;
+        reset();
+    }
+
+    public Integer getExecutionYearID() {
+	return (executionYearID == null) ? (executionYearID = getAndHoldIntegerParameter("executionYearID")) : executionYearID;
+    }
+    
     public void setCompetenceCourseID(Integer competenceCourseID) {
         this.competenceCourseID = competenceCourseID;
     }
@@ -400,9 +421,17 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourse = competenceCourse;
     }
     
+    public ExecutionYear getExecutionYear() {
+	return (getExecutionYearID() != null) ? rootDomainObject.readExecutionYearByOID(getExecutionYearID()) : null; 
+    }
+    
+    public ExecutionPeriod getAssociatedExecutionPeriod() {
+	return (getExecutionYear() != null) ? getExecutionYear().getLastExecutionPeriod() : null;
+    }
+    
     public String getObjectives() {
         if (objectives == null && getCompetenceCourse() != null) {
-            objectives = getCompetenceCourse().getObjectives();
+            objectives = getCompetenceCourse().getObjectives(getAssociatedExecutionPeriod());
         }
         return objectives;
     }
@@ -413,7 +442,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getProgram() {
         if (program == null && getCompetenceCourse() != null) {
-            program = getCompetenceCourse().getProgram();
+            program = getCompetenceCourse().getProgram(getAssociatedExecutionPeriod());
         }
         return program;
     }
@@ -424,7 +453,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public String getEvaluationMethod() {
         if (evaluationMethod == null && getCompetenceCourse() != null) {
-            evaluationMethod = getCompetenceCourse().getEvaluationMethod();
+            evaluationMethod = getCompetenceCourse().getEvaluationMethod(getAssociatedExecutionPeriod());
         }
         return evaluationMethod;
     }
@@ -435,7 +464,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getObjectivesEn() {
         if (objectivesEn == null && getCompetenceCourse() != null) {
-            objectivesEn = getCompetenceCourse().getObjectivesEn();
+            objectivesEn = getCompetenceCourse().getObjectivesEn(getAssociatedExecutionPeriod());
         }
         return objectivesEn;
     }
@@ -446,7 +475,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getProgramEn() {
         if (programEn == null && getCompetenceCourse() != null) {
-            programEn = getCompetenceCourse().getProgramEn();
+            programEn = getCompetenceCourse().getProgramEn(getAssociatedExecutionPeriod());
         }
         return programEn;
     }
@@ -457,7 +486,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public String getEvaluationMethodEn() {
         if (evaluationMethodEn == null && getCompetenceCourse() != null) {
-            evaluationMethodEn = getCompetenceCourse().getEvaluationMethodEn();
+            evaluationMethodEn = getCompetenceCourse().getEvaluationMethodEn(getAssociatedExecutionPeriod());
         }
         return evaluationMethodEn;
     }
@@ -552,7 +581,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
-        return getCompetenceCourse().getSortedCompetenceCourseLoads();
+        return getCompetenceCourse().getSortedCompetenceCourseLoads(getAssociatedExecutionPeriod());
     }
     
     public List<BibliographicReference> getMainBibliographicReferences() {
@@ -582,8 +611,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     private List<BibliographicReference> getBibliographicReferences() {
-        return (getCompetenceCourse().getBibliographicReferences() == null) ? null :
-            getCompetenceCourse().getBibliographicReferences().getBibliographicReferencesList();
+        return (getCompetenceCourse().getBibliographicReferences(getAssociatedExecutionPeriod()) == null) ? null :
+            getCompetenceCourse().getBibliographicReferences(getAssociatedExecutionPeriod()).getBibliographicReferencesList();
     }
     
     public int getBibliographicReferencesCount() {
@@ -1006,4 +1035,31 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return "";
     }   
     
+    
+    public List<SelectItem> getExecutionYears() {
+	if (selectedYears == null) {
+	    selectedYears = new ArrayList<SelectItem>();
+	    for(ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+		selectedYears.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+	    }
+	    Collections.sort(selectedYears, new ReverseComparator(new BeanComparator("label")));
+	}
+	
+	return selectedYears; 
+    }
+    
+    private void reset() {
+	name = null;	  
+	nameEn = null;
+	acronym  = null;
+	basic  = null;
+	objectives = null;
+        program = null;
+        evaluationMethod = null;
+        objectivesEn = null;
+        programEn = null;
+        evaluationMethodEn = null;
+        stage = null;
+	bibliographicReferenceID = null;
+    }
 }

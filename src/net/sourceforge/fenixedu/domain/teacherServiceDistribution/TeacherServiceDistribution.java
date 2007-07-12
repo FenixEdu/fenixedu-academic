@@ -115,7 +115,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>(department.getCompetenceCourses());
 		
 		// add Bolonha Courses
-		competenceCourseSet.addAll(department.getDepartmentUnit().getDepartmentUnitCompetenceCourses(CurricularStage.APPROVED));
+		competenceCourseSet.addAll(department.getDepartmentUnit().getCompetenceCourses(CurricularStage.APPROVED));
 
 		for (ExecutionPeriod executionPeriod : executionPeriods) {
 			for(CompetenceCourse competenceCourse : competenceCourseSet){

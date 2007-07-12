@@ -12,7 +12,15 @@
 				<bean:message key="navigation.competenceCoursesManagement"/>
 			</html:link>
 		</li>
-
+		
+		<%--  
+		<li>
+			<html:link page="/competenceCourses/manageVersions.do?method=prepare">
+				<bean:message key="navigation.competenceCourse.manageVersions"/>
+			</html:link>
+		</li>
+		--%>
+		
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
 				<bean:message key="navigation.curricularPlansManagement"/>

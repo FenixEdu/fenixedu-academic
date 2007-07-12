@@ -22,6 +22,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private CurricularCourse curricularCourse;
     private boolean byYears;
+    private ExecutionPeriod lastExecutionPeriod;
     
     public UICurricularCourse() {
         super();
@@ -39,6 +40,12 @@ public class UICurricularCourse extends UIDegreeModule {
         super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = true;
+        
+        if (this.executionYear == null) {
+            this.executionYear = ExecutionYear.readCurrentExecutionYear(); 
+        }
+        
+        lastExecutionPeriod = this.executionYear.getLastExecutionPeriod();
     }
     
     public String getFamily() {
@@ -74,7 +81,7 @@ public class UICurricularCourse extends UIDegreeModule {
             buffer.append("[CC ").append(this.curricularCourse.getIdInternal()).append("][");
             buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
             buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
-            buffer.append(this.curricularCourse.getName());
+            buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
             System.out.println(buffer.toString());
         }
     }
@@ -103,9 +110,9 @@ public class UICurricularCourse extends UIDegreeModule {
 
         String name = null;
         if (!facesContext.getViewRoot().getLocale().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-            name = this.curricularCourse.getName();
+            name = this.curricularCourse.getName(lastExecutionPeriod);
         } else {
-            name = this.curricularCourse.getNameEn();
+            name = this.curricularCourse.getNameEn(lastExecutionPeriod);
         }
         
         if (linkable) {

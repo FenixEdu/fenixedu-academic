@@ -312,3 +312,35 @@
     </slot>
 </schema>
 
+<schema name="view.departments.with.requests" type="net.sourceforge.fenixedu.domain.Department">
+    <slot name="name" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="destination" value="viewDepartmentRequests"/>
+    </slot>
+    <slot name="draftCompetenceCourseInformationChangeRequestsCount"/>
+    <slot name="competenceCourseInformationChangeRequestsCount"/>
+</schema>
+
+<schema name="present.semester1.loads" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="theoreticalHours" key="theoreticalLesson"/>
+	<slot name="problemsHours" key="problemsLesson"/>
+	<slot name="laboratorialHours" key="laboratorialLesson"/>
+    <slot name="seminaryHours" key="seminary"/>
+    <slot name="fieldWorkHours" key="fieldWork"/>
+	<slot name="trainingPeriodHours" key="trainingPeriod"/>
+    <slot name="tutorialOrientationHours" key="tutorialOrientation"/>
+	<slot name="autonomousWorkHours" key="autonomousWork"/>
+    <slot name="ectsCredits"/>
+</schema>
+
+<schema name="present.semester2.loads" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="secondTheoreticalHours" key="theoreticalLesson"/>
+	<slot name="secondProblemsHours"  key="problemsLesson"/>
+	<slot name="secondLaboratorialHours"  key="laboratorialLesson"/>
+    <slot name="secondSeminaryHours"  key="laboratorialLesson"/>
+    <slot name="secondFieldWorkHours" key="fieldWork"/>
+	<slot name="secondTrainingPeriodHours" key="trainingPeriod"/>
+    <slot name="secondTutorialOrientationHours" key="tutorialOrientation"/>
+	<slot name="secondAutonomousWorkHours" key="autonomousWork"/>
+    <slot name="secondEctsCredits" key="ectsCredits"/>
+</schema>

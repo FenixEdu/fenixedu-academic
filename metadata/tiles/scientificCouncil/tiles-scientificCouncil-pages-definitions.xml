@@ -282,5 +282,20 @@
    	<definition name="scientific-edit-file" extends="scientificCouncil.communication">
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
-   
+
+
+<!--  bolonha -->
+
+    <definition name="manage-competence-course-information-versions" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/bolonha/manageVersions.jsp"/>
+    </definition> 
+
+    <definition name="view-version-details" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/bolonha/viewVersionDetails.jsp"/>
+    </definition>     
+
+    <definition name="list-versions-requests" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/bolonha/listVersions.jsp"/>
+    </definition>     
+    
 </tiles-definitions>

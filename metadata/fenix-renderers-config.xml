@@ -250,7 +250,15 @@ Documentation:
     	<property name="selectedTagClass" value="tcloudselected"/>
     	<property name="nearByTagClass" value="tcloudnearBy"/>
     </renderer>
-        
+     
+     <renderer type="net.sourceforge.fenixedu.domain.Department" layout="competence-course-list" class="net.sourceforge.fenixedu.presentationTier.renderers.CompetenceCourseVersionList">
+     	<property name="approvedClass" value="approved"/>
+		<property name="draftClass" value="draft"/>
+		<property name="publishedClass" value="published"/>
+		<property name="courseNameClasses" value="color2"/>
+		<property name="linkGroupSeparator" value=", "/>
+     </renderer>   
+
     <!--@ The default layout for the a parser report.  -->
     <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
     

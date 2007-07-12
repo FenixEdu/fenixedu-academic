@@ -1,0 +1,247 @@
+<schema name="editCompetenceCourseInformation.common" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="competenceCourse.name" read-only="true"/>
+	<slot name="name" key="label.proposedName">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="nameEn" key="label.proposedNameEn">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="executionPeriod" layout="menu-select-postback">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>
+		<property name="format" value="${name} ${executionYear.year}"/>
+		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+	</slot>
+	<slot name="regime" layout="menu-select-postback">	
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.RegimeType"/>
+		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="competenceCourseLevel"/>
+	<slot name="justification" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>	
+</schema>
+
+<schema name="editCompetenceCourseInformation.common.executionYear.readonly" extends="editCompetenceCourseInformation.common" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="executionPeriod" read-only="true">
+		<property name="format" value="${name} ${executionYear.year}"/>	
+	</slot>
+</schema>
+
+<schema name="editCompetenceCourseInformation.common.simple" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="competenceCourse.name" read-only="true"/>
+	<slot name="executionPeriod" layout="menu-select-postback">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>
+		<property name="format" value="${name} ${executionYear.year}"/>
+		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+	</slot>
+</schema>
+
+
+<schema name="editCompetenceCourseInformation.pt" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="objectives" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="program" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="evaluationMethod" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+</schema>
+
+<schema name="editCompetenceCourseInformation.en" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="objectivesEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>	
+	<slot name="programEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>	
+	<slot name="evaluationMethodEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>	
+</schema>
+
+
+<schema name="present.competenceCourseInformation.change.request" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="competenceCourse.name"/>
+	<slot name="name" key="label.proposedName"/>
+	<slot name="nameEn" key="label.proposedNameEn"/>
+	<slot name="executionPeriod" layout="format">
+		<property name="format" value="${semester} - ${executionYear.year}"/>
+	</slot>
+	<slot name="regime"/>	
+	<slot name="competenceCourseLevel"/>
+	<slot name="justification"/>
+	<slot name="objectives"/>
+	<slot name="program"/>
+	<slot name="evaluationMethod"/>
+	<slot name="objectivesEn"/>
+	<slot name="programEn"/>
+	<slot name="evaluationMethodEn"/>
+</schema>
+
+<schema name="editCompetenceCourseLoad.semestrial" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="theoreticalHours" key="theoreticalLesson">
+		<property name="size" value="2"/>
+	</slot>
+	<slot name="problemsHours" key="problemsLesson">
+		<property name="size" value="2"/>
+	</slot>
+	<slot name="laboratorialHours" key="laboratorialLesson">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="seminaryHours" key="seminary">
+   		<property name="size" value="2"/>
+	</slot>
+    <slot name="fieldWorkHours" key="fieldWork">
+   		<property name="size" value="2"/>
+	</slot>
+	<slot name="trainingPeriodHours" key="trainingPeriod">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="tutorialOrientationHours" key="tutorialOrientation">
+   		<property name="size" value="2"/>
+	</slot>
+	<slot name="autonomousWorkHours" key="autonomousWork">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="ectsCredits">
+    	<property name="size" value="2"/>
+	</slot>
+</schema>
+
+<schema name="editCompetenceCourseLoad.anual.same.info" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="sameInformationForBothPeriods" layout="radio-postback">
+		<property name="destination" value="loadInformationPostBack"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="theoreticalHours" key="theoreticalLesson">
+		<property name="size" value="2"/>
+	</slot>
+	<slot name="problemsHours" key="problemsLesson">
+		<property name="size" value="2"/>
+	</slot>
+	<slot name="laboratorialHours" key="laboratorialLesson">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="seminaryHours" key="seminary">
+   		<property name="size" value="2"/>
+	</slot>
+    <slot name="fieldWorkHours" key="fieldWork">
+   		<property name="size" value="2"/>
+	</slot>
+	<slot name="trainingPeriodHours" key="trainingPeriod">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="tutorialOrientationHours" key="tutorialOrientation">
+   		<property name="size" value="2"/>
+	</slot>
+	<slot name="autonomousWorkHours" key="autonomousWork">
+		<property name="size" value="2"/>
+	</slot>
+    <slot name="ectsCredits">
+    	<property name="size" value="2"/>
+	</slot>
+</schema>
+
+<schema name="editCompetenceCourseLoad.anual.diferent.info" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="secondTheoreticalHours" key="theoreticalLesson">
+			<property name="size" value="2"/>
+	</slot>
+	<slot name="secondProblemsHours"  key="problemsLesson">
+			<property name="size" value="2"/>
+	</slot>
+	<slot name="secondLaboratorialHours"  key="laboratorialLesson">
+			<property name="size" value="2"/>
+	</slot>
+    <slot name="secondSeminaryHours"  key="laboratorialLesson">
+			<property name="size" value="2"/>
+	</slot>
+    <slot name="secondFieldWorkHours" key="fieldWork">
+			<property name="size" value="2"/>
+	</slot>
+	<slot name="secondTrainingPeriodHours" key="trainingPeriod">
+			<property name="size" value="2"/>
+	</slot>
+    <slot name="secondTutorialOrientationHours" key="tutorialOrientation">
+			<property name="size" value="2"/>
+	</slot>
+	<slot name="secondAutonomousWorkHours" key="autonomousWork">
+			<property name="size" value="2"/>
+	</slot>
+    <slot name="secondEctsCredits" key="ectsCredits">
+			<property name="size" value="2"/>
+	</slot>
+</schema>
+
+<schema name="view.reference" type="net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences$BibliographicReference" bundle="BOLONHA_MANAGER_RESOURCES">
+		<slot name="title"/>
+		<slot name="authors"/>
+	    <slot name="year"/>
+		<slot name="reference"/>
+		<slot name="url"/>
+</schema>
+
+<schema name="edit.reference" type="net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences$BibliographicReference" bundle="BOLONHA_MANAGER_RESOURCES">
+		<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="authors" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+	    <slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<slot name="reference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="url">
+			<property name="size" value="70"/>
+		</slot>
+</schema>    
+    
+
+<schema name="create.reference.from.bean" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CreateReferenceBean" bundle="BOLONHA_MANAGER_RESOURCES">
+		<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="type" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences$BibliographicReferenceType"/>
+			<property name="eachLayout" value=""/>
+		</slot>
+		<slot name="authors" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="70"/>
+		</slot>
+	    <slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<slot name="reference">
+			<property name="size" value="70"/>
+		</slot>
+		<slot name="url">
+			<property name="size" value="70"/>
+		</slot>
+</schema>    
+
+<schema name="view.competenceCourseInformation" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" bundle="APPLICATION_RESOURCES">
+		<slot name="executionPeriod.executionYear.year" key="label.executionYear"/>
+		<slot name="executionPeriod.name" key="label.executionPeriod"/>
+</schema>    
+
+
+<schema name="view.competenceCourseInformation.details" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="name"/>
+	<slot name="nameEn"/>
+	<slot name="acronym"/>
+	<slot name="competenceCourseLevel"/>
+	<slot name="basic"/>
+	<slot name="objectives"/>
+	<slot name="program"/>
+	<slot name="evaluationMethod"/>
+	<slot name="objectivesEn"/>
+	<slot name="programEn"/>
+	<slot name="evaluationMethodEn"/>
+</schema>

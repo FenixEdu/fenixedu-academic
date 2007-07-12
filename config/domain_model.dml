@@ -2116,7 +2116,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean basic;
 		BibliographicReferences bibliographicReferences;
 		CompetenceCourseLevel competenceCourseLevel;
-		YearMonthDay endDateYearMonthDay;
 		String evaluationMethod;
 		String evaluationMethodEn;
 		String name;
@@ -2126,6 +2125,45 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String program;
 		String programEn;
 		degreeStructure.RegimeType regime;
+	}
+
+	class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+		String justification;
+		Boolean approved;
+		
+		String name;
+		String nameEn;
+		
+		degreeStructure.RegimeType regime;
+		String objectives;
+		String objectivesEn;
+		String program;
+	    String programEn;
+	    String evaluationMethod;
+	    String evaluationMethodEn;
+	    CompetenceCourseLevel competenceCourseLevel;
+	    
+	    Double theoreticalHours;
+	    Double problemsHours;
+	    Double laboratorialHours; 
+		Double seminaryHours;
+		Double fieldWorkHours;
+		Double trainingPeriodHours;
+		Double tutorialOrientationHours;
+		Double autonomousWorkHours;
+		Double ectsCredits;
+	    
+	    Double secondTheoreticalHours;
+	    Double secondProblemsHours;
+	    Double secondLaboratorialHours; 
+		Double secondSeminaryHours;
+		Double secondFieldWorkHours;
+		Double secondTrainingPeriodHours;
+		Double secondTutorialOrientationHours;
+		Double secondAutonomousWorkHours;
+		Double secondEctsCredits;
+		
+		BibliographicReferences bibliographicReferences;
 	}
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -12032,4 +12070,46 @@ relation LessonInstanceLessonInstanceSpaceOccupation {
 relation SummaryLessonInstance {
 	net.sourceforge.fenixedu.domain.Summary playsRole summary;
 	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstance;
+}
+
+relation CompetenceCourseInformationChangeRequester {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole requester;
+}
+
+relation CompetenceCourseInformationChangeApprover {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole approvedCompetenceCourseInformationChangeRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole analizedBy;
+}
+
+relation CompetenceCourseInformationChangeRequestExecutionPeriod {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation CompetenceCourseInformationChangeRequestCompetenceCourse {
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
+}
+
+relation CompetenceCourseInformationChangeRequestRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
+		multiplicity *;
+	}
+}
+
+relation CompetenceCourseInformationExecutionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
+		multiplicity *;
+	}
 }

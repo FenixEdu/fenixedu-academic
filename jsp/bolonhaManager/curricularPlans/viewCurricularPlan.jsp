@@ -93,7 +93,7 @@
 	</h:panelGroup>
 	<h:outputText value="</p>" escape="false"/>
 
-	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
+	<h:outputText value="<p class='mtop05 mboc:ttom0'>" escape="false"/>
 	<h:panelGroup rendered="#{CurricularCourseManagement.showRules == 'true' && CurricularCourseManagement.organizeBy == 'groups'}">
 		<h:outputText value="#{bolonhaBundle['curricularCourses']}: " escape="false"/>
 		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'true'}">

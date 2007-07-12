@@ -78,12 +78,16 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
     }
 
-    public List<CompetenceCourse> getDepartmentUnitCompetenceCourses(CurricularStage curricularStage) {
+    public List<CompetenceCourse> getCompetenceCourses() {
+	return getCompetenceCourses(null);
+    }
+    
+    public List<CompetenceCourse> getCompetenceCourses(CurricularStage curricularStage) {
 	List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
 	for (ScientificAreaUnit scientificAreaUnit : getScientificAreaUnits()) {
 	    for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
 		for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-		    if (competenceCourse.getCurricularStage().equals(curricularStage)) {
+		    if (curricularStage == null || competenceCourse.getCurricularStage().equals(curricularStage)) {
 			result.add(competenceCourse);
 		    }
 		}

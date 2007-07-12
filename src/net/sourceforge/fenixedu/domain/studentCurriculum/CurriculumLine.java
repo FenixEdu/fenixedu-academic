@@ -9,11 +9,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class CurriculumLine extends CurriculumLine_Base {
 
@@ -128,5 +130,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     abstract public ExecutionPeriod getExecutionPeriod();
-    
+
+    @Override
+    public MultiLanguageString getName() {
+	ExecutionPeriod period = getExecutionPeriod();
+	CurricularCourse course = getCurricularCourse();
+	return MultiLanguageString.i18n().add("pt",course.getName(period)).add("en", course.getNameEn(period)).finish();
+    }
 }

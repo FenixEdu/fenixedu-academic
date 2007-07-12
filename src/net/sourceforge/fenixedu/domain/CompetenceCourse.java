@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
@@ -55,7 +57,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, CompetenceCourseGroupUnit unit) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type,
+	    CurricularStage curricularStage, CompetenceCourseGroupUnit unit) {
 
 	this();
 	super.setCurricularStage(curricularStage);
@@ -102,16 +105,28 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public BibliographicReferences getBibliographicReferences() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getBibliographicReferences() : null;
+	return getBibliographicReferences(null);
     }
 
+    public BibliographicReferences getBibliographicReferences(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return (information != null) ? information.getBibliographicReferences() : null;
+    }
+    
     public List<BibliographicReferences.BibliographicReference> getMainBibliographicReferences() {
-	return this.getBibliographicReferences().getMainBibliographicReferences();
+	return getMainBibliographicReferences(null);
     }
 
+    public List<BibliographicReferences.BibliographicReference> getMainBibliographicReferences(ExecutionPeriod period) {
+	return this.getBibliographicReferences(period).getMainBibliographicReferences();
+    }
+    
     public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences() {
-	return this.getBibliographicReferences().getSecondaryBibliographicReferences();
+	return getSecondaryBibliographicReferences(null);
+    }
+    
+    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(ExecutionPeriod period) {
+	return this.getBibliographicReferences(period).getSecondaryBibliographicReferences();
     }
 
     public void createBibliographicReference(String year, String title, String authors,
@@ -165,10 +180,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void edit(String name, String nameEn, Boolean basic,
-	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type,
+	    CurricularStage curricularStage) {
 	changeCurricularStage(curricularStage);
-    setType(type);
-    
+	setType(type);
+
 	getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), basic,
 		competenceCourseLevel);
 
@@ -245,238 +261,362 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	}
     }
 
-    private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
-	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
-	    if (competenceCourseInformation.getEndDateYearMonthDay() == null) {
-		return competenceCourseInformation;
-	    }
-	}
+    private TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
+	TreeSet<CompetenceCourseInformation> informations = new TreeSet<CompetenceCourseInformation>(
+		new Comparator<CompetenceCourseInformation>() {
 
-	return null;
+		    public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
+			return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+		    }
+		});
+
+	informations.addAll(getCompetenceCourseInformationsSet());
+	return informations;
     }
 
-    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	final YearMonthDay endOfExecutionPeriod = executionPeriod.getEndDateYearMonthDay();
-	
-	CompetenceCourseInformation minCompetenceCourseInformation = null;
-	
-	for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
-	    if (competenceCourseInformation.getEndDateYearMonthDay() == null
-		    || !competenceCourseInformation.getEndDateYearMonthDay().isBefore(endOfExecutionPeriod)) {
-		
-		if (minCompetenceCourseInformation == null || minCompetenceCourseInformation.getEndDateYearMonthDay() == null) {
-		    minCompetenceCourseInformation = competenceCourseInformation;
-		} else if (competenceCourseInformation.getEndDateYearMonthDay() != null 
-			&& competenceCourseInformation.getEndDateYearMonthDay().isBefore(minCompetenceCourseInformation.getEndDateYearMonthDay())) {
-		    minCompetenceCourseInformation = competenceCourseInformation;
-		}
-	    }
+    private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
+	return getOrderedCompetenceCourseInformations().last();
+    }
+
+    private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
+	return getOrderedCompetenceCourseInformations().first();
+    }
+
+    public boolean isCompetenceCourseInformationDefinedAtExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+	return information != null && information.getExecutionPeriod().equals(executionPeriod);
+    }
+
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
+	    final ExecutionPeriod executionPeriod) {
+
+	if(executionPeriod == null) {
+	    return getRecentCompetenceCourseInformation();
 	}
 	
+	if (executionPeriod.isBefore(getOldestCompetenceCourseInformation().getExecutionPeriod())) {
+	    return null;
+	}
+
+	CompetenceCourseInformation minCompetenceCourseInformation = null;
+	for (final CompetenceCourseInformation competenceCourseInformation : getOrderedCompetenceCourseInformations()) {
+	    if (competenceCourseInformation.getExecutionPeriod().isAfter(executionPeriod)) {
+		return minCompetenceCourseInformation;
+	    } else {
+		minCompetenceCourseInformation = competenceCourseInformation;
+	    }
+	}
+
 	return minCompetenceCourseInformation;
     }
 
-    @Override
-    public String getName() {
-
-	if ((super.getName() == null || super.getName().length() == 0)
-		&& getRecentCompetenceCourseInformation() != null) {
-	    return getRecentCompetenceCourseInformation().getName();
+    public String getName(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	if ((super.getName() == null || super.getName().length() == 0) && information != null) {
+	    return information.getName();
 	}
 	return super.getName();
     }
 
+    @Override
+    public String getName() {
+	return getName(null);
+    }
+
+    public String getNameEn(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getNameEn() : null;
+    }
+
     public String getNameEn() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getNameEn() : null;
+	return getNameEn(null);
+    }
+
+    public String getAcronym(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getAcronym() : null;
     }
 
     public String getAcronym() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getAcronym() : null;
+	return getAcronym(null);
     }
 
     public void setAcronym(String acronym) {
 	getRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
+    public boolean isBasic(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getBasic() : null;
+    }
+
     public boolean isBasic() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getBasic().booleanValue() : false;
+	return isBasic(null);
+    }
+
+    public RegimeType getRegime(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getRegime() : null;
     }
 
     public RegimeType getRegime() {
-	final CompetenceCourseInformation recentCompetenceCourseInformation = getRecentCompetenceCourseInformation();
-	return recentCompetenceCourseInformation != null ? recentCompetenceCourseInformation.getRegime() : null;
+	return getRegime(null);
     }
 
     public void setRegime(RegimeType regimeType) {
 	getRecentCompetenceCourseInformation().setRegime(regimeType);
     }
 
+    public CompetenceCourseLevel getCompetenceCourseLevel(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getCompetenceCourseLevel() : null;
+    }
+
     public CompetenceCourseLevel getCompetenceCourseLevel() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getCompetenceCourseLevel() : null;
+	return getCompetenceCourseLevel(null);
+    }
+
+    public List<CompetenceCourseLoad> getCompetenceCourseLoads(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getCompetenceCourseLoads() : null;
     }
 
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getCompetenceCourseLoads() : null;
+	return getCompetenceCourseLoads(null);
+    }
+
+    public int getCompetenceCourseLoadsCount(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getCompetenceCourseLoadsCount() : 0;
     }
 
     public int getCompetenceCourseLoadsCount() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getCompetenceCourseLoadsCount() : 0;
+	return getCompetenceCourseLoadsCount(null);
+    }
+
+    public String getObjectives(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getObjectives() : null;
     }
 
     public String getObjectives() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getObjectives() : null;
+	return getObjectives(null);
+    }
+
+    public String getProgram(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getProgram() : null;
     }
 
     public String getProgram() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getProgram() : null;
+	return getProgram(null);
+    }
+
+    public String getEvaluationMethod(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getEvaluationMethod() : null;
     }
 
     public String getEvaluationMethod() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getEvaluationMethod() : null;
+	return getEvaluationMethod(null);
     }
 
+    public String getObjectivesEn(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getObjectivesEn() : null;
+    }
+    
     public String getObjectivesEn() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getObjectivesEn() : null;
+	return getObjectivesEn(null);
     }
 
+    public String getProgramEn(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getProgramEn() : null;
+    }
+    
     public String getProgramEn() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getProgramEn() : null;
+	return getProgramEn(null);
     }
 
+    public String getEvaluationMethodEn(ExecutionPeriod period) {
+	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+	return information != null ? information.getEvaluationMethodEn() : null;
+    }
+    
     public String getEvaluationMethodEn() {
-	return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation()
-		.getEvaluationMethodEn() : null;
+	return getEvaluationMethodEn(null);
     }
 
     public double getTheoreticalHours() {
-	return getTheoreticalHours(null);
+	return getTheoreticalHours(null,null);
     }
 
-    public double getTheoreticalHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getTheoreticalHours(order);
-	}
-	return result;
+    public Double getTheoreticalHours(Integer order) {
+	return getTheoreticalHours(order, null);
+    }
+    
+    public double getTheoreticalHours(ExecutionPeriod period) {
+	return getTheoreticalHours(null,period);
+    }
+    
+    public double getTheoreticalHours(Integer order,ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getTheoreticalHours(order) : 0.0;
     }
 
     public double getProblemsHours() {
-	return getProblemsHours(null);
+	return getProblemsHours(null,null);
     }
 
-    public double getProblemsHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getProblemsHours(order);
-	}
-	return result;
+    public Double getProblemsHours(Integer order) {
+	return getProblemsHours(order, null);
+    }
+    
+    public double getProblemsHours(ExecutionPeriod period) {
+	return getProblemsHours(null,period);
+    }
+    
+    public double getProblemsHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getProblemsHours(order) : 0.0;
     }
 
     public double getLaboratorialHours() {
-	return getLaboratorialHours(null);
+	return getLaboratorialHours(null,null);
     }
 
-    public double getLaboratorialHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getLaboratorialHours(order);
-	}
-	return result;
+    public Double getLaboratorialHours(Integer order) {
+	return getLaboratorialHours(order, null);
+    }
+    
+    public double getLaboratorialHours(ExecutionPeriod period) {
+	return getLaboratorialHours(null,period);
+    }
+    
+    public double getLaboratorialHours(Integer order,ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getLaboratorialHours(order) : 0.0;
     }
 
     public double getSeminaryHours() {
-	return getSeminaryHours(null);
+	return getSeminaryHours(null,null);
     }
 
-    public double getSeminaryHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getSeminaryHours(order);
-	}
-	return result;
+    public double getSeminaryHours(ExecutionPeriod period) {
+	return getSeminaryHours(null,period);
+    }
+    
+    public Double getSeminaryHours(Integer order) {
+	return getSeminaryHours(order, null);
+    }
+    
+    public double getSeminaryHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getSeminaryHours(order) : 0.0;
     }
 
     public double getFieldWorkHours() {
-	return getFieldWorkHours(null);
+	return getFieldWorkHours(null,null);
     }
 
-    public double getFieldWorkHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getFieldWorkHours(order);
-	}
-	return result;
+    public double getFieldWorkHours(ExecutionPeriod period) {
+	return getFieldWorkHours(null,period);
+    }
+    
+    public Double getFieldWorkHours(Integer order) {
+	return getFieldWorkHours(order, null);
+    }
+    
+    public double getFieldWorkHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getFieldWorkHours(order) : 0.0;
     }
 
     public double getTrainingPeriodHours() {
-	return getTrainingPeriodHours(null);
+	return getTrainingPeriodHours(null,null);
     }
 
-    public double getTrainingPeriodHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getTrainingPeriodHours(order);
-	}
-	return result;
+    public double getTrainingPeriodHours(ExecutionPeriod period) {
+	return getTrainingPeriodHours(null,period);
+    }
+    
+    public Double getTrainingPeriodHours(Integer order) {
+	return getTrainingPeriodHours(order, null);
+    }
+    
+    public double getTrainingPeriodHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getTrainingPeriodHours(order) : 0.0;
     }
 
     public double getTutorialOrientationHours() {
-	return getTutorialOrientationHours(null);
+	return getTutorialOrientationHours(null,null);
     }
 
-    public double getTutorialOrientationHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getTutorialOrientationHours(order);
-	}
-	return result;
+    public Double getTutorialOrientationHours(Integer order) {
+	return getTutorialOrientationHours(order, null);
+    }
+    
+    public double getTutorialOrientationHours(ExecutionPeriod period) {
+	return getTutorialOrientationHours(null,period);
+    }
+    
+    public double getTutorialOrientationHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getTutorialOrientationHours(order) : 0.0;
     }
 
     public double getAutonomousWorkHours() {
-	return getAutonomousWorkHours(null);
+	return getAutonomousWorkHours(null,null);
     }
 
+    public double getAutonomousWorkHours(ExecutionPeriod period) {
+	return getAutonomousWorkHours(null, period);
+    }
+    
     public Double getAutonomousWorkHours(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getAutonomousWorkHours(order);
-	}
-	return result;
+	return getAutonomousWorkHours(order, null);
+    }
+    
+    public Double getAutonomousWorkHours(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getAutonomousWorkHours(order) : 0.0;
     }
 
     public double getContactLoad() {
-	return getContactLoad(null);
+	return getContactLoad(null, null);
     }
 
+    public Double getContactLoad(ExecutionPeriod period) {
+	return getContactLoad(null,period);
+    }
+    
     public Double getContactLoad(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getContactLoad(order);
-	}
-	return result;
+	return getContactLoad(order, null);
+    }
+    
+    public Double getContactLoad(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getContactLoad(order) : 0.0;
     }
 
     public double getTotalLoad() {
-	return getTotalLoad(null);
+	return getTotalLoad(null, null);
     }
 
     public Double getTotalLoad(Integer order) {
-	double result = 0.0;
-	if (getRecentCompetenceCourseInformation() != null) {
-	    result = getRecentCompetenceCourseInformation().getTotalLoad(order);
-	}
-	return result;
+	return getTotalLoad(order, null);
+    }
+    
+    public double getTotalLoad(ExecutionPeriod period) {
+	return getTotalLoad(null, period);
+    }
+    
+    public Double getTotalLoad(Integer order, ExecutionPeriod period) {
+	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	return (information != null) ? information.getTotalLoad(order) : 0.0;
     }
 
     public double getEctsCredits() {
@@ -492,12 +632,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Double getEctsCredits(final Integer order, final ExecutionPeriod executionPeriod) {
-	final CompetenceCourseInformation competenceCourseInformation = executionPeriod == null ? getRecentCompetenceCourseInformation() : findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
-	
+	final CompetenceCourseInformation competenceCourseInformation = executionPeriod == null ? getRecentCompetenceCourseInformation()
+		: findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+
 	if (competenceCourseInformation != null) {
 	    return competenceCourseInformation.getEctsCredits(order);
 	}
-	
+
 	return 0.0d;
     }
 
@@ -553,14 +694,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		    }
 		});
     }
-    
+
     public CurricularCourse getCurricularCourse(final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		return curricularCourse;
 	    }
 	}
-	
+
 	return null;
     }
 
@@ -607,6 +748,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return this.getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
+    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(ExecutionPeriod period) {
+	final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>(
+		getCompetenceCourseLoadsCount(period));
+	result.addAll(getCompetenceCourseLoads(period));
+	Collections.sort(result);
+	return result;
+    }
+    
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
 	final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>(
 		getCompetenceCourseLoadsCount());
@@ -691,7 +840,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		throw new DomainException("compentence.course.should.have.only.one.scientific.area");
 	    }
 
-	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
+	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator()
+		    .next();
 	}
 	return null;
     }
@@ -806,7 +956,33 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isDissertation() {
-        return getType() == CompetenceCourseType.DISSERTATION;
+	return getType() == CompetenceCourseType.DISSERTATION;
+    }
+
+    public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
+	int count = 0;
+	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests()) {
+	    if (request.getApproved() == null) {
+		count++;
+	    }
+	}
+	return count;
     }
     
+    public CompetenceCourseInformationChangeRequest getCompetenceCourseInformationChangeRequests(ExecutionPeriod period) { 
+	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests()) {
+	    if (request.getExecutionPeriod() == period) {
+		return request;
+	    }
+	}
+	return null;
+    }
+    
+    @Override
+    public void addCompetenceCourseInformationChangeRequests(CompetenceCourseInformationChangeRequest request) {
+        if(getCompetenceCourseInformationChangeRequests(request.getExecutionPeriod()) != null) {
+            throw new DomainException("error.can.only.exist.one.request.per.execution.period");
+        }
+        super.addCompetenceCourseInformationChangeRequests(request);
+    }
 }

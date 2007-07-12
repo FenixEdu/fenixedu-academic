@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -10,12 +11,12 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class BibliographicReferences {       
+public class BibliographicReferences implements Serializable {       
     private List<BibliographicReference> bibliographicReferencesList;
 
     public SortedSet<BibliographicReference> getBibliographicReferencesSortedByOrder() {
     	final SortedSet<BibliographicReference> bibliographicReferences = new TreeSet<BibliographicReference>();
-    	bibliographicReferences.addAll(bibliographicReferencesList);
+    	bibliographicReferences.addAll(getBibliographicReferencesList());
     	return bibliographicReferences;
     }
 
@@ -86,7 +87,7 @@ public class BibliographicReferences {
         }
     }
     
-    public class BibliographicReference implements Comparable<BibliographicReference> {
+    public static class BibliographicReference implements Comparable<BibliographicReference>, Serializable {
         private String year;
         private String title;
         private String authors;

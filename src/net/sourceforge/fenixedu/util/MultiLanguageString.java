@@ -186,6 +186,14 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     		return this;
     	}
     	
+    	public I18N nadd(String language, String text) {
+    		if (text != null) {
+    			MultiLanguageString.this.setContent(Language.valueOf(language), text);
+    		}
+    		
+    		return this;
+    	}
+
     	public MultiLanguageString finish() {
     		return MultiLanguageString.this;
     	}

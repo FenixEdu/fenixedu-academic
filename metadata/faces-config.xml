@@ -1580,6 +1580,10 @@
 			<from-outcome>competenceCoursesManagement</from-outcome>
 			<to-view-id>/scientificCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCourseManagementPostBack</from-outcome>
+			<to-view-id>/scientificCouncil/competenceCourses/showCompetenceCourse.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/scientificCouncil/competenceCourses/transferCompetenceCourse.jsp</from-view-id>

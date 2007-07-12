@@ -41,6 +41,7 @@
     <!ENTITY boardSchemas SYSTEM "board-schemas.xml">
     <!ENTITY inquirySchemas SYSTEM "inquiry-schemas.xml">
     <!ENTITY librarySchemas SYSTEM "library-schemas.xml">
+    <!ENTITY bolonhaManagerSchemas SYSTEM "bolonhaManager-schemas.xml">
 ]>
 
 <schemas>
@@ -718,5 +719,6 @@
     &inquirySchemas;
     &librarySchemas;
     &resourceManager;
+    &bolonhaManagerSchemas;
     
 </schemas>

@@ -9,8 +9,20 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
-	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
+	<h:outputText value="<h2>#{CompetenceCourseManagement.name}</h2>" escape="false"/>
 
+	<h:form>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
+
+		<h:selectOneMenu value="#{CompetenceCourseManagement.executionYearID}">
+			<f:selectItems value="#{CompetenceCourseManagement.executionYears}" />
+		</h:selectOneMenu>
+
+		<h:commandButton alt="#{htmlAltBundle['commandButton.associate']}" value="#{scouncilBundle['button.researchActivity.choose']}"
+			action="competenceCourseManagementPostBack"/>	
+	</h:form>
+	
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
@@ -49,34 +61,34 @@
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p><strong>#{scouncilBundle['state']}: </strong>" escape="false"/>
-	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'DRAFT'}" value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
-	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<span class='highlight3'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
-	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'APPROVED'}" value="<span class='highlight4'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>		
+	<h:outputText rendered="#{CompetenceCourseManagement.stage == 'DRAFT'}" value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.stage == 'PUBLISHED'}" value="<span class='highlight3'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.stage == 'APPROVED'}" value="<span class='highlight4'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>		
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
 	<h:outputText value="<li><strong>#{scouncilBundle['name']} (pt): </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.name}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['nameEn']} (en): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
-	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}">
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.acronym}">
 		<h:outputText value="<li><strong>#{scouncilBundle['acronym']}: </strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.acronym}</li>" escape="false"/>
 	</h:panelGroup>
 	<h:outputText value="<li><strong>#{scouncilBundle['competenceCourseLevel']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
-	<h:outputText value="<em>#{scouncilBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourseLevel}"/>	
+	<h:outputText value="<em>#{scouncilBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourseLevel}"/>	
 	<h:outputText value="<li><strong>#{scouncilBundle['type']}: </strong>" escape="false"/>
-	<h:outputText value="#{scouncilBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<h:outputText value="#{scouncilBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
+	<h:outputText value="#{scouncilBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.basic}" escape="false"/>
+	<h:outputText value="#{scouncilBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.basic}" escape="false"/>
 	<h:outputText value="</ul></div>" escape="false"/>
 	
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['regime']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</li>" escape="false"/>	
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.regime]}</li>" escape="false"/>	
 	<h:outputText value="<li><strong>#{scouncilBundle['lessonHours']}: </strong>" escape="false"/>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
 		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}º #{scouncilBundle['semester']}</em></p>" escape="false"
-			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
+			rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<ul class='mvert0'>" escape="false"/>
 		<h:outputText value="<li>#{scouncilBundle['theoreticalLesson']}: " escape="false"/>
@@ -115,18 +127,18 @@
 	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['objectives']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectives}" linebreak="true"/>
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectives}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.objectives}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.objectives}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['program']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.program}" linebreak="true"/>
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.program}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.program}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.program}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['evaluationMethod']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" linebreak="true"/>
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethod}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.evaluationMethod}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.evaluationMethod}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	
@@ -134,18 +146,18 @@
 	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['objectivesEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}" linebreak="true"/>
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectivesEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.objectivesEn}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.objectivesEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['programEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.programEn}" linebreak="true"/>
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.programEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.programEn}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.programEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['evaluationMethodEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" linebreak="true"/>	
-	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethodEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.evaluationMethodEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.evaluationMethodEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>

@@ -92,7 +92,7 @@ public class CompetenceCoursePredicates {
             case PUBLISHED:
                 return isCompetenceGroupMember || isDegreeCurricularPlansMember;
             case APPROVED:
-                return false;
+                return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
             default:
                 return false;
             }
