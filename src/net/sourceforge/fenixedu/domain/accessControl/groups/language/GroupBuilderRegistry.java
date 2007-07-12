@@ -7,6 +7,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
@@ -174,6 +175,7 @@ public class GroupBuilderRegistry {
         register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
         register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
         register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
+        register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class, new CurrentDegreeScientificCommissionMembersGroup.Builder());
         registerGroupsWithNoArguments();
     }
 

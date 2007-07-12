@@ -854,6 +854,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getCoordinators(executionYear, true);
     }
     
+    final public Collection<Coordinator> getCurrentCoordinators() {
+    	return getCurrentCoordinators(false);
+    }
+    
     final public Collection<Coordinator> getCurrentResponsibleCoordinators() {
 	return getCurrentCoordinators(true);
     }

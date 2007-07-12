@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Correct group used in thesis files" updateThesesFilesGroups.sql

@@ -2,28 +2,28 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 
 /**
- * Group of all the persons in the last coordination team defined for the target
+ * Group of all the persons in the last scientific comission team defined for the target
  * degree.
  * 
  * @author cfgi
  */
-public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
+public class CurrentDegreeScientificCommissionMembersGroup extends DegreeGroup {
 
     /**
      * Default serialization id.
      */
     private static final long serialVersionUID = 1L;
 
-    public CurrentDegreeCoordinatorsGroup(Degree degree) {
+    public CurrentDegreeScientificCommissionMembersGroup(Degree degree) {
         super(degree);
     }
 
@@ -33,8 +33,8 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
 
         Set<Person> persons = buildSet();
         
-        for (Coordinator coordinator: degree.getCurrentCoordinators()) {
-            persons.add(coordinator.getPerson());
+        for (ScientificCommission member : degree.getCurrentScientificCommissionMembers()) {
+            persons.add(member.getPerson());
         }
 
         return persons;
@@ -56,7 +56,7 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
                 throw new WrongTypeOfArgumentException(0, Degree.class, arguments[0].getClass());
             }
             
-            return new CurrentDegreeCoordinatorsGroup(degree);
+            return new CurrentDegreeScientificCommissionMembersGroup(degree);
         }
 
         public int getMinArguments() {
