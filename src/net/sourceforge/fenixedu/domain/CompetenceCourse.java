@@ -291,6 +291,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
 
+	if(!isBolonha()) {
+	    return null;
+	}
+	
 	if(executionPeriod == null) {
 	    return getRecentCompetenceCourseInformation();
 	}

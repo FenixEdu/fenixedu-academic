@@ -1437,7 +1437,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getNameEn(ExecutionPeriod period) {
-	return (super.getNameEn() == null || super.getNameEn().length() == 0) ? getCompetenceCourse()
+	return ((super.getNameEn() == null || super.getNameEn().length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse()
 		.getNameEn(period) : super.getNameEn();
     }
 
