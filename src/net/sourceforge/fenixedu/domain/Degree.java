@@ -15,7 +15,6 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -948,6 +948,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * Provide {@link #hasAnyThesis()} with a standard getter signature. 
      */
     public boolean isAnyThesisAvailable() {
-    	return hasAnyThesis();
+    	for (Thesis thesis : getThesis()) {
+    		if (thesis.isFinalAndApprovedThesis()) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 }
