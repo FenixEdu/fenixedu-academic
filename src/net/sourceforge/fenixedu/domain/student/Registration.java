@@ -441,8 +441,7 @@ public class Registration extends Registration_Base {
 	    return null;
 	}
 
-	return super.getFinalAverage() != null ? super.getFinalAverage() : new StudentCurriculum(this)
-		.getRoundedAverage(null, false).intValue();
+	return super.getFinalAverage() == null ? new StudentCurriculum(this).getRoundedAverage(null, false).intValue() : super.getFinalAverage();
     }
 
     final public String getFinalAverageDescription() {
@@ -1733,7 +1732,6 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasConcludedCycle(final CycleType cycleType, ExecutionYear executionYear) {
-
 	StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
 	if (lastStudentCurricularPlan == null) {
@@ -1743,15 +1741,28 @@ public class Registration extends Registration_Base {
 	return lastStudentCurricularPlan.hasConcludedCycle(cycleType, executionYear);
     }
 
-    final public List<CycleType> getConcludedCycles() {
-	final List<CycleType> result = new ArrayList<CycleType>();
+    final public Collection<CycleType> getConcludedCycles() {
+	return getConcludedCycles(null);
+    }
+    
+    /**
+     * Retrieve concluded cycles before or equal to the given cycle
+     */
+    final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
+	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+
 	for (final CycleType cycleType : CycleType.getSortedValues()) {
-	    if (hasConcludedCycle(cycleType, null)) {
+	    if ((lastCycleTypeToInspect == null || cycleType.isBeforeOrEquals(lastCycleTypeToInspect)) && hasConcludedCycle(cycleType, null)) {
 		result.add(cycleType);
 	    }
 	}
 	
 	return result;
+    }
+	
+    final public CycleType getLastConcludedCycleType() {
+	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
+	return concludedCycles.isEmpty() ? null : concludedCycles.last();
     }
     
     public boolean hasApprovement(ExecutionYear executionYear) {
@@ -2177,7 +2188,5 @@ public class Registration extends Registration_Base {
 		return result.last();
 				
 	}
-	
-
 
 }
