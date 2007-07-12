@@ -52,4 +52,9 @@ public enum CycleType {
 	result.addAll(Arrays.asList(values()));
 	return result;
     }
+    
+    public boolean isBeforeOrEquals(final CycleType cycleType) {
+	return CYCLE_TYPE_COMPARATOR.compare(this, cycleType) <= 0;
+    }
+
 }
