@@ -82,7 +82,7 @@ public class TreasuryPaymentsManagementDA extends PaymentsManagementDispatchActi
 		searchPersonBean.getDocumentIdNumber(),
 		searchPersonBean.getIdDocumentType() != null ? searchPersonBean.getIdDocumentType()
 			.toString() : null, null, null, null, null, null, searchPersonBean
-			.getStudentNumber());
+			.getStudentNumber(), Boolean.FALSE);
 
 	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

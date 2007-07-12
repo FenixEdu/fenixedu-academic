@@ -187,7 +187,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, null, null, null,
-		null, roleType, degreeType, degreeId, departmentId, Boolean.TRUE, null);
+		null, roleType, degreeType, degreeId, departmentId, Boolean.TRUE, null, Boolean.FALSE);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

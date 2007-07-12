@@ -303,7 +303,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    FenixFilterException {
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null,
-		null, null, null, null, null, null, Boolean.TRUE, null);
+		null, null, null, null, null, null, Boolean.TRUE, null, Boolean.FALSE);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 		
 	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(getUserView(), "SearchPerson", new Object[] {searchParameters, predicate});
