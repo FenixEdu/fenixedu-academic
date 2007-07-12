@@ -16,7 +16,7 @@
 			</html:link>
 -->
 			<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan" %>">
-			    <bean:message key="link.equivalency.plan.student" bundle="APPLICATION_RESOURCES"/>
+			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>
 
