@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -72,33 +73,32 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
     	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
     	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-    	final Collection<CurricularCourseScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
+    	final Collection<DegreeModuleScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getDegreeModuleScopes();
     	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
     	final Set<CurricularCourse> notCompletedCurricularCoursesForMinimumCurricularYear = new HashSet<CurricularCourse>();
     	final Set<CurricularCourse> completedCurricularCourses = new HashSet<CurricularCourse>();
     	//int numberCompletedCurricularCourses = 0;
-		for (final CurricularCourseScope curricularCourseScope : degreesActiveCurricularCourseScopes) {
-			final CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+		for (final DegreeModuleScope degreeModuleScope : degreesActiveCurricularCourseScopes) {
+			final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
 			final boolean isCurricularCourseApproved = studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
 
-			final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-			final CurricularYear curricularYear = curricularSemester.getCurricularYear();
+			final Integer curricularYear = degreeModuleScope.getCurricularYear();
 
-			if (minimumCompletedCurricularYear != null && curricularYear.getIdInternal().intValue() <= minimumCompletedCurricularYear.intValue()) {
+			if (minimumCompletedCurricularYear != null && curricularYear <= minimumCompletedCurricularYear) {
 				if (!isCurricularCourseApproved) {
 					notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
 				}
 			}
 
-			if (maximumCurricularYearToCountCompletedCourses == null || curricularYear.getYear().intValue() <= maximumCurricularYearToCountCompletedCourses.intValue()) {
+			if (maximumCurricularYearToCountCompletedCourses == null || curricularYear <= maximumCurricularYearToCountCompletedCourses) {
 				if (isCurricularCourseApproved) {
-					completedCurricularCourses.add(curricularCourseScope.getCurricularCourse());
+					completedCurricularCourses.add(degreeModuleScope.getCurricularCourse());
 					//numberCompletedCurricularCourses++;
 				} else {
 					if (notCompletedCurricularCourses.length() > 0) {
 						notCompletedCurricularCourses.append(", ");
 					}
-					notCompletedCurricularCourses.append(curricularCourseScope.getCurricularCourse().getName());
+					notCompletedCurricularCourses.append(degreeModuleScope.getCurricularCourse().getName());
 				}
 			}
 		}
