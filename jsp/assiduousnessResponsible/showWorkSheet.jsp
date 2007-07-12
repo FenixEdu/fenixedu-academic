@@ -31,14 +31,14 @@
 	<!-- escrever mes ano -->
 	
 	<logic:empty name="employeeWorkSheet" property="workDaySheetList">
-		<p>
+		<p class="mbottom05">
 			<em><bean:message key="message.employee.noWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList" schema="show.workDaySheet">
 			<fr:layout name="tabular">
-			    <fr:property name="classes" value="tstyle1 printborder tpadding1"/>
+			    <fr:property name="classes" value="tstyle1 printborder tpadding1 mtop05"/>
 				<fr:property name="columnClasses" value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>

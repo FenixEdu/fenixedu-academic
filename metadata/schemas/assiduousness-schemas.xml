@@ -1,5 +1,5 @@
 <schema name="show.employeePersonalInformation.toList" type="net.sourceforge.fenixedu.domain.Employee">
-	<slot name="employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="employeeNumber" key="label.number" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 

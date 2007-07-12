@@ -32,7 +32,7 @@
 		
 	<span class="toprint"><br />
 	</span>
-	
+
 	<table border="0">
 		<tr><td class="invisible">
 		<html:img src="<%= request.getContextPath() +"/departmentMember/assiduousnessResponsible.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
@@ -43,10 +43,12 @@
 			</fr:layout>
 		</fr:view>
 		</td></tr>
-	</table>	
-	<p class="bold mbottom0">
-		<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
-		<bean:write name="year"/>
+	</table>
+
+	<p>
+		<strong>
+			<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
+			<bean:write name="year"/>
+		</strong>
 	</p>
-	<br/>
 </logic:present>	
