@@ -955,7 +955,7 @@
             <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
 
             <forward name="announcementsAction" path="/department/announcements.do"/>
-            <forward name="eventsAction" path="/department/announcements.do"/>
+            <forward name="eventsAction" path="/department/events.do"/>
             <forward name="announcementsRSSAction" path="/department/announcementsRSS.do"/>
             <forward name="eventsRSSAction" path="/department/eventsRSS.do"/>
         </action>
@@ -998,7 +998,7 @@
             <forward name="site-item-adviseLogin" path="pedagogicalCouncil-item-adviseLogin"/>
 
             <forward name="announcementsAction" path="/pedagogicalCouncil/announcements.do"/>
-            <forward name="eventsAction" path="/pedagogicalCouncil/announcements.do"/>
+            <forward name="eventsAction" path="/pedagogicalCouncil/events.do"/>
             <forward name="announcementsRSSAction" path="/pedagogicalCouncil/announcementsRSS.do"/>
             <forward name="eventsRSSAction" path="/pedagogicalCouncil/eventsRSS.do"/>
         </action>
