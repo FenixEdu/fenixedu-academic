@@ -782,11 +782,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    throw new DomainException("Enrolment.is.not.concluded");
 	}
 	
-	if (!hasEnrolmentEvaluationByType(enrolmentEvaluationType)) {
+	final EnrolmentEvaluation enrolmentEvaluation;
+	if (enrolmentEvaluationType == null) {
+	    enrolmentEvaluation = getLatestEnrolmentEvaluation();
+	} else if (hasEnrolmentEvaluationByType(enrolmentEvaluationType)) {
+	    enrolmentEvaluation = getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
+	} else {
 	    return null;
 	}
 	
-	return getLatestEnrolmentEvaluationBy(enrolmentEvaluationType).getExamDateYearMonthDay();
+	return enrolmentEvaluation.getExamDateYearMonthDay();
     }
     
     final public boolean isEnroled() {
@@ -1220,6 +1225,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
     
+
+    /**
+     * Just for Master Degrees legacy code
+     * @return
+     */
+    @Deprecated
+    final public double getCredits() {
+	return getEctsCredits();
+    }
+
     @Override
     final public Double getEctsCredits() {
 	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(getExecutionPeriod());
