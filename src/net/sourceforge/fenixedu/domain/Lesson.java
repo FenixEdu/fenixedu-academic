@@ -60,14 +60,14 @@ public class Lesson extends Lesson_Base {
 	if(newBeginDate == null) {
 	    throw new DomainException("error.Lesson.empty.new.begin.date");
 	}
-	
+
 	if(!hasPeriod()) {
 	    throw new DomainException("error.Lesson.already.finished");
 	}
-	
+
 	removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	
 	refreshPeriodAndInstances(newBeginDate);
-	
+
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
 	setFim(fim);
@@ -89,7 +89,7 @@ public class Lesson extends Lesson_Base {
 	if (hasAnyAssociatedSummaries()) {
 	    throw new DomainException("error.deleteLesson.with.summaries", prettyPrint());
 	}
-		
+
 	final OccupationPeriod period = getPeriod();        
 	super.setPeriod(null);
 	if (period != null) {
@@ -103,7 +103,7 @@ public class Lesson extends Lesson_Base {
 	while(hasAnyLessonInstances()) {
 	    getLessonInstances().get(0).delete();
 	}
-	
+
 	removeExecutionPeriod();	
 	removeShift();	
 	removeRootDomainObject();
@@ -113,17 +113,17 @@ public class Lesson extends Lesson_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return (!hasLessonSpaceOccupation() && hasAnyLessonInstances() || hasPeriod())
-		&& getFrequency() != null && getTipo() != null && getDiaSemana() != null	
-		&& hasExecutionPeriod() && hasShift();		 
+	&& getFrequency() != null && getTipo() != null && getDiaSemana() != null	
+	&& hasExecutionPeriod() && hasShift();		 
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkTimeInterval() {
 	final HourMinuteSecond start = getBeginHourMinuteSecond();
 	final HourMinuteSecond end = getEndHourMinuteSecond();	
 	return start != null && end != null && start.isBefore(end);
     }
-        
+
     public AllocatableSpace getSala() {	
 	if(hasLessonSpaceOccupation()) {
 	    return getLessonSpaceOccupation().getRoom();
@@ -136,48 +136,52 @@ public class Lesson extends Lesson_Base {
     public boolean hasSala() {
 	return getSala() != null;
     }
-            
+
     public void refreshPeriodAndInstances(YearMonthDay newBeginDate) {
 
 	if(newBeginDate != null && hasPeriod()) {
-	    	    	    
+
 	    OccupationPeriod currentPeriod = getPeriod();	    
-	    SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));
-	    
-	    if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {								
-		setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate));			
 
-	    } else if (currentPeriod.hasNextPeriod()){				
+	    if(newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {
 
-		OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();		
+		SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));
 
-		if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
-		    setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay()));		    		
+		if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {								
+		    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate));			
 
-		} else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
-		    setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate));    
+		} else if (currentPeriod.hasNextPeriod()){				
 
-		} else {
+		    OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();		
+
+		    if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
+			setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay()));		    		
+
+		    } else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
+			setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate));    
+
+		    } else {
+			if(hasLessonSpaceOccupation()) {
+			    getLessonSpaceOccupation().delete();
+			}
+			setPeriod(null);
+		    }
+
+		} else {		
 		    if(hasLessonSpaceOccupation()) {
 			getLessonSpaceOccupation().delete();
 		    }
 		    setPeriod(null);
 		}
 
-	    } else {		
-		if(hasLessonSpaceOccupation()) {
-		    getLessonSpaceOccupation().delete();
-		}
-		setPeriod(null);
+		currentPeriod.delete();	    
+		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
 	    }
-	    
-	    currentPeriod.delete();	    
-	    createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
 	}
     } 
-    
+
     private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day) {
-	
+
 	if(allLessonDatesBeforeRefreshPeriod != null && day != null) {
 
 	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
@@ -193,7 +197,7 @@ public class Lesson extends Lesson_Base {
 	    }	    	   
 	}
     }   
-          
+
     private void removeExistentInstancesWithoutSummaryAfterOrEqual(YearMonthDay newBeginDate) {		
 	if(newBeginDate != null ) {
 	    Map<Boolean, List<LessonInstance>> instances = getLessonInstancesWithOrWithoutSummaryAfterOrEqual(newBeginDate);
@@ -209,7 +213,7 @@ public class Lesson extends Lesson_Base {
 	    }
 	}
     }
-   
+
     public Calendar getInicio() {
 	if (this.getBegin() != null) {
 	    Calendar result = Calendar.getInstance();
@@ -330,7 +334,7 @@ public class Lesson extends Lesson_Base {
 	    }
 	    return !lessonEndTime.isAfter(timeToInsert);
 	}
-	
+
 	return true;
     }
 
@@ -427,7 +431,7 @@ public class Lesson extends Lesson_Base {
 
 	return datesToInsert;
     }    
-    
+
     public SortedSet<YearMonthDay> getAllLessonDatesWithoutInstanceDates() {
 	SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();	
 	if(hasPeriod()) {	   	    
@@ -436,7 +440,7 @@ public class Lesson extends Lesson_Base {
 	}	
 	return dates;
     }
-    
+
     public SortedSet<YearMonthDay> getAllLessonDates() {
 	SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();	
 	if(hasPeriod()) {	   	    
@@ -445,14 +449,14 @@ public class Lesson extends Lesson_Base {
 	}	
 	return dates;
     }
-        
+
     private SortedSet<YearMonthDay> getAllLessonDatesUntil(YearMonthDay day) {			
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();				
-	
+
 	if(day != null) {	  	    
-	    
+
 	    result.addAll(getAllLessonInstanceDatesUntil(day));
-	    
+
 	    if(hasPeriod() && !getLessonStartDay().isAfter(day)) {
 		YearMonthDay lessonEndDay = getLessonEndDay();	
 		YearMonthDay endDateToSearch = (lessonEndDay.isAfter(day)) ? day : lessonEndDay;		    
@@ -461,7 +465,7 @@ public class Lesson extends Lesson_Base {
 	}
 	return result;
     }
-    
+
     public SortedSet<YearMonthDay> getAllLessonInstanceDates(){
 	SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();	
 	for (LessonInstance instance: getLessonInstances()) {	    
@@ -481,7 +485,7 @@ public class Lesson extends Lesson_Base {
 	}
 	return result;
     }  
-    
+
     public SortedSet<YearMonthDay> getAllLessonInstanceDatesUntil(YearMonthDay day) {
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();
 	if (day != null) {	    			
@@ -494,14 +498,14 @@ public class Lesson extends Lesson_Base {
 	}
 	return result;
     }  
-            
+
     private SortedSet<YearMonthDay> getAllValidLessonDatesUntil(YearMonthDay endDateToSearch) {			
-	
+
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();	
 	YearMonthDay startDateToSearch = getLessonStartDay();
-	
+
 	if (hasPeriod() && !startDateToSearch.isAfter(endDateToSearch)) {	    		    	    
-		    
+
 	    Campus lessonCampus = getLessonCampus();	    
 	    while (true) {
 		if (!Holiday.isHoliday(startDateToSearch, lessonCampus) 
@@ -516,7 +520,7 @@ public class Lesson extends Lesson_Base {
 	}	
 	return result;
     }
-     
+
     private Summary getLastSummary() {
 	SortedSet<Summary> summaries = getSummariesSortedByNewestDate();
 	return (summaries.isEmpty()) ? null : summaries.first();
@@ -541,13 +545,13 @@ public class Lesson extends Lesson_Base {
 	}
 	return null;
     }
-    
+
     private Map<Boolean, List<LessonInstance>> getLessonInstancesWithOrWithoutSummaryAfterOrEqual(YearMonthDay afterDate){
 	Map<Boolean, List<LessonInstance>> result = new HashMap<Boolean, List<LessonInstance>>();
-	
+
 	result.put(Boolean.TRUE, new ArrayList<LessonInstance>());
 	result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
-		
+
 	List<LessonInstance> lessonInstances = getLessonInstances();
 	for (LessonInstance lessonInstance : lessonInstances) {
 	    if(lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(afterDate)) {
@@ -558,7 +562,7 @@ public class Lesson extends Lesson_Base {
 		list.add(lessonInstance);
 	    }
 	}	
-	
+
 	return result;
     }
 
@@ -585,15 +589,15 @@ public class Lesson extends Lesson_Base {
 	return newPeriod;
     }
 
-    
+
     public boolean contains(Interval interval) {
 	return contains(interval, getAllLessonDates());
     }
-    
+
     public boolean containsWithoutCheckInstanceDates(Interval interval) {
 	return contains(interval, getAllLessonDatesWithoutInstanceDates());
     }
-        
+
     private boolean contains(Interval interval, SortedSet<YearMonthDay> allLessonDates) {
 
 	YearMonthDay intervalStartDate = interval.getStart().toYearMonthDay();
