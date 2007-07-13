@@ -26,7 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Correct group used in thesis files" updateThesesFilesGroups.sql
-
-execute "Alter Table Resource Allocation" alterTableResourceAllocation.sql
