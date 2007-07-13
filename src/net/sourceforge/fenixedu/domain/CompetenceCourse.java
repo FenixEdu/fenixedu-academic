@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
@@ -275,11 +274,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
-	return getOrderedCompetenceCourseInformations().last();
+	return hasAnyCompetenceCourseInformations() ? getOrderedCompetenceCourseInformations().last() : null;
     }
 
     private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
-	return getOrderedCompetenceCourseInformations().first();
+	return hasAnyCompetenceCourseInformations() ? getOrderedCompetenceCourseInformations().first() : null;
     }
 
     public boolean isCompetenceCourseInformationDefinedAtExecutionPeriod(
