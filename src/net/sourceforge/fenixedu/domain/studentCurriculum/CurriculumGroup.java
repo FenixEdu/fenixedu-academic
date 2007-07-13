@@ -26,6 +26,9 @@ import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.joda.time.YearMonthDay;
+
 import dml.runtime.RelationAdapter;
 
 public class CurriculumGroup extends CurriculumGroup_Base {
@@ -641,6 +644,20 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
     }
 
+    @Override
+    final public YearMonthDay getConclusionDate() {
+	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
+	
+	YearMonthDay result = curriculumModules.iterator().next().getConclusionDate();
+	for (final CurriculumModule curriculumModule : curriculumModules) {
+	    if (curriculumModule.getConclusionDate().isAfter(result)) {
+		result = curriculumModule.getConclusionDate();
+	    }
+	}
+	
+	return result;
+    }
+    
     @Override
     public boolean isPropaedeutic() {
 	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();

@@ -1695,6 +1695,23 @@ public class Registration extends Registration_Base {
 	throw new DomainException("Registration.is.not.concluded");
     }
 
+    final public YearMonthDay getConclusionDate(final CycleType cycleType) {
+	if (!getDegreeType().hasAnyCycleTypes()) {
+	    return getConclusionDate();
+	}
+	
+	if (!hasConcludedCycle(cycleType, (ExecutionYear) null)) {
+	    throw new DomainException("Registration.hasnt.finished.given.cycle");
+	}
+
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	if (lastStudentCurricularPlan == null) {
+	    throw new DomainException("Registration.has.no.student.curricular.plan");
+    	}
+    
+	return lastStudentCurricularPlan.getConclusionDate(cycleType);
+    }
+
     final public String getGraduateTitle() {
 	if (isConcluded()) {
 	    return getLastDegreeCurricularPlan().getGraduateTitle(); 

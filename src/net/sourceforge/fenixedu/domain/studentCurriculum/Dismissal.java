@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.YearMonthDay;
+
 public class Dismissal extends Dismissal_Base {
     
     public Dismissal() {
@@ -185,7 +187,17 @@ public class Dismissal extends Dismissal_Base {
     }
 
     @Override
+    final public YearMonthDay getConclusionDate() {
+	if (!isConcluded((ExecutionYear) null)) {
+	    throw new DomainException("Dismissal.is.not.concluded");
+	}
+	
+	return getExecutionPeriod().getBeginDateYearMonthDay();
+    }
+    
+    @Override
     public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
     }    
+
 }

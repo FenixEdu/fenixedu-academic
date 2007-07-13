@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.YearMonthDay;
+
 public abstract class CurriculumModule extends CurriculumModule_Base {
 
     static final public Comparator<CurriculumModule> COMPARATOR_BY_NAME_AND_ID = new Comparator<CurriculumModule>() {
@@ -161,6 +163,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
     
     abstract public boolean isConcluded(ExecutionYear executionYear);
+    
+    abstract public YearMonthDay getConclusionDate();
     
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
     

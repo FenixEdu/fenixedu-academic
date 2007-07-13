@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.joda.time.YearMonthDay;
+
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -138,4 +140,16 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}	
     }
 
+    final public YearMonthDay getConclusionDate(final CycleType cycleType) {
+	if (!getDegreeType().hasAnyCycleTypes()) {
+	    return null;
+	}
+	
+	if (!hasConcludedCycle(cycleType, (ExecutionYear) null)) {
+	    throw new DomainException("RootCurriculumGroup.hasnt.concluded.cicle");
+	}
+	
+	return getCycleCurriculumGroup(cycleType).getConclusionDate();
+    }
+    
 }

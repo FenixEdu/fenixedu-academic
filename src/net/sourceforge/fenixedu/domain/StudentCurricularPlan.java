@@ -2494,5 +2494,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRoot().hasConcludedCycle(cycleType, executionYear);
     }
     
+    final public YearMonthDay getConclusionDate(final CycleType cycleType) {
+	return getRoot().getConclusionDate(cycleType);
+    }
 
 }
