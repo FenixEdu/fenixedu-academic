@@ -370,7 +370,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
                                 .get(DateTimeFieldType.monthOfYear()))) {
                     if (lastRequest == null
                             || (lastRequest.getHoursDoneInPartialDate().get(
-                                    DateTimeFieldType.monthOfYear()) > request
+                                    DateTimeFieldType.monthOfYear()) < request
                                     .getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()))) {
                         lastRequest = request;
                     }
