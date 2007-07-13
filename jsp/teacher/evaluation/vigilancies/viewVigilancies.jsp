@@ -9,7 +9,7 @@
 <bean:define id="executionCourseId" name="executionCourseID"/>
 <bean:define id="evaluationId" name="evaluation" property="idInternal"/>
 
-<em><bean:message key="label.vigilancies" bundle="APPLICATION_RESOURCES"/></em>
+<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.viewVigilancies" bundle="VIGILANCY_RESOURCES"/></h2>
 
 <ul>
@@ -47,9 +47,9 @@
 	<input type="hidden" name="bool" value=""/>
 
 
-<p class="mbottom05"><strong><bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+<p class="mtop2 mbottom05"><strong><bean:message key="label.teachersVigilants" bundle="VIGILANCY_RESOURCES"/></strong></p>
 
-<table class="tstyle1 mtop05">
+<table class="tstyle1 thlight mtop05">
 	<tr>
 		<th rowspan="2"><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/></th>
 		<th rowspan="2"><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/></th>
@@ -95,9 +95,9 @@
 
 <logic:notEmpty name="vigilancies">
 
-<p class="mbottom05"><strong><bean:message key="label.otherVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:</p>
+<p class="mtop1 mbottom05"><strong><bean:message key="label.otherVigilants" bundle="VIGILANCY_RESOURCES"/></strong></p>
 
-<table class="tstyle1 mtop05">
+<table class="tstyle1 thlight mtop05">
 	<tr>
 		<th><bean:message key="label.vigilancy.category.header" bundle="VIGILANCY_RESOURCES"/></th>
 		<th><bean:message key="label.vigilancy.vigilant" bundle="VIGILANCY_RESOURCES"/></th>

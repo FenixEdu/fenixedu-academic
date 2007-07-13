@@ -19,7 +19,7 @@
 			
 			<h:panelGrid columns="2" styleClass="tstyle5" columnClasses="aright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
-					<h:outputText value="* " style="color: red"/>
+					<h:outputText value="* " style="color: #c00"/>
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
@@ -27,7 +27,7 @@
 					<h:message for="name" styleClass="error"/>
 				</h:panelGroup>
 				<h:panelGroup>
-					<h:outputText value="* " style="color: red"/>				
+					<h:outputText value="* " style="color: #c00"/>				
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
@@ -39,7 +39,7 @@
 					<h:message for="beginHour" styleClass="error"/>
 				</h:panelGroup>
 				<h:panelGroup>
-					<h:outputText value="* " style="color: red"/>					
+					<h:outputText value="* " style="color: #c00"/>					
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
@@ -74,8 +74,10 @@
 				</h:panelGroup>			
 			</h:panelGrid>			
 			
-			<h:outputText value="* " style="color: red" escape="false"/>
+			<h:outputText value="* " style="color: #c00" escape="false"/>
+			<h:outputText value="<span class='smalltxt color777'>" escape="false"/>
 			<h:outputText value="#{bundle['label.neededFields']}"/>
+			<h:outputText value="</span>" escape="false"/>
 			
 			<h:outputText value="<br/><br/>" escape="false" />
 			<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" action="#{projectManagementBackingBean.createProject}"

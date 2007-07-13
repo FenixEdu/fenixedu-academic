@@ -9,10 +9,14 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="gradeSubmissionStepOne" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" name="markSheetManagementForm" property="executionCourseID" />
 	
+	<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="label.submit.listMarks"/></h2>
-	<table class="infoop"><tr><td><bean:message key="label.submitMarks.introduction"/></td></tr></table>
-	<br/>
-	<h3><u><bean:message key="label.markSheet.gradeSubmission.step.one"/></u> &gt; <bean:message key="label.markSheet.gradeSubmission.step.two"/></h3>
+	
+	<div class="infoop2">
+		<bean:message key="label.submitMarks.introduction"/>
+	</div>
+
+	<p class="breadcumbs mbottom1"><span class="actual"><bean:message key="label.markSheet.gradeSubmission.step.one"/></span> &gt; <span><bean:message key="label.markSheet.gradeSubmission.step.two"/></span></p>
 
 	<logic:messagesPresent message="true">
 		<ul>
@@ -20,7 +24,6 @@
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br/><br/>
 	</logic:messagesPresent>
 
 	<fr:edit id="submissionBean"
@@ -28,14 +31,17 @@
 			 schema="markSheet.teacher.gradeSubmission.step.one"
 			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
-	    	<fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop1"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 		</fr:layout>
 	</fr:edit>
-	<br/>
-	<br/>
-	<table class="infoop"><tr><td><bean:message key="label.submitMarks.remainder"/></td></tr></table>
-	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+
+	<p>
+		<span class="warning0"><bean:message key="label.submitMarks.remainder"/></span>
+	</p>
+	
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+	</p>
 	
 </fr:form>

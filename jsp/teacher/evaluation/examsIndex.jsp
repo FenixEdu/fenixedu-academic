@@ -9,6 +9,8 @@
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		
+		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
+		
 		<h:outputText value="<h2>#{bundle['title.evaluation.Exam']}</h2>" escape="false" />
 
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"

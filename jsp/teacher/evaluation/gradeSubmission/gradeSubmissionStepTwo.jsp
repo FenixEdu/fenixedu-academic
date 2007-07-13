@@ -22,10 +22,15 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="gradeSubmissionStepTwo" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" name="markSheetManagementForm" property="executionCourseID" />
 	
+	<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="label.submit.listMarks"/></h2>
-	<table class="infoop"><tr><td><bean:message key="label.submitMarks.introduction"/></td></tr></table>
-	<br/>
-	<h3><bean:message key="label.markSheet.gradeSubmission.step.one"/> &gt; <u><bean:message key="label.markSheet.gradeSubmission.step.two"/></u></h3>
+
+	<div class="infoop2">
+		<bean:message key="label.submitMarks.introduction"/>
+	</div>
+
+
+	<p class="breadcumbs"><span><bean:message key="label.markSheet.gradeSubmission.step.one"/></span> &gt; <span class="actual"><bean:message key="label.markSheet.gradeSubmission.step.two"/></span></p>
 	
 	<logic:messagesPresent message="true">
 		<ul>
@@ -33,15 +38,13 @@
 				<li><span class="error0"><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
-		<br/><br/>
 	</logic:messagesPresent>
 
 	<fr:view name="submissionBean"
 			 schema="markSheet.teacher.gradeSubmission.step.two.view"
 			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4"/>
-		    <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 		</fr:layout>
 	</fr:view>
 	
@@ -49,24 +52,29 @@
 	
 		<fr:edit id="submissionBean-invisible" name="submissionBean" visible="false"/>
 		
-		<br/><br/>
-		<table class="infoop"><tr><td><bean:message key="label.submitMarks.instructions"/></td></tr></table>
-		<br/>
+
+		<div class="infoop mvert1">
+			<bean:message key="label.submitMarks.instructions"/>
+		</div>
+
 		
-		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>
+		<p class="mvert1"><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>
+		
 		<fr:edit id="marksToSubmit" name="submissionBean" property="marksToSubmit" 
 				 schema="markSheet.teacher.gradeSubmission.marksToSubmit" layout="tabular-editable">
 			<fr:layout>
 				<fr:property name="sortBy" value="attends.aluno.number"/>
 				<fr:property name="classes" value="tstyle4"/>
-			    <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="columnClasses" value="acenter,,,acenter,,,"/>
 			</fr:layout>
 		</fr:edit>
+
 		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>
-		<br/>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.submit"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToMainPage';"><bean:message key="button.cancel"/></html:cancel>
+
+		<p class="mtop15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.submit"/></html:submit>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToMainPage';"><bean:message key="button.cancel"/></html:cancel>
+		</p>
 	</logic:notEmpty>
 
 </fr:form>

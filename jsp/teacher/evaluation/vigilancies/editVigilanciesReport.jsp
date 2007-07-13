@@ -9,18 +9,18 @@
 <bean:define id="executionCourseId" name="executionCourseID"/>
 <bean:define id="evaluationId" name="evaluation" property="idInternal"/>
 
-<em><bean:message key="label.vigilancies" bundle="APPLICATION_RESOURCES"/></em>
+<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.vigilanciesReport" bundle="VIGILANCY_RESOURCES"/></h2>
 
 <ul>
-<li>
-<logic:equal name="evaluation" property="class.simpleName" value="WrittenTest">
-<html:link page="<%="/evaluation/writtenTestsIndex.faces?executionCourseID=" + executionCourseId%>"><bean:message key="link.goBack" bundle="APPLICATION_RESOURCES"/></html:link>
-</logic:equal>
-<logic:equal name="evaluation" property="class.simpleName" value="Exam">
-<html:link page="<%="/evaluation/examsIndex.faces?executionCourseID=" + executionCourseId%>"><bean:message key="link.goBack" bundle="APPLICATION_RESOURCES"/></html:link>
-</logic:equal>
-</li>
+	<li>
+		<logic:equal name="evaluation" property="class.simpleName" value="WrittenTest">
+		<html:link page="<%="/evaluation/writtenTestsIndex.faces?executionCourseID=" + executionCourseId%>"><bean:message key="link.goBack" bundle="APPLICATION_RESOURCES"/></html:link>
+		</logic:equal>
+		<logic:equal name="evaluation" property="class.simpleName" value="Exam">
+		<html:link page="<%="/evaluation/examsIndex.faces?executionCourseID=" + executionCourseId%>"><bean:message key="link.goBack" bundle="APPLICATION_RESOURCES"/></html:link>
+		</logic:equal>
+	</li>
 </ul>
 
 <strong><fr:view name="evaluation" property="name"/> (<fr:view name="evaluation" property="dayDateYearMonthDay"/> - <fr:view name="evaluation" property="beginningDateHourMinuteSecond"/>) </strong>

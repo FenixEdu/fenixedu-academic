@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -26,20 +27,23 @@
 			<h:outputText value="</em></p>" escape="false"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty projectManagementBackingBean.associatedProjects}">
-			<h:dataTable  value="#{projectManagementBackingBean.associatedProjects}" var="project">
-				<h:column>
-					<h:outputText value="<strong>#{bundle['label.project']}:</strong> " escape="false" />
-					<h:outputText value="#{project.name}, " />
+			<fc:dataRepeater  value="#{projectManagementBackingBean.associatedProjects}" var="project">
+					<%--
+					<h:outputText value="#{bundle['label.project']}: " escape="false" />
+					--%>
+					<h:outputText value="<div class='mtop15 mbottom2'>" escape="false" />
+					<h:outputText value="<b>#{project.name}</b>, " escape="false" />
 					
-					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
+					<h:outputText value="<span class='color888'>#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}:</span> " escape="false" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.begin}" />
 					</h:outputFormat>
-					<h:outputText value=", #{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
+					<h:outputText value=", <span class='color888'>#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}:</span> " escape="false" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{project.end}" />
 					</h:outputFormat>
-					<h:outputText value=" | " escape="false"/>
+					
+					<h:outputText value=" <p> " escape="false"/>
 
 					<h:outputText value="<a href='#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=#{projectManagementBackingBean.executionCourseID}&amp;projectID=#{project.idInternal}'>#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}</a>" escape="false"/>
 					<h:outputText value=" | " escape="false"/>
@@ -53,13 +57,14 @@
 						<h:outputFormat value="#{bundle['link.delete']}" />
 					</h:commandLink>
 					
-					<h:outputText value="<br/>" escape="false"/>
-					<h:outputText value="#{bundle['label.description']}: " style="font-weight: bold" />
-					<h:outputText value="#{project.description}" />
+					<h:outputText value=" </p> " escape="false"/>
 					
-					<h:outputText value="<br/><br/>" escape="false"/>
-				</h:column>			
-			</h:dataTable>
+					<h:outputText value="#{bundle['label.description']}: " escape="false" rendered="#{!empty project.description}"/>
+					<h:outputText value="#{project.description}" />
+
+					<h:outputText value="</div>" escape="false" />
+					
+			</fc:dataRepeater>
 		</h:panelGroup>		
 	</h:form>
 </ft:tilesView>

@@ -9,13 +9,14 @@
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		
+		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 		<h:outputText value="<h2>#{bundle['title.showTests']}</h2>" escape="false" />
 
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />
 	
 		<h:panelGrid rendered="#{empty evaluationManagementBackingBean.onlineTestList}" >
-			<h:outputText value="#{bundle['message.onlineTests.not.scheduled']}" />
+			<h:outputText value="<em>#{bundle['message.onlineTests.not.scheduled']}</em>" escape="false"/>
 		</h:panelGrid>
 		<h:panelGrid rendered="#{!empty evaluationManagementBackingBean.onlineTestList}" >
 			<h:dataTable value="#{evaluationManagementBackingBean.onlineTestList}" var="onlineTest">

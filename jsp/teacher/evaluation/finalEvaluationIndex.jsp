@@ -21,27 +21,29 @@
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		
+		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
+		
 		<h:outputText value="<h2>#{bundle['label.finalEvaluation']}</h2>" escape="false" />
 	
-		<h:outputText value="<ul class=\"links\"><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
+		<h:outputText value="<ul class='links'><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
 		<h:commandLink action="enterShowMarksListOptions">
 			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />
 			<h:outputFormat value="#{bundle['link.teacher.evaluation.grades']}"/>
 		</h:commandLink>
 		
-		<h:outputText value="<b> | </b>" escape="false"/>
+		<h:outputText value=" | " escape="false"/>
 		<h:commandLink action="enterPublishMarks">
 			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />
 			<h:outputFormat value="#{bundle['link.publishMarks']}" />
 		</h:commandLink>
 
-<%--		<h:outputText value="<b> | </b>" escape="false"/>
+<%--		<h:outputText value=" | " escape="false"/>
 		<h:commandLink action="enterSubmitMarksList">
 			<f:param name="evaluationID" value="#{evaluationManagementBackingBean.finalEvaluation.idInternal}" />		
 			<h:outputFormat value="#{bundle['label.submit.listMarks']}" />
 		</h:commandLink>
 --%>
-		<h:outputText value="<b> | </b>" escape="false"/>
+		<h:outputText value=" | " escape="false"/>
 		<h:outputText value="<a href='#{evaluationManagementBackingBean.contextPath}/teacher/markSheetManagement.do?method=prepareSubmitMarks&amp;executionCourseID=#{evaluationManagementBackingBean.executionCourseID}'>#{bundle['label.submit.listMarks']}</a>" escape="false"/>
 		
 		<h:outputText value="</li></ul>" escape="false"/>

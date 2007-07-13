@@ -16,6 +16,7 @@
 <fr:view name="project" schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">
         <fr:property name="classes" value="tstyle2 thlight thright"/>
+        <fr:property name="rowClasses" value="bold,,,,,,"/>
     </fr:layout>
 </fr:view>
 
@@ -30,12 +31,20 @@
 </logic:empty>
 <logic:notEmpty name="projectSubmissions">
 	<bean:define id="projectID" value="<%= request.getParameter("projectID") %>"/>
-	<html:link page="<%="/projectSubmissionsManagement.do?method=downloadProjectsInZipFormat&amp;projectID=" + projectID %>">
-		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.downloadProjectsInZipFormat"/> 
-	</html:link>, 
-	<html:link page="<%= "/projectSubmissionsManagement.do?method=prepareSelectiveDownload&executionCourseID=" + executionCourseID + "&projectID=" + projectID %>">
-		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.partsDownload"/>	
-	</html:link>
+
+	<p class="mtop1 mbottom05">
+		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.downloadProjectsInZipFormat"/>:
+		<html:link page="<%="/projectSubmissionsManagement.do?method=downloadProjectsInZipFormat&amp;projectID=" + projectID %>">
+			<bean:message key="link.common.download"/>
+		</html:link>
+	</p>
+	<p class="mtop05">
+		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.partsDownload"/>:
+		<html:link page="<%= "/projectSubmissionsManagement.do?method=prepareSelectiveDownload&executionCourseID=" + executionCourseID + "&projectID=" + projectID %>">
+			<bean:message key="link.common.download"/>
+		</html:link>
+	</p>
+	
 	<fr:view name="projectSubmissions" schema="projectSubmission.view-full">
 		<fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle2"/>
@@ -48,7 +57,4 @@
 	    </fr:layout>
 	</fr:view>
 </logic:notEmpty>
-
-
-
 
