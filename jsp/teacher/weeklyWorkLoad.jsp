@@ -5,14 +5,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 
-<h2><bean:write name="siteView" property="commonComponent.executionCourse.nome"/></h2>
+<h2><bean:message key="link.weekly.work.load"/></h2>
 <h3>
+	<bean:write name="siteView" property="commonComponent.executionCourse.nome"/> - 
 	<bean:write name="executionCourse" property="executionPeriod.semester"/>
 	<bean:message key="label.semester"/>
 	<bean:write name="executionCourse" property="executionPeriod.executionYear.year"/>
 </h3>
 
-<br/>
 
 <bean:define id="contact_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.contact.tooltip"/></bean:define>
 <bean:define id="autonomousStudy_tooltip" type="java.lang.String"><bean:message key="title.weekly.work.load.autonomousStudy.tooltip"/></bean:define>
@@ -129,12 +129,11 @@
 	</table>
 </logic:present>
 
-<br/>
 
 	<p><bean:message key="info.weekly.work.load.into"/></p>
 	<ol>
-	<li><bean:message key="info.weekly.work.load.values"/></li>
-	<li><bean:message key="info.weekly.work.load.values.total"/></li>
-	<li><bean:message key="info.weekly.work.load.values.line.total"/></li>
-	<li><bean:message key="info.weekly.work.load.values.line.average"/></li>
+		<li><bean:message key="info.weekly.work.load.values"/></li>
+		<li><bean:message key="info.weekly.work.load.values.total"/></li>
+		<li><bean:message key="info.weekly.work.load.values.line.total"/></li>
+		<li><bean:message key="info.weekly.work.load.values.line.average"/></li>
 	</ol>

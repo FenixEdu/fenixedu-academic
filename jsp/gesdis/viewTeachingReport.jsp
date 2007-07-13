@@ -3,15 +3,19 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
 <h2><bean:message key="title.teachingReport"/></h2>
+
 <logic:present name="siteView">
 <bean:define id="infoSiteCourseInformation" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="infoSiteCourseInformation" property="infoExecutionCourse"/>
 <bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 <bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
-<table width="90%" border="0" cellspacing="1" style="border: 1px solid #666;">
+
+
+<table class="tstyle1">
 	<tr>
-		<td width="25%"><strong><bean:message key="message.teachingReport.courseName"/></strong></td>
+		<td><strong><bean:message key="message.teachingReport.courseName"/></strong></td>
 		<td><bean:write name="executionCourse" property="nome" /></td>
 	</tr>
 	<tr>
@@ -36,23 +40,24 @@
 				<logic:present name="infoDepartment" property="name" >
 					<bean:write name="infoDepartment" property="name" />				
 				</logic:present>
-				<br />
 			</logic:iterate>
 		</td>
 	</tr>
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseSection"/></strong></td>
-		<td>&nbsp;</td>
+		<td></td>
 	</tr>
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseURL"/></strong></td>
 		<td>
-				<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
-				<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
+			<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
+			<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 		</td>
 	</tr>
 </table>
-<br />
+
+
+
 <h3 class="bluetxt"><bean:message key="message.teachingReport.executionYear" />
 &nbsp;<bean:write name="executionYear" property="year" />*</h3>
 
