@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Correct group used in thesis files" updateThesesFilesGroups.sql
+
+execute "alter Table External Enrolment" alterTableExternalEnrolment.sql
