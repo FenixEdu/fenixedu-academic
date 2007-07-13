@@ -650,8 +650,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	YearMonthDay result = curriculumModules.iterator().next().getConclusionDate();
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    if (curriculumModule.getConclusionDate().isAfter(result)) {
-		result = curriculumModule.getConclusionDate();
+	    final YearMonthDay curriculumModuleConclusionDate = curriculumModule.getConclusionDate();
+	    if (curriculumModuleConclusionDate.isAfter(result)) {
+		result = curriculumModuleConclusionDate;
 	    }
 	}
 	
