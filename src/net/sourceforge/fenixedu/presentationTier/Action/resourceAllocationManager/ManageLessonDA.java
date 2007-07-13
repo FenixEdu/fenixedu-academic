@@ -460,23 +460,6 @@ public class ManageLessonDA extends
 		infoRoomOccupation.setFrequency(frequency);
 	    }
 	    
-	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		    .getAttribute(SessionConstants.EXECUTION_PERIOD);
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-		    .getAttribute(SessionConstants.EXECUTION_DEGREE);
-
-	    InfoPeriod infoPeriod = null;
-
-	    if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
-		infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-	    } else {
-		infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-	    }
-
-	    if (infoRoomOccupation != null) {
-		infoRoomOccupation.setInfoPeriod(infoPeriod);
-	    }
-
 	    String action = request.getParameter("action");
 	    if (action != null && action.equals("edit")) {
 
@@ -484,8 +467,7 @@ public class ManageLessonDA extends
 
 		try {
 		    
-		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, weekOfQuinzenalStart, 
-			    infoRoomOccupation, infoShift };
+		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, weekOfQuinzenalStart, infoRoomOccupation, infoShift };
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);
 		    
 		} catch (EditLesson.InvalidLoadException ex) {
@@ -513,9 +495,21 @@ public class ManageLessonDA extends
 		}
 
 	    } else {
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+		   
+		InfoPeriod infoPeriod = null;
+		if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
+		    infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
+		} else {
+		    infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
+		}
+		
 		try {
-		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, weekOfQuinzenalStart, infoRoomOccupation, infoShift };
+		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, weekOfQuinzenalStart, infoRoomOccupation, infoShift, infoPeriod };
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", argsCreateLesson);
+		    
 		} catch (CreateLesson.InvalidLoadException ex) {
 		    if (ex.getMessage().endsWith("REACHED")) {
 			actionErrors.add("errors.shift.hours.limit.reached", new ActionError(
