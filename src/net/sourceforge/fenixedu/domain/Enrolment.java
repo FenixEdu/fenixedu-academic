@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -753,6 +752,43 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isApproved();
     }
 
+    final public boolean isAproved(final ExecutionYear executionYear) {
+	return (executionYear == null || getExecutionYear().isBeforeOrEquals(executionYear)) && isApproved();
+    }
+    
+    @Override
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+	    return isApproved()
+		    && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(
+			    getCurricularCourse(), curricularCourse, executionPeriod));
+	} else {
+	    return false;
+	}
+    }
+
+    @Override
+    final public boolean isConcluded(ExecutionYear executionYear) {
+	return isAproved(executionYear);
+    }
+    
+    @Override
+    final public YearMonthDay getConclusionDate() {
+	return getConclusionDate((EnrolmentEvaluationType) null);
+    }
+    
+    final public YearMonthDay getConclusionDate(final EnrolmentEvaluationType enrolmentEvaluationType) {
+	if (!isConcluded((ExecutionYear) null)) {
+	    throw new DomainException("Enrolment.is.not.concluded");
+	}
+	
+	if (!hasEnrolmentEvaluationByType(enrolmentEvaluationType)) {
+	    return null;
+	}
+	
+	return getLatestEnrolmentEvaluationBy(enrolmentEvaluationType).getExamDateYearMonthDay();
+    }
+    
     final public boolean isEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
@@ -1043,21 +1079,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getExecutionPeriod().getExecutionYear();
     }
     
-    @Override
-    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return isApproved()
-		    && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(
-			    getCurricularCourse(), curricularCourse, executionPeriod));
-	} else {
-	    return false;
-	}
-    }
-
-    final public boolean isAproved(final ExecutionYear executionYear) {
-	return (executionYear == null || getExecutionYear().isBeforeOrEquals(executionYear)) && isApproved();
-    }
-    
     protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
 	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
@@ -1210,6 +1231,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
+    final public Double getCreditsConcluded(ExecutionYear executionYear) {
+        return getAprovedEctsCredits();
+    }
+
+    @Override
     final public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && isEnroled() ? getEctsCredits() : Double.valueOf(0d);
     }
@@ -1335,19 +1361,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return getDegreeModule().getCode();
 	}
 	return null;
-    }
-    
-    @Override
-    final public boolean isConcluded(ExecutionYear executionYear) {
-	return isAproved(executionYear);
-    }
-    
-    @Override
-    final public Double getCreditsConcluded(ExecutionYear executionYear) {
-	if(isAproved(executionYear)) {
-	    return getEctsCredits();
-	}
-        return Double.valueOf(0d);
     }
     
 }
