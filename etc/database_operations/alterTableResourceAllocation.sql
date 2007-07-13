@@ -1,0 +1,1 @@
+alter table RESOURCE_ALLOCATION drop column KEY_LESSON_INSTANCE;
