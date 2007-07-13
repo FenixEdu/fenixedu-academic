@@ -12,10 +12,12 @@
 <bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
 <bean:define id="hostURL2" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %></bean:define>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-
 <em><bean:message key="label.teacherPortal"/></em>
 <h2><bean:message key="label.professorships"/></h2>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
 
 <table class="mtop1 mbottom15">
 	<tr>
@@ -39,18 +41,24 @@
 </table>
 
 
-<table class="tstyle4">
+<logic:empty name="executionCourses">
+	<p><em><bean:message key="label.noProfessorships"/></em></p>
+</logic:empty>
+
+
+<logic:notEmpty name="executionCourses">
+<table class="tstyle4 thleft">
 	<tr>
-		<th class="listClasses-header" style="text-align:left">
+		<th>
 			<bean:message key="label.professorship.course"/>
 		</th>
-		<th class="listClasses-header" style="text-align:left">
+		<th>
 			<bean:message key="label.professorships.degrees"/>
 		</th>
-		<th class="listClasses-header" style="text-align:left">
+		<th>
 			<bean:message key="label.semestre"/>
 		</th>
-        <th class="listClasses-header" style="text-align:left">
+        <th>
             <bean:message key="link.executionCourseManagement.menu.view.course.page"/>
         </th>
 	</tr>
@@ -89,6 +97,6 @@
 		</tr>		
 	</logic:iterate>
 </table>
-
+</logic:notEmpty>
 
 
