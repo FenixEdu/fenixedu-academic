@@ -13,7 +13,7 @@
 <p class="mvert2">
 <span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-	<fr:view name="student" schema="student.show.personAndStudentInformation.short">
+	<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
 		<fr:layout name="flow">
 			<fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
@@ -35,8 +35,8 @@
 		<bean:define id="parameters">&amp;<bean:write name="parameters"/></bean:define>
 	</logic:notEmpty>
 
-	<bean:define id="studentId" name="student" property="idInternal" />
-	<fr:form action="<%= contextInformation.toString() + "studentId=" + studentId + parameters %>">
+	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters %>">
 		<html:hidden property="method" value="createExternalEnrolments"/>
 		
 		<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
@@ -58,7 +58,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 mtop15" />
 			</fr:layout>
-			<fr:destination name="invalid" path="<%= contextInformation.toString() + "method=createExternalEnrolmentsInvalid&studentId=" + studentId + parameters +"&externalUnitId=" + externalUnitId %>" />
+			<fr:destination name="invalid" path="<%= contextInformation.toString() + "method=createExternalEnrolmentsInvalid&registrationId=" + registrationId + parameters +"&externalUnitId=" + externalUnitId %>" />
 		</fr:edit>
 		<html:submit><bean:message key="button.choose" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		<html:cancel onclick="this.form.method.value='chooseExternalCurricularCourses';" ><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>

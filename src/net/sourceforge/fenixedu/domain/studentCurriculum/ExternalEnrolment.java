@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -19,73 +20,81 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolment {
-    
+
     static public final Comparator<ExternalEnrolment> COMPARATOR_BY_NAME = new Comparator<ExternalEnrolment>() {
 	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
 	    int result = o1.getName().compareTo(o2.getName());
 	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
     };
-    
+
     protected ExternalEnrolment() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCreationDateDateTime(new DateTime());
-	if(AccessControl.getPerson() != null){
+	if (AccessControl.getPerson() != null) {
 	    setCreatedBy(AccessControl.getPerson().getUsername());
 	}
     }
-    
-    public ExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
-        this();
-        if(student == null) {
-            throw new DomainException("error.externalEnrolment.student.cannot.be.null");
-        }
-        if(externalCurricularCourse == null) {
-            throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
-        }
 
-        checkConstraints(grade, ectsCredits);
-        checkIfCanCreateExternalEnrolment(student, externalCurricularCourse);
-        
-        setStudent(student);
-        setExternalCurricularCourse(externalCurricularCourse);
-        setGrade(grade);
-        setExecutionPeriod(executionPeriod);
-        setEvaluationDate(evaluationDate);
-        setEctsCredits(ectsCredits);
+    public ExternalEnrolment(final Registration registration,
+	    final ExternalCurricularCourse externalCurricularCourse, final Grade grade,
+	    final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate,
+	    final Double ectsCredits) {
+	this();
+	if (registration == null) {
+	    throw new DomainException("error.externalEnrolment.student.cannot.be.null");
+	}
+	if (externalCurricularCourse == null) {
+	    throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
+	}
+
+	checkConstraints(grade, ectsCredits);
+	checkIfCanCreateExternalEnrolment(registration, externalCurricularCourse);
+
+	setRegistration(registration);
+	setExternalCurricularCourse(externalCurricularCourse);
+	setGrade(grade);
+	setExecutionPeriod(executionPeriod);
+	setEvaluationDate(evaluationDate);
+	setEctsCredits(ectsCredits);
     }
 
-    private void checkIfCanCreateExternalEnrolment(final Student student, final ExternalCurricularCourse externalCurricularCourse) {
-	for (final ExternalEnrolment externalEnrolment : student.getExternalEnrolmentsSet()) {
+    private void checkIfCanCreateExternalEnrolment(final Registration registration,
+	    final ExternalCurricularCourse externalCurricularCourse) {
+	for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
 	    if (externalEnrolment.getExternalCurricularCourse() == externalCurricularCourse) {
-		throw new DomainException("error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse", externalCurricularCourse.getName());
+		throw new DomainException(
+			"error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse",
+			externalCurricularCourse.getName());
 	    }
 	}
     }
-    
+
     private void checkConstraints(final Grade grade, final Double ectsCredits) {
-        if (grade == null || grade.isEmpty()) {
-            throw new DomainException("error.externalEnrolment.invalid.grade");
-        }
-        if(ectsCredits == null) {
-            throw new DomainException("error.externalEnrolment.ectsCredits.cannot.be.null");
-        }	
-    }
-    
-    public void edit(final Student student, final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
-	
-	if (student != getStudent()) {
-	    checkIfCanCreateExternalEnrolment(student, getExternalCurricularCourse());
+	if (grade == null || grade.isEmpty()) {
+	    throw new DomainException("error.externalEnrolment.invalid.grade");
 	}
-	
+	if (ectsCredits == null) {
+	    throw new DomainException("error.externalEnrolment.ectsCredits.cannot.be.null");
+	}
+    }
+
+    public void edit(final Registration registration, final Grade grade,
+	    final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate,
+	    final Double ectsCredits) {
+
+	if (registration != getRegistration()) {
+	    checkIfCanCreateExternalEnrolment(registration, getExternalCurricularCourse());
+	}
+
 	checkConstraints(grade, ectsCredits);
-	
-	setStudent(student);
-        setGrade(grade);
-        setExecutionPeriod(executionPeriod);
-        setEvaluationDate(evaluationDate);
-        setEctsCredits(ectsCredits);
+
+	setRegistration(registration);
+	setGrade(grade);
+	setExecutionPeriod(executionPeriod);
+	setEvaluationDate(evaluationDate);
+	setEctsCredits(ectsCredits);
     }
 
     public MultiLanguageString getName() {
@@ -93,19 +102,19 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	multiLanguageString.setContent(getExternalCurricularCourse().getName());
 	return multiLanguageString;
     }
-    
+
     public String getCode() {
-        return getExternalCurricularCourse().getCode();
+	return getExternalCurricularCourse().getCode();
     }
-    
+
     public String getFullPathName() {
 	return getExternalCurricularCourse().getFullPathName();
     }
-    
+
     public String getDescription() {
-        return getFullPathName();
+	return getFullPathName();
     }
-    
+
     public void delete() {
 	removeExecutionPeriod();
 	removeExternalCurricularCourse();
@@ -114,11 +123,11 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	getNotNeedToEnrollCurricularCourses().clear();
 	super.deleteDomainObject();
     }
-    
+
     final public boolean isApproved() {
-        return true;
+	return true;
     }
-    
+
     final public boolean isEnroled() {
 	return true;
     }
@@ -129,7 +138,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public Integer getFinalGrade() {
 	final String grade = getGradeValue();
-	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
+	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer
+		.valueOf(grade);
     }
 
     public Double getWeigth() {
@@ -143,9 +153,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public Unit getAcademicUnit() {
 	return getExternalCurricularCourse().getAcademicUnit();
     }
-    
+
     public String getGradeValue() {
-        return getGrade().getValue();
+	return getGrade().getValue();
     }
 
 }

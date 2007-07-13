@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalCurricularCourseBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalEnrolmentBean;
@@ -304,14 +303,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     private ExternalCurricularCourse getExternalCurricularCourse(final HttpServletRequest request) {
 	return (ExternalCurricularCourse) readDomainObject(request, ExternalCurricularCourse.class, getIntegerFromRequest(request, "oid"));
     }
-    
-    public ActionForward prepareCreateExternalEnrolment(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("externalEnrolmentBean", new CreateExternalEnrolmentBean(getExternalCurricularCourse(request)));
-	return mapping.findForward("prepareCreateExternalEnrolment");
-    }
-    
+        
     public ActionForward prepareEditExternalEnrolment(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -323,34 +315,13 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	return (ExternalEnrolment) readDomainObject(request, ExternalEnrolment.class, getIntegerFromRequest(request, "oid"));
     }
 
-    public ActionForward createExternalEnrolment(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	final CreateExternalEnrolmentBean externalEnrolmentBean = (CreateExternalEnrolmentBean) getRenderedObject();
-	final Student student = Student.readStudentByNumber(externalEnrolmentBean.getStudentNumber());	
-	try {
-	    executeService("CreateExternalEnrolment", new Object[] {externalEnrolmentBean, student});
-	    
-	    request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
-	    return viewExternalCurricularCourse(mapping, actionForm, request, response);
-	    
-	} catch (final NotAuthorizedException e) {
-	    addActionMessage("error", request, "error.notAuthorized");
-	} catch (final DomainException e) {
-	    addActionMessage("error", request, e.getMessage());
-	}
-
-	request.setAttribute("externalEnrolmentBean", externalEnrolmentBean);
-	return mapping.findForward("prepareCreateExternalEnrolment");	
-    }
-
     public ActionForward editExternalEnrolment(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final EditExternalEnrolmentBean externalEnrolmentBean = (EditExternalEnrolmentBean) getRenderedObject();
-	final Student student = Student.readStudentByNumber(externalEnrolmentBean.getStudentNumber());	
 	try {
-	    executeService("EditExternalEnrolment", new Object[] {externalEnrolmentBean, student});
+	    executeService("EditExternalEnrolment", new Object[] { externalEnrolmentBean,
+		    externalEnrolmentBean.getExternalEnrolment().getRegistration() });
 	    
 	    request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
 	    return viewExternalCurricularCourse(mapping, actionForm, request, response);

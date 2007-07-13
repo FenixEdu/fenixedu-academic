@@ -32,11 +32,6 @@
 		<html:link action='<%= url1 %>'><bean:message key="label.studentDismissal.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 
-	<li>
-		<bean:define id="url1">/studentDismissalsExternalEnrolments.do?method=chooseExternalUnit&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
-		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
-	</li>
-
 </ul>
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
 <fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() %>">

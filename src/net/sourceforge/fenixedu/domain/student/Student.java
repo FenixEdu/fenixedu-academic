@@ -583,17 +583,6 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public ExternalEnrolment findExternalEnrolment(Unit university, ExecutionPeriod period, String code) {
-	for (final ExternalEnrolment externalEnrolment : this.getExternalEnrolments()) {
-	    if (externalEnrolment.getExecutionPeriod() == period
-		    && externalEnrolment.getExternalCurricularCourse().getCode().equals(code)
-		    && externalEnrolment.getExternalCurricularCourse().getUnit() == university) {
-		return externalEnrolment;
-	    }
-	}
-	return null;
-    }
-
     public List<Registration> getRegistrationsToEnrolByStudent() {
 	final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolByStudent();
 	return getRegistrationsToEnrol(degreeTypesToEnrolByStudent);

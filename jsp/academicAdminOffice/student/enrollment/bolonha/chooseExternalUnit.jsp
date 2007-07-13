@@ -15,7 +15,7 @@
 <p class="mvert2">
 <span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-	<fr:view name="student" schema="student.show.personAndStudentInformation.short">
+	<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
 		<fr:layout name="flow">
 			<fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
@@ -25,7 +25,7 @@
 
 <h3><bean:message key="label.student.enrollment.choose.externalUnit" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<bean:define id="studentId" name="student" property="idInternal" />
+<bean:define id="registrationId" name="registration" property="idInternal" />
 <bean:define id="contextInformation" name="contextInformation" />
 <bean:define id="parameters" name="parameters" />
 <logic:notEmpty name="parameters">
@@ -39,11 +39,11 @@
         <fr:property name="childrenFor(Unit)" value="sortedExternalChilds"/>
         <fr:property name="expandable" value="true"/>
     </fr:layout>
-    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + "method=chooseExternalCurricularCourses&amp;studentId=" + studentId + parameters + "&amp;externalUnitId=${idInternal}" %>"/>
+    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + "method=chooseExternalCurricularCourses&amp;registrationId=" + registrationId + parameters + "&amp;externalUnitId=${idInternal}" %>"/>
 </fr:view>
 
 <fr:form action="<%= contextInformation.toString() + "method=backToMainPage" + parameters %>">
-	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
+	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
 	<br/>
 	<html:cancel><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 </fr:form>

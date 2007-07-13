@@ -938,8 +938,8 @@
 		type="net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment" >
 		
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
-	<slot name="student.number" key="label.number" read-only="true"/>
-	<slot name="student.person.name" key="label.name" read-only="true"/>
+	<slot name="registration.number" key="label.number" read-only="true"/>
+	<slot name="registration.student.person.name" key="label.name" read-only="true"/>
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
 	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">

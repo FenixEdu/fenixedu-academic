@@ -24,8 +24,8 @@
 <fr:form action="<%= contextInformation.toString() + parameters.toString() %>">
 	<html:hidden property="method" value="editExternalEnrolment"/>
 	
-	<bean:define id="studentId" name="student" property="idInternal" />
-	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
+	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
 
 	<fr:edit id="editExternalEnrolmentBean" 
 			 name="externalEnrolmentBean"

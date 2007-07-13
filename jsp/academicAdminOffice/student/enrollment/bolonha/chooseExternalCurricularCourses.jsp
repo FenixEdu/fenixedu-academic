@@ -11,7 +11,7 @@
 <p class="mvert2">
 <span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-	<fr:view name="student" schema="student.show.personAndStudentInformation.short">
+	<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
 		<fr:layout name="flow">
 			<fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
@@ -33,8 +33,8 @@
 <fr:form action="<%= contextInformation.toString() + parameters.toString() %>">
 	<html:hidden property="method" value="prepareCreateExternalEnrolments"/>
 	
-	<bean:define id="studentId" name="student" property="idInternal" />
-	<html:hidden property="studentId" value="<%= studentId.toString() %>"/>
+	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
 	
 	<bean:define id="externalUnitId" name="externalUnit" property="idInternal" />
 	<html:hidden property="externalUnitId" value="<%= externalUnitId.toString() %>"/>

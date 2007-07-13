@@ -6,6 +6,8 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+<bean:define id="student" name="registration" property="student" />
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.student.manageExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
@@ -28,19 +30,19 @@
 
 <ul>
 	<li>
-		<bean:define id="url1"><bean:write name="contextInformation"/>method=chooseExternalUnit&amp;studentId=<bean:write name="student" property="idInternal" /><bean:write name="parameters"/></bean:define>
+		<bean:define id="url1"><bean:write name="contextInformation"/>method=chooseExternalUnit&amp;registrationId=<bean:write name="registration" property="idInternal" /><bean:write name="parameters"/></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.student.create.external.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 </ul>
 
-<bean:define id="studentId" name="student" property="idInternal" />
+<bean:define id="registrationId" name="registration" property="idInternal" />
 
-<fr:form action="<%= contextInformation.toString() + "studentId=" + studentId + parameters.toString()  %>">
+<fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters.toString()  %>">
 
 	<html:hidden property="method" value="deleteExternalEnrolments"/>
 	
-	<logic:notEmpty name="student" property="externalEnrolments">
-		<fr:view name="student" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCourse">
+	<logic:notEmpty name="registration" property="externalEnrolments">
+		<fr:view name="registration" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCourse">
 			<fr:layout name="tabular">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 thlight thcenter" />
@@ -58,7 +60,7 @@
 		<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</logic:notEmpty>
 
-	<logic:empty name="student" property="externalEnrolments">
+	<logic:empty name="registration" property="externalEnrolments">
 		<p class="mvert15">
 			<em><bean:message key="label.student.enrollment.no.externalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 		</p>

@@ -19,7 +19,6 @@
 <bean:define id="externalCurricularCourseId">&amp;oid=<bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.idInternal" /></bean:define>
 
 <ul class="mtop15">
-	<li><html:link page="<%="/externalUnits.do?method=prepareCreateExternalEnrolment" + externalCurricularCourseId  %>"><bean:message key="label.externalUnits.createExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	<li><html:link page="<%="/externalUnits.do?method=prepareEditExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 

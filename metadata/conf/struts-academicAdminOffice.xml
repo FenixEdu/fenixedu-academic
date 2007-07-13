@@ -330,7 +330,7 @@
 			<forward name="chooseExternalUnit" path="student.externalEnrolment.chooseExternalUnit"/>
 			<forward name="chooseExternalCurricularCourses" path="student.externalEnrolment.chooseExternalCurricularCourses"/>
 			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
-			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 		</action>         
 		
 		<!-- Academic Service Requests Management -->
@@ -695,7 +695,6 @@
       		<forward name="prepareCreateExternalCurricularCourse" path="externalUnits.prepareCreateExternalCurricularCourse"/>
       		<forward name="prepareEditExternalCurricularCourse" path="externalUnits.prepareEditExternalCurricularCourse"/>
       		
-      		<forward name="prepareCreateExternalEnrolment" path="externalUnits.prepareCreateExternalEnrolment"/>
       		<forward name="prepareEditExternalEnrolment" path="externalUnits.prepareEditExternalEnrolment"/>
       </action>
       

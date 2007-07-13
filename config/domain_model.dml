@@ -11199,6 +11199,13 @@ relation StudentExternalEnrolment {
 	}
 }
 
+relation RegistrationExternalEnrolment {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
+		multiplicity *;
+	}
+}
+
 relation StudentGroup {
 	net.sourceforge.fenixedu.domain.StudentGroup playsRole associatedStudentGroups {
 		multiplicity *;
