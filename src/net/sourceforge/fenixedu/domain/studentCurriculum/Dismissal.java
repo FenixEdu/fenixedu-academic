@@ -169,7 +169,11 @@ public class Dismissal extends Dismissal_Base {
     
     @Override
     public void delete() {
+	final Credits credits = getCredits();
         removeCredits();
+        if (!credits.hasAnyDismissals()) {
+            credits.delete();
+        }
         super.delete();
     }
     
