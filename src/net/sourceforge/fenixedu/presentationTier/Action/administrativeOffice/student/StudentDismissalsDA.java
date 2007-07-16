@@ -56,7 +56,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
-	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getSortedExternalEnrolments()) {
+	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getSortedExternalEnrolments()) {
 	    externalEnrolments.add(new DismissalBean.SelectedExternalEnrolment(externalEnrolment));
 	}
 	return externalEnrolments;

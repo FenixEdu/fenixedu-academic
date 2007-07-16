@@ -2201,4 +2201,10 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    public SortedSet<ExternalEnrolment> getSortedExternalEnrolments() {
+	final SortedSet<ExternalEnrolment> result = new TreeSet<ExternalEnrolment>(
+		ExternalEnrolment.COMPARATOR_BY_NAME);
+	result.addAll(getExternalEnrolmentsSet());
+	return result;
+    }
 }
