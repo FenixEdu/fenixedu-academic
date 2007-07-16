@@ -341,14 +341,14 @@
 			<form-property name="curricularYearID" type="java.lang.String" />
 			<form-property name="executionCourseID" type="java.lang.String" />
 		</form-bean>
-		
+
 		<!-- bolonhaTransitionManagementForm -->
 		<form-bean name="bolonhaTransitionManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="registrationId" type="java.lang.Integer" />
 			<form-property name="studentId" type="java.lang.Integer" />
 	    </form-bean>
-	    
+
 	    <!-- viewStudentCurriculumForm -->
 		<form-bean name="viewStudentCurriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
@@ -498,6 +498,13 @@
 
 
         <!-- List Student Curriculum -->
+		<action path="/registration"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
+				scope="request">
+			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+		</action>	
+
         <action path="/studentCurriculum"
 		      parameter="method"
 		      scope="request"
@@ -972,7 +979,7 @@
             <forward name="showPlan" path="show-student-equivalency.plan"/>
             <forward name="addEquivalency" path="add-student-equivalency"/>
         </action>
-        
+
         <!-- Start : Bolonha Transition Management -->
         <action path="/bolonhaTransitionManagement" 
         		type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition.BolonhaTransitionManagementDA" 

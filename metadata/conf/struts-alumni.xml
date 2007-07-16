@@ -45,6 +45,13 @@
             <forward name="Success" path="index"/>
         </action>
 
+		<action path="/registration"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
+				scope="request">
+			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+		</action>	
+
 		<action path="/viewCurriculum"
 				name="studentCurricularPlanAndEnrollmentsSelectionForm"
 				scope="request"		

@@ -180,6 +180,9 @@
 		extends="definition.teacher.two-column.extra-menu.tutor" >
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>
+    <definition name="view-registration-curriculum" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
+    </definition>
 	<definition name="df.page.showStudentCurriculum" 
 		extends="definition.teacher.two-column.extra-menu.tutor" >
 		<put name="body" 

@@ -172,6 +172,9 @@
 	<definition name="df.page.notAuthorized" extends="definition.coordinator.two-column" >
 		<put name="body" value="/coordinator/student/notAuthorized_bd.jsp" />
 	</definition>
+    <definition name="view-registration-curriculum" extends="definition.coordinator.two-column.extra-menu.student">
+        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
+    </definition>
 	<definition name="df.page.showStudentCurriculum" extends="definition.coordinator.two-column.extra-menu.student" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
@@ -341,7 +344,7 @@
 		<put name="body" value="/coordinator/transition/bolonha/showStudentCurricularPlan.jsp"/>
 	</definition>
 	<!-- End: Bolonha Transition Management -->
-	
+    
 	
 	<!-- Begin: View Student Curriculum -->
 	<definition name="student.curriculum.chooseStudent" extends="definition.coordinator.two-column">
