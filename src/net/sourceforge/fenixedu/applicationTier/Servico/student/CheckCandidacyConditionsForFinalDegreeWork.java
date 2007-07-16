@@ -14,9 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -80,7 +77,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
     	//int numberCompletedCurricularCourses = 0;
 		for (final DegreeModuleScope degreeModuleScope : degreesActiveCurricularCourseScopes) {
 			final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
-			final boolean isCurricularCourseApproved = studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
+			final boolean isCurricularCourseApproved = studentCurricularPlan.isApproved(curricularCourse);
 
 			final Integer curricularYear = degreeModuleScope.getCurricularYear();
 
