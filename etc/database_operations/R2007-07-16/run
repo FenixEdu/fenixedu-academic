@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Changing table EquivalencePlanEntry" AlterTableEquivalencePlanEntry.sql
+execute "Insert Country" insertCountry.sql
+execute "Open Execution Year" openExecutionYear.sql

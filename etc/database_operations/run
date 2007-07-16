@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Insert Country" insertCountry.sql
-execute "Open Execution Year" openExecutionYear.sql
