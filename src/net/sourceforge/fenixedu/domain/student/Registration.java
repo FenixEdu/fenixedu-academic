@@ -193,6 +193,9 @@ public class Registration extends Registration_Base {
 	if (hasExternalRegistrationData()) {
 	    getExternalRegistrationData().delete();
 	}
+	
+	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
+	    ;
 
 	removeRegistrationYear();
 	removeDegree();
@@ -603,23 +606,6 @@ public class Registration extends Registration_Base {
 	}
 	return false;
 
-    }
-
-    final public boolean hasAnyExternalEnrolments() {
-	final Collection<RegistrationState> mobilityStates = getRegistrationStates(RegistrationStateType.MOBILITY);
-	if (mobilityStates.isEmpty()) {
-	    return false;
-	}
-
-	for (final ExternalEnrolment externalEnrolment : getStudent().getExternalEnrolments()) {
-	    for (final RegistrationState mobilityState : mobilityStates) {
-		if (mobilityState.includes(externalEnrolment)) {
-		    return true;
-		}
-	    }
-	}
-
-	return false;
     }
 
     final public boolean getHasExternalEnrolments() {

@@ -342,9 +342,6 @@ public class Student extends Student_Base {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 
-	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
-	    ;
-
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();
