@@ -262,6 +262,7 @@
     <slot name="file" key="label.thesis.file">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
             <property name="required" value="true"/>
+            <property name="typeMessage" value="student.thesis.document.type"/>
             <property name="acceptedTypes" value="application/pdf"/>
         </validator>
         
@@ -284,6 +285,7 @@
     <slot name="file" key="label.thesis.file">
         <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
             <property name="required" value="true"/>
+            <property name="typeMessage" value="student.thesis.document.type"/>
             <property name="acceptedTypes" value="application/pdf"/>
         </validator>
         

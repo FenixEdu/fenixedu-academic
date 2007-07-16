@@ -149,13 +149,11 @@ public class FileValidator extends HtmlValidator {
     
     @Override
     protected String getResourceMessage(String message) {
-    	String userMessage = RenderUtils.getResourceString(getBundle(), message);
-
     	if (this.arguments == null || this.arguments.length == 0) {
-            return userMessage;
+            return RenderUtils.getResourceString(getBundle(), message);
         }
         else {
-            return RenderUtils.getFormatedResourceString(userMessage, this.arguments);
+            return RenderUtils.getFormatedResourceString(getBundle(), message, this.arguments);
         }
     }
 
