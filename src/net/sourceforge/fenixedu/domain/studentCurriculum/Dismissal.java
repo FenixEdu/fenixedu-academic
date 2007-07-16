@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -85,14 +86,14 @@ public class Dismissal extends Dismissal_Base {
 
 
     static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
-	final List<CurriculumGroup> curriculumGroups = new ArrayList<CurriculumGroup>(curricularCourse.getParentContextsCount());
+	final Set<CurriculumGroup> curriculumGroups = new HashSet<CurriculumGroup>(curricularCourse.getParentContextsCount());
 	for (final Context context : curricularCourse.getParentContexts()) {
 	    final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(context.getParentCourseGroup());
 	    if (curriculumGroup != null && !curriculumGroup.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
 		curriculumGroups.add(curriculumGroup);
 	    }
 	}
-	return curriculumGroups.size() == 1 ? curriculumGroups.get(0) : getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan); 
+	return curriculumGroups.size() == 1 ? curriculumGroups.iterator().next() : getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan); 
     }
 
     @Override
