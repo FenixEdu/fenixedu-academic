@@ -30,7 +30,7 @@
 			<em><bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/></em>
 		</logic:empty>
 
-		<table class="tstyle4 mtop05">
+		<table class="tstyle2 mtop05">
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" indexId="n" name="entries">
 			<tr>
 			<td>
@@ -43,7 +43,7 @@
 						<bean:message name="entry" property="sourceDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
-				<span style="border-bottom: 1px solid #ccc;">
+				<span class="nowrap" style="border-bottom: 1px solid #ccc;">
 					<logic:equal name="degreeModuleFromList1" property="curricularCourse" value="true">
 						<logic:notEmpty name="degreeModuleFromList1" property="code"><bean:write name="degreeModuleFromList1" property="code"/> - </logic:notEmpty>
 					</logic:equal>
@@ -63,7 +63,7 @@
 						<bean:message name="entry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 					</strong>
 				</logic:notEqual>
-				<span style="border-bottom: 1px solid #ccc;">
+				<span class="nowrap" style="border-bottom: 1px solid #ccc;">
 					<logic:equal name="degreeModuleFromList2" property="curricularCourse" value="true">
 						<logic:notEmpty name="degreeModuleFromList2" property="code"><bean:write name="degreeModuleFromList2" property="code"/> - </logic:notEmpty>
 					</logic:equal>

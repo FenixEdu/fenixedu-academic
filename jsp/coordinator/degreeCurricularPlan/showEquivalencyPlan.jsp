@@ -7,6 +7,7 @@
 
 <h2><bean:message key="title.equivalency.plan" bundle="APPLICATION_RESOURCES"/></h2>
 
+
 <logic:present name="degreeCurricularPlan">
 <logic:notPresent name="degreeCurricularPlan" property="equivalencePlan">
 
@@ -19,7 +20,7 @@
 				schema="degreeCurricularPlan.createEquivalencyPlan">
 		    <fr:layout>
 	    	    <fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-	        	<fr:property name="columnClasses" value="tdclear,,t"/>
+	        	<fr:property name="columnClasses" value="tdclear,,"/>
 		    </fr:layout>
 		</fr:edit>
 
@@ -38,13 +39,14 @@
 	<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
 
 	<logic:notPresent name="viewTable">
-		<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-				+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-				+ equivalencePlan.getIdInternal() %>">
-			<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-		<br/>
-		<br/>
+		<p>
+			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+					+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+					+ equivalencePlan.getIdInternal() %>">
+				<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</p>
+
 		<logic:present name="degreeCurricularPlan" property="root">
 			<bean:define id="degreeModule" name="degreeCurricularPlan" property="root" toScope="request"/>
 			<bean:define id="indentLevel" type="java.lang.String" value="0" toScope="request"/>
