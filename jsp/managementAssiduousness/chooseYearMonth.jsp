@@ -64,26 +64,42 @@
 	</fr:form>
 </logic:present>
 <logic:present name="yearMonth">
-	<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
-		<html:hidden property="action" value="<%=nextAction %>" />
-		<logic:present name="chooseMonth">
-			<bean:define id="chooseMonth" name="chooseMonth" type="java.lang.String"/>
-			<html:hidden property="chooseMonth" value="<%=chooseMonth %>" />
-			<fr:edit id="yearMonth" name="yearMonth" schema="choose.year">
-				<fr:layout>
-					<fr:property name="classes" value="thlight thright" />
-				</fr:layout>
-			</fr:edit>
-		</logic:present>
-		<logic:notPresent name="chooseMonth">
+	<logic:present name="assignedEmployees">
+		<fr:form action="/exportAssiduousness.do?method=exportAssignedEmployees">
 			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 				<fr:layout>
 					<fr:property name="classes" value="thlight thright" />
 				</fr:layout>
-			</fr:edit>
-		</logic:notPresent>
-		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-			<bean:message key="button.export" />
-		</html:submit></p>
-</fr:form>
+			</fr:edit>		
+			<p>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+					<bean:message key="button.export" />
+				</html:submit>
+			</p>
+		</fr:form>
+	</logic:present>
+	<logic:notPresent name="assignedEmployees">
+		<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
+			<html:hidden property="action" value="<%=nextAction %>" />
+			<logic:present name="chooseMonth">
+				<bean:define id="chooseMonth" name="chooseMonth" type="java.lang.String"/>
+				<html:hidden property="chooseMonth" value="<%=chooseMonth %>" />
+				<fr:edit id="yearMonth" name="yearMonth" schema="choose.year">
+					<fr:layout>
+						<fr:property name="classes" value="thlight thright" />
+					</fr:layout>
+				</fr:edit>
+			</logic:present>
+			<logic:notPresent name="chooseMonth">
+				<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
+					<fr:layout>
+						<fr:property name="classes" value="thlight thright" />
+					</fr:layout>
+				</fr:edit>
+			</logic:notPresent>
+			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+				<bean:message key="button.export" />
+			</html:submit></p>
+		</fr:form>
+	</logic:notPresent>
 </logic:present>

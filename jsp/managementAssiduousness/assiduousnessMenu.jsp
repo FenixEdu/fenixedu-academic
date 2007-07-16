@@ -20,6 +20,7 @@
     <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportWorkSheets&amp;chooseBetweenDates=true"><bean:message key="link.exportWorkSheets" /></html:link></li>
     <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportMonthResume"><bean:message key="link.exportMonthResume" /></html:link></li>
     <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth&amp;action=exportJustifications"><bean:message key="link.exportJustifications" /></html:link></li>
+    <li><html:link page="/exportAssiduousness.do?method=prepareExportAssignedEmployees&amp;action=exportAssignedEmployees"><bean:message key="link.exportAssignedEmployees" /></html:link></li>    
     
     <% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) { %>
     <li class="navheader"><bean:message key="title.monthClosure" /></li>

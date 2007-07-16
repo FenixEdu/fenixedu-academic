@@ -26,7 +26,8 @@
 		
 		<table class="tstyle1">
 		<tr align="left">
-			<td><strong><bean:message key="label.hoursNumbersAuthorizedAndRealized" /></strong></td>
+			<td class="acenter"><strong><bean:message key="label.hoursNumbersAuthorized" /></strong></td>
+			<td><strong><bean:message key="label.hoursNumbersRealized" /></strong></td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -37,7 +38,7 @@
 					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.nightHours">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -54,7 +55,7 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.extraNightDays">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -71,7 +72,7 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.saturdayHours">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -88,7 +89,7 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.holidayHours">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -105,7 +106,7 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.sundayHours">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -122,7 +123,7 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
-			<td>
+			<td class="acenter">
 			<fr:view name="employeeExtraWorkRequestFactory" schema="show.workdayHours">
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
@@ -135,6 +136,7 @@
 			<td>
 				<strong><bean:message key="label.remunerationOption" /></strong>
 			</td>
+			<td class="clear"></td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -145,6 +147,7 @@
 					</fr:layout>
 				</fr:view>
 			</td>
+			<td class="clear"></td>
 		</tr>
 		<tr align="right">
 			<td>
@@ -154,9 +157,9 @@
 					</fr:layout>
 				</fr:edit>
 			</td>
+			<td class="clear"></td>
 		</tr>
 		</table>
-		<br/>
 		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
 				<bean:message key="button.confirm" />
@@ -170,7 +173,7 @@
 			<table>
 			<tr align="left">
 				<td>
-					<strong><bean:message key="label.hoursNumbersAuthorizedAndRealized" /></strong>
+					<strong><bean:message key="label.hoursNumbersAuthorized" /></strong>
 					<logic:notEmpty name="employeeExtraWorkRequestFactory" property="nightHours">
 				</td>
 			</tr>
@@ -245,6 +248,5 @@
 		<logic:empty name="employeeExtraWorkRequestFactory" property="extraWorkRequest">	
 			<p><bean:message key="message.noPaymentRequestInClosedMonth" bundle="ASSIDUOUSNESS_RESOURCES"/></p>
 		</logic:empty>
-		<br/>
 	</logic:notEqual>
 </logic:present>

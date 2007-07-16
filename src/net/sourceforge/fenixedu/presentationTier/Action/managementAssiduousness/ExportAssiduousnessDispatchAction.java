@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMonthlyResume;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssignedEmployeeMonthInfo;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -31,6 +33,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.YearMonthDay;
 
 public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
@@ -141,6 +144,36 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
+    }
+    
+    public ActionForward prepareExportAssignedEmployees(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("yearMonth", new YearMonth(new YearMonthDay()));  
+        request.setAttribute("assignedEmployees","assignedEmployees");
+        request.setAttribute("action", request.getParameter("action"));
+        return mapping.findForward("choose-year-month");
+    }
+    
+    public ActionForward exportAssignedEmployees(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");        
+        final IUserView userView = SessionUtils.getUserView(request);
+        List<AssignedEmployeeMonthInfo> assignedEmployeeInfoList = (List<AssignedEmployeeMonthInfo>) ServiceUtils.executeService(
+                userView, "ExportAssignedEmployeesInfo", new Object[] { yearMonth });
+        
+        Collections.sort(assignedEmployeeInfoList,new BeanComparator("employee.employeeNumber"));
+        byte[] data = ReportsUtils.exportToPdf("personnelSection.assignedEmployees", null, null, assignedEmployeeInfoList);        
+        response.setContentLength(data.length);
+        response.setContentType("application/pdf");        
+        response.setHeader("Content-disposition", "attachment; filename=listagemDestacados.pdf");
+        
+        final ServletOutputStream writer = response.getOutputStream();        
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        
+        response.flushBuffer();
+        return null;
     }
 
     private void setError(HttpServletRequest request,

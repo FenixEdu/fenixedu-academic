@@ -9807,7 +9807,16 @@
 		<filterChains>
 			<chain name="AssiduousnessManagementAuthorization"/>
 		</filterChains>
-    </service>    
+    </service>
+    	<service>
+		<name>ExportAssignedEmployeesInfo</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportAssignedEmployeesInfo</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>  
 	<service>
 		<name>DeletePersonSpaceOccupation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation</implementationClass>

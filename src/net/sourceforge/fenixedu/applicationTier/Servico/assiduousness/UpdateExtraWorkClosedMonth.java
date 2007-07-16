@@ -32,8 +32,9 @@ public class UpdateExtraWorkClosedMonth extends Service {
 		}
 	    }
 	}
-        if(totalMonthAmount != giafInterface.getTotalMonthAmount(closedMonth.getClosedYearMonth())) {
-            return new ActionMessage("error.extraWork.totalMonthValueNotEqual");
+        double giafTotalMonthAmount = giafInterface.getTotalMonthAmount(closedMonth.getClosedYearMonth());
+        if(totalMonthAmount != giafTotalMonthAmount) {
+            return new ActionMessage("error.extraWork.totalMonthValueNotEqual", totalMonthAmount, giafTotalMonthAmount);
         }
 	return null;
     }

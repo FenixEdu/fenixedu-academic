@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.util;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeField;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Instant;
 
 public enum Month {
     

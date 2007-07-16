@@ -40,7 +40,7 @@ public class ReportsUtils extends PropertiesManager {
     private static final Map<String, JasperReport> reportsMap = new HashMap<String, JasperReport>();
 
     private static final Properties properties = new Properties();
-    
+
     private static final String reportsPropertiesFile = "/reports.properties";
 
     static {
@@ -52,17 +52,17 @@ public class ReportsUtils extends PropertiesManager {
     }
 
     public static Map<String, JasperReport> getReportsMap() {
-	return reportsMap;
+        return reportsMap;
     }
-    
+
     public static Properties getProperties() {
-	return properties;
+        return properties;
     }
-    
+
     public static String getReportsPropertiesFile() {
-	return reportsPropertiesFile;
+        return reportsPropertiesFile;
     }
-    
+
     public static boolean printReport(String key, Map parameters, ResourceBundle bundle,
             Collection dataSource, String printerName) {
         try {
@@ -117,8 +117,8 @@ public class ReportsUtils extends PropertiesManager {
                         MediaPrintableArea.MM));
                 exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET,
                         printRequestAttributeSet);
-//                exporter
-//                        .setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+                //                exporter
+                //                        .setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
                 exporter.exportReport();
                 System.out.println("Printer Job Sent");
                 return true;
@@ -142,20 +142,25 @@ public class ReportsUtils extends PropertiesManager {
         if (report == null) {
             String reportFileName = properties.getProperty(key);
             if (reportFileName != null) {
-        	// Miracle solution for reloading jasper reports on the fly while developing...
-        	File reportFile = new File("/home/cfgi/Projects/fenix-head/build/WEB-INF/classes/" + reportFileName);
-        	report = reportFile.exists() ? (JasperReport) JRLoader.loadObject(reportFile) : (JasperReport) JRLoader.loadObject(ReportsUtils.class.getResourceAsStream(reportFileName)); 
-        	
-        	reportsMap.put(key, report);
+                // Miracle solution for reloading jasper reports on the fly while developing...
+                File reportFile = new File("/home/alien/eclipseProjects/Fenix/build/WEB-INF/classes/"
+                        + reportFileName);
+                report = reportFile.exists() ? (JasperReport) JRLoader.loadObject(reportFile)
+                        : (JasperReport) JRLoader.loadObject(ReportsUtils.class
+                                .getResourceAsStream(reportFileName));
+
+                reportsMap.put(key, report);
             }
         }
         if (report != null) {
-            parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE, bundle);
-            
+            if (parameters != null && bundle != null) {
+                parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE, bundle);
+            }
+
             if (dataSource == null || dataSource.isEmpty()) {
-        	// dummy, engine seems to work not very well with empty data sources
-        	dataSource = new ArrayList();
-        	dataSource.add(StringUtils.EMPTY);
+                // dummy, engine seems to work not very well with empty data sources
+                dataSource = new ArrayList();
+                dataSource.add(StringUtils.EMPTY);
             }
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters,
                     new JRBeanCollectionDataSource(dataSource));
@@ -165,49 +170,54 @@ public class ReportsUtils extends PropertiesManager {
     }
 
     static public byte[] exportToPdf(final FenixReport report) throws JRException {
-        return exportToPdfWithPreProcessing(report.getReportTemplateKey(), report.getParameters(), report.getResourceBundle(), report.getDataSource(), report.getPreProcessor());
+        return exportToPdfWithPreProcessing(report.getReportTemplateKey(), report.getParameters(),
+                report.getResourceBundle(), report.getDataSource(), report.getPreProcessor());
     }
 
-    static public byte[] exportToPdf(String key, Map parameters, ResourceBundle bundle, Collection dataSource) throws JRException {
+    static public byte[] exportToPdf(String key, Map parameters, ResourceBundle bundle,
+            Collection dataSource) throws JRException {
         return exportToPdfWithPreProcessing(key, parameters, bundle, dataSource, null);
     }
 
-	private static byte[] exportToPdfWithPreProcessing(String key, Map parameters, ResourceBundle bundle, Collection dataSource, JasperPrintProcessor processor) throws JRException {
-		try {
+    private static byte[] exportToPdfWithPreProcessing(String key, Map parameters,
+            ResourceBundle bundle, Collection dataSource, JasperPrintProcessor processor)
+            throws JRException {
+        try {
             JasperPrint jasperPrint = getReport(key, parameters, bundle, dataSource);
-			if (jasperPrint != null) {
+            if (jasperPrint != null) {
 
-				if (processor != null) {
-					jasperPrint = processor.process(jasperPrint);
-				}
+                if (processor != null) {
+                    jasperPrint = processor.process(jasperPrint);
+                }
 
-				final JRPdfExporter exporter = new JRPdfExporter();
-				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                final JRPdfExporter exporter = new JRPdfExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 
-				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-		
-				// TODO uncomment this once font files location are parameterized and
-				// diploma requests are made available
-				//
-				//		final Map<FontKey, PdfFont> fontMap = new HashMap<FontKey, PdfFont>(4);
-				//		fontMap.put(new FontKey("Quadraat-Regular", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUAD____.ttf", BaseFont.CP1252, true));
-				//		fontMap.put(new FontKey("Quadraat-Bold", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADBD__.ttf", BaseFont.CP1252, true));
-				//		fontMap.put(new FontKey("Quadraat-Italic", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADI___.ttf", BaseFont.CP1252, true));
-				//		fontMap.put(new FontKey("Quadraat-BoldItalic", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADBDI_.ttf", BaseFont.CP1252, true));
-				//		exporter.setParameter(JRExporterParameter.FONT_MAP, fontMap);
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
-				exporter.exportReport();
-				return baos.toByteArray();
-	        }
-	    } catch (JRException e) {
-	        throw e;
-	    }
-	    
-	    return null;
-	}
+                // TODO uncomment this once font files location are parameterized and
+                // diploma requests are made available
+                //
+                //		final Map<FontKey, PdfFont> fontMap = new HashMap<FontKey, PdfFont>(4);
+                //		fontMap.put(new FontKey("Quadraat-Regular", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUAD____.ttf", BaseFont.CP1252, true));
+                //		fontMap.put(new FontKey("Quadraat-Bold", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADBD__.ttf", BaseFont.CP1252, true));
+                //		fontMap.put(new FontKey("Quadraat-Italic", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADI___.ttf", BaseFont.CP1252, true));
+                //		fontMap.put(new FontKey("Quadraat-BoldItalic", false, false), new PdfFont("/usr/local/installed/java/jre/lib/fonts/QUADBDI_.ttf", BaseFont.CP1252, true));
+                //		exporter.setParameter(JRExporterParameter.FONT_MAP, fontMap);
 
-    static public boolean exportToPdfFile(String key, Map parameters, ResourceBundle bundle, Collection dataSource, String destination) {
+                exporter.exportReport();
+                return baos.toByteArray();
+            }
+        } catch (JRException e) {
+            throw e;
+        }
+
+        return null;
+    }
+
+    static public boolean exportToPdfFile(String key, Map parameters, ResourceBundle bundle,
+            Collection dataSource, String destination) {
         try {
             final JasperPrint jasperPrint = getReport(key, parameters, bundle, dataSource);
             if (jasperPrint != null) {
@@ -221,8 +231,8 @@ public class ReportsUtils extends PropertiesManager {
         }
     }
 
-    public static void exportToHtmlFile(String destFileName, String key, Map parameters, ResourceBundle bundle,
-            Collection dataSource) throws JRException {
+    public static void exportToHtmlFile(String destFileName, String key, Map parameters,
+            ResourceBundle bundle, Collection dataSource) throws JRException {
         try {
             JasperPrint jasperPrint = getReport(key, parameters, bundle, dataSource);
             if (jasperPrint != null) {
@@ -232,5 +242,5 @@ public class ReportsUtils extends PropertiesManager {
             throw e;
         }
     }
-    
+
 }
