@@ -17,7 +17,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
 
-		<h:panelGrid width="100%" columns="1" cellspacing="8" cellpadding="8">
+
 			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
 				<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.distributedTest.title}, "/>
@@ -57,19 +57,25 @@
 				</h:outputFormat>
 			</h:panelGroup>
 
-			<h:panelGrid styleClass="infoop" columns="1">
-				<h:outputText value="#{bundle['label.marksOnline.instructions']}" escape="false"/>
-				<h:outputText value="<br/>" escape="false"/>
-				<h:commandLink action="enterLoadMarks">
-					<f:param name="evaluationIDHidden" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
-					<f:param name="executionCourseIDHidden" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
-					<f:param name="evaluationID" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
-					<f:param name="executionCourseID" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
-					<h:outputFormat value="#{bundle['label.load.marks']}" />
-				</h:commandLink>
-			</h:panelGrid>
+			<h:outputText value="<div class='infoop2'>" escape="false"/>
 
-			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" headerClass="listClasses-header" columnClasses="listClasses">
+				<h:outputText value="<p>" escape="false"/>
+					<h:outputText value="#{bundle['label.marksOnline.instructions']}" escape="false"/>
+				<h:outputText value="</p>" escape="false"/>
+
+				<h:outputText value="<p>" escape="false"/>
+					<h:commandLink action="enterLoadMarks">
+						<f:param name="evaluationIDHidden" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
+						<f:param name="executionCourseIDHidden" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
+						<f:param name="evaluationID" value="#{evaluationManagementBackingBean.evaluation.idInternal}" />
+						<f:param name="executionCourseID" value="#{evaluationManagementBackingBean.executionCourse.idInternal}" />
+						<h:outputFormat value="#{bundle['label.load.marks']}" />
+					</h:commandLink>
+				<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="</div>" escape="false"/>
+
+
+			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" styleClass="tstyle4">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
 					<h:outputText value="#{attends.registration.number}" />
@@ -89,9 +95,10 @@
 				</h:column>
 			</h:dataTable>
 
-		</h:panelGrid>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:outputText value="<p>" escape="false"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 
 </ft:tilesView>
