@@ -28,6 +28,10 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 	
 	setLesson(lesson);        
 	
+	if(getPeriod() == null) {
+	    throw new DomainException("error.LessonSpaceOccupation.empty.period");
+	}
+	
 	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
 	    throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
 	}
@@ -38,6 +42,10 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
     public void edit(AllocatableSpace allocatableSpace) {	
 
+	if(getPeriod() == null) {
+	    throw new DomainException("error.LessonSpaceOccupation.empty.period");
+	}
+	
 	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
 	    throw new DomainException("error.LessonSpaceOccupation.room.is.not.free");
 	}
@@ -45,12 +53,12 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 	setResource(allocatableSpace);						       	  
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
+    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupationsWithoutCheckSpaceManagerRole")
     public void delete() {	
         super.setLesson(null);
 	super.delete();
     }          
-    
+        
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return hasLesson();	

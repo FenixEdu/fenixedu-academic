@@ -1,6 +1,12 @@
 package net.sourceforge.fenixedu.predicates;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
@@ -36,6 +42,20 @@ public class SpacePredicates {
 	public boolean evaluate(SpaceOccupation spaceOccupation) {
 	    spaceOccupation.checkPermissionsToManageSpaceOccupations();
 	    return true;
+	}
+    };
+    
+    public static final AccessControlPredicate<LessonSpaceOccupation> checkPermissionsToManageLessonSpaceOccupationsWithoutCheckSpaceManagerRole = new AccessControlPredicate<LessonSpaceOccupation>() {
+	public boolean evaluate(LessonSpaceOccupation spaceOccupation) {
+	    Person loggedPerson = AccessControl.getPerson();
+	    ExecutionCourse executionCourse = spaceOccupation.getLesson().getShift().getDisciplinaExecucao();
+	    List<Professorship> professorships = executionCourse.getProfessorships();
+	    for (Professorship professorship : professorships) {
+		if(professorship.getTeacher().getPerson().equals(loggedPerson)) {
+		    return true;
+		}
+	    }
+	    return checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole.evaluate(spaceOccupation);
 	}
     };
     
