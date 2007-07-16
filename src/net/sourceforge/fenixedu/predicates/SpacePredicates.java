@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
@@ -54,6 +55,9 @@ public class SpacePredicates {
 		if(professorship.getTeacher().getPerson().equals(loggedPerson)) {
 		    return true;
 		}
+	    }
+	    if(loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+		return true;
 	    }
 	    return checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole.evaluate(spaceOccupation);
 	}
