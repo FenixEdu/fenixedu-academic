@@ -44,6 +44,9 @@
 					</strong>
 				</logic:notEqual>
 				<span style="border-bottom: 1px solid #ccc;">
+					<logic:equal name="degreeModuleFromList1" property="curricularCourse" value="true">
+						<logic:notEmpty name="degreeModuleFromList1" property="code"><bean:write name="degreeModuleFromList1" property="code"/> - </logic:notEmpty>
+					</logic:equal>
 					<bean:write name="degreeModuleFromList1" property="name"/>
 				</span>
 			</logic:iterate>
@@ -61,9 +64,21 @@
 					</strong>
 				</logic:notEqual>
 				<span style="border-bottom: 1px solid #ccc;">
+					<logic:equal name="degreeModuleFromList2" property="curricularCourse" value="true">
+						<logic:notEmpty name="degreeModuleFromList2" property="code"><bean:write name="degreeModuleFromList2" property="code"/> - </logic:notEmpty>
+					</logic:equal>
 					<bean:write name="degreeModuleFromList2" property="name"/>
 				</span>
 			</logic:iterate>
+			</td>
+			
+			<td class="acenter nowrap">
+			<logic:notEmpty name="entry" property="previousCourseGroupForNewDegreeModules">
+				<bean:write name="entry" property="previousCourseGroupForNewDegreeModules.name"/>
+			</logic:notEmpty>
+			<logic:empty name="entry" property="previousCourseGroupForNewDegreeModules">
+				-
+			</logic:empty>
 			</td>
 			
 			<td class="acenter nowrap">
@@ -74,7 +89,7 @@
 				-
 			</logic:empty>
 			</td>
-			
+						
 			<td>
 			<span>
 				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="

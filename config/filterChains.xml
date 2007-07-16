@@ -275,6 +275,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>ScientificCouncilOrAcademicAdministrativeOfficeAuthorization</name>
+        <expression>ScientificCouncilAuthorization || AcademicAdministrativeOfficeAuthorization </expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>ReadCandidateEnrolmentsByCandidateIDAuthorization</name>
         <expression>ReadCandidateEnrolmentsByCandidateIDAuthorization</expression>
         <description/>

@@ -14,44 +14,50 @@
 <bean:define id="width" type="java.lang.String" name="width"/>
 
 <logic:equal name="curriculumModule" property="leaf" value="true">
-
-	<bean:define id="curriculumLine" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine" name="curriculumModule"/>
-
-	<div class="indent<%= indentLevel %>">
-		<table class="showinfo3 mvert0" style="width: <%= width %>em;">
-			<tr>
-				<td>
-					<bean:write name="curriculumLine" property="name"/>
-				</td>
-				<td class="highlight2 smalltxt" align="center" style="width: 14em;">
-					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
-							+ curriculumModule.getIdInternal() + "&amp;studentNumber="
-								+ student.getNumber() %>">
-						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
-					</html:link>
-				</td>
-				<td class="smalltxt" align="right" style="width: 22em;">
-					<logic:empty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
-						<span style="color: #888">
-							<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
-						</span>
-					</logic:empty>
-					<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
-						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+	<logic:equal name="curriculumModule" property="enrolment" value="true">
+	
+		<bean:define id="enrolment" type="net.sourceforge.fenixedu.domain.Enrolment" name="curriculumModule"/>
+	
+		<div class="indent<%= indentLevel %>">
+			<table class="showinfo3 mvert0" style="width: <%= width %>em;">
+				<tr>
+					<td>
+						<logic:equal name="enrolment" property="enrolment" value="true">
+							<logic:notEmpty name="enrolment" property="code"><bean:write name="enrolment" property="code"/> - </logic:notEmpty>
+						</logic:equal>
+						<bean:write name="enrolment" property="name"/>
+					</td>
+					<td class="highlight2 smalltxt" align="center" style="width: 14em;">
+						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
 								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
 								+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
 								+ curriculumModule.getIdInternal() + "&amp;studentNumber="
-								+ student.getNumber() 
-								%>">
-							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
+									+ student.getNumber() %>">
+							<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
-					</logic:notEmpty>
-				</td>
-			</tr>
-		</table>
-	</div>
+					</td>
+					<td class="smalltxt" align="right" style="width: 22em;">
+						<logic:empty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
+							<span style="color: #888">
+								<bean:message key="message.curricular.course.has.no.equivalencies" bundle="APPLICATION_RESOURCES"/>
+							</span>
+						</logic:empty>
+						<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
+							<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
+									+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+									+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
+									+ curriculumModule.getIdInternal() + "&amp;studentNumber="
+									+ student.getNumber() 
+									%>">
+								<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
+							</html:link>
+						</logic:notEmpty>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+	</logic:equal>
 </logic:equal>
 <logic:notEqual name="curriculumModule" property="leaf" value="true">
 

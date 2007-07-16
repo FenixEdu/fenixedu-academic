@@ -191,6 +191,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public List<Enrolment> getChildEnrolments() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isEnrolment()) {
+		result.add((Enrolment) curriculumModule);
+	    }
+	}
+
+	return result;
+    }
+
     public boolean isRoot() {
 	return false;
     }
@@ -572,12 +583,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public boolean isConcluded(ExecutionYear executionYear) {
-	return checkCreditsLimits(executionYear) || checkDegreeModulesSelectionLimit(executionYear) || checkAllModules(executionYear); 
+	return checkCreditsLimits(executionYear) || checkDegreeModulesSelectionLimit(executionYear)
+		|| checkAllModules(executionYear);
     }
 
     private boolean checkAllModules(ExecutionYear executionYear) {
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if(!curriculumModule.isConcluded(executionYear)) {
+	    if (!curriculumModule.isConcluded(executionYear)) {
 		return false;
 	    }
 	}
@@ -585,33 +597,37 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     private boolean checkDegreeModulesSelectionLimit(ExecutionYear executionYear) {
-	List<DegreeModulesSelectionLimit> curricularRules = (List<DegreeModulesSelectionLimit>) getDegreeModule().getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
-	if(curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.degree.modules.limit.for.executionPeriod");
+	List<DegreeModulesSelectionLimit> curricularRules = (List<DegreeModulesSelectionLimit>) getDegreeModule()
+		.getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
+	if (curricularRules.size() > 1) {
+	    throw new DomainException(
+		    "error.degree.module.has.more.than.one.degree.modules.limit.for.executionPeriod");
 	}
-	
-	if(curricularRules.isEmpty()) {
+
+	if (curricularRules.isEmpty()) {
 	    return false;
 	} else {
 	    DegreeModulesSelectionLimit degreeModulesSelectionLimit = curricularRules.get(0);
 	    int modulesConcluded = 0;
 	    for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-		if(curriculumModule.isConcluded(executionYear)) {
+		if (curriculumModule.isConcluded(executionYear)) {
 		    modulesConcluded++;
 		}
 	    }
-	    
+
 	    return modulesConcluded >= degreeModulesSelectionLimit.getMinimumLimit();
 	}
     }
 
     private boolean checkCreditsLimits(ExecutionYear executionYear) {
-	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionYear);
-	if(curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
+	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
+		CurricularRuleType.CREDITS_LIMIT, executionYear);
+	if (curricularRules.size() > 1) {
+	    throw new DomainException(
+		    "error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
 	}
-	
-	if(curricularRules.isEmpty()) {
+
+	if (curricularRules.isEmpty()) {
 	    return false;
 	} else {
 	    CreditsLimit creditsLimit = curricularRules.get(0);
@@ -619,24 +635,26 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 		creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
 	    }
-	    
+
 	    return creditsConcluded >= creditsLimit.getMinimumCredits();
 	}
     }
 
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionYear);
-	if(curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
+	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
+		CurricularRuleType.CREDITS_LIMIT, executionYear);
+	if (curricularRules.size() > 1) {
+	    throw new DomainException(
+		    "error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
 	}
-	
+
 	Double creditsConcluded = 0d;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
 	}
 
-	if(curricularRules.isEmpty()) {
+	if (curricularRules.isEmpty()) {
 	    return creditsConcluded;
 	} else {
 	    CreditsLimit creditsLimit = curricularRules.get(0);
@@ -663,5 +681,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public boolean isPropaedeutic() {
 	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();
     }
-    
+
+    public boolean hasCurriculumLines() {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isLeaf()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }

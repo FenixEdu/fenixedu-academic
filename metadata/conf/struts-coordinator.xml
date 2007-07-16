@@ -313,7 +313,9 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
-			<form-property name="organizedBy" type="java.lang.String" initial="executionYears"/>
+			<form-property name="organizedBy" type="java.lang.String" />
+			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
+			<form-property name="viewType" type="java.lang.String"/>
 		</form-bean>	
 
 		<!-- =================== View Old Inquiries Teacher's Results ============== -->

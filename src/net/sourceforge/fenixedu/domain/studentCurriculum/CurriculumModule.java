@@ -131,6 +131,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	}
     }
 
+    public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getDegreeModule().getParentDegreeCurricularPlan() == degreeCurricularPlan;
+    }
+
     abstract public Double getEctsCredits();
 
     abstract public Double getAprovedEctsCredits();

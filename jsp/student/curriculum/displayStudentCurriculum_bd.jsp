@@ -51,7 +51,7 @@
 	<fr:view name="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-			<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+			<fr:property name="rowClasses" value=",,tdhl1,,,,"/>
 		</fr:layout>
 	</fr:view>
 </logic:notPresent>
@@ -60,7 +60,7 @@
 	<fr:view name="registration" schema="student.registrationDetail" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-			<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+			<fr:property name="rowClasses" value=",,tdhl1,,,,"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>
@@ -190,10 +190,20 @@
 			</td>
 		</tr>
 		<tr>
+			<th><bean:message key="label.view" bundle="STUDENT_RESOURCES" />:</th>
+			<td>
+				<e:labelValues id="viewTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$ViewType" bundle="ENUMERATION_RESOURCES" />
+				<html:select property="viewType" altKey="select.viewType" bundle="HTMLALT_RESOURCES" onchange="this.form.submit();">
+					<html:options collection="viewTypes" labelProperty="label" property="value"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
 			<th><bean:message key="label.enrollmentsFilter.basic" bundle="STUDENT_RESOURCES" /></th>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" property="select" onchange='this.form.submit();' >
-					<html:options collection="enrollmentOptions" property="value" labelProperty="label"/>
+				<e:labelValues id="enrolmentStateTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$EnrolmentStateFilterType" bundle="ENUMERATION_RESOURCES" />
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentStateType" property="select" onchange='this.form.submit();' >
+					<html:options collection="enrolmentStateTypes" property="value" labelProperty="label"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -203,172 +213,101 @@
 		<tr>
 			<th><bean:message key="organize.by" bundle="STUDENT_RESOURCES" />:</th>
 			<td>
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="groups" onclick='this.form.submit();'/><bean:message key="groups" bundle="BOLONHA_MANAGER_RESOURCES"/>
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.organizedBy" property="organizedBy" value="executionYears" onclick='this.form.submit();'/><bean:message key="label.execution.year" bundle="STUDENT_RESOURCES"/>
+				<e:labelValues id="organizationTypes" enumeration="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer$OrganizationType" bundle="ENUMERATION_RESOURCES" />
+				<logic:iterate id="organizationType" name="organizationTypes">
+					<bean:define id="label" name="organizationType" property="label" />
+					<bean:define id="value" name="organizationType" property="value" />
+					<html:radio property="organizedBy" altKey="radio.organizedBy" bundle="HTMLALT_RESOURCES" onclick="this.form.submit();" value="<%=value.toString()%>"/><bean:write name="label"/>
+				</logic:iterate>
+			</td>
+		</tr>
+		<tr>
+			<th><bean:message key="label.detailed" bundle="STUDENT_RESOURCES" />:</th>
+			<td>
+				<html:radio property="detailed" altKey="radio.detailed" bundle="HTMLALT_RESOURCES" onclick="this.form.submit();" value="<%=Boolean.TRUE.toString()%>"/><bean:message  key="label.yes" bundle="STUDENT_RESOURCES"/>
+				<html:radio property="detailed" altKey="radio.detailed" bundle="HTMLALT_RESOURCES" onclick="this.form.submit();" value="<%=Boolean.FALSE.toString()%>"/><bean:message  key="label.no" bundle="STUDENT_RESOURCES"/>
 			</td>
 		</tr>
 	</table>
-</html:form>
 
 
-<%-- Show Student Curricular Plans --%>
-<logic:empty name="selectedStudentCurricularPlans">
-	<p>
-		<span class="warning0">
-			<bean:message key="message.no.curricularplans" bundle="STUDENT_RESOURCES"/>
-		</span>
-	</p>
-</logic:empty>
 
-<logic:notEmpty name="selectedStudentCurricularPlans">
-	<bean:define id="organizedBy" name="organizedBy" scope="request" type="java.lang.String" />
-	<bean:define id="enrolmentStateSelectionType" name="enrolmentStateSelectionType" scope="request" type="java.lang.Integer" />	
-	<logic:iterate id="studentCurricularPlan" name="selectedStudentCurricularPlans" indexId="index">
-		
-		<logic:greaterThan name="index" value="0">
-			<div class="mvert3"></div>
-		</logic:greaterThan>
-
-		<bean:define id="dateFormated">
-			<dt:format pattern="dd.MM.yyyy">
-				<bean:write name="studentCurricularPlan" property="startDate.time"/>
-			</dt:format>
-		</bean:define>
-
-		<div class="mvert2 mtop0">
-			<p class="mvert05">
-				<strong>
-					<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
-				</strong> 
-				<bean:message bundle="ENUMERATION_RESOURCES" name="studentCurricularPlan" property="degreeType.name"/>
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> 
-				<bean:write name="studentCurricularPlan" property="degree.name"/>,
-				<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.name"/>
-				<logic:present name="studentCurricularPlan" property="specialization">
-					- <bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-				</logic:present>
-			</p>
-			<logic:present name="studentCurricularPlan" property="branch">
+	<%-- Show Student Curricular Plans --%>
+	<logic:empty name="selectedStudentCurricularPlans">
+		<p>
+			<span class="warning0">
+				<bean:message key="message.no.curricularplans" bundle="STUDENT_RESOURCES"/>
+			</span>
+		</p>
+	</logic:empty>
+	
+	<logic:notEmpty name="selectedStudentCurricularPlans">
+		<bean:define id="organizedBy" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="organizedBy" type="java.lang.String" />
+		<bean:define id="enrolmentStateFilterType" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="select" type="java.lang.String" />
+		<bean:define id="detailed" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="detailed" type="java.lang.Boolean" />
+		<bean:define id="viewType" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="viewType" type="java.lang.String" />
+			
+		<logic:iterate id="studentCurricularPlan" name="selectedStudentCurricularPlans" indexId="index">
+			
+			<logic:greaterThan name="index" value="0">
+				<div class="mvert3"></div>
+			</logic:greaterThan>
+	
+			<bean:define id="dateFormated">
+				<dt:format pattern="dd.MM.yyyy">
+					<bean:write name="studentCurricularPlan" property="startDate.time"/>
+				</dt:format>
+			</bean:define>
+	
+			<div class="mvert2 mtop0">
 				<p class="mvert05">
 					<strong>
-						Grupo: 
+						<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
 					</strong> 
-					<bean:write name="studentCurricularPlan" property="branch.name"/>
+					<bean:message bundle="ENUMERATION_RESOURCES" name="studentCurricularPlan" property="degreeType.name"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.in"/> 
+					<bean:write name="studentCurricularPlan" property="degree.name"/>,
+					<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.name"/>
+					<logic:present name="studentCurricularPlan" property="specialization">
+						- <bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+					</logic:present>
 				</p>
-			</logic:present>
-			<p class="mvert05">
-				<strong>
-					<bean:message key="label.beginDate" bundle="STUDENT_RESOURCES" />: 
-				</strong> 
-				<bean:write name="dateFormated"/>
-			</p>
-		</div>
+				<logic:present name="studentCurricularPlan" property="branch">
+					<p class="mvert05">
+						<strong>
+							Grupo: 
+						</strong> 
+						<bean:write name="studentCurricularPlan" property="branch.name"/>
+					</p>
+				</logic:present>
+				<p class="mvert05">
+					<strong>
+						<bean:message key="label.beginDate" bundle="STUDENT_RESOURCES" />: 
+					</strong> 
+					<bean:write name="dateFormated"/>
+				</p>
+			</div>
+	
+			<fr:edit name="studentCurricularPlan" nested="true">
+				<fr:layout>
+					<fr:property name="organizedBy" value="<%=organizedBy.toString()%>" />
+					<fr:property name="enrolmentStateFilter" value="<%=enrolmentStateFilterType.toString()%>" />
+					<fr:property name="viewType" value="<%=viewType.toString()%>" />
+					<fr:property name="detailed" value="<%=detailed.toString()%>" />
+				</fr:layout>
+			</fr:edit>
+	
+		</logic:iterate>
+	
+	
+	<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
+	<div style="width: 250px; float: left;">
+	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
+		<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
+			<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
+		</logic:iterate>
+	</div>
+	<div class="cboth"></div>
 
-
-
-<%-- inline styles to remove --%>
-<style type="text/css" media="screen">
-<%--
-.col01 { background: #efe; }
-.col02 { background: #eff; }
-.col03 { background: #ffe; }
-.col04 { background: #eef; }
-.col05 { background: #fee; }
-.col06 { background: #fde; }
-.col07 { background: #efd; }
-.col08 { background: #dfe; }
-.col09 { background: #edf; }
-.col10 { background: #def; }
-.col11 { background: #fed; }
-.col12 { background: #fcd; }
---%>
-
-.bgcolor01 { background: #fdfdfa; }
-.bgcolor02 { background: #fdfdfa; }
-.bgcolor03 { background: #fdfdfa; }
-.bgcolor04 { background: #fdfdfa; }
-.bgcolor05 { background: #fdfdfa; }
-.bgcolor06 { background: #fdfdfa; }
-.bgcolor07 { background: #fdfdfa; }
-.bgcolor08 { background: #fdfdfa; }
-.bgcolor09 { background: #fdfdfa; }
-.bgcolor10 { background: #f9f9f5; }
-.bgcolor11 { background: #fdfdfa; }
-.bgcolor12 { background: #fdfdfa; }
-.bgcolor13 { background: #fdfdfa; }
-
-.scurriculum { width: 800px; margin-left: 0px; }
-.scurriculum1 { width: 790px; margin-left: 10px; }
-.scurriculum2 { width: 780px; margin-left: 20px; }
-.scurriculum3 { width: 770px; margin-left: 30px; }
-.scurriculum4 { width: 760px; margin-left: 40px; }
-.scurriculum5 { width: 750px; margin-left: 50px; }
-.scurriculum6 { width: 740px; margin-left: 60px; }
-.scurriculum7 { width: 730px; margin-left: 70px; }
-.scurriculum8 { width: 720px; margin-left: 80px; }
-.scurriculum9 { width: 710px; margin-left: 90px; }
-.scurriculum10 { width: 700px; margin-left: 100px; }
-</style>
-
-<style type="text/css" media="print">
-.scurriculum { width: 700px; margin-left: 0px; }
-.scurriculum1 { width: 690px; margin-left: 10px; }
-.scurriculum2 { width: 680px; margin-left: 20px; }
-.scurriculum3 { width: 670px; margin-left: 30px; }
-.scurriculum4 { width: 660px; margin-left: 40px; }
-.scurriculum5 { width: 650px; margin-left: 50px; }
-.scurriculum6 { width: 640px; margin-left: 60px; }
-.scurriculum7 { width: 630px; margin-left: 70px; }
-.scurriculum8 { width: 620px; margin-left: 80px; }
-.scurriculum9 { width: 610px; margin-left: 90px; }
-.scurriculum10 { width: 600px; margin-left: 100px; }
-</style>
-
-
-		<bean:define id="initialWidth" value="scurriculum"/>
-		<bean:define id="widthDecreasePerLevel" value="10"/>
-		<bean:define id="tablesClasses" value="showinfo3 mvert0"/>
-		<bean:define id="groupRowClasses" value="bgcolor2"/>
-		<bean:define id="groupNameClasses" value="aleft"/>
-		<bean:define id="enrolmentClasses" value="
-			<!-- Código e Disciplina --> 		col01 bgcolor04 aleft,
-			<!-- Curso  --> 					col02 bgcolor05 width5em acenter,
-			<!-- Opcional  -->					col03 bgcolor08 width5em acenter,
-			<!-- Caixa  -->						col04 bgcolor13 width2em acenter printhidden,
-			<!-- Reprovado Não Avaliado  -->	col05 bgcolor09 width8em acenter,
-			<!-- Nota  -->						col06 bgcolor10 width2em acenter,
-			<!-- Peso  -->						col07 bgcolor11 color888 width2em acenter,
-			<!-- ECTS  -->						col08 bgcolor12 color888 width2em acenter,
-			<!-- Época Normal -->				col09 bgcolor03 width1p5em acenter,
-			<!-- Ano -->						col10 bgcolor06 width5em acenter,
-			<!-- Semestre -->					col11 bgcolor07 width5em acenter,
-			<!-- Data do Exame -->				col12 bgcolor02 width6em acenter,
-			<!-- Pessoa Responsável Nota -->	col13 bgcolor01 width3em acenter
-		"/>
-
-		<fr:edit name="studentCurricularPlan">
-			<fr:layout>
-				<fr:property name="organizedBy" value="<%=organizedBy%>"/>
-				<fr:property name="initialWidth" value="<%=initialWidth%>"/>
-				<fr:property name="widthDecreasePerLevel" value="<%=widthDecreasePerLevel%>"/>
-				<fr:property name="tablesClasses" value="<%=tablesClasses%>"/>
-				<fr:property name="groupRowClasses" value="<%=groupRowClasses%>"/>
-				<fr:property name="groupNameClasses" value="<%=groupNameClasses%>"/>
-				<fr:property name="enrolmentClasses" value="<%=enrolmentClasses%>"/>
-				<fr:property name="enrolmentStateSelectionType" value="<%=enrolmentStateSelectionType.toString()%>"/>
-			</fr:layout>
-		</fr:edit>
-
-	</logic:iterate>
-
-
-<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
-<div style="width: 250px; float: left;">
-    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
-	<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
-		<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>
-	</logic:iterate>
-</div>
-<div class="cboth"></div>
-
-</logic:notEmpty>
+	</logic:notEmpty>
+</html:form>

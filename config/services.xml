@@ -12083,7 +12083,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="ScientificCouncilAuthorization"/>
+			<chain name="ScientificCouncilOrAcademicAdministrativeOfficeAuthorization"/>
 		</filterChains>
     </service>
     <service>
@@ -12208,7 +12208,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="CoordinatorAuthorization"/>
+			<chain name="AcademicAdministrativeOfficeAuthorization"/>
 		</filterChains>
     </service>
     <service>
@@ -12217,7 +12217,7 @@
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="CoordinatorAuthorization"/>
+			<chain name="AcademicAdministrativeOfficeAuthorization"/>
 		</filterChains>
     </service>
     <service>

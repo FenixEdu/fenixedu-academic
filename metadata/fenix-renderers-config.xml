@@ -265,8 +265,8 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagInputCloudRenderer">
     	<property name="textClasses" value="smalltxt color888"/>
     </renderer>
-
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanRenderer"/>
+   
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer"/>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
 	

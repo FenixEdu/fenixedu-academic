@@ -19,7 +19,9 @@
 		<table class="showinfo3 mvert0" style="width: <%= width %>em;">
 			<tr>
 				<td>
-					<bean:write name="degreeModule" property="name"/>
+					<logic:equal name="degreeModule" property="curricularCourse" value="true">
+						<logic:notEmpty name="degreeModule" property="code"><bean:write name="degreeModule" property="code"/> - </logic:notEmpty>
+					</logic:equal><bean:write name="degreeModule" property="name"/>
 				</td>
 				<td class="highlight2 smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
@@ -63,7 +65,9 @@
 		<table class="showinfo3 mvert0" style="width: <%= width %>em;">
 			<tr class="bgcolor2">
 				<th class="aleft">
-					<bean:write name="degreeModule" property="name"/>
+					<logic:equal name="degreeModule" property="curricularCourse" value="true">
+						<logic:notEmpty name="degreeModule" property="code"><bean:write name="degreeModule" property="code"/> - </logic:notEmpty>
+					</logic:equal><bean:write name="degreeModule" property="name"/>
 				</th>
 				<th class="smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="

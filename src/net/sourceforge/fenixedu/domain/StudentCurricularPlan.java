@@ -62,6 +62,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
@@ -2309,6 +2310,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    @Checked("StudentCurricularPlanPredicates.checkPermissionsToSetExtraCurricularEnrolments")
     public void setExtraCurricularEnrolments(final Collection<Enrolment> extraCurricularEnrolments) {
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    enrolment.setIsExtraCurricular(extraCurricularEnrolments.contains(enrolment));

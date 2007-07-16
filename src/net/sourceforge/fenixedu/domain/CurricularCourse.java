@@ -1959,5 +1959,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return result;
     }
+    
+    @Override
+    public boolean isCurricularCourse() {
+	return true;
+    }
 
 }

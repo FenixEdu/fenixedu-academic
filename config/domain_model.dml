@@ -567,6 +567,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double ectsCredits;
 		LogicOperator newDegreeModulesOperator;
 		LogicOperator sourceDegreeModulesOperator;
+		Boolean transitiveSource;
 	}
 
 		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan extends net.sourceforge.fenixedu.domain.EquivalencePlan {

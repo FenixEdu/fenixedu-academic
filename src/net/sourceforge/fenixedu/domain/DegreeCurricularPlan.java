@@ -74,11 +74,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-         * This might look a strange comparator, but the idea is to show a list
-         * of degree curricular plans according to, in the following order: 1.
-         * It's degree type 2. Reverse order of ExecutionDegrees 3. It's degree
-         * code (in order to roughly order them by prebolonha/bolonha) OR
-         * reverse order of their own name
+     * This might look a strange comparator, but the idea is to show a list of
+     * degree curricular plans according to, in the following order: 1. It's
+     * degree type 2. Reverse order of ExecutionDegrees 3. It's degree code (in
+     * order to roughly order them by prebolonha/bolonha) OR reverse order of
+     * their own name
      * 
      * For an example, see the coordinator's portal.
      */
@@ -324,14 +324,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
     }
-    
+
     public boolean isBolonhaDegree() {
 	return getDegree().isBolonhaDegree();
     }
-    
+
     /**
-         * Temporary method, after all degrees migration this is no longer
-         * necessary
+     * Temporary method, after all degrees migration this is no longer necessary
      * 
      * @return
      */
@@ -431,7 +430,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		return executionDegree;
 	    }
 	}
-	return null;	
+	return null;
     }
 
     public boolean hasExecutionDegreeFor(ExecutionYear executionYear) {
@@ -449,21 +448,21 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final List<ExecutionDegree> sortedExecutionDegrees = new ArrayList<ExecutionDegree>(
 		getExecutionDegrees());
 	Collections.sort(sortedExecutionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-	
-	if(!sortedExecutionDegrees.isEmpty() 
+
+	if (!sortedExecutionDegrees.isEmpty()
 		&& sortedExecutionDegrees.iterator().next().getExecutionYear().isAfter(
 			currentExecutionYear)) {
 	    return sortedExecutionDegrees.iterator().next();
 	}
-	
+
 	final ListIterator<ExecutionDegree> iterator = sortedExecutionDegrees.listIterator();
-	while(iterator.hasPrevious()) {
+	while (iterator.hasPrevious()) {
 	    final ExecutionDegree executionDegree = iterator.previous();
 	    if (executionDegree.getExecutionYear().isBeforeOrEquals(currentExecutionYear)) {
 		return executionDegree;
 	    }
 	}
-	
+
 	return null;
     }
 
@@ -499,6 +498,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
 	}
 	return degreeModuleScopes;
+    }
+
+    public Set<DegreeModuleScope> getDegreeModuleScopesFor(final Integer year, final Integer semester) {
+	final Set<DegreeModuleScope> result = new TreeSet<DegreeModuleScope>(
+		DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
+
+	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
+	    if (each.isActive(year, semester)) {
+		result.add(each);
+	    }
+	}
+
+	return result;
     }
 
     public void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
@@ -572,7 +584,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (isBolonhaDegree()) {
 	    return Collections.emptyList();
 	}
-	
+
 	final List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
 	    if (curricularCourse.getBasic().equals(basic)) {
@@ -708,8 +720,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     /**
      * Method to get an unfiltered list of a dcp's curricular courses
      * 
-         * @return All curricular courses that were or still are present in the
-         *         dcp
+     * @return All curricular courses that were or still are present in the dcp
      */
     @Override
     public List<CurricularCourse> getCurricularCourses() {
@@ -765,11 +776,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-         * Method to get an unfiltered list of a bolonha dcp's competence
-         * courses
+     * Method to get an unfiltered list of a bolonha dcp's competence courses
      * 
-         * @return All competence courses that were or still are present in the
-         *         dcp, ordered by name
+     * @return All competence courses that were or still are present in the dcp,
+     *         ordered by name
      */
     public List<CompetenceCourse> getCompetenceCourses() {
 	if (isBolonhaDegree()) {
@@ -781,17 +791,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-         * Method to get a filtered list of a dcp's competence courses in the
-         * given execution year. Each competence courses is connected with a
-         * curricular course with at least one open context in the execution
-         * year
+     * Method to get a filtered list of a dcp's competence courses in the given
+     * execution year. Each competence courses is connected with a curricular
+     * course with at least one open context in the execution year
      * 
      * @return All competence courses that are present in the dcp
      */
     public List<CompetenceCourse> getCompetenceCourses(ExecutionYear executionYear) {
 	SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	
+
 	if (isBolonhaDegree()) {
 	    for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
 		if (!curricularCourse.isOptionalCurricularCourse()) {
@@ -1240,7 +1249,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus,
 	    Boolean temporaryExamMap) {
-	
+
 	if (isBolonhaDegree() && isDraft()) {
 	    throw new DomainException(
 		    "degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
@@ -1551,7 +1560,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public CycleCourseGroup getFirstCycleCourseGroup() {
 	return isFirstCycle() ? getRoot().getFirstCycleCourseGroup() : null;
     }
-    
+
     public boolean isSecondCycle() {
 	return getDegree().isSecondCycle();
     }
@@ -1581,7 +1590,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		    LanguageUtils.getLocale()).getString("label.in");
 	    result.append(" ").append(in);
 	    result.append(" ").append(getDegree().getFilteredName());
-	    
+
 	    return result.toString();
 	}
     }
@@ -1590,15 +1599,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (cycleType == null) {
 	    return getGraduateTitle();
 	}
-	
+
 	if (getDegreeType().getCycleTypes().isEmpty()) {
 	    throw new DomainException("DegreeCurricularPlan.has.no.cycle.type");
 	}
-	
+
 	if (!getDegreeType().hasCycleTypes(cycleType)) {
 	    throw new DomainException("DegreeCurricularPlan.doesnt.have.such.cycle.type");
 	}
-	
+
 	return getCycleCourseGroup(cycleType).getGraduateTitle();
     }
 
@@ -1616,14 +1625,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     // this slot is a hack to allow renderers to call the setter. Don't
-        // delete
+    // delete
     // it.
     private DegreeCurricularPlan sourceDegreeCurricularPlan = null;
+
     public DegreeCurricularPlan getSourceDegreeCurricularPlan() {
-        return sourceDegreeCurricularPlan;
+	return sourceDegreeCurricularPlan;
     }
+
     public void setSourceDegreeCurricularPlan(DegreeCurricularPlan sourceDegreeCurricularPlan) {
-        this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
+	this.sourceDegreeCurricularPlan = sourceDegreeCurricularPlan;
     }
 
     public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(
@@ -1635,15 +1646,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return hasRoot() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
 
-	public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
+    public final List<StudentCurricularPlan> getLastStudentCurricularPlan() {
 	List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-		studentCurricularPlans.add(studentCurricularPlan.getRegistration()
-				.getLastStudentCurricularPlan());
+	    studentCurricularPlans.add(studentCurricularPlan.getRegistration()
+		    .getLastStudentCurricularPlan());
 
 	}
 	return studentCurricularPlans;
-	}
+    }
 
     public Set<CourseGroup> getAllCoursesGroups() {
 	final Set<DegreeModule> courseGroups = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
@@ -1669,7 +1680,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	degreeModules.addAll(super.getCurricularCoursesSet());
 	return degreeModules;
     }
-    
+
     public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final Set<DegreeType> degreeTypes) {
 	final Set<DegreeCurricularPlan> degreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(
 		DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
@@ -1689,11 +1700,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * This must be completely refactored.
-     * A pattern of some sort is desirable in order to make this instance-dependent.
-     * Just did this due to time constrains.
+     * This must be completely refactored. A pattern of some sort is desirable
+     * in order to make this instance-dependent. Just did this due to time
+     * constrains.
      */
-    
+
     static final Set<String> bestAverage = new HashSet<String>();
     static {
 	bestAverage.add("MEE02/04");
@@ -1714,7 +1725,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	bestAverage.add("MEE04/06");
 	bestAverage.add("MEE05/07");
     };
-    
+
     static final Set<String> weightedAverage = new HashSet<String>();
     static {
 	weightedAverage.add("MB02/04");
@@ -1724,7 +1735,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	weightedAverage.add("MT03/05");
 	weightedAverage.add("MT05/07");
     };
-    
+
     final public AverageType getAverageType() {
 	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
 	    if (bestAverage.contains(getName())) {
@@ -1738,5 +1749,4 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return AverageType.WEIGHTED;
 	}
     }
-
 }

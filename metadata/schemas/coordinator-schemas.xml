@@ -306,6 +306,12 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
+    <slot name="destinationDegreeModulesPreviousCourseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
+    		layout="menu-select" key="label.right.hand.courseGroup">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider"/>
+		<property name="format" value="${right}" />
+		<property name="saveOptions" value="true" />
+    </slot>
     <slot name="ectsCredits" key="label.ects.credits"/>
 </schema>
 
@@ -361,6 +367,12 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
+    </slot>
+    <slot name="destinationDegreeModulesPreviousCourseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
+    		layout="menu-select" key="label.right.hand.courseGroup">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModulesPreviousCourseGroupForStudentEquivalencePlanEntryCreatorProvider"/>
+		<property name="format" value="${right}" />
+		<property name="saveOptions" value="true" />
     </slot>
     <slot name="ectsCredits" key="label.ects.credits"/>
 

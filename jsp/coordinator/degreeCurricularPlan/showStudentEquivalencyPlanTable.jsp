@@ -28,75 +28,64 @@
 				<strike>
 			<% } %>
 				<logic:iterate id="degreeModuleFromList1" indexId="i1" name="equivalencePlanEntry" property="oldDegreeModules">
-					<span style="padding: 0 0.5em;">
+					<span style="border-bottom: 1px dotted #aaa;">
 						<logic:notEqual name="i1" value="0">
 							<strong>
 								<bean:message name="equivalencePlanEntry" property="sourceDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 							</strong>
 						</logic:notEqual>
-					</span>
-
-					<span style="border-bottom: 1px solid #aaa;">
-						<bean:write name="degreeModuleFromList1" property="name"/>
+						<logic:equal name="degreeModuleFromList1" property="curricularCourse" value="true">
+							<logic:notEmpty name="degreeModuleFromList1" property="code"><bean:write name="degreeModuleFromList1" property="code"/> - </logic:notEmpty>
+						</logic:equal><bean:write name="degreeModuleFromList1" property="name"/>
 					</span>
 				</logic:iterate>
-				
-				<span style="padding-left: 1em;">
-				==>
-				</span>
-				
+				==>&nbsp;&nbsp;
+				<logic:notEmpty name="equivalencePlanEntry" property="previousCourseGroupForNewDegreeModules">
+					<strong><bean:write name="equivalencePlanEntry" property="previousCourseGroupForNewDegreeModules.name"/>:</strong>
+				</logic:notEmpty>
 				<logic:iterate id="degreeModuleFromList2" indexId="i2" name="equivalencePlanEntry" property="newDegreeModules">
-					<span style="padding: 0 0.5em;">
+					<span style="border-bottom: 1px dotted #aaa;">
 						<logic:notEqual name="i2" value="0">
 							<strong>
 								<bean:message name="equivalencePlanEntry" property="newDegreeModulesOperator.name" bundle="ENUMERATION_RESOURCES"/>
 							</strong>
 						</logic:notEqual>
-					</span>
-					
-					<span style="border-bottom: 1px solid #aaa;">
+						<logic:equal name="degreeModuleFromList2" property="curricularCourse" value="true">
+							<logic:notEmpty name="degreeModuleFromList2" property="code"><bean:write name="degreeModuleFromList2" property="code"/> - </logic:notEmpty>
+						</logic:equal>
 						<bean:write name="degreeModuleFromList2" property="name"/>
 					</span>
-					
 				</logic:iterate>
 				<logic:notEmpty name="equivalencePlanEntry" property="ectsCredits">
-					<span style="padding: 0 0.5em;">
-						(<bean:write name="equivalencePlanEntry" property="ectsCredits"/> <bean:message key="label.credits"/>)
-					</span>
+					(<bean:write name="equivalencePlanEntry" property="ectsCredits"/> <bean:message key="label.credits"/>)
 				</logic:notEmpty>
 			<% if (strikeText) { %>
 				</strike>
 			<% } %>
 			<logic:equal name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
-				<span style="padding-left: 1em;">
-					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
-							+ student.getNumber() %>">
-						<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
-					</html:link>
-				</span>
+				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
+						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+						+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+						+ student.getNumber() %>">
+					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
+				</html:link>
 			</logic:equal>
 			<logic:notEqual name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
 				<logic:equal name="entry" property="removalEntry" value="true">
-					<span style="padding-left: 1em;">
-						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=activate&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-								+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
-								+ student.getNumber() %>">
-							<bean:message key="link.activate" bundle="APPLICATION_RESOURCES"/>
-						</html:link>
-					</span>
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=activate&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() %>">
+						<bean:message key="link.activate" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
 				</logic:equal>
 				<logic:notEqual name="entry" property="removalEntry" value="true">
-					<span style="padding-left: 1em;">
-						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deactivate&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-								+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
-								+ student.getNumber() %>">
-							<bean:message key="link.deactivate" bundle="APPLICATION_RESOURCES"/>
-						</html:link>
-					</span>
+					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deactivate&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ student.getNumber() %>">
+						<bean:message key="link.deactivate" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
 				</logic:notEqual>
 			</logic:notEqual>
 		</logic:iterate>

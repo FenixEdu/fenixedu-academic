@@ -21,6 +21,9 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
+import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
+import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
@@ -70,7 +73,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	if (registration == null) {
 	    return mapping.findForward("NotAuthorized");
 	} else {
-	    return getStudentCP(registration, mapping, request);
+	    return getStudentCP(registration, mapping, (DynaActionForm) form, request);
 	}
     }
 
@@ -87,7 +90,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	if (registrations.isEmpty()) {
 	    return mapping.findForward("NotAuthorized");
 	} else {
-	    return getStudentCP(registrations.get(0), mapping, request);
+	    return getStudentCP(registrations.get(0), mapping, actionForm, request);
 	}
     }
 
@@ -109,20 +112,25 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping,
-	    final HttpServletRequest request) {
+	    DynaActionForm actionForm, final HttpServletRequest request) {
 	request.setAttribute("registration", registration);
 
 	request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(
 		registration, request));
 	request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration
 		.getStudentCurricularPlans()));
-	request.setAttribute("enrollmentOptions", EnrollmentStateSelectionType.getLabelValueBeanList());
-	request.setAttribute("enrolmentStateSelectionType",
-		request.getParameter("select") == null ? EnrollmentStateSelectionType.ALL_TYPE : Integer
-			.valueOf(request.getParameter("select")));
-	request.setAttribute("organizedBy",
-		request.getParameter("organizedBy") == null ? "executionYears" : request
-			.getParameter("organizedBy"));
+
+	if (StringUtils.isEmpty(actionForm.getString("select"))) {
+	    actionForm.set("select", EnrolmentStateFilterType.ALL.name());
+	}
+
+	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
+	    actionForm.set("organizedBy", OrganizationType.EXECUTION_YEARS.name());
+	}
+
+	if (StringUtils.isEmpty(actionForm.getString("viewType"))) {
+	    actionForm.set("viewType", ViewType.ALL.name());
+	}
 
 	if (request.getParameter("degreeCurricularPlanID") == null
 		|| Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
