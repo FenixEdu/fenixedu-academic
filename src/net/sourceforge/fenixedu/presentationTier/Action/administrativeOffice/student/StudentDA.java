@@ -92,6 +92,11 @@ public class StudentDA extends FenixDispatchAction {
 	    }
 	}
 	
+	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+	if (degreeCurricularPlanID != null) {
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+	
 	request.setAttribute("bean", bean);
 	return mapping.findForward("view-registration-curriculum");
     }
