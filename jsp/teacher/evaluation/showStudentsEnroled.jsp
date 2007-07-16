@@ -64,10 +64,6 @@
 		<h:outputText value="</table>" escape="false" />
 		
 		
-		<h:outputText value="<br/>" escape="false" />
-		
-				
-
 		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.writtenEvaluationEnrolments}">
 
 			<h:outputText value="<table class='tstyle4'>" escape="false" />
@@ -101,10 +97,6 @@
 			
 		</h:panelGroup>
 
-		
-		
-		
-		
 		<h:outputText value="<p>" escape="false" />
 			<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton"  />
 		<h:outputText value="</p>" escape="false" />

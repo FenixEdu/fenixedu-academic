@@ -28,6 +28,9 @@
 		</h:panelGrid>
 		<h:panelGrid rendered="#{!empty evaluationManagementBackingBean.writtenTestList}" >
 			<fc:dataRepeater value="#{evaluationManagementBackingBean.writtenTestList}" var="writtenTest">
+
+				<h:outputText value="<div class='mtop05 mbottom15'>" escape="false"/>
+
 					<%--
 					<h:outputText value="<b>#{bundle['label.written.test']}:</b> " escape="false"/>
 					--%>
@@ -45,7 +48,6 @@
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit']}" />
 					</h:commandLink>
-
 		
 					<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
 					<h:commandLink action="enterEditEnrolmentPeriod">
@@ -87,7 +89,7 @@
 
 					<h:outputText value="</p>" escape="false"/>
 
-
+				<h:outputText value="</div>" escape="false"/>
 			</fc:dataRepeater>
 		</h:panelGrid>	
 	</h:form>
