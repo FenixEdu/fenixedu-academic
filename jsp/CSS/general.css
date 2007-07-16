@@ -2073,186 +2073,121 @@ color: #595;
 /* Student curricular plan renderer */
 
 table.scplan {
-	border-collapse: collapse;
+border-collapse: collapse;
 }
 
 table.scplan tr {
-	padding: 0;
+padding: 0;
 }
 
 table.scplan tr td {
-	border: none;
-	padding: 0;
-	text-align: center;
-	font-size: 0.85em;
-	background: #fff;
+border: none;
+padding: 0;
+text-align: center;
+font-size: 0.85em;
+background: #fff;
 }
 
 table.scplan tr.scplangroup td {
-	background: #fbfbdd;
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+background: #fbfbdd;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
 
 table.scplan tr.scplanenrollment td {
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
 
 table.scplan tr.scplanevaluation td {
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
 
 table.scplan tr.scplandismissal td {
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
 
 table.scplan tr.scplantemporarydismissal td {
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
-
 
 table.scplan tr.scplandismissalsource td {
-	border: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 5px;
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
 }
 
-tr.scplantemporarydismissal td.scplancolcurricularcourse {
-	color: #a00;
-}
+tr.scplantemporarydismissal td.scplancolcurricularcourse { color: #a00; }
+tr.scplanevaluation td.scplancolcurricularcourse em { color: #888; }
 
+table.scplan tr.scplanenrollment td.scplancolgrade { background: #f5f5f5; }
+table.scplan tr.scplandismissal td.scplancolgrade { background: #f5f5f5; }
+table.scplan tr.scplantemporarydismissal td.scplancolgrade { background: #f5f5f5; }
+table.scplan tr.scplanevaluation td.scplancolgrade { background: #f5f5f5; }
+table.scplan tr.scplandismissalsource td.scplancolgrade { background: #f5f5f5; }
 
-tr.scplanevaluation td.scplancolcurricularcourse em {
-	color: #888;
-}
-
-table.scplan tr.scplanenrollment td.scplancolgrade {
-	background: #f5f5f5;
-}
-
-table.scplan tr.scplandismissal td.scplancolgrade {
-	background: #f5f5f5;
-}
-
-table.scplan tr.scplantemporarydismissal td.scplancolgrade {
-	background: #f5f5f5;
-}
-
-table.scplan tr.scplanevaluation td.scplancolgrade {
-	background: #f5f5f5;
-}
-
-
-
-table.scplan tr.scplandismissalsource td.scplancolgrade {
-	background: #f5f5f5;
-}
-
-table.scplan tr.scplangroup td.scplancolgrade {
-	color: #000;
-}
-
-table.scplan tr.scplangroup td.scplancolweight {
-	color: #000;
-}
-
-table.scplan tr.scplangroup td.scplancolects {
-	color: #000;
-}
+table.scplan tr.scplangroup td.scplancolgrade { color: #000; }
+table.scplan tr.scplangroup td.scplancolweight { color: #000; }
+table.scplan tr.scplangroup td.scplancolects { color: #000; }
 
 /* 00 Indent */
 td.scplancolident {
-	background: none !important;
-	/*border-width: 0px !important;*/
-	padding: 0 !important;
-	width: 1%;
-	
+background: none !important;
+/*border-width: 0px !important;*/
+padding: 0 !important;
+width: 1%;
 }
 
 /* 01 Código e Disciplina */
 td.scplancolcurricularcourse {
-	text-align: left !important;
-	font-size: 1em !important;
-	white-space: nowrap;
+text-align: left !important;
+font-size: 1em !important;
+white-space: nowrap;
 }
 
 /* 02 Plano Curricular */
-td.scplancoldegreecurricularplan {
-	
-}
+td.scplancoldegreecurricularplan { }
 
 /* 03 Opcional */
-td.scplancolenrollmenttype {
-	
-}
+td.scplancolenrollmenttype { }
 
 /* 04 Caixa */
-td.scplancolextracurricularcheck {
-	
-}
+td.scplancolextracurricularcheck { }
 
 /* 05 Reprovado / Nao Avaliado */
-td.scplancolenrollmentstate {
-	
-}
+td.scplancolenrollmentstate { }
 
 /* 06 Nota */
-td.scplancolgrade {
-	color: #000;
-}
+td.scplancolgrade { color: #444; }
 
 /* 07 Peso */
-td.scplancolweight {
-	color: #888;
-}
+td.scplancolweight { color: #888; }
 
 /* 08 ECTS */
-td.scplancolects {
-	color: #888;
-}
+td.scplancolects { color: #888; }
 
 /* 09 Época */
-td.scplancolenrolmentevaluationtype {
-	
-}
-
-td.scplancolenrolmentevaluationtype span {
-	border-bottom: 1px dotted #777;
-}
+td.scplancolenrolmentevaluationtype { }
+td.scplancolenrolmentevaluationtype span { border-bottom: 1px dotted #777; }
 
 /* 10 Ano */
-td.scplancolyear {
-	
-}
+td.scplancolyear { }
 
 /* 11 Semestre */
-td.scplancolsemester {
-	white-space: nowrap;
-}
+td.scplancolsemester { white-space: nowrap; }
 
 /* 12 Data do Exame */
-td.scplancolexamdate {
-	
-}
-
-td.scplancolexamdate span {
-	border-bottom: 1px dotted #777;
-}
+td.scplancolexamdate { }
+td.scplancolexamdate span { border-bottom: 1px dotted #777; }
 
 /* 13 Pessoa Responsável Nota */
-td.scplancolgraderesponsible {
-	
-}
-
-td.scplancolgraderesponsible span {
-	border-bottom: 1px dotted #777;
-}
+td.scplancolgraderesponsible { }
+td.scplancolgraderesponsible span { border-bottom: 1px dotted #777; }

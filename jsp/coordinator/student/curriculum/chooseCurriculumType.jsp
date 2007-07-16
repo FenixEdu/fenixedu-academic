@@ -17,20 +17,20 @@
 		property="executionDegreeId" />
 	<bean:define id="degreeCurricularPlanId"
 		name="viewStudentCurriculumForm" property="degreeCurricularPlanId" />
-	<table>
-		<tr>
-			<td><html:link
+
+	<ul>
+		<li>
+			<html:link
 				action="<%="/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString()%>">
 				<bean:message key="label.preBolonha" bundle="APPLICATION_RESOURCES" />
-			</html:link></td>
-		</tr>
-		<tr>
-
-			<td><html:link
+			</html:link>
+		</li>
+		<li>
+			<html:link
 				action="<%="/bolonhaTransitionManagement.do?method=prepare&studentId=" + studentId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
 				<bean:message key="label.bolonha" bundle="APPLICATION_RESOURCES" />
-			</html:link></td>
-		</tr>
-	</table>
+			</html:link>
+		</li>
+	</ul>
 
 </logic:present>
