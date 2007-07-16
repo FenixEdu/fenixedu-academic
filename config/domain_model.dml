@@ -11193,13 +11193,6 @@ relation StudentExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole registrationYear;
 }
 
-relation StudentExternalEnrolment {
-	net.sourceforge.fenixedu.domain.student.Student playsRole student;
-	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
-		multiplicity *;
-	}
-}
-
 relation RegistrationExternalEnrolment {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {

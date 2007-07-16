@@ -64,11 +64,18 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	}
 	bean.setAprovedEnrolments(aprovedEnrolments);
 	
-	if(bean.getStudent().hasAnyExternalEnrolments()) {
-	    Collection<SelectedExternalEnrolment> externalEnrolments = new ArrayList<SelectedExternalEnrolment>();
-	    for (ExternalEnrolment enrolment : bean.getStudent().getExternalEnrolmentsSet()) {
-		externalEnrolments.add(new SelectedExternalEnrolment(enrolment, notNeedToEnrollInCurricularCourse.getExternalEnrolmentsSet().contains(enrolment)));
+	Collection<SelectedExternalEnrolment> externalEnrolments = new ArrayList<SelectedExternalEnrolment>();
+	for (final Registration registration : bean.getStudent().getRegistrations()) {
+	    if(registration.hasAnyExternalEnrolments()){
+		for (ExternalEnrolment enrolment : registration.getExternalEnrolmentsSet()) {
+		    externalEnrolments.add(new SelectedExternalEnrolment(enrolment,
+			    notNeedToEnrollInCurricularCourse.getExternalEnrolmentsSet().contains(
+				    enrolment)));
+		}
 	    }
+	}
+	
+	if(!externalEnrolments.isEmpty()){
 	    bean.setExternalEnrolments(externalEnrolments);
 	}
 	
