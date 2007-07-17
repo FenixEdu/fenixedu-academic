@@ -1217,9 +1217,21 @@ public class Person extends Person_Base {
 	return count;
     }
 
+    @Deprecated
     public Registration readStudentByDegreeType(DegreeType degreeType) {
 	for (final Registration registration : this.getStudents()) {
 	    if (registration.getDegreeType().equals(degreeType)) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+    
+    public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final Registration registration : this.getStudents()) {
+	    StudentCurricularPlan studentCurricularPlan = registration
+		    .getStudentCurricularPlan(degreeCurricularPlan);
+	    if (studentCurricularPlan != null) {
 		return registration;
 	    }
 	}
@@ -1854,18 +1866,22 @@ public class Person extends Person_Base {
 	return getGender() == Gender.MALE;
     }
 
+    @Deprecated
     public List<Registration> getStudents() {
 	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
     }
 
+    @Deprecated
     public boolean hasAnyStudents() {
 	return getStudentsCount() > 0;
     }
 
+    @Deprecated
     public int getStudentsCount() {
 	return hasStudent() ? getStudent().getRegistrationsCount() : 0;
     }
 
+    @Deprecated
     public Set<Registration> getStudentsSet() {
 	return hasStudent() ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
