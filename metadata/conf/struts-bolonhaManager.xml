@@ -42,6 +42,7 @@
 			<forward name="viewVersions" path="view-versions"/>
 			<forward name="viewVersionDetails" path="view-version-details"/>
             <forward name="editBiblio" path="edit-Biblio"/>
+            <forward name="viewInformationDetails" path="view-information-details"/>
        	</action>  
     </action-mappings>
     
