@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -95,6 +96,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     final public boolean isToBePrintedInAplica() {
 	return getDocumentRequestType() == DocumentRequestType.APPROVEMENT_CERTIFICATE && !getRegistration().isBolonha() && getRegistration().hasStartedBeforeFirstBolonhaExecutionYear();
+    }
+
+    final public boolean isToShowCredits() {
+	return getDegreeType() != DegreeType.DEGREE;
     }
 
 }
