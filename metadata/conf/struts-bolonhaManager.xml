@@ -32,6 +32,17 @@
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
         </action>       
+        
+        <action path="/competenceCourses/manageVersions" 
+        	type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.ManageCompetenceCourseInformationVersions"
+        	scope="request"
+        	parameter="method">
+        	<forward name="showCourses" path="show-courses"/>
+        	<forward name="createVersions" path="create-version"/>
+			<forward name="viewVersions" path="view-versions"/>
+			<forward name="viewVersionDetails" path="view-version-details"/>
+            <forward name="editBiblio" path="edit-Biblio"/>
+       	</action>  
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
