@@ -27,7 +27,6 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
 			Employee modifiedBy) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(this.getClass().getName());
 		setAcronym(acronym);
 		setScheduleClockingType(scheduleClockingType);
 		setWorkTime(dayTime);

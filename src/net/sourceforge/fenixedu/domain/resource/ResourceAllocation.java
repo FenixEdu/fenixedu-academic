@@ -7,7 +7,6 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     
     protected ResourceAllocation() {
         super();
-        setOjbConcreteClass(getClass().getName());
 	setRootDomainObject(RootDomainObject.getInstance());
     }
       

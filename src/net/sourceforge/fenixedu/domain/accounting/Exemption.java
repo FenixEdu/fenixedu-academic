@@ -29,7 +29,6 @@ public abstract class Exemption extends Exemption_Base {
     protected Exemption() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
 	super.setWhenCreated(new DateTime());
     }
 

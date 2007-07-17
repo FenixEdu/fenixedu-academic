@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEQBolonhaEnrolme
 public class DegreeCurricularPlanLEQ extends DegreeCurricularPlanLEQ_Base {
     
     public  DegreeCurricularPlanLEQ() {
-	setOjbConcreteClass(getClass().getName());
     }
     
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

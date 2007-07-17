@@ -8,7 +8,6 @@ public class Mark extends Mark_Base {
     public Mark() {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
-    	setOjbConcreteClass(this.getClass().getName());
     }
 
     public Mark(final Attends attends, final Evaluation evaluation, final String mark) {

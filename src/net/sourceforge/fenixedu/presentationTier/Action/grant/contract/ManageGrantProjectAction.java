@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -29,7 +30,7 @@ public class ManageGrantProjectAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-            Object[] args = { InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass() };
+            Object[] args = { GrantProject.class.getName() };
             IUserView userView = SessionUtils.getUserView(request);
             List infoGrantProjectList = (List) ServiceUtils.executeService(userView,
                     "ReadAllGrantPaymentEntitiesByClassName", args);

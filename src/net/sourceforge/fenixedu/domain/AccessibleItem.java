@@ -13,8 +13,7 @@ public class AccessibleItem extends AccessibleItem_Base {
     
     public  AccessibleItem() {
         super();
-        
-        setOjbConcreteClass(this.getClass().getName());
+
         setEnabled(true);
         setVisible(true);
     }

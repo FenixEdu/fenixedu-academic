@@ -31,7 +31,6 @@ public abstract class PenaltyExemption extends PenaltyExemption_Base {
     protected PenaltyExemption() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
     }
 
     protected PenaltyExemption(final PenaltyExemptionJustificationType justificationType,

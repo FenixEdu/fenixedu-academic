@@ -14,7 +14,6 @@ public abstract class Restriction extends Restriction_Base {
     public Restriction() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(this.getClass().getName());
     }
 	
 	public void delete() {

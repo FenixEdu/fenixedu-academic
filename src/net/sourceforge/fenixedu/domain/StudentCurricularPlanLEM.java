@@ -30,7 +30,6 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
     private static final String MAQUINAS_FERRAMENTAS_CODE = "A90";
 
     public StudentCurricularPlanLEM() {
-        setOjbConcreteClass(getClass().getName());
     }
 
     /**

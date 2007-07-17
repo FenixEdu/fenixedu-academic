@@ -42,7 +42,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public RegistrationState() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
     }
 
     public static RegistrationState createState(Registration registration, Person person,

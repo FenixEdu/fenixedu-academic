@@ -34,7 +34,6 @@ public abstract class Installment extends Installment_Base {
 
     protected Installment() {
 	super();
-	super.setOjbConcreteClass(getClass().getName());
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
     }

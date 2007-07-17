@@ -34,7 +34,6 @@ public class Exam extends Exam_Base {
         setAttributesAndAssociateRooms(examDay, examStartTime, examEndTime, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms);
 
-        this.setOjbConcreteClass(Exam.class.getName());
         this.setSeason(season);
         checkIntervalBetweenEvaluations();
     }

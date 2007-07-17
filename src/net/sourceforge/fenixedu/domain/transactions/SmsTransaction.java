@@ -29,7 +29,6 @@ public class SmsTransaction extends SmsTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			Person responsiblePerson, PersonAccount personAccount,
 			GuideEntry guideEntry) {
-        setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);
 		setRemarks(remarks);

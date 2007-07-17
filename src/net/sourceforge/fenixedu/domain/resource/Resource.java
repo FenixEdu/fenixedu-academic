@@ -8,7 +8,6 @@ public abstract class Resource extends Resource_Base {
     protected Resource() {
         super();        
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
     }
     
     public void delete() {

@@ -22,8 +22,6 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 
     public InsuranceTransaction() {
 	super();
-	setOjbConcreteClass(getClass().getName());
-
     }
 
     public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,

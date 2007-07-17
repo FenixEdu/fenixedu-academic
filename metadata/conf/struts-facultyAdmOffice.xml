@@ -170,7 +170,6 @@
 				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="number" type="java.lang.String"/>
 				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="ojbConcreteClass" type="java.lang.String"/>
 				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
@@ -180,7 +179,6 @@
 				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="number" type="java.lang.String"/>
 				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="ojbConcreteClass" type="java.lang.String"/>
 				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
 				<form-property name="grantCostCenterNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>

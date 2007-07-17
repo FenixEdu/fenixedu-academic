@@ -11,9 +11,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class GrantProject extends GrantProject_Base {
 
-	public GrantProject() {
-        setRootDomainObject(RootDomainObject.getInstance());        
-		setOjbConcreteClass(GrantProject.class.getName());
-	}
+    public GrantProject() {
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
 }

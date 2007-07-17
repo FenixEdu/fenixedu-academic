@@ -28,7 +28,6 @@ public class ScheduleExemption extends ScheduleExemption_Base {
 			WorkPeriod normalWorkPeriod, Meal meal, DateTime lastModifiedDate, Employee modifiedBy) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(this.getClass().getName());
 		setAcronym(acronym);
 		setScheduleClockingType(scheduleClockingType);
 		setWorkTime(dayTime);

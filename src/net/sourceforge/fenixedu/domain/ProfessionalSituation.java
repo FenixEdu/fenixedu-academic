@@ -9,7 +9,6 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     
     protected ProfessionalSituation() {
         super();
-        setOjbConcreteClass(getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
     }
     

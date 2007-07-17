@@ -37,8 +37,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
 	super();	
-	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());	
+	setRootDomainObject(RootDomainObject.getInstance());	
     }
     
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")

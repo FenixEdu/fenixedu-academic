@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEANBolonhaEnrolm
 public class DegreeCurricularPlanLEAN extends DegreeCurricularPlanLEAN_Base {
     
     public  DegreeCurricularPlanLEAN() {
-	setOjbConcreteClass(getClass().getName());
     }
     
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
     public DegreeCurricularPlanLEEC() {
-        setOjbConcreteClass(getClass().getName());
     }
 
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

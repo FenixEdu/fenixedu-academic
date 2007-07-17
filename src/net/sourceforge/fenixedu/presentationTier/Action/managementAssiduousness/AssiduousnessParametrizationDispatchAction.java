@@ -157,7 +157,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	    }
 	}
 	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("ojbConcreteClass"));
+	comparatorChain.addComparator(new BeanComparator("class.name"));
 	comparatorChain.addComparator(new BeanComparator("acronym"));
 	Collections.sort(workScheduleList, comparatorChain);
 	return workScheduleList;

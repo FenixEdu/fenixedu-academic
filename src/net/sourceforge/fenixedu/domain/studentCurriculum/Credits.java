@@ -20,7 +20,6 @@ public class Credits extends Credits_Base {
     public Credits() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
     }
 
     public Credits(StudentCurricularPlan studentCurricularPlan,

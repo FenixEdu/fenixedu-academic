@@ -86,7 +86,7 @@ public class ResearchResultMetaDataManager {
 				metadata.add(new FileSetMetaData("date", "issued", null, publication.getYear()
 						+ ((month != null) ? "-" + month.ordinal() + 1 : "")));
 			}
-			String type[] = publication.getOjbConcreteClass().split("\\.");
+			String type[] = publication.getClass().getName().split("\\.");
 			metadata.add(new FileSetMetaData("type", null, null, type[type.length - 1]));
 
 			for (String keyword : publication.getKeywordsList()) {

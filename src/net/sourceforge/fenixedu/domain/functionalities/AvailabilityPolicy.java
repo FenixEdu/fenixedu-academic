@@ -18,9 +18,7 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
     
     protected AvailabilityPolicy() {
         super();
-
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(this.getClass().getName());
     }
 
     /**

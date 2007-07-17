@@ -48,7 +48,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public DegreeModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
     }
 
     /**

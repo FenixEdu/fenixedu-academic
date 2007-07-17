@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEBMBolonhaEnrolm
 public class DegreeCurricularPlanLEBM extends DegreeCurricularPlanLEBM_Base {
     
     public  DegreeCurricularPlanLEBM() {
-	setOjbConcreteClass(getClass().getName());
     }
     
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

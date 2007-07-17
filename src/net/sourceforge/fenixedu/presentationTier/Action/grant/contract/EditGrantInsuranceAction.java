@@ -113,8 +113,15 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 
             //Let's read the payment entity
             if (infoGrantInsurance.getInfoGrantPaymentEntity().getNumber() != null) {
-                Object[] args = { infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(),
-                        infoGrantInsurance.getInfoGrantPaymentEntity().getOjbConcreteClass() };
+        	final String classname;
+        	if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject) {
+        	    classname = GrantProject.class.getName();
+        	} else if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter) {
+        	    classname = GrantCostCenter.class.getName();
+        	} else {
+        	    throw new Error("unkown type: " + infoGrantInsurance.getInfoGrantPaymentEntity());
+        	}
+                Object[] args = { infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname };
                 InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
                         .executeService(userView, "ReadPaymentEntityByNumberAndClass", args);
 
@@ -157,9 +164,9 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         if (infoGrantInsurance.getTotalValue() != null)
             form.set("totalValue", infoGrantInsurance.getTotalValue());
         if (infoGrantInsurance.getInfoGrantPaymentEntity() != null) {
-            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject && InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass().equals(GrantProject.class.getName()) )
+            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
                 form.set("project", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
-            else if((infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter && InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass().equals(GrantCostCenter.class.getName()) ))
+            else if((infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter))
                     form.set("costcenter", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
         }
         if (infoGrantInsurance.getDateBeginInsurance() != null)
@@ -192,14 +199,9 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         if (verifyStringParameterInForm(editGrantInsuranceForm, "project")) {
             infoGrantPaymentEntity = new InfoGrantProject();
             infoGrantPaymentEntity.setNumber((String) editGrantInsuranceForm.get("project"));
-            infoGrantPaymentEntity.setOjbConcreteClass(InfoGrantPaymentEntity
-                    .getGrantProjectOjbConcreteClass());
-
         } else if (verifyStringParameterInForm(editGrantInsuranceForm, "costcenter")) {
             infoGrantPaymentEntity = new InfoGrantCostCenter();
             infoGrantPaymentEntity.setNumber((String) editGrantInsuranceForm.get("costcenter"));
-            infoGrantPaymentEntity.setOjbConcreteClass(InfoGrantPaymentEntity
-                    .getGrantCostCenterOjbConcreteClass());
         }
         infoGrantInsurance.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 

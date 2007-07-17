@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurr
 public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
 
     public DegreeCurricularPlanLEM() {
-        setOjbConcreteClass(getClass().getName());
     }
 
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

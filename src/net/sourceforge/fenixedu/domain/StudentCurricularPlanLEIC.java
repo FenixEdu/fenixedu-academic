@@ -25,7 +25,6 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
     public StudentCurricularPlanLEIC() {
     	super();
-        setOjbConcreteClass(getClass().getName());
     }
 
     @Override

@@ -18,7 +18,6 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     protected ServiceAgreementTemplate() {
 	super();
-	super.setOjbConcreteClass(this.getClass().getName());
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());
     }

@@ -19,7 +19,6 @@
 
 	<%-- grant project --%>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ojbConcreteClass" property="ojbConcreteClass"/>
 
 	<table>
 		<tr>

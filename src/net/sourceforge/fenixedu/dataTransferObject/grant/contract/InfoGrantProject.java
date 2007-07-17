@@ -38,7 +38,6 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
             super.copyFromDomain(grantProject);
             setNumber(grantProject.getNumber());
             setDesignation(grantProject.getDesignation());
-            setOjbConcreteClass(grantProject.getOjbConcreteClass());
         }
     }
 
@@ -61,7 +60,6 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
 
         grantProject.setDesignation(infoGrantProject.getDesignation());
         grantProject.setNumber(infoGrantProject.getNumber());
-        grantProject.setOjbConcreteClass(infoGrantProject.getOjbConcreteClass());
     }
 
 }

@@ -11,7 +11,6 @@ public abstract class Participation extends Participation_Base {
 
 	public Participation() {
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(this.getClass().getName());
 	}
 
 	public Participation(Party party, ResearchActivityParticipationRole role) {

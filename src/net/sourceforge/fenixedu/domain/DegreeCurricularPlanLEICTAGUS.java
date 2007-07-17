@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS_Base {
 
     public DegreeCurricularPlanLEICTAGUS() {
-        setOjbConcreteClass(getClass().getName());
     }
 
     public List getCurricularCoursesFromArea(Branch area, AreaType areaType) {

@@ -39,7 +39,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     protected PaymentCode() {
 	super();
-	super.setOjbConcreteClass(getClass().getName());
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenCreated(new DateTime());
 	super.setWhenUpdated(new DateTime());

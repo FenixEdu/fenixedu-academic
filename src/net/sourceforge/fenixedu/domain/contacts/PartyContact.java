@@ -19,7 +19,6 @@ public abstract class PartyContact extends PartyContact_Base {
     protected PartyContact() {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
-        super.setOjbConcreteClass(getClass().getName());
     }
     
     protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {

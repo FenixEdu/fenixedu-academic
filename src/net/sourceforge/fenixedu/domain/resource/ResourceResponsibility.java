@@ -10,7 +10,6 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
     
     protected ResourceResponsibility() {
         super();
-        setOjbConcreteClass(getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
     }
         

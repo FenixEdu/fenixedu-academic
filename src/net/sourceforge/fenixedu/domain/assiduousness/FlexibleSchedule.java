@@ -30,7 +30,6 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
 			DateTime lastModifiedDate, Employee modifiedBy) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(this.getClass().getName());
 		setAcronym(acronym);
 		setScheduleClockingType(scheduleClockingType);
 		setWorkTime(dayTime);

@@ -16,7 +16,6 @@ public abstract class Identification extends Identification_Base {
     protected Identification() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(getClass().getName());
     }
 
     public void delete() {	

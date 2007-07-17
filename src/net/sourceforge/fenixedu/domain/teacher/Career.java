@@ -23,7 +23,6 @@ public abstract class Career extends Career_Base {
     public Career() {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
-        this.setOjbConcreteClass(this.getClass().getName());
     }
 	
 	public void delete() {
@@ -48,7 +47,7 @@ public abstract class Career extends Career_Base {
 
     private static void readCareersByClass(Teacher teacher, List<Career> allTeacherCareers, String className) {
         for (Career career : teacher.getAssociatedCareers()) {
-            if(career.getOjbConcreteClass().equals(className)){
+            if(career.getClass().getName().equals(className)){
                 allTeacherCareers.add(career);
             }
         }

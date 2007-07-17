@@ -14,7 +14,6 @@ public class GrantCostCenter extends GrantCostCenter_Base {
     public GrantCostCenter() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(GrantCostCenter.class.getName());
     }
 
     public static GrantCostCenter readGrantCostCenterByNumber(String number) {

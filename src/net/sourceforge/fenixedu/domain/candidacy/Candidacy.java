@@ -16,7 +16,6 @@ public abstract class Candidacy extends Candidacy_Base {
 
     protected Candidacy() {
 	super();
-	setOjbConcreteClass(this.getClass().getName());
 	setNumber(createCandidacyNumber());
 	setRootDomainObject(RootDomainObject.getInstance());
 	setStartDate(new YearMonthDay());

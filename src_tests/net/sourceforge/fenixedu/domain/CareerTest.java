@@ -198,7 +198,7 @@ public class CareerTest extends DomainTestBase {
 
 	private void verifyCareerAttributes(TeachingCareer teachingCareer, InfoTeachingCareer infoTeachingCareer) {
 		assertEquals("Different objConcreteType!",
-				teachingCareer.getOjbConcreteClass(), TeachingCareer.class.getName());
+				teachingCareer.getClass().getName(), TeachingCareer.class.getName());
 		assertEquals("Different beginYear!", teachingCareer.getBeginYear(), infoTeachingCareer.getBeginYear());
 		assertEquals("Different endYear!", teachingCareer.getEndYear(), infoTeachingCareer.getEndYear());
 		assertEquals("Different courseOrPosition!", teachingCareer.getCourseOrPosition(), infoTeachingCareer.getCourseOrPosition());
@@ -206,7 +206,7 @@ public class CareerTest extends DomainTestBase {
 
 	private void verifyCareerAttributes(ProfessionalCareer professionalCareer, InfoProfessionalCareer infoProfessionalCareer) {
 		assertEquals("Different objConcreteType!",
-				professionalCareer.getOjbConcreteClass(), ProfessionalCareer.class.getName());
+				professionalCareer.getClass().getName(), ProfessionalCareer.class.getName());
 		assertEquals("Different beginYear!", professionalCareer.getBeginYear(), infoProfessionalCareer.getBeginYear());
 		assertEquals("Different endYear!", professionalCareer.getEndYear(), infoProfessionalCareer.getEndYear());
 		assertEquals("Different courseOrPosition!", professionalCareer.getEntity(), infoProfessionalCareer.getEntity());

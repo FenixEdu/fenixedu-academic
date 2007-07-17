@@ -24,7 +24,6 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
 
             setNumber(grantCostCenter.getNumber());
             setDesignation(grantCostCenter.getDesignation());
-            setOjbConcreteClass(grantCostCenter.getOjbConcreteClass());
         }
     }
 
@@ -47,7 +46,6 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
 
         grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
         grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
-        grantCostCenter.setOjbConcreteClass(infoGrantCostCenter.getOjbConcreteClass());
     }
 
 }

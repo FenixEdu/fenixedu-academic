@@ -19,7 +19,6 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public EnrolmentPeriod() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
     }
 
     protected void init(final DegreeCurricularPlan degreeCurricularPlan,

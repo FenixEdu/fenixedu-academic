@@ -20,7 +20,6 @@ public class Anulation extends Anulation_Base {
         setDate(lastModifiedDate);
         setLastModifiedDate(lastModifiedDate);
         setModifiedBy(modifiedBy);
-        setOjbConcreteClass(Anulation.class.getName());
     }
 
     public Anulation(AssiduousnessRecord assiduousnessRecord, Employee modifiedBy) {
@@ -35,7 +34,6 @@ public class Anulation extends Anulation_Base {
         setDate(now);
         setLastModifiedDate(now);
         setModifiedBy(modifiedBy);
-        setOjbConcreteClass(Anulation.class.getName());
     }
 
     protected JustificationMotive getJustificationMotiveForAnulation() {

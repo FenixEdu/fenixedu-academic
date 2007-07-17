@@ -31,8 +31,7 @@ public abstract class Site extends Site_Base {
     
     public Site() {
         super();
-        
-        setOjbConcreteClass(this.getClass().getName());
+
         setRootDomainObject(RootDomainObject.getInstance());
         setTemplate(SiteTemplate.getTemplateForType(getClass()));
     }

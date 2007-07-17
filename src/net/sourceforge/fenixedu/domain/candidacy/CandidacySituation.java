@@ -33,7 +33,6 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setSituationDate(new DateTime());
-        setOjbConcreteClass(this.getClass().getName());
     }
     
     protected final void init(final Candidacy candidacy, final Person person) {

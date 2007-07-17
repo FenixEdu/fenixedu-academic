@@ -33,7 +33,6 @@ public abstract class Event extends Event_Base {
     protected Event() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
 	super.setWhenOccured(new DateTime());
 	changeState(EventState.OPEN, new DateTime());
     }

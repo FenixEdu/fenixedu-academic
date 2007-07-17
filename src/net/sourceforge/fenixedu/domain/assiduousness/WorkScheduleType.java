@@ -23,27 +23,6 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         super();
     }
 
-    public void update(String className, ScheduleClockingType scheduleClockingType,
-            YearMonthDay beginValidDate, YearMonthDay endValidDate, String acronym, TimeOfDay dayTime,
-            Duration dayTimeDuration, TimeOfDay clockingTime, Duration clockingTimeDuration,
-            WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod, Meal meal,
-            DateTime lastModifiedDate, Employee modifiedBy) {
-        setOjbConcreteClass(className);
-        setAcronym(acronym);
-        setScheduleClockingType(scheduleClockingType);
-        setWorkTime(dayTime);
-        setWorkTimeDuration(dayTimeDuration);
-        setClockingTime(clockingTime);
-        setClockingTimeDuration(clockingTimeDuration);
-        setNormalWorkPeriod(normalWorkPeriod);
-        setFixedWorkPeriod(fixedWorkPeriod);
-        setMeal(meal);
-        setBeginValidDate(beginValidDate);
-        setEndValidDate(endValidDate);
-        setLastModifiedDate(lastModifiedDate);
-        setModifiedBy(modifiedBy);
-    }
-
     public boolean definedFixedPeriod() {
         return (getFixedWorkPeriod() != null);
     }

@@ -17,14 +17,12 @@ public class TeachingCareer extends TeachingCareer_Base {
 
     public TeachingCareer() {
         super();
-        setOjbConcreteClass(TeachingCareer.class.getName());
     }
 
     public TeachingCareer(Teacher teacher, Category category, InfoTeachingCareer infoTeachingCareer) {
         if (teacher == null || category == null)
             throw new DomainException("Neither teacher nor category should be null!");
 
-        setOjbConcreteClass(TeachingCareer.class.getName());
         setTeacher(teacher);
         setCategory(category);
         setBasicProperties(infoTeachingCareer);

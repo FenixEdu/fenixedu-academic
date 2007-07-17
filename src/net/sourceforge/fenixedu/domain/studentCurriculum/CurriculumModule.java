@@ -34,7 +34,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public CurriculumModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
     }
 
     public void delete() {

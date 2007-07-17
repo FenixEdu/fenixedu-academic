@@ -17,7 +17,6 @@ public class CurricularCourseValuation extends CurricularCourseValuation_Base {
 		this.setValuationCurricularCourse(valuationCurricularCourse);
 		this.setValuationPhase(valuationPhase);
 		this.setExecutionPeriod(executionPeriod);
-		this.setOjbConcreteClass(getClass().getName());
 	}
 
 	@Override

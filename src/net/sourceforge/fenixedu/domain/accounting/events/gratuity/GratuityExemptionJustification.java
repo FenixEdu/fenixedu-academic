@@ -9,7 +9,6 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     protected GratuityExemptionJustification() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(this.getClass().getName());
     }
 
     public GratuityExemptionJustification(final GratuityExemption gratuityExemption,

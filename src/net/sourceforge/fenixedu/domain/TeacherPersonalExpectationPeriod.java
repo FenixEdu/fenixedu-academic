@@ -9,7 +9,6 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
     public TeacherPersonalExpectationPeriod() {
         super();        
         setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(getClass().getName());        
     }
     
     public void init(Department department, ExecutionYear executionYear, YearMonthDay startDate, YearMonthDay endDate) {

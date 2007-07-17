@@ -33,7 +33,6 @@ public class WrittenTest extends WrittenTest_Base {
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
 
-        this.setOjbConcreteClass(WrittenTest.class.getName());
         this.setDescription(description);
         checkIntervalBetweenEvaluations();
     }

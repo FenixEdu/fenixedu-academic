@@ -27,7 +27,6 @@ public class CurricularCourseValuationGroup extends CurricularCourseValuationGro
 		
 		this.setValuationPhase(valuationPhase);
 		this.getCurricularCourseValuations().addAll(curricularCourseValuationList);
-		this.setOjbConcreteClass(getClass().getName());
 		this.setExecutionPeriod(curricularCourseValuationList.get(0).getExecutionPeriod());
 	}
 

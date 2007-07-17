@@ -9,7 +9,6 @@ public class PenaltyExemptionJustification extends PenaltyExemptionJustification
     protected PenaltyExemptionJustification() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(this.getClass().getName());
     }
 
     public PenaltyExemptionJustification(final PenaltyExemption penaltyExemption,

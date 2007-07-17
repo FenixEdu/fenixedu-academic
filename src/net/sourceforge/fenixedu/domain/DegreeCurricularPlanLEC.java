@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECEvenAndOddNumb
 public class DegreeCurricularPlanLEC extends DegreeCurricularPlanLEC_Base {
 
     public DegreeCurricularPlanLEC() {
-        setOjbConcreteClass(getClass().getName());
     }
 
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

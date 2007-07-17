@@ -15,7 +15,6 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
 	public FinalEvaluation() {
 		super();
-        this.setOjbConcreteClass(FinalEvaluation.class.getName());
     }
 
     public boolean deleteFrom(ExecutionCourse executionCourse) {

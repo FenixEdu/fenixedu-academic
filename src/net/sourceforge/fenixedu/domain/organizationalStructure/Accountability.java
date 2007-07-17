@@ -12,7 +12,6 @@ public class Accountability extends Accountability_Base {
     protected Accountability() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
     }
 
     public Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {

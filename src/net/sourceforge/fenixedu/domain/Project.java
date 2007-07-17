@@ -20,7 +20,6 @@ public class Project extends Project_Base {
 
     private Project() {
         super();
-        this.setOjbConcreteClass(Project.class.getName());
     }
 
     public Project(String name, Date begin, Date end, String description,

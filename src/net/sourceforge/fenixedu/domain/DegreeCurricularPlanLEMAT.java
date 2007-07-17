@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMATBolonhaEnrol
 public class DegreeCurricularPlanLEMAT extends DegreeCurricularPlanLEMAT_Base {
     
     public  DegreeCurricularPlanLEMAT() {
-	setOjbConcreteClass(getClass().getName());
     }
     
     public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,

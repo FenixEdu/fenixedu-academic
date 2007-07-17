@@ -45,11 +45,11 @@ public class ReadCareers extends Service {
         for (final Career career : careers) {
             boolean addCareer = false;
             if (careerType == null
-                    || (careerType.equals(CareerType.PROFESSIONAL) && career.getOjbConcreteClass()
+                    || (careerType.equals(CareerType.PROFESSIONAL) && career.getClass().getName()
                             .equals(ProfessionalCareer.class.getName()))) {
                 addCareer = true;
             } else if (careerType.equals(CareerType.TEACHING)
-                    && career.getOjbConcreteClass().equals(TeachingCareer.class.getName())) {
+                    && career.getClass().getName().equals(TeachingCareer.class.getName())) {
                 addCareer = true;
             }
             if (addCareer && career.getBeginYear() == null) {

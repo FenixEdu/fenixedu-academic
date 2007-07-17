@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -91,7 +93,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
             InfoGrantCostCenter infoGrantCostCenter = null;
             if (infoGrantProject.getInfoGrantCostCenter() != null) {
                 Object[] argsCostCenter = { infoGrantProject.getInfoGrantCostCenter().getNumber(),
-                        InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass() };
+                	GrantCostCenter.class.getName() };
                 infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView,
                         "ReadPaymentEntityByNumberAndClass", argsCostCenter);
             }
@@ -130,7 +132,6 @@ public class EditGrantProjectAction extends FenixDispatchAction {
                     .getTeacherNumber().toString());
         if (infoGrantProject.getInfoGrantCostCenter() != null)
             form.set("grantCostCenterNumber", infoGrantProject.getInfoGrantCostCenter().getNumber());
-        form.set("ojbConcreteClass", InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
     }
 
     /*
@@ -142,7 +143,6 @@ public class EditGrantProjectAction extends FenixDispatchAction {
         infoGrantProject.setIdInternal((Integer) editGrantProjectForm.get("idInternal"));
         infoGrantProject.setDesignation((String) editGrantProjectForm.get("designation"));
         infoGrantProject.setNumber((String) editGrantProjectForm.get("number"));
-        infoGrantProject.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
 
         // Copy the teacher Number
         InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantProjectForm

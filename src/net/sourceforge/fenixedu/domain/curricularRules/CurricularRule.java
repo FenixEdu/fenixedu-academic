@@ -21,7 +21,6 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     protected CurricularRule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
     }
 
     protected void init(final DegreeModule degreeModuleToApplyRule,

@@ -10,7 +10,6 @@ public class ProtocolFile extends ProtocolFile_Base {
 
     public ProtocolFile() {
         super();
-        setOjbConcreteClass(getClass().getName());
     }
 
     public ProtocolFile(String filename, String displayName, String mimeType, String checksum,

@@ -50,7 +50,6 @@ public abstract class Vigilancy extends Vigilancy_Base {
     public Vigilancy() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
     }
 
     public VigilantGroup getAssociatedVigilantGroup() {

@@ -38,7 +38,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     protected AccountingTransaction() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
     }
 
     public AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,

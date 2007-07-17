@@ -31,7 +31,6 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 	super();
 	super.setCreationDate(new DateTime());
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
     }
 
     protected void init(Person person, ServiceAgreementTemplate serviceAgreementTemplate) {

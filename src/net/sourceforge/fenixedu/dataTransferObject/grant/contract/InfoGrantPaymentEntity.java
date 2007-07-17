@@ -18,8 +18,6 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
 
     protected String designation;
 
-    protected String ojbConcreteClass;
-
     protected InfoTeacher infoResponsibleTeacher;
 
     /**
@@ -53,39 +51,10 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
     }
 
     /**
-     * @return Returns the ojbConcreteClass.
-     */
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    /**
-     * @param ojbConcreteClass
-     *            The ojbConcreteClass to set.
-     */
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
-    }
-
-    /**
      * @return Returns the infoResponsibleTeacher.
      */
     public InfoTeacher getInfoResponsibleTeacher() {
         return infoResponsibleTeacher;
-    }
-
-    /**
-     * @return Returns the grantCostCenterOjbConcreteClass.
-     */
-    public static String getGrantCostCenterOjbConcreteClass() {
-        return GrantCostCenter.class.getName();
-    }
-
-    /**
-     * @return Returns the grantProjectOjbConcreteClass.
-     */
-    public static String getGrantProjectOjbConcreteClass() {
-        return GrantProject.class.getName();
     }
 
     /**

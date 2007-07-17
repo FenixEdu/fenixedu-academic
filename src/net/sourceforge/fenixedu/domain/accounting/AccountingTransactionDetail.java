@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -12,7 +11,6 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     protected AccountingTransactionDetail() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(this.getClass().getName());
 	super.setWhenProcessed(new DateTime());
     }
     

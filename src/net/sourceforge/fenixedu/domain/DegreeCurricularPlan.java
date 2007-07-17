@@ -123,7 +123,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
     }
 
     private DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale) {
@@ -1092,12 +1091,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setName(String name) {
 	super.setName(name);
-    }
-
-    @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-	super.setOjbConcreteClass(ojbConcreteClass);
     }
 
     public String getPresentationName() {

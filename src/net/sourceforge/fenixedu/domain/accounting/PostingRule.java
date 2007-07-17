@@ -66,7 +66,6 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected PostingRule() {
 	super();
-	super.setOjbConcreteClass(getClass().getName());
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());
     }

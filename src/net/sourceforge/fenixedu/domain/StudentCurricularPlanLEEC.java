@@ -25,7 +25,6 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
     public StudentCurricularPlanLEEC() {
     	super();
-        setOjbConcreteClass(getClass().getName());
     }
 
     @Override

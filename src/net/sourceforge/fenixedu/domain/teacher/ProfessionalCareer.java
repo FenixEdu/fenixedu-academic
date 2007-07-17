@@ -17,14 +17,11 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 
     public ProfessionalCareer() {
         super();
-        setOjbConcreteClass(ProfessionalCareer.class.getName());
     }
 	
     public ProfessionalCareer(Teacher teacher, InfoProfessionalCareer infoProfessionalCareer) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
-
-		setOjbConcreteClass(ProfessionalCareer.class.getName());
 		setTeacher(teacher);
 		setBasicProperties(infoProfessionalCareer);
     }

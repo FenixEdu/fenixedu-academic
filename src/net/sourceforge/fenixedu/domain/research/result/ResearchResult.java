@@ -63,7 +63,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
 	@Checked("ResultPredicates.createPredicate")
 	private void setOnCreateAtributes() {
-		super.setOjbConcreteClass(getClass().getName());
 		if (AccessControl.getUserView() != null) {
 			super.setModifiedBy(AccessControl.getPerson().getName());
 			setCreator(AccessControl.getPerson());
@@ -324,14 +323,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
 		for (; !getResultParticipations().isEmpty(); getResultParticipations().get(0).delete()) {
 
 		}
-	}
-
-	/**
-     * Block individual setters
-     */
-	@Override
-	public void setOjbConcreteClass(String ojbConcreteClass) {
-		throw new DomainException("error.researcher.Result.call", "setOjbConcreteClass");
 	}
 
 	// @Override

@@ -128,7 +128,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public StudentCurricularPlan() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
     }
 
     public void delete() throws DomainException {

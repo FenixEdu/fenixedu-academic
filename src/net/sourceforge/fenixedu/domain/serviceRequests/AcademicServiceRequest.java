@@ -35,7 +35,6 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected AcademicServiceRequest() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(this.getClass().getName());
 	super.setServiceRequestNumber(RootDomainObject.getInstance().getAcademicServiceRequestsCount());
     }
 

@@ -9,8 +9,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     
     protected AccountabilityType() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());        
-        setOjbConcreteClass(getClass().getName());
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {

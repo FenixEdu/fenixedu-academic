@@ -19,7 +19,6 @@ public class Clocking extends Clocking_Base {
 	setAssiduousness(assiduousness);
 	setClockUnit(clockUnit);
 	setOracleSequence(oracleSequence);
-	setOjbConcreteClass(Clocking.class.getName());
     }
 
     public TimeOfDay getTimeOfDay() {

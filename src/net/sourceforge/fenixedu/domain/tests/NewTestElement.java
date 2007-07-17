@@ -15,7 +15,6 @@ public abstract class NewTestElement extends NewTestElement_Base {
 		super();
 
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(getClass().getName());
 	}
 
 	public List<NewPresentationMaterial> getOrderedPresentationMaterials() {

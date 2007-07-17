@@ -10,7 +10,6 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
     public ExecutionCourseForum() {
         super();
-        setOjbConcreteClass(this.getClass().getName());
     }
 
     public ExecutionCourseForum(String name, String description) {

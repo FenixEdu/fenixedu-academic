@@ -10,7 +10,6 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
 		super();
 
 		setRootDomainObject(RootDomainObject.getInstance());
-		setOjbConcreteClass(getClass().getName());
 	}
 
 	public NewPresentationMaterial(NewTestElement testElement, Boolean inline) {

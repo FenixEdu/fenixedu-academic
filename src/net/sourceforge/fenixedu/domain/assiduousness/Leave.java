@@ -41,7 +41,6 @@ public class Leave extends Leave_Base {
         setLastModifiedDate(lastModificationDate);
         setModifiedBy(modifiedBy);
         setOracleSequence(oracleSequence);
-        setOjbConcreteClass(Leave.class.getName());
     }
 
     public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration,
@@ -58,7 +57,6 @@ public class Leave extends Leave_Base {
         setLastModifiedDate(lastModificationDate);
         setModifiedBy(modifiedBy);
         setOracleSequence(0);
-        setOjbConcreteClass(Leave.class.getName());
     }
 
     public void modify(DateTime date, Duration dateDuration, JustificationMotive justificationMotive,
@@ -71,7 +69,6 @@ public class Leave extends Leave_Base {
         setLastModifiedDate(new DateTime());
         setModifiedBy(modifiedBy);
         setOracleSequence(0);
-        setOjbConcreteClass(Leave.class.getName());
     }
 
     public DateTime getEndDate() {

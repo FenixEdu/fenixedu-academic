@@ -83,7 +83,6 @@ public abstract class Party extends Party_Base {
     public Party() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }

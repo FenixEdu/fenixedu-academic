@@ -23,7 +23,6 @@ public class OnlineTest extends OnlineTest_Base {
     
     public OnlineTest() {
     	super();
-        this.setOjbConcreteClass(OnlineTest.class.getName());
     }
     
 	public EvaluationType getEvaluationType() {

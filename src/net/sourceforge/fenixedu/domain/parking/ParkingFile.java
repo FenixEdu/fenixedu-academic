@@ -11,7 +11,6 @@ public class ParkingFile extends ParkingFile_Base {
 
     public ParkingFile() {
         super();
-        setOjbConcreteClass(ParkingFile.class.getName());
     }
 
     public ParkingFile(String filename, String displayName, String mimeType, String checksum,

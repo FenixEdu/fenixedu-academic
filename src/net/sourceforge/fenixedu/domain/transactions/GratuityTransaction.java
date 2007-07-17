@@ -19,7 +19,6 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 
     public GratuityTransaction() {
 	super();
-	setOjbConcreteClass(getClass().getName());
     }
 
     public GratuityTransaction(Double value, Timestamp transactionDate, String remarks,

@@ -139,7 +139,6 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     public AnnouncementBoard() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(this.getClass().getName());
 	setCreationDate(new DateTime());
     }
 

@@ -20,7 +20,6 @@ public class MissingClocking extends MissingClocking_Base {
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
 	setOracleSequence(oracleSequence);
-	setOjbConcreteClass(MissingClocking.class.getName());
     }
 
     public MissingClocking(Assiduousness assiduousness, DateTime date,
@@ -33,7 +32,6 @@ public class MissingClocking extends MissingClocking_Base {
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
 	setOracleSequence(0);
-	setOjbConcreteClass(MissingClocking.class.getName());
     }
 
     public MissingClocking(Assiduousness assiduousness, JustificationMotive justificationMotive,
@@ -46,7 +44,6 @@ public class MissingClocking extends MissingClocking_Base {
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
 	setOracleSequence(0);// TODO é mesmo preciso por a zero ??
-	setOjbConcreteClass(MissingClocking.class.getName());
     }
 
     public void modify(DateTime date, JustificationMotive justificationMotive, Employee modifiedBy) {
@@ -54,7 +51,6 @@ public class MissingClocking extends MissingClocking_Base {
 	setJustificationMotive(justificationMotive);
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
-	setOjbConcreteClass(MissingClocking.class.getName());
     }
 
     public TimeOfDay getTime() {

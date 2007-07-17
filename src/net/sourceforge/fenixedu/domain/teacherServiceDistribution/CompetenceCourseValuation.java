@@ -16,7 +16,6 @@ public class CompetenceCourseValuation extends CompetenceCourseValuation_Base {
     	this.setValuationCompetenceCourse(valuationCompetenceCourse);
     	this.setValuationPhase(valuationPhase);
     	this.setExecutionPeriod(executionPeriod);
-    	setOjbConcreteClass(getClass().getName());
     }
 
 	@Override

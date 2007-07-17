@@ -43,7 +43,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     protected PaymentPlan() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setOjbConcreteClass(getClass().getName());
 	super.setWhenCreated(new DateTime());
     }
 
