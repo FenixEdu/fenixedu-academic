@@ -49,10 +49,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public abstract DiaSemana getDayOfWeek();
     
     public abstract FrequencyType getFrequency();
-    
-    public abstract Integer getWeekOfQuinzenalStart();
-    
-           
+               
     protected EventSpaceOccupation() {
         super();        
     }    
@@ -102,13 +99,15 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     
     public boolean alreadyWasOccupiedBy(EventSpaceOccupation occupation) {
 
-	if(this.equals(occupation)) {
+	if (this.equals(occupation)) {
 	    return true;
 	}
 	
 	if (intersects(occupation.getBeginDate(), occupation.getEndDate())) {                       	   	    	    			   	    
+	  
 	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals();			    			    	 
+	    
 	    for (Interval interval : thisOccupationIntervals) {		    
                 for (Interval passedInterval : passedOccupationIntervals) {
                     if(interval.getStart().isBefore(passedInterval.getEnd()) && interval.getEnd().isAfter(passedInterval.getStart())) {
@@ -121,16 +120,17 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }        
     
     public boolean alreadyWasOccupiedIn(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, 
-	    HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Integer week, 
+	    HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, 
 	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
       		
 	startTime.setSecondOfMinute(0);
 	endTime.setSecondOfMinute(0);
 	
 	if (intersects(startDate, endDate)) {                       	   	    	    			   	    
+	    
 	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = getEventSpaceOccupationIntervals(startDate, endDate, startTime, endTime,
-		    frequency, week, dayOfWeek, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday);		
+		    frequency, dayOfWeek, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday);		
 	    			    	  
 	    for (Interval interval : thisOccupationIntervals) {		    
                 for (Interval passedInterval : passedOccupationIntervals) {
@@ -146,8 +146,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay begin, YearMonthDay end){
 	List<Interval> result = new ArrayList<Interval>();
 	for (Interval interval : getEventSpaceOccupationIntervals()) {
-	    if(!interval.getStart().toYearMonthDay().isAfter(end)
-		    && !interval.getEnd().toYearMonthDay().isBefore(begin)) {
+	    if(!interval.getStart().toYearMonthDay().isAfter(end) && !interval.getEnd().toYearMonthDay().isBefore(begin)) {
 		result.add(interval);
 	    }
 	}
@@ -156,20 +155,16 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     
     public List<Interval> getEventSpaceOccupationIntervals() {
 	return getEventSpaceOccupationIntervals(getBeginDate(), getEndDate(), getStartTimeDateHourMinuteSecond(), 
-		getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), getDayOfWeek(),
+		getEndTimeDateHourMinuteSecond(), getFrequency(), getDayOfWeek(),
 		getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday());	
     }     
           
     protected List<Interval> getEventSpaceOccupationIntervals(YearMonthDay begin, YearMonthDay end,
-	    HourMinuteSecond beginTime, HourMinuteSecond endTime, FrequencyType frequency, Integer startWeek,
-	    DiaSemana diaSemana, Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
+	    HourMinuteSecond beginTime, HourMinuteSecond endTime, FrequencyType frequency, DiaSemana diaSemana, 
+	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 
 	List<Interval> result = new ArrayList<Interval>();		
-	
-	if (startWeek != null && startWeek.intValue() > 0) {
-	    begin = begin.plusDays((startWeek - 1) * 7);	    
-	}	
-	
+			
 	if(diaSemana != null) {
 	    YearMonthDay newBegin = begin.toDateTimeAtMidnight().withDayOfWeek(diaSemana.getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
 	    if(newBegin.isBefore(begin)) {
@@ -203,7 +198,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	return result; 
     }
                  
-    private Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
+    protected Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
 	return new Interval(
 		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			
 		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));

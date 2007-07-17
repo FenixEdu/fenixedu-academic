@@ -82,13 +82,13 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 	if(getPeriod() != null) {
 	
 	    result.addAll(getEventSpaceOccupationIntervals(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay(), 
-		    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), getWeekOfQuinzenalStart(), 
+		    getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(), 
 		    getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
 
 	    while(occupationPeriod.getNextPeriod() != null) {
 		result.addAll(getEventSpaceOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(), 
 			occupationPeriod.getNextPeriod().getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(),
-			getEndTimeDateHourMinuteSecond(), getFrequency(), null, getDayOfWeek(),
+			getEndTimeDateHourMinuteSecond(), getFrequency(), getDayOfWeek(),
 			getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday()));
 
 		occupationPeriod = occupationPeriod.getNextPeriod();             
@@ -114,11 +114,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     @Override
     public FrequencyType getFrequency() {
 	 return getLesson().getFrequency();
-    }
-   
-    @Override
-    public Integer getWeekOfQuinzenalStart() {
-	return getLesson().getWeekOfQuinzenalStart();
     }
 
     @Override

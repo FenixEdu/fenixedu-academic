@@ -36,11 +36,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             strBuffer.append("<a href=\"");
             strBuffer.append(getApplication());
             strBuffer.append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append(
-                    "\">");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
-                    .append("</a>");
-
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
+            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
             strBuffer.append("&nbsp;");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
 

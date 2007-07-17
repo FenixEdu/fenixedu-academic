@@ -34,11 +34,7 @@ public class InfoRoomOccupation extends InfoObject {
     public FrequencyType getFrequency() {
         return getRoomOccupation().getFrequency();
     }
-
-    public Integer getWeekOfQuinzenalStart() {
-        return getRoomOccupation().getWeekOfQuinzenalStart();
-    }
-
+    
     /**
      * @return
      */

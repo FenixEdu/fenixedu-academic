@@ -205,14 +205,14 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     } 
     
     public boolean isFree(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, 
-	    HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Integer week,
+	    HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, 
 	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 	
 	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
 		if (occupation.alreadyWasOccupiedIn(startDate, endDate, startTime, endTime, dayOfWeek,
-			frequency, week, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
+			frequency, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday)) {
 		    return false;
 		}
 	    }
@@ -247,6 +247,18 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	return lessons;
     }       
 
+    public ResourceAllocation getFirstOccurrenceOfResourceAllocationByClass(Class<? extends ResourceAllocation> clazz) {
+	if(clazz != null) {
+	    List<ResourceAllocation> resourceAllocations = getResourceAllocations();
+	    for (ResourceAllocation resourceAllocation : resourceAllocations) {
+		if(resourceAllocation.getClass().equals(clazz)) {
+		    return resourceAllocation;
+		}
+	    }
+	}
+	return null;
+    }
+    
     public static List<AllocatableSpace> findActiveAllocatableSpacesBySpecifiedArguments(String nome, String edificio,
 	    Integer piso, RoomClassification tipo, Integer capacidadeNormal, Integer capacidadeExame)
 	    throws ExcepcaoPersistencia {

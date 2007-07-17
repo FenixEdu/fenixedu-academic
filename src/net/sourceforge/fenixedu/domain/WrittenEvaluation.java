@@ -329,7 +329,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    if(!newOccupations.contains(roomOccupation)) {
 		final AllocatableSpace room = roomOccupation.getRoom();
 		if (!rooms.contains(room)) {
-		    roomOccupationsToDelete.add(roomOccupation);
+		    roomOccupationsToDelete.add(roomOccupation);		    		    
 		} else {                        	    
 		    roomOccupation.edit();        	    
 		}
@@ -339,8 +339,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	// Delete Rooms
 	for (Iterator<WrittenEvaluationSpaceOccupation> iter = roomOccupationsToDelete.iterator(); iter.hasNext();) {
 	    WrittenEvaluationSpaceOccupation occupation = iter.next();
-	    iter.remove();
-	    occupation.delete();
+	    if(occupation.canBeDeleted()) {
+		iter.remove();
+		occupation.delete();
+	    }
 	}        
     }
 
@@ -352,16 +354,29 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return true;
     }
 
-    private void deleteAllRoomOccupations() {
-	for (; !getWrittenEvaluationSpaceOccupations().isEmpty(); getWrittenEvaluationSpaceOccupations().get(0).delete());
+    private void deleteAllRoomOccupations() {		
+	while(hasAnyWrittenEvaluationSpaceOccupations()) {
+	    WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().get(0);
+	    occupation.removeWrittenEvaluations(this);	    
+	    occupation.delete();
+	}		
     }
 
     private List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
+	
 	List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();	
 	for (final AllocatableSpace room : rooms) {
 	    if (!hasOccupationForRoom(room)) {                
-		WrittenEvaluationSpaceOccupation writtenEvaluationSpaceOccupation = new WrittenEvaluationSpaceOccupation(room, this);
-		newInsertedOccupations.add(writtenEvaluationSpaceOccupation);
+		
+		WrittenEvaluationSpaceOccupation occupation =
+		    (WrittenEvaluationSpaceOccupation) room.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+		
+		if(occupation == null) {
+		    occupation = new WrittenEvaluationSpaceOccupation(room);		    
+		} 
+		
+		occupation.addWrittenEvaluations(this);
+		newInsertedOccupations.add(occupation);
 	    }
 	}
 	return newInsertedOccupations;
@@ -705,5 +720,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public DiaSemana getDayOfWeek() {
 	return new DiaSemana(DiaSemana.getDiaSemana(getDayDateYearMonthDay()));
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	HourMinuteSecond beginTime = getBeginningDateHourMinuteSecond();
+	HourMinuteSecond endTime = getEndDateHourMinuteSecond();	
+	return getDayDateYearMonthDay() != null && beginTime != null && endTime != null && endTime.isAfter(beginTime); 	
     }
 }

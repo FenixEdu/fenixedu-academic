@@ -16,9 +16,7 @@ public abstract class FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricula
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ContextUtils.setShiftContext(request);
-
         ActionForward actionForward = super.execute(mapping, actionForm, request, response);
-
         return actionForward;
     }
 

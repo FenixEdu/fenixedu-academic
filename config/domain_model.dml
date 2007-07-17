@@ -843,8 +843,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DiaSemana diaSemana;
 		HourMinuteSecond endHourMinuteSecond;
 		FrequencyType frequency;
-		ShiftType tipo;
-		Integer weekOfQuinzenalStart;
+		ShiftType tipo;		
 	}
 
 	class net.sourceforge.fenixedu.domain.LessonInstance extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -12015,7 +12014,9 @@ relation WrittenEvaluationEnrolmentStudent {
 }
 
 relation WrittenEvaluationWrittenEvaluationSpaceOccupation {
-	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluations {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation playsRole writtenEvaluationSpaceOccupations {
 		multiplicity *;
 	}
@@ -12063,8 +12064,10 @@ relation LessonInstanceLesson {
 	}
 }
 
-relation LessonInstanceLessonInstanceSpaceOccupation {
-	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstance;
+relation LessonInstanceLessonInstanceSpaceOccupations {
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstances {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation playsRole lessonInstanceSpaceOccupation;
 }
 

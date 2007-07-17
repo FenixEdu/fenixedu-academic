@@ -71,13 +71,20 @@
     	    <td>
         	 	<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.quinzenal" property="quinzenal"/>
     	    </td> 
-	 	</tr>
+	 	</tr>	 	
 	 	<tr>
-	        <th><bean:message key="property.aula.time.week"/>:</th>
+	        <th><bean:message key="property.lesson.new.begin.date"/>:</th>
     	    <td>
-        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="week" size="1"/>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="10"/>
+        	 	<bean:message key="property.lesson.new.begin.date.format"/> <bean:message key="label.until"/> <b><bean:write name="executionDegreeLessonsEndDate"/></b>
     	    </td> 
 	 	</tr>
+	 	<tr>
+	        <th><bean:message key="property.lesson.period.dates"/>:</th>
+    	    <td>
+        	 	<b><bean:write name="executionDegreeLessonsStartDate"/> - <bean:write name="executionDegreeLessonsEndDate"/></b>
+    	    </td> 
+	 	</tr>	 		 	
 	</table>
 
 	<p>

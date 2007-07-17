@@ -15,14 +15,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -33,9 +31,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 public class CreateLesson extends Service {
 
     public InfoLessonServiceResult run(DiaSemana weekDay, Calendar begin, Calendar end,
-	    FrequencyType frequency, Integer weekOfQuinzenalStart,
-	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, InfoPeriod infoPeriod)
-	    throws FenixServiceException {
+	    FrequencyType frequency, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift) throws FenixServiceException {
 
 	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoShift
 		.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
@@ -52,8 +48,7 @@ public class CreateLesson extends Service {
 	    InfoShiftServiceResult infoShiftServiceResult = valid(shift, begin, end);
 	    if (infoShiftServiceResult.isSUCESS()) {
 
-		final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(infoPeriod.getIdInternal());
-		Lesson aula = new Lesson(weekDay, begin, end, infoShift.getTipo(), shift, weekOfQuinzenalStart, frequency, executionPeriod, period);
+		Lesson aula = new Lesson(weekDay, begin, end, infoShift.getTipo(), shift, frequency, executionPeriod);
 
 		if (infoRoomOccupation != null) {
 

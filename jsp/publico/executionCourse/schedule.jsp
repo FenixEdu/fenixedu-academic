@@ -5,9 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
-<%@ page import="java.util.Calendar" %>
 
 <h2><bean:message key="label.schedule" /></h2>
 

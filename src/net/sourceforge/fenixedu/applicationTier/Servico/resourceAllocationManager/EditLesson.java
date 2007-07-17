@@ -27,8 +27,7 @@ import org.joda.time.YearMonthDay;
 public class EditLesson extends Service {
 
     public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency, 
-    		Integer weekOfQuinzenalStart, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift)
-    		throws FenixServiceException {
+    		InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate) throws FenixServiceException {
         
 	InfoLessonServiceResult result = null;
         Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
@@ -51,7 +50,7 @@ public class EditLesson extends Service {
             if (result.isSUCESS() && infoShiftServiceResult.isSUCESS()) {
          
         	LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();        	
-                aula.edit(new YearMonthDay(), weekDay, begin, end, infoShift.getTipo(), frequency, weekOfQuinzenalStart);                                            
+                aula.edit(newBeginDate, weekDay, begin, end, infoShift.getTipo(), frequency);                                            
                 
                 if(salaNova != null) {
                     try {                

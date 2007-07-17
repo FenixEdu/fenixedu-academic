@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -35,6 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana e Ricardo
@@ -707,7 +709,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             return prepare(mapping, form, request, response);
         }
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null, null, Boolean.FALSE };
+        Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate), 
+        	HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
+        	dayOfWeek, null, null, Boolean.FALSE };
 
         List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
 

@@ -76,16 +76,17 @@ public class ReadExamsMapByRooms extends Service {
         final AllocatableSpace oldRoom = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
         for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
             if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-                final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();
-                if (writtenEvaluation instanceof Exam) {
-                    final Exam exam = (Exam) writtenEvaluation;
-                    final Set<ExecutionCourse> executionCourses = exam.getAssociatedExecutionCoursesSet();
-                    final ExecutionCourse executionCourse = executionCourses.isEmpty() ? null : executionCourses.iterator().next();
-                    if (executionCourse != null && executionPeriod == executionCourse.getExecutionPeriod()) {
-                        InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-                        infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
-                                .getAssociatedExecutionCourses().get(0)));
-                        result.add(infoExam);
+                List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();
+                for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {		    	
+                    if (writtenEvaluation instanceof Exam) {
+                	final Exam exam = (Exam) writtenEvaluation;
+                	final Set<ExecutionCourse> executionCourses = exam.getAssociatedExecutionCoursesSet();
+                	final ExecutionCourse executionCourse = executionCourses.isEmpty() ? null : executionCourses.iterator().next();
+                	if (executionCourse != null && executionPeriod == executionCourse.getExecutionPeriod()) {
+                	    InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+                	    infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam.getAssociatedExecutionCourses().get(0)));
+                	    result.add(infoExam);
+                	}
                     }
                 }
             }

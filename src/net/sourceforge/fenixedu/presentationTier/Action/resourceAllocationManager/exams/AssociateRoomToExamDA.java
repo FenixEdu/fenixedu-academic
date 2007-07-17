@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -28,6 +29,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana e Ricardo
@@ -95,7 +97,9 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null, null, Boolean.FALSE };
+        Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+        	HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
+        	dayOfWeek, null, null, Boolean.FALSE };
         
         List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
 

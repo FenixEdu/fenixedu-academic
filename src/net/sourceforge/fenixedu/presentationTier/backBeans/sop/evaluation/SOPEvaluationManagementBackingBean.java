@@ -931,7 +931,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.SECOND, 0);
         examEndTime.set(Calendar.MILLISECOND, 0);
 
-        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null, null, null, Boolean.FALSE };
+        Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate), 
+        	HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
+        	dayOfWeek, null, null, Boolean.FALSE };
         
         List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this.getUserView(),
         	"ReadAvailableRoomsForExam", args);

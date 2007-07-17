@@ -109,8 +109,8 @@
         <form-property name="horaFim" type="java.lang.String"/>
         <form-property name="minutosFim" type="java.lang.String"/>
         <form-property name="nomeSala" type="java.lang.String"/>
-        <form-property name="quinzenal" type="java.lang.Boolean"/>
-        <form-property name="week" type="java.lang.String"/>
+        <form-property name="quinzenal" type="java.lang.Boolean"/>        
+        <form-property name="newBeginDate" type="java.lang.String"/>
       </form-bean>
 
 	  <!-- Dynamic-FormBean for adding shifts to class -->
@@ -970,8 +970,7 @@
             >
 		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift$UnableToTransferStudentsException"
 				   key="message.unable.to.transfer.students"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
     	<forward name="Continue" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 

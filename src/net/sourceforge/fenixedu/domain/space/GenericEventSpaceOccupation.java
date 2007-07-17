@@ -94,9 +94,4 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public DiaSemana getDayOfWeek() {
 	return null;
     }
-    
-    @Override
-    public Integer getWeekOfQuinzenalStart() {
-	return null;
-    }     
 }

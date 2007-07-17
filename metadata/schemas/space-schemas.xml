@@ -453,7 +453,12 @@
 	<slot name="class" layout="label" key="label.space.type">
 		<property name="labelFormat" value="label.${simpleName}" />
 		<property name="bundle" value="SPACE_RESOURCES" />
-	</slot>	         
+	</slot>	 
+	<slot name="activeFlag" key="label.space.active.flag">
+		<property name="trueLabel" value="label.active.space.true" />
+		<property name="falseLabel" value="label.active.space.false" />
+		<property name="bundle" value="SPACE_RESOURCES"/>
+	</slot>	        
 </schema>	
 
 <schema name="ViewRoomImportantAssociationsBeforeMerge" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
@@ -484,8 +489,9 @@
 		<property name="label" value="-"/>
 		<property name="subLayout" value="spaceInformation-presentationName-label" />
 	</slot>	    
-	<slot name="class" layout="label" key="label.space.type">
-		<property name="labelFormat" value="label.${simpleName}" />
-		<property name="bundle" value="SPACE_RESOURCES" />
-	</slot>	     
+	<slot name="activeFlag" key="label.space.active.flag">
+		<property name="trueLabel" value="label.active.space.true" />
+		<property name="falseLabel" value="label.active.space.false" />
+		<property name="bundle" value="SPACE_RESOURCES"/>
+	</slot>	
 </schema>

@@ -16,9 +16,7 @@ public abstract class FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAnd
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ContextUtils.setLessonContext(request);
-
         ActionForward actionForward = super.execute(mapping, actionForm, request, response);
-
         return actionForward;
     }
 

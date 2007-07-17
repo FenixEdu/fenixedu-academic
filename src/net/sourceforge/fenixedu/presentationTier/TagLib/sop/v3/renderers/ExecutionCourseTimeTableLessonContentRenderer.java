@@ -26,14 +26,14 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             InfoLesson lesson = (InfoLesson) showOccupation;
             
             strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");            
-            if(lesson.getInfoRoomOccupation() != null) {
+            if(lesson.getInfoSala() != null) {
                 strBuffer.append("<a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("&amp;objectCode=");
+                strBuffer.append(lesson.getInfoSala().getNome()).append("&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
                 strBuffer.append("&amp;executionPeriodOID=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal()).append("'>");               
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                strBuffer.append(lesson.getInfoSala().getNome()).append("</a>");
             }
             
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {

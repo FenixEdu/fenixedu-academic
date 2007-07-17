@@ -1,23 +1,24 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
     
-    public LessonInstanceSpaceOccupation(LessonInstance lessonInstance, AllocatableSpace allocatableSpace) {
+    public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
         
 	super();
         
-	setLessonInstance(lessonInstance);
-	
 	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
 	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free");
 	}
@@ -26,50 +27,53 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
     
     public void delete() {
-	super.setLessonInstance(null);
-	super.delete();
+	if(canBeDeleted()) {
+	    super.delete();
+	}	
     }
     
-    @Override
-    public void setLessonInstance(LessonInstance lessonInstance) {
-	if(lessonInstance == null) {
-	    throw new DomainException("error.LessonInstanceSpaceOccupation.empty.lessonInstance");
-	}
-	super.setLessonInstance(lessonInstance);
-    }    
-    
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasLessonInstance();	
+    private boolean canBeDeleted() {
+	return !hasAnyLessonInstances();
     }
-            
-    public Lesson getLesson() {
-	return getLessonInstance().getLesson();
-    }
-
+                                        
     @Override
     public boolean isLessonInstanceSpaceOccupation() {
         return true;
     }
+    
+    @Override
+    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+	return true;    
+    }
+    
+    @Override
+    public List<Interval> getEventSpaceOccupationIntervals() {
+	List<Interval> result = new ArrayList<Interval>();
+	List<LessonInstance> lessonInstances = getLessonInstances();
+	for (LessonInstance lessonInstance : lessonInstances) {	    
+	    result.add(new Interval(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime()));
+	}
+	return result;
+    }
                     
     @Override
     public YearMonthDay getBeginDate() {
-	return getLessonInstance().getDay();
+	return null;
     }
 
     @Override
     public YearMonthDay getEndDate() {
-	return getLessonInstance().getDay();
+	return null;
     }
     
     @Override
     public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-	return getLessonInstance().getStartTime();
+	return null;
     }
    
     @Override
     public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-	return getLessonInstance().getEndTime();
+	return null;
     }
     
     @Override
@@ -90,12 +94,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public Boolean getDailyFrequencyMarkSunday() {
 	return null;
-    }
-    
-    @Override
-    public Integer getWeekOfQuinzenalStart() {
-	return null;
-    }            
+    }        
     
     @Override
     public Group getAccessGroup() {

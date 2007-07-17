@@ -265,15 +265,17 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 		final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 		for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
 		    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-			final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();                        
-			if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
-			    final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
-			    final CalendarLink calendarLink = new CalendarLink();
-			    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-			    calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation, executionCourse));
-			    calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
-			    calendarLinks.add(calendarLink);
-			}                        
+			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();
+			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {			    		
+			    if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
+				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
+				final CalendarLink calendarLink = new CalendarLink();
+				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
+				calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation, executionCourse));
+				calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
+				calendarLinks.add(calendarLink);
+			    }   
+			}
 		    }
 		} 
 		calendarLinksMap.put(room, calendarLinks);

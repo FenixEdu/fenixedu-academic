@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -26,6 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana & Ricardo
@@ -94,7 +96,10 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek, null, null, null, Boolean.FALSE };
+        Object args[] = { YearMonthDay.fromCalendarFields(searchDate), YearMonthDay.fromCalendarFields(searchDate),
+        	HourMinuteSecond.fromCalendarFields(searchStartTime), HourMinuteSecond.fromCalendarFields(searchEndTime), 
+        	dayOfWeek, null, null, Boolean.FALSE };
+        
         List<InfoRoom> availableInfoRoom = null;
         try {
             availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);

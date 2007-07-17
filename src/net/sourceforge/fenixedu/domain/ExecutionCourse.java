@@ -20,6 +20,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -1664,4 +1665,34 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return departments;
     }
 
+    public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
+		
+	YearMonthDay minBeginDate = null, maxEndDate = null;
+	Integer semester = getExecutionPeriod().getSemester();
+
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());	    
+	    if(semester.intValue() == 1) {
+		if(minBeginDate == null || minBeginDate.isAfter(executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay())) {
+		    minBeginDate = executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay();
+		}		    
+		if(maxEndDate == null || maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay())) {
+		    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay();
+		}	
+	    } else {
+		if(minBeginDate == null || minBeginDate.isAfter(executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay())) {
+		    minBeginDate = executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay();
+		}		    
+		if(maxEndDate == null || maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay())) {
+		    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay();
+		}	
+	    }	
+	}
+	
+	if(minBeginDate != null && maxEndDate != null) {
+	    return new GenericPair<YearMonthDay, YearMonthDay>(minBeginDate, maxEndDate);
+	}
+	
+	return null;  
+    }
 }

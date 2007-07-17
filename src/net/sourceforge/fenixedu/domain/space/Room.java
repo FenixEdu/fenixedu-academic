@@ -68,13 +68,18 @@ public class Room extends Room_Base {
     }
          
     @Override
-    public List<ResourceAllocation> getResourceAllocationsForCheck() {
-	List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();		
-	result.addAll(getResourceAllocations());        
-	for (RoomSubdivision roomSubdivision : getRoomSubdivisions()) {
-	    result.addAll(roomSubdivision.getResourceAllocations());
-	}                    
-        return result;
+    public List<ResourceAllocation> getResourceAllocationsForCheck() {	
+	List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
+	if(roomSubdivisions.isEmpty()) {
+	    return getResourceAllocations(); 
+	} else {
+	    List<ResourceAllocation> result = new ArrayList<ResourceAllocation>();
+	    result.addAll(getResourceAllocations());        
+	    for (RoomSubdivision roomSubdivision : getRoomSubdivisions()) {
+		result.addAll(roomSubdivision.getResourceAllocations());
+	    }                    
+	    return result;
+	}
     }   
     
     private List<RoomSubdivision> getRoomSubdivisions() {	

@@ -39,7 +39,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.DateTime;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -186,8 +185,7 @@ public class ManageShiftDA extends
 
         if (selectedLessons.length == 0) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors
-                    .add("errors.lessons.notSelected", new ActionError("errors.lessons.notSelected"));
+            actionErrors.add("errors.lessons.notSelected", new ActionError("errors.lessons.notSelected"));
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
 
@@ -202,9 +200,9 @@ public class ManageShiftDA extends
 
         try {
             ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
+       
         } catch (FenixServiceMultipleException e) {
-            final ActionErrors actionErrors = new ActionErrors();
-            
+            final ActionErrors actionErrors = new ActionErrors();            
             for (final DomainException domainException: e.getExceptionList()) {
         	actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
             }

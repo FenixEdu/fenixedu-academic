@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -8,16 +11,15 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
       
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
-    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace, WrittenEvaluation writtenEvaluation) {	
+    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {	
         
 	super();		
-
-	setWrittenEvaluation(writtenEvaluation);
 	
 	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {		
 	    throw new DomainException("error.roomOccupied", getRoom().getName());
@@ -35,28 +37,36 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
           
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
     public void delete() {
-	super.setWrittenEvaluation(null);
-	super.delete();    
+	if(canBeDeleted()) {	    	    
+	    super.delete();
+	}
     }
     
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasWrittenEvaluation();	
+    public boolean canBeDeleted() {
+	return !hasAnyWrittenEvaluations();
     }
-
+    
+    @Override
+    public List<Interval> getEventSpaceOccupationIntervals() {
+	List<Interval> result = new ArrayList<Interval>();
+	List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
+	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {	    
+	    result.add(createNewInterval(writtenEvaluation.getDayDateYearMonthDay(), writtenEvaluation.getDayDateYearMonthDay(),
+		    writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+	}
+	return result;
+    }
+        
     @Override
     public boolean isWrittenEvaluationSpaceOccupation() {
 	return true;
     }
-       
+    
     @Override
-    public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-	if(writtenEvaluation == null) {
-	    throw new DomainException("error.WrittenEvaluationSpaceOccupation.empty.writtenEvaluation");
-	}
-	super.setWrittenEvaluation(writtenEvaluation);
+    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+	return true;
     }
-        
+             
     @Override
     public Group getAccessGroup() {
 	return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
@@ -64,22 +74,22 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         
     @Override
     public YearMonthDay getBeginDate() {
-	return getWrittenEvaluation().getDayDateYearMonthDay();
+	return null;
     }
 
     @Override
     public YearMonthDay getEndDate() {
-	return getWrittenEvaluation().getDayDateYearMonthDay();
+	return null;
     }
     
     @Override
     public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-	return getWrittenEvaluation().getBeginningDateHourMinuteSecond();
+	return null;
     }
        
     @Override
     public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-	return getWrittenEvaluation().getEndDateHourMinuteSecond();
+	return null;
     }
 
     @Override
@@ -99,11 +109,6 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     
     @Override
     public FrequencyType getFrequency() {
-	return null;
-    }
-
-    @Override
-    public Integer getWeekOfQuinzenalStart() {
 	return null;
     }
 }

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.YearMonthDay;
 
 public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparable<InfoLesson> {
 
@@ -23,8 +24,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("infoSala.nome"));
     }
     
-    private DomainReference<Lesson> lesson;
-    
+    private DomainReference<Lesson> lesson;    
     private InfoRoom infoSala;
     private InfoShift infoShift;
     private InfoRoomOccupation infoRoomOccupation;
@@ -53,9 +53,14 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     public FrequencyType getFrequency() {        
         return getLesson().getFrequency();
     }
+        
+    public YearMonthDay getLessonBegin() {
+	return getLesson() != null && getLesson().hasPeriod() ? getLesson().getPeriod().getStartYearMonthDay() : null;
+    }
     
-    public Integer getWeekOfQuinzenalStart() {
-        return getLesson().getWeekOfQuinzenalStart();
+    public YearMonthDay getLessonEnd() {
+	return getLesson() != null && getLesson().hasPeriod() ? getLesson().getPeriod().getLastOccupationPeriodOfNestedPeriods()
+		.getEndYearMonthDay() : null;
     }
     
     public String getWeekDay() {
@@ -88,13 +93,13 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     public InfoShift getInfoShift() {
         return (infoShift == null) ? infoShift = InfoShift.newInfoFromDomain(getLesson().getShift()) : infoShift;
     }
-
+    
     public InfoRoomOccupation getInfoRoomOccupation() {
-    	if (infoRoomOccupation == null) {
-    		infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(getLesson().getLessonSpaceOccupation());
-    	}
-    	return infoRoomOccupation;
+	if (infoRoomOccupation == null) {
+	    infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(getLesson().getLessonSpaceOccupation());
 	}
+	return infoRoomOccupation;
+    }
 
     public static InfoLesson newInfoFromDomain(Lesson lesson) {
     	return (lesson != null) ? new InfoLesson(lesson) : null;
@@ -109,14 +114,11 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         if (obj instanceof InfoLesson) {
             InfoLesson infoAula = (InfoLesson) obj;
             resultado = (getDiaSemana().equals(infoAula.getDiaSemana()))
-                    && (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(
-                            Calendar.HOUR_OF_DAY))
+                    && (getInicio().get(Calendar.HOUR_OF_DAY) == infoAula.getInicio().get(Calendar.HOUR_OF_DAY))
                     && (getInicio().get(Calendar.MINUTE) == infoAula.getInicio().get(Calendar.MINUTE))
-                    && (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim()
-                            .get(Calendar.HOUR_OF_DAY))
+                    && (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim().get(Calendar.HOUR_OF_DAY))
                     && (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE))
-                    && ((getInfoSala() == null && infoAula.getInfoSala() == null) || 
-                            (getInfoSala() != null && getInfoSala().equals(infoAula.getInfoSala())))
+                    && ((getInfoSala() == null && infoAula.getInfoSala() == null) || (getInfoSala() != null && getInfoSala().equals(infoAula.getInfoSala())))
                     && ((getInfoRoomOccupation() == null && infoAula.getInfoRoomOccupation() == null) 
                             || (getInfoRoomOccupation() != null && getInfoRoomOccupation().equals(infoAula.getInfoRoomOccupation())));
         }
@@ -131,8 +133,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
         String result = "";
         result += getDiaSemana().toString() + "\n";
-        result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " ("
-                + getTipo().getSiglaTipoAula() + ")";
+        result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " (" + getTipo().getSiglaTipoAula() + ")";
         result += "\n" + beginTime;
         result += "-" + endTime;
         result += "\nSala=" + getInfoSala().getNome();

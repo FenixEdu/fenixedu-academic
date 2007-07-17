@@ -61,8 +61,8 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {            
 
 	    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {                
-		final WrittenEvaluation writtenEvaluation = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluation();                                   
-		getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, writtenEvaluation);
+		List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();                                   
+		getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, writtenEvaluations);
 	    }
 
 	    if(roomOccupation.isGenericEventSpaceOccupation()) {            
@@ -76,8 +76,8 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 	    }
 
 	    if(roomOccupation.isLessonInstanceSpaceOccupation()) {
-		final LessonInstance lessonInstance = ((LessonInstanceSpaceOccupation)roomOccupation).getLessonInstance();
-		getLessonInstanceOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lessonInstance);
+		List<LessonInstance> lessonInstances = ((LessonInstanceSpaceOccupation)roomOccupation).getLessonInstances();
+		getLessonInstanceOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lessonInstances);
 	    }
 	}
 
@@ -95,35 +95,40 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
     }
 
     private void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
-	    YearMonthDay weekEndYearMonthDay, LessonInstance lessonInstance) {
+	    YearMonthDay weekEndYearMonthDay, List<LessonInstance> lessonInstances) {
 
-	if(lessonInstance != null) {
-	    final YearMonthDay lessonInstanceDay = lessonInstance.getDay();	    
-	    if (!lessonInstanceDay.isBefore(weekStartYearMonthDay) && !lessonInstanceDay.isAfter(weekEndYearMonthDay)) {		
-		InfoLessonInstance infoLessonInstance = new InfoLessonInstance(lessonInstance);
-		infoShowOccupations.add(infoLessonInstance);		
-	    }		 	
+	if(lessonInstances != null) {
+	    for (LessonInstance lessonInstance : lessonInstances) {
+		final YearMonthDay lessonInstanceDay = lessonInstance.getDay();	    
+		if (!lessonInstanceDay.isBefore(weekStartYearMonthDay) && !lessonInstanceDay.isAfter(weekEndYearMonthDay)) {		
+		    InfoLessonInstance infoLessonInstance = new InfoLessonInstance(lessonInstance);
+		    infoShowOccupations.add(infoLessonInstance);		
+		}	
+	    }	    	 
 	}
     }
 
     private void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations, final YearMonthDay weekStartYearMonthDay,
-	    final YearMonthDay weekEndYearMonthDay, final WrittenEvaluation writtenEvaluation) {
+	    final YearMonthDay weekEndYearMonthDay, final List<WrittenEvaluation> writtenEvaluations) {
 
-	if (writtenEvaluation != null) {
+	if (writtenEvaluations != null) {
 
-	    final YearMonthDay evaluationDate = writtenEvaluation.getDayDateYearMonthDay();
+	    for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
 
-	    if (!evaluationDate.isBefore(weekStartYearMonthDay) && !evaluationDate.isAfter(weekEndYearMonthDay)) {
+		final YearMonthDay evaluationDate = writtenEvaluation.getDayDateYearMonthDay();
 
-		if (writtenEvaluation instanceof Exam) {
-		    final Exam exam = (Exam) writtenEvaluation;
-		    infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+		if (!evaluationDate.isBefore(weekStartYearMonthDay) && !evaluationDate.isAfter(weekEndYearMonthDay)) {
 
-		} else if (writtenEvaluation instanceof WrittenTest) {
-		    final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
-		    infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
-		}
-	    }                
+		    if (writtenEvaluation instanceof Exam) {
+			final Exam exam = (Exam) writtenEvaluation;
+			infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
+
+		    } else if (writtenEvaluation instanceof WrittenTest) {
+			final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
+			infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
+		    }
+		}   
+	    }
 	}
     }
 
@@ -159,7 +164,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Se
 			    Calendar endOfInterval = null;
 			    if (intervalStartDay.isEqual(intervalEndDay)) {
 				endOfInterval = interval.getEnd().toCalendar(LanguageUtils.getLocale());
-			    
+
 			    } else {
 				endOfInterval = pointer.toCalendar(LanguageUtils.getLocale());
 				endOfInterval.set(Calendar.HOUR_OF_DAY, 23);

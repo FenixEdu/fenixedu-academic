@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -22,6 +23,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author jpvl
@@ -95,7 +97,9 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
                 return prepare(mapping, form, request, response);
             }
 
-            Object args[] = { startDate, endDate, start, end, weekDay, normalCapacity, FrequencyType.WEEKLY, null, Boolean.TRUE };
+            Object args[] = { YearMonthDay.fromCalendarFields(startDate), YearMonthDay.fromCalendarFields(endDate), 
+        	    HourMinuteSecond.fromCalendarFields(start), HourMinuteSecond.fromCalendarFields(end),
+        	    weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE };
             
             List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils.getUserView(request),
         	    "ReadAvailableRoomsForExam", args);

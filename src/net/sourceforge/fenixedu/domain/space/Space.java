@@ -338,6 +338,10 @@ public abstract class Space extends Space_Base {
 	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
     }
 
+    public Boolean getActiveFlag() {
+	return Boolean.valueOf(isActive());
+    }
+    
     public static List<Space> getAllSpacesByPresentationName(String name) {
 	List<Space> result = new ArrayList<Space>();	
 	String[] identificationWords = getIdentificationWords(name);
@@ -921,8 +925,7 @@ public abstract class Space extends Space_Base {
 	    } else if(resourceAllocation.isMaterialSpaceOccupation()) {
 		materialOccupations++;
 	    }	    
-	}
-	
+	}	
 	builder.append(eventOccupations).append(" (Events)").append(", ");
 	builder.append(personOccupations).append(" (Persons)").append(", ");
 	builder.append(unitOccupations).append(" (Units)").append(", ");

@@ -47,13 +47,13 @@ public class LessonInstance extends LessonInstance_Base {
 	setLesson(lesson);      
 	setSummary(summary);
 		
-	lesson.refreshPeriodAndInstances(day.plusDays(1));
+	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
 	
-	if(space != null) {	    
-	    new LessonInstanceSpaceOccupation(this, space);
+	if(space != null) {	 
+	    lessonInstanceSpaceOccupationManagement(space);
 	}	
     }
-    
+
     public LessonInstance(Lesson lesson, AllocatableSpace space, YearMonthDay day) {
 	
 	super();
@@ -73,8 +73,8 @@ public class LessonInstance extends LessonInstance_Base {
 	setEndDateTime(endDateTime);
 	setLesson(lesson);      
 		
-	if(space != null) {	    
-	    new LessonInstanceSpaceOccupation(this, space);
+	if(space != null) {
+	    lessonInstanceSpaceOccupationManagement(space);
 	}
     }    
 
@@ -84,19 +84,21 @@ public class LessonInstance extends LessonInstance_Base {
 	   throw new DomainException("error.LessonInstance.cannot.be.deleted");
 	}
 	
-	super.setLesson(null);	
-	if(hasLessonInstanceSpaceOccupation()) {
-	    getLessonInstanceSpaceOccupation().delete();
-	}	
+	LessonInstanceSpaceOccupation occupation = getLessonInstanceSpaceOccupation();
+	if(occupation != null) {
+	    occupation.removeLessonInstances(this);
+	    occupation.delete();
+	}
 	
+	super.setLesson(null);		
 	removeRootDomainObject();
-	deleteDomainObject();
+	deleteDomainObject();	
     }
     
     private boolean canBeDeleted() {
 	return !hasSummary();
     }
-
+    
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateTimeInterval() {
 	final DateTime start = getBeginDateTime();
@@ -109,6 +111,17 @@ public class LessonInstance extends LessonInstance_Base {
 	return hasLesson();	
     }
     
+    private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
+	LessonInstanceSpaceOccupation instanceSpaceOccupation = 
+	    (LessonInstanceSpaceOccupation) space.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+	
+	if(instanceSpaceOccupation == null) {		
+	    instanceSpaceOccupation = new LessonInstanceSpaceOccupation(space);
+	}
+	
+	instanceSpaceOccupation.addLessonInstances(this);
+    }
+                  
     @Override
     public void setSummary(Summary summary) {
 	if(summary == null) {

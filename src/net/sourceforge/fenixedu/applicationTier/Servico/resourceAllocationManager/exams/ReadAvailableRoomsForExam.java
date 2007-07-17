@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +20,8 @@ import org.joda.time.YearMonthDay;
  */
 public class ReadAvailableRoomsForExam extends Service {
 
-    public List<InfoRoom> run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
-	    DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Integer weekOfStart,
-	    Boolean withLabs) throws ExcepcaoPersistencia {
+    public List<InfoRoom> run(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTimeHMS, HourMinuteSecond endTimeHMS,
+	    DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Boolean withLabs) throws ExcepcaoPersistencia {
 
 	final Collection<AllocatableSpace> rooms = new HashSet<AllocatableSpace>();
 	final List<AllocatableSpace> roomsToCheck = new ArrayList<AllocatableSpace>();
@@ -38,14 +36,8 @@ public class ReadAvailableRoomsForExam extends Service {
 	    roomsToCheck.addAll(AllocatableSpace.getAllActiveAllocatableSpacesExceptLaboratoriesForEducation());
 	}
 
-	YearMonthDay startDate = YearMonthDay.fromCalendarFields(periodStart);
-	YearMonthDay endDate = YearMonthDay.fromCalendarFields(periodEnd);
-	HourMinuteSecond startTimeHMS = HourMinuteSecond.fromCalendarFields(startTime);
-	HourMinuteSecond endTimeHMS = HourMinuteSecond.fromCalendarFields(endTime);	
-	
 	for (AllocatableSpace allocatableSpace : roomsToCheck) {
-	    if(allocatableSpace.isFree(startDate, endDate, startTimeHMS, endTimeHMS, dayOfWeek,
-		    frequency, weekOfStart, Boolean.TRUE, Boolean.TRUE)) {
+	    if(allocatableSpace.isFree(startDate, endDate, startTimeHMS, endTimeHMS, dayOfWeek, frequency, Boolean.TRUE, Boolean.TRUE)) {
 		rooms.add(allocatableSpace);
 	    }
 	}

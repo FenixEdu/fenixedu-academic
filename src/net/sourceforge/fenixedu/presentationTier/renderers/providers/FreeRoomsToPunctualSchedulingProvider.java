@@ -39,7 +39,7 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 	
 	for (AllocatableSpace room :  AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {	    
 	    if (!selectedRooms.contains(room)) {				
-		if(room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, null, markSaturday, markSunday)) {
+		if(room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
 		    result.add(room);
 		} 
 	    } 
