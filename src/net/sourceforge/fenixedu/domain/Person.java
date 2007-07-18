@@ -1228,14 +1228,7 @@ public class Person extends Person_Base {
     }
     
     public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	for (final Registration registration : this.getStudents()) {
-	    StudentCurricularPlan studentCurricularPlan = registration
-		    .getStudentCurricularPlan(degreeCurricularPlan);
-	    if (studentCurricularPlan != null) {
-		return registration;
-	    }
-	}
-	return null;
+	return getStudent().readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
     }
 
     public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(

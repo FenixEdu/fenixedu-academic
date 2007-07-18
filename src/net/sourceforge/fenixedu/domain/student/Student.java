@@ -79,6 +79,17 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final Registration registration : this.getRegistrations()) {
+	    StudentCurricularPlan studentCurricularPlan = registration
+		    .getStudentCurricularPlan(degreeCurricularPlan);
+	    if (studentCurricularPlan != null) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+    
     public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(
 	    DegreeType degreeType, ExecutionPeriod executionPeriod) {
 	List<Registration> result = new ArrayList<Registration>();
