@@ -50,7 +50,10 @@
 	<p>
 		<span class="greytxt1">
 			<bean:message key="label.lastModificationDate"/>
-				<fr:view name="result" property="lastModificationDate"/> (<fr:view name="result" property="modifiedBy"/>)
+				<fr:view name="result" property="lastModificationDate"/> 	
+					<logic:present name="result" property="modifiedBy">
+						(<fr:view name="result" property="modifiedBy" type="java.lang.String"/>)
+					</logic:present>
 		</span>
 	</p>
 	
