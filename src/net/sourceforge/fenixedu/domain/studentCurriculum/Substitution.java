@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+
+import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -34,8 +37,17 @@ public class Substitution extends Substitution_Base {
 
     @Override
     public String getGivenGrade() {
-	// TODO: check rules
-	return null;
+	if (super.getGivenGrade() == null) {
+	    BigDecimal result = BigDecimal.ZERO;
+	    for (final IEnrolment enrolment  : getIEnrolments()) {
+		if (StringUtils.isNumeric(enrolment.getGradeValue())) {
+		    result = result.add(new BigDecimal(enrolment.getGradeValue()));
+		}
+	    }
+	    return result == BigDecimal.ZERO ? null : result.divide(new BigDecimal(getIEnrolments().size())).toPlainString();
+	} else {
+	    return super.getGivenGrade();
+	}
     }
 
 }
