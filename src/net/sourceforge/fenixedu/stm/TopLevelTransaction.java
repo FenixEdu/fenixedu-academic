@@ -56,6 +56,11 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
 
     private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
+    // for statistics
+    protected int numBoxReads = 0;
+    protected int numBoxWrites = 0;
+
+
     TopLevelTransaction(ActiveTransactionsRecord record) {
         super(record);
 
@@ -132,10 +137,18 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
     @Override
     protected void doCommit() {
         if (isWriteTransaction()) {
-            Transaction.STATISTICS.incWrites();
+            Transaction.STATISTICS.incWrites(this);
         } else {
-            Transaction.STATISTICS.incReads();
+            Transaction.STATISTICS.incReads(this);
         }
+
+        //if (numBoxReads + numBoxWrites > 0) {
+        //    System.out.printf("INFO: Commiting transaction with (reads = %d, writes = %d)\n", numBoxReads, numBoxWrites);
+        //}
+
+        // reset statistics counters
+        numBoxReads = 0;
+        numBoxWrites = 0;
 
         notifyBeforeCommit(this);
         super.doCommit();
@@ -162,6 +175,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         if (dbChanges == null) {
             throw new IllegalWriteException();
         } else {
+            numBoxWrites++;
             super.setBoxValue(vbox, value);
         }
     }
@@ -176,6 +190,7 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
     }
 
     public <T> T getBoxValue(VBox<T> vbox, Object obj, String attr) {
+        numBoxReads++;
         T value = getLocalValue(vbox);
 
         if (value == null) {

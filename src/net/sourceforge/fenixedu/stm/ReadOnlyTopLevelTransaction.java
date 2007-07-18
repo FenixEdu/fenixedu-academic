@@ -18,6 +18,7 @@ class ReadOnlyTopLevelTransaction extends TopLevelTransaction {
     }
 
     public <T> T getBoxValue(VBox<T> vbox, Object obj, String attr) {
+        numBoxReads++;
         VBoxBody<T> body = vbox.body.getBody(number);
         if (body.value == VBox.NOT_LOADED_VALUE) {
             vbox.reload(obj, attr);
