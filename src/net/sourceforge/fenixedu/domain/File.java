@@ -37,12 +37,8 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
-	if (this.getPermittedGroup() == null) {
-	    // everyone can access file
-	    return true;
-	} else {
-	    return this.getPermittedGroup().isMember(person);
-	}
+        final Group group = this.getPermittedGroup();
+        return group == null || group.isMember(person);
     }
 
     /**

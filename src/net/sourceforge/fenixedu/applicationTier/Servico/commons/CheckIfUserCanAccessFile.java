@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -15,16 +14,10 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class CheckIfUserCanAccessFile extends Service {
 
-    public Boolean run(String uniqueUsername, String externalStorageIdentification)
-            throws FenixServiceException {
-        Person person = Person.readPersonByUsername(uniqueUsername);
-        File file = File.readByExternalStorageIdentification(externalStorageIdentification);
-
-        if (person != null && file != null) {
-            return file.isPersonAllowedToAccess(person);
-        }
-
-        return false;
+    public Boolean run(final String username, final String externalStorageIdentification) {
+        final Person person = Person.readPersonByUsername(username);
+        final File file = File.readByExternalStorageIdentification(externalStorageIdentification);
+        return person != null && file != null && file.isPersonAllowedToAccess(person);
     }
 
 }
