@@ -7,6 +7,8 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class StringUtils {
 
+    static final public String EMPTY = org.apache.commons.lang.StringUtils.EMPTY;
+    
     public static boolean verifyContainsWithEquality(String originalString, String stringToCompare) {
         if (originalString == null || stringToCompare == null) {
             return false;
@@ -64,22 +66,30 @@ public class StringUtils {
     }
 
     public static String rightPad(String field, int LINE_LENGTH, char fillPaddingWith) {
+	if (!org.apache.commons.lang.StringUtils.isEmpty(field) && !field.endsWith(" ")) {
+	    field += " ";
+	}
+	
 	return org.apache.commons.lang.StringUtils.rightPad(field, LINE_LENGTH, fillPaddingWith);
     }
     
     public static String multipleLineRightPad(String field, int LINE_LENGTH, char fillPaddingWith) {
+	if (!org.apache.commons.lang.StringUtils.isEmpty(field) && !field.endsWith(" ")) {
+	    field += " ";
+	}
+	
 	if (field.length() < LINE_LENGTH) {
-	    return org.apache.commons.lang.StringUtils.rightPad(field + " ", LINE_LENGTH, fillPaddingWith);    
+	    return org.apache.commons.lang.StringUtils.rightPad(field, LINE_LENGTH, fillPaddingWith);    
 	} else {
 	    final List<String> words = Arrays.asList(field.split(" "));
 	    int currentLineLength = 0;
-	    String result = "";
+	    String result = EMPTY;
 	    
 	    for (final String word : words) {
 		final String toAdd = word + " ";
 		
 		if (currentLineLength + toAdd.length() > LINE_LENGTH) {
-		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH - 1, ' ') + '\n';
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH, fillPaddingWith) + '\n';
 		    currentLineLength = toAdd.length();
 		} else {
 		    currentLineLength += toAdd.length();
@@ -97,24 +107,30 @@ public class StringUtils {
     }
     
     public static String multipleLineRightPadWithSuffix(String field, int LINE_LENGTH, char fillPaddingWith, String suffix) {
+	if (!org.apache.commons.lang.StringUtils.isEmpty(field) && !field.endsWith(" ")) {
+	    field += " ";
+	}
+	
 	if (org.apache.commons.lang.StringUtils.isEmpty(suffix)) {
 	    return multipleLineRightPad(field, LINE_LENGTH, fillPaddingWith);
+	} else if (!suffix.startsWith(" ")) {
+	    suffix = " " + suffix;
 	}
 	
 	int LINE_LENGTH_WITH_SUFFIX = LINE_LENGTH - suffix.length();
 	
 	if (field.length() < LINE_LENGTH_WITH_SUFFIX) {
-	    return org.apache.commons.lang.StringUtils.rightPad(field + " ", LINE_LENGTH_WITH_SUFFIX, fillPaddingWith) + suffix;    
+	    return StringUtils.rightPad(field, LINE_LENGTH_WITH_SUFFIX, fillPaddingWith) + suffix;    
 	} else {
 	    final List<String> words = Arrays.asList(field.split(" "));
 	    int currentLineLength = 0;
-	    String result = "";
+	    String result = EMPTY;
 	    
 	    for (final String word : words) {
 		final String toAdd = word + " ";
 		
-		if (currentLineLength + toAdd.length() > LINE_LENGTH_WITH_SUFFIX) {
-		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH_WITH_SUFFIX - 1, ' ') + '\n';
+		if (currentLineLength + toAdd.length() > LINE_LENGTH) {
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH, fillPaddingWith) + '\n';
 		    currentLineLength = toAdd.length();
 		} else {
 		    currentLineLength += toAdd.length();
@@ -124,10 +140,10 @@ public class StringUtils {
 	    }
 	    
 	    if (currentLineLength < LINE_LENGTH_WITH_SUFFIX) {
-		return org.apache.commons.lang.StringUtils.rightPad(result, result.length() + (LINE_LENGTH_WITH_SUFFIX - currentLineLength), fillPaddingWith) + suffix;
-	    } 
-	    
-	    return result;
+		return StringUtils.rightPad(result, result.length() + (LINE_LENGTH_WITH_SUFFIX - currentLineLength), fillPaddingWith) + suffix;
+	    } else {
+		return StringUtils.rightPad(result, result.length() + (LINE_LENGTH - currentLineLength), fillPaddingWith) + "\n" + org.apache.commons.lang.StringUtils.leftPad(suffix, LINE_LENGTH, fillPaddingWith);
+	    }
 	}
     }
     
