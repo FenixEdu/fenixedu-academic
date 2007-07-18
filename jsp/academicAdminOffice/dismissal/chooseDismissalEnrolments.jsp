@@ -59,7 +59,7 @@
 	<logic:notEmpty name="dismissalBean" property="enrolments">
 		<fr:edit id="internalEnrolments" name="dismissalBean" property="enrolments" schema="student.Dismissal.choose.internal.enrolments">
 			<fr:layout name="tabular-editable">
-				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.startDate,enrolment.executionPeriod,enrolment.name"/>
+				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.startDate,enrolment.name"/>
 				<fr:property name="classes" value="tstyle4"/>
 			</fr:layout>
 		</fr:edit>
