@@ -37,7 +37,7 @@ public class WrittenTestsRoomManager extends HashSet<Room> {
         	dateTime.plusMinutes(120).getHourOfDay() == 0 ?
         		new HourMinuteSecond(dateTime.plusMinutes(119).getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime.plusMinutes(119).getSecondOfMinute()) :
         		    new HourMinuteSecond(dateTime.plusMinutes(120).getHourOfDay(),dateTime.plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120).getSecondOfMinute()),  
-        	new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Integer.valueOf(1), Boolean.TRUE, Boolean.TRUE));
+        	new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Boolean.TRUE, Boolean.TRUE));
 
         return dateTime;
     }
