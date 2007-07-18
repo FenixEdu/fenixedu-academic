@@ -62,5 +62,7 @@ public interface IEnrolment {
     boolean isEnroled();
     
     boolean isExternalEnrolment();
+
+    boolean isEnrolment();
     
 }

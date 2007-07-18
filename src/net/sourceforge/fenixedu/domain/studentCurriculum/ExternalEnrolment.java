@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -134,6 +133,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     final public boolean isExternalEnrolment() {
 	return true;
+    }
+
+    final public boolean isEnrolment() {
+	return false;
     }
 
     public Integer getFinalGrade() {
