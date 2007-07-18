@@ -316,19 +316,6 @@
 					</textElement>
 				<text><![CDATA[o grau de]]></text>
 				</staticText>
-				<staticText>
-					<reportElement
-						x="161"
-						y="710"
-						width="72"
-						height="16"
-						key="staticText-20"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<text><![CDATA[O Administrador]]></text>
-				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="112"
@@ -338,28 +325,6 @@
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch" pen="Thin"/>
 				</line>
-				<line direction="TopDown">
-					<reportElement
-						x="112"
-						y="758"
-						width="156"
-						height="0"
-						key="line-2"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="147"
-						y="762"
-						width="100"
-						height="16"
-						key="staticText-21"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<text><![CDATA[A Coordenadora de Núcleo]]></text>
-				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="330"
@@ -382,19 +347,10 @@
 					</textElement>
 				<text><![CDATA[O Reitor]]></text>
 				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="330"
-						y="758"
-						width="156"
-						height="0"
-						key="line-4"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
 				<staticText>
 					<reportElement
-						x="341"
-						y="762"
+						x="122"
+						y="710"
 						width="139"
 						height="16"
 						key="staticText-23"/>

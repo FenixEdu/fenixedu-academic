@@ -318,16 +318,16 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="158"
+						x="126"
 						y="701"
-						width="72"
+						width="141"
 						height="16"
 						key="staticText-19"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[O Administrador]]></text>
+				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -338,28 +338,6 @@
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch" pen="Thin"/>
 				</line>
-				<line direction="TopDown">
-					<reportElement
-						x="109"
-						y="749"
-						width="156"
-						height="0"
-						key="line-2"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="144"
-						y="753"
-						width="100"
-						height="16"
-						key="staticText-20"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<text><![CDATA[A Coordenadora de Núcleo]]></text>
-				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="327"
@@ -381,28 +359,6 @@
 						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[O Reitor]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="327"
-						y="749"
-						width="156"
-						height="0"
-						key="line-4"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="338"
-						y="753"
-						width="139"
-						height="16"
-						key="staticText-22"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
 				</staticText>
 			</band>
 		</detail>
