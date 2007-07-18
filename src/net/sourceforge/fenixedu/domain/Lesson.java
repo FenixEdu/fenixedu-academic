@@ -222,7 +222,6 @@ public class Lesson extends Lesson_Base {
 		}
 		setPeriod(null);
 	    }
-
 	} else {		
 	    if(hasLessonSpaceOccupation()) {
 		getLessonSpaceOccupation().delete();
@@ -244,7 +243,7 @@ public class Lesson extends Lesson_Base {
 	    Campus lessonCampus = getLessonCampus();
 	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {
 		if(!Holiday.isHoliday(dateToCreate, lessonCampus) ) {
-		    new LessonInstance(this, getSala(), dateToCreate);
+		    new LessonInstance(this, dateToCreate);
 		}
 	    }	    	   
 	}
@@ -392,19 +391,25 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay getLessonStartDay() {	
-	if(hasPeriod()) {
-	    YearMonthDay periodStart = getPeriod().getStartYearMonthDay();			    
-	    int lessonStartDayOfWeek = periodStart.toDateTimeAtMidnight().getDayOfWeek();
-	    return periodStart.plusDays(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat() - lessonStartDayOfWeek);
+	if(hasPeriod()) {	    
+	    YearMonthDay periodBegin = getPeriod().getStartYearMonthDay();
+	    YearMonthDay lessonBegin = periodBegin.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	    if(lessonBegin.isBefore(periodBegin)) {
+		lessonBegin = lessonBegin.plusDays(7);
+	    }     
+	    return lessonBegin;
 	}	
 	return null;	
     }
 
     private YearMonthDay getLessonEndDay() {	
 	if(hasPeriod()) {
-	    YearMonthDay periodEnd = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();		  	
-	    int lessonEndDayOfWeek = periodEnd.toDateTimeAtMidnight().getDayOfWeek();
-	    return periodEnd.minusDays(lessonEndDayOfWeek - getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat());    
+	    YearMonthDay periodEnd = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();
+	    YearMonthDay lessonEnd = periodEnd.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	    if(lessonEnd.isAfter(periodEnd)) {
+		lessonEnd = lessonEnd.minusDays(7);
+	    } 
+	    return lessonEnd;
 	} 
 	return null;	
     }
@@ -639,13 +644,10 @@ public class Lesson extends Lesson_Base {
 
     public String prettyPrint() {
 	final StringBuilder result = new StringBuilder();
-	result.append(getDiaSemana().getDiaSemanaString());
-	result.append(", ");
-	result.append(getInicio().get(Calendar.HOUR_OF_DAY));
-	result.append(":");
-	result.append(getInicio().get(Calendar.MINUTE));
-	result.append(", ");
-	result.append(hasSala() ? ((AllocatableSpace)getSala()).getName() : "");
+	result.append(getDiaSemana().toString()).append(" (");
+	result.append(getBeginHourMinuteSecond().toString("HH:mm")).append("-");
+	result.append(getEndHourMinuteSecond().toString("HH:mm")).append(") ");
+	result.append(hasSala() ? ((AllocatableSpace)getSala()).getName().toString() : "");	
 	return result.toString();
     }        
 }

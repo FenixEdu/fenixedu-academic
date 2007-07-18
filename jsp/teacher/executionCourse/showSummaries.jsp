@@ -114,6 +114,10 @@
 					<fr:view name="summary" property="summaryDateYearMonthDay" />
 					<fr:view name="summary" property="summaryHourHourMinuteSecond" />
 				
+					<logic:notEmpty name="summary" property="room">
+						(<bean:message key="label.room"/>: <bean:write name="summary" property="room.name"/>)
+					</logic:notEmpty>
+					
 					 - 															 
 				
 					<%-- Students Number --%>

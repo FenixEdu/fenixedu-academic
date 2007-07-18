@@ -476,7 +476,7 @@
 </schema>
 <schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
 	<slot name="date" />
-	<slot name="lesson" key="label.lesson" layout="lesson-plain"/>
+	<slot name="lessonInstancePrettyPrint" key="label.lesson" />
 	<slot name="lesson.tipo" layout="" key="label.type"/>
 	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
 	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>		
@@ -512,7 +512,7 @@
 	<slot name="date.dayOfMonth" key="label.day"/>
 	<slot name="monthString" key="label.month"/>
 	<slot name="date.year" key="labe.summary.year"/>
-	<slot name="lesson" key="label.lesson" layout="lesson-plain" />		
+	<slot name="lessonInstancePrettyPrint" key="label.lesson" />		
 	<slot name="lesson.tipo" layout="" key="label.type"/>
 	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
 	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>			

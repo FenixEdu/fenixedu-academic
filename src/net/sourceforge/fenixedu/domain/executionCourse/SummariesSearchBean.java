@@ -21,68 +21,68 @@ public class SummariesSearchBean implements Serializable {
     private Boolean showOtherProfessors;
 
     public SummariesSearchBean(final ExecutionCourse executionCourse) {
-        this.executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return executionCourseDomainReference.getObject();
+	return executionCourseDomainReference.getObject();
     }
 
     public Professorship getProfessorship() {
-        return professorshipDomainReference == null ? null : professorshipDomainReference.getObject();
+	return professorshipDomainReference == null ? null : professorshipDomainReference.getObject();
     }
     public void setProfessorship(final Professorship professorship) {
-        professorshipDomainReference = new DomainReference<Professorship>(professorship);
+	professorshipDomainReference = new DomainReference<Professorship>(professorship);
     }
     public Shift getShift() {
-        return shiftDomainReference == null ? null : shiftDomainReference.getObject();
+	return shiftDomainReference == null ? null : shiftDomainReference.getObject();
     }
     public void setShift(final Shift shift) {
-        shiftDomainReference = new DomainReference<Shift>(shift);
+	shiftDomainReference = new DomainReference<Shift>(shift);
     }
     public ShiftType getShiftType() {
-        return shiftType;
+	return shiftType;
     }
     public void setShiftType(ShiftType shiftType) {
-        this.shiftType = shiftType;
+	this.shiftType = shiftType;
     }
-	public Boolean getShowOtherProfessors() {
-		return showOtherProfessors;
-	}
-	public void setShowOtherProfessors(final Boolean showOtherProfessors) {
-		this.showOtherProfessors = showOtherProfessors;
-	}
+    public Boolean getShowOtherProfessors() {
+	return showOtherProfessors;
+    }
+    public void setShowOtherProfessors(final Boolean showOtherProfessors) {
+	this.showOtherProfessors = showOtherProfessors;
+    }
 
     public SortedSet<Summary> search() {
-        final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
-        for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
-            final Shift shift = summary.getShift();
-            if (getShift() == null || getShift() == shift) {
-                if (getShiftType() == null || getShiftType() == shift.getTipo()) {
-                	final Professorship professorship = summary.getProfessorship();
-                	if (getProfessorship() == null && showOtherProfessors == null) {
-                		summaries.add(summary);
-                	} else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
-                		summaries.add(summary);
-                	} else if (showOtherProfessors == null && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
-                        summaries.add(summary);
-                    }
-                }
-            }
-        }
-        return summaries;
+	final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
+	    final Shift shift = summary.getShift();
+	    if (getShift() == null || getShift() == shift) {
+		if (getShiftType() == null || getShiftType() == shift.getTipo()) {
+		    final Professorship professorship = summary.getProfessorship();
+		    if (getProfessorship() == null && showOtherProfessors == null) {
+			summaries.add(summary);
+		    } else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
+			summaries.add(summary);
+		    } else if (showOtherProfessors == null && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
+			summaries.add(summary);
+		    }
+		}
+	    }
+	}
+	return summaries;
     }
 
     public SortedSet<Summary> getSummaries() {
-        return search();
+	return search();
     }
 
     public SortedSet<ShiftType> getShiftTypes() {
-    	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
-    	for (final Shift shift : getExecutionCourse().getAssociatedShiftsSet()) {
-    		shiftTypes.add(shift.getTipo());
-    	}
-    	return shiftTypes;
+	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+	for (final Shift shift : getExecutionCourse().getAssociatedShiftsSet()) {
+	    shiftTypes.add(shift.getTipo());
+	}
+	return shiftTypes;
     }
 
 }

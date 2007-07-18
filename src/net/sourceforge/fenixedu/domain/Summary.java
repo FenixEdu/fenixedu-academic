@@ -58,7 +58,7 @@ public class Summary extends Summary_Base {
 	    Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay day,
 	    AllocatableSpace room, Partial hour) {
-	
+
 	setShift(shift);
 	setSummaryDateYearMonthDay(day);
 	setExecutionCourse(shift.getDisciplinaExecucao());
@@ -69,14 +69,14 @@ public class Summary extends Summary_Base {
 	checkSpecialParameters(isExtraLesson, professorship, teacherName, teacher, lesson, hour);	
 	checkIfInternalTeacherHasProfessorhipInExecutionCourse(teacher, shift.getDisciplinaExecucao());
 	checkIfSummaryDateIsValid(day, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson, isExtraLesson);
-			
+
 	setStudentsNumber(studentsNumber);	
 	setProfessorship(professorship);
 	setTeacherName(teacherName);
 	setTeacher(teacher);		
 	setLastModifiedDateDateTime(new DateTime());
 	setSummaryType(shift.getTipo());
-	
+
 	if (isExtraLesson) {
 	    super.setLessonInstance(null);
 	    setRoom(room);
@@ -88,7 +88,7 @@ public class Summary extends Summary_Base {
 	    lessonInstanceManagement(lesson, day, lesson.getSala());
 	}
     }
-        
+
     public void delete() {
 	super.setExecutionCourse(null);
 	super.setShift(null);
@@ -99,19 +99,19 @@ public class Summary extends Summary_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return hasShift() && hasExecutionCourse() && (hasTeacher() || hasProfessorship() || !StringUtils.isEmpty(getTeacherName()))
-		&& !getTitle().isEmpty() && !getSummaryText().isEmpty() && getSummaryDateYearMonthDay() != null
-		&& getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null 
-		&& getSummaryType() != null;	
+	&& !getTitle().isEmpty() && !getSummaryText().isEmpty() && getSummaryDateYearMonthDay() != null
+	&& getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null 
+	&& getSummaryType() != null;	
     }
-    
+
     private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {		
 	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
 	if(lessonInstance == null) {	    
-	    new LessonInstance(lesson, room, this);	    
+	    new LessonInstance(this);	    
 	} else {
 	    setLessonInstance(lessonInstance);
 	}
@@ -120,15 +120,15 @@ public class Summary extends Summary_Base {
     public Lesson getLesson() {
 	return getLessonInstance() != null ? getLessonInstance().getLesson() : null;
     }
-    
+
     @Override
     public void setSummaryHourHourMinuteSecond(HourMinuteSecond summaryHourHourMinuteSecond) {
-        if(summaryHourHourMinuteSecond == null) {
-            throw new DomainException("error.Summary.empty.time");
-        }
+	if(summaryHourHourMinuteSecond == null) {
+	    throw new DomainException("error.Summary.empty.time");
+	}
 	super.setSummaryHourHourMinuteSecond(summaryHourHourMinuteSecond);
     }
-    
+
     @Override
     public void setIsExtraLesson(Boolean isExtraLesson) {
 	if(isExtraLesson == null) {
@@ -136,7 +136,7 @@ public class Summary extends Summary_Base {
 	}
 	super.setIsExtraLesson(isExtraLesson);
     }
-    
+
     @Override
     public void setExecutionCourse(ExecutionCourse executionCourse) {
 	if(executionCourse == null) {
@@ -144,7 +144,7 @@ public class Summary extends Summary_Base {
 	}
 	super.setExecutionCourse(executionCourse);
     }
-    
+
     @Override
     public void setSummaryDateYearMonthDay(YearMonthDay summaryDateYearMonthDay) {
 	if (summaryDateYearMonthDay == null) {
@@ -152,7 +152,7 @@ public class Summary extends Summary_Base {
 	}
 	super.setSummaryDateYearMonthDay(summaryDateYearMonthDay);
     }
-    
+
     @Override
     public void setTitle(MultiLanguageString title) {
 	if (title == null || title.getAllContents().isEmpty()) {
@@ -160,7 +160,7 @@ public class Summary extends Summary_Base {
 	}
 	super.setTitle(title);
     }
-    
+
     @Override
     public void setSummaryText(MultiLanguageString summaryText) {
 	if (summaryText == null || summaryText.getAllContents().isEmpty()) {
@@ -168,15 +168,15 @@ public class Summary extends Summary_Base {
 	}
 	super.setSummaryText(summaryText);
     }
-    
+
     @Override
     public void setLessonInstance(LessonInstance lessonInstance) {
-        if(lessonInstance == null) {
-            throw new DomainException("error.Summary.empty.lessonInstance");
-        }
+	if(lessonInstance == null) {
+	    throw new DomainException("error.Summary.empty.lessonInstance");
+	}
 	super.setLessonInstance(lessonInstance);
     }
-    
+
     @Override
     public void setShift(Shift shift) {
 	if (shift == null) {
@@ -184,7 +184,7 @@ public class Summary extends Summary_Base {
 	}
 	super.setShift(shift);
     }
-    
+
     private void checkIfSummaryDateIsValid(YearMonthDay date, ExecutionPeriod executionPeriod, Lesson lesson, Boolean isExtraLesson) {
 	if (!isExtraLesson) {	 	   	    	    
 	    Summary summary = lesson.getSummaryByDate(date);
@@ -210,7 +210,7 @@ public class Summary extends Summary_Base {
 
     private void checkSpecialParameters(Boolean isExtraLesson, Professorship professorship, String teacherName, 
 	    Teacher teacher, Lesson lesson, Partial hour) {
-		
+
 	if (professorship == null && StringUtils.isEmpty(teacherName) && teacher == null) {
 	    throw new DomainException("error.summary.no.teacher");
 	}	
@@ -224,7 +224,7 @@ public class Summary extends Summary_Base {
 	    }
 	}
     }
-    
+
     public String getOrder() {
 	StringBuilder stringBuilder = new StringBuilder();
 	Lesson lesson = getLesson();
@@ -244,10 +244,12 @@ public class Summary extends Summary_Base {
 
     @Override
     public AllocatableSpace getRoom() {
-	if (getLesson() != null) {
-	    return (AllocatableSpace) getLesson().getSala();
+	if(getIsExtraLesson()) {
+	    return (AllocatableSpace) super.getRoom();
+	} else if(hasLessonInstance()) {
+	    return getLessonInstance().getRoom();	   
 	}
-	return (AllocatableSpace) super.getRoom();
+	return null;
     }
 
     public void moveFromTeacherToProfessorship(Professorship professorship) {
@@ -255,7 +257,7 @@ public class Summary extends Summary_Base {
 		&& professorship != null 
 		&& professorship.getExecutionCourse().equals(getExecutionCourse())
 		&& professorship.getTeacher().equals(getTeacher())) {
-	    	    
+
 	    setTeacher(null);
 	    setProfessorship(professorship);
 	}

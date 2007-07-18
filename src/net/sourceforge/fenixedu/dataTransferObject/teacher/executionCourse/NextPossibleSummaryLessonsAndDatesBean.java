@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -34,6 +35,16 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	setDate(date);
     }
 
+    public String getLessonInstancePrettyPrint() {
+	Lesson lesson = getLesson();
+	LessonInstance lessonInstance = lesson.getLessonInstanceFor(getDate());
+	if(lessonInstance != null) {
+	    return lessonInstance.prettyPrint();
+	} else {
+	    return lesson.prettyPrint();
+	}
+    }
+    
     public Integer getStudentsNumber() {
 	return studentsNumber;
     }
@@ -62,8 +73,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	return getLesson().getSummaryByDate(getDate()) != null;
     }
 
-    private static final DateTimeFormatter monthOfYearTextFormatter = new DateTimeFormatterBuilder().appendMonthOfYearText()
-	    .toFormatter();
+    private static final DateTimeFormatter monthOfYearTextFormatter = new DateTimeFormatterBuilder().appendMonthOfYearText().toFormatter();
 
     public String getMonthString() {	
 	return getDate().toString(monthOfYearTextFormatter);

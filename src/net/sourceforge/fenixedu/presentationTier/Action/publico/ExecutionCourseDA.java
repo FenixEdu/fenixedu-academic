@@ -93,20 +93,20 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     	final SummariesSearchBean summariesSearchBean = executionCourse.getSummariesSearchBean();
     	request.setAttribute("summariesSearchBean", summariesSearchBean);
     	if (dynaActionForm != null) {
-    		final String shiftType = (String) dynaActionForm.get("shiftType");
-    		if (shiftType != null && shiftType.length() > 0) {
-    			summariesSearchBean.setShiftType(ShiftType.valueOf(shiftType));
-    		}
-    		final String shiftID = (String) dynaActionForm.get("shiftID");
-    		if (shiftID != null && shiftID.length() > 0) {
-    			summariesSearchBean.setShift(rootDomainObject.readShiftByOID(Integer.valueOf(shiftID)));
-    		}
-    		final String professorshipID = (String) dynaActionForm.get("professorshipID");
-    		if (professorshipID != null && professorshipID.equals("-1")) {
-    			summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
-    		} else if (professorshipID != null && !professorshipID.equals("0")) {
-    			summariesSearchBean.setProfessorship(rootDomainObject.readProfessorshipByOID(Integer.valueOf(professorshipID)));
-    		}
+    	    final String shiftType = (String) dynaActionForm.get("shiftType");
+    	    if (shiftType != null && shiftType.length() > 0) {
+    		summariesSearchBean.setShiftType(ShiftType.valueOf(shiftType));
+    	    }
+    	    final String shiftID = (String) dynaActionForm.get("shiftID");
+    	    if (shiftID != null && shiftID.length() > 0) {
+    		summariesSearchBean.setShift(rootDomainObject.readShiftByOID(Integer.valueOf(shiftID)));
+    	    }
+    	    final String professorshipID = (String) dynaActionForm.get("professorshipID");
+    	    if (professorshipID != null && professorshipID.equals("-1")) {
+    		summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
+    	    } else if (professorshipID != null && !professorshipID.equals("0")) {
+    		summariesSearchBean.setProfessorship(rootDomainObject.readProfessorshipByOID(Integer.valueOf(professorshipID)));
+    	    }
     	}
         return mapping.findForward("execution-course-summaries");
     }

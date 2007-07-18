@@ -13,7 +13,6 @@
 	<bean:define id="shifts" name="component" property="infoShifts" />
 	<bean:define id="professorships" name="component" property="infoProfessorships" />
 
-
 	<h2><bean:message key="label.summaries" /></h2>
 
 	<html:form action="/viewSiteSummaries">
@@ -21,8 +20,6 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
         
-
-
 		<table class="tab_simple" cellspacing="2" cellpadding="0">
 			<tr>
 				<td><bean:message key="label.summary.lesson" />:</td>
@@ -63,7 +60,6 @@
 			</tr>
 		</table>	
 	</html:form>
-
 
 	<logic:iterate id="summary" name="component" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
 		<bean:define id="summaryCode" name="summary" property="idInternal" />

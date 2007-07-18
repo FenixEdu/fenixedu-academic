@@ -85,18 +85,12 @@
 </html:form>
 <% } %>
 
-
-
-
-
 <bean:define id="summaries" name="summariesSearchBean" property="summaries"/>
 <logic:empty name="summaries">
 	<p>
 		<em><bean:message key="message.summaries.not.available" /></em>
 	</p>
 </logic:empty>
-
-
 
 <logic:notEmpty name="summaries">
 	<logic:iterate id="summary" name="summaries" >	
@@ -116,7 +110,6 @@
 							(<bean:message key="label.room" /> <bean:write name="summary" property="room.nome" />)
 			       		</logic:notEmpty>
 			       	</logic:present>
-
 
 					<span class="greytxt">
 						<logic:empty name="summary" property="isExtraLesson">

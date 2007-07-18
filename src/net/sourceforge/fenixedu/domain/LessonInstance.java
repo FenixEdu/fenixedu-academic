@@ -21,43 +21,48 @@ public class LessonInstance extends LessonInstance_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
-    public LessonInstance(Lesson lesson, AllocatableSpace space, Summary summary) {
+    public LessonInstance(Summary summary) {
 	
 	super();
 
-	if(summary == null) {
+	if(summary == null || summary.getLesson() == null) {
 	    throw new DomainException("error.LessonInstance.empty.summary");
 	}
 	
 	YearMonthDay day = summary.getSummaryDateYearMonthDay();
 	
-	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
+	LessonInstance lessonInstance = summary.getLesson().getLessonInstanceFor(day);
 	if(lessonInstance != null) {
 	    throw new DomainException("error.lessonInstance.already.exist");
 	}
 			
-	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
-	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();	    
+	HourMinuteSecond beginTime = summary.getLesson().getBeginHourMinuteSecond();
+	HourMinuteSecond endTime = summary.getLesson().getEndHourMinuteSecond();	    
 	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(), beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
 	DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(), endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);	    	    	   
 	
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
-	setLesson(lesson);      
+	setLesson(summary.getLesson());      
 	setSummary(summary);
 		
-	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
+	summary.getLesson().refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
 	
-	if(space != null) {	 
-	    lessonInstanceSpaceOccupationManagement(space);
+	AllocatableSpace room = summary.getLesson().getSala();
+	if(room != null) {	 
+	    lessonInstanceSpaceOccupationManagement(room);
 	}	
     }
 
-    public LessonInstance(Lesson lesson, AllocatableSpace space, YearMonthDay day) {
+    public LessonInstance(Lesson lesson, YearMonthDay day) {
 	
 	super();
 
+	if(lesson == null || !lesson.getAllLessonDates().contains(day)) {
+	    throw new DomainException("error.LessonInstance.empty.Lesson");
+	}
+	
 	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
 	if(lessonInstance != null) {
 	    throw new DomainException("error.lessonInstance.already.exist");
@@ -73,8 +78,9 @@ public class LessonInstance extends LessonInstance_Base {
 	setEndDateTime(endDateTime);
 	setLesson(lesson);      
 		
-	if(space != null) {
-	    lessonInstanceSpaceOccupationManagement(space);
+	AllocatableSpace room = lesson.getSala();
+	if(room != null) {
+	    lessonInstanceSpaceOccupationManagement(room);
 	}
     }    
 
@@ -156,5 +162,14 @@ public class LessonInstance extends LessonInstance_Base {
     
     public DiaSemana getDayOfweek() {
 	return new DiaSemana(DiaSemana.getDiaSemana(getDay()));
-    }      
+    }
+    
+    public String prettyPrint() {
+	final StringBuilder result = new StringBuilder();
+	result.append(getDayOfweek().getDiaSemanaString()).append(" (");	
+	result.append(getStartTime().toString("HH:mm")).append(" - ");
+	result.append(getEndDateTime().toString("HH:mm")).append(") ");
+	result.append(getRoom() != null ? getRoom().getName() : "");
+	return result.toString();
+    }  
 }
