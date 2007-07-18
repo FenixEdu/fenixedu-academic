@@ -128,12 +128,7 @@ public class Registration extends Registration_Base {
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, null, RegistrationAgreement.NORMAL, null, degreeCurricularPlan);
-
-	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod());
+	this(person, degreeCurricularPlan, null, RegistrationAgreement.NORMAL, null);
     }
 
     private Registration(Person person, Integer studentNumber, RegistrationAgreement agreement,
