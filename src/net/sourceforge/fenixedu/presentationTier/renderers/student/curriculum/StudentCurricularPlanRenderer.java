@@ -298,11 +298,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private static final String SPACER_IMAGE_PATH = "/images/scp_spacer.gif";
 
-	private static final int MAX_LINE_SIZE = 20;
+	private static final int MAX_LINE_SIZE = 25;
 
-	private static final int MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS = 12;
+	private static final int MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS = 17;
 
-	private static final int MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES = 8;
+	private static final int MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES = 13;
 
 	private static final int HEADERS_SIZE = 3;
 
