@@ -77,7 +77,9 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
     	//int numberCompletedCurricularCourses = 0;
 		for (final DegreeModuleScope degreeModuleScope : degreesActiveCurricularCourseScopes) {
 			final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
-			final boolean isCurricularCourseApproved = studentCurricularPlan.isApproved(curricularCourse);
+			final boolean isCurricularCourseApproved =
+			        (studentCurricularPlan.isBoxStructure() && studentCurricularPlan.getRoot().isAproved(curricularCourse))
+		                || studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
 
 			final Integer curricularYear = degreeModuleScope.getCurricularYear();
 
