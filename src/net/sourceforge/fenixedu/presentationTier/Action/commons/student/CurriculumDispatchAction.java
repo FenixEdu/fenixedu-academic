@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.St
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
@@ -85,13 +85,28 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	// String studentNumber = (String) actionForm.get("studentNumber");
 	// List<Registration> registrations =
 	// Registration.readByNumber(Integer.valueOf(studentNumber));
-	final List<Registration> registrations = getStudent(actionForm).getRegistrations();
+	
+	Registration registration = null;
 
-	if (registrations.isEmpty()) {
+	final Integer degreeCurricularPlanId = (Integer) actionForm.get("degreeCurricularPlanID");
+	if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
+	    DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	    registration = getStudent(actionForm).readRegistrationByDegreeCurricularPlan(
+		    degreeCurricularPlan);
+	} else {
+	    final List<Registration> registrations = getStudent(actionForm).getRegistrations();
+	    if (!registrations.isEmpty()) {
+		registration = registrations.iterator().next();
+	    }
+	}
+
+	if (registration == null) {
 	    return mapping.findForward("NotAuthorized");
 	} else {
-	    return getStudentCP(registrations.get(0), mapping, actionForm, request);
-	}
+	    return getStudentCP(registration, mapping, actionForm, request);
+	}    
+
     }
 
     private Student getStudent(DynaActionForm form) {
