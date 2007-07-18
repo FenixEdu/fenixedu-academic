@@ -41,7 +41,7 @@ public class CreateScormFileItemForItem extends CreateFileItemForItem {
 
 		private EducationalResourceType educationalResourceType;
 
-		public CreateScormFileItemForItemArgs(Item item, File File, String originalFilename,
+		public CreateScormFileItemForItemArgs(Item item, File file, String originalFilename,
 				String displayName, Group permittedGroup, ScormMetaDataHash scormParameters,
 				Person person, EducationalResourceType educationalResourceType) {
 			this.item = item;
