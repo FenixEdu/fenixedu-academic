@@ -38,7 +38,7 @@ public class StringFormatter {
 	// pt
 	final Map<String, String> ptPersonNameDictionary = new HashMap<String, String>();
 	ptPersonNameDictionary.put("ramoa", "ramôa");
-	ptPersonNameDictionary.put("gonçalves", "goncalves");
+	ptPersonNameDictionary.put("goncalves", "gonçalves");
 	ptPersonNameDictionary.put("jose", "josé");
 	personNameDictionaries.put(Language.pt, ptPersonNameDictionary);
     }
