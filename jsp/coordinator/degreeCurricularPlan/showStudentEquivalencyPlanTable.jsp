@@ -13,6 +13,14 @@
 	<table class="tstyle2 mtop05">
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.EquivalencyPlanEntryWrapper" indexId="n" name="equivalencePlanEntryWrappers">
 		<tr>
+			<td align="center">
+					<logic:equal name="entry" property="equivalencePlanEntry.transitiveSource" value="true">
+						<bean:message  key="label.transitive" bundle="APPLICATION_RESOURCES"/>
+					</logic:equal>
+					<logic:notEqual name="entry" property="equivalencePlanEntry.transitiveSource" value="true">
+						-
+					</logic:notEqual>
+				</td>
 			<td>
 				<bean:define id="equivalencePlanEntry" name="entry" property="equivalencePlanEntry"/>
 	

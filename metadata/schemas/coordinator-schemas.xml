@@ -300,6 +300,7 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
+    <slot name="transitiveOrigin" key="label.left.hand.transitive" />
     <slot name="destinationLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.right.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
@@ -362,6 +363,7 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
+    <slot name="transitiveOrigin" key="label.left.hand.transitive" />
     <slot name="destinationLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.right.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
@@ -375,7 +377,6 @@
 		<property name="saveOptions" value="true" />
     </slot>
     <slot name="ectsCredits" key="label.ects.credits"/>
-
 </schema>
 
 <schema name="StudentEquivalencyPlanEntryCreator.create" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">

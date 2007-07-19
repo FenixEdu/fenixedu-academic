@@ -41,6 +41,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
 	private LogicOperator destinationLogicOperator = LogicOperator.AND;
 
+	private Boolean transitiveOrigin = true;
+
 	private Double ectsCredits;
 
 	private DomainReference<CourseGroup> destinationDegreeModulesPreviousCourseGroup;
@@ -60,7 +62,8 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
 	    return new EquivalencePlanEntry(getEquivalencePlan(), getOriginDegreeModules(),
 		    getDestinationDegreeModules(), getDestinationDegreeModulesPreviousCourseGroup(),
-		    getOriginLogicOperator(), getDestinationLogicOperator(), ectsCredits);
+		    getOriginLogicOperator(), getDestinationLogicOperator(), getTransitiveOrigin(),
+		    ectsCredits);
 
 	}
 
@@ -138,6 +141,14 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    this.destinationLogicOperator = destinationLogicOperator;
 	}
 
+	public Boolean getTransitiveOrigin() {
+	    return transitiveOrigin;
+	}
+
+	public void setTransitiveOrigin(Boolean transitiveOrigin) {
+	    this.transitiveOrigin = transitiveOrigin;
+	}
+
 	public Double getEctsCredits() {
 	    return ectsCredits;
 	}
@@ -157,6 +168,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 		    .getObject()
 		    : null;
 	}
+
     }
 
     //
@@ -170,7 +182,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    final CourseGroup newCourseGroup) {
 	this();
 	init(equivalencePlan, Collections.singleton(oldCourseGroup), Collections
-		.singleton(newCourseGroup), null, null, null, null);
+		.singleton(newCourseGroup), null, null, null, true, null);
     }
 
     @Checked("EquivalencePlanPredicates.checkPermissionsToCreate")
@@ -178,12 +190,13 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    final Collection<? extends DegreeModule> oldDegreeModules,
 	    final Collection<? extends DegreeModule> newDegreeModules,
 	    final CourseGroup previousCourseGroupForNewDegreeModules,
-	    final LogicOperator sourceCurricularCoursesOperator,
-	    final LogicOperator newCurricularCoursesOperator, final Double ectsCredits) {
+	    final LogicOperator sourceDegreeModulesOperator,
+	    final LogicOperator newDegreeModulesOperator, final Boolean transitiveSource,
+	    final Double ectsCredits) {
 	this();
 	init(equivalencePlan, oldDegreeModules, newDegreeModules,
-		previousCourseGroupForNewDegreeModules, sourceCurricularCoursesOperator,
-		newCurricularCoursesOperator, ectsCredits);
+		previousCourseGroupForNewDegreeModules, sourceDegreeModulesOperator,
+		newDegreeModulesOperator, transitiveSource, ectsCredits);
 
     }
 
@@ -191,8 +204,9 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    final Collection<? extends DegreeModule> oldDegreeModules,
 	    final Collection<? extends DegreeModule> newDegreeModules,
 	    final CourseGroup previousCourseGroupForNewDegreeModules,
-	    final LogicOperator sourceCurricularCoursesOperator,
-	    final LogicOperator newCurricularCoursesOperator, final Double ectsCredits) {
+	    final LogicOperator sourceDegreeModulesOperator,
+	    final LogicOperator newDegreeModulesOperator, final Boolean transitiveSource,
+	    final Double ectsCredits) {
 
 	checkParameters(equivalencePlan);
 
@@ -202,10 +216,10 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	super.getOldDegreeModulesSet().addAll(oldDegreeModules);
 	super.getNewDegreeModulesSet().addAll(newDegreeModules);
 	super.setPreviousCourseGroupForNewDegreeModules(previousCourseGroupForNewDegreeModules);
-	super.setSourceDegreeModulesOperator(sourceCurricularCoursesOperator);
-	super.setNewDegreeModulesOperator(newCurricularCoursesOperator);
+	super.setSourceDegreeModulesOperator(sourceDegreeModulesOperator);
+	super.setNewDegreeModulesOperator(newDegreeModulesOperator);
+	super.setTransitiveSource(transitiveSource);
 	super.setEctsCredits(ectsCredits);
-	super.setTransitiveSource(true);
 
     }
 
@@ -223,12 +237,11 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     }
 
-    private void checkParameters(EquivalencePlan equivalencePlan) {
+    private void checkParameters(final EquivalencePlan equivalencePlan) {
 	if (equivalencePlan == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.equivalencePlan.cannot.be.null");
 	}
-
     }
 
     @Override

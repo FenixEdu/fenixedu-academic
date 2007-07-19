@@ -33,6 +33,16 @@
 		<table class="tstyle2 mtop05">
 		<logic:iterate id="entry" type="net.sourceforge.fenixedu.domain.EquivalencePlanEntry" indexId="n" name="entries">
 			<tr>
+				<td align="center">
+					<logic:equal name="entry" property="transitiveSource" value="true">
+						<bean:message  key="label.transitive" bundle="APPLICATION_RESOURCES"/>
+					</logic:equal>
+					<logic:notEqual name="entry" property="transitiveSource" value="true">
+						-
+					</logic:notEqual>
+				</td>
+			
+			
 			<td>
 			<logic:notEqual name="n" value="0">
 			</logic:notEqual>
