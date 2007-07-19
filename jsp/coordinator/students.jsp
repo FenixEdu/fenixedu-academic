@@ -158,7 +158,7 @@
 					<h:outputText value="#{bundle['label.number']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}'>" escape="false"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculum.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}&studentNumber=#{studentCurricularPlan.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
 				<h:outputText value="#{studentCurricularPlan.registration.number}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
@@ -178,7 +178,7 @@
 					<h:outputText value="#{bundle['label.name']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewCurriculum.do?method=prepare&degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}'>" escape="false"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculum.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}&studentNumber=#{studentCurricularPlan.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
 				<h:outputText value="#{studentCurricularPlan.registration.person.name}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>

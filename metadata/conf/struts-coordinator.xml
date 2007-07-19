@@ -987,6 +987,7 @@
         		name="bolonhaTransitionManagementForm">
         	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />
         	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />
+        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>
         </action>
         <!-- End : Bolonha Transition Management -->
 

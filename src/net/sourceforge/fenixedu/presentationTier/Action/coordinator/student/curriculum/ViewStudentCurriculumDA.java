@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.student.cur
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -33,13 +34,28 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 	    return mapping.findForward("chooseStudent");
 	}
 
-	if (!student.hasTransitionRegistrations()) {
+	if (!getDegreeCurricularPlan(actionForm).isBolonhaDegree()) {
+
+	    if (!student.hasTransitionRegistrations()) {
+		return getOldCurriculumRedirect(actionForm, student);
+	    }
+
+	    request.setAttribute("student", student);
+
+	    return mapping.findForward("chooseCurriculumType");
+	} else {
 	    return getOldCurriculumRedirect(actionForm, student);
 	}
 
-	request.setAttribute("student", student);
+    }
 
-	return mapping.findForward("chooseCurriculumType");
+    private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
+	final ActionForward actionForward = new ActionForward();
+	actionForward.setRedirect(true);
+	actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId="
+		+ student.getIdInternal());
+
+	return actionForward;
 
     }
 
@@ -64,6 +80,10 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private void setExecutionDegreeId(final ActionForm actionForm, final Integer id) {
 	((DynaActionForm) actionForm).set("executionDegreeId", id);
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan(final ActionForm form) {
+	return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanId(form));
     }
 
     private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {

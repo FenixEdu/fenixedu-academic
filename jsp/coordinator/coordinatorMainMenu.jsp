@@ -216,7 +216,7 @@
 				</html:link>			
 			</li>		
 			<li>
-				<html:link page="<%= "/students.faces?degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				<html:link page="<%= "/students.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;executionDegreeId=" + executionDegreeID %>">
 				    <bean:message key="list.students"/>
 				</html:link>			
 			</li>			

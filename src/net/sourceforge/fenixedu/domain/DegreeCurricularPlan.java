@@ -448,17 +448,24 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		getExecutionDegrees());
 	Collections.sort(sortedExecutionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 
-	if (!sortedExecutionDegrees.isEmpty()
-		&& sortedExecutionDegrees.iterator().next().getExecutionYear().isAfter(
-			currentExecutionYear)) {
-	    return sortedExecutionDegrees.iterator().next();
-	}
+	if (!sortedExecutionDegrees.isEmpty()) {
+	    final ExecutionDegree firstExecutionDegree = sortedExecutionDegrees.iterator().next();
+	    if (sortedExecutionDegrees.size() == 1) {
+		return firstExecutionDegree;
+	    }
 
-	final ListIterator<ExecutionDegree> iterator = sortedExecutionDegrees.listIterator();
-	while (iterator.hasPrevious()) {
-	    final ExecutionDegree executionDegree = iterator.previous();
-	    if (executionDegree.getExecutionYear().isBeforeOrEquals(currentExecutionYear)) {
-		return executionDegree;
+	    if (firstExecutionDegree.getExecutionYear().isAfter(currentExecutionYear)) {
+		return firstExecutionDegree;
+	    } else {
+
+		final ListIterator<ExecutionDegree> iterator = sortedExecutionDegrees
+			.listIterator(sortedExecutionDegrees.size() - 1);
+		while (iterator.hasPrevious()) {
+		    final ExecutionDegree executionDegree = iterator.previous();
+		    if (executionDegree.getExecutionYear().isBeforeOrEquals(currentExecutionYear)) {
+			return executionDegree;
+		    }
+		}
 	    }
 	}
 

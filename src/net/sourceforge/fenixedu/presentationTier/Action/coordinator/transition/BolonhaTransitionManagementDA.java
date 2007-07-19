@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -56,7 +57,16 @@ public class BolonhaTransitionManagementDA extends FenixDispatchAction {
     public ActionForward showStudentCurricularPlan(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	setParametersToShowStudentCurricularPlan(form, request, getRegistration(request, form));
+	final Registration registration = getRegistration(request, form);
+
+	if (!getLoggedPerson(request).isCoordinatorFor(
+		registration.getLastStudentCurricularPlan().getDegreeCurricularPlan(),
+		ExecutionYear.readCurrentExecutionYear())) {
+
+	    return mapping.findForward("NotAuthorized");
+	}
+
+	setParametersToShowStudentCurricularPlan(form, request, registration);
 
 	return mapping.findForward("showStudentCurricularPlan");
     }
