@@ -146,6 +146,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod);
 
+    abstract public boolean hasAnyEnrolments();
+
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod);
 
@@ -172,5 +174,5 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
     
     abstract public boolean isPropaedeutic();
-    
+
 }

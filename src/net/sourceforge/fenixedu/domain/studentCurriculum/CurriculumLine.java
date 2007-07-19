@@ -62,6 +62,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
+    public boolean hasAnyEnrolments() {
+	return false;
+    }
+    
+    @Override
     public void collectDismissals(final List<Dismissal> result) {
 	// nothing to do
     }

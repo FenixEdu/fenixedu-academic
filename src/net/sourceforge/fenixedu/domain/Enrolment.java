@@ -1068,7 +1068,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public List<Enrolment> getEnrolments() {
 	return Collections.singletonList(this);
     }
-
+    
+    @Override
+    final public boolean hasAnyEnrolments() {
+	return true;
+    }
+    
     @Override
     final public StudentCurricularPlan getStudentCurricularPlan() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : super

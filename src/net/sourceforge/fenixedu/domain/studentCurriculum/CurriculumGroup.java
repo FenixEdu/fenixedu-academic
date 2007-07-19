@@ -175,6 +175,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    @Override
+    final public boolean hasAnyEnrolments() {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.hasAnyEnrolments()) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+    
     public void collectDismissals(final List<Dismissal> result) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    curriculumModule.collectDismissals(result);
