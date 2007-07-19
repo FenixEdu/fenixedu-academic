@@ -7,7 +7,6 @@
 	<slot name="allResponsibles" key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="view.personName" layout="values-dash">
 		<property name="htmlSeparator" value=","/>
 	</slot>
-	<slot name="scientificAreas" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 </schema>
 
 <schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
@@ -90,6 +89,7 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
+			<property name="required" value="false"/>			
 		</validator>
 	</slot>
 	<slot name="active" key="label.protocol.active" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>

@@ -8,8 +8,7 @@
 <h2><bean:message key="title.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></h2>
 <logic:present name="protocolSearch">
 	<html:errors/>
-	<fr:form action="/protocols.do">
-		<html:hidden property="method" value="searchProtocols"/>
+	<fr:form action="/protocols.do?method=searchProtocols">
 
 		<div class="mvert15">
 			<p class="mvert0"><span class="error0"><fr:message for="protocolBeginDate"/></span></p>
@@ -85,7 +84,7 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 			<bean:message key="button.ok" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" onclick="this.form.method.value='exportProtocols';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" property="export">
 			<bean:message key="link.export" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</html:submit>
 	</fr:form>
