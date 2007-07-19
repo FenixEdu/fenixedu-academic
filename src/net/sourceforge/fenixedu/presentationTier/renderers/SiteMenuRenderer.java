@@ -208,7 +208,13 @@ public class SiteMenuRenderer extends OutputRenderer {
             private HtmlComponent createSectionComponent(FunctionalityContext context, Section section) {
                 if (section instanceof FunctionalitySection) {
                    Functionality functionality = ((FunctionalitySection) section).getFunctionality();
-                   return MenuRenderer.getFunctionalityNameComponent(context, functionality, true);
+                   HtmlComponent component = MenuRenderer.getFunctionalityNameComponent(context, functionality, true);
+                   
+                   if (component instanceof HtmlLink) {
+                	   ((HtmlLink) component).setParameter("sectionID", section.getIdInternal());
+                   }
+                   
+                   return component;
                 }
                 else {
                     HtmlLink link = new HtmlLink();

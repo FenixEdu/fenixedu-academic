@@ -272,10 +272,10 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-	<filter-mapping>
+<!-- 	<filter-mapping>
 		<filter-name>RequestChecksumFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
     <!-- Listeners -->
 	<listener>

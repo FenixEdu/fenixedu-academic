@@ -11,9 +11,8 @@ import dml.runtime.RelationAdapter;
 
 /**
  * This adapter when added to a direct relation manages the order of all the
- * elements in the relation
- * of all the elements in the relation so that there is a strict ordering, by
- * that slot's value, between all the elements.
+ * elements in the relation so that there is a strict ordering, by that slot's
+ * value, between all the elements.
  * 
  * @author cfgi
  */

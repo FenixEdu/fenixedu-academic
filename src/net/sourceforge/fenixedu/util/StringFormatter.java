@@ -288,7 +288,7 @@ public class StringFormatter {
          *                the string to capitalize
          * @return the capitalized word
          */
-    private static String capitalizeWord(String uglyWord) {
+    public static String capitalizeWord(String uglyWord) {
 	StringBuffer prettyWord = new StringBuffer();
 
 	if (allCapSet.contains(uglyWord)) {

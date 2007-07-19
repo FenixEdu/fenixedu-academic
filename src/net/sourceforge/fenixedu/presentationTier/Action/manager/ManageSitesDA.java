@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
+import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SiteTemplate;
@@ -34,7 +36,9 @@ public class ManageSitesDA extends SiteManagementDA {
         ExecutionCourseSite.class,
         DegreeSite.class,
         DepartmentSite.class,
-        ResearchUnitSite.class
+        ResearchUnitSite.class,
+        PedagogicalCouncilSite.class,
+        ScientificCouncilSite.class
     };
     
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

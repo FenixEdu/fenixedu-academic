@@ -292,7 +292,6 @@ Documentation:
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/printPersonalExpectationTemplate.jsp"/>
     </renderer>
     
-    
 	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.renderers.JournalIssueRenderer"/> 
  
     <!--@ The default layout for a collection. -->
@@ -335,6 +334,20 @@ Documentation:
         <property name="disabledClass" value="fDisabled"/>
     </renderer>
 
+    <renderer type="java.util.Collection" layout="unit-functions-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitFunctionsTreeRenderer">
+        <property name="imageFor(Unit)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
+        <property name="systemFunctionImage" value="/images/blue-bullet.gif"/>
+        <property name="virtualFunctionImage" value="/images/green-bullet.gif"/>
+    </renderer>
+	
+    <renderer type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean" layout="person-unit-functions-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUnitFunctionsTreeRenderer">
+        <property name="imageFor(Unit)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
+        <property name="imageFor(PersonFunction)" value="/images/round_bullet.gif"/>
+        <property name="systemFunctionImage" value="/images/blue-bullet.gif"/>
+        <property name="virtualFunctionImage" value="/images/green-bullet.gif"/>
+        <property name="activePersonFunctionImage" value="/images/list-bullet.gif"/>
+    </renderer>
+	
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalityInputTreeRenderer">
         <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
         <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
@@ -366,6 +379,11 @@ Documentation:
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     <renderer type="java.util.Collection" layout="list" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
+
+    <renderer type="java.util.Collection" layout="list-personFunctions" class="net.sourceforge.fenixedu.renderers.ListRenderer">
+    	<property name="eachLayout" value="values"/>
+    	<property name="eachSchema" value="site.functions.personFunction.person"/>
+    </renderer>
     
     <!--@ LabelFormatter output. -->
     <renderer type="net.sourceforge.fenixedu.util.resources.LabelFormatter" class="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer">
@@ -900,5 +918,29 @@ Documentation:
 		<property name="gradeScaleClasses" value="color888 smalltxt"/>
     </renderer>
               
+	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" layout="organigram" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitStructureRenderer">
+		<property name="classes" value="ostructure"/>
+		<property name="rootUnitClasses" value="osrootunit"/>
+		<property name="unitClasses" value="osunit"/>
+		<property name="levelClasses" value="oslevel"/> <!-- 1..n is added to the class name -->
+		<property name="employeesSectionClasses" value="osemployees"/>
+		<property name="employeesClasses" value="osperson osworker"/>
+		<property name="functionsClasses" value="osfunction"/>
+		<property name="implicitFunctionsClasses" value="osfunction osimplicit"/>
+		<property name="membersClasses" value="osperson osmember"/>
 
+		<property name="homepageLocation" value="/homepage/%s"/>
+		<property name="showEmployeesSection" value="true"/>
+		<property name="showEmptyEmployeesSection" value="false"/>
+		<property name="showEmptyFunctions" value="false"/>
+		<property name="showImplicityFunctionLabel" value="true"/>
+
+		<property name="bundle" value="RENDERER_RESOURCES"/>
+		<property name="employeesSectionKey" value="fenix.renderers.organigram.employees"/>
+		<property name="implicityFunctionKey" value="fenix.renderers.organigram.function.implicit"/>
+		<property name="dateFromKey" value="fenix.renderers.organigram.date.from"/>
+		<property name="dateToKey" value="fenix.renderers.organigram.date.to"/>
+		<property name="dateSinceKey" value="fenix.renderers.organigram.date.since"/>
+	</renderer>
+	
 </renderers-config>

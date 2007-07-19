@@ -30,7 +30,7 @@ public class CreationMetaObject extends SimpleMetaObject {
             try {
                 setObject(getType().newInstance());
             } catch (Exception e) {
-                throw new RuntimeException("could not create instace of type " + getType().getName() + " using the default constructor");
+                throw new RuntimeException("could not create instance of type " + getType().getName() + " using the default constructor");
             }
         }
         

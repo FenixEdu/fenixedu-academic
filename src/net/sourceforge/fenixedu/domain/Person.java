@@ -824,27 +824,11 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getActivePersonFunctions() {
-	YearMonthDay current = new YearMonthDay();
-	List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-	    if (personFunction.isActive(current)) {
-		activeFunctions.add(personFunction);
-	    }
-	}
-	return activeFunctions;
+    	return getPersonFunctions(null, false, true, false);
     }
 
     public List<PersonFunction> getInactivePersonFunctions() {
-	YearMonthDay current = new YearMonthDay();
-	List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-	    if (!personFunction.isActive(current)) {
-		inactiveFunctions.add(personFunction);
-	    }
-	}
-	return inactiveFunctions;
+    	return getPersonFunctions(null, false, false, false);
     }
 
     public List<Function> getActiveInherentPersonFunctions() {
@@ -855,6 +839,18 @@ public class Person extends Person_Base {
 	return inherentFunctions;
     }
 
+    /**
+	 * The main difference between this method and
+	 * {@link #getActivePersonFunctions()} is that person functions with a
+	 * virtual function are also included. This method also collects person
+	 * functions from the given unit and all subunits.
+	 * 
+	 * @see Function#isVirtual()
+	 */
+	public List<PersonFunction> getAllActivePersonFunctions(Unit unit) {
+		return getPersonFunctions(unit, true, true, null);
+	}
+    
     public boolean containsActivePersonFunction(Function function) {
 	for (PersonFunction personFunction : getActivePersonFunctions()) {
 	    if (personFunction.getFunction().equals(function)) {
@@ -873,6 +869,23 @@ public class Person extends Person_Base {
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
 
+	public Collection<PersonFunction> getPersonFunctions(Function function) {
+		Collection<PersonFunction> personFunctions = getPersonFunctions();
+		
+		Iterator<PersonFunction> iterator = personFunctions.iterator();
+		while (iterator.hasNext()) {
+			PersonFunction element = iterator.next();
+			
+			if (element.getFunction() == function) {
+				continue;
+			}
+			
+			iterator.remove();
+		}
+		
+		return personFunctions;
+	}
+    
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
@@ -885,14 +898,43 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getPersonFunctions(Unit unit) {
-	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-	    if (personFunction.getUnit().equals(unit)) {
-		result.add(personFunction);
-	    }
-	}
-	return result;
+    	return getPersonFunctions(unit, false, null, null);
+    }
+
+    /**
+	 * Filters all parent PersonFunction accountabilities and returns all the
+	 * PersonFunctions that selection indicated in the parameters.
+	 * 
+	 * @param unit filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
+	 * @param includeSubUnits if even subunits of the given unit are considered
+	 * @param active the state of the function, <code>null</code> for all PersonFunctions 
+	 */
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual) {
+    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+
+    	Collection<Unit> allSubUnits = Collections.emptyList();
+    	if (includeSubUnits) {
+    		allSubUnits = unit.getAllSubUnits();
+    	}
+    	
+		YearMonthDay today = new YearMonthDay();
+
+		for (PersonFunction personFunction : getPersonFunctions()) {
+			if (active != null && (personFunction.isActive(today) == !active)) {
+				continue;
+			}
+			
+			if (virtual != null && (personFunction.getFunction().isVirtual() == !virtual)) {
+				continue;
+			}
+			
+    	    Unit functionUnit = personFunction.getUnit();
+			if (unit == null || functionUnit.equals(unit) || (includeSubUnits && allSubUnits.contains(functionUnit))) {
+				result.add(personFunction);
+			}
+    	}
+		
+    	return result;
     }
 
     public boolean hasFunctionType(FunctionType functionType) {
@@ -2525,4 +2567,5 @@ public class Person extends Person_Base {
     public String getPartyPresentationName() {
 	return getPresentationName();
     }
+
 }

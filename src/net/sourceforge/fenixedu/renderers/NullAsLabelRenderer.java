@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -111,7 +113,7 @@ public class NullAsLabelRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                if (object == null || object.equals("")) {
+                if (isEmpty(object)) {
                     if (isKey()) {
                         return new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()), false);
                     } else {
@@ -123,6 +125,20 @@ public class NullAsLabelRenderer extends OutputRenderer {
                     return renderValue(object, type, schema, getSubLayout());
                 }
             }
+
+			private boolean isEmpty(Object object) {
+				if (object == null || object.equals("")) {
+					return true;
+				}
+				
+				if (object instanceof Collection) {
+					if (((Collection) object).isEmpty()) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
 
         };
     }

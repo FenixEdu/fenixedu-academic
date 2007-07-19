@@ -6,7 +6,7 @@ public class ScientificCouncilAnnouncementsDA extends UnitSiteAnnouncementManage
 
     @Override
     protected String getContextInformation(HttpServletRequest request) {
-        return "/managePedagogicalCouncilAnnouncements.do";
+        return "/manageScientificCouncilAnnouncements.do";
     }
 
 }

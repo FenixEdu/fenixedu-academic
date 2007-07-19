@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.renderers.model;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InstanceCreator implements Serializable {
@@ -33,7 +34,7 @@ public class InstanceCreator implements Serializable {
             
             return constructor.newInstance(values);
         } catch (Exception e) {
-            throw new RuntimeException("failed to create instance of " + this.type.getName() + " with arguments " + getArgumentTypes(), e);
+            throw new RuntimeException("failed to create instance of " + this.type.getName() + " with arguments " + Arrays.asList(getArgumentTypes()), e);
         }
     }
     

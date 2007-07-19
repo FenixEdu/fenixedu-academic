@@ -2854,6 +2854,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			YearMonthDay beginDateYearMonthDay;
 			YearMonthDay endDateYearMonthDay;
 			FunctionType functionType;
+			Integer functionOrder;
 		}
 
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {

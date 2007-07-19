@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.renderers.StringRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 /**
  * Presents a string considering that it's a person's name. So it allows you to
@@ -67,7 +68,9 @@ public class PersonNameRenderer extends StringRenderer {
         if (! isFirstLastOnly()) {
             for (int i = 1; i < allNames.length - 1; i++) {
                 if (isMiddleNamesInicials()) {
-                    finalName += " " + allNames[i].substring(0, 1) + ".";
+                	if (Character.isUpperCase(allNames[i].charAt(0))) {
+                		finalName += " " + allNames[i].substring(0, 1) + ".";
+                	}
                 }
                 else {
                     finalName += " " + allNames[i];
@@ -81,24 +84,20 @@ public class PersonNameRenderer extends StringRenderer {
     }
 
     private String capitalize(String text) {
-        StringBuilder buffer = new StringBuilder();
-        char ch, prevCh;
+    	StringBuilder buffer = new StringBuilder();
+    	for (String part : text.split("\\p{Space}+")) {
+    		if (part.length() == 0) {
+    			continue;
+    		}
+    		
+    		if (buffer.length() > 0) {
+    			buffer.append(" ");
+    		}
+    		
+    		buffer.append(StringFormatter.capitalizeWord(part));
+    	}
         
-        prevCh = ' ';
-        for (int i = 0;  i < text.length();  i++) {
-           ch = text.charAt(i);
-           
-           if (Character.isLetter(ch) && !Character.isLetter(prevCh)) {
-               buffer.append(Character.toUpperCase(ch));
-           }
-           else {
-               buffer.append(ch);
-           }
-           
-           prevCh = ch;
-        }
-        
-        return buffer.toString();
+    	return buffer.toString();
     }
 
 }

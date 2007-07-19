@@ -97,5 +97,8 @@ public abstract class UnitSiteVisualizationDA extends SiteVisualizationDA {
         
         return unit;
     }
-	
+
+    public ActionForward organization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	return mapping.findForward("unit-organization");
+    }
 }

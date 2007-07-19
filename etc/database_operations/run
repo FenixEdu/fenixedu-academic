@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add order to unit's functions" AddOrderToFunctions.sql
+execute "Crete more funcitonalities in unit sites" createSiteFunctionalities.sql
+execute "Create site templates for pedagogical and scientific" createTemplates.sql

@@ -953,6 +953,7 @@
             <forward name="site-item" path="department-item"/>
             <forward name="site-item-deny" path="department-item-deny"/>
             <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
+            <forward name="unit-organization" path="department-organization"/>
 
             <forward name="announcementsAction" path="/department/announcements.do"/>
             <forward name="eventsAction" path="/department/events.do"/>
@@ -996,6 +997,7 @@
             <forward name="site-item" path="pedagogicalCouncil-item"/>
             <forward name="site-item-deny" path="pedagogicalCouncil-item-deny"/>
             <forward name="site-item-adviseLogin" path="pedagogicalCouncil-item-adviseLogin"/>
+            <forward name="unit-organization" path="pedagogicalCouncil-organization"/>
 
             <forward name="announcementsAction" path="/pedagogicalCouncil/announcements.do"/>
             <forward name="eventsAction" path="/pedagogicalCouncil/events.do"/>
@@ -1035,6 +1037,7 @@
             <forward name="site-item" path="scientificCouncil-item"/>
             <forward name="site-item-deny" path="scientificCouncil-item-deny"/>
             <forward name="site-item-adviseLogin" path="scientificCouncil-item-adviseLogin"/>
+            <forward name="unit-organization" path="scientificCouncil-organization"/>
 
             <forward name="announcementsAction" path="/scientificCouncil/announcements.do"/>
             <forward name="eventsAction" path="/scientificCouncil/events.do"/>
@@ -1078,6 +1081,7 @@
 	        <forward name="showBoardEvents" path="show-research-unit-board-events"/>
 	        <forward name="showResearchers" path="show-research-unit-researchers"/>
 	        <forward name="showPublications" path="show-research-unit-publications"/>
+            <forward name="unit-organization" path="show-research-unit-organization"/>
 	        
             <forward name="announcementsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>
             <forward name="eventsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>

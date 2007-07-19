@@ -821,7 +821,7 @@ public class TreeRenderer extends OutputRenderer {
                     boolean noChildren = getNoChildrenFor(object) != null;
                     
                     if (children != null && !noChildren) {
-                        Collection subCollection = (Collection) RendererPropertyUtils.getProperty(object, children, false);
+                        Collection subCollection = getChildrenObjects(object, children);
                         
                         if (subCollection != null && ! subCollection.isEmpty()) {
                         	try {
@@ -930,7 +930,11 @@ public class TreeRenderer extends OutputRenderer {
     	return false;
     }
     
-    public interface LevelDecorator {
+    protected Collection getChildrenObjects(Object object, String children) {
+		return (Collection) RendererPropertyUtils.getProperty(object, children, false);
+	}
+
+	public interface LevelDecorator {
         public HtmlComponent decorate(Object object);
     }
 

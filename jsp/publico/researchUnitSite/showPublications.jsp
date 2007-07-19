@@ -5,7 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 	
-	<h1><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/></h1>
+<h1 class="mbottom03 cnone">
+	<fr:view name="researchUnit" property="nameWithAcronym"/>
+</h1>
+
+<h2 class="mtop15"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/></h2>
 	
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">

@@ -209,7 +209,7 @@ public class FlowCollectionRenderer extends OutputRenderer {
             HtmlComponent component = null;
 
             if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
-                component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
+                component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()), false);
                 this.empty = true;
             } else {
                 component = super.createComponent(object, type);

@@ -15,8 +15,8 @@
   NOTE: 'type' currently is not used nor are the schemas verified as said
   TODO: implement the verification if slots exist in the defined schemas.
   
-  The 'extends' attribute allows you to indicate that the schema beeing defined
-  is an extension of the referred schema. This means that the schema beeing
+  The 'extends' attribute allows you to indicate that the schema being defined
+  is an extension of the referred schema. This means that the schema being
   defined will include all the slots of the referred schema and can optionally
   override or remove some definitions.
   
@@ -30,9 +30,9 @@
   this in a per-slot basis.
   
   The 'constructor' attribute allows you to specify the constructor to be called
-  when the schema is beeing used to create an object of the given type. The
+  when the schema is being used to create an object of the given type. The
   constuctor is specified by indicating the parameters and types of the constructor.
-  You also indicate wich slot will be passed as argument and in waht order.
+  You also indicate wich slot will be passed as argument and in what order.
   The specification of the constructor as the following format:
   
   	<slot name>[:<type>][,<slot name>[:<type>])]*
@@ -82,10 +82,10 @@
   to convert the value for this slot. This can be used if you want to foce a special
   input presentation for the slot or convert to a specific value.
   
-  The 'read-only' attribute allows you to prevent slots from beeing edited in an 
+  The 'read-only' attribute allows you to prevent slots from being edited in an 
   input operation.
   
-  The 'hidden' attributes prevents the slot from beeing used in the presentation but
+  The 'hidden' attributes prevents the slot from being used in the presentation but
   makes the slot available. So you can use this slot when specifying the constructor
   or a special setter. Offcourse you need to pass the value as an hidden slot in a
   JSP. Otherwise the slot will have the null value or any other value that was previously 

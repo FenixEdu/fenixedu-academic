@@ -32,6 +32,10 @@ public class PersonFunction extends PersonFunction_Base {
 	setOccupationInterval(begin, end);
     }
 
+    public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end) {
+    	this(parentParty, childParty, function, begin, end, 0.0);
+    }
+    
     public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {	
 	setCredits(credits);
 	setOccupationInterval(begin, end);
@@ -115,8 +119,12 @@ public class PersonFunction extends PersonFunction_Base {
 	if (end == null) {
 	    throw new DomainException("error.personFunction.no.endDate");
 	}
-	if (end != null && !end.isAfter(begin)) {
+	if (end != null && begin.isAfter(end)) {
 	    throw new DomainException("error.personFunction.endDateBeforeBeginDate");
 	}
     }
+
+	public boolean hasCredits() {
+		return getCredits() > 0d;
+	}
 }

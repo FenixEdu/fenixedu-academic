@@ -81,6 +81,15 @@
         <forward name="addInstitutionSection" path="researchSite-addInstitutionSection"/>
         <forward name="functionalitySection" path="researchSite-functionalitySection"/>
         <forward name="editFunctionalitySection" path="researchSite-editFunctionalitySection"/>
+        <forward name="manageFunctions" path="researchSite-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="researchSite-manageExistingFunctions"/>
+        <forward name="addFunction" path="researchSite-addFunction"/>
+        <forward name="editFunction" path="researchSite-editFunction"/>
+        <forward name="confirmDeleteFunction" path="researchSite-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="researchSite-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="researchSite-changePersonFunctions"/>
+        <forward name="createPersonFunction" path="researchSite-createPersonFunction"/>
+        <forward name="editPersonFunction" path="researchSite-editPersonFunction"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -139,6 +148,15 @@
         <forward name="addInstitutionSection" path="departmentSite-addInstitutionSection"/>
         <forward name="functionalitySection" path="departmentSite-functionalitySection"/>
         <forward name="editFunctionalitySection" path="departmentSite-editFunctionalitySection"/>
+        <forward name="manageFunctions" path="departmentSite-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="departmentSite-manageExistingFunctions"/>
+        <forward name="addFunction" path="departmentSite-addFunction"/>
+        <forward name="editFunction" path="departmentSite-editFunction"/>
+        <forward name="confirmDeleteFunction" path="departmentSite-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="departmentSite-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="departmentSite-changePersonFunctions"/>
+        <forward name="createPersonFunction" path="departmentSite-createPersonFunction"/>
+        <forward name="editPersonFunction" path="departmentSite-editPersonFunction"/>
     </action>
 
     <action path="/manageDepartmentSiteAnnouncements"
@@ -187,6 +205,22 @@
         <forward name="addInstitutionSection" path="pedagogicalCouncil-addInstitutionSection"/>
         <forward name="functionalitySection" path="pedagogicalCouncil-functionalitySection"/>
         <forward name="editFunctionalitySection" path="pedagogicalCouncil-editFunctionalitySection"/>
+        <forward name="manageFunctions" path="pedagogicalCouncil-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="pedagogicalCouncil-manageExistingFunctions"/>
+        <forward name="addFunction" path="pedagogicalCouncil-addFunction"/>
+        <forward name="editFunction" path="pedagogicalCouncil-editFunction"/>
+        <forward name="confirmDeleteFunction" path="pedagogicalCouncil-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="pedagogicalCouncil-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="pedagogicalCouncil-changePersonFunctions"/>
+        <forward name="manageFunctions" path="pedagogicalCouncil-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="pedagogicalCouncil-manageExistingFunctions"/>
+        <forward name="addFunction" path="pedagogicalCouncil-addFunction"/>
+        <forward name="editFunction" path="pedagogicalCouncil-editFunction"/>
+        <forward name="confirmDeleteFunction" path="pedagogicalCouncil-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="pedagogicalCouncil-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="pedagogicalCouncil-changePersonFunctions"/>
+        <forward name="createPersonFunction" path="pedagogicalCouncil-createPersonFunction"/>
+        <forward name="editPersonFunction" path="pedagogicalCouncil-editPersonFunction"/>
     </action>
 
     <action path="/managePedagogicalCouncilAnnouncements"
@@ -231,6 +265,15 @@
         <forward name="addInstitutionSection" path="scientificCouncil-addInstitutionSection"/>
         <forward name="functionalitySection" path="scientificCouncil-functionalitySection"/>
         <forward name="editFunctionalitySection" path="scientificCouncil-editFunctionalitySection"/>
+        <forward name="manageFunctions" path="scientificCouncil-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="scientificCouncil-manageExistingFunctions"/>
+        <forward name="addFunction" path="scientificCouncil-addFunction"/>
+        <forward name="editFunction" path="scientificCouncil-editFunction"/>
+        <forward name="confirmDeleteFunction" path="scientificCouncil-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="scientificCouncil-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="scientificCouncil-changePersonFunctions"/>
+        <forward name="createPersonFunction" path="scientificCouncil-createPersonFunction"/>
+        <forward name="editPersonFunction" path="scientificCouncil-editPersonFunction"/>
     </action>
 
     <action path="/manageScientificCouncilAnnouncements"

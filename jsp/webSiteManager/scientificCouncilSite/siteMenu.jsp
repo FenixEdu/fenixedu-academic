@@ -65,4 +65,14 @@
             <bean:message key="link.site.announcements" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    
+    <li class="navheader">
+		<bean:message key="title.site.functions" bundle="WEBSITEMANAGER_RESOURCES"/>
+    </li>
+    <li>
+        <html:link page="<%= "/manageScientificCouncilSite.do?method=manageFunctions&amp;oid=" + oid %>">
+            <bean:message key="link.site.manage.functions" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    
 </ul>

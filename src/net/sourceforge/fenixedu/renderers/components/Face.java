@@ -7,5 +7,6 @@ public enum Face {
 	STANDARD,
 	STRONG,
 	EMPHASIS,
-	MONOSPACED
+	MONOSPACED, 
+	H1, H2, H3, H4
 }

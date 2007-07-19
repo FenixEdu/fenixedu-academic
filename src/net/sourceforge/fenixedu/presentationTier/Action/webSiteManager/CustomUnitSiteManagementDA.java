@@ -2,14 +2,20 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Login;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
@@ -17,6 +23,11 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -27,6 +38,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -59,6 +71,11 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
 		}
 
 		return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
+	}
+
+	protected Unit getUnit(HttpServletRequest request) {
+		UnitSite site = getSite(request);
+		return site == null ? null : site.getUnit();
 	}
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
@@ -446,4 +463,223 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
         return mapping.findForward("editFunctionalitySection");
     }
 
+    //
+    // Functions
+    //
+    public ActionForward manageFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Unit unit = getUnit(request);
+
+        SortedSet<Person> persons = collectFunctionPersons(unit, new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID));
+        request.setAttribute("people", wrapPersons(persons, unit));
+
+        request.setAttribute("addUserBean", new VariantBean());
+        
+        return mapping.findForward("manageFunctions");
+    }
+
+    public ActionForward managePersonFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Person person = getSelectedPerson(request);
+        
+        if (person != null) {
+        	request.setAttribute("personBean", new PersonFunctionsBean(person, getUnit(request)));
+        	return mapping.findForward("changePersonFunctions");
+        }
+        else {
+        	return manageFunctions(mapping, actionForm, request, response);
+        }
+    }
+    
+    private Person getSelectedPerson(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "personID");
+		if (id != null) {
+			return (Person) RootDomainObject.getInstance().readPartyByOID(id);
+		}
+
+		VariantBean bean = (VariantBean) getRenderedObject("addUserBean");
+		if (bean == null) {
+			return null;
+		}
+		
+		String username = bean.getString();
+		Login login = Login.readLoginByUsername(username);
+		
+		if (login == null) {
+			addActionMessage("addPersonError", request, "site.functions.addPerson.noUsername");
+			return null;
+		}
+		
+		return login.getUser().getPerson();
+	}
+
+	public ActionForward manageExistingFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	request.setAttribute("tree", Collections.singleton(getUnit(request)));
+    	return mapping.findForward("manageExistingFunctions");
+    }
+
+	private List<PersonFunctionsBean> wrapPersons(SortedSet<Person> persons, Unit unit) {
+		List<PersonFunctionsBean> result = new ArrayList<PersonFunctionsBean>();
+		
+		for (Person person : persons) {
+			result.add(new PersonFunctionsBean(person, unit));
+		}
+		
+		return result;
+	}
+
+	private SortedSet<Person> collectFunctionPersons(Unit unit, TreeSet<Person> persons) {
+		YearMonthDay today = new YearMonthDay();
+
+		AccountabilityTypeEnum[] types = new AccountabilityTypeEnum[] {
+				AccountabilityTypeEnum.WORKING_CONTRACT, 
+				AccountabilityTypeEnum.RESEARCH_CONTRACT	
+		};
+		
+		List<Contract> contacts = unit.getContracts(today, null, types);
+		for (Contract contract : contacts) {
+			persons.add(contract.getPerson());
+		}
+		
+		for (Function function : unit.getFunctions()) {
+			for (PersonFunction pf : function.getPersonFunctions()) {
+				if (pf.isActive(today)) {
+					persons.add(pf.getPerson());
+				}
+			}
+		}
+
+		for (Unit sub : unit.getSubUnits()) {
+			collectFunctionPersons(sub, persons);
+		}
+		
+		return persons;
+	}
+
+    public ActionForward addFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Unit unit = getTargetUnit(request);
+    	
+    	request.setAttribute("target", unit);
+    	request.setAttribute("bean", new VariantBean());
+    	
+    	return mapping.findForward("addFunction");
+    }
+
+    public ActionForward createFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	UnitSite site = getSite(request);
+    	Unit unit = getTargetUnit(request);
+    	
+    	VariantBean bean = (VariantBean) getRenderedObject("create");
+    	if (bean != null) {
+    		executeService("CreateVirtualFunction", site, unit, bean.getString());
+    	}
+    	
+    	return manageExistingFunctions(mapping, actionForm, request, response);
+    }
+
+    private Unit getTargetUnit(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "unitID");
+		return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+	}
+
+    public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Function function = getTargetFunction(request);
+
+    	VariantBean bean = new VariantBean();
+    	bean.setString(function.getName());
+    	
+		request.setAttribute("bean", bean);
+		request.setAttribute("function", function);
+		
+    	return mapping.findForward("editFunction");
+    }
+
+    public ActionForward editFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Function function = getTargetFunction(request);
+    	
+    	VariantBean bean = (VariantBean) getRenderedObject("edit");
+    	if (bean != null) {
+    		executeService("EditVirtualFunction", getSite(request), function, bean.getString());
+    	}
+    	
+    	return manageExistingFunctions(mapping, actionForm, request, response);
+    }
+
+    public ActionForward deleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Function function = getTargetFunction(request);
+    	request.setAttribute("function", function);
+    	
+    	return mapping.findForward("confirmDeleteFunction");
+    }
+
+    public ActionForward confirmDeleteFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	if (request.getParameter("cancel") == null) {
+    		executeService("DeleteVirtualFunction", getSite(request), getTargetFunction(request));
+    	}
+    	
+    	return manageExistingFunctions(mapping, actionForm, request, response);
+    }
+
+	private Function getTargetFunction(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "functionID");
+		return (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(id);
+	}
+
+    public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Unit unit = getTargetUnit(request);
+    	request.setAttribute("target", unit);
+    	
+    	return mapping.findForward("organizeFunctions");
+    }
+    
+    public ActionForward changeFunctionsOrder(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String orderString = request.getParameter("functionsOrder");
+        Unit unit = getTargetUnit(request);
+
+        if (unit == null) {
+            return manageExistingFunctions(mapping, actionForm, request, response);
+        }
+
+        List<Function> initialFunctions = new ArrayList<Function>(unit.getOrderedFunctions());
+        List<Function> orderedFunctions = new ArrayList<Function>();
+
+        String[] nodes = orderString.split(",");
+        for (int i = 0; i < nodes.length; i++) {
+            String[] parts = nodes[i].split("-");
+
+            Integer functionIndex = getId(parts[0]);
+            orderedFunctions.add(initialFunctions.get(functionIndex - 1));
+        }
+
+        executeService("RearrangeUnitSiteFunctions", getSite(request), unit, orderedFunctions);
+        return manageExistingFunctions(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward addPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	Person person = getSelectedPerson(request);
+    	Function function = getTargetFunction(request);
+    	
+    	request.setAttribute("person", person);
+    	request.setAttribute("function", function);
+    	
+    	return mapping.findForward("createPersonFunction");
+    }
+
+    public ActionForward editPersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	PersonFunction function = getPersonFunction(request);
+    	request.setAttribute("personFunction", function);
+    	
+    	return mapping.findForward("editPersonFunction");
+    }
+    
+    private PersonFunction getPersonFunction(HttpServletRequest request) {
+		Integer id = getIdInternal(request, "personFunctionID");
+		return (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(id);
+	}
+    
+    public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	PersonFunction personFunction = getPersonFunction(request);
+    	executeService("DeleteUnitSitePersonFunction", getSite(request), personFunction);
+    	
+    	return managePersonFunctions(mapping, actionForm, request, response);
+    }
+    
 }

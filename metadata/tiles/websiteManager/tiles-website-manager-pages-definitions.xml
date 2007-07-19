@@ -218,6 +218,36 @@
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
     </definition>
+    <definition name="researchSite-manageFunctions" extends="definition.researchUnitSite.masterPage" >
+        <put name="body" value="/webSiteManager/commons/manageFunctions.jsp"/>
+    </definition>
+    <definition name="researchSite-manageExistingFunctions" extends="definition.researchUnitSite.masterPage" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/manageExistingFunctions.jsp"/>
+    </definition>
+    <definition name="researchSite-addFunction" extends="definition.researchUnitSite.masterPage" >
+        <put name="body" value="/webSiteManager/commons/addFunction.jsp"/>
+    </definition>
+    <definition name="researchSite-editFunction" extends="definition.researchUnitSite.masterPage" >
+        <put name="body" value="/webSiteManager/commons/editFunction.jsp"/>
+    </definition>
+    <definition name="researchSite-confirmDeleteFunction" extends="definition.researchUnitSite.masterPage" >
+        <put name="body" value="/webSiteManager/commons/deleteFunctionConfirm.jsp"/>
+    </definition>
+    <definition name="researchSite-organizeFunctions" extends="definition.researchUnitSite.masterPage" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/organizeFunctions.jsp"/>
+    </definition>
+    <definition name="researchSite-changePersonFunctions" extends="definition.researchUnitSite.masterPage" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/changePersonFunctions.jsp"/>
+    </definition>
+    <definition name="researchSite-createPersonFunction" extends="definition.researchUnitSite.masterPage" >
+        <put name="body" value="/webSiteManager/commons/createPersonFunction.jsp"/>
+    </definition>
+    <definition name="researchSite-editPersonFunction" extends="definition.researchUnitSite.masterPage">
+        <put name="body" value="/webSiteManager/commons/editPersonFunction.jsp"/>
+    </definition>
 
 	<!-- ======  -->
 
@@ -318,6 +348,37 @@
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
     </definition>
+    <definition name="departmentSite-manageFunctions" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/manageFunctions.jsp"/>
+    </definition>
+    <definition name="departmentSite-manageExistingFunctions" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/manageExistingFunctions.jsp"/>
+    </definition>
+    <definition name="departmentSite-addFunction" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/addFunction.jsp"/>
+    </definition>
+    <definition name="departmentSite-editFunction" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/editFunction.jsp"/>
+    </definition>
+    <definition name="departmentSite-confirmDeleteFunction" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/deleteFunctionConfirm.jsp"/>
+    </definition>
+    <definition name="departmentSite-organizeFunctions" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/organizeFunctions.jsp"/>
+    </definition>
+    <definition name="departmentSite-changePersonFunctions" extends="definition.department.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/changePersonFunctions.jsp"/>
+    </definition>
+    <definition name="departmentSite-createPersonFunction" extends="definition.department.site.management" >
+        <put name="body" value="/webSiteManager/commons/createPersonFunction.jsp"/>
+    </definition>
+    <definition name="departmentSite-editPersonFunction" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/editPersonFunction.jsp"/>
+    </definition>
+    
         <!-- announcements -->
 
     <definition name="definition.department.site.announcements.management" extends="definition.websiteManager.masterPage">
@@ -441,6 +502,37 @@
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
     </definition>
+    <definition name="pedagogicalCouncil-manageFunctions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/manageFunctions.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-manageExistingFunctions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/manageExistingFunctions.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-addFunction" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/addFunction.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-editFunction" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/editFunction.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-confirmDeleteFunction" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/deleteFunctionConfirm.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-organizeFunctions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/organizeFunctions.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-changePersonFunctions" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/changePersonFunctions.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-createPersonFunction" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/createPersonFunction.jsp"/>
+    </definition>
+    <definition name="pedagogicalCouncil-editPersonFunction" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/editPersonFunction.jsp"/>
+    </definition>
+    
         <!-- announcements -->
 
     <definition name="definition.pedagogicalCouncil.site.announcements.management" extends="definition.websiteManager.masterPage">
@@ -564,6 +656,37 @@
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
     </definition>
+    <definition name="scientificCouncil-manageFunctions" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/manageFunctions.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-manageExistingFunctions" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/manageExistingFunctions.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-addFunction" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/addFunction.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-editFunction" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/editFunction.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-confirmDeleteFunction" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/webSiteManager/commons/deleteFunctionConfirm.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-organizeFunctions" extends="definition.scientificCouncil.site.management" >
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/organizeFunctions.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-changePersonFunctions" extends="definition.scientificCouncil.site.management">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+        <put name="body" value="/webSiteManager/commons/changePersonFunctions.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-createPersonFunction" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/createPersonFunction.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-editPersonFunction" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/editPersonFunction.jsp"/>
+    </definition>
+    
         <!-- announcements -->
 
     <definition name="definition.scientificCouncil.site.announcements.management" extends="definition.websiteManager.masterPage">

@@ -72,13 +72,15 @@
 	<p>
 		<em class="color888 smalltxt">
 			<bean:message key="label.messaging.author" bundle="MESSAGING_RESOURCES"/>: 
-			<logic:equal name="announcement" property="creator.homePageAvailable" value="true">
-				<bean:define id="userName" name="announcement" property="creator.username"/>
-				<html:link target="blank" href="<%= request.getContextPath() + "/homepage/" + userName %>"><fr:view name="announcement" property="creator.nickname"/></html:link>
-			</logic:equal>
-			<logic:notEqual name="announcement" property="creator.homePageAvailable" value="true">
-				<fr:view name="announcement" property="creator.nickname"/>
-			</logic:notEqual>
+			<logic:notEmpty name="announcement" property="authorEmail">
+				<bean:define id="authorEmail" name="announcement" property="authorEmail"/>
+				<a href="mailto:<%= authorEmail %>">
+					<fr:view name="announcement" property="author"/>
+				</a>
+			</logic:notEmpty>
+			<logic:empty name="announcement" property="authorEmail">
+				<fr:view name="announcement" property="author"/>
+			</logic:empty>
 		</em>
 	</p>
 

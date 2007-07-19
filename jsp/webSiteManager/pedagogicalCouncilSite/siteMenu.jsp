@@ -9,7 +9,7 @@
 
 <ul>
     <li>
-		<html:link module="/publico" action="<%= "/scientificCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
+		<html:link module="/publico" action="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
 		    <bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
 		</html:link>
     </li>
@@ -17,7 +17,7 @@
         <bean:message key="title.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=manageConfiguration&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=manageConfiguration&amp;oid=" + oid %>">
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
@@ -25,44 +25,53 @@
     
 	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=chooseLogo&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=chooseLogo&amp;oid=" + oid %>">
             <bean:message key="link.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
 
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=introduction&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=introduction&amp;oid=" + oid %>">
             <bean:message key="link.site.introduction" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=manageBanners&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=manageBanners&amp;oid=" + oid %>">
             <bean:message key="link.site.banners" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=sideBanner&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=sideBanner&amp;oid=" + oid %>">
             <bean:message key="link.site.sideBanner" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=topNavigation&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=topNavigation&amp;oid=" + oid %>">
             <bean:message key="link.site.topNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=footerNavigation&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=footerNavigation&amp;oid=" + oid %>">
             <bean:message key="link.site.footerNavigation" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilSite.do?method=sections&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=sections&amp;oid=" + oid %>">
             <bean:message key="link.site.sectionsManagement" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
     <li>
-        <html:link page="<%= "/manageScientificCouncilAnnouncements.do?method=viewBoards&amp;tabularVersion=true&amp;oid=" + oid %>">
+        <html:link page="<%= "/managePedagogicalCouncilAnnouncements.do?method=viewBoards&amp;tabularVersion=true&amp;oid=" + oid %>">
             <bean:message key="link.site.announcements" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
+    
+    <li class="navheader">
+		<bean:message key="title.site.functions" bundle="WEBSITEMANAGER_RESOURCES"/>
+    </li>
+    <li>
+        <html:link page="<%= "/managePedagogicalCouncilSite.do?method=manageFunctions&amp;oid=" + oid %>">
+            <bean:message key="link.site.manage.functions" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
 </ul>

@@ -33,8 +33,12 @@ public abstract class Site extends Site_Base {
         super();
 
         setRootDomainObject(RootDomainObject.getInstance());
-        setTemplate(SiteTemplate.getTemplateForType(getClass()));
+        initTemplate();
     }
+
+	protected void initTemplate() {
+		setTemplate(SiteTemplate.getTemplateForType(getClass()));
+	}
 
     public Section createSection(MultiLanguageString sectionName, Section parentSection,
             Integer sectionOrder) {

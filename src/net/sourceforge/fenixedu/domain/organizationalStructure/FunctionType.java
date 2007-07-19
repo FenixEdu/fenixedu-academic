@@ -28,7 +28,9 @@ public enum FunctionType {
     REPRESENTATIVE,
     MEMBER,
     ASSIDUOUSNESS_RESPONSIBLE,
-    PRINCIPAL;
+    PRINCIPAL,
+    
+    VIRTUAL /* for functions that can be created unofficially */;
              
     public String getName() {
         return name();

@@ -271,7 +271,7 @@
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
-				</f:facet>								
+				</f:facet>
 				<fc:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
 					<f:param id="functionID" name="functionID" value="#{function.idInternal}"/>
 					<f:param id="listingTypeToFunctions" name="listingTypeToFunctions" value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}"/>										

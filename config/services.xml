@@ -12229,6 +12229,51 @@
 			<chain name="AcademicAdministrativeOfficeAuthorization"/>
 		</filterChains>
     </service>
+   	<service>
+        <name>CreateVirtualFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.CreateVirtualFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>
+   	<service>
+        <name>EditVirtualFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.EditVirtualFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>
+   	<service>
+        <name>DeleteVirtualFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.DeleteVirtualFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>
+   	<service>
+        <name>RearrangeUnitSiteFunctions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RearrangeUnitSiteFunctions</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>
+   	<service>
+        <name>DeleteUnitSitePersonFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.DeleteUnitSitePersonFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="UnitSiteManagerAuthorization"/>
+		</filterChains>
+    </service>
     <service>
     	<name>CreateCompetenceCourseInformationRequest</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourseInformationChangeRequest</implementationClass>
@@ -12255,6 +12300,5 @@
         <filterChains>
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
-    </service>    
-    
+    </service>
 </serviceDefinitions>

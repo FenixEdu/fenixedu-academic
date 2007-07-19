@@ -22,6 +22,11 @@ public class SiteTemplate extends SiteTemplate_Base {
         updateSites(type);
     }
     
+    @Override
+    protected void initTemplate() {
+    	// no template for templates
+    }
+    
     private void updateSites(final Class type) {
 	for (final Site site : RootDomainObject.getInstance().getSites()) {
 	    if (site.getClass().isAssignableFrom(type)) {

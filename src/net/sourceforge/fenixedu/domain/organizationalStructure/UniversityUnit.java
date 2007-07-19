@@ -121,7 +121,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 	    throw new DomainException("UniversityUnit.not.parent.of.institution.unit");
 	}
 	
-	final Collection<? extends Accountability> childAccountabilities = institutionUnit.getChildAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);	
+	final Collection<? extends Accountability> childAccountabilities = institutionUnit.getChildAccountabilities(PersonFunction.class, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);	
 	for (final Accountability accountability : childAccountabilities) {
 	    if (((Function)accountability.getAccountabilityType()).getFunctionType() == FunctionType.PRINCIPAL) {
 		return ((PersonFunction)accountability).getPerson();		

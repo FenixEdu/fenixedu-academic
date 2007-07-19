@@ -5,13 +5,16 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.person;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -27,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -422,7 +424,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void addPersonFunctions(Function function, StringBuffer buffer, ExecutionYear iExecutionYear) {
-	List<PersonFunction> validPersonFunction = getValidPersonFunction(iExecutionYear, function);
+	Collection<PersonFunction> validPersonFunction = getValidPersonFunction(iExecutionYear, function);
 	if (!validPersonFunction.isEmpty()) {
 	    buffer.append("<ul class='unit1'>");
 	    for (PersonFunction personFunction : validPersonFunction) {
@@ -433,29 +435,28 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		printPersonHomePage(personFunction.getPerson(), buffer);
 		buffer.append(" (");
 		buffer.append(personFunction.getBeginDate().toString()).append(" - ");
-		buffer.append(personFunction.getEndDate().toString()).append(")");
-		buffer.append("</li>");
+		if (personFunction.getEndDate() != null) {
+			buffer.append(personFunction.getEndDate().toString());
+		}
+		buffer.append(")").append("</li>");
 	    }
 	    buffer.append("</ul>");
 	}
     }
 
-    private List<Function> getSortFunctionList(Unit unit) {
-	List<Function> allFunctions = new ArrayList<Function>();
-	allFunctions.addAll(unit.getFunctions());
-	Collections.sort(allFunctions, new Comparator<Function>() {
-	    public int compare(Function function1, Function function2) {		
-		if (function1.getFunctionType() != null && function2.getFunctionType() != null) {
-		    return function1.getFunctionType().compareTo(function2.getFunctionType());
-		} else if (function1.getFunctionType() == null && function2.getFunctionType() != null) {
-		    return -1;
-		} else if (function1.getFunctionType() != null && function2.getFunctionType() == null) {
-		    return 1;
+    private SortedSet<Function> getSortFunctionList(Unit unit) {
+    	SortedSet<Function> functions = unit.getOrderedFunctions();
+    	
+    	Iterator<Function> iterator = functions.iterator();
+		while (iterator.hasNext()) {
+			Function function = iterator.next();
+			
+			if (function.isVirtual()) {
+				iterator.remove();
+			}
 		}
-		return 0;
-	    }
-	});
-	return allFunctions;
+    	
+		return functions;
     }
 
     public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException, FenixServiceException {
@@ -464,16 +465,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return iExecutionYear;
     }
 
-    public List<PersonFunction> getValidPersonFunction(ExecutionYear iExecutionYear, Function function) {
-	List<PersonFunction> list = new ArrayList<PersonFunction>();
-	for (PersonFunction personFunction : function.getPersonFunctions()) {
-	    if (personFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
-		list.add((PersonFunction) personFunction);
-	    }
+    public SortedSet<PersonFunction> getValidPersonFunction(ExecutionYear iExecutionYear, Function function) {
+		SortedSet<PersonFunction> personFunctions = new TreeSet<PersonFunction>(PersonFunction.COMPARATOR_BY_PERSON_NAME);
+		for (PersonFunction personFunction : function.getPersonFunctions()) {
+			if (personFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
+				personFunctions.add((PersonFunction) personFunction);
+			}
+		}
+		return personFunctions;
 	}
-	Collections.sort(list, PersonFunction.COMPARATOR_BY_PERSON_NAME);
-	return list;
-    }
 
     public List<SelectItem> getListingType() {
 	List<SelectItem> list = new ArrayList<SelectItem>();

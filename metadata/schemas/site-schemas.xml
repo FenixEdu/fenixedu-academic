@@ -307,3 +307,76 @@
     <slot name="mostImportantAlias" key="label.alias"/>
     <slot name="name" key="label.name"/>
 </schema>
+
+<schema name="site.functions.tree.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SITE_RESOURCES">
+	<slot name="nameI18n"/>
+</schema>
+
+<schema name="site.functions.tree.function" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function" bundle="SITE_RESOURCES">
+	<slot name="name"/>
+</schema>
+
+<schema name="site.functions.tree.personFunction" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="SITE_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+</schema>
+
+<schema name="site.functions.create.function" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
+	<slot name="string" key="label.function.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+	</slot>
+</schema>
+
+<schema name="site.functions.delete.function" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function" bundle="SITE_RESOURCES">
+	<slot name="name" key="label.function.name"/>
+	<slot name="personFunctions" key="label.function.personFunctions" layout="null-as-label">
+		<property name="label" value="message.function.persons.empty"/>
+		<property name="key" value="true"/>
+		<property name="bundle" value="SITE_RESOURCES"/>
+		<property name="subLayout" value="list-personFunctions"/>
+	</slot>
+</schema>
+
+<schema name="site.functions.personFunction.person" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="SITE_RESOURCES">
+	<slot name="person" layout="name-with-alias"/>
+</schema>
+
+<schema name="site.functions.person.table" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean" bundle="SITE_RESOURCES">
+	<slot name="person" layout="name-with-alias"/>
+	<slot name="functions" key="label.function.functions" layout="flowLayout">
+		<property name="emptyMessageKey" value="message.person.functions.empty"/>
+		<property name="emptyMessageBundle" value="SITE_RESOURCES"/>
+		<property name="htmlSeparator" value=", "/>
+		<property name="eachInline" value="true"/>
+		<property name="indented" value="false"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="site.functions.function.name"/>
+	</slot>
+</schema>
+
+<schema name="site.functions.function.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function" bundle="SITE_RESOURCES">
+	<slot name="name"/>
+</schema>
+
+<schema name="site.functions.addPerson" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
+	<slot name="string" key="label.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="site.functions.view.PersonFunctionsBean" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean" bundle="SITE_RESOURCES">
+	<slot name="person" layout="name-with-alias"/>
+</schema>
+
+<schema name="site.functions.person.personFunction.create" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="SITE_RESOURCES"
+        constructor="parentParty, childParty, accountabilityType:net.sourceforge.fenixedu.domain.organizationalStructure.Function, beginDate, endDate">
+	<slot name="parentParty" hidden="true"/>
+	<slot name="childParty" hidden="true"/>
+	<slot name="accountabilityType" hidden="true"/>
+	<slot name="beginDate" key="label.personFunction.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.personFunction.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="site.functions.person.personFunction.edit" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="SITE_RESOURCES">
+	<slot name="beginDate" key="label.personFunction.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.personFunction.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="setOccupationInterval(beginDate, endDate)"/>
+</schema>

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class CreationDomainMetaObject extends DomainMetaObject {
             try {
                 newChanges.add(0, new ObjectChange(key, instanceCreator.getConstructor(), instanceCreator.getArgumentValues()));
             } catch (Exception e) {
-                throw new RuntimeException("could not find constructor for '" + getType().getName() + "' with arguments " + instanceCreator.getArgumentTypes(), e);
+                throw new RuntimeException("could not find constructor for '" + getType().getName() + "' with arguments " + Arrays.asList(instanceCreator.getArgumentTypes()), e);
             }
         }
         

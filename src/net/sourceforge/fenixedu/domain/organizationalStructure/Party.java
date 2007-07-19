@@ -269,18 +269,36 @@ public abstract class Party extends Party_Base {
     }
 
     public Collection<? extends Accountability> getChildAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum,
-	    Class<? extends Accountability> accountabilityClass) {
-	final Set<Accountability> result = new HashSet<Accountability>();
-	for (final Accountability accountability : getChildsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-		    && accountabilityClass.isAssignableFrom(accountability.getClass())) {
-		result.add(accountability);
-	    }
-	}
-	return result;
+    		Class<? extends Accountability> accountabilityClass, AccountabilityTypeEnum ... types) {
+    	final Set<Accountability> result = new HashSet<Accountability>();
+    	
+		for (final Accountability accountability : getChildsSet()) {
+			AccountabilityTypeEnum accountabilityType = accountability.getAccountabilityType().getType();
+			
+			if (! isOneOfTypes(accountabilityType, types)) {
+				continue;
+			}
+			
+			if (! accountabilityClass.isAssignableFrom(accountability.getClass())) {
+				continue;
+			}
+			
+			result.add(accountability);
+		}
+
+		return result;
     }
 
+    private boolean isOneOfTypes(AccountabilityTypeEnum type, AccountabilityTypeEnum[] possibilities) {
+		for (AccountabilityTypeEnum t : possibilities) {
+			if (t == type) {
+				return true;
+			}
+		}
+
+		return false;
+    }
+    
     public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(
 	    Class<? extends Party> parentClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
