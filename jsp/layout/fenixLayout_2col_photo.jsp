@@ -34,11 +34,7 @@
 	<tiles:getAsString name="serviceName" />
 	--%>
 	
-	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
-	<ul>
-		<li class="support"><a href="<%= supportLink %>">Suporte</a></li>
-		<li class="logout"><a href="<%= request.getContextPath() %>/logoff.do">Logout</a></li>
-	</ul>
+	<tiles:insert page="/commons/headerButtons.jsp" />
 	<p id="user">
 		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
 	</p>

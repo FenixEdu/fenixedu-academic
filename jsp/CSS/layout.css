@@ -53,6 +53,11 @@ padding: 0.5em 0.5em 0.75em 2.75em;
 display: inline;
 margin: 0 4px;
 }
+#top ul li.institution a {
+background: url(../images/sup0_01.gif) 0 center no-repeat;
+padding: 0.4em;
+padding-left: 18px;
+}
 #top ul li.support a {
 background: url(../images/sup1_01.gif) 0 center no-repeat;
 padding: 0.4em;
