@@ -116,7 +116,7 @@
 	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.formatted" layout="flow"/>
-	<slot name="protocolAction.text" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="scientificAreas" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
 		<property name="eachLayout" value="this-does-not-exist" />
