@@ -151,5 +151,10 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	
 	return getCycleCurriculumGroup(cycleType).getConclusionDate();
     }
-    
+
+    @Override
+    public void delete() {
+        removeParentStudentCurricularPlan();
+        super.delete();
+    }
 }
