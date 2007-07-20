@@ -288,7 +288,19 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	}
 	return result;
     }
-
+    
+    public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
+	    final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
+	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
+	for (final ICurricularRule curricularRule : getCurricularRules(executionYear)) {
+	    if (curricularRule.getCurricularRuleType() == ruleType
+		    && (!curricularRule.hasContextCourseGroup() || curricularRule.getContextCourseGroup() == parentCourseGroup)) {
+		result.add(curricularRule);
+	    }
+	}
+	return result;
+    }
+    
     public Double getMaxEctsCredits() {
 	return getMaxEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
     }
