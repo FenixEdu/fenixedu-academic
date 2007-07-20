@@ -275,8 +275,8 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>ScientificCouncilOrAcademicAdministrativeOfficeAuthorization</name>
-        <expression>ScientificCouncilAuthorization || AcademicAdministrativeOfficeAuthorization </expression>
+        <name>ScientificCouncilOrAcademicAdministrativeOfficeOrManagerAuthorization</name>
+        <expression>ScientificCouncilAuthorization || AcademicAdministrativeOfficeAuthorization || ManagerAuthorization </expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
@@ -1221,9 +1221,16 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-       <filterChain>
+    <filterChain>
     	<name>EditPrize</name>
     	<expression>EditPrize</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+    	<name>ManagerOrAcademicAdministrativeOfficeAuthorization</name>
+    	<expression>ManagerAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
