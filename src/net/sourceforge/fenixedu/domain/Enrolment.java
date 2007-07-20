@@ -743,6 +743,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isFlunked();
     }
 
+    @Override
     final public boolean isApproved() {
 	if (isAnnulled()) {
 	    return false;

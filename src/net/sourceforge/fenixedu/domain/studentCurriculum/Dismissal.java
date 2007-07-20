@@ -34,7 +34,7 @@ public class Dismissal extends Dismissal_Base {
 	init(credits, curriculumGroup, curricularCourse);
     }
     
-    protected void init(Credits credits, CurriculumGroup curriculumGroup) {
+    final protected void init(Credits credits, CurriculumGroup curriculumGroup) {
         if(credits == null || curriculumGroup == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
         }
@@ -42,7 +42,7 @@ public class Dismissal extends Dismissal_Base {
         setCurriculumGroup(curriculumGroup);	
     }
     
-    protected void init(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
+    final protected void init(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
         init(credits, curriculumGroup);
         if( curricularCourse == null) {
             throw new DomainException("error.dismissal.wrong.arguments");
@@ -106,7 +106,12 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    final public boolean isApproved() {
+	return getCredits().isSubstitution();
+    }
+    
+    @Override
+    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         if(hasCurricularCourse()) {
             return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod))
 		    && getCurricularCourse().isEquivalent(curricularCourse);
@@ -123,27 +128,27 @@ public class Dismissal extends Dismissal_Base {
         return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits();
     }
     
-    protected Double getEnrolmentsEcts() {
+    final protected Double getEnrolmentsEcts() {
 	return getCredits().getEnrolmentsEcts();
     }
     
     @Override
-    public Double getAprovedEctsCredits() {
+    final public Double getAprovedEctsCredits() {
         return getEctsCredits();
     }
     
     @Override
-    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+    final public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
         return Double.valueOf(0d);
     }
     
     @Override
-    public boolean hasDegreeModule(DegreeModule degreeModule) {
+    final public boolean hasDegreeModule(DegreeModule degreeModule) {
 	return hasDegreeModule() ? super.hasDegreeModule(degreeModule) : false;
     }
     
     @Override
-    public MultiLanguageString getName() {
+    final public MultiLanguageString getName() {
 	if(hasDegreeModule()) {
 	    return super.getName();
 	} else {
@@ -154,22 +159,22 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public void collectDismissals(final List<Dismissal> result) {
+    final public void collectDismissals(final List<Dismissal> result) {
 	result.add(this);
     }
     
     @Override
-    public boolean isDismissal() {
+    final public boolean isDismissal() {
         return true;
     }
     
     @Override
-    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+    final public Dismissal getDismissal(final CurricularCourse curricularCourse) {
         return (getCurricularCourse() == curricularCourse) ? this : null;
     }
     
     @Override
-    public void delete() {
+    final public void delete() {
 	final Credits credits = getCredits();
         removeCredits();
         if (!credits.hasAnyDismissals()) {
@@ -179,12 +184,12 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public boolean isConcluded(final ExecutionYear executionYear) {
+    final public boolean isConcluded(final ExecutionYear executionYear) {
 	return executionYear == null || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override
-    public Double getCreditsConcluded(ExecutionYear executionYear) {
+    final public Double getCreditsConcluded(ExecutionYear executionYear) {
 	if(isConcluded(executionYear)) {
 	    return getEctsCredits();
 	}
@@ -201,7 +206,7 @@ public class Dismissal extends Dismissal_Base {
     }
     
     @Override
-    public ExecutionPeriod getExecutionPeriod() {
+    final public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
     }    
 

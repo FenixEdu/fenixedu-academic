@@ -16,13 +16,17 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-public abstract class CurriculumLine extends CurriculumLine_Base {
+abstract public class CurriculumLine extends CurriculumLine_Base {
 
     public CurriculumLine() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    abstract public ExecutionPeriod getExecutionPeriod();
+    
+    abstract public boolean isApproved();
+    
     @Override
     final public boolean isLeaf() {
 	return true;
@@ -48,8 +52,8 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     public boolean isPropaedeutic() {
 	return getCurriculumGroup().isPropaedeutic();
     }
-    
-    protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup,
+
+    final protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup,
 	    CurricularCourse curricularCourse) {
 	if (!curriculumGroup.getDegreeModule().validate(curricularCourse)) {
 	    throw new DomainException("error.studentCurriculum.curriculumLine.invalid.curriculum.group");
@@ -133,12 +137,11 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
 	degreeModules.add(getDegreeModule());
     }
 
-    abstract public ExecutionPeriod getExecutionPeriod();
-
     @Override
     public MultiLanguageString getName() {
 	ExecutionPeriod period = getExecutionPeriod();
 	CurricularCourse course = getCurricularCourse();
 	return MultiLanguageString.i18n().nadd("pt",course.getName(period)).nadd("en", course.getNameEn(period)).finish();
     }
+
 }
