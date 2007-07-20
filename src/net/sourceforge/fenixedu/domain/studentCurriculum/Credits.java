@@ -35,14 +35,14 @@ public class Credits extends Credits_Base {
 	init(studentCurricularPlan, courseGroup, enrolments, credits, executionPeriod);
     }
 
-    protected void initExecutionPeriod(ExecutionPeriod executionPeriod) {
+    final protected void initExecutionPeriod(ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
 	setExecutionPeriod(executionPeriod);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
+    final protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
 	    Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
 	if (studentCurricularPlan == null || courseGroup == null || credits == null) {
 	    throw new DomainException("error.credits.wrong.arguments");
@@ -114,7 +114,7 @@ public class Credits extends Credits_Base {
 	}
     }
 
-    public Collection<IEnrolment> getIEnrolments() {
+    final public Collection<IEnrolment> getIEnrolments() {
 	final Set<IEnrolment> result = new HashSet<IEnrolment>();
 	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
 	    result.add(enrolmentWrapper.getIEnrolment());
@@ -122,12 +122,12 @@ public class Credits extends Credits_Base {
 	return result;
     }
 
-    public boolean hasAnyIEnrolments() {
+    final public boolean hasAnyIEnrolments() {
 	return hasAnyEnrolments();
     }
 
     @Override
-    public Double getGivenCredits() {
+    final public Double getGivenCredits() {
 	if (super.getGivenCredits() == null) {
 	    BigDecimal bigDecimal = BigDecimal.ZERO;
 	    for (Dismissal dismissal : getDismissalsSet()) {
@@ -146,7 +146,7 @@ public class Credits extends Credits_Base {
 	return null;
     }
 
-    public void delete() {
+    final public void delete() {
 	removeStudentCurricularPlan();
 	removeRootDomainObject();
 	removeExecutionPeriod();
@@ -160,7 +160,7 @@ public class Credits extends Credits_Base {
 	super.deleteDomainObject();
     }
 
-    public Double getEnrolmentsEcts() {
+    final public Double getEnrolmentsEcts() {
 	Double result = 0d;
 	for (final IEnrolment enrolment : getIEnrolments()) {
 	    result = result + enrolment.getEctsCredits();
@@ -168,15 +168,19 @@ public class Credits extends Credits_Base {
 	return result;
     }
 
-    public boolean hasGivenCredits() {
+    final public boolean hasGivenCredits() {
 	return getGivenCredits() != null;
     }
 
-    public boolean hasGivenCredits(final Double ectsCredits) {
+    final public boolean hasGivenCredits(final Double ectsCredits) {
 	return hasGivenCredits() && getGivenCredits().equals(ectsCredits);
     }
 
     public boolean isTemporary() {
+	return false;
+    }
+
+    public boolean isSubstitution() {
 	return false;
     }
 
