@@ -133,7 +133,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    final public void delete() {
+    public void delete() {
 	if (canBeDeleted()) {
 	    super.delete();
 	} else {
