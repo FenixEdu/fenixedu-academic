@@ -21,35 +21,35 @@ public class LessonInstance extends LessonInstance_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
-    public LessonInstance(Summary summary) {
+    public LessonInstance(final Lesson lesson, final Summary summary) {
 	
 	super();
 
-	if(summary == null || summary.getLesson() == null) {
+	if(summary == null || lesson == null) {
 	    throw new DomainException("error.LessonInstance.empty.summary");
 	}
 	
 	YearMonthDay day = summary.getSummaryDateYearMonthDay();
 	
-	LessonInstance lessonInstance = summary.getLesson().getLessonInstanceFor(day);
+	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
 	if(lessonInstance != null) {
 	    throw new DomainException("error.lessonInstance.already.exist");
 	}
 			
-	HourMinuteSecond beginTime = summary.getLesson().getBeginHourMinuteSecond();
-	HourMinuteSecond endTime = summary.getLesson().getEndHourMinuteSecond();	    
+	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
+	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();	    
 	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(), beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
 	DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(), endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);	    	    	   
 	
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
-	setLesson(summary.getLesson());      
+	setLesson(lesson);      
 	setSummary(summary);
 		
-	summary.getLesson().refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
+	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
 	
-	AllocatableSpace room = summary.getLesson().getSala();
+	AllocatableSpace room = lesson.getSala();
 	if(room != null) {	 
 	    lessonInstanceSpaceOccupationManagement(room);
 	}	

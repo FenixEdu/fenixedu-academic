@@ -111,7 +111,7 @@ public class Summary extends Summary_Base {
     private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {		
 	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
 	if(lessonInstance == null) {	    
-	    new LessonInstance(this);	    
+	    new LessonInstance(lesson, this);	    
 	} else {
 	    setLessonInstance(lessonInstance);
 	}
