@@ -25,7 +25,7 @@ public class Substitution extends Substitution_Base {
     }
 
     @Override
-    protected void init(final StudentCurricularPlan studentCurricularPlan,
+    final protected void init(final StudentCurricularPlan studentCurricularPlan,
 	    final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
 	
@@ -36,7 +36,12 @@ public class Substitution extends Substitution_Base {
     }
 
     @Override
-    public String getGivenGrade() {
+    final public boolean isSubstitution() {
+	return true;
+    }
+
+    @Override
+    final public String getGivenGrade() {
 	if (super.getGivenGrade() == null) {
 	    BigDecimal result = BigDecimal.ZERO;
 	    for (final IEnrolment enrolment  : getIEnrolments()) {
