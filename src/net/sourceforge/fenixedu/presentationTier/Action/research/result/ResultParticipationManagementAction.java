@@ -90,6 +90,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final ResultParticipationCreationBean bean = getRenderedObject("bean");
+
 	request.setAttribute("bean", bean);
 	try {
 	    if (bean.getParticipator() == null) {
@@ -223,6 +224,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	    return mapping.findForward("editParticipation");
 	}
 	request.setAttribute("duringCreation", true);
+	request.setAttribute("createUnit",true);
 	return mapping.findForward("editParticipation");
     }
 

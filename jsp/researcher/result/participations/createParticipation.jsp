@@ -74,33 +74,14 @@
 	</logic:notPresent>
 	
 	<logic:present name="duringCreation">
-		<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean"/>
+	<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean"/>
 	<bean:define id="schema" value="<%= "resultParticipation.fullCreation" + (bean.getResult().getIsPossibleSelectPersonRole() ? "WithRole" : "") + ".external.readOnly"%>" type="java.lang.String"/>
 	<bean:define id="path" value="<%= "/resultParticipations/createParticipator.do?" + parameters %>"/>
 	
-	<logic:notPresent name="createUnit">
-	
-	<p class="mvert05"><span class="color888"><bean:message key="label.chooseExternalUnit" bundle="RESEARCHER_RESOURCES"/>:</span></p>
-	<fr:edit id="beanForExternalPerson" name="bean" schema="<%= schema %>" action="<%= path %>">
-		<fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="cancel" path="<%= cancel %>"/>
-	</fr:edit>	
-	</logic:notPresent>
-	
-	 
-	<logic:present name="createUnit">
 		<bean:define id="schema" value="<%= "resultParticipation.fullCreation" + (bean.getResult().getIsPossibleSelectPersonRole() ? "WithRole" : "") + ".external.readOnly"%>" type="java.lang.String"/>
-		
-		<div class="warning0">
-			<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
-			<bean:message key="label.informationForCreateUnit" bundle="RESEARCHER_RESOURCES"/>	
-		</div>
-		
+
 		<div class="dinline forminline">
-			<fr:form action="createUnit" action="<%= "/resultParticipations/unitWrapper.do?" + parameters %>">
+			<fr:form action="<%= "/resultParticipations/unitWrapper.do?" + parameters %>">
 				<fr:edit id="beanForExternalPerson" name="bean" schema="<%= schema %>">
 					<fr:layout name="tabular">
 				        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
@@ -108,14 +89,12 @@
 					</fr:layout>
 				</fr:edit>
 				<br/>
-				<html:submit><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
-				<html:submit property="createNewUnit" ><bean:message key="label.createUnit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+				<html:submit property="createNewUnit"><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>
-			<fr:form action="createUnit" action="<%= "/resultParticipations/prepareEdit.do?" + parameters %>">
+			<fr:form action="<%= "/resultParticipations/prepareEdit.do?" + parameters %>">
 				<html:submit><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>		
 		</div>
-	</logic:present>
 		
 	</logic:present>
 
