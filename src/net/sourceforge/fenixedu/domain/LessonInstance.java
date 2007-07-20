@@ -21,12 +21,16 @@ public class LessonInstance extends LessonInstance_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
-    public LessonInstance(final Lesson lesson, final Summary summary) {
+    public LessonInstance(Summary summary, Lesson lesson) {
 	
 	super();
 
-	if(summary == null || lesson == null) {
+	if(summary == null) {
 	    throw new DomainException("error.LessonInstance.empty.summary");
+	}
+	
+	if(lesson == null) {
+	    throw new DomainException("error.LessonInstance.empty.lesson");
 	}
 	
 	YearMonthDay day = summary.getSummaryDateYearMonthDay();
