@@ -48,7 +48,7 @@ public class GradeValidator extends HtmlValidator {
     
     @Override
     protected String getResourceMessage(String message) {
-        return RenderUtils.getFormatedResourceString(message, getComponent().getValue());
+        return RenderUtils.getFormatedResourceString(message, new Object[] { getComponent().getValue() });
     }
 
 	public boolean isRequired() {
