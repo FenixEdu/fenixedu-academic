@@ -1591,8 +1591,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
 	return this.equals(oldCurricularCourse)
-		|| (hasCompetenceCourse() && getCompetenceCourse().getAssociatedCurricularCourses()
-			.contains(oldCurricularCourse));
+		|| (hasCompetenceCourse() && getCompetenceCourse().hasAssociatedCurricularCourses(
+			oldCurricularCourse));
     }
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear,
