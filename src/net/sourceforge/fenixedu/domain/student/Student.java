@@ -720,7 +720,7 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwner")
+    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
