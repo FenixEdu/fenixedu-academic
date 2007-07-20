@@ -678,6 +678,13 @@
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 		
+		<!-- bolonhaTransitionManagementForm -->
+		<form-bean name="bolonhaTransitionManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationId" type="java.lang.Integer" />
+			<form-property name="studentId" type="java.lang.Integer" />
+	    </form-bean>
+		
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2362,6 +2369,17 @@
             <forward name="showPlan" path="show-student-equivalency.plan"/>
             <forward name="addEquivalency" path="add-student-equivalency"/>
         </action>
+        
+        <!-- Start : Bolonha Transition Management -->
+        <action path="/bolonhaTransitionManagement" 
+        		type="net.sourceforge.fenixedu.presentationTier.Action.manager.transition.BolonhaTransitionManagementDA" 
+        		parameter="method"
+        		name="bolonhaTransitionManagementForm">
+        	<forward name="chooseStudent" path="transition.bolonha.chooseStudent" />
+        	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />
+        	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />
+        </action>
+        <!-- End : Bolonha Transition Management -->
 
 	</action-mappings>
 

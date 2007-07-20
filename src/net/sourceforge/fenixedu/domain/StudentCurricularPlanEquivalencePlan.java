@@ -12,9 +12,11 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.Equ
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.EquivalencyPlanEntryWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanEquivalencePlan_Base {
 
+    @Checked("StudentCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
     public StudentCurricularPlanEquivalencePlan(final StudentCurricularPlan studentCurricularPlan) {
 	super();
 

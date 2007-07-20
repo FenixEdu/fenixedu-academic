@@ -4,9 +4,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEquivalencePlan_Base {
 
+    @Checked("DegreeCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
     public DegreeCurricularPlanEquivalencePlan(final DegreeCurricularPlan degreeCurricularPlan,
 	    final DegreeCurricularPlan sourceDegreeCurricularPlan) {
 	super();

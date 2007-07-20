@@ -317,3 +317,8 @@
 	<slot name="number"/>
 	<slot name="person.name"/>
 </schema>
+
+
+<schema name="StudentNumberBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
+	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>

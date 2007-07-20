@@ -177,7 +177,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Checked("EquivalencePlanPredicates.checkPermissionsToCreate")
+    @Checked("EquivalencePlanEntryPredicates.checkPermissionsToCreate")
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
 	    final CourseGroup newCourseGroup) {
 	this();
@@ -185,7 +185,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 		.singleton(newCourseGroup), null, null, null, true, null);
     }
 
-    @Checked("EquivalencePlanPredicates.checkPermissionsToCreate")
+    @Checked("EquivalencePlanEntryPredicates.checkPermissionsToCreate")
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan,
 	    final Collection<? extends DegreeModule> oldDegreeModules,
 	    final Collection<? extends DegreeModule> newDegreeModules,

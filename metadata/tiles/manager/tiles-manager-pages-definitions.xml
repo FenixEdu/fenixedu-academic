@@ -930,5 +930,18 @@
 	</definition>
 	<definition name="prepare-create-new-persistent-group" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/persistentGroups/createNewPersistentGroup.jsp" />		
+	</definition>
+	
+	<!-- Begin: Bolonha Transition Management -->
+	<definition name="transition.bolonha.chooseStudent" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/transition/bolonha/chooseStudent.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.chooseRegistration" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/transition/bolonha/chooseRegistration.jsp"/>
+	</definition>
+	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/transition/bolonha/showStudentCurricularPlan.jsp"/>
 	</definition>	
+	<!-- End: Bolonha Transition Management -->
+		
 </tiles-definitions>
