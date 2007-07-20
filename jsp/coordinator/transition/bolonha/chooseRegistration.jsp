@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-<logic:present role="MANAGER">
+<logic:present role="COORDINATOR">
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>
 
