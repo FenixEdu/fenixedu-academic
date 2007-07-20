@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,7 +21,7 @@ public class Substitution extends Substitution_Base {
     public Substitution(final StudentCurricularPlan studentCurricularPlan,
 	    final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
-	
+
 	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
     }
 
@@ -28,7 +29,7 @@ public class Substitution extends Substitution_Base {
     final protected void init(final StudentCurricularPlan studentCurricularPlan,
 	    final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
-	
+
 	if (enrolments == null || enrolments.isEmpty()) {
 	    throw new DomainException("error.substitution.wrong.arguments");
 	}
@@ -44,12 +45,21 @@ public class Substitution extends Substitution_Base {
     final public String getGivenGrade() {
 	if (super.getGivenGrade() == null) {
 	    BigDecimal result = BigDecimal.ZERO;
-	    for (final IEnrolment enrolment  : getIEnrolments()) {
+	    for (final IEnrolment enrolment : getIEnrolments()) {
 		if (StringUtils.isNumeric(enrolment.getGradeValue())) {
 		    result = result.add(new BigDecimal(enrolment.getGradeValue()));
 		}
 	    }
-	    return result == BigDecimal.ZERO ? null : result.divide(new BigDecimal(getIEnrolments().size())).toPlainString();
+	    // FIXME: This is a temporary solution
+	    if (result == BigDecimal.ZERO) {
+		return null;
+	    }
+
+	    final BigDecimal grade = result.divide(new BigDecimal(getIEnrolments().size()), 2,
+		    RoundingMode.HALF_UP);
+	    
+	    return grade.compareTo(BigDecimal.TEN) < 0 ? null : grade.toPlainString();
+	    
 	} else {
 	    return super.getGivenGrade();
 	}

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -40,6 +41,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
@@ -494,11 +496,18 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateDismissalGradeCell(HtmlTableRow dismissalRow, Dismissal dismissal) {
-	    final String grade = !StringUtils.isEmpty(dismissal.getCredits().getGivenGrade()) ? dismissal
+	    final String gradeValue = !StringUtils.isEmpty(dismissal.getCredits().getGivenGrade()) ? dismissal
 		    .getCredits().getGivenGrade()
-		    : "-";
-	    generateCellWithText(dismissalRow, grade, getGradeCellClass());
+		    : null;
+	    final String gradeString;
+	    if (gradeValue != null && NumberUtils.isNumber(gradeValue)) {
+		final DecimalFormat decimalFormat = new DecimalFormat("##");
+		gradeString = decimalFormat.format(Double.valueOf(gradeValue));
+	    } else {
+		gradeString = gradeValue != null ? gradeValue : "-";
+	    }
 
+	    generateCellWithText(dismissalRow, gradeString, getGradeCellClass());
 	}
 
 	private void generateCellsBetweenLabelAndGradeCell(HtmlTableRow dismissalRow) {
