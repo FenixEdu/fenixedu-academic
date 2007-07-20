@@ -24,7 +24,7 @@
 		</fr:edit>
 	</logic:notEmpty>
 	<logic:empty name="registration" property="lastStudentCurricularPlan">
-		<i><bean:message  key="label.transition.bolonha.noEquivalences"/></i>
+		<i><bean:message  key="label.transition.bolonha.noEquivalences" bundle="STUDENT_RESOURCES"/></i>
 	</logic:empty>
 		
 
