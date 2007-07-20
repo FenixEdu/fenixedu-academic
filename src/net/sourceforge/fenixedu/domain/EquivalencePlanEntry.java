@@ -381,6 +381,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	if (getNewDegreeModulesOperator() != null) {
 	    stringBuilder.append(getNewDegreeModulesOperator().name());
 	}
+	stringBuilder.append(getIdInternal());
 	return stringBuilder.toString();
     }
 
