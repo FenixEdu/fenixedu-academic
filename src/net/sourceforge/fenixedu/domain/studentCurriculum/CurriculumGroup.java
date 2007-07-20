@@ -62,14 +62,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
 	this();
-
+	init(curriculumGroup, courseGroup);
+    }
+    
+    protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup) {
 	if (courseGroup == null || curriculumGroup == null) {
 	    throw new DomainException(
 		    "error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
 	}
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
-	setCurriculumGroup(curriculumGroup);
 	setDegreeModule(courseGroup);
+	setCurriculumGroup(curriculumGroup);
     }
 
     protected void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan,
@@ -447,6 +450,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
     
+    public Set<CurriculumLine> getAllCurriculumLines() {
+	Set<CurriculumLine> result = new HashSet<CurriculumLine>();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isLeaf()) {
+		result.add((CurriculumLine) curriculumModule);
+	    } else {
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+		result.addAll(curriculumGroup.getAllCurriculumLines());
+	    }
+	}
+	return result;
+    }
+    
     public Integer getChildOrder() {
 	return getChildOrder(null);
     }
@@ -680,8 +696,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     @SuppressWarnings("unchecked")
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
-		CurricularRuleType.CREDITS_LIMIT, executionYear);
+	
+	final CourseGroup courseGroup = isRoot() ? getDegreeModule() : getCurriculumGroup().getDegreeModule();
+	final List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
+		CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
 	if (curricularRules.size() > 1) {
 	    throw new DomainException(
 		    "error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");

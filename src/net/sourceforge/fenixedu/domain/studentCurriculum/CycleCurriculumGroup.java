@@ -18,10 +18,14 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super();
     }
 
-    public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup,
-	    CycleCourseGroup cycleCourseGroup, ExecutionPeriod executionPeriod) {
+    public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup, ExecutionPeriod executionPeriod) {
 	this();
 	init(rootCurriculumGroup, cycleCourseGroup, executionPeriod);
+    }
+    
+    public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup) {
+	this();
+	init(rootCurriculumGroup, cycleCourseGroup);
     }
 
     @Override
