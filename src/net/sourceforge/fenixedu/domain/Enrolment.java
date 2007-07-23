@@ -290,7 +290,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	    else {
 		throw new DomainException("error.enrolment.cant.unenroll");
-	    }
+	}
 	}
 
 	delete();
@@ -569,8 +569,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee, executionPeriod);
 	createAttendForImprovement(executionPeriod);
+	
 	return enrolmentEvaluation;
     }
+
     
     private void createAttendForImprovement(final ExecutionPeriod executionPeriod) {
 	final Registration registration = getRegistration();
@@ -906,7 +908,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		responsibleFor, grade, availableDate, examDate, new DateTime());
 	if(enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
 	    enrolmentEvaluation.setExecutionPeriod(executionPeriod);
-	}
+    }
 	return enrolmentEvaluation;
     }
 
@@ -1264,7 +1266,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
     }
-    
+
     @Override
     final public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
         return isAproved(curricularCourse) ? this : null;
@@ -1383,4 +1385,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return null;
     }
     
+    public static Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
+		Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+		return enrolments.get(0);
+	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -1090,7 +1091,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     public Double getContactLoad() {
 	return getContactLoad(null);
-    }
+	}
 
     public Double getContactLoad(final CurricularPeriod curricularPeriod) {
 	if (isBolonhaDegree()) {
@@ -1116,12 +1117,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public Double getTotalLoad() {
 	return getTotalLoad(null);
-    }
+	}
 
     public Double getTotalLoad(final CurricularPeriod curricularPeriod) {
 	if (!isBolonhaDegree()) {
 	    return getAutonomousWorkHours() + getContactLoadForPreBolonha();
-	}
+    }
 	double result = 0.0;
 	if (hasCompetenceCourse()) {
 	    result = this.getCompetenceCourse().getTotalLoad(
@@ -1587,7 +1588,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return getRegimeType() == RegimeType.ANUAL;
 	}
 	return hasCompetenceCourse() ? getCompetenceCourse().isAnual() : false;
-    }
+	}
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
 	return this.equals(oldCurricularCourse)
@@ -1927,12 +1928,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return false;
     }
-
+    
     public boolean isDissertation() {
 	CompetenceCourse competenceCourse = getCompetenceCourse();
 	return competenceCourse == null ? false : competenceCourse.isDissertation();
     }
-
+    
     @Override
     public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
 	degreeModules.add(this);
@@ -1964,5 +1965,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean isCurricularCourse() {
 	return true;
     }
+    
+    public DegreeModuleScope getOldestDegreeModuleScope(){
+		List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>(this.getDegreeModuleScopes());
+		Collections.sort(scopes, DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
+		return scopes.get(0);
+	}
 
 }

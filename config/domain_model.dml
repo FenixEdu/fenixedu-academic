@@ -1286,7 +1286,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		class net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsVisualizationPeriod extends net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod {
 		}
 
-	class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
+	class net.sourceforge.fenixedu.domain.Tutorship extends net.sourceforge.fenixedu.domain.DomainObject {
+		Partial startDate;
+		Partial endDate;
 	}
 
 	class net.sourceforge.fenixedu.domain.UnitFileTag extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -10584,9 +10586,9 @@ relation RootDomainObjectTransaction {
 	}
 }
 
-relation RootDomainObjectTutor {
+relation RootDomainObjectTutorship {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Tutor playsRole tutors {
+	net.sourceforge.fenixedu.domain.Tutorship playsRole tutorships {
 		multiplicity *;
 	}
 }
@@ -11569,16 +11571,18 @@ relation TransactionPersonAccount {
 	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
-relation TutorStudentCurricularPlan {
-	net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;
-	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+relation TutorshipStudentCurricularPlan {
+    net.sourceforge.fenixedu.domain.Tutorship playsRole tutorships {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
-relation TutorTeacher {
-	net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutors {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+relation TutorshipTeacher {
+    net.sourceforge.fenixedu.domain.Tutorship playsRole tutorships {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 relation UnitCampus {

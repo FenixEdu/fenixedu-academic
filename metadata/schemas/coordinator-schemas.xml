@@ -382,3 +382,237 @@
 <schema name="StudentEquivalencyPlanEntryCreator.create" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">
     <setter signature="execute()"/>
 </schema>
+
+<schema name="coordinator.tutor.tutorNumber" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean">
+	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="10" />
+	</slot>
+</schema>
+
+<schema name="coordinator.tutor.addTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
+	<slot name="studentNumber" key="label.coordinator.tutor.associateStudent.studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>  
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+    </slot>
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+    </slot> 
+</schema>
+
+<schema name="coordinator.tutor.tutorshipInfo" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
+	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>
+	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>	
+	<slot name="teacher.numberOfTutorships" key="label.coordinator.tutor.tutorshipInfo.allTutoredStudents"/>
+</schema>
+
+<schema name="coordinator.tutor.studentsListTabularOption" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="studentsList" layout="tabular-option" schema="coordinator.tutor.tutorship">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.StudentsGivenTutorAndEntryYearDataProvider"/>
+		<property name="classes" value="tstyle1 acenter"/>
+		<property name="columnClasses" value=",,width200px aleft,,width100px,width100px"/>
+	</slot>
+</schema>
+
+<schema name="coordinator.tutor.tutorship" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+		<slot name="studentCurricularPlan.registration.number" key="label.coordinator.studentNumber" />
+		<slot name="studentCurricularPlan.registration.person.name" key="label.coordinator.studentName"/>
+		<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+		<slot name="startDate" key="label.tutorship.startDate"/>
+		<slot name="endDate" key="label.tutorship.endDate"/>
+</schema>
+
+<schema name="coordinator.tutorshipHistory.studentsList" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+		<slot name="studentCurricularPlan.registration.number" key="label.coordinator.studentNumber" />
+		<slot name="studentCurricularPlan.registration.person.name" key="label.coordinator.studentName"/>
+		<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+		<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear"/>
+		<slot name="startDate" key="label.tutorship.startDate"/>
+		<slot name="endDate" key="label.tutorship.endDate"/>
+		<slot name="studentCurricularPlan.registrationStateType" key="label.coordinator.registrationStateType"/>
+</schema>
+
+<schema name="coordinator.tutorshipHistory.pastStudentsList" extends="coordinator.tutorshipHistory.studentsList" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+		<slot name="studentCurricularPlan.activeTutorship" layout="null-as-label" key="label.coordinator.activeTutor">
+			<property name="label" value="-" />
+			<property name="subLayout" value="values"/>
+			<property name="subSchema" value="currentTutorship.teacher.name"/>
+		</slot>
+</schema>
+
+<schema name="currentTutorship.teacher.name"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Tutorship">
+	<slot name="teacher.person.name" key="label.coordinator.lastActiveTutor"/>
+</schema>
+
+<schema name="coordinator.chooseTutor.teacher.name"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="nickname" key="label.name"/>
+</schema>
+
+<schema name="coordinator.chooseTutor.person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="email" />
+</schema>
+
+<schema name="coordinator.createTutorship.studentsWithoutTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.entryYear" layout="link">
+		<property name="classes" value="bold" />
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/createTutorship.do?method=prepareCreateTutorships&amp;selectedEntryYear=${executionYear.year}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+		<property name="contextRelative" value="true" />
+		<property name="moduleRelative" value="true" />
+	</slot>
+	<slot name="numberOfStudentsWithoutTutor" key="label.coordinator.tutor.studentsWithoutTutorship"/>	
+</schema>
+
+<schema name="coordinator.createTutorship.studentsListTabularOption" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="studentsToCreateTutorshipList" layout="tabular-option" schema="currentStudentCurricularPlan">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.StudentsWithoutTutorshipDataProvider"/>
+		<property name="classes" value="tstyle1 acenter"/>
+		<property name="columnClasses" value=",,width200px aleft,,"/>
+		<property name="emptyMessageKey" value="label.coordinator.tutor.emptyStudentsList"/>
+		<property name="emptyMessageBundle" value="APPLICATION_RESOURCES"/>
+	</slot>
+</schema>
+
+<schema name="currentStudentCurricularPlan" type="net.sourceforge.fenixedu.domain.Tutorship">
+	<slot name="registration.number" key="label.coordinator.studentNumber" />
+	<slot name="registration.person.name" key="label.coordinator.studentName"/>
+	<slot name="registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+	<slot name="registrationStateType" key="label.coordinator.registrationStateType"/>
+</schema>
+
+<schema name="coordinator.createTutorship.randomNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.coordinator.tutor.selectedEntryYear" read-only="true" />
+	<slot name="numberOfStudentsToCreateTutorship" key="label.coordinator.tutor.numberOfStudents" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="5" />
+	</slot>
+</schema>
+
+<schema name="coordinator.createTutorship.registration.number" bundle="APPLICATION_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.student.Registration" >
+	<slot name="number" />
+</schema>
+
+<schema name="coordinator.createTutorship.selectedStudentsInfo" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.entryYear" />
+	<slot name="numberOfStudentsToCreateTutorship" key="label.coordinator.tutor.numberOfStudents" />
+</schema>
+
+<schema name="coordinator.createTutorship.selectedStudentsAndTutorInfo" extends="coordinator.createTutorship.selectedStudentsInfo" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="teacherNumber" key="label.teacherNumber" />
+	<slot name="teacher.person.name" key="label.name" />
+</schema>
+
+<schema name="coordinator.createTutorship.studentsList" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="APPLICATION_RESOURCES">
+	<slot name="registration.number" key="label.coordinator.studentNumber"/>
+	<slot name="registration.person.name" key="label.coordinator.studentName"/>
+	<slot name="registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+	<slot name="registration.startExecutionYear.year" key="label.entryYear"/>
+	<slot name="registrationStateType" key="label.coordinator.registrationStateType"/>
+</schema>
+
+<schema name="coordinator.createTutorship.tutorNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="10" />
+	</slot>
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+    </slot>
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+    </slot>
+</schema>
+
+<schema name="coordinator.createTutorship.tutorName" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="teacher.person.name" key="label.tutor" read-only="true"/>
+</schema>
+
+<schema name="coordinator.tutor.changeTutorshipsEndDates" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean$ChangeTutorshipBean" bundle="APPLICATION_RESOURCES">
+	<slot name="tutorship.studentCurricularPlan.registration.number" key="label.coordinator.studentNumber" read-only="true"/>
+	<slot name="tutorship.studentCurricularPlan.registration.person.name" key="label.coordinator.studentName" read-only="true"/>
+	<slot name="tutorship.studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" read-only="true"/>
+	<slot name="tutorship.startDate" key="label.tutorship.startDate" read-only="true"/>
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+    </slot>
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+    </slot>
+</schema>
+
+<schema name="coordinator.tutor.endDate" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+    </slot>
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+    </slot> 
+</schema>
+
+<schema name="coordinator.chooseTutor.tutorList" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean">
+	<slot name="teacherNumber" key="label.teacherNumber" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/tutorManagement.do?method=prepare&amp;forwardTo=readTutor&amp;teacherNumber=${teacher.teacherNumber}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+	</slot>
+	<slot name="teacher.person.name" key="label.name" />
+	<slot name="teacher.person" key="label.email" layout="link">
+		<property name="linkFormat" value="mailto:${email}"/>
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="coordinator.chooseTutor.person.email" />
+	</slot>
+	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
+	<slot name="teacher.category.longName" key="label.teacherCategory"/>
+	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>
+	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>
+</schema>
+
+<schema name="coordinator.chooseTutorHistory.tutorList" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean">	
+	<slot name="teacher.teacherNumber" key="label.teacherNumber" />
+	<slot name="teacherName" key="label.name" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="/tutorManagement.do?method=viewTutorshipHistory&amp;forwardTo=prepareChooseTutorHistory&amp;teacherNumber=${teacher.teacherNumber}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+	</slot>
+	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
+	<slot name="teacher.category.longName" key="label.teacherCategory"/>
+	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>
+	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>	
+</schema>
+
+<schema name="coordinator.tutor.transferTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
+	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="10" />
+	</slot>
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+    </slot>
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+		<property name="saveOptions" value="true"/>
+		<property name="nullOptionHidden" value="true"/>
+    </slot>
+</schema>

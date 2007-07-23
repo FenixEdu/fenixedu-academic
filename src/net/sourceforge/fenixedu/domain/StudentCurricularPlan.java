@@ -2507,5 +2507,59 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<CurriculumLine> getAllCurriculumLines() {
 	return isBoxStructure() ? getRoot().getAllCurriculumLines() : new HashSet<CurriculumLine>(super.getEnrolmentsSet());
     }
+    
+    public List<Enrolment> getEnrolmentsWithExecutionYearBeforeOrEqualTo(
+			final ExecutionYear executionYear) {
+		final List<Enrolment> result = new ArrayList<Enrolment>();
+		for (final Enrolment enrolment : getEnrolmentsSet()) {
+			if (enrolment.getExecutionPeriod().getExecutionYear()
+					.isBeforeOrEquals(executionYear)) {
+				result.add(enrolment);
+			}
+		}
+		return result;
+	}
+
+	public List<Enrolment> getEnrolmentsWithExecutionYearEqualTo(
+			final ExecutionYear executionYear) {
+		final List<Enrolment> result = new ArrayList<Enrolment>();
+		for (final Enrolment enrolment : getEnrolmentsSet()) {
+			if (enrolment.getExecutionPeriod().getExecutionYear().equals(
+					executionYear)) {
+				result.add(enrolment);
+			}
+		}
+		return result;
+	}
+
+	public Tutorship getLastTutorship() {
+		return (Tutorship)Collections.max(getTutorships(),Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+	}
+
+	public Tutorship getActiveTutorship() {
+		List<Tutorship> tutorships = getTutorships();
+		if (!tutorships.isEmpty() && getLastTutorship().isActive()) {
+			return getLastTutorship();
+		}
+		return null;
+	}
+
+	@Override
+	public void addTutorships(Tutorship tutorships) throws DomainException {
+		for (Tutorship tutorship : getTutorships()) {
+			if (tutorship.getTeacher().equals(tutorships.getTeacher())
+					&& tutorship.getEndDate().equals(tutorships.getEndDate())) {
+				throw new DomainException(
+						"error.tutorships.duplicatedTutorship");
+			}
+
+			if (tutorship.isActive()) {
+				throw new DomainException(
+						"error.tutorships.onlyOneActiveTutorship");
+			}
+		}
+
+		super.addTutorships(tutorships);
+	}
 
 }

@@ -146,18 +146,18 @@
             <form-property name="executionCourseId" type="java.lang.Integer"/>
       </form-bean>
       
-      <form-bean name="tutorForm"
-      		type="org.apache.struts.validator.DynaValidatorForm"
-	        dynamic="true">
-        <form-property name="page" type="java.lang.Integer" initial="0"/>
-        <form-property name="executionDegreeId" type="java.lang.String"/>
-	    <form-property name="tutorNumber" type="java.lang.String"/>
-	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />
-   	    <form-property name="studentNumber" type="java.lang.String"/>
-	    <form-property name="studentNumberFirst" type="java.lang.String"/>
-	    <form-property name="studentNumberSecond" type="java.lang.String"/>	  
-	    <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>  
-      </form-bean>
+<!--      <form-bean name="tutorForm"-->
+<!--      		type="org.apache.struts.validator.DynaValidatorForm"-->
+<!--	        dynamic="true">-->
+<!--        <form-property name="page" type="java.lang.Integer" initial="0"/>-->
+<!--        <form-property name="executionDegreeId" type="java.lang.String"/>-->
+<!--	    <form-property name="tutorNumber" type="java.lang.String"/>-->
+<!--	    <form-property name="deletedTutorsIds" type="java.lang.Integer[]" />-->
+<!--   	    <form-property name="studentNumber" type="java.lang.String"/>-->
+<!--	    <form-property name="studentNumberFirst" type="java.lang.String"/>-->
+<!--	    <form-property name="studentNumberSecond" type="java.lang.String"/>	  -->
+<!--	    <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>  -->
+<!--      </form-bean>-->
 
 	<!-- ******************* LEEC Enrollment **************** -->
 	<form-bean name="curricularCoursesEnrollmentForm"
@@ -738,29 +738,48 @@
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>	
 	  
-	  <!-- Tutor Information -->
-	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.TutorManagementDispatchAction"
-	  	path="/tutorManagement"
-	  	name="tutorForm"
-	  	parameter="method"
-	  	scope="request"
-	  	input="/tutorManagement.do?method=prepareChooseTutor&amp;page=0"
-	  >
-	  	<forward name="notAuthorized" path="notAutorized" />
+	  <!-- Tutor Management -->
+	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction"
+		  	path="/tutorManagement"
+		  	parameter="method"
+		  	scope="request">
+	  	<forward name="notAuthorized" path="notAuthorized" />
 	  	<forward name="chooseTutor" path="chooseTutor" />
+	  	<forward name="prepareChooseTutor" path="/tutorManagement.do?method=prepareChooseTutor" />
+	  	<forward name="readTutor" path="/tutorManagement.do?method=readTutor" />
+	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
+	  	<forward name="prepareChooseTutorHistory" path="/tutorManagement.do?method=prepareChooseTutorHistory" />
+	  	<forward name="chooseTutorHistory" path="chooseTutorHistory" />
+	  	<forward name="showTutorshipHistory" path="showTutorshipHistory" />
+	  </action>
+	  
+	  <!-- Tutorship Management -->
+	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorshipManagementDispatchAction"
+		  	path="/tutorshipManagement"
+		  	parameter="method"
+		  	scope="request">
+	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
+	  	<forward name="transferTutorships" path="transferTutorships" />
+	  </action>
+	  
+	  <!-- Tutorship Atribution -->
+	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.CreateTutorshipDispatchAction"
+		  	path="/createTutorship"
+		  	parameter="method"
+		  	scope="request">
+	  	<forward name="createTutorships" path="createTutorships" />
+	  	<forward name="notAuthorized" path="notAuthorized" />
+	  </action>
+	  
+	  <!-- Tutorship Modification -->
+	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.ChangeTutorshipDispatchAction"
+		  	path="/changeTutorship"
+		  	parameter="method"
+		  	scope="request">
+		<forward name="changeTutorshipsEndDate" path="changeTutorshipsEndDates" />
 	  	<forward name="showStudentsByTutor" path="showStudentsByTutor" />
 	  </action>
 	  
-	  <action type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.TutorManagementLookupDispatchAction"
-	  	path="/tutorManagementLookup"
-	  	name="tutorForm"
-	  	parameter="method"
-	  	scope="request"
-	  	input="/tutorManagement.do?method=readTutor&amp;page=0"
-	  >
-	  	<forward name="confirmation" path="/tutorManagement.do?method=readTutor&amp;page=0" />
-	  	<forward name="cancel" path="/tutorManagement.do?method=prepareChooseTutor" />
-	  </action>
 	  
 	<!-- ****************** LEEC Enrollment **************************** -->
 	<action path="/studentEnrollementSection"
@@ -810,6 +829,10 @@
         	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
     </action>	  
+    
+    <action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>
     
       <!-- Teaching Report -->
 	<action type="net.sourceforge.fenixedu.presentationTier.Action.gesdis.TeachingReportAction" 

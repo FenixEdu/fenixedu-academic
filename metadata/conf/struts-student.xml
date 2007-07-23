@@ -355,6 +355,16 @@
         <forward name="NotAuthorized" path="df.page.notAuthorized"/>
         
       </action>
+      
+      <action path="/viewTutorInfo" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.tutor.TutorInfoDispatchAction">
+			<forward name="ShowStudentTutorInfo"
+				path="df.page.showStudentTutorInfo" />
+		</action>
+		
+		<action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>
 
       <!-- Student Shift Enrolment Manager-->
 	  <action path="/studentShiftEnrollmentManager"

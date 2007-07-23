@@ -313,5 +313,14 @@
 </div>
 <div class="cboth"></div>
 
+<br />
+<br />
+
+<tr>
+	<td>
+		<bean:define id="graph" type="java.lang.String">viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
+		<html:img align="middle" src="<%= graph %>"/>
+	</td>
+</tr>
 </logic:notEmpty>
 </html:form>

@@ -71,8 +71,8 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
 
     private boolean verifyStudentTutor(Teacher teacher, List<Registration> students) {
         for (Registration registration : students) {
-            if (registration.getAssociatedTutor() != null
-                    && registration.getAssociatedTutor().getTeacher() == teacher) {
+            if (registration.getActiveTutorship() != null
+                    && registration.getActiveTutorship().getTeacher() == teacher) {
                 return true;
             }
         }

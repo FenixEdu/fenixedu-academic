@@ -1984,11 +1984,32 @@
         
 		<!-- ****************** LEEC Enrollment **************************** -->
 		<action path="/tutorSection"
-		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-		parameter="method"
-		>
-			<forward name="Success" path="firstPageTutorSection"/>
+			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.TutorshipManagementDispatchAction"
+			parameter="method">
+			<forward name="tutorMenu" path="firstPageTutorSection"/>
 		</action>
+		
+		<action path="/viewStudentsByTutor"
+		   	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsByTutorDispatchAction"
+	       	parameter="method">
+			<forward name="viewStudentsByTutor" path="studentsByTutor"/>        	
+	    </action>
+		
+		<action path="/viewStudentsPerformanceGrid"
+		   	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsPerformanceGridDispatchAction"
+	       	parameter="method">
+			<forward name="viewStudentsPerformanceGrid" path="studentsPerformanceGrid"/>        	
+	    </action>
+	    
+	    <action path="/sendMailToTutoredStudents"
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.SendEmailToTutoredStudents"
+            parameter="method"
+            scope="request">
+            <forward name="choose-receivers" path="chooseReceivers"/>
+            <forward name="compose-mail" path="sendMailToTutoredStudents"/>
+            <forward name="success" path="/sendMailToTutoredStudents.do?method=prepare"/>
+            <forward name="problem" path="/sendMailToTutoredStudents.do?method=prepare"/>
+        </action>
 		
 		<action	path="/curricularCoursesEnrollment"
 			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
@@ -2014,19 +2035,13 @@
 	       	parameter="method">
 			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
 	    </action>
-	      	
-		<action path="/viewStudentsByTutor"
-		   	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentsByTutorDispatchAction"
-	       	parameter="method">
-			<forward name="viewStudentsByTutor" path="df.page.viewStudentsByTutor"/>        	
-	    </action>
 
 		<action path="/registration"
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
 				scope="request">
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
-		</action>	
+		</action>
 
 		<action path="/viewCurriculum"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
@@ -2034,8 +2049,12 @@
 	        parameter="method" scope="request" input="/viewStudentsByTutor.do?method=execute&amp;page=0" validate="false">
 			<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
-	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>
 	    </action>
+	    
+	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>
 
 	    <!-- Final Degree Work -->
 	    <action path="/finalWorkManagement"

@@ -623,7 +623,7 @@ Documentation:
 	<!--@ The default layout for a YearMonthDay automatically includes the day, month, and year -->
 	<renderer type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
-	</renderer>
+	</renderer>	
 	
 	<renderer type="org.joda.time.YearMonthDay" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${monthOfYear,02d}-${year}"/>
@@ -942,5 +942,14 @@ Documentation:
 		<property name="dateToKey" value="fenix.renderers.organigram.date.to"/>
 		<property name="dateSinceKey" value="fenix.renderers.organigram.date.since"/>
 	</renderer>
-	
+
+	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
+    	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->
+    	<property name="approvedMonitoringYear" value="approvedMonitoringYear"/> <!-- span without border and with #003333 color  -->
+    	<property name="approvedAnotherYear" value="approvedAnotherYear"/> <!-- span without border and with #CCCC66 color  -->
+    	<property name="enroled" value="enroled"/> <!-- span with #003333 border and with #FFFFFF color  -->
+    	<property name="notApprovedMonitoringYear" value="notApprovedMonitoringYear"/> <!-- span with #003333 border and with #FFFFFF color  -->
+    	<property name="notApprovedAnotherYear" value="notApprovedAnotherYear"/> <!-- span with #CCCC66 border and #FFFFFF color  -->
+    	<property name="performanceGridBundle" value="APPLICATION_RESOURCES"/>
+    </renderer>
 </renderers-config>

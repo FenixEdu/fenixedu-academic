@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutor;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -39,7 +39,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 return new String("error.student.degreeCurricularPlan.LEEC");
             }
 
-            final Tutor tutor = registration.getAssociatedTutor();
+            final Tutorship tutor = registration.getActiveTutorship();
             if (tutor != null) {
                 return new String("error.enrollment.student.withTutor+"
                         + tutor.getTeacher().getTeacherNumber().toString() + "+"

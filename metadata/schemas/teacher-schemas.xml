@@ -21,3 +21,112 @@
 	<setter signature="edit(subject, description)" />
 </schema>
 
+<!-- SCHEMAS FOR TUTORSHIP MANAGEMENT  -->
+<schema name="teacher.tutor.name" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party">	
+	<slot name="name" key="label.tutor" />
+	<slot name="teacher.teacherNumber" key="label.teacherNumber"/>
+	<slot name="teacher.currentWorkingDepartment.realName" key="label.department" />
+</schema>
+
+<schema name="teacher.tutor.performanceGrid.filters" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean" >
+	<slot name="degree" key="label.degree" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider"/> 
+		<property name="format" value="${sigla} - ${nome}"/>
+		<property name="sortBy" value="nome"/>
+		<property name="destination" value="post-back"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+	<slot name="studentsEntryYear" key="label.entryYear" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.ExecutionYearsForTutorEntryYearProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year"/>
+		<property name="destination" value="post-back"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+	<slot name="currentMonitoringYear" key="label.monitoringYear" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.ExecutionYearsForTutorMonitoringProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year"/>
+		<property name="destination" value="post-back"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+</schema>
+
+<schema name="teacher.tutor.performanceGrid.eachStudent" bundle="APPLICATION_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO$PerformanceGridLine" >
+	<slot name="registration" key="label.studentNumber" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="blankTarget" value="true"/>
+		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${idInternal}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="registration.number"/>
+	</slot>
+	<slot name="registration.person.name" key="label.name"/>
+	<slot name="registration.entryPhase" layout="null-as-label" key="label.entryPhase">
+		<property name="label" value="-"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="registration.entryPhase"/>
+	</slot>
+	<slot name="entryGrade" key="label.entryGrade"/>
+	<slot name="aritmeticAverage" key="label.aritmeticAverage"/>
+</schema>
+
+<schema name="registration.number" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Registration" >
+	<slot name="number" />
+</schema>
+
+<schema name="registration.entryPhase" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Registration" >
+	<slot name="entryPhase" />
+</schema>
+
+<schema name="teacher.tutor.tutorStatistics" bundle="APPLICATION_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean" >
+	<slot name="approvedEnrolmentsNumber" key="label.approvedEnrolments" />
+	<slot name="studentsNumber" key="label.studentsNumber" />	
+	<slot name="studentsRatio" key="label.studentsPercentage" />
+</schema>
+
+<schema name="teacher.viewStudentsByTutor" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Tutorship">
+	<slot name="studentCurricularPlan.registration" key="label.studentNumber" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="blankTarget" value="true"/>
+		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${idInternal}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="registration.number"/>
+	</slot>
+	<slot name="studentCurricularPlan.person.name" key="label.name" />
+	<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
+	<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
+	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
+		<property name="linkFormat" value="mailto:${email}"/>
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="teacher.person.email" />
+	</slot>
+</schema>
+
+<schema name="teacher.person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="email" />
+</schema>
+
+<schema name="teacher.tutorshipHistory.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean">
+	<slot name="numberOfCurrentTutorships" key="label.teacher.tutor.tutorshipInfo.currentTutoredStudents"/>
+	<slot name="numberOfPastTutorships" key="label.teacher.tutor.tutorshipInfo.pastTutoredStudents"/>
+	<slot name="numberOfTutorships" key="label.teacher.tutor.tutorshipInfo.allTutoredStudents"/>
+</schema>
+
+<schema name="teacher.tutor.chooseEmailReceivers" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean">
+	<slot name="studentsList" layout="tabular-option" schema="teacher.tutor.tutorship">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.StudentsGivenTutorDataProvider"/>
+		<property name="classes" value="tstyle1 acenter mtop0"/>
+		<property name="columnClasses" value=",,width250px aleft,"/>
+	</slot>
+</schema>
+
+<schema name="teacher.tutor.tutorship" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+		<slot name="studentCurricularPlan.registration.number" key="label.coordinator.studentNumber" />
+		<slot name="studentCurricularPlan.registration.person.name" key="label.coordinator.studentName"/>
+		<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+		<slot name="studentCurricularPlan.person.email" key="label.email"/>
+</schema>

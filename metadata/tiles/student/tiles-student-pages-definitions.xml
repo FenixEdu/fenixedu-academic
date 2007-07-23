@@ -75,6 +75,9 @@
 	<definition name="df.page.showStudentCurricularPlans" extends="definition.student.masterPage" >
 		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp" />
 	</definition>	
+	<definition name="df.page.showStudentTutorInfo" extends="definition.student.masterPage" >
+		<put name="body" value="/student/tutor/showStudentTutorInfo.jsp" />
+	</definition>
 
 	<!-- GROUPS DEFINITIONS-->
 	<definition name="view-enroled-ExecutionCourses" extends="definition.student.masterPage">

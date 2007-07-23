@@ -1,21 +1,76 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="label.tutor"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span><br/>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<html:form action="/tutorManagement" focus="tutorNumber">
+<bean:define id="executionDegreeId" name="tutorshipManagementBean" property="executionDegreeID" />
+<bean:define id="degreeCurricularPlanID" name="tutorshipManagementBean" property="degreeCurricularPlanID" />
+<bean:define id="parameters" value="<%= "executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>"/>
 
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readTutor" />
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
+<h2><bean:message key="label.coordinator.tutorshipManagement" bundle="APPLICATION_RESOURCES" /></h2>
 
-<bean:message key="label.tutorNumber"/>:&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorNumber" property="tutorNumber" size="4"/>
+<logic:messagesPresent message="true">
+	<p>
+		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<span class="error"><bean:write name="messages"/></span>
+		</html:messages>
+	</p>
+</logic:messagesPresent>
 
-<p />
-<html:submit><bean:message key="label.submit"/></html:submit>
-<p />
-<p />
-</html:form>
+<html:errors />
+
+<br />
+
+<b><bean:message key="label.coordinator.tutor.chooseTutor" bundle="APPLICATION_RESOURCES" /></b>
+<br />
+<p class="color888 mvert05"><bean:message key="message.coordinator.tutor.chooseTutor.help" bundle="APPLICATION_RESOURCES" /></p>
+<logic:present name="tutorshipManagementBean">
+	<fr:form action="/tutorManagement.do?method=prepare&forwardTo=readTutor">
+		<fr:edit id="choosetutorshipManagementBean" name="tutorshipManagementBean" schema="coordinator.tutor.tutorNumber">
+			<fr:destination name="invalid" path="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&" +  parameters %>"/>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom0" />
+				<fr:property name="columnClasses" value="width80px,width125px,tdclear tderror1" />
+			</fr:layout>
+		</fr:edit>
+		<table class="tstyle5 gluetop mtop0">
+			<tr>
+				<td class="width80px"></td>
+				<td class="width125px">
+					<html:submit><bean:message key="button.coordinator.tutor.chooseTutor" bundle="APPLICATION_RESOURCES"/></html:submit>
+				</td>
+			</tr>
+		</table>
+	</fr:form>
+</logic:present>
+
+<logic:notPresent name="tutors">
+	<ul>
+		<li><p class="mtop1 mbottom2">
+			<html:link page="<%="/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&chooseFromList=true&" + parameters%>">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.tutor.chooseTutorFromListLink" /></html:link> 
+		</li>
+	</ul>
+</logic:notPresent>
+		
+<logic:present name="tutors">
+	<logic:notEmpty name="tutors">
+		<br />
+		<b><bean:message key="label.coordinator.tutor.chooseTutor.tutorList" bundle="APPLICATION_RESOURCES" /></b>
+		<br />
+		<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.chooseTutor.tutorList.help" bundle="APPLICATION_RESOURCES" /></p>
+		<fr:view name="tutors" layout="tabular-sortable" schema="coordinator.chooseTutor.tutorList">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle1 mtop1 tdcenter"/>
+				<fr:property name="columnClasses" value=",nowrap aleft,,smalltxt aleft,smalltxt aleft,,"/>
+				<fr:property name="sortParameter" value="sortBy"/>
+				<fr:property name="sortableSlots" value="teacherNumber,teacher.person.name,teacher.currentWorkingDepartment.name,teacher.category.longName,teacher.numberOfPastTutorships,teacher.numberOfActiveTutorships"/>
+            	<fr:property name="sortUrl" value="<%= String.format("/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&chooseFromList=true&" + parameters) %>"/>
+            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "teacher.teacherNumber" : request.getParameter("sortBy") %>"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</logic:present>
+

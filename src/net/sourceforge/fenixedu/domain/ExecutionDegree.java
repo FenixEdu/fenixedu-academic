@@ -818,5 +818,20 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         
         return false;
     }
+    
+    /*
+	 * Returns a list of teachers from the coordinator department that can be
+	 * tutors of a student from the given execution degree
+	 */
+	public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
+		List<Department> departments = this.getDegree().getDepartments();
+		
+		ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
+		for(Department department : departments) {
+			possibleTeachers.addAll(department.getPossibleTutors());
+		}
+		
+		return possibleTeachers;
+	}
 
 }

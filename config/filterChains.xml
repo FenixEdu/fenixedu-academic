@@ -107,6 +107,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>CoordinatorOfBolonhaOrLEECAuthorization</name>
+        <expression>CoordinatorAuthorization &amp;&amp; BolonhaOrLEECCoordinatorAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>ManagerAuthorization</name>
         <expression>ManagerAuthorization</expression>
         <description/>
@@ -655,13 +662,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>CoordinatorAndLEECAuthorization</name>
-        <expression>CoordinatorAndLEECAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
-    </filterChain>
-	<filterChain>
         <name>EnrollmentAuthorization</name>
         <expression>EnrollmentAuthorization</expression>
         <description/>

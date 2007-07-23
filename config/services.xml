@@ -5621,26 +5621,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadStudentsByTutor</name>
-		<description>Reads students associated with the teacher</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadStudentsByTutor</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="CoordinatorAndLEECAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ViewStudentsByTutor</name>
-		<description>Reads students associated with the teacher</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ViewStudentsByTutor</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadNotClosedPublicExecutionPeriods</name>
 		<description>Reads all public execution periods that are not closed</description>
 		<implementationClass>
@@ -5649,32 +5629,48 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>InsertTutorShipWithOneStudent</name>
-		<description>Associate one student to the teacher</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.InsertTutorShipWithOneStudent</implementationClass>
+		<name>CreatePerformanceGridTable</name>
+		<description>Create a performance table that shows students performance</description>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tutor.CreatePerformanceGridTable</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorAndLEECAuthorization" />
+			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertTutorShipWithManyStudent</name>
-		<description>Associate a range of students to the teacher</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.InsertTutorShipWithManyStudent</implementationClass>
+		<name>InsertTutorship</name>
+		<description>Associate students to teachers (tutors)</description>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorAndLEECAuthorization" />
+			<chain name="CoordinatorOfBolonhaOrLEECAuthorization" />
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteTutorShip</name>
-		<description>Delete a tutor ship</description>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteTutorShip</implementationClass>
+		<name>DeleteTutorship</name>
+		<description>Remove students from teachers (tutors)</description>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.DeleteTutorship</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="CoordinatorAndLEECAuthorization" />
+			<chain name="CoordinatorOfBolonhaOrLEECAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ChangeTutorship</name>
+		<description>Change tutorship data</description>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.ChangeTutorship</implementationClass>
+		<isTransactional>True</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorOfBolonhaOrLEECAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>TransferTutorship</name>
+		<description>Transfer students from one teacher to another (tutors)</description>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.TransferTutorship</implementationClass>
+		<isTransactional>True</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorOfBolonhaOrLEECAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -9737,7 +9733,7 @@
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>		
 	</service>
-    <service>
+	<service>
 		<name>OpenExtraWorkClosedMonth</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
 		<description />
@@ -10538,6 +10534,7 @@
         <filterChains>
         </filterChains>     
     </service>      
+
     <service>
     	<name>ConsultRoles</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ConsultRoles</implementationClass>
@@ -11270,7 +11267,7 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-   
+
     <service>
     	<name>CreateOtherPartyPayment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment</implementationClass>
@@ -11299,7 +11296,7 @@
         	<chain name="StudentAuthorization" />
         </filterChains>     
     </service>  
-    <service>
+     <service>
     	<name>CreateNewCreditsDismissal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewCreditsDismissal</implementationClass>
         <description></description>
@@ -11429,7 +11426,7 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>
+    </service>   
     <service>
     	<name>EditExternalEnrolment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment</implementationClass>
@@ -11785,7 +11782,7 @@
 			<chain name="ManagerOrCientificCouncilAuthentication" />
 		</filterChains>
     </service>
-	<service>
+   	<service>
         <name>MergeJournalIssues</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeJournalIssues</implementationClass>
         <description></description>
@@ -11857,7 +11854,7 @@
 			<chain name="DepartmentAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
-	<service>
+    <service>
         <name>AddPedagogicalSiteManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
         <description></description>
@@ -11973,7 +11970,7 @@
 		<filterChains>
 			<chain name="UnitSiteManagerAuthorization"/>
 		</filterChains>
-    </service>
+    </service>    
 	<service>
         <name>AssociateEnrolmentsToNotNeedToEnrol</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.notNeedToEnrol.AssociateEnrolmentsToNotNeedToEnrol</implementationClass>

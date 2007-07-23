@@ -196,16 +196,30 @@
 		
 		<%-- Start of non-Master Degree Coordinator Options --%>
 		<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
-			<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
-				<li class="navheader">
-					<bean:message key="label.coordinator.degreeSite.informations"/>
-				</li>
-				<li>
-					<html:link page="<%= "/tutorManagement.do?method=prepareChooseTutor&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
-						<bean:message key="label.coordinator.tutors"/>
-					</html:link>
-				</li>
-			</logic:equal>	
+
+			<li class="navheader">
+				<bean:message key="label.coordinator.degreeSite.tutorship"/>
+			</li>
+			<li>
+				<html:link href="http://gep.ist.utl.pt/html/tutorado" target="_blank">
+					<bean:message key="link.coordinator.gepTutorshipPage" />
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/createTutorship.do?method=prepareCreateTutorships&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
+					<bean:message key="link.coordinator.createTutorships"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
+					<bean:message key="link.coordinator.tutorshipManagement"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutorHistory&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
+					<bean:message key="link.coordinator.tutorshipHistory"/>
+				</html:link>
+			</li>
 			
 			<li class="navheader">
 				<bean:message key="label.coordinator.degreeSite.students"/>

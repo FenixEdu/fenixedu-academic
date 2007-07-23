@@ -1698,6 +1698,36 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return degreeCurricularPlans;
     }
+    
+    public List<StudentCurricularPlan> getStudentsCurricularPlanGivenEntryYear(ExecutionYear entryYear) {
+		List<StudentCurricularPlan> studentsGivenEntryYear = new ArrayList<StudentCurricularPlan>();
+		ExecutionYear currentExecutionYear = ExecutionYear.getExecutionYearByDate(new YearMonthDay());
+		
+		for (Registration registration : this.getActiveRegistrations()) {
+			if (registration.getStartDate() != null && registration.getStartExecutionYear().equals(entryYear)
+						&& registration.isInRegisteredState(currentExecutionYear)) {
+				studentsGivenEntryYear.add(registration.getActiveStudentCurricularPlan());
+			}
+		}
+		return studentsGivenEntryYear;
+	}
+
+	/*
+	 * Returns a list of students without tutor for the given entry year. This
+	 * students never had a tutor. Students that have expired tutorships do not
+	 * appear in this list.
+	 */
+	public List<StudentCurricularPlan> getStudentsWithoutTutorGivenEntryYear(ExecutionYear entryYear) {
+		List<StudentCurricularPlan> studentsWithoutTutor = new ArrayList<StudentCurricularPlan>();
+		for (StudentCurricularPlan scp : getStudentsCurricularPlanGivenEntryYear(entryYear)) {
+			if (scp.getActiveTutorship() == null && scp.getTutorships().isEmpty()) {
+				studentsWithoutTutor.add(scp);
+			}
+		}
+		Collections.sort(studentsWithoutTutor, new BeanComparator("student.number"));
+		Collections.reverse(studentsWithoutTutor);
+		return studentsWithoutTutor;
+	}
 
     /**
      * This must be completely refactored. A pattern of some sort is desirable

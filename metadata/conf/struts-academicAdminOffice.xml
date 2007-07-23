@@ -245,7 +245,11 @@
 	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
-	    </action>			
+	    </action>
+	    
+	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>			
 
 		<action path="/manageEnrolmentModel"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageEnrolmentModelDA"

@@ -61,6 +61,10 @@
 			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 			<forward name="NotAuthorized" path="df.page.notAuthorized"/>
 		</action>
+		
+		<action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>
 	
     </action-mappings>
 

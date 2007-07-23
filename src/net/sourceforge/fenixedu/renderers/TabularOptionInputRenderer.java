@@ -72,13 +72,31 @@ public class TabularOptionInputRenderer extends InputRenderer {
     private String emptyMessageKey;
     private String emptyMessageBundle;
     
+    private String columnClasses;
+    
     private String sortBy;
 
     public String getSortBy() {
         return sortBy;
     }
 
-    /**
+	/**
+     * Selects column classes
+     * 
+     * @property
+     * 
+     */
+    public String getColumnClasses() {
+		return columnClasses;
+	}
+
+
+	public void setColumnClasses(String columnClasses) {
+		this.columnClasses = columnClasses;
+	}
+
+
+	/**
      * Selects the sorting criteria to apply to the collection of objects before presenting them.
      * 
      * @property

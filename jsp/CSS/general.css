@@ -541,9 +541,15 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width40em { width: 40em; }
 .width46em { width: 46em; }
 .width50em { width: 50em; }
+.width80px { width: 80px; }
 .width100px { width: 100px; }
+.width110px { width: 110px; }
+.width125px { width: 125px; }
 .width150px { width: 150px; }
+.width160px { width: 160px; }
+.width200px { width: 200px; }
 .width250px { width: 250px; }
+.width300px { width: 300px; }
 .width500px { width: 550px; }
 .width550px { width: 550px; }
 .width600px { width: 600px; }
@@ -1094,7 +1100,7 @@ background: #fff;
 .boldFontClass { font-weight: bold }
 .bluecell { background: #EDF3FE; }
 .lightBluecell { background: #F9F9FF; width: 100% }
-.bgwhite { background: #FFFFFF; }
+.bgwhite { background: #fff; }
 .grey { background: #909090; width: 100% }
 .solidBorderClass {
 border-style: solid;
@@ -2042,7 +2048,6 @@ ul.tcloudedit li a { border-bottom: 1px solid #aaa !important; }
 
 
 
-
 .flowblock {
 display: block;
 padding-top: 1em;
@@ -2191,3 +2196,22 @@ td.scplancolexamdate span { border-bottom: 1px dotted #777; }
 /* 13 Pessoa Responsável Nota */
 td.scplancolgraderesponsible { }
 td.scplancolgraderesponsible span { border-bottom: 1px dotted #777; }
+
+
+
+/* tutors performance grids */
+table.pgrid tr td { }
+table.pgrid tr td span span { display: inline; padding: 0px 4px; }
+
+.emptySpace { background: #fff; border: 1px solid #000; color: #fff;}
+.approvedMonitoringYear { background: #699; border: 1px solid #699; color: #699;}
+.approvedAnotherYear { background: #cc6; border: 1px solid #cc6; color: #cc6;}
+.enroled { background: #fff; border: 1px solid #699; color: #fff;}
+.notApprovedMonitoringYear { background: url(../images/circle.gif) center center no-repeat; border: 1px solid #699; color: #fff;}
+.notApprovedAnotherYear { background: #fff; border: 1px solid #cc6; color: #fff;}
+
+.performanceGridLegend { padding: 1px 3px; }
+
+
+
+

@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -208,6 +209,20 @@ public class Department extends Department_Base {
     public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(ExecutionYear executionYear) {	
 	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsEvaluationPeriod.class);
 	return period != null ? (TeacherPersonalExpectationsEvaluationPeriod)period : null;
+    }
+    
+    public List<Teacher> getPossibleTutors(){		
+    	List<Teacher> teachers = new ArrayList<Teacher>();
+    	
+    	for(Teacher teacher : this.getAllTeachers()) {
+    		if(teacher.canBeTutorOfDepartment(this)) {
+    			teachers.add(teacher);
+    		}
+    	}
+    	
+    	Collections.sort(teachers,Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+		return teachers;
+	
     }
 
     // -------------------------------------------------------------

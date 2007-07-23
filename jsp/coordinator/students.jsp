@@ -294,6 +294,14 @@
 			</f:facet>
 			<h:outputText value="#{studentCurricularPlan.registration.curricularYear}"/>
 		</h:column>
+		<h:column>
+			<f:facet name="header">	
+				<c:if test="${studentCurricularPlan.activeTutorship != null}">
+					<h:outputText value="#{studentCurricularPlan.activeTutorship.teacher.person.name}"/>
+				</c:if>
+			</f:facet>
+		</h:column>
+		
 		<h:column rendered="#{CoordinatorStudentsBackingBean.showPhoto == true}">
 			<f:facet name="header">
 				<h:outputText value="#{bundle['label.person.photo']}" />

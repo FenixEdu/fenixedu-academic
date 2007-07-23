@@ -318,7 +318,45 @@
 	<slot name="person.name"/>
 </schema>
 
-
 <schema name="StudentNumberBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="student.tutorship.tutorInfo" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
+	<slot name="teacher.person" key="label.name" layout="conditional-link">
+		<property name="visibleIf" value="homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="student.tutorship.tutorInfo.showName"/>
+		<property name="blankTarget" value="true"/>
+	</slot>
+	<slot name="teacher.teacherNumber" key="label.teacherNumber"/>
+	<slot name="teacher.person.personWorkPhone.number" key="label.person.workPhone.short"/>
+	<slot name="teacher.category.longName" key="label.teacher.category"/>
+	<slot name="teacher.currentWorkingDepartment.name" key="label.teacher.currentWorkingDepartment"/>
+	<slot name="teacher.person.email" key="label.email" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="mailto:${teacher.person.email}"/>
+	</slot>
+	<slot name="startDate" key="label.tutorship.startDate"/>
+	<slot name="endDate" key="label.tutorship.endDate"/>
+</schema>
+
+<schema name="student.tutorship.tutorInfo.showName"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" key="label.homepage"/>
+</schema>
+
+<schema name="person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="email" />
+</schema>
+
+<schema name="student.statistics.table" type="net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionPeriod" key="label.student.statistics.executionYear-semester">
+		<property name="format" value="${executionYear.year} - ${semester}"/>
+	</slot>
+	<slot name="totalEnrolmentsNumber" key="label.student.statistics.enrolmentsNumber"/>
+	<slot name="approvedEnrolmentsNumber" key="label.student.statistics.approvedEnrolmentsNumber"/>
+	<slot name="approvedRatio" key="label.student.statistics.approvedRatio"/>
+	<slot name="aritmeticAverage" key="label.student.statistics.aritmeticAverage"/>
 </schema>

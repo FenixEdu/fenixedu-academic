@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutor;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -1341,7 +1341,7 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public Tutor getAssociatedTutor() {
+    public Tutorship getActiveTutorship() {
 
 	StudentCurricularPlan activeStudentCurricularPlan = this
 		.getActiveOrConcludedStudentCurricularPlan();
@@ -1349,7 +1349,7 @@ public class Registration extends Registration_Base {
 	    activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
 	}
 
-	return activeStudentCurricularPlan.getAssociatedTutor();
+	return activeStudentCurricularPlan.getActiveTutorship();
     }
 
     @Override
@@ -1869,7 +1869,7 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final private ExecutionYear getStartExecutionYear() {
+    final public ExecutionYear getStartExecutionYear() {
 	return ExecutionYear.readByDateTime(getStartDate().toDateTimeAtMidnight());
     }
 

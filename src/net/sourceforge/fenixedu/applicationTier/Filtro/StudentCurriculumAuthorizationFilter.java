@@ -187,7 +187,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     }
 
     private boolean verifyStudentTutor(Teacher teacher, Registration registration) {
-	return registration.getAssociatedTutor() != null
-		&& registration.getAssociatedTutor().getTeacher().equals(teacher);
+	return registration.getActiveTutorship() != null
+		&& registration.getActiveTutorship().getTeacher().equals(teacher);
     }
 }

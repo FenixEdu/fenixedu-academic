@@ -1226,5 +1226,85 @@ public class Teacher extends Teacher_Base {
     public Unit getCurrentSectionOrScientificArea() {
     	return getPerson().getEmployee().getCurrentSectionOrScientificArea();
     }
-
+    
+    public List<Tutorship> getActiveTutorshipsByStudentsEntryYearAndDegree(ExecutionYear entryYear, Degree degree){
+    	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+    	
+    	for(Tutorship tutorship : this.getActiveTutorships()) {
+    		StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
+    		ExecutionYear studentEntryYear = ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
+    		if(studentEntryYear.equals(entryYear) && studentCurricularPlan.getDegree().equals(degree)) {
+    			tutorships.add(tutorship);
+    		}
+    	}
+    	
+    	return tutorships;
+    }
+    
+    public List<Tutorship> getPastTutorships(){
+    	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+    	for(Tutorship tutorship : getTutorships()) {
+    		if(!tutorship.isActive()) {
+    			tutorships.add(tutorship);
+    		}
+    	}
+    	return tutorships;
+    }
+    
+    public List<Tutorship> getActiveTutorships(){
+    	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+    	for(Tutorship tutorship : getTutorships()) {
+    		if(tutorship.isActive()) {
+    			tutorships.add(tutorship);
+    		}
+    	}
+    	return tutorships;
+    }
+    
+    public Integer getNumberOfPastTutorships() {
+    	return this.getPastTutorships().size();
+    }
+    
+    public Integer getNumberOfActiveTutorships() {
+    	return this.getActiveTutorships().size();
+    }
+    
+    public Integer getNumberOfTutorships() {
+    	return this.getTutorships().size();
+    }
+    
+    public boolean canBeTutorOfDepartment(Department department) {
+    	if(getCurrentWorkingDepartment() != null && getCurrentWorkingDepartment().equals(department)) {
+			return true;
+		}
+    	return false;
+    }
+    
+    public List<Tutorship> getTutorshipsByStudentsEntryYear(ExecutionYear entryYear) {
+    	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+    	
+    	for(Tutorship tutorship : this.getTutorships()) {
+    		StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
+    		ExecutionYear studentEntryYear = ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
+    		if(studentEntryYear.equals(entryYear)){
+    			tutorships.add(tutorship);
+    		}
+    	}
+    	
+    	return tutorships;
+    }
+    
+    public List<Tutorship> getActiveTutorshipsByStudentsEntryYear(ExecutionYear entryYear) {
+    	List<Tutorship> tutorships = new ArrayList<Tutorship>();
+    	
+    	for(Tutorship tutorship : this.getTutorships()) {
+    		StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
+    		ExecutionYear studentEntryYear = ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration().getStartDate());
+    		if(studentEntryYear.equals(entryYear) && tutorship.isActive()) {
+    			tutorships.add(tutorship);
+    		}
+    	}
+    	
+    	return tutorships;
+    }
 }

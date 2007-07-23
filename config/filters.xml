@@ -610,11 +610,11 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>CoordinatorAndLEECAuthorization</name>
+        <name>BolonhaOrLEECCoordinatorAuthorizationFilter</name>
         <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter</implementationClass>
         <description/>
-        <isTransactional>false</isTransactional>
+        <isTransactional>true</isTransactional>
     </filter> 	
 	<filter>
         <name>EnrollmentAuthorization</name>

@@ -72,5 +72,13 @@ public abstract class DegreeModuleScope {
     public boolean isActive(int year, int semester) {
 	return getCurricularYear().intValue() == year && getCurricularSemester().intValue() == semester;
     }
+    
+    public boolean isFirstSemester() {
+    	return (this.getCurricularSemester().intValue() == 1);
+    }
+    
+    public boolean isSecondSemester() {
+    	return (this.getCurricularSemester().intValue() == 2);
+    }
 
 }

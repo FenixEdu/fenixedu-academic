@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table TUTORSHIP, adding new columns" alterTableTutorship.sql

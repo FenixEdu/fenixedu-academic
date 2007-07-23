@@ -805,7 +805,11 @@
 			>
 	        	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
-	    </action>	  
+	    </action>
+	    
+	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>	  
 
 		<action path="/setFinalDegreeWorkCandidacyPeriod"
 				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"

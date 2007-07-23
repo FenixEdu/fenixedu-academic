@@ -135,13 +135,27 @@
 	<definition name="chooseTutor" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/tutors/chooseTutor.jsp" />
 	</definition>
-	<definition name="notAutorized" extends="definition.coordinator.two-column">
-		<put name="body" value="/coordinator/tutors/notAutorized.jsp" />
+	<definition name="notAuthorized" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/notAuthorized.jsp" />
 	</definition>
 	<definition name="showStudentsByTutor" extends="definition.coordinator.two-column">
-		<put name="body" value="/coordinator/tutors/showStudentsByTutor.jsp" />
-		<put name="body-context" value="/coordinator/tutors/context.jsp" />
+		<put name="body" value="/coordinator/tutors/tutorManagement.jsp" />
+	</definition>
+	<definition name="transferTutorships" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/transferTutorships.jsp" />
+	</definition>
+	<definition name="createTutorships" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/createTutorships.jsp" />
 	</definition>	
+	<definition name="changeTutorshipsEndDates" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/changeTutorshipsEndDates.jsp" />
+	</definition>
+	<definition name="showTutorshipHistory" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/viewTutorshipHistory.jsp" />
+	</definition>
+	<definition name="chooseTutorHistory" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/tutors/chooseTutorHistory.jsp" />
+	</definition>
 
 	<!-- Enrollment -->
 	<definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu.student">
