@@ -76,7 +76,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	PersonNamePart.reindex(this);
     }
 
-    private static boolean conatinsAll(final String normalizedPersonName, final String[] nameParts) {
+    private static boolean containsAll(final String normalizedPersonName, final String[] nameParts) {
 	for (final String namePart : nameParts) {
 	    if (normalizedPersonName.indexOf(namePart) == -1) {
 		return false;
@@ -97,7 +97,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 			.getPersonNameSet() : personNamePart.getPersonNameSet();
 		for (final PersonName personName : personNames) {
 		    final String normalizedPersonName = personName.getName();
-		    if (conatinsAll(normalizedPersonName, nameParts)) {
+		    if (containsAll(normalizedPersonName, nameParts)) {
 			personNameLimitedOrderedSet.add(personName);
 		    }
 		}
@@ -139,19 +139,21 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	    if (person.hasExternalContract()) {
 		textToAppend = person.getExternalContract().getInstitutionUnit().getName();
 	    } else {
-		textToAppend = person.getUsername();
+		textToAppend = person.getMostImportantAlias();
 	    }
 	}
-	appendTextBetweenCommas(text, textToAppend);
+	appendText(text, textToAppend);
 
 	return text.toString();
     }
 
-    private void appendTextBetweenCommas(final StringBuilder stringBuilder, final String string) {
-	stringBuilder.append(" (");
-	stringBuilder.append(string);
-	stringBuilder.append(")");
-    }
+    private void appendText(final StringBuilder stringBuilder, final String string) {
+		if (string != null) {
+			stringBuilder.append(" (");
+			stringBuilder.append(string);
+			stringBuilder.append(")");
+		}
+	}
 
     public void delete() {
 	final Set<PersonNamePart> personNameParts = new HashSet<PersonNamePart>(getPersonNamePartSet());

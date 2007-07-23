@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
-public abstract class UnitSiteVisualizationDA extends SiteVisualizationDA {
+public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
     public static final String ANNOUNCEMENTS_NAME = "Anúncios";
@@ -41,7 +41,12 @@ public abstract class UnitSiteVisualizationDA extends SiteVisualizationDA {
         return super.execute(mapping, actionForm, request, response);
     }
 
-	protected String getContextParamName(HttpServletRequest request) {
+    @Override
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    	return presentation(mapping, form, request, response);
+    }
+    
+    protected String getContextParamName(HttpServletRequest request) {
 		return "unitID";
 	}
 
@@ -101,4 +106,5 @@ public abstract class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public ActionForward organization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
     	return mapping.findForward("unit-organization");
     }
+    
 }

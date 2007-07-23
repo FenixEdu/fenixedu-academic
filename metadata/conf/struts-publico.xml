@@ -936,6 +936,47 @@
     			<forward name="viewAnnouncement" path="public-view-announcement"/>
 		</action>
    
+      <!--============ Basic Uni site ============-->
+        <action path="/units/viewSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA">
+            <forward name="frontPage-BANNER_INTRO" path="basicUnit-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="basicUnit-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="basicUnit-site-front-page-intro-float"/>
+            <forward name="site-section" path="basicUnit-section"/>
+            <forward name="site-section-deny" path="basicUnit-section-deny"/>
+            <forward name="site-section-adviseLogin" path="basicUnit-section-adviseLogin"/>
+            <forward name="site-item" path="basicUnit-item"/>
+            <forward name="site-item-deny" path="basicUnit-item-deny"/>
+            <forward name="site-item-adviseLogin" path="basicUnit-item-adviseLogin"/>
+            <forward name="unit-organization" path="basicUnit-organization"/>
+
+            <forward name="announcementsAction" path="/units/announcements.do"/>
+            <forward name="eventsAction" path="/units/events.do"/>
+            <forward name="announcementsRSSAction" path="/units/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/units/eventsRSS.do"/>
+        </action>
+
+        <action path="/units/announcements"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA">
+            <forward name="listAnnouncements" path="public-basicUnit-list-announcements"/>
+            <forward name="viewAnnouncement" path="basicUnit-view-announcement"/>
+        </action>
+        
+        <action path="/units/events"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.EventsBoardDA">
+            <forward name="listAnnouncements" path="public-basicUnit-list-events"/>
+            <forward name="viewAnnouncement" path="basicUnit-view-event"/>
+        </action>
+
+        <action path="/units/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitAnnouncementsRSS"/>
+        <action path="/units/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitEventsRSS"/>
+   
+   
    <!-- Department site -->
         <action path="/department/departmentSite"
                 parameter="method"
@@ -1007,14 +1048,14 @@
 
         <action path="/pedagogicalCouncil/announcements"
                 parameter="method"
-                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilAnnouncementsDA">
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA">
             <forward name="listAnnouncements" path="public-pedagogicalCouncil-list-announcements"/>
             <forward name="viewAnnouncement" path="pedagogicalCouncil-view-announcement"/>
         </action>
         
         <action path="/pedagogicalCouncil/events"
                 parameter="method"
-                type="net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil.PedagogicalCouncilEventsDA">
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.EventsBoardDA">
             <forward name="listAnnouncements" path="public-pedagogicalCouncil-list-events"/>
             <forward name="viewAnnouncement" path="pedagogicalCouncil-view-event"/>
         </action>

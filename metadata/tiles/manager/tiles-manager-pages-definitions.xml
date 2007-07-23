@@ -917,12 +917,13 @@
 
 	<!--  =========== Research Unit Site Management ========== -->					
 	 
-	<definition name="show-research-units" extends="definition.manager.masterPage">
-		<put name="body" value="/manager/organizationalStructureManagament/researchUnits/showResearchUnits.jsp"/>
+	<definition name="manage-site-show-units" extends="definition.manager.masterPage">
+        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/manager/organizationalStructureManagament/unitSites/showUnits.jsp"/>
 	</definition> 
 	<definition name="edit-research-site-managers" extends="definition.manager.masterPage">
-		<put name="body" value="/manager/organizationalStructureManagament/researchUnits/editSiteManagers.jsp"/>
-	</definition> 	
+		<put name="body" value="/manager/organizationalStructureManagament/unitSites/editSiteManagers.jsp"/>
+	</definition>
 	
 	<!--  ###################  Access Control Persistent Groups ####################### -->
 	<definition name="see-all-persistent-groups" extends="definition.manager.masterPage" >

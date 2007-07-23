@@ -542,12 +542,6 @@
 		   <forward name="view-protocol" path="view-protocol"/> 	       
 	    </action>
 
-  		<action path="/manageSitePermissions" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ManageSiteManagersDA"
-  		        parameter="method">
-            <forward name="no-site" path="site.managers.no-site"/>
-            <forward name="chooseManagers" path="site.managers.choose-managers"/>
- 	    </action>
-
   		<action path="/sendEmail" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.SendEmailDA"
   		        parameter="method">
 			<forward name="compose-mail" path="scientific.communication.sendMail"/>

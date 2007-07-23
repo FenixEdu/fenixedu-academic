@@ -20,9 +20,5 @@ public class DepartmentEventsDA extends DepartmentBoardsDA {
     	return viewAnnouncements(mapping, form, request, response);
     }
 
-	@Override
-	protected String getActionPath(HttpServletRequest request) {
-		return "/department/events.do";
-	}
 
 }

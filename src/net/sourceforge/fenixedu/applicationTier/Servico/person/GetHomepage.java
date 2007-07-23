@@ -13,7 +13,7 @@ public class GetHomepage extends Service {
             return homepage;
         }
         else if (create) {
-            homepage = new Homepage(person);
+        	homepage = person.initializeSite();
             homepage.setActivated(false);
             
             return homepage;

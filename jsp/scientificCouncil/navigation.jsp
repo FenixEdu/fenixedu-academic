@@ -116,7 +116,6 @@
 		  	</html:link>
 		</li>
 
-
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
                     .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
             if (net.sourceforge.fenixedu.domain.ManagementGroups.isProtocolManagerMember(user.getPerson())) {
@@ -142,25 +141,6 @@
 			</li>		
 		<%}%>
 
-		<%-- Site --%>
-		<li class="navheader">
-			<bean:message key="title.section.site"/>
-		</li>
-		<li>
-			<logic:notEmpty name="site">
-				<bean:define id="unitId" name="site" property="unit.idInternal"/>
-				
-				<html:link module="/publico" action="<%= "/scientificCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
-					<bean:message key="link.site.view"/>
-				</html:link>
-			</logic:notEmpty>
-		</li>
-		<li>
-			<html:link page="/manageSitePermissions.do?method=chooseManagers">
-				<bean:message key="link.site.manage.managers"/>
-			</html:link>
-		</li>
-		
 		<%-- Communication --%>
 		<li class="navheader">
 			<bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/>

@@ -81,7 +81,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     }
 
     @Override
-    protected String getContextInformation(HttpServletRequest request) {
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
 	return "/announcementsManagement.do";
     }
 

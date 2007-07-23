@@ -942,7 +942,7 @@ Documentation:
 		<property name="dateToKey" value="fenix.renderers.organigram.date.to"/>
 		<property name="dateSinceKey" value="fenix.renderers.organigram.date.since"/>
 	</renderer>
-
+	
 	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
     	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->
     	<property name="approvedMonitoringYear" value="approvedMonitoringYear"/> <!-- span without border and with #003333 color  -->
@@ -952,4 +952,7 @@ Documentation:
     	<property name="notApprovedAnotherYear" value="notApprovedAnotherYear"/> <!-- span with #CCCC66 border and #FFFFFF color  -->
     	<property name="performanceGridBundle" value="APPLICATION_RESOURCES"/>
     </renderer>
+
+	<renderer type="java.util.Collection" layout="unit-sites-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSitesTreeRenderer"/>
+	
 </renderers-config>

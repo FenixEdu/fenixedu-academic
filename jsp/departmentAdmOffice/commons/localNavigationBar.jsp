@@ -122,7 +122,7 @@
 				  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
 				  		<bean:message key="link.teacherServiceDistribution"/>
 				  	</html:link>  
-				</li> 				
+				</li>
 			</logic:equal>
 		</logic:notEmpty>
 
@@ -166,19 +166,8 @@
     <bean:define id="site" name="person" property="employee.currentDepartmentWorkingPlace.departmentUnit.site" type="net.sourceforge.fenixedu.domain.UnitSite"/>
     <bean:define id="siteId" name="site" property="idInternal"/>
     
-    <%
-        if (site.hasManagers(person)) {
-    %>
     <li>
-        <html:link page="<%= "/manageDepartmentSite.do?method=prepare&amp;oid=" + siteId %>" module="/webSiteManager">
-            <bean:message key="link.site.department.manage"/>
-        </html:link>
-    </li>
-    <%
-        }
-    %>
-    <li>
-        <html:link page="/departmentSite.do?method=chooseManagers">
+        <html:link page="<%= "/departmentSite.do?method=chooseManagers&amp;oid=" + siteId %>">
             <bean:message key="link.site.managers.choose"/>
         </html:link>
     </li>

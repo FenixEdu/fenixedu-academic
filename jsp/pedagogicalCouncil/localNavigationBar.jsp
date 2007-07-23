@@ -30,28 +30,10 @@
 				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="navigation.curricularPlansManagement"/>
 			</html:link>
 		</li>
-		<li class="navheader">
-			<bean:message bundle="PEDAGOGICAL_COUNCIL" key="title.pedagogicalCouncil.site"/>
-		</li>
-		<li>
-			<logic:notEmpty name="site">
-				<bean:define id="unitId" name="site" property="unit.idInternal"/>
-				
-				<html:link module="/publico" action="<%= "/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" target="_blank">
-					<bean:message bundle="PEDAGOGICAL_COUNCIL" key="link.site.view"/>
-				</html:link>
-			</logic:notEmpty>
-		</li>
-		<li>
-			<html:link page="/manageSitePermissions.do?method=chooseManagers">
-				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="link.site.manage.managers"/>
-			</html:link>
-		</li>
 		
 		<li class="navheader">
 			<bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/>
 		</li>
-		
 		<bean:define id="unitId" name="unit" property="idInternal"/>
 		<li>
 			<html:link page="<%= "/sendEmail.do?method=prepare&unitId=" + unitId %>">

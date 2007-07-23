@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -9,11 +8,11 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -208,5 +207,9 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 		
 		return groups;
 	}
-	
+
+	@Override
+	protected UnitSite createSite() {
+		return new DepartmentSite(this);
+	}
 }

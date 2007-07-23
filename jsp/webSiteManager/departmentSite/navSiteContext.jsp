@@ -7,4 +7,6 @@
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
 <bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
 
-<em><bean:message key="label.websiteManagement" bundle="MANAGER_RESOURCES"/> | <fr:view name="site" property="unit.nameWithAcronym"/></em>
+<bean:define id="unitId" name="site" property="unit.idInternal"/>
+<bean:define id="publicSiteUrl" value="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" toScope="request"/>
+<bean:define id="announcementsActionName" value="/manageDepartmentSiteAnnouncements.do" toScope="request"/>

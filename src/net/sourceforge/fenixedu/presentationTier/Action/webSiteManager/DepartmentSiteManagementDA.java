@@ -33,4 +33,14 @@ public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
         }
     }
 
+    @Override
+    protected String getRemoveManagerServiceName() {
+    	return "RemoveDepartmentSiteManager";
+    }
+    
+    @Override
+    protected String getAddManagerServiceName() {
+    	return "AddDepartmentSiteManager";
+    }
+    
 }

@@ -17,11 +17,8 @@ public class SubmitHomepage extends Service {
 	    final Boolean showPublications, final Boolean showPatents, final Boolean showInterests,
 	    final Boolean showParticipations, final Boolean showPrizes) {
 
-	Homepage homepage = person.getHomepage();
-	if (homepage == null) {
-	    homepage = new Homepage(person);
-	}
-
+	Homepage homepage = person.initializeSite();
+	
 	homepage.setActivated(activated);
 	homepage.setShowUnit(showUnit);
 	homepage.setShowCategory(showCategory);

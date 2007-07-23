@@ -182,4 +182,16 @@
 		<put name="body-context" value="/publico/cientificCouncil/siteContext.jsp" />
     </definition>
 
+    <definition name="definition.public.basicUnit.frontPage" extends="definition.public.noPaddingLayout">
+        <put name="profile_navigation" value="/publico/unitSite/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/unitSite/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/unitSite/siteContext.jsp" />
+    </definition>
+
+    <definition name="definition.public.basicUnit" extends="definition.public.paddingLayout">
+        <put name="profile_navigation" value="/publico/unitSite/topNavigation.jsp" />
+        <put name="main_navigation" value="/publico/unitSite/mainNavigation.jsp" />
+		<put name="body-context" value="/publico/unitSite/siteContext.jsp" />
+    </definition>
+
 </tiles-definitions>

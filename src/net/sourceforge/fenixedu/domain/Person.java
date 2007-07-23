@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
@@ -2566,6 +2567,21 @@ public class Person extends Person_Base {
     @Override
     public String getPartyPresentationName() {
 	return getPresentationName();
+    }
+
+    @Override
+    public Homepage getSite() {
+    	return getHomepage();
+    }
+    
+    @Override
+    protected Homepage createSite() {
+    	return new Homepage(this);
+    }
+
+    @Override
+    public Homepage initializeSite() {
+    	return (Homepage) super.initializeSite();
     }
 
 }

@@ -5,18 +5,29 @@ import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import dml.runtime.RelationAdapter;
 
-public abstract class UnitSite extends UnitSite_Base {
+public class UnitSite extends UnitSite_Base {
     
+	private static MultiLanguageString TOP_SECTION_NAME = MultiLanguageString.i18n()
+		.add("pt", "Topo")
+		.add("en", "Lateral").finish();
+
+	private static MultiLanguageString SIDE_SECTION_NAME = MultiLanguageString.i18n()
+		.add("pt", "Topo")
+		.add("en", "Lateral").finish();
+	
     static {
         UnitSiteManagers.addListener(new ManageWebsiteManagerRole());
     }
     
-    public UnitSite() {
+    protected UnitSite() {
         super();
         
         setShowInstitutionLogo(true);
@@ -26,8 +37,22 @@ public abstract class UnitSite extends UnitSite_Base {
         setShowBanner(true);
         setShowAnnouncements(true);
         setShowEvents(true);
+        
+        new Section(this, TOP_SECTION_NAME);
+        new Section(this, SIDE_SECTION_NAME);
     }
 
+    public UnitSite(Unit unit) {
+    	this();
+    	
+    	setUnit(unit);
+    }
+    
+    @Override
+    public IGroup getOwner() {
+    	return new FixedSetGroup(getManagers());
+    }
+    
     @Override
     @Checked("UnitSitePredicates.managers")
     public void setDescription(MultiLanguageString description) {

@@ -11765,8 +11765,8 @@
 		</filterChains>
     </service>     
     <service>
-        <name>CreateResearchUnitSite</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateResearchUnitSite</implementationClass>
+        <name>CreateUnitSite</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
@@ -11854,60 +11854,24 @@
 			<chain name="DepartmentAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
-    <service>
-        <name>AddPedagogicalSiteManager</name>
+	<service>
+        <name>AddUnitSiteManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="PedagogicalCouncilAuthorization" />
+			<chain name="UnitSiteManagerOrManagerAuthorization" />
 		</filterChains>
     </service>
 	<service>
-        <name>RemovePedagogicalSiteManager</name>
+        <name>RemoveUnitSiteManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="PedagogicalCouncilAuthorization" />
+			<chain name="UnitSiteManagerOrManagerAuthorization" />
 		</filterChains>
     </service>
-	<service>
-        <name>AddScientificSiteManager</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="ScientificCouncilAuthorization" />
-		</filterChains>
-    </service>
-	<service>
-        <name>RemoveScientificSiteManager</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="ScientificCouncilAuthorization" />
-		</filterChains>
-    </service>
-    <service>
-        <name>AddResearchUnitSiteManager</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.AddUnitSiteManager</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="ResearchUnitSiteAuthorization"/>
-		</filterChains>
-    </service>
-	<service>
-        <name>RemoveResearchUnitSiteManager</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RemoveUnitSiteManager</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-		<filterChains>
-			<chain name="ResearchUnitSiteAuthorization"/>
-		</filterChains>
-    </service>    
 	<service>
         <name>ChangeUnitSiteLayout</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.ChangeUnitSiteLayout</implementationClass>

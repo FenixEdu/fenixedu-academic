@@ -1166,7 +1166,7 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
    	<filterChain>
-        <name>ResearchUnitSiteAuthorization</name>
+        <name>UnitSiteManagerOrManagerAuthorization</name>
         <expression>ManagerAuthorization || UnitSiteManagerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>

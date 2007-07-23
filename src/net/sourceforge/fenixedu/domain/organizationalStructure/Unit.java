@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import net.sourceforge.fenixedu.domain.InstitutionSite;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
@@ -1234,5 +1235,21 @@ public class Unit extends Unit_Base {
     	functions.addAll(getActiveFunctions());
     	
     	return functions;
+    }
+    
+    @Override
+    protected UnitSite createSite() {
+    	if (this == RootDomainObject.getInstance().getInstitutionUnit()) {
+    		// TODO: to be removed if institution unit becomes a specific class
+    		return InstitutionSite.initialize();
+    	}
+    	else {
+    		return new UnitSite(this);
+    	}
+    }
+
+    @Override
+    public UnitSite initializeSite() {
+		return (UnitSite) super.initializeSite();
     }
 }

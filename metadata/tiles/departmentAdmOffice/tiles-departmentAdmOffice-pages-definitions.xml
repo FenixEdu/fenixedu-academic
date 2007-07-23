@@ -406,7 +406,8 @@
 	</definition>        
         
     <definition name="departmentSite-chooseManagers" extends="departmentAdmOffice.masterPage" >
-        <put name="body" value="/departmentAdmOffice/site/chooseManagers.jsp"/>
+        <put name="body-context" value="/departmentAdmOffice/site/siteContext.jsp"/>
+        <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
     </definition>
 
 </tiles-definitions>

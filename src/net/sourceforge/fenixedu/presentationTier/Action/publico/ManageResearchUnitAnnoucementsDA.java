@@ -54,11 +54,6 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 	}
 
 	@Override
-	protected String getActionPath(HttpServletRequest request) {
-		return "/researchSite/manageResearchUnitAnnouncements.do";
-	}
-	
-	@Override
 	public ActionForward viewAnnouncements(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

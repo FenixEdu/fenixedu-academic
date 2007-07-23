@@ -90,7 +90,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     }
 
     @Override
-    protected String getContextInformation(HttpServletRequest request) {
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
 	return "/announcementManagement.do";
 
     }

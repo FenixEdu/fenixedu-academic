@@ -22,7 +22,7 @@ public class ManageResearchUnitAnnouncementsDA extends UnitSiteAnnouncementManag
 				: "listAnnouncementBoards");
 	}
 
-	protected String getContextInformation(HttpServletRequest request) {
+	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
 		return "/manageResearchUnitAnnouncements.do";
 	}
 

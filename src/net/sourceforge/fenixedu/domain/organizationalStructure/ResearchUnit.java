@@ -7,6 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResearchUnitSite;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -175,5 +177,10 @@ public class ResearchUnit extends ResearchUnit_Base {
     public void setPublicationCollaborators(List<Person> collaborators) {
 	getPublicationCollaborators().clear();
 	getPublicationCollaborators().addAll(collaborators);
+    }
+    
+    @Override
+    protected ResearchUnitSite createSite() {
+    	return new ResearchUnitSite(this);
     }
 }

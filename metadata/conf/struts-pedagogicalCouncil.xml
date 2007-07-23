@@ -48,11 +48,6 @@
   				>
   			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
   		</action>
-  		<action path="/manageSitePermissions" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ManageSiteManagersDA"
-  		        parameter="method">
-            <forward name="no-site" path="site.managers.no-site"/>
-            <forward name="chooseManagers" path="site.managers.choose-managers"/>
- 	    </action>
 
   		<action path="/sendEmail" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailDA"
   		        parameter="method">

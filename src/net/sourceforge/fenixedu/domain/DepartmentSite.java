@@ -7,23 +7,26 @@ import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
     
-    public DepartmentSite(Department department) {
-        super();
-        
-        Unit unit = department.getDepartmentUnit();
+    public DepartmentSite(DepartmentUnit unit) {
+    	super();
+    	
         if (unit.hasSite()) {
             throw new DomainException("site.department.unit.already.has.site");
         }
         
-        setUnit(department.getDepartmentUnit());
+        setUnit(unit);
     }
+	
+	public DepartmentSite(Department department) {
+        this(department.getDepartmentUnit());
+	}
     
     public Department getDepartment() {
         return getUnit().getDepartment();

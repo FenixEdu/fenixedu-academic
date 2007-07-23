@@ -153,8 +153,8 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
 
     
     @Override
-    protected String getContextInformation(HttpServletRequest request) {
-        String path = getActionPath(request);
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+        String path = getActionPath(mapping, request);
         
         request.setAttribute("announcementActionVariable", path);
         
@@ -183,6 +183,8 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
     
     protected abstract String getBoardName(HttpServletRequest request);
 
-	protected abstract String getActionPath(HttpServletRequest request);
+	protected String getActionPath(ActionMapping mapping, HttpServletRequest request) {
+		return mapping.getPath() + ".do";
+	}
 
 }

@@ -451,12 +451,6 @@
 	</slot>
 </schema>
 
-<schema name="researchUnit" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit" bundle="MANAGER_RESOURCES">
-	<slot name="nameWithAcronym" key="label.name"/>
-	<slot name="siteAvailable"/>
-</schema>
-
-
 <schema name="selectPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean" bundle="MANAGER_RESOURCES">
 	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.managerName">
 		<property name="size" value="70"/>
@@ -467,7 +461,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 		<property name="labelField" value="person.name"/>
-		<property name="format" value="${person.name} (${person.istUsername})"/>
+		<property name="format" value="${text}"/>
 	</slot>
 </schema>
 

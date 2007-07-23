@@ -55,7 +55,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	request.setAttribute("contextPrefix", getContextPrefix(request));
+	request.setAttribute("contextPrefix", getContextPrefix(mapping, request));
 	request.setAttribute("extraParameters", getExtraRequestParameters(request));
 
 	final Person person = getLoggedPerson(request);
@@ -219,8 +219,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return true;
     }
 
-    private String getContextPrefix(HttpServletRequest request) {
-	String contextPrefix = getContextInformation(request);
+    private String getContextPrefix(ActionMapping mapping, HttpServletRequest request) {
+	String contextPrefix = getContextInformation(mapping, request);
 
 	if (contextPrefix.contains("?")) {
 	    contextPrefix += "&amp;";
@@ -278,12 +278,13 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     /**
          * This method must return any additional request parameters that may be
          * necessary
+     * @param mapping TODO
          * 
          * 
          * 
          * @return
          */
-    protected abstract String getContextInformation(HttpServletRequest request);
+    protected abstract String getContextInformation(ActionMapping mapping, HttpServletRequest request);
 
     /**
          * This method should return all the boards to show. Example: <code><br>

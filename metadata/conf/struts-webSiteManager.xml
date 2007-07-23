@@ -34,6 +34,8 @@
       <forward name="redirect" path="/redirect.do" contextRelative="true"/>
       <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
     </global-forwards>
+
+
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
@@ -46,10 +48,65 @@
         <forward name="Success" path="announcementsManagement.do?method=start" redirect="true"/>
       </action>
 
+	  <action path="/manageUnitSite" 
+			  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA"
+			  parameter="method">
+		<forward name="start" path="basicUnitSite-start"/>
+        <forward name="editIntroduction" path="basicUnitSite-edit-introduction"/>
+        <forward name="editConfiguration" path="basicUnitSite-edit-configuration"/>
+        <forward name="editSideBanner" path="basicUnitSite-edit-side-banner"/>
+        <forward name="editLogo" path="basicUnitSite-edit-logo"/>
+        <forward name="editBanners" path="basicUnitSite-edit-banners"/>
+        <forward name="editTopNavigation" path="basicUnitSite-edit-top-navigation"/>
+        <forward name="editFooterNavigation" path="basicUnitSite-edit-footer-navigation"/>
+        <forward name="organizeTopLinks" path="basicUnitSite-edit-organizeTopLinks"/>
+        <forward name="organizeFooterLinks" path="basicUnitSite-edit-organizeFooterLinks"/>
+        <forward name="createSection" path="basicUnitSite-createSection"/>
+        <forward name="sectionsManagement" path="basicUnitSite-sectionsManagement"/>
+        <forward name="section" path="basicUnitSite-section"/>
+        <forward name="editSection" path="basicUnitSite-editSection"/>
+        <forward name="createItem" path="basicUnitSite-createItem"/>
+        <forward name="editItem" path="basicUnitSite-editItem"/>
+        <forward name="uploadFile" path="basicUnitSite-uploadFile"/>
+        <forward name="editFile" path="basicUnitSite-editFile"/>          
+        <forward name="organizeItems" path="basicUnitSite-organizeItems"/>
+        <forward name="organizeFiles" path="basicUnitSite-organizeFiles"/>
+        <forward name="confirmSectionDelete" path="basicUnitSite-confirmSectionDelete"/>
+        <forward name="editSectionPermissions" path="basicUnitSite-editSectionPermissions"/>
+        <forward name="editItemPermissions" path="basicUnitSite-editItemPermissions"/>
+        <forward name="editFile" path="basicUnitSite-editFile"/>
+        <forward name="chooseIntroductionSections" path="basicUnitSite-chooseIntroductionSections"/>
+        <forward name="addInstitutionSection" path="basicUnitSite-addInstitutionSection"/>
+        <forward name="functionalitySection" path="basicUnitSite-functionalitySection"/>
+        <forward name="editFunctionalitySection" path="basicUnitSite-editFunctionalitySection"/>
+        <forward name="manageFunctions" path="basicUnitSite-manageFunctions"/>
+        <forward name="manageExistingFunctions" path="basicUnitSite-manageExistingFunctions"/>
+        <forward name="addFunction" path="basicUnitSite-addFunction"/>
+        <forward name="editFunction" path="basicUnitSite-editFunction"/>
+        <forward name="confirmDeleteFunction" path="basicUnitSite-confirmDeleteFunction"/>
+        <forward name="organizeFunctions" path="basicUnitSite-organizeFunctions"/>
+        <forward name="changePersonFunctions" path="basicUnitSite-changePersonFunctions"/>
+        <forward name="createPersonFunction" path="basicUnitSite-createPersonFunction"/>
+        <forward name="editPersonFunction" path="basicUnitSite-editPersonFunction"/>
+        <forward name="chooseManagers" path="basicUnitSite-chooseManagers"/>
+	  </action>
+	  
+      <action path="/manageUnitAnnouncements"
+            parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitAnnouncementsDA"
+            scope="request">
+        <forward name="noBoards" path="basicUnit-announcements-no-boards"/>
+        <forward name="viewAnnouncementsRedirect" path="/manageUnitAnnouncements.do?method=viewAnnouncements&amp;tabularVersion=true"/>
+        <forward name="listAnnouncementBoards" path="basicUnit-announcements-list-boards"/>
+        <forward name="listAnnouncements" path="basicUnit-announcements-list-announcements"/>
+        <forward name="add" path="basicUnit-announcements-add-announcement"/>
+        <forward name="viewAnnouncement" path="basicUnit-announcements-view-announcement"/>
+        <forward name="edit" path="basicUnit-announcements-edit-announcement"/>
+    </action>
+
 	  <action path="/manageResearchUnitSite" 
 	  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchUnitSiteManagementDA"
 	  parameter="method">
-	  	<forward name="addManager" path="add-manager-to-research-site"/>
 	  	<forward name="editResearchSite" path="edit-research-site"/>
         <forward name="createSection" path="manage-researchSite-createSection"/>
         <forward name="sectionsManagement" path="manage-researchSite-sectionsManagement"/>
@@ -90,6 +147,7 @@
         <forward name="changePersonFunctions" path="researchSite-changePersonFunctions"/>
         <forward name="createPersonFunction" path="researchSite-createPersonFunction"/>
         <forward name="editPersonFunction" path="researchSite-editPersonFunction"/>
+        <forward name="chooseManagers" path="researchSite-chooseManagers"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -157,6 +215,7 @@
         <forward name="changePersonFunctions" path="departmentSite-changePersonFunctions"/>
         <forward name="createPersonFunction" path="departmentSite-createPersonFunction"/>
         <forward name="editPersonFunction" path="departmentSite-editPersonFunction"/>
+        <forward name="chooseManagers" path="departmentSite-chooseManagers"/>
     </action>
 
     <action path="/manageDepartmentSiteAnnouncements"
@@ -221,6 +280,7 @@
         <forward name="changePersonFunctions" path="pedagogicalCouncil-changePersonFunctions"/>
         <forward name="createPersonFunction" path="pedagogicalCouncil-createPersonFunction"/>
         <forward name="editPersonFunction" path="pedagogicalCouncil-editPersonFunction"/>
+        <forward name="chooseManagers" path="pedagogicalCouncil-chooseManagers"/>
     </action>
 
     <action path="/managePedagogicalCouncilAnnouncements"
@@ -274,6 +334,7 @@
         <forward name="changePersonFunctions" path="scientificCouncil-changePersonFunctions"/>
         <forward name="createPersonFunction" path="scientificCouncil-createPersonFunction"/>
         <forward name="editPersonFunction" path="scientificCouncil-editPersonFunction"/>
+        <forward name="chooseManagers" path="scientificCouncil-chooseManagers"/>
     </action>
 
     <action path="/manageScientificCouncilAnnouncements"

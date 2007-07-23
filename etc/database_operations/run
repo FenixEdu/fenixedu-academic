@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter table TUTORSHIP, adding new columns" alterTableTutorship.sql
+execute "Change name of research unit sites management" changeSiteManagement.sql

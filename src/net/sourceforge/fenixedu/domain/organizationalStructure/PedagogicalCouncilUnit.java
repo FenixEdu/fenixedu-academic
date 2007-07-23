@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
@@ -36,6 +37,11 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
     @Override
     public Collection<Person> getPossibleGroupMembers() {
     	return Role.getRoleByRoleType(RoleType.PEDAGOGICAL_COUNCIL).getAssociatedPersons();
+    }
+ 
+    @Override
+    protected PedagogicalCouncilSite createSite() {
+    	return new PedagogicalCouncilSite(this);
     }
     
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
@@ -78,4 +80,8 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     	return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersons();
     }
 
+    @Override
+    protected ScientificCouncilSite createSite() {
+    	return new ScientificCouncilSite(this);
+    }
 }

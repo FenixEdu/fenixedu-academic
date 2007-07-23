@@ -236,14 +236,6 @@
         <put name="body" value="/protocols/searchProtocols.jsp"/>
     </definition>  
 
-	<!-- site -->
-	<definition name="site.managers.no-site" extends="scientificCouncil.masterPage">
-		<put name="body" value="/scientificCouncil/site/no-site.jsp" />
-	</definition>
-	<definition name="site.managers.choose-managers" extends="scientificCouncil.masterPage">
-		<put name="body" value="/scientificCouncil/site/chooseManagers.jsp" />
-	</definition>
-	
     <definition name="scientific.communication.sendMail" extends="scientificCouncil.masterPage">
        <put name="body" value="/scientificCouncil/communication/sendEmail.jsp"/>
     </definition>

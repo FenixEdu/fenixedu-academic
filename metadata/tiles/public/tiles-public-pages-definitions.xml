@@ -338,6 +338,59 @@
 		<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>	
 
+	<!-- ========== BASIC UNIT SITE -->
+    <definition name="basicUnit-site-front-page-banner-intro" extends="definition.public.basicUnit.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+    </definition>
+    
+    <definition name="basicUnit-site-front-page-intro-banner" extends="definition.public.basicUnit.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+    </definition>
+    
+    <definition name="basicUnit-site-front-page-intro-float" extends="definition.public.basicUnit.frontPage">
+        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="useFlags" value="false"/>
+    </definition>
+
+    <definition name="definition.public.basicUnit.site" extends="definition.public.basicUnit">
+		<put name="body-context" value="/publico/unitSite/siteContext.jsp" />
+    </definition>
+    
+    <definition name="basicUnit-section" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/section.jsp"/>
+    </definition>
+    <definition name="basicUnit-section-deny" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/section-deny.jsp"/>
+    </definition>
+    <definition name="basicUnit-section-adviseLogin" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
+    </definition>
+    <definition name="basicUnit-item" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/item.jsp"/>
+    </definition>
+    <definition name="basicUnit-item-deny" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/item-deny.jsp"/>
+    </definition>
+    <definition name="basicUnit-item-adviseLogin" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
+    </definition>
+    <definition name="basicUnit-organization" extends="definition.public.basicUnit.site">
+        <put name="body" value="/commons/sites/unitSite/unitOrganization.jsp"/>
+    </definition>
+    
+    <definition name="public-basicUnit-list-announcements" extends="definition.public.basicUnit">
+        <put name="body" value="/commons/sites/unitSite/boards/listAnnouncements.jsp"/>
+    </definition>
+    <definition name="public-basicUnit-list-events" extends="definition.public.basicUnit">
+        <put name="body" value="/commons/sites/unitSite/boards/listEvents.jsp"/>
+    </definition>
+    <definition name="basicUnit-view-announcement" extends="definition.public.basicUnit">
+        <put name="body" value="/commons/sites/unitSite/boards/showAnnouncement.jsp" />
+    </definition>
+    <definition name="basicUnit-view-event" extends="definition.public.basicUnit">
+        <put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
+    </definition>
+
 	<!-- =================== Announcements ============== -->
 	<definition name="public-list-announcements" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/announcements/listAnnouncements.jsp" />

@@ -51,7 +51,7 @@
 	    </html:messages>
 	</logic:messagesPresent>
 	
-    <fr:form action="<%= String.format("%s?method=selectPersonFunctions&amp;%s", actionName, context) %>">
+    <fr:form action="<%= String.format("%s?method=managePersonFunctions&amp;%s", actionName, context) %>">
         <fr:edit id="addUserBean" name="addUserBean" schema="site.functions.addPerson">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 tdmiddle thlight thright thmiddle mbottom0"/>

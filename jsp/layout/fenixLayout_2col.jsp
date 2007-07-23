@@ -70,6 +70,7 @@
 
 	<!-- NavLateral -->
 	<div id="navlateral">
+	  	<tiles:insert attribute="navLocal-context" ignore="true"/>
 		<tiles:insert attribute="navLocal" ignore="true"/>
 		<tiles:insert attribute="navLocalExtra" ignore="true"/>
 	</div>

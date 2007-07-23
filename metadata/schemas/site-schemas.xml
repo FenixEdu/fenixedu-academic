@@ -298,16 +298,6 @@
     </slot>
 </schema>
 
-<schema name="pedagogicalCouncil.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitSiteManagerBean" bundle="PEDAGOGICAL_COUNCIL">
-    <slot name="alias"/>
-    <slot name="idNumber"/>
-</schema>
-
-<schema name="pedagogicalCouncil.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="PEDAGOGICAL_COUNCIL">
-    <slot name="mostImportantAlias" key="label.alias"/>
-    <slot name="name" key="label.name"/>
-</schema>
-
 <schema name="site.functions.tree.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SITE_RESOURCES">
 	<slot name="nameI18n"/>
 </schema>
@@ -379,4 +369,18 @@
 	<slot name="beginDate" key="label.personFunction.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.personFunction.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
+</schema>
+
+<schema name="unitSite.managers.add" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.UnitSiteManagerBean" bundle="SITE_RESOURCES">
+    <slot name="alias"/>
+    <slot name="idNumber"/>
+</schema>
+
+<schema name="unitSite.manager" type="net.sourceforge.fenixedu.domain.Person" bundle="SITE_RESOURCES">
+    <slot name="mostImportantAlias" key="label.alias"/>
+    <slot name="name" key="label.name"/>
+</schema>
+
+<schema name="unitSite.tree.unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+    <slot name="nameWithAcronym"/>
 </schema>

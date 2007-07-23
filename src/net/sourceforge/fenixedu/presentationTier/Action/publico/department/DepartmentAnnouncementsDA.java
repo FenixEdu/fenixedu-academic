@@ -11,9 +11,4 @@ public class DepartmentAnnouncementsDA extends DepartmentBoardsDA {
         return UnitSiteBoardsDA.ANNOUNCEMENTS;
     }
 
-	@Override
-	protected String getActionPath(HttpServletRequest request) {
-		return "/department/announcements.do";
-	}
-
 }

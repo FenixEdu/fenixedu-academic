@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -42,7 +44,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
-public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
+public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	private Integer getId(String id) {
 		if (id == null || id.equals("")) {
@@ -681,5 +683,114 @@ public abstract class CustomUnitSiteManagementDA extends SiteManagementDA {
     	
     	return managePersonFunctions(mapping, actionForm, request, response);
     }
+ 
+    //
+    // Unit site managers
+    //
     
+    public ActionForward chooseManagers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+     
+        request.setAttribute("managersBean", new UnitSiteManagerBean());
+        request.setAttribute("managers", site.getManagers());
+        
+        return mapping.findForward("chooseManagers");
+    }
+
+    public ActionForward removeManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSite site = getSite(request);
+        
+        Integer managerId = getId(request.getParameter("managerID"));
+        for (Person manager : site.getManagers()) {
+            if (manager.getIdInternal().equals(managerId)) {
+                try {
+                    removeUnitSiteManager(site, manager);
+                } catch (DomainException e) {
+                    addActionMessage("error", request, e.getKey(), e.getArgs());
+                }
+            }
+        }
+        
+        return chooseManagers(mapping, actionForm, request, response);
+    }
+
+    public ActionForward addManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UnitSiteManagerBean bean = (UnitSiteManagerBean) getRenderedObject("add");
+        
+        if (bean == null) {
+            return chooseManagers(mapping, actionForm, request, response);
+        }
+        
+        Person person = null;
+        
+        String alias = bean.getAlias();
+        if (alias != null) {
+            person = Person.readPersonByUsername(alias);
+            
+            if (person == null) {
+                addActionMessage("addError", request, "error.site.managers.add.alias.notFound");
+            }
+        }
+        else {
+            String documentId = bean.getIdNumber();
+            
+            if (documentId != null) {
+                ArrayList<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(documentId));
+                
+                if (persons.isEmpty()) {
+                    person = null;
+                }
+                else {
+                    // TODO: show a selection list
+                    person = persons.get(new Random().nextInt() % persons.size());
+                }
+                
+                if (person == null) {
+                    addActionMessage("addError", request, "error.site.managers.add.idNumber.notFound");
+                }
+            }
+        }
+
+        if (person != null) {
+            try {
+                UnitSite site = getSite(request);
+                
+                addUnitSiteManager(site, person);
+                RenderUtils.invalidateViewState("add");
+            } catch (DomainException e) {
+                addActionMessage("addError", request, e.getKey(), e.getArgs());
+            }
+        }
+        
+        return chooseManagers(mapping, actionForm, request, response);
+    }
+
+	protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+		executeService(getRemoveManagerServiceName(), site, person);
+	}
+
+	protected void addUnitSiteManager(UnitSite site, Person person) throws FenixFilterException, FenixServiceException {
+		executeService(getAddManagerServiceName(), site, person);
+	}
+
+    protected String getAddManagerServiceName() {
+    	return "AddUnitSiteManager";
+    }
+    
+	protected String getRemoveManagerServiceName() {
+		return "RemoveUnitSiteManager";
+	}
+
+	@Override
+	protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+		Unit unit = getUnit(request);
+		
+		if (unit != null) {
+			return unit.getName();
+		}
+		else {
+			return getLoggedPerson(request).getName();
+		}
+	}
+
 }

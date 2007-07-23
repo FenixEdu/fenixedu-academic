@@ -27,7 +27,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
     
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("returnAction", this.getContextInformation(request));
+        request.setAttribute("returnAction", this.getContextInformation(mapping, request));
         request.setAttribute("returnMethod", "start");
         return super.execute(mapping, actionForm, request, response);
     }
@@ -45,7 +45,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
     }
 
     @Override
-    protected String getContextInformation(HttpServletRequest request) {
+    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
         return "/manageAdvisories.do";
     }
 
