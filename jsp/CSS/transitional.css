@@ -1486,3 +1486,16 @@ padding-left: 10px;
 #perfnav ul ul {
 display: none;
 }
+
+table.test tr td { }
+
+table.test tr td span span { display: inline; padding: 0px 4px; }
+
+.emptySpace { background: #FFFFFF; border: 1px solid #000; color: #fff;}
+.approvedMonitoringYear { background: #669999; border: 1px solid #669999; color: #699;}
+.approvedAnotherYear { background: #CCCC66; border: 1px solid #CCCC66; color: #cc6;}
+.enroled { background: #FFFFFF; border: 1px solid #669999; color: #fff;}
+.notApprovedMonitoringYear { background: url(../images/circle.gif) center center no-repeat; border: 1px solid #669999; color: #fff;}
+.notApprovedAnotherYear { background: #FFFFFF; border: 1px solid #CCCC66; color: #fff;}
+
+.performanceGridLegend { padding: 1px 3px; }
