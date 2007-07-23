@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Manager Bolonha Transition Functionalities" AddManagerBolonhaTransitionFunctionalities.sql
