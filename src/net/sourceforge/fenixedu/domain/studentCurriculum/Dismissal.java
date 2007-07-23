@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -9,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -110,6 +112,10 @@ public class Dismissal extends Dismissal_Base {
 	return getCredits().isSubstitution();
     }
     
+    final public Collection<IEnrolment> getSourceIEnrolments() {
+	return getCredits().getIEnrolments();
+    }
+    
     @Override
     final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         if(hasCurricularCourse()) {
@@ -125,7 +131,7 @@ public class Dismissal extends Dismissal_Base {
 	if (!hasCurricularCourse()) {
 	    return getCredits().getGivenCredits();
 	}
-        return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits();
+        return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits(getExecutionPeriod());
     }
     
     final protected Double getEnrolmentsEcts() {
