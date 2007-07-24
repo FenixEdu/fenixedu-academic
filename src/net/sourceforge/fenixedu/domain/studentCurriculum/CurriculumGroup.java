@@ -416,14 +416,22 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return false;
     }
 
+    @Override
     final public void addApprovedCurriculumLines(final Collection<CurriculumLine> result) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (!curriculumModule.isLeaf()) {
-		((CurriculumGroup) curriculumModule).addApprovedCurriculumLines(result);
-	    } else if (((CurriculumLine) curriculumModule).isApproved()) {
-		result.add((CurriculumLine) curriculumModule);
+	    curriculumModule.addApprovedCurriculumLines(result);
+	}
+    }
+    
+    @Override
+    final public boolean hasAnyApprovedCurriculumLines() {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.hasAnyApprovedCurriculumLines()) {
+		return true;
 	    }
 	}
+
+	return false;
     }
 
     final public Set<CurriculumGroup> getCurriculumGroups() {

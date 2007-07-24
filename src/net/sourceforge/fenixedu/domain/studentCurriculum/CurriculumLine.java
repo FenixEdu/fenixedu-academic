@@ -76,6 +76,18 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
     
     @Override
+    final public void addApprovedCurriculumLines(final Collection<CurriculumLine> result) {
+	if (isApproved()) {
+	    result.add(this);
+	}
+    }
+    
+    @Override
+    final public boolean hasAnyApprovedCurriculumLines() {
+	return isApproved();
+    }
+
+    @Override
     public void collectDismissals(final List<Dismissal> result) {
 	// nothing to do
     }

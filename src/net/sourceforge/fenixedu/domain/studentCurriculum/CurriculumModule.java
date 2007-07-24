@@ -147,6 +147,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	    final ExecutionPeriod executionPeriod);
 
     abstract public boolean hasAnyEnrolments();
+    
+    abstract public void addApprovedCurriculumLines(final Collection<CurriculumLine> result);
+    
+    abstract public boolean hasAnyApprovedCurriculumLines();
 
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod);
