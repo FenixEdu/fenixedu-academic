@@ -34,6 +34,7 @@ execute "Create Bonus Tables" createBonusTables.sql
 execute "Alter Table JustificationMotive" alterTableJustificationMotive.sql
 execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
 execute "Alter Table ManagementGroups" alterTableManagementGroups.sql
+execute "Convert Assiduousness Portal to Functionalities" convertedAssiduousnessPortalToFunctionalities.sql
 
 
 

@@ -94,7 +94,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private DomainReference<ProtocolFile> fileToDelete;
 
     private DomainListReference<ProtocolHistory> protocolHistories;
-    
+
     private transient InputStream inputStream;
 
     private String fileName;
@@ -170,30 +170,33 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         if (getProtocol() == null) {
             return new Protocol(this);
         } else {
-            if (getEditProtocolAction().equals(EditProtocolAction.EDIT_PROTOCOL_DATA)) {
+            switch (getEditProtocolAction()) {
+            case EDIT_PROTOCOL_DATA:
                 getProtocol().editData(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_RESPONSIBLE)) {
+                break;
+            case ADD_RESPONSIBLE:
                 getProtocol().addResponsible(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.REMOVE_RESPONSIBLE)) {
+                break;
+            case REMOVE_RESPONSIBLE:
                 getProtocol().removeResponsible(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_UNIT)) {
+                break;
+            case ADD_UNIT:
                 getProtocol().addUnit(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.REMOVE_UNIT)) {
+                break;
+            case REMOVE_UNIT:
                 getProtocol().removeUnit(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.ADD_FILE)) {
+                break;
+            case ADD_FILE:
                 getProtocol().addFile(this);
-                return getProtocol();
-            } else if (getEditProtocolAction().equals(EditProtocolAction.DELETE_FILE)) {
+                break;
+            case DELETE_FILE:
                 getProtocol().deleteFile(this);
-                return getProtocol();
+                break;
+            default:
+                return null;
             }
+            return getProtocol();
         }
-        return null;
     }
 
     public Boolean getActive() {
@@ -458,7 +461,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         }
         getUnits().add(unit);
     }
-    
+
     public void addPartnerUnit(Unit unit) {
         if (getPartnerUnits() == null) {
             setPartnerUnits(new DomainListReference<Unit>());
@@ -496,10 +499,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
         setInputStream(null);
     }
 
-    public ProtocolHistory getActualProtocolHistory(){
+    public ProtocolHistory getActualProtocolHistory() {
         return getProtocol().getActualProtocolHistory();
     }
-    
+
     public Person getResponsibleToAdd() {
         return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
     }
@@ -582,7 +585,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     public void setCountry(Country country) {
         this.country = country != null ? new DomainReference<Country>(country) : null;
     }
-    
+
     public List<ProtocolHistory> getProtocolHistories() {
         return protocolHistories;
     }
