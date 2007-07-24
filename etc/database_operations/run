@@ -35,4 +35,3 @@ execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMont
 execute "Alter Table ManagementGroups" alterTableManagementGroups.sql
 execute "Convert Assiduousness Portal to Functionalities" convertedAssiduousnessPortalToFunctionalities.sql
 execute "Change name of research unit sites management and add subsites" changeSiteManagement.sql
-execute "Update availability policy" updateAvailabilityPolicy.sql
