@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
@@ -37,13 +38,15 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	try {
-	    executeFactoryMethod();
-	    addActionMessage(request, "message.success.state.edit");
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	}
-
+            try {
+        	executeFactoryMethod();
+        	addActionMessage(request, "message.success.state.edit");
+            } catch (DomainExceptionWithLabelFormatter e) {
+        	addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));
+            } catch (DomainException e) {
+        	addActionMessage(request, e.getMessage());
+            }
+	
 	final Registration registration = ((RegistrationStateBean) getRenderedObject())
 		.getRegistration();
 	request.setAttribute("registration", registration);
