@@ -25,6 +25,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public ExecutionPeriod getExecutionPeriod();
     
+    final public ExecutionYear getExecutionYear() {
+	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	return executionPeriod == null ? null : executionPeriod.getExecutionYear();
+    }
+    
     abstract public boolean isApproved();
     
     @Override

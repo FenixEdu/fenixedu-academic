@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -290,7 +291,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	    else {
 		throw new DomainException("error.enrolment.cant.unenroll");
-	}
+	    }
 	}
 
 	delete();
@@ -569,10 +570,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee, final ExecutionPeriod executionPeriod) {
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT, EnrolmentEvaluationState.TEMPORARY_OBJ, employee, executionPeriod);
 	createAttendForImprovement(executionPeriod);
-	
 	return enrolmentEvaluation;
     }
-
     
     private void createAttendForImprovement(final ExecutionPeriod executionPeriod) {
 	final Registration registration = getRegistration();
@@ -908,7 +907,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		responsibleFor, grade, availableDate, examDate, new DateTime());
 	if(enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
 	    enrolmentEvaluation.setExecutionPeriod(executionPeriod);
-    }
+	}
 	return enrolmentEvaluation;
     }
 
@@ -1087,10 +1086,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getStudentCurricularPlan().getRegistration();
     }
     
-    final public ExecutionYear getExecutionYear() {
-	return getExecutionPeriod().getExecutionYear();
-    }
-    
     protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
 	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
@@ -1266,7 +1261,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
         return isEnroledInExecutionPeriod(curricularCourse, executionPeriod) ? this : null;
     }
-
+    
     @Override
     final public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
         return isAproved(curricularCourse) ? this : null;
@@ -1388,5 +1383,5 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public static Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
 		Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 		return enrolments.get(0);
-	}
+}
 }
