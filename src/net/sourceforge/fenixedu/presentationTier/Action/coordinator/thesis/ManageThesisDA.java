@@ -327,6 +327,11 @@ public class ManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("edit-thesis");
     }
     
+    public ActionForward editProposalDiscussion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	request.setAttribute("changeDiscussion", true);
+        return editProposal(mapping, actionForm, request, response);
+    }
+
     public ActionForward changeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("change-information");
     }

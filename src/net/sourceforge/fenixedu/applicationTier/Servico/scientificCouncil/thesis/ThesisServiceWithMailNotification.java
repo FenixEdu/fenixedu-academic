@@ -52,12 +52,16 @@ public abstract class ThesisServiceWithMailNotification extends Service {
     protected abstract void setMessage(Thesis thesis, MailBean bean);
     
     protected String getMessage(String key, Object ... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", new Locale("pt"));
+        return getMessage(key, new Locale("pt"), args);
+    }
+
+    protected String getMessage(String key, Locale locale, Object ... args) {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
         
         String message = bundle.getString(key);
         return MessageFormat.format(message, args);
     }
-
+    
     private void setReceivers(Thesis thesis, MailBean bean) {
         Collection<Person> receivers = getReceivers(thesis);
 

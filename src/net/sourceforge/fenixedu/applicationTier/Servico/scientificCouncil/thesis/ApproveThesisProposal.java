@@ -7,12 +7,19 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.DateTime;
 
 public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
@@ -21,13 +28,16 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     
     private static final String SUBJECT_KEY = "thesis.proposal.jury.approve.subject";
     private static final String BODY_KEY = "thesis.proposal.jury.approve.body";
+	
+    private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "Anúncios";
 
     @Override
     void process(Thesis thesis) {
+    	createAnnouncement(thesis);
         thesis.approveProposal();
     }
     
-    @Override
+	@Override
     protected Collection<Person> getReceivers(Thesis thesis) {
         Person student = thesis.getStudent().getPerson();
         Person orientator = thesis.getOrientator().getPerson();
@@ -123,5 +133,95 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
             return null;
         }
     }
+
+    private void createAnnouncement(Thesis thesis) {
+    	if (thesis.getProposedDiscussed() == null) {
+    		return;
+    	}
+    	
+    	AnnouncementBoard board = getBoard(DEGREE_ANNOUNCEMENTS_BOARD_NAME, thesis.getDegree().getUnit());
+    	
+    	if (board == null) {
+    		return;
+    	}
+
+    	DateTime now = new DateTime();
+
+    	Announcement announcement = new Announcement();
+    	announcement.setAnnouncementBoard(board);
+    	announcement.setCreator(AccessControl.getPerson());
+		announcement.setCreationDate(now);
+		announcement.setPlace(thesis.getProposedPlace());
+		announcement.setVisible(true);
+
+    	announcement.setAuthor(getMessage("system.public.name"));
+    	announcement.setAuthorEmail(getMessage("system.public.email"));
+    	announcement.setCreationDate(now);
+    	announcement.setPublicationBegin(now);
+    	announcement.setReferedSubjectBegin(thesis.getProposedDiscussed());
+    	
+    	MultiLanguageString subject = MultiLanguageString.i18n()
+    	.add("pt", getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.pt))
+    	.add("en", getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.en))
+    	.finish();
+    	
+    	MultiLanguageString body = MultiLanguageString.i18n()
+    	.add("pt", getAnnouncementBody(thesis, "thesis.announcement.body", Language.pt))
+    	.add("en", getAnnouncementBody(thesis, "thesis.announcement.body", Language.en))
+    	.finish();
+    	
+    	announcement.setSubject(subject);
+    	announcement.setBody(body);
+	}
+
+	private String getAnnouncementSubject(Thesis thesis, String key, Language language) {
+		return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName());
+	}
+
+	private String getAnnouncementBody(Thesis thesis, String key, Language language) {
+		return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName(), getDate(thesis.getProposedDiscussed()), hasPlace(thesis), thesis.getProposedPlace(), hasTime(thesis.getProposedDiscussed()), getTime(thesis.getProposedDiscussed()), getString(thesis.getTitle(), language));
+	}
+	
+	private Integer hasPlace(Thesis thesis) {
+		String place = thesis.getProposedPlace();
+		return place == null || place.trim().length() == 0 ? 0 : 1;
+	}
+
+	private String getTime(DateTime dateTime) {
+		return String.format(new Locale("pt"), "%tR", dateTime.toDate());
+	}
+
+	private Integer hasTime(DateTime proposedDiscussed) {
+		if (proposedDiscussed.getHourOfDay() == 0 && proposedDiscussed.getMinuteOfHour() == 0) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+
+	private String getDate(DateTime dateTime) {
+		return String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", dateTime.toDate());
+	}
+
+	private String getString(MultiLanguageString mls, Language language) {
+		String value = mls.getContent(language);
+		
+		if (value == null) {
+			value = mls.getContent();
+		}
+		
+		return value;
+	}
+
+	private AnnouncementBoard getBoard(String name, Unit unit) {
+		for (AnnouncementBoard board : unit.getBoards()) {
+			if (board.getName().equals(name)) {
+				return board;
+			}
+		}
+		
+		return null;
+	}
 
 }

@@ -4268,6 +4268,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime creation;
 		Boolean declarationAccepted;
 		DateTime declarationAcceptedTime;
+		DateTime proposedDiscussed;
+		String proposedPlace;
 		DateTime discussed;
 		DateTime documentsAvailableAfter;
 		DateTime evaluation;

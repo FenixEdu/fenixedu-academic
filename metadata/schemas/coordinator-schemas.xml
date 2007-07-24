@@ -124,6 +124,19 @@
     </slot>
 </schema>
 
+<schema name="thesis.jury.proposal.discussion" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="proposedDiscussed" key="label.coordinator.thesis.discussed" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>
+    <slot name="proposedPlace" key="label.coordinator.thesis.place" layout="null-as-label"/>
+</schema>
+
+<schema name="thesis.jury.proposal.discussion.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="proposedDiscussed" key="label.coordinator.thesis.discussed"/>
+    <slot name="proposedPlace" key="label.coordinator.thesis.place"/>
+</schema>
+
 <schema name="thesis.jury.proposal.information.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="student" layout="format" read-only="true">
         <property name="format" value="${person.name} (${number})"/>

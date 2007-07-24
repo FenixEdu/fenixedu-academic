@@ -37,6 +37,11 @@
     <slot name="comment" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
+    <slot name="proposedDiscussed" key="label.scientificCouncil.thesis.discussed" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>
+    <slot name="proposedPlace" key="label.scientificCouncil.thesis.place" layout="null-as-label"/>
 </schema>
 
 <schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">

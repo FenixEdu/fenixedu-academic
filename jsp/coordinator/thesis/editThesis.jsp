@@ -94,7 +94,7 @@
 <%-- Rejected information --%>
 <logic:equal name="thesis" property="rejected" value="true">
     <div class="warning0" style="padding: 1em;">
-        <p class="mtop0 mbottom025"><strong><bean:message key="label.attention"/>:</strong><br/> <bean:message key="title.coordinator.thesis.edit.rejected"/></span></p>
+        <p class="mtop0 mbottom025"><strong><bean:message key="label.attention"/>:</strong><br/> <bean:message key="title.coordinator.thesis.edit.rejected"/></p>
         <p class="mtop025 mbottom0">
             	<logic:notEmpty name="thesis" property="rejectionComment" >
                 <bean:message key="label.coordinator.thesis.edit.rejected.comment"/>:
@@ -110,11 +110,46 @@
     </div>
 </logic:equal>
 
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.discussion"/></h3>
+
+<logic:notPresent name="changeDiscussion">
+	<fr:view name="thesis" schema="thesis.jury.proposal.discussion">
+	    <fr:layout name="tabular">
+	    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+	    	<fr:property name="columnClasses" value="width12em,,"/>
+	    </fr:layout>
+	</fr:view>
+    
+    <html:link page="<%= String.format("/manageThesis.do?method=editProposalDiscussion&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
+    </html:link>
+</logic:notPresent>
+
+<logic:present name="changeDiscussion">
+    <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+        <fr:edit id="details" name="thesis" schema="thesis.jury.proposal.discussion.edit">
+            <fr:layout name="tabular">
+            		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+            		<fr:property name="columnClasses" value="width12em,,tderror1"/>
+            </fr:layout>
+            
+            <fr:destination name="invalid" path="<%= String.format("/manageThesis.do?method=editProposalDiscussion&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"/>
+        </fr:edit>
+        
+        <html:submit>
+            <bean:message key="button.submit"/>
+        </html:submit>
+        <html:cancel>
+            <bean:message key="button.cancel"/>
+        </html:cancel>
+    </fr:form>
+</logic:present>
+
 
 <%-- Jury --%>
 <h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
 
-<%--  problems in the jury --%>
+<%-- problems in the jury --%>
 <logic:notEmpty name="conditions">
 	<div class="warning0" style="padding: 1em;">
     <strong><bean:message key="label.attention"/>:</strong><br/>
@@ -133,19 +168,19 @@
 <h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h4>
 
 <logic:empty name="thesis" property="orientator">
-    <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-        <p>
-            <bean:message key="link.coordinator.thesis.edit.addOrientation"/>
-        </p>
-    </html:link>
+    <p>
+ 	   <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+	   		<bean:message key="link.coordinator.thesis.edit.addOrientation"/>
+	   </html:link>
+    </p>
 </logic:empty>
 <logic:notEmpty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
-        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <p>
+        <p>
+	        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <bean:message key="link.coordinator.thesis.edit.addOrientation"/>
-            </p>
-        </html:link>
+    	    </html:link>
+        </p>
     </logic:empty>
 </logic:notEmpty>
     
