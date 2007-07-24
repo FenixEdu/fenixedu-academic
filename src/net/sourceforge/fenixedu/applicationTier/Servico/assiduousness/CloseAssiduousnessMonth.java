@@ -71,6 +71,9 @@ public class CloseAssiduousnessMonth extends Service {
 	double tolerance = 0;
 	double article17 = 0;
 	double article66 = 0;
+	int maximumWorkingDays = 0;
+	int workedDays = 0;
+
 	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
 		.plusDays(1)) {
 	    WorkDaySheet workDaySheet = new WorkDaySheet();
@@ -85,6 +88,7 @@ public class CloseAssiduousnessMonth extends Service {
 		workDaySheet.setLeaves(leavesList);
 		workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday, true);
 		if (workSchedule != null && !isDayHoliday) {
+		    maximumWorkingDays += 1;
 		    for (Leave leave : leavesList) {
 			if (leave.getJustificationMotive().getJustificationType().equals(
 				JustificationType.TIME)) {
@@ -145,9 +149,16 @@ public class CloseAssiduousnessMonth extends Service {
 				    .getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
 				    .getWorkPeriodDuration().getMillis() / 2);
 			}
+
+			if (!leave.getJustificationMotive().getDiscountBonus()) {
+			    workedDays += 1;
+			}
 		    }
 		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(
 			    new DateMidnight());
+		    if (leavesList.isEmpty() && !thisDayBalance.isShorterThan(Duration.ZERO)) {
+			workedDays += 1;
+		    }
 		    if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
 			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
 			totalBalance = totalBalance.plus(thisDayBalance);
@@ -167,7 +178,8 @@ public class CloseAssiduousnessMonth extends Service {
 
 	AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousness,
 		closedMonth, totalBalance, totalComplementaryWeeklyRestBalance, totalWeeklyRestBalance,
-		holidayRest, totalBalanceToDiscount, vacations, tolerance, article17, article66);
+		holidayRest, totalBalanceToDiscount, vacations, tolerance, article17, article66,
+		maximumWorkingDays, workedDays);
 
 	for (JustificationMotive justificationMotive : justificationsDuration.keySet()) {
 	    new ClosedMonthJustification(assiduousnessClosedMonth, justificationMotive,

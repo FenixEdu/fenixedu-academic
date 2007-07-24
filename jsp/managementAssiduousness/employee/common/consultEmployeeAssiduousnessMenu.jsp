@@ -52,7 +52,7 @@
 	
 	<table border="0">
 		<tr><td class="invisible">
-		<html:img src="<%= request.getContextPath() +"/managementAssiduousness/viewEmployeeAssiduousness.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+		<html:img src="<%= request.getContextPath() +"/personnelSection/viewEmployeeAssiduousness.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		</td><td>
 		<fr:view name="employee" schema="show.employeeInformation">
 			<fr:layout name="tabular">

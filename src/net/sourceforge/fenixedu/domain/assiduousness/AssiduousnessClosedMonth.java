@@ -20,7 +20,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public AssiduousnessClosedMonth(Assiduousness assiduousness, ClosedMonth closedMonth,
 	    Duration balance, Duration totalComplementaryWeeklyRestBalance,
 	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration balanceToDiscount,
-	    double vacations, double tolerance, double article17, double article66) {
+	    double vacations, double tolerance, double article17, double article66,
+	    Integer maximumWorkingDays, Integer workedDays) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
@@ -36,6 +37,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setAccumulatedArticle66(0.0);
 	setAccumulatedUnjustified(0.0);
 	setUnjustifiedDays(0);
+	setMaximumWorkingDays(maximumWorkingDays);
+	setWorkedDays(workedDays);
     }
 
     public HashMap<Integer, Duration> getPastJustificationsDurations() {

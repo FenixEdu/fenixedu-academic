@@ -409,8 +409,8 @@
             <param-value>/WEB-INF/conf/struts-delegate.xml</param-value>
         </init-param>
 	    <init-param>
-            <param-name>config/managementAssiduousness</param-name>
-            <param-value>/WEB-INF/conf/struts-managementAssiduousness.xml</param-value>
+            <param-name>config/personnelSection</param-name>
+            <param-value>/WEB-INF/conf/struts-personnelSection.xml</param-value>
         </init-param>
         <init-param>
             <param-name>config/projectsManagement</param-name>

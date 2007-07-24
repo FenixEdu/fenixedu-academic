@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
@@ -176,6 +177,9 @@ public class GroupBuilderRegistry {
         register("researchUnitElement", ResearchUnitElementGroup.class, new ResearchUnitElementGroup.Builder());
         register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
         register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class, new CurrentDegreeScientificCommissionMembersGroup.Builder());
+        register("assiduousnessManagers", ManagementGroups.class, new ManagementGroups.AssiduousnessManagerGroupBuilder());
+        register("assiduousnessSectionStaff", ManagementGroups.class, new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
+        register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
         registerGroupsWithNoArguments();
     }
 

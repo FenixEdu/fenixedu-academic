@@ -1162,7 +1162,7 @@ public class Person extends Person_Base {
 	    case CREDITS_MANAGER:
 	    case EXAM_COORDINATOR:
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-	    case MANAGEMENT_ASSIDUOUSNESS:
+	    case PERSONNEL_SECTION:
 	    case PROJECTS_MANAGER:
 	    case INSTITUCIONAL_PROJECTS_MANAGER:
 		addRoleIfNotPresent(person, RoleType.EMPLOYEE);
@@ -1211,7 +1211,7 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-		removeRoleIfPresent(person, RoleType.MANAGEMENT_ASSIDUOUSNESS);
+		removeRoleIfPresent(person, RoleType.PERSONNEL_SECTION);
 		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
 		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 		break;

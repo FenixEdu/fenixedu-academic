@@ -186,7 +186,7 @@ valueType org.joda.time.Partial                                                 
 valueType org.joda.time.Period                                                                                       as Period;
 valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
-
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 											 as YearMonthList;
 
 
 /*
@@ -879,6 +879,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.ManagementGroups extends net.sourceforge.fenixedu.domain.DomainObject {
 		Group assiduousnessManagers;
+		Group assiduousnessSectionStaff;
+		Group payrollSectionStaff;
 		Group protocolManagers;
 	}
 
@@ -1680,6 +1682,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double tolerance;
 		Integer unjustifiedDays;
 		Double vacations;
+		Integer maximumWorkingDays;
+		Integer workedDays;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1827,6 +1831,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		JustificationGroup justificationGroup;
 		JustificationType justificationType;
 		DateTime lastModifiedDate;
+		Boolean discountBonus;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4406,7 +4411,25 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String rulesLink;
 	}
 
+class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer year;
+	Partial paymentPartialDate;
+  	YearMonthList assiduousnessYearMonths;
+}
 
+class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double installmentP1Value;
+	Double installmentP2Value;
+	Integer costCenterCode;
+	Integer subCostCenterCode;
+	Integer explorationUnit;
+}
+
+class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer month;
+	Double p1Value;
+	Double p2Value;
+}
 
 /*
  * Relations definitions
@@ -5630,6 +5653,27 @@ relation EmployeeExtraWorkAuthorizationExtraWorkAuthorization {
 relation EmployeeExtraWorkRequest {
 	net.sourceforge.fenixedu.domain.Employee playsRole modifiedBy;
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole modifiedExtraWorkRequests {
+		multiplicity *;
+	}
+}
+
+relation EmployeeBonusInstallmentAnualBonusInstallment {
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment playsRole anualBonusInstallment;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments {
+		multiplicity *;
+	}
+}
+
+relation EmployeeBonusInstallmentEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments {
+		multiplicity *;
+	}
+}
+
+relation EmployeeMonthlyBonusInstallmentEmployeeBonusInstallment {
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallment;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment playsRole employeeMonthlyBonusInstallments {
 		multiplicity *;
 	}
 }
@@ -12119,6 +12163,27 @@ relation CompetenceCourseInformationChangeRequestRootDomainObject {
 relation CompetenceCourseInformationExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
+		multiplicity *;
+	}
+}
+
+relation AnualBonusInstallmentRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment playsRole anualBonusInstallments {
+		multiplicity *;
+	}
+}
+
+relation EmployeeBonusInstallmentRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments{
+		multiplicity *;
+	}
+}
+
+relation EmployeeMonthlyBonusInstallmentRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment playsRole employeeMonthlyBonusInstallments{
 		multiplicity *;
 	}
 }

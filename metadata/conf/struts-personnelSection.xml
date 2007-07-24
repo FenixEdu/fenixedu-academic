@@ -179,6 +179,22 @@
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
 				<forward name="choose-year-month" path="choose-year-month"/>
 		</action>
+		<action path="/anualInstallments"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection.AnualInstallmentsDispatchAction" 
+				parameter="method"
+				name="parametrizationForm"
+				scope="request"
+				validate="true">
+				<forward name="show-anual-installment" path="show-anual-installment"/>
+				<forward name="show-bonus-installment" path="show-bonus-installment"/>
+		</action>
+		<action path="/uploadAnualInstallments"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection.UploadAnualInstallments" 
+				parameter="method"
+				scope="request"
+				validate="true">
+				<forward name="upload-bonus-file" path="upload-bonus-file"/>
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -195,7 +211,8 @@
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles-assiduousness-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
+					  /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

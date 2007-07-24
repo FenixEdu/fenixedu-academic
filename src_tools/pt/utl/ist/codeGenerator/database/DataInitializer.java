@@ -63,7 +63,7 @@ public class DataInitializer {
 	new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
 	new Role(RoleType.COORDINATOR, "/coordinator", "/index.do", "portal.coordinator");
 	new Role(RoleType.EMPLOYEE, "/employee", "/index.do", "portal.employee");
-	new Role(RoleType.MANAGEMENT_ASSIDUOUSNESS, "/managementAssiduousness", "/index.do", "portal.managementAssiduousness");
+	new Role(RoleType.PERSONNEL_SECTION, "/personnelSection", "/index.do", "portal.personnelSection");
 	new Role(RoleType.MANAGER, "/manager", "/index.do", "portal.manager");
 	new Role(RoleType.CREDITS_MANAGER, "/facultyAdmOffice", "/index.do", "portal.credits");
 	new Role(RoleType.DEPARTMENT_CREDITS_MANAGER, "/departmentAdmOffice", "/index.do", "portal.credits.department");

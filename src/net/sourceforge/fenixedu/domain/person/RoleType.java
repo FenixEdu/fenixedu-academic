@@ -31,7 +31,7 @@ public enum RoleType {
 
     EMPLOYEE("Employee"),
 
-    MANAGEMENT_ASSIDUOUSNESS("Assiduousness Management"),
+    PERSONNEL_SECTION("Personnel Section"),
 
     MANAGER("Management"),
 

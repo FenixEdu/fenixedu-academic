@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;

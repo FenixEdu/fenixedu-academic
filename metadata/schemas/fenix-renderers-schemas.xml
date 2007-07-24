@@ -8,7 +8,7 @@
 	<!ENTITY markSheet SYSTEM "markSheet-schemas.xml">
 	<!ENTITY messaging SYSTEM "messaging-schemas.xml">
 	<!ENTITY space SYSTEM "space-schemas.xml">
-	<!ENTITY assiduousness SYSTEM "assiduousness-schemas.xml">
+	<!ENTITY personnelSection SYSTEM "personnelSection-schemas.xml">
 	<!ENTITY party SYSTEM "party-schemas.xml">
 	<!ENTITY payments SYSTEM "payments-schemas.xml">
 	<!ENTITY candidacy SYSTEM "candidacy-schemas.xml">
@@ -686,7 +686,7 @@
 	&markSheet;
 	&messaging;
 	&space;
-	&assiduousness;
+	&personnelSection;
 	&party;
 	&payments;
 	&candidacy;

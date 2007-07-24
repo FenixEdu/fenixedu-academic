@@ -29,3 +29,12 @@ function executeWithTempFile() {
 
 execute "Alter table TUTORSHIP, adding new columns" alterTableTutorship.sql
 execute "Change name of research unit sites management" changeSiteManagement.sql
+execute "Update Role" updateRole.sql
+execute "Create Bonus Tables" createBonusTables.sql
+execute "Alter Table JustificationMotive" alterTableJustificationMotive.sql
+execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
+execute "Alter Table ManagementGroups" alterTableManagementGroups.sql
+
+
+
+

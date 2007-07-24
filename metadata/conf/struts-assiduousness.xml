@@ -155,7 +155,7 @@
   
   <plug-in className="org.apache.struts.tiles.TilesPlugin" >
     <set-property property="definitions-config"
-	              value="/WEB-INF/tiles-assiduousness-definitions.xml" />
+	              value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
 	<set-property property="moduleAware" value="true" />
 	<set-property property="definitions-parser-validate" value="true" />
   </plug-in>   

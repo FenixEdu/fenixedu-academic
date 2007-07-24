@@ -10,6 +10,7 @@ import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class YearMonth implements Serializable {
+
     Integer year;
 
     Month month;
@@ -88,6 +89,12 @@ public class YearMonth implements Serializable {
     public Partial getPartial() {
 	return new Partial().with(DateTimeFieldType.monthOfYear(), getNumberOfMonth()).with(
 		DateTimeFieldType.year(), getYear());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	return ((YearMonth) obj).getYear().equals(getYear())
+		&& ((YearMonth) obj).getMonth().equals(getMonth());
     }
 
 }

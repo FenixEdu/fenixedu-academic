@@ -105,6 +105,14 @@ public class StyledExcelSpreadsheet {
 	sheet.setColumnWidth(thisCellNumber, (short) columnSize);
     }
 
+    public void addHeader(String value, int columnSize, int columnNumber) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) columnNumber);
+	cell.setCellValue(value);
+	cell.setCellStyle(excelStyle.getHeaderStyle());
+	sheet.setColumnWidth((short) columnNumber, (short) columnSize);
+    }
+
     public void newHeaderRow() {
 	int rowNumber = sheet.getLastRowNum();
 	if (rowNumber != 0 || sheet.getRow(rowNumber) != null) {
@@ -126,46 +134,47 @@ public class StyledExcelSpreadsheet {
 	return sheet.getRow(sheet.getLastRowNum());
     }
 
-    public void addCell(String value) {
-	HSSFRow currentRow = getRow();
-	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
-	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+    public void addCell(Object value) {
+	addCell(value, getDefaultExcelStyle(value), (getRow().getLastCellNum() + 1));
     }
 
-    public void addCell(String value, HSSFCellStyle newStyle) {
-	HSSFRow currentRow = getRow();
-	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
-	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(newStyle));
+    public void addCell(Object value, HSSFCellStyle newStyle) {
+	addCell(value, newStyle, (getRow().getLastCellNum() + 1));
     }
 
-    public void addCell(Double value) {
-	HSSFRow currentRow = getRow();
-	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
-	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(excelStyle.getDoubleStyle()));
+    public void addCell(Object value, int columnNumber) {
+	addCell(value, getDefaultExcelStyle(value), columnNumber);
     }
 
-    public void addCell(Double value, HSSFCellStyle newStyle) {
-	HSSFRow currentRow = getRow();
-	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
-	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(newStyle));
+    public void addCell(Object value, HSSFCellStyle newStyle, int columnNumber) {
+	if (value instanceof String) {
+	    addCell((String) value, newStyle, columnNumber);
+	} else if (value instanceof Integer) {
+	    addCell((Integer) value, newStyle, columnNumber);
+	} else if (value instanceof Double) {
+	    addCell((Double) value, newStyle, columnNumber);
+	}
     }
 
-    public void addCell(Double value, HSSFCellStyle newStyle, int columnNumber) {
+    private void addCell(String value, HSSFCellStyle newStyle, int columnNumber) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
 	cell.setCellStyle(getExcelStyle(newStyle));
     }
 
-    public void addCell(Integer value, int columnNumber) {
+    private void addCell(Double value, HSSFCellStyle newStyle, int columnNumber) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+	cell.setCellStyle(getExcelStyle(newStyle));
+    }
+
+    private void addCell(Integer value, HSSFCellStyle newStyle, int columnNumber) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) columnNumber);
+	cell.setCellValue(value);
+	cell.setCellStyle(newStyle);
     }
 
     public void addDateTimeCell(DateTime value) {
@@ -273,4 +282,14 @@ public class StyledExcelSpreadsheet {
 	}
 	return style;
     }
+
+    private HSSFCellStyle getDefaultExcelStyle(Object value) {
+	if (value instanceof Integer) {
+	    return getExcelStyle(getExcelStyle().getIntegerStyle());
+	} else if (value instanceof Double) {
+	    return getExcelStyle(getExcelStyle().getDoubleStyle());
+	}
+	return getExcelStyle(getExcelStyle().getValueStyle());
+    }
+
 }
