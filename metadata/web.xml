@@ -131,7 +131,7 @@
         </init-param>
         <init-param>
         	<param-name>researchURI</param-name>
-        	<param-value>/publico/researchSite/viewResearchUnitSite.do?siteID=%s&amp;method=%s</param-value>
+        	<param-value>/publico/researchSite/viewResearchUnitSite.do?method=%s&amp;siteID=%s</param-value>
         </init-param>
         <init-param>
         	<param-name>pedagogicalCouncilURI</param-name>
@@ -140,6 +140,10 @@
         <init-param>
         	<param-name>scientificCouncilURI</param-name>
         	<param-value>/publico/scientificCouncil/viewSite.do?method=%s&amp;unitID=%s</param-value>
+        </init-param>
+        <init-param>
+        	<param-name>unitSiteURI</param-name>
+        	<param-value>/publico/units/viewSite.do?method=%s&amp;unitID=%s</param-value>
         </init-param>
     </filter>
 	<filter>
@@ -272,10 +276,10 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-<!-- 	<filter-mapping>
+	<filter-mapping>
 		<filter-name>RequestChecksumFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 
     <!-- Listeners -->
 	<listener>

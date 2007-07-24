@@ -223,6 +223,13 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
        <forward name="index" path="/index.html" redirect="true"/>
        <forward name="firstPage" path="/index.html"/>
+       
+       <!-- global forwards indicating the site url for each unit site, may use arguments %1$s and %2$s for unitId and siteId respectivly -->
+       <forward name="viewUnitSite" path="/units/viewSite.do?method=presentation&amp;unitID=%s"/>
+       <forward name="viewResearchUnitSite" path="/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=%2$s"/>
+       <forward name="viewDepartmentUnitSite" path="/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=%s"/>
+       <forward name="viewPedagogicalCouncilUnitSite" path="/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=%s"/>
+       <forward name="viewScientificCouncilUnitSite" path="/scientificCouncil/viewSite.do?method=presentation&amp;unitID=%s"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -995,6 +1002,7 @@
             <forward name="site-item-deny" path="department-item-deny"/>
             <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
             <forward name="unit-organization" path="department-organization"/>
+            <forward name="unit-subunits" path="department-subunits"/>
 
             <forward name="announcementsAction" path="/department/announcements.do"/>
             <forward name="eventsAction" path="/department/events.do"/>

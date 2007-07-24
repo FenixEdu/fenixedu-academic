@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScientificCouncilProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SemesterProcessor;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.YearProcessor;
 
 public class GeneralForwardFilter implements Filter {
@@ -57,6 +58,7 @@ public class GeneralForwardFilter implements Filter {
         String researchURI = config.getInitParameter("researchURI");
         String pedagocialCouncilURI = config.getInitParameter("pedagogicalCouncilURI");
         String scientificCouncilURI = config.getInitParameter("scientificCouncilURI");
+        String unitSiteURI = config.getInitParameter("unitSiteURI");
         
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
@@ -76,6 +78,7 @@ public class GeneralForwardFilter implements Filter {
         ResearchUnitProcessor researchUnit = new ResearchUnitProcessor(researchURI);
         PedagogicalCouncilProcessor pedagogicalCouncil = new PedagogicalCouncilProcessor(pedagocialCouncilURI);
         ScientificCouncilProcessor scientificCouncil = new ScientificCouncilProcessor(scientificCouncilURI);
+        UnitSiteProcessor unitSite = new UnitSiteProcessor(unitSiteURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -106,6 +109,7 @@ public class GeneralForwardFilter implements Filter {
         processors.add(research.add(researchUnit.add(sectionAndItem)));
         processors.add(pedagogicalCouncil.add(sectionAndItem));
         processors.add(scientificCouncil.add(sectionAndItem));
+        processors.add(unitSite.add(sectionAndItem));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

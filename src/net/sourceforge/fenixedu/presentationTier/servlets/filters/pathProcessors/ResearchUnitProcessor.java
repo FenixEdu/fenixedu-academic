@@ -4,12 +4,10 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor.UnitSiteContext;
 
 public class ResearchUnitProcessor extends PathProcessor {
 
@@ -24,13 +22,26 @@ public class ResearchUnitProcessor extends PathProcessor {
 	
 	@Override
 	protected boolean accepts(ProcessingContext context, PathElementsProvider provider) {
-		String acronym = provider.current();
+		String current = provider.current();
 	        
-	   ResearchUnitContext ownContext = (ResearchUnitContext) context;
-	   ownContext.setAcronym(acronym);
-	        
-	   return ownContext.getResearchUnit() != null;
-	}
+		ResearchUnitContext ownContext = (ResearchUnitContext) context;
+		
+		int i;
+        for (i = 0; ; i++) {
+            current = provider.peek(i);
+            
+            if (! ownContext.addUnit(current)) {
+                break;
+            }
+        }
+
+        while (i > 1) {
+            provider.next();
+            i--;
+        }
+        
+        return ownContext.getUnit() != null && ownContext.getUnit().hasSite();	
+    }
 
 	@Override
 	protected boolean forward(ProcessingContext context, PathElementsProvider provider)
@@ -40,7 +51,7 @@ public class ResearchUnitProcessor extends PathProcessor {
         }
         else {
         	ResearchUnitContext ownContext = (ResearchUnitContext) context;
-            return doForward(context, new Object[] { ownContext.getResearchUnit().getSite().getIdInternal(), "frontPage" });
+            return doForward(context, new Object[] { ownContext.getUnit().getSite().getIdInternal(), "frontPage" });
         }
 	}
 
@@ -49,59 +60,24 @@ public class ResearchUnitProcessor extends PathProcessor {
 		return new ResearchUnitContext(parentContext, getForwardURI());
 	}
 
-	public static class ResearchUnitContext extends ProcessingContext implements SiteContext {
-
-		private String contextURI;
-
-		private String acronym;
-
-		private ResearchUnit researchUnit;
+	public static class ResearchUnitContext extends UnitSiteContext {
 
 		public ResearchUnitContext(ProcessingContext parent, String contextURI) {
-			super(parent);
-
-			this.contextURI = contextURI;
+			super(parent, contextURI);
 		}
 
-		public void setAcronym(String acronym) {
-			this.acronym = acronym;
+		@Override
+		protected boolean isTypeAccepted(Unit unit, PartyTypeEnum type) {
+			return type != null && type == PartyTypeEnum.RESEARCH_UNIT; 
 		}
 
-		public String getAcronym() {
-			return this.acronym;
+		@Override
+		protected Integer getContextIdInternal() {
+			return getSite().getIdInternal();
 		}
-
-		public ResearchUnit getResearchUnit() {
-			if (researchUnit != null) {
-				return researchUnit;
-			}
-			if (acronym == null) {
-				return null;
-			}
-
-			for (Party party : PartyType.readPartyTypeByType(PartyTypeEnum.RESEARCH_UNIT).getParties()) {
-				ResearchUnit unit = (ResearchUnit) party;
-				String acronym = unit.getAcronym();
-				if (acronym != null && acronym.equalsIgnoreCase(this.acronym) && unit.hasSite()) {
-					this.researchUnit = unit;
-					break;
-				}
-			}
-			return researchUnit;
-		}
-
-		public Site getSite() {
-			return (researchUnit == null) ? null : researchUnit.getSite();
-		}
-
-		public String getSiteBasePath() {
-			
-			return String.format(this.contextURI, getSite().getIdInternal(), "%s");
-		}
-
 	}
 	
 	public static String getResearchUnitPath(ResearchUnit unit) {
-        return "/" + ResearchProcessor.PREFIX2 + "/" + unit.getAcronym(); 
+        return UnitSiteProcessor.getUnitSitePath(unit, ResearchProcessor.PREFIX1);
     }
 }

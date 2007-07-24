@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -40,6 +42,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -59,6 +62,21 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 		}
 	}
 
+	@Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Unit unit = getUnit(request);
+
+        if (unit == null) {
+        	return null;
+        }
+        
+        try {
+            return RequestUtils.absoluteURL(request, UnitSiteProcessor.getUnitSitePath(unit)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+	
 	@Override
 	protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
 		return null;

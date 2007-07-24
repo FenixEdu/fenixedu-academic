@@ -448,7 +448,7 @@ public class Unit extends Unit_Base {
 
     public Collection<Unit> getAllParentUnits() {
 	Set<Unit> allParentUnits = new HashSet<Unit>();
-	Collection<Unit> parentUnits = getSubUnits();
+	Collection<Unit> parentUnits = getParentUnits();
 	allParentUnits.addAll(parentUnits);
 	for (Unit subUnit : parentUnits) {
 	    allParentUnits.addAll(subUnit.getAllParentUnits());

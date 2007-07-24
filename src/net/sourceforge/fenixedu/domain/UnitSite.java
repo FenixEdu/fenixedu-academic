@@ -17,11 +17,11 @@ public class UnitSite extends UnitSite_Base {
     
 	private static MultiLanguageString TOP_SECTION_NAME = MultiLanguageString.i18n()
 		.add("pt", "Topo")
-		.add("en", "Lateral").finish();
+		.add("en", "Top").finish();
 
 	private static MultiLanguageString SIDE_SECTION_NAME = MultiLanguageString.i18n()
-		.add("pt", "Topo")
-		.add("en", "Lateral").finish();
+		.add("pt", "Lateral")
+		.add("en", "Side").finish();
 	
     static {
         UnitSiteManagers.addListener(new ManageWebsiteManagerRole());

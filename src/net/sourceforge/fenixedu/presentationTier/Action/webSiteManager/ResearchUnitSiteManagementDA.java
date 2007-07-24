@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
+import java.net.MalformedURLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,16 +13,30 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 
 public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
+	@Override
+	protected String getDirectLinkContext(HttpServletRequest request) {
+		ResearchUnit unit = getSite(request).getUnit();
+
+        try {
+            return RequestUtils.absoluteURL(request, ResearchUnitProcessor.getResearchUnitPath(unit)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+	}
+	
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return mapping.findForward("editResearchSite");

@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -15,6 +14,12 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.RequestUtils;
 
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
@@ -44,6 +49,17 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
     	return presentation(mapping, form, request, response);
+    }
+    
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+        Unit unit = getUnit(request);
+
+        try {
+            return RequestUtils.absoluteURL(request, UnitSiteProcessor.getUnitSitePath(unit)).toString();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
     
     protected String getContextParamName(HttpServletRequest request) {
@@ -107,4 +123,31 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     	return mapping.findForward("unit-organization");
     }
     
+    public ActionForward subunits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    	Unit unit = getUnit(request);
+    	
+    	SortedSet<Unit> subunits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+    	for (Unit sub : unit.getSubUnits()) {
+    		if (sub.hasSite()) {
+    			subunits.add(sub);
+    			
+    			String siteUrl = getSiteUrl(mapping, sub);
+    			request.setAttribute("viewSite" + sub.getIdInternal(), siteUrl);
+    		}
+    	}
+    	
+    	request.setAttribute("subunits", subunits);
+    	return mapping.findForward("unit-subunits");
+    }
+
+	protected String getSiteUrl(ActionMapping mapping, Unit sub) {
+		ActionForward forward = mapping.findForward("view" + sub.getClass().getSimpleName() + "Site");
+		
+		if (forward == null) {
+			forward = mapping.findForward("viewUnitSite");
+		}
+		
+		return String.format(forward.getPath(), sub.getIdInternal(), sub.getSite().getIdInternal());
+	}
+
 }
