@@ -41,7 +41,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
         setActive(Boolean.TRUE);
-       // setDiscountBonus(Boolean.FALSE);
+        setDiscountBonus(Boolean.FALSE);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime,
