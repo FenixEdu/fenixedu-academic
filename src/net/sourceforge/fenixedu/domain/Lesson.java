@@ -168,6 +168,25 @@ public class Lesson extends Lesson_Base {
 	}
     }
 
+    private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day) {
+
+	if(allLessonDatesBeforeRefreshPeriod != null && day != null) {
+
+	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
+	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
+		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
+	    }
+
+	    Campus lessonCampus = getLessonCampus();
+	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {
+		if(!Holiday.isHoliday(dateToCreate, lessonCampus)
+			&& getPeriod().nestedOccupationPeriodsContainsDay(dateToCreate)) {
+		    new LessonInstance(this, dateToCreate);
+		}
+	    }	    	   
+	}
+    }  
+    
     private void removeExistentInstancesWithoutSummaryAfterOrEqual(YearMonthDay newBeginDate) {				   
 	Map<Boolean, List<LessonInstance>> instances = getLessonInstancesWithOrWithoutSummaryAfterOrEqual(newBeginDate);
 	if(instances.get(Boolean.TRUE).isEmpty()) {
@@ -229,25 +248,7 @@ public class Lesson extends Lesson_Base {
 	    setPeriod(null);
 	}
 	currentPeriod.delete();	
-    } 
-
-    private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day) {
-
-	if(allLessonDatesBeforeRefreshPeriod != null && day != null) {
-
-	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
-	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
-		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
-	    }
-
-	    Campus lessonCampus = getLessonCampus();
-	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {
-		if(!Holiday.isHoliday(dateToCreate, lessonCampus) ) {
-		    new LessonInstance(this, dateToCreate);
-		}
-	    }	    	   
-	}
-    }   
+    }     
     
     private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate) {
 	OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());		
