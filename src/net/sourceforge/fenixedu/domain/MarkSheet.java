@@ -644,5 +644,10 @@ public class MarkSheet extends MarkSheet_Base {
     public String getPrettyCheckSum() {
 	return FenixDigestUtils.getPrettyCheckSum(getCheckSum());
     }
+
+    public boolean canManage(final Employee employee) {
+        final DegreeCurricularPlan degreeCurricularPlan = getCurricularCourse().getDegreeCurricularPlan();
+        return degreeCurricularPlan.canManageMarkSheetsForExecutionPeriod(employee, getExecutionPeriod());
+    }
     
 }

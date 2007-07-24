@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -51,6 +52,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -1779,4 +1782,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return AverageType.WEIGHTED;
 	}
     }
+
+    public boolean canManageMarkSheetsForExecutionPeriod(final Employee employee, final ExecutionPeriod executionPeriod) {
+        if (employee == null || executionPeriod == null) {            
+            return false;
+        }
+        final Campus employeeCampus = employee.getCurrentCampus();
+        final ExecutionPeriod considerCampusExecutionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(1, "2006/2007");
+        if (executionPeriod.isBeforeOrEquals(considerCampusExecutionPeriod)) {
+            return !employeeCampus.getName().equalsIgnoreCase("Taguspark");
+        } 
+        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+            if (executionDegree.getExecutionYear() == executionYear) {
+                return employeeCampus == executionDegree.getCampus();
+            }
+        }
+        return false;
+    }
+
 }
