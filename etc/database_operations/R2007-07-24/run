@@ -1,0 +1,39 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+#
+#   Runs sql scripts to update database from previous release.
+#
+# -----------------------------------------------------------------------------
+#
+
+DB=$1
+USER=$2
+
+echo Using database: $DB
+echo Enter password for $USER:
+read -s password
+
+function execute() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
+	echo
+}
+
+function executeWithTempFile() {
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
+	rm tmp.sql
+	echo
+}
+
+execute "Alter table TUTORSHIP, adding new columns" alterTableTutorship.sql
+execute "Update Role" updateRole.sql
+execute "Create Bonus Tables" createBonusTables.sql
+execute "Alter Table JustificationMotive" alterTableJustificationMotive.sql
+execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
+execute "Alter Table ManagementGroups" alterTableManagementGroups.sql
+execute "Convert Assiduousness Portal to Functionalities" convertedAssiduousnessPortalToFunctionalities.sql
+execute "Change name of research unit sites management and add subsites" changeSiteManagement.sql
+execute "Corrected some links in Personnel Section Portal" bugFixPersonnelSectionPortal.sql
+execute "Added proposed discussion date to thesis" changeThesis.sql
