@@ -2215,4 +2215,11 @@ public class Registration extends Registration_Base {
 	result.addAll(getExternalEnrolmentsSet());
 	return result;
     }
+    
+    @Override
+    public RegistrationAgreement getRegistrationAgreement() {
+        return super.getRegistrationAgreement() == null ? RegistrationAgreement.NORMAL : super
+		.getRegistrationAgreement();
+    }
+    
 }
