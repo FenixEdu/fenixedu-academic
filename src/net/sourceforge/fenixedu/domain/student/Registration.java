@@ -71,7 +71,10 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -573,9 +576,21 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Collection<CurriculumLine> getApprovedCurriculumLines() {
+	return getLastStudentCurricularPlan().getApprovedCurriculumLines();
+    }
+
     final public Collection<IEnrolment> getApprovedIEnrolments() {
 	final Collection<IEnrolment> result = new HashSet<IEnrolment>();
-	result.addAll(getApprovedEnrolments());
+	
+	for (final CurriculumLine curriculumLine : getApprovedCurriculumLines()) {
+	    if (curriculumLine.isEnrolment()) {
+		result.add((Enrolment) curriculumLine);
+	    } else if (curriculumLine.isDismissal()) {
+		result.addAll(((Dismissal) curriculumLine).getSourceIEnrolments());
+	    }
+	}
+	
 	result.addAll(getExternalEnrolments());
 
 	return result;
@@ -603,6 +618,18 @@ public class Registration extends Registration_Base {
 
     }
 
+    final public Substitution getSubstitution(final IEnrolment iEnrolment) {
+	return getLastStudentCurricularPlan().getSubstitution(iEnrolment);
+    }
+    
+    final public Double getDismissalsEctsCredits() {
+	return getLastStudentCurricularPlan().getDismissalsEctsCredits();
+    }
+    
+    final public Double getDismissalsEctsCreditsExceptApproved() {
+	return getLastStudentCurricularPlan().getDismissalsEctsCreditsExceptApproved();
+    }
+    
     final public boolean getHasExternalEnrolments() {
 	return hasAnyExternalEnrolments();
     }
@@ -1654,7 +1681,7 @@ public class Registration extends Registration_Base {
     final public YearMonthDay getConclusionDate() {
 	if (isConcluded()) {
 	    return getActiveState().getStateDate().toYearMonthDay();
-	}
+    	}
 
 	throw new DomainException("Registration.is.not.concluded");
     }
