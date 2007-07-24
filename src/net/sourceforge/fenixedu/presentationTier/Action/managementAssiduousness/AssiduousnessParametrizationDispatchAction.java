@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory;
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory.WorkScheduleTypeFactoryCreator;
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory.WorkScheduleTypeFactoryEditor;
@@ -36,6 +37,49 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAction {
+    public ActionForward showSchedules(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	List<WorkScheduleType> workScheduleList = new ArrayList<WorkScheduleType>();
+	for (WorkScheduleType workScheduleType : rootDomainObject.getWorkScheduleTypes()) {
+	    if (workScheduleType.isValidWorkScheduleType()) {
+		workScheduleList.add(workScheduleType);
+	    }
+	}
+	Collections.sort(workScheduleList, new BeanComparator("acronym"));
+	request.setAttribute("workScheduleList", workScheduleList);
+	return mapping.findForward("show-all-schedules");
+    }
+
+    public ActionForward showJustificationMotives(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	List<JustificationMotive> justificationMotives = new ArrayList<JustificationMotive>();
+	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
+	    if (justificationMotive.getJustificationType() != null
+		    && JustificationType.getJustificationTypesForJustificationMotives().contains(
+			    justificationMotive.getJustificationType())) {
+		justificationMotives.add(justificationMotive);
+	    }
+	}
+	Collections.sort(justificationMotives, new BeanComparator("justificationType"));
+	request.setAttribute("justificationMotives", justificationMotives);
+	return mapping.findForward("show-justification-motives");
+    }
+
+    public ActionForward showRegularizationMotives(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	List<JustificationMotive> regularizationMotives = new ArrayList<JustificationMotive>();
+	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
+	    if (justificationMotive.getJustificationType() == null) {
+		regularizationMotives.add(justificationMotive);
+	    }
+	}
+	Collections.sort(regularizationMotives, new BeanComparator("acronym"));
+	request.setAttribute("regularizationMotives", regularizationMotives);
+	return mapping.findForward("show-regularization-motives");
+    }
 
     public ActionForward prepareInsertJustificationMotive(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
