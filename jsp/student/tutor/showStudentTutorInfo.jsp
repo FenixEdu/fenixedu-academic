@@ -18,7 +18,7 @@
 	<li>
 		<html:link href="http://gep.ist.utl.pt/html/tutorado"
 			target="_blank">
-			<bean:message key="link.teacher.tutorship.gepTutorshipPage" />
+			<bean:message key="link.teacher.tutorship.gepTutorshipPage" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>
