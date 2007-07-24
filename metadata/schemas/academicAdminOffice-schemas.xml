@@ -358,7 +358,7 @@
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
 	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsFrom1Sem0607" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 		<property name="destination" value="postBack"/>
 	</slot>
