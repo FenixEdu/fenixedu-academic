@@ -15,13 +15,13 @@
 	</definition>
 
 	<definition name="show-equivalency.plan" extends="scientificCouncil.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+		<put name="body" value="/scientificCouncil/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
 	</definition>
 	<definition name="show-student-equivalency.plan" extends="scientificCouncil.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+		<put name="body" value="/scientificCouncil/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
 	</definition>
 	<definition name="add-equivalency" extends="scientificCouncil.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
+		<put name="body" value="/scientificCouncil/degreeCurricularPlan/addEquivalency.jsp"/>
 	</definition>
 
 	<!-- Credits -->	

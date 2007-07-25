@@ -9,6 +9,15 @@
 	<bean:define id="equivalencePlan" type="net.sourceforge.fenixedu.domain.EquivalencePlan" name="degreeCurricularPlan" property="equivalencePlan"/>
 
 	<logic:present name="entries">
+	<ul class="mtop05">
+		<li>
+			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID="
+					+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+					+ equivalencePlan.getIdInternal() %>">
+				<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
 	
 	<p class="mtop15 mbottom05">
 		<bean:message key="message.degree.module.equivalencies" bundle="APPLICATION_RESOURCES"/>:
@@ -90,7 +99,17 @@
 				-
 			</logic:empty>
 			</td>
-					
+						
+			<td>
+			<span>
+				<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
+						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
+						+ equivalencePlan.getIdInternal() + "&amp;equivalencePlanEntryID="
+						+ entry.getIdInternal() %>">
+					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
+				</html:link>
+			</span>
+			</td>
 		</tr>
 		</logic:iterate>
 	</table>

@@ -9,7 +9,8 @@ public class StudentCurricularPlanEquivalencePlanPredicates {
 
     public static final AccessControlPredicate<StudentCurricularPlanEquivalencePlan> checkPermissionsToCreate = new AccessControlPredicate<StudentCurricularPlanEquivalencePlan>() {
 	public boolean evaluate(StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan) {
-	    return hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRoleType(RoleType.MANAGER);
+	    return hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRoleType(RoleType.MANAGER)
+		    || hasRoleType(RoleType.COORDINATOR);
 
 	}
     };

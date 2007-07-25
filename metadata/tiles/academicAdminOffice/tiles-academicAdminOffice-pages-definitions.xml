@@ -93,20 +93,12 @@
         <put name="body" value="/academicAdminOffice/manageRegistrationStartDates.jsp"></put>
     </definition>      
 
-	<definition name="show-equivalency.plan" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
-	</definition>
+
 	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
-	</definition>
-	<definition name="add-equivalency" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
+		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
 	</definition>
 	<definition name="add-student-equivalency" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addStudentEquivalency.jsp"/>
-	</definition>
-	<definition name="add-course-group-equivalency" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addCourseGroupEquivalency.jsp"/>
+		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp"/>
 	</definition>
 
 	<!-- ************* Academic Service Requests Management ************* -->

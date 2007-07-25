@@ -31,6 +31,12 @@
 				<bean:message key="label.bolonha" bundle="APPLICATION_RESOURCES" />
 			</html:link>
 		</li>
+		<li>
+			<html:link
+				action="<%="/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString() %>">
+				<bean:message key="label.equivalency.plan.applied.to.student" bundle="APPLICATION_RESOURCES" />
+			</html:link>
+		</li>
 	</ul>
 
 </logic:present>

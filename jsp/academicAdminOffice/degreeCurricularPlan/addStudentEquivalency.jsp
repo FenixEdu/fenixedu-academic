@@ -6,6 +6,7 @@
 <html:xhtml/>
 
 <bean:define id="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="degreeCurricularPlan"/>
+<bean:define id="selectedDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" name="selectedDegreeCurricularPlan"/>
 <bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="student"/>
 
 <h2><bean:message key="link.equivalency.plan.create.equivalence" bundle="APPLICATION_RESOURCES"/></h2>
@@ -13,11 +14,11 @@
 <p class="mvert15">
 	<bean:message key="message.equivalency.table.from.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/>
 	<strong class="highlight1">
-		<bean:write name="degreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
+		<bean:write name="selectedDegreeCurricularPlan" property="equivalencePlan.sourceDegreeCurricularPlan.presentationName"/>
 	</strong>
 </p>
 
-<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal()  
+<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getIdInternal()  
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 	<p class="mtop2"><bean:message key="message.set.non.list.fields" bundle="APPLICATION_RESOURCES"/>:</p>
 
@@ -107,7 +108,7 @@
 		</span>
 	</div>
 
-	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID=" + degreeCurricularPlan.getIdInternal() 
+	<fr:form action="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;selectedDegreeCurricularPlanID=" + selectedDegreeCurricularPlan.getIdInternal() 
 			+ "&amp;studentNumber=" + student.getNumber() %>">
 		<fr:edit id="StudentEquivalencyPlanEntryCreator.create"
 				name="studentEquivalencyPlanEntryCreator"

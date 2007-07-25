@@ -32,7 +32,7 @@
 
         <%--  start of isCoordinator logic, search for isCoordinator --%>
         <logic:present name="isCoordinator">
-        
+                
 		<%-- Start of Common Options --%>	
 		<li class="navheader">
 			<bean:message key="label.coordinator.management"/>		

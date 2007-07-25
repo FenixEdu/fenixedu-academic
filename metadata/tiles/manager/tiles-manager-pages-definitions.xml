@@ -16,19 +16,16 @@
 	</definition>
 
 	<definition name="show-equivalency.plan" extends="definition.manager.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+		<put name="body" value="/manager/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
 	</definition>
 	<definition name="show-student-equivalency.plan" extends="definition.manager.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+		<put name="body" value="/manager/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
 	</definition>
 	<definition name="add-equivalency" extends="definition.manager.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
+		<put name="body" value="/manager/degreeCurricularPlan/addEquivalency.jsp"/>
 	</definition>
 	<definition name="add-student-equivalency" extends="definition.manager.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addStudentEquivalency.jsp"/>
-	</definition>
-	<definition name="add-course-group-equivalency" extends="definition.manager.masterPage">
-		<put name="body" value="/coordinator/degreeCurricularPlan/addCourseGroupEquivalency.jsp"/>
+		<put name="body" value="/manager/degreeCurricularPlan/addStudentEquivalency.jsp"/>
 	</definition>
 
 	<definition name="df.page.edit-degree" extends="definition.manager.masterPage" >

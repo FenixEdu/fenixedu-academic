@@ -338,15 +338,21 @@
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" bundle="APPLICATION_RESOURCES">
+	<slot name="studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
     <slot name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-    		layout="menu-select">
+    		layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlanForStudentEquivalenciesProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />
     </slot>
-	<slot name="studentNumber">
-		<property name="size" value="10"/>
-	</slot>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan-edit-degree-curricular-plan" 
+		type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" 
+		extends="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan">
+	<remove name="studentNumber" />
 </schema>
 
 <schema name="StudentEquivalencyPlanEntryCreator.addOrigin" type="net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator" bundle="APPLICATION_RESOURCES">

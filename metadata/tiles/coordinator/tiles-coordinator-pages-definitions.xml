@@ -97,26 +97,6 @@
             />
 		<put name="body" value="/coordinator/degreeCurricularPlan/editCurriculumEn.jsp" />
 	</definition>
-	<definition name="show-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
-		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
-	</definition>
-	<definition name="show-student-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
-		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
-	</definition>
-	<definition name="add-equivalency" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
-		<put name="body" value="/coordinator/degreeCurricularPlan/addEquivalency.jsp"/>
-	</definition>
-	<definition name="add-student-equivalency" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
-		<put name="body" value="/coordinator/degreeCurricularPlan/addStudentEquivalency.jsp"/>
-	</definition>
-	<definition name="add-course-group-equivalency" extends="definition.coordinator.two-column.extra-menu">
-		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
-		<put name="body" value="/coordinator/degreeCurricularPlan/addCourseGroupEquivalency.jsp"/>
-	</definition>
 	<definition name="view-course-information" extends="definition.coordinator.two-column">
 		<put name="body" value="/gesdis/viewCourseInformation.jsp">
 		</put>
@@ -368,5 +348,18 @@
 		<put name="body" value="/coordinator/student/curriculum/chooseCurriculumType.jsp"/>
 	</definition>
 	<!-- End: View Student Curriculum -->
+	
+	
+	<!-- Begin: Equivalence Management -->
+	<definition name="show-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
+	</definition>
+	<definition name="show-student-equivalency.plan" extends="definition.coordinator.two-column.extra-menu">
+	<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+	</definition>
+	
+	<!-- End: Equivalence Management -->
     
 </tiles-definitions>

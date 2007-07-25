@@ -567,7 +567,6 @@
             parameter="method">
             <forward name="showPlan" path="show-equivalency.plan"/>
             <forward name="addEquivalency" path="add-equivalency"/>
-            <forward name="addCourseGroupEquivalency" path="add-course-group-equivalency"/>
         </action>
 
         <action path="/competenceCourses/manageVersions"

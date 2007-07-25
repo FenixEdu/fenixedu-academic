@@ -14,6 +14,16 @@
 		<p class="mtop2">
 			<em><bean:message key="message.no.equivalency.table.exists" bundle="APPLICATION_RESOURCES"/></em>
 		</p>
+		
+		<p class="mbottom05"><strong><bean:message key="label.create.equivalency.table.for.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/></strong></p>
+		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+				schema="degreeCurricularPlan.createEquivalencyPlan">
+		    <fr:layout>
+	    	    <fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+	        	<fr:property name="columnClasses" value="tdclear,,"/>
+		    </fr:layout>
+		</fr:edit>
+
 </logic:notPresent>
 <logic:present name="degreeCurricularPlan" property="equivalencePlan">
 	<p class="mvert15">
