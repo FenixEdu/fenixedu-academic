@@ -2497,13 +2497,21 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchUnit> getWorkingResearchUnits() {
-	List<ResearchUnit> units = new ArrayList<ResearchUnit>();
-	for (Party party : getParentParties(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearchUnit.class)) {
-	    units.add((ResearchUnit) party);
+	
+	List<ResearchUnit> units = new ArrayList<ResearchUnit>();	
+	Collection<? extends Accountability> parentAccountabilities = 
+	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearchContract.class);
+	
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Accountability accountability : parentAccountabilities) {
+	    if(accountability.isActive(currentDate)) {
+		units.add((ResearchUnit) accountability.getParentParty());
+	    }
 	}
+	
 	return units;
     }
-
+        
     public String getWorkingResearchUnitNames() {
 
 	String names = "";
