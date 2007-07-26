@@ -24,7 +24,7 @@
 			<fr:edit id="editJustificationMotive" name="justificationMotive"
 				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 				schema="edit.justificationMotives"
-				action="viewAssiduousness.do?method=showJustificationMotives">
+				action="assiduousnessParametrization.do?method=showJustificationMotives">
 				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 				<fr:layout>
@@ -36,7 +36,7 @@
 			<fr:edit id="editJustificationMotive" name="justificationMotive"
 				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 				schema="edit.regularizationMotives"
-				action="viewAssiduousness.do?method=showJustificationMotives">
+				action="assiduousnessParametrization.do?method=showJustificationMotives">
 				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 				<fr:layout>
@@ -71,7 +71,7 @@
 	<fr:create id="createJustificationMotive"
 		type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 		schema="create.justificationMotives"
-		action="viewAssiduousness.do?method=showJustificationMotives">
+		action="assiduousnessParametrization.do?method=showJustificationMotives">
 		<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 		<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 		<fr:layout>

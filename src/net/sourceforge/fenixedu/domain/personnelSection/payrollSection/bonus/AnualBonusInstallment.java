@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList;
+import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.Partial;
@@ -55,9 +56,10 @@ public class AnualBonusInstallment extends AnualBonusInstallment_Base {
 	return getEmployeeBonusInstallments().isEmpty();
     }
 
-    public EmployeeBonusInstallment getEmployeeBonusInstallment(Employee employee) {
+    public EmployeeBonusInstallment getEmployeeBonusInstallment(Employee employee, BonusType type) {
 	for (EmployeeBonusInstallment employeeBonusInstallment : getEmployeeBonusInstallments()) {
-	    if (employeeBonusInstallment.getEmployee().equals(employee)) {
+	    if (employeeBonusInstallment.getEmployee().equals(employee)
+		    && employeeBonusInstallment.getBonusType().equals(type)) {
 		return employeeBonusInstallment;
 	    }
 	}

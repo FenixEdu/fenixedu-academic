@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
+import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Month;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -83,20 +83,22 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		POIFSFileSystem fs = new POIFSFileSystem(inputStream);
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
 		HSSFSheet sheet = wb.getSheetAt(0);
-		for (int rowIndex = sheet.getFirstRowNum(); rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+		for (int rowIndex = sheet.getFirstRowNum() + 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 		    HSSFRow row = sheet.getRow(rowIndex);
-		    HSSFCell cell = row.getCell((short) 0);
-		    if (cell != null) {
+		    String bonusType = row.getCell((short) 0).getStringCellValue();
+		    if (bonusType != null
+			    && (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim()
+				    .toUpperCase().equals("P2"))) {
 			try {
-			    new Integer(new Double(cell.getNumericCellValue()).intValue());
-			    try {
-				employeeBonusInstallmentList.add(new EmployeeBonusInstallmentBean(row));
-			    } catch (Exception e) {
-				return new ActionMessage("error.errorReadingFileLine",
-					new Object[] { rowIndex + 1 });
-			    }
-			} catch (NumberFormatException e) {
+			    employeeBonusInstallmentList.add(new EmployeeBonusInstallmentBean(row,
+				    bonusType.trim().toUpperCase()));
+			} catch (Exception e) {
+			    return new ActionMessage("error.errorReadingFileLine",
+				    new Object[] { rowIndex + 1 });
 			}
+		    } else {
+			return new ActionMessage("error.errorReadingFileLine",
+				new Object[] { rowIndex + 1 });
 		    }
 		}
 	    } catch (IOException e) {
@@ -126,44 +128,44 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	    for (EmployeeBonusInstallmentBean employeeBonusInstallmentBean : employeeBonusInstallmentList) {
 		EmployeeBonusInstallment thisEmployeeBonusInstallment = null;
 		if (!anualBonusInstallment.getEmployeeBonusInstallments().isEmpty()) {
-		    thisEmployeeBonusInstallment = anualBonusInstallment
-			    .getEmployeeBonusInstallment(employeeBonusInstallmentBean.getEmployee());
+		    thisEmployeeBonusInstallment = anualBonusInstallment.getEmployeeBonusInstallment(
+			    employeeBonusInstallmentBean.getEmployee(),
+			    employeeBonusInstallmentBean.bonusType);
 		}
 		if (thisEmployeeBonusInstallment == null) {
 		    thisEmployeeBonusInstallment = new EmployeeBonusInstallment(anualBonusInstallment,
 			    employeeBonusInstallmentBean.getEmployee(), employeeBonusInstallmentBean
-				    .getP1(), employeeBonusInstallmentBean.getP2(),
+				    .getValue(), employeeBonusInstallmentBean.getBonusType(),
 			    employeeBonusInstallmentBean.getCostCenterCode(),
 			    employeeBonusInstallmentBean.getSubCostCenterCode(),
 			    employeeBonusInstallmentBean.getExplorationUnit());
+		    System.out.println("NOVOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO " + thisEmployeeBonusInstallment.getIdInternal());
 		} else {
-		    thisEmployeeBonusInstallment.edit(employeeBonusInstallmentBean.getP1(),
-			    employeeBonusInstallmentBean.getP2(), employeeBonusInstallmentBean
+		    thisEmployeeBonusInstallment.edit(employeeBonusInstallmentBean.getValue(),
+			    employeeBonusInstallmentBean.getBonusType(), employeeBonusInstallmentBean
 				    .getCostCenterCode(), employeeBonusInstallmentBean
 				    .getSubCostCenterCode(), employeeBonusInstallmentBean
 				    .getExplorationUnit());
+		    System.out.println("EDITARARRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " + thisEmployeeBonusInstallment.getIdInternal());
 		}
 		for (int monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++) {
 		    EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment = thisEmployeeBonusInstallment
-			    .getEmployeeMonthlyBonusInstallment(employeeBonusInstallmentBean
-				    .getEmployee(), monthIndex);
+			    .getEmployeeMonthlyBonusInstallment(monthIndex);
 
-		    double p1Value = thisEmployeeBonusInstallment.getInstallmentP1Value() / monthsNumber;
-		    double p2Value = thisEmployeeBonusInstallment.getInstallmentP2Value() / monthsNumber;
+		    double value = thisEmployeeBonusInstallment.getValue() / monthsNumber;
 		    ClosedMonth closedMonth = closedMonthMap.get(monthIndex);
 		    if (closedMonth.getAssiduousnessClosedMonth(thisEmployeeBonusInstallment
 			    .getEmployee().getAssiduousness()) == null
 			    || closedMonth.getAssiduousnessClosedMonth(
 				    thisEmployeeBonusInstallment.getEmployee().getAssiduousness())
 				    .getWorkedDays() < miniumWorkedDays) {
-			p1Value = 0;
-			p2Value = 0;
+			value = 0;
 		    }
 		    if (employeeMonthlyBonusInstallment == null) {
 			employeeMonthlyBonusInstallment = new EmployeeMonthlyBonusInstallment(
-				thisEmployeeBonusInstallment, monthIndex, p1Value, p2Value);
+				thisEmployeeBonusInstallment, monthIndex, value);
 		    } else {
-			employeeMonthlyBonusInstallment.edit(p1Value, p2Value);
+			employeeMonthlyBonusInstallment.edit(value);
 		    }
 		}
 
@@ -175,9 +177,9 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
     public class EmployeeBonusInstallmentBean implements Serializable {
 	private Employee employee;
 
-	private Double p1;
+	private Double value;
 
-	private Double p2;
+	private BonusType bonusType;
 
 	private Integer costCenterCode;
 
@@ -185,14 +187,23 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
 	private Integer explorationUnit;
 
-	public EmployeeBonusInstallmentBean(HSSFRow row) {
-	    setEmployee(Employee.readByNumber(new Double(row.getCell((short) 0).getNumericCellValue())
+	public EmployeeBonusInstallmentBean(HSSFRow row, String bonusType) {
+	    setBonusType(getBonusTypeEnum(bonusType));
+	    setEmployee(Employee.readByNumber(new Double(row.getCell((short) 1).getNumericCellValue())
 		    .intValue()));
-	    setP1(row.getCell((short) 2).getNumericCellValue());
-	    setP2(row.getCell((short) 3).getNumericCellValue());
+	    setValue(row.getCell((short) 3).getNumericCellValue());
 	    setCostCenterCode(new Double(row.getCell((short) 4).getNumericCellValue()).intValue());
 	    setSubCostCenterCode(new Double(row.getCell((short) 5).getNumericCellValue()).intValue());
 	    setExplorationUnit(new Double(row.getCell((short) 6).getNumericCellValue()).intValue());
+	}
+
+	private BonusType getBonusTypeEnum(String bonusType) {
+	    if (bonusType.equals("P1")) {
+		return BonusType.DEDICATION_BONUS;
+	    } else if (bonusType.equals("P2")) {
+		return BonusType.EXCEPTIONAL_BONUS;
+	    }
+	    return null;
 	}
 
 	public Integer getCostCenterCode() {
@@ -219,28 +230,28 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	    this.explorationUnit = explorationUnit;
 	}
 
-	public Double getP1() {
-	    return p1;
-	}
-
-	public void setP1(Double p1) {
-	    this.p1 = p1;
-	}
-
-	public Double getP2() {
-	    return p2;
-	}
-
-	public void setP2(Double p2) {
-	    this.p2 = p2;
-	}
-
 	public Integer getSubCostCenterCode() {
 	    return subCostCenterCode;
 	}
 
 	public void setSubCostCenterCode(Integer subCostCenterCode) {
 	    this.subCostCenterCode = subCostCenterCode;
+	}
+
+	public BonusType getBonusType() {
+	    return bonusType;
+	}
+
+	public void setBonusType(BonusType bonusType) {
+	    this.bonusType = bonusType;
+	}
+
+	public Double getValue() {
+	    return value;
+	}
+
+	public void setValue(Double value) {
+	    this.value = value;
 	}
 
     }

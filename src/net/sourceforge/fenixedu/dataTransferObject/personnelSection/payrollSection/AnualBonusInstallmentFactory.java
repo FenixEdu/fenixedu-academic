@@ -76,25 +76,38 @@ public class AnualBonusInstallmentFactory implements Serializable, FactoryExecut
     }
 
     public void updateAnualBonusInstallment() {
-	if (getYear() != null && getInstallmentsNumber() != null) {
-	    int monthsPerInstallment = Month.values().length / getInstallmentsNumber();
-	    int rest = Month.values().length % getInstallmentsNumber();
-	    for (int installmentNumber = 1; installmentNumber <= getInstallmentsNumber(); installmentNumber++) {
-		YearMonthList yearMonths = getInstallmentMonths(getInstallmentsNumber(),
-			installmentNumber, monthsPerInstallment, rest);
-		int paymentMonthIndex = ((YearMonth) yearMonths.getYearsMonths().toArray()[(yearMonths
-			.getYearsMonths().size() - 1)]).getNumberOfMonth();
-		if (paymentMonthIndex == 12) {
-		    paymentMonthIndex = 0;
-		}
-		YearMonth paymentYearMonth = new YearMonth(getYear(), Month.values()[paymentMonthIndex]);
 
-		AnualBonusInstallmentBean anualBonusInstallmentBean = new AnualBonusInstallmentBean(
-			getYear(), yearMonths, paymentYearMonth);
-		addAnualBonusInstallmentBeanList(anualBonusInstallmentBean);
+	if (getYear() != null && getInstallmentsNumber() == null) {
+	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment
+		    .readByYear(getYear());
+	    if (anualBonusInstallmentList.size() != 0) {
+		setInstallmentsNumber(anualBonusInstallmentList.size());
+		if (!getCanEditAnualBonusInstallment(anualBonusInstallmentList)) {
+		    setAnualBonusInstallmentBeanList();
+		}
 	    }
+	} else if (getYear() != null && getInstallmentsNumber() != null) {
+	    setAnualBonusInstallmentBeanList();
 	}
 
+    }
+
+    private void setAnualBonusInstallmentBeanList() {
+	int monthsPerInstallment = Month.values().length / getInstallmentsNumber();
+	int rest = Month.values().length % getInstallmentsNumber();
+	for (int installmentNumber = 1; installmentNumber <= getInstallmentsNumber(); installmentNumber++) {
+	    YearMonthList yearMonths = getInstallmentMonths(getInstallmentsNumber(), installmentNumber,
+		    monthsPerInstallment, rest);
+	    int paymentMonthIndex = ((YearMonth) yearMonths.getYearsMonths().toArray()[(yearMonths
+		    .getYearsMonths().size() - 1)]).getNumberOfMonth();
+	    if (paymentMonthIndex == 12) {
+		paymentMonthIndex = 0;
+	    }
+	    YearMonth paymentYearMonth = new YearMonth(getYear(), Month.values()[paymentMonthIndex]);
+	    AnualBonusInstallmentBean anualBonusInstallmentBean = new AnualBonusInstallmentBean(
+		    getYear(), yearMonths, paymentYearMonth);
+	    addAnualBonusInstallmentBeanList(anualBonusInstallmentBean);
+	}
     }
 
     private YearMonthList getInstallmentMonths(int totalInstallmentsNumber, int installmentNumber,

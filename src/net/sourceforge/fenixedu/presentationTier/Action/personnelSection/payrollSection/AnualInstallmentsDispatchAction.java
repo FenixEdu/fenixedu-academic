@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSecti
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -46,9 +47,10 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
 	AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentBean");
-//	if(anualBonusInstallmentFactory == null) {
-//	    anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentList");
-//	}
+	//	if(anualBonusInstallmentFactory == null) {
+	//	    anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentList");
+	//	}
+	RenderUtils.invalidateViewState();
 	if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
 	    ActionMessage actionMessage = (ActionMessage) executeService(request,
 		    "ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
@@ -60,15 +62,14 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 			"message.successUpdatingInstallmentsNumber"));
 	    }
 	    saveMessages(request, actionMessages);
-	    request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
 	    // request.setAttribute("anualBonusInstallmentsList", getOrderedAnualBonusInstallmentsList());
-	    return mapping.findForward("show-anual-installment");
 
 	} else {
 	    anualBonusInstallmentFactory.updateAnualBonusInstallment();
-	    request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
-	    return mapping.findForward("show-anual-installment");
 	}
+
+	request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
+	return mapping.findForward("show-anual-installment");
 
     }
 
@@ -114,7 +115,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"));
 
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);
-	bonusInstallment.getRows(spreadsheet);
+	bonusInstallment.getRows(spreadsheet, enumBundle);
 
 	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet
 		.getMaxiumColumnNumber() + 1);

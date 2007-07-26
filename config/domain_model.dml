@@ -187,6 +187,7 @@ valueType org.joda.time.Period                                                  
 valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 											 as YearMonthList;
+valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType 						 as BonusType;
 
 
 /*
@@ -4420,8 +4421,8 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Anua
 }
 
 class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double installmentP1Value;
-	Double installmentP2Value;
+	BonusType bonusType;
+	Double value;
 	Integer costCenterCode;
 	Integer subCostCenterCode;
 	Integer explorationUnit;
@@ -4429,8 +4430,7 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Empl
 
 class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer month;
-	Double p1Value;
-	Double p2Value;
+	Double value;
 }
 
 /*

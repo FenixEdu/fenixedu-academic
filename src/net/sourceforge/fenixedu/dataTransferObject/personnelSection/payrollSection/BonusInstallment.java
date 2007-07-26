@@ -61,8 +61,8 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundle.getString("label.number"), 1250);
 	spreadsheet.addHeader(bundle.getString("label.employee.name"), 7500);
-	spreadsheet.addHeader(bundle.getString("label.p1"), 2000);
-	spreadsheet.addHeader(bundle.getString("label.p2"), 2000);
+	spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000);
+	spreadsheet.addHeader(bundle.getString("label.value"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.subCostCenter"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.explorationUnit"), 2000);
@@ -77,33 +77,33 @@ public class BonusInstallment implements Serializable {
 	int endMonth = beginMonth + monthsNumber;
 
 	for (int monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++) {
-	    spreadsheet.addHeader("");
-	    spreadsheet.addHeader("");
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
 	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
 	}
 
-	for (int columnIndex = 0; columnIndex < 8; columnIndex++) {
+	for (int columnIndex = 0; columnIndex < 7; columnIndex++) {
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(0, (short) columnIndex, 1, (short) columnIndex));
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
-	for (int index = 8, monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++, index += 3) {
+	for (int index = 7, monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++, index += 3) {
 	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index);
-	    spreadsheet.addHeader(bundle.getString("label.p1"), 2000, index + 1);
-	    spreadsheet.addHeader(bundle.getString("label.p2"), 2000, index + 2);
+	    spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000, index + 1);
+	    spreadsheet.addHeader(bundle.getString("label.value"), 2000, index + 2);
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(rowNumber, (short) index, rowNumber, (short) (index + 2)));
 	}
     }
 
-    public void getRows(StyledExcelSpreadsheet spreadsheet) {
+    public void getRows(StyledExcelSpreadsheet spreadsheet, ResourceBundle enumBundle) {
 	for (EmployeeBonusInstallment employeeBonusInstallment : getBonusInstallmentList()) {
 	    spreadsheet.newRow();
 	    spreadsheet.addCell(employeeBonusInstallment.getEmployee().getEmployeeNumber());
 	    spreadsheet.addCell(employeeBonusInstallment.getEmployee().getPerson().getName());
-	    spreadsheet.addCell(employeeBonusInstallment.getInstallmentP1Value());
-	    spreadsheet.addCell(employeeBonusInstallment.getInstallmentP2Value());
+	    spreadsheet.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
+	    spreadsheet.addCell(employeeBonusInstallment.getValue());
 	    spreadsheet.addCell(employeeBonusInstallment.getCostCenterCode(), spreadsheet
 		    .getExcelStyle().getIntegerStyle());
 	    spreadsheet.addCell(employeeBonusInstallment.getSubCostCenterCode(), spreadsheet
@@ -114,8 +114,9 @@ public class BonusInstallment implements Serializable {
 		    .getEmployeeMonthlyBonusInstallmentsOrdered()) {
 		spreadsheet.addCell(employeeMonthlyBonusInstallment.getAbsences(), spreadsheet
 			.getExcelStyle().getIntegerStyle());
-		spreadsheet.addCell(employeeMonthlyBonusInstallment.getP1Value());
-		spreadsheet.addCell(employeeMonthlyBonusInstallment.getP2Value());
+		spreadsheet
+			.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
+		spreadsheet.addCell(employeeMonthlyBonusInstallment.getValue());
 	    }
 	}
     }

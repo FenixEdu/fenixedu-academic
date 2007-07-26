@@ -7,22 +7,17 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 
 public class EmployeeMonthlyBonusInstallment extends EmployeeMonthlyBonusInstallment_Base {
 
-    public EmployeeMonthlyBonusInstallment() {
-	super();
-    }
-
     public EmployeeMonthlyBonusInstallment(EmployeeBonusInstallment employeeBonusInstallment, int month,
-	    double p1Value, double p2Value) {
+	    double value) {
+	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setEmployeeBonusInstallment(employeeBonusInstallment);
 	setMonth(month);
-	setP1Value(p1Value);
-	setP2Value(p2Value);
+	setValue(value);
     }
 
-    public void edit(double p1Value, double p2Value) {
-	setP1Value(p1Value);
-	setP2Value(p2Value);
+    public void edit(double value) {
+	setValue(value);
     }
 
     public Integer getAbsences() {

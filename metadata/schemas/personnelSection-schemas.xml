@@ -1077,13 +1077,20 @@
 </schema>
 
 
-<schema name="edit.anualBonusInstallmentFactory"
+<schema name="edit.anualBonusInstallmentFactory.year"
 	type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentFactory">
 	<slot name="year"
 		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"
 		key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
+	</slot>
+</schema>
+
+<schema name="edit.anualBonusInstallmentFactory"
+	type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentFactory">
+	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="readOnly" value="true" />
 	</slot>
 	<slot name="installmentsNumber"
 		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"
@@ -1147,8 +1154,9 @@
 
 <schema name="show.employeeBonusInstallment" type="net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment">
 	<slot name="employee.employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="installmentP1Value" key="label.p1" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="installmentP2Value" key="label.p2" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="employee.person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="bonusType" key="label.bonusType" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="value" key="label.value" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="costCenterCode" key="label.workingUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="subCostCenterCode" key="label.subCostCenter" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="explorationUnit" key="label.explorationUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
