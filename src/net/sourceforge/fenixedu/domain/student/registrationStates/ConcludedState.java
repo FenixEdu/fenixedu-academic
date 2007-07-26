@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
@@ -64,6 +65,33 @@ public class ConcludedState extends ConcludedState_Base {
     @Override
     public RegistrationStateType getStateType() {
 	return RegistrationStateType.CONCLUDED;
+    }
+
+    static public class RegistrationConcludedStateCreator extends RegistrationStateCreator {
+
+	public RegistrationConcludedStateCreator(Registration registration) {
+	    super(registration);
+	    setStateType(RegistrationStateType.CONCLUDED);
+	    setStateDate(registration.getLastApprovementDate());
+	    setFinalAverage(StudentCurriculum.applyRound(registration.getAverage(), false).intValue());
+	}
+
+	Integer finalAverage;
+	
+	public Integer getFinalAverage() {
+	    return finalAverage;
+	}
+
+	public void setFinalAverage(Integer finalAverage) {
+	    this.finalAverage = finalAverage;
+	}
+
+	@Override
+	public Object execute() {
+	    getRegistration().setFinalAverage(getFinalAverage());
+	    return super.execute();
+	}
+	
     }
 
 }
