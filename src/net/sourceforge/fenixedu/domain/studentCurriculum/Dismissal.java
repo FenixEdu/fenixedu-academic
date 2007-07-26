@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -208,7 +210,10 @@ public class Dismissal extends Dismissal_Base {
 	    throw new DomainException("Dismissal.is.not.concluded");
 	}
 	
-	return getExecutionPeriod().getBeginDateYearMonthDay();
+	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
+	iEnrolments.addAll(getSourceIEnrolments());
+	
+	return iEnrolments.isEmpty() ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
     }
     
     @Override
