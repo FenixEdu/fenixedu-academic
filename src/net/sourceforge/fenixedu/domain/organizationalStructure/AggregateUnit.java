@@ -12,7 +12,7 @@ public class AggregateUnit extends AggregateUnit_Base {
 	super.setType(PartyTypeEnum.AGGREGATE_UNIT);
     }
 
-    public static Unit createNewAggregateUnit(String name, Integer costCenterCode, String acronym,
+    public static AggregateUnit createNewAggregateUnit(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {

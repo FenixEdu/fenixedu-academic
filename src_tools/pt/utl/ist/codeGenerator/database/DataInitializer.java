@@ -1,5 +1,7 @@
 package pt.utl.ist.codeGenerator.database;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -11,8 +13,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -51,6 +55,7 @@ public class DataInitializer {
 	createManagerUser();
 	createPartyTypeEnums();
 	createAccountabilityTypeEnums();
+	createOrganizationalStructure();
     }
 
     private static void createRoles() {
@@ -139,7 +144,6 @@ public class DataInitializer {
 	new Country("Irão", "Iraniana", "ir");
 	new Country("Paquistão", "Paquistanesa", "pk");
 	new Country("Austrália", "Australiana", "au");
-	new Country("Irlanda", "Irlandesa", "ie");
 	new Country("Estados Unidos da América", "Norte Americana", "us");
 	new Country("Paraguai", "Paraguaia", "py");
 	new Country("Canadá", "Canadiana", "ca");
@@ -161,7 +165,6 @@ public class DataInitializer {
 	new Country("Sérvia e Montenegro", "Sérvia e Montenegro", "cs");
 	new Country("Jugoslávia", "Jugoslava", "yu");
 	new Country("Índia", "Indiana", "in");
-	new Country("Coreia", "Coreana", "kr");
 	new Country("Ucrânia", "Ucraniana", "ua");
 	new Country("Eslovénia", "Eslovena", "si");
 	new Country("Vietname", "Vietnamita", "vn");
@@ -183,7 +186,7 @@ public class DataInitializer {
 	new Country("Croácia", "Croata", "hr");
 	new Country("Maurícias", "Maurícias", "mu");
 	new Country("Malta", "Maltês", "mt");
-	new Country("Porto Rico", "Portoriquenha", "pt");
+	new Country("Porto Rico", "Portoriquenha", "pr");
 	new Country("Chipre", "Cipriota", "cy");
 	new Country("Lituânia", "Lituana", "lt");
 	new Country("Letónia", "Letónia", "lv");
@@ -219,4 +222,19 @@ public class DataInitializer {
 	    new AccountabilityType(accountabilityTypeEnum);
 	}
     }
+
+    private static void createOrganizationalStructure() {
+        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit("Earth", null, "E", new YearMonthDay(), null, null, null, null, false, null);
+        rootDomainObject.setEarthUnit(planetUnit);
+
+        createCountryUnits(rootDomainObject, planetUnit);
+    }
+
+    private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
+        for (final Country country : rootDomainObject.getCountrysSet()) {
+            CountryUnit.createNewCountryUnit(country.getName(), null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+        }
+    }
+
 }

@@ -107,4 +107,46 @@
 		</java>
     </target>
 
+    <target name="DmlCleaner"
+    		description="Generates a single run file for upgrading database.">
+		<java classname="pt.utl.ist.codeGenerator.DmlCleaner" fork="true">
+			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+            	<fileset dir="${lib}">
+            	    <include name="**/*.jar"/>
+        	    </fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="DmlChecker"
+    		description="Generates a single run file for upgrading database.">
+		<java classname="pt.utl.ist.codeGenerator.DmlChecker" fork="true">
+			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+            	<fileset dir="${lib}">
+            	    <include name="**/*.jar"/>
+        	    </fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="OidSqlGenerator"
+    		description="Generates a single run file for upgrading database.">
+		<java classname="pt.utl.ist.codeGenerator.OidSqlGenerator" fork="true">
+			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+            	<fileset dir="${lib}">
+            	    <include name="**/*.jar"/>
+        	    </fileset>
+			</classpath>
+		</java>
+    </target>
+
 </project>

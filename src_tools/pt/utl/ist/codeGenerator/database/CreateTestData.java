@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
@@ -28,7 +30,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
@@ -42,6 +46,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.FunctionalitySection;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Identification;
 import net.sourceforge.fenixedu.domain.Language;
@@ -59,6 +64,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.SiteTemplate;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.SupportLesson;
@@ -66,6 +72,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -99,6 +107,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -107,18 +116,25 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.Floor;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -132,10 +148,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -150,36 +164,440 @@ import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
 
-    private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
-    private static final ExamRoomManager examRoomManager = new ExamRoomManager();
-    private static final WrittenTestsRoomManager writtenTestsRoomManager = new WrittenTestsRoomManager();
+    public static abstract class AtomicAction extends Thread implements jvstm.TransactionalCommand {
+        public void run() {
+            Transaction.withTransaction(this);
+        }
+    }
+
+    public static void doAction(AtomicAction action) {
+        action.start();
+        try {
+            action.join();
+        } catch (InterruptedException ie) {
+            System.out.println("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
+        }
+    }
+
+    private static void setPrivledges() {
+        AccessControl.setUserView(new MockUserView());
+    }
+
+    private static RootDomainObject getRootDomainObject() {
+        return RootDomainObject.getInstance();
+    }
+
+    public static class CreateManagerUser extends AtomicAction {
+        public void doIt() {
+            final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
+            final Country country = Country.readCountryByNationality("Portuguesa");
+            person.setCountry(country);
+            person.setCountryOfBirth(country);
+            person.setCountryOfResidence(country);
+        }
+    }
+
+    public static class CreateExecutionYears extends AtomicAction {
+        public void doIt() {
+            final int numYearsToCreate = 7;
+            final YearMonthDay today = new YearMonthDay();
+            final YearMonthDay yearMonthDay = new YearMonthDay(today.getYear() - numYearsToCreate + 2, 9, 1);
+            for (int i = 0; i < numYearsToCreate; createExecutionYear(yearMonthDay, i++));
+        }
+
+        private void createExecutionYear(final YearMonthDay yearMonthDay, final int offset) {
+            final int year = yearMonthDay.getYear() + offset;
+            final YearMonthDay start = new YearMonthDay(year, yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth());
+            final YearMonthDay end = new YearMonthDay(year + 1, 8, 31);
+
+            final ExecutionYear executionYear = new ExecutionYear();
+            executionYear.setYear(getYearString(year));
+            executionYear.setBeginDateYearMonthDay(start);
+            executionYear.setEndDateYearMonthDay(end);
+            final YearMonthDay now = new YearMonthDay();
+            if (start.isAfter(now) || end.isBefore(now)) {
+                executionYear.setState(PeriodState.OPEN);
+            } else {
+                executionYear.setState(PeriodState.CURRENT);                
+            }
+
+            createExecutionPeriods(executionYear);
+        }
+
+        private void createExecutionPeriods(final ExecutionYear executionYear) {
+            createExecutionPeriods(executionYear, 1);
+            createExecutionPeriods(executionYear, 2);
+        }
+
+        private void createExecutionPeriods(final ExecutionYear executionYear, final int semester) {
+            final ExecutionPeriod lastExecutionPeriod = ExecutionPeriod.readLastExecutionPeriod();
+            final YearMonthDay start = getStartYearMonthDay(executionYear, semester);
+            final YearMonthDay end = getEndYearMonthDay(executionYear, semester);
+
+            final ExecutionPeriod executionPeriod = new ExecutionPeriod();
+            executionPeriod.setBeginDateYearMonthDay(start);
+            executionPeriod.setEndDateYearMonthDay(end);
+            executionPeriod.setExecutionYear(executionYear);
+            executionPeriod.setName(getPeriodString(semester));
+            executionPeriod.setPreviousExecutionPeriod(lastExecutionPeriod);
+            executionPeriod.setSemester(Integer.valueOf(semester));
+            final YearMonthDay now = new YearMonthDay();
+            if (start.isAfter(now) || end.isBefore(now)) {
+                executionPeriod.setState(PeriodState.OPEN);
+            } else {
+                executionPeriod.setState(PeriodState.CURRENT);                
+            }
+
+            createInquiryResponsePeriods(executionPeriod);
+        }
+
+        private void createInquiryResponsePeriods(final ExecutionPeriod executionPeriod) {
+            new InquiryResponsePeriod(executionPeriod, executionPeriod.getBeginDate(), executionPeriod.getEndDate()); 
+        }
+
+        private YearMonthDay getStartYearMonthDay(final ExecutionYear executionYear, final int semester) {
+            final YearMonthDay yearMonthDay = executionYear.getBeginDateYearMonthDay();
+            return semester == 1 ? yearMonthDay : new YearMonthDay(yearMonthDay.getYear() + 1, 2, 1);
+        }
+
+        private YearMonthDay getEndYearMonthDay(final ExecutionYear executionYear, final int semester) {
+            final YearMonthDay yearMonthDay = executionYear.getEndDateYearMonthDay();
+            return semester == 2 ? yearMonthDay : new YearMonthDay(yearMonthDay.getYear(), 1, 31);
+        }
+
+        private String getPeriodString(final int semester) {
+            return "Semester " + semester;
+        }
+
+        private String getYearString(final int year) {
+            return Integer.toString(year) + '/' + (year + 1);
+        }
+    }
+
+    public static class CreateResources extends AtomicAction {
+        private int roomCounter = 0;
+
+        public void doIt() {
+            createCampi(1);
+            createCampi(2);
+        }
+
+        private void createCampi(int i) {
+            final Campus campus = new Campus("Herdade do Conhecimento " + i, new YearMonthDay(), null, null);
+            for (int j = i; j < i + 7; j++) {
+                createBuilding(campus, j);
+            }
+        }
+
+        private void createBuilding(final Campus campus, final int j) {
+            final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null);
+            for (int k = -1; k < 6; k++) {
+                createFloor(building, k);
+            }
+        }
+
+        private void createFloor(final Building building, final int k) {
+            final Floor floor = new Floor(building, k, new YearMonthDay(), null, null);
+            for (int l = 0; l < 255; l++) {
+                createRoom(floor);
+            }
+        }
+
+        private void createRoom(Floor floor) {
+            new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
+                    Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1));
+        }
+
+        private String getRoomName() {
+            return "Room " + roomCounter++;
+        }
+    }
+
+    public static class CreateOrganizationalStructure extends AtomicAction {
+        public void doIt() {
+            final CountryUnit countryUnit = getCountryUnit("Portugal");
+            final UniversityUnit universityUnit = createUniversityUnit(countryUnit);
+            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, "Escola do Galo", "Fenix");
+            getRootDomainObject().setInstitutionUnit(institutionUnit);
+            final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
+            createServiceUnits(serviceUnits);
+            final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
+            createDepartmentUnits(departmentUnits);
+            final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
+            createDegreeUnits(degreeUnits);
+        }
+
+        private CountryUnit getCountryUnit(final String countryUnitName) {
+            for (final Party party : getRootDomainObject().getPartysSet()) {
+                if (party.isCountryUnit()) {
+                    final CountryUnit countryUnit = (CountryUnit) party;
+                    if (countryUnit.getName().equalsIgnoreCase(countryUnitName)) {
+                        return countryUnit;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit) {
+            return UniversityUnit.createNewUniversityUnit("Universidade de Barcelos", null, "UB", new YearMonthDay(),
+                    null, countryUnit, null, null, false, null);
+        }
+
+        private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
+            return AggregateUnit.createNewAggregateUnit(unitName, null, null, new YearMonthDay(),
+                    null, parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE),
+                    null, null, Boolean.FALSE, null);
+        }
+
+        private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName, final String universityAcronym) {
+            return SchoolUnit.createNewSchoolUnit(universityName, null, universityAcronym, new YearMonthDay(),
+                    null, universityUnit, null, null, Boolean.FALSE, null);
+        }
+
+        private void createServiceUnits(final AggregateUnit serviceUnits) {
+            final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
+            final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
+                    "Office", null, null, new YearMonthDay(), null, serviceUnits,
+                    AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE),
+                    null, null, administrativeOffice, Boolean.FALSE, null);
+        }
+
+        private void createDepartmentUnits(final AggregateUnit departmentUnits) {
+            for (int i = 0; i < 5; i++) {
+                createDepartment(departmentUnits, i);
+            }
+        }
+
+        private void createDepartment(final AggregateUnit departmentUnits, final int i) {
+            final Department department = new Department();
+            department.setCode(getDepartmentCode(i));
+            final String departmentName = getDepartmentName(i);
+            department.setName(departmentName);
+            department.setRealName(departmentName);
+            department.setCompetenceCourseMembersGroup(getCompetenceCourseMembersGroup());
+            
+            final DepartmentUnit departmentUnit = createDepartmentUnut(departmentUnits, 3020 + i, department);
+            department.setDepartmentUnit(departmentUnit);
+
+            new DepartmentSite(department);
+        }
+
+        private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber, final Department department) {
+            return DepartmentUnit.createNewInternalDepartmentUnit(
+                    "Department Name " + someNumber, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
+                    departmentUnits, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+                    null, department, null, Boolean.FALSE, null);
+        }
+
+        private Group getCompetenceCourseMembersGroup() {
+            final Group teachersGroup = getRoleGroup(RoleType.TEACHER);
+            final Group managersGroup = getRoleGroup(RoleType.MANAGER);
+            return new GroupUnion(teachersGroup, managersGroup);
+        }
+
+        private Group getRoleGroup(final RoleType roleType) {
+            return new RoleGroup(Role.getRoleByRoleType(roleType));
+        }
+
+        private String getDepartmentName(final int i) {
+            return "Department " + i;
+        }
+
+        private String getDepartmentCode(final int i) {
+            return "DEP" + i;
+        }
+
+        private void createDegreeUnits(final AggregateUnit degreeUnits) {
+            for (final DegreeType degreeType : DegreeType.values()) {
+                createAggregateUnit(degreeUnits, degreeType.getName());
+            }
+        }
+    }
+
+    public static class CreateDegrees extends AtomicAction {
+        public void doIt() {
+            final SiteTemplate siteTemplate = findSiteTemplate();
+            final Unit unit = findUnitByName("Degrees");
+            for (final DegreeType degreeType : DegreeType.values()) {
+                for (int i = 0; i < 5 ; i++) {
+                    final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
+                    createDegreeInfo(degree);
+                    associateToDepartment(degree);
+                    final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+                    createExecutionDegrees(degreeCurricularPlan, getCampus());
+
+                    final DegreeSite degreeSite = degree.getSite();
+                    degreeSite.setTemplate(siteTemplate);
+
+                    DegreeUnit.createNewInternalDegreeUnit(degree.getName(), null, degree.getSigla(), new YearMonthDay(), null, unit,
+                            AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+                            null, degree, null, Boolean.FALSE, null);
+                }
+            }
+        }
+
+        private SiteTemplate findSiteTemplate() {
+            for (final Site site : RootDomainObject.getInstance().getSitesSet()) {
+                if (site instanceof SiteTemplate) {
+                    final SiteTemplate siteTemplate = (SiteTemplate) site;
+                    if (siteTemplate.getSiteType().equals(DegreeSite.class.getName())) {
+                        return siteTemplate;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private Unit findUnitByName(final String unitName) {
+            for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+                if (party.isAggregateUnit() && party.getName().equals(unitName)) {
+                    return (Unit) party;
+                }
+            }
+            return null;
+        }
+
+        private Degree createDegree(final DegreeType degreeType, final int i) {
+            return new Degree("Agricultura do Conhecimento " + i, "Knowledge Agriculture " + i, "CODE" + i, degreeType,
+                    degreeType.getGradeScale(), DegreeCurricularPlan.class.getName());
+        }
+
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
+            final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+            degreeCurricularPlan.setDegree(degree);
+            degreeCurricularPlan.setName(degree.getSigla());
+            degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
+            degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
+            degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
+            return degreeCurricularPlan;
+        }
+
+        private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Campus campus) {
+            for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
+                degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
+            }
+        }
+
+        Campus campus = null;
+        private Campus getCampus() {
+            for (final Resource resource : getRootDomainObject().getResourcesSet()) {
+                if (resource.isCampus()) {
+                    final Campus campus = (Campus) resource;
+                    if (this.campus != campus) {
+                        this.campus = campus;
+                        return this.campus;
+                    }
+                }
+            }
+            throw new Error("Could not find another campus.");
+        }
+
+        Iterator<Department> departmentIterator = null;
+        private void associateToDepartment(final Degree degree) {
+            if (departmentIterator == null || !departmentIterator.hasNext()) {
+                departmentIterator = getRootDomainObject().getDepartmentsIterator();
+            }
+            final Department department = departmentIterator.next();
+            department.addDegrees(degree);
+        }
+
+        private void createDegreeInfo(final Degree degree) {
+            final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
+            degreeInfo.setDescription(new MultiLanguageString("Descrição do curso. Bla bla bla bla bla."));
+            degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
+            degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
+            degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
+            degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
+            degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
+            degreeInfo.setDesignedFor(new MultiLanguageString("Propósito do curso. Bla bla bla bla bla."));
+            degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
+            degreeInfo.setProfessionalExits(new MultiLanguageString("Saídas profissionais. Bla bla bla bla bla."));
+            degreeInfo.getProfessionalExits().setContent(Language.en, "Professional exists of the degree. Blur blur blur and more blur.");
+            degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
+            degreeInfo.getOperationalRegime().setContent(Language.en, "Operational regime of the degree. Blur blur blur and more blur.");
+            degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
+            degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
+            degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendário escolar. Bla bla bla bla bla."));
+            degreeInfo.getSchoolCalendar().setContent(Language.en, "School calendar of the degree. Blur blur blur and more blur.");
+            degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
+            degreeInfo.getCandidacyPeriod().setContent(Language.en, "Candidacy period of the degree. Blur blur blur and more blur.");
+            degreeInfo.setSelectionResultDeadline(new MultiLanguageString("Prazo de publicação de resultados de candidaturas. Bla bla bla bla bla."));
+            degreeInfo.getSelectionResultDeadline().setContent(Language.en, "Seletion result deadline of the degree. Blur blur blur and more blur.");
+            degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscrições. Bla bla bla bla bla."));
+            degreeInfo.getEnrolmentPeriod().setContent(Language.en, "Enrolment period of the degree. Blur blur blur and more blur.");
+            degreeInfo.setAdditionalInfo(new MultiLanguageString("Informação adicional. Bla bla bla bla bla."));
+            degreeInfo.getAdditionalInfo().setContent(Language.en, "Additional information of the degree. Blur blur blur and more blur.");
+            degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
+            degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
+            degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressão. Bla bla bla bla bla."));
+            degreeInfo.getTestIngression().setContent(Language.en, "Ingression tests of the degree. Blur blur blur and more blur.");
+            degreeInfo.setClassifications(new MultiLanguageString("Classificações. Bla bla bla bla bla."));
+            degreeInfo.getClassifications().setContent(Language.en, "Classifications of the degree. Blur blur blur and more blur.");
+            degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
+            degreeInfo.getAccessRequisites().setContent(Language.en, "Access requisites of the degree. Blur blur blur and more blur.");
+            degreeInfo.setCandidacyDocuments(new MultiLanguageString("Documentos de candidatura. Bla bla bla bla bla."));
+            degreeInfo.getCandidacyDocuments().setContent(Language.en, "Candidacy documents of the degree. Blur blur blur and more blur.");
+            degreeInfo.setDriftsInitial(Integer.valueOf(1));
+            degreeInfo.setDriftsFirst(Integer.valueOf(1));
+            degreeInfo.setDriftsSecond(Integer.valueOf(1));
+            degreeInfo.setMarkMin(Double.valueOf(12));
+            degreeInfo.setMarkMax(Double.valueOf(20));
+            degreeInfo.setMarkAverage(Double.valueOf(15));
+            degreeInfo.setQualificationLevel(new MultiLanguageString("Nível de qualificação. Bla bla bla bla bla."));
+            degreeInfo.getQualificationLevel().setContent(Language.en, "Qualification level of the degree. Blur blur blur and more blur.");
+            degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
+            degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
+        }
+    }
+
+    private static void createTestData() {
+        doAction(new CreateManagerUser());
+        doAction(new CreateExecutionYears());
+        doAction(new CreateResources());
+        doAction(new CreateOrganizationalStructure());
+        doAction(new CreateDegrees());
+
+//        createUnits();
+//        createExecutionYears();
+//        createCampus();
+//        createRooms();
+//        createDegrees();
+//        createExecutionCourses();
+//        connectShiftsToSchoolClasses();
+//        createWrittenEvaluations();
+//        createStudents();
+    }
 
     public static void main(String[] args) {
         try {
             MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
             SuportePersistenteOJB.fixDescriptors();
             RootDomainObject.init();
+            setPrivledges();
 
-            ISuportePersistente persistentSupport = null;
-            try {
-                persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                persistentSupport.iniciarTransaccao();
-        	setPrivledges();
-                clearData();
-                createManagerUser();
-                createTestData();
-                persistentSupport.confirmarTransaccao();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-
-                try {
-                    if (persistentSupport != null) {
-                        persistentSupport.cancelarTransaccao();
-                    }
-                } catch (ExcepcaoPersistencia e) {
-                    throw new Error(e);
-                }
-            }
+            createTestData();
+//
+//            ISuportePersistente persistentSupport = null;
+//            try {
+//                persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+//                persistentSupport.iniciarTransaccao();
+//        	setPrivledges();
+//                clearData();
+//                createManagerUser();
+//                createTestData();
+//                persistentSupport.confirmarTransaccao();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//
+//                try {
+//                    if (persistentSupport != null) {
+//                        persistentSupport.cancelarTransaccao();
+//                    }
+//                } catch (ExcepcaoPersistencia e) {
+//                    throw new Error(e);
+//                }
+//            }
         } finally {
             System.err.flush();
             System.out.flush();
@@ -188,25 +606,12 @@ public class CreateTestData {
 	System.exit(0);
     }
 
-    private static void setPrivledges() {
-	AccessControl.setUserView(new MockUserView());
-    }
+    private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
+    private static final ExamRoomManager examRoomManager = new ExamRoomManager();
+    private static final WrittenTestsRoomManager writtenTestsRoomManager = new WrittenTestsRoomManager();
+
 
     private static void createManagerUser() {
-        final Person person = new Person();
-        person.setName("Fenix System Administrator");
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
-        person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-        person.setDocumentIdNumber(person.getIdInternal().toString());
-        
-        final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
-        login.setPassword(PasswordEncryptor.encryptPassword("pass"));
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, "admin");
-        login.openLoginIfNecessary(RoleType.MANAGER);
-        person.setIsPassInKerberos(Boolean.TRUE);
     }
 
     private static void clearData() {
@@ -383,18 +788,6 @@ public class CreateTestData {
         System.out.println("Loading the test data...");
     }
 
-    private static void createTestData() {
-        createUnits();
-        createExecutionYears();
-        createCampus();
-        createRooms();
-        createDegrees();
-        createExecutionCourses();
-        connectShiftsToSchoolClasses();
-        createWrittenEvaluations();
-        createStudents();
-    }
-
     private static void createUnits() {
 	createInstitutionalUnit();
 	createDegreeAdministrativeOfficeUnit(AdministrativeOfficeType.DEGREE, 1);
@@ -430,13 +823,6 @@ public class CreateTestData {
                 .getServiceAgreementTemplate());
 
         createAdminPostingRules(administrativeOfficeDegree.getServiceAgreementTemplate());
-    }
-
-    private static DepartmentUnit createDepartmentUnut(int someNumber, final Department department) {
-	return DepartmentUnit.createNewInternalDepartmentUnit(
-		"Department Name " + someNumber, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
-		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
-		null, department, null, Boolean.FALSE, null);
     }
 
     private static DegreeUnit createNewDegreeUnit(int i, Degree degree) {
@@ -706,13 +1092,13 @@ public class CreateTestData {
             
             department.setName("Department " + degree.getName());
             department.setRealName("Department " + degree.getName());
-            final DepartmentUnit departmentUnit = createDepartmentUnut(3020 + i, department);
-            department.setDepartmentUnit(departmentUnit);
+//            final DepartmentUnit departmentUnit = createDepartmentUnut(3020 + i, department);
+//            department.setDepartmentUnit(departmentUnit);
             department.addDegrees(degree);
 
             createNewDegreeUnit(4020 + i, degree);
 
-            createDegreeInfo(degree);
+            //createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
             degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
 
@@ -1133,54 +1519,6 @@ public class CreateTestData {
 	    }
 	}
 	return false;
-    }
-
-    private static void createDegreeInfo(final Degree degree) {
-        final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
-        degreeInfo.setDescription(new MultiLanguageString("Descrição do curso. Bla bla bla bla bla."));
-        degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
-        degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
-        degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
-        degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
-        degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
-        degreeInfo.setDesignedFor(new MultiLanguageString("Propósito do curso. Bla bla bla bla bla."));
-        degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
-        degreeInfo.setProfessionalExits(new MultiLanguageString("Saídas profissionais. Bla bla bla bla bla."));
-        degreeInfo.getProfessionalExits().setContent(Language.en, "Professional exists of the degree. Blur blur blur and more blur.");
-        degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
-        degreeInfo.getOperationalRegime().setContent(Language.en, "Operational regime of the degree. Blur blur blur and more blur.");
-        degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
-        degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
-        degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendário escolar. Bla bla bla bla bla."));
-        degreeInfo.getSchoolCalendar().setContent(Language.en, "School calendar of the degree. Blur blur blur and more blur.");
-        degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
-        degreeInfo.getCandidacyPeriod().setContent(Language.en, "Candidacy period of the degree. Blur blur blur and more blur.");
-        degreeInfo.setSelectionResultDeadline(new MultiLanguageString("Prazo de publicação de resultados de candidaturas. Bla bla bla bla bla."));
-        degreeInfo.getSelectionResultDeadline().setContent(Language.en, "Seletion result deadline of the degree. Blur blur blur and more blur.");
-        degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscrições. Bla bla bla bla bla."));
-        degreeInfo.getEnrolmentPeriod().setContent(Language.en, "Enrolment period of the degree. Blur blur blur and more blur.");
-        degreeInfo.setAdditionalInfo(new MultiLanguageString("Informação adicional. Bla bla bla bla bla."));
-        degreeInfo.getAdditionalInfo().setContent(Language.en, "Additional information of the degree. Blur blur blur and more blur.");
-        degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
-        degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
-        degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressão. Bla bla bla bla bla."));
-        degreeInfo.getTestIngression().setContent(Language.en, "Ingression tests of the degree. Blur blur blur and more blur.");
-        degreeInfo.setClassifications(new MultiLanguageString("Classificações. Bla bla bla bla bla."));
-        degreeInfo.getClassifications().setContent(Language.en, "Classifications of the degree. Blur blur blur and more blur.");
-        degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
-        degreeInfo.getAccessRequisites().setContent(Language.en, "Access requisites of the degree. Blur blur blur and more blur.");
-        degreeInfo.setCandidacyDocuments(new MultiLanguageString("Documentos de candidatura. Bla bla bla bla bla."));
-        degreeInfo.getCandidacyDocuments().setContent(Language.en, "Candidacy documents of the degree. Blur blur blur and more blur.");
-        degreeInfo.setDriftsInitial(Integer.valueOf(1));
-        degreeInfo.setDriftsFirst(Integer.valueOf(1));
-        degreeInfo.setDriftsSecond(Integer.valueOf(1));
-        degreeInfo.setMarkMin(Double.valueOf(12));
-        degreeInfo.setMarkMax(Double.valueOf(20));
-        degreeInfo.setMarkAverage(Double.valueOf(15));
-        degreeInfo.setQualificationLevel(new MultiLanguageString("Nível de qualificação. Bla bla bla bla bla."));
-        degreeInfo.getQualificationLevel().setContent(Language.en, "Qualification level of the degree. Blur blur blur and more blur.");
-        degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
-        degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
     }
 
     private static class MockUserView implements IUserView {

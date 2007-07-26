@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -234,11 +235,13 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public static ExecutionPeriod readFirstExecutionPeriod() {
-	return Collections.min(RootDomainObject.getInstance().getExecutionPeriods());
+        final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
     }
 
     public static ExecutionPeriod readLastExecutionPeriod() {
-	return Collections.max(RootDomainObject.getInstance().getExecutionPeriods());
+        final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+	return exeutionPeriods.isEmpty() ? null : Collections.max(exeutionPeriods);
     }
 
     public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {

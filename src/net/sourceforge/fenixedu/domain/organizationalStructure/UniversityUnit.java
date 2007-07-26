@@ -22,8 +22,8 @@ public class UniversityUnit extends UniversityUnit_Base {
         super();
         super.setType(PartyTypeEnum.UNIVERSITY);
     }
-    
-    public static Unit createNewUniversityUnit(String universityName, Integer costCenterCode, String universityAcronym,
+
+    public static UniversityUnit createNewUniversityUnit(String universityName, Integer costCenterCode, String universityAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {			
 	
@@ -35,7 +35,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 	
 	return universityUnit;
     }
-    
+
     @Override
     public void edit(String name, String acronym) {
         super.edit(name, acronym);

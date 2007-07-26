@@ -16,7 +16,7 @@ public class PlanetUnit extends PlanetUnit_Base {
         super.setType(PartyTypeEnum.PLANET);
     }
     
-    public static Unit createNewPlanetUnit(String planetName, Integer costCenterCode, String planetAcronym,
+    public static PlanetUnit createNewPlanetUnit(String planetName, Integer costCenterCode, String planetAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
 	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {	
 				

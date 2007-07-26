@@ -20,7 +20,7 @@ public class SchoolUnit extends SchoolUnit_Base {
         super.setType(PartyTypeEnum.SCHOOL);
     }
     
-    public static Unit createNewSchoolUnit(String schoolName, Integer costCenterCode, String schoolAcronym,
+    public static SchoolUnit createNewSchoolUnit(String schoolName, Integer costCenterCode, String schoolAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, 
 	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {	
 	

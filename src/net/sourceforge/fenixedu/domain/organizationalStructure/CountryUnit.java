@@ -20,7 +20,7 @@ public class CountryUnit extends CountryUnit_Base {
         super.setType(PartyTypeEnum.COUNTRY);
     }
     
-    public static Unit createNewCountryUnit(String countryName, Integer costCenterCode, String countryAcronym,
+    public static CountryUnit createNewCountryUnit(String countryName, Integer costCenterCode, String countryAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {	
 		
@@ -90,12 +90,16 @@ public class CountryUnit extends CountryUnit_Base {
     private static void checkIfAlreadyExistsOneCountryWithSameAcronymAndName(CountryUnit countryUnit) {
 	for (Unit parentUnit : countryUnit.getParentUnits()) {	 
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
-		if (!unit.equals(countryUnit)
-		    && unit.isCountryUnit()
-		    && (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()) || countryUnit
-			    .getName().equalsIgnoreCase(unit.getName()))) {
-		    throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
-		}	
+		if ((!unit.equals(countryUnit)) && unit.isCountryUnit()) {
+		    if (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
+		        System.out.println(countryUnit.getAcronym());
+		        throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit.getAcronym());
+		    }
+		    if (countryUnit.getName().equalsIgnoreCase(unit.getName())) {
+		        System.out.println(countryUnit.getName() + countryUnit.getIdInternal() + " " + unit.getIdInternal());
+		        throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit.getName());
+		    }	
+		}
 	    }
 	}
     }
