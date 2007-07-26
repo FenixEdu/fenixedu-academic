@@ -89,8 +89,11 @@ public abstract class StudentCurriculumBase implements Serializable {
     }
 
     final public Double getRoundedAverage(final ExecutionYear executionYear, final boolean decimal) {
-	final double average = calculateAverage(executionYear);
-	return decimal ? Math.round((average * 100)) / 100.0 : Math.round((average));
+	return applyRound(calculateAverage(executionYear), decimal);
+    }
+
+    static final public Double applyRound(final double d, final boolean decimal) {
+	return decimal ? Math.round((d * 100)) / 100.0 : Math.round((d));
     }
 
     final public double getSumPiCi(final ExecutionYear executionYear) {
