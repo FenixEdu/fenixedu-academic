@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,15 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.YearMonthDay;
+
 abstract public class CurriculumLine extends CurriculumLine_Base {
+
+    static final public Comparator<CurriculumLine> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<CurriculumLine>() {
+        public int compare(CurriculumLine o1, CurriculumLine o2) {
+            return o1.getApprovementDate().compareTo(o2.getApprovementDate());
+        }
+    };
 
     public CurriculumLine() {
 	super();
@@ -31,6 +40,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
     
     abstract public boolean isApproved();
+    
+    public YearMonthDay getApprovementDate() {
+	return isApproved() ? getConclusionDate() : null;
+    }
     
     @Override
     final public boolean isLeaf() {

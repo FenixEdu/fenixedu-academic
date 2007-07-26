@@ -153,6 +153,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getExecutionPeriod().getExecutionYear();
     }
 
+    final public YearMonthDay getApprovementDate() {
+        return getEvaluationDate();
+    }
+    
     public Unit getAcademicUnit() {
 	return getExternalCurricularCourse().getAcademicUnit();
     }

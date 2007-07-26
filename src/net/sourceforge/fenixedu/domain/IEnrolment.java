@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -33,6 +35,12 @@ public interface IEnrolment {
         }
     };
 
+    static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
+        public int compare(IEnrolment o1, IEnrolment o2) {
+            return o1.getApprovementDate().compareTo(o2.getApprovementDate());
+        }
+    };
+
     Integer getIdInternal();
     
     MultiLanguageString getName();
@@ -54,6 +62,8 @@ public interface IEnrolment {
     ExecutionPeriod getExecutionPeriod();
     
     ExecutionYear getExecutionYear();
+    
+    YearMonthDay getApprovementDate();
 
     Unit getAcademicUnit();
     
