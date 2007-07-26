@@ -151,7 +151,7 @@ public class Lesson extends Lesson_Base {
 	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {		
 		SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));				
 		refreshPeriod(newBeginDate, currentPeriod);	    
-		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1), currentPeriod);
+		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
 		currentPeriod.delete();
 	    }
 	}
@@ -164,14 +164,13 @@ public class Lesson extends Lesson_Base {
 		removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);		
 		SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));		
 		refreshPeriod(newBeginDate, currentPeriod);	    
-		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1), currentPeriod);
+		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
 		currentPeriod.delete();
 	    }
 	}
     }
 
-    private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day,
-	    OccupationPeriod periodBeforeRefresh) {
+    private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day) {
 
 	if(allLessonDatesBeforeRefreshPeriod != null && day != null) {
 
@@ -179,13 +178,9 @@ public class Lesson extends Lesson_Base {
 	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
 		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
 	    }
-	    
-	    Campus lessonCampus = getLessonCampus();
+	    	   
 	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {
-		if(!Holiday.isHoliday(dateToCreate, lessonCampus)
-			&& periodBeforeRefresh.nestedOccupationPeriodsContainsDay(dateToCreate)) {
-		    new LessonInstance(this, dateToCreate);
-		}
+		new LessonInstance(this, dateToCreate);		
 	    }	    	   
 	}
     }  
@@ -253,11 +248,14 @@ public class Lesson extends Lesson_Base {
     }     
     
     private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate) {
-	OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());		
-	while(currentPeriod.hasNextPeriod()) {
-	    OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();
-	    OccupationPeriod newNextPeriod = new OccupationPeriod(currentNextPeriod.getStartYearMonthDay(), currentNextPeriod.getEndYearMonthDay());
-	    newPeriod.setNextPeriod(newNextPeriod);
+	OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());
+	OccupationPeriod newPeriodPointer = newPeriod;
+	while(currentPeriod.hasNextPeriod()) {	    
+	    OccupationPeriod newNextPeriod = new OccupationPeriod(
+	    	    currentPeriod.getNextPeriod().getStartYearMonthDay(), 
+		    currentPeriod.getNextPeriod().getEndYearMonthDay());
+	    newPeriodPointer.setNextPeriod(newNextPeriod);
+	    newPeriodPointer = newNextPeriod;
 	    currentPeriod = currentPeriod.getNextPeriod();
 	}	
 	return newPeriod;

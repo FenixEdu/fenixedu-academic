@@ -63,7 +63,7 @@ public class LessonInstance extends LessonInstance_Base {
 	
 	super();
 
-	if(lesson == null || !lesson.getAllLessonDates().contains(day)) {
+	if(lesson == null) {
 	    throw new DomainException("error.LessonInstance.empty.Lesson");
 	}
 	
