@@ -53,14 +53,16 @@ public class EditLesson extends Service {
                 LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();
                 
                 if(salaNova != null) {
-                    try {                
-                	if(lessonSpaceOccupation == null) {                	                    	                    
-                	    lessonSpaceOccupation = new LessonSpaceOccupation(salaNova, aula);   
-                	} else {
-                	    lessonSpaceOccupation.edit(salaNova);
+                    if(!aula.wasFinished()) {
+                	try {                
+                	    if(lessonSpaceOccupation == null) {                	                    	                    
+                		lessonSpaceOccupation = new LessonSpaceOccupation(salaNova, aula);   
+                	    } else {
+                		lessonSpaceOccupation.edit(salaNova);
+                	    }
+                	} catch (DomainException e) {
+                	    throw new InterceptingServiceException(e);
                 	}
-                    } catch (DomainException e) {
-                	throw new InterceptingServiceException(e);
                     }
                 } else {
                     if(lessonSpaceOccupation != null) {

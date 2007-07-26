@@ -65,7 +65,7 @@ public class Lesson extends Lesson_Base {
 
     public void edit(YearMonthDay newBeginDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, FrequencyType frequency) {			
 
-	if(!hasPeriod()) {
+	if(wasFinished()) {
 	    throw new DomainException("error.Lesson.already.finished");
 	}
 	
@@ -118,6 +118,10 @@ public class Lesson extends Lesson_Base {
 	deleteDomainObject();
     }
 
+    public boolean wasFinished() {
+	return !hasPeriod();
+    }
+    
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return (!hasLessonSpaceOccupation() && hasAnyLessonInstances() || hasPeriod())
