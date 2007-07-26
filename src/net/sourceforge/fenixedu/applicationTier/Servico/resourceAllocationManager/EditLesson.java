@@ -48,9 +48,9 @@ public class EditLesson extends Service {
             Shift shift = aula.getShift();               
             InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), begin, end);
             if (result.isSUCESS() && infoShiftServiceResult.isSUCESS()) {
-         
-        	LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();        	
-                aula.edit(newBeginDate, weekDay, begin, end, infoShift.getTipo(), frequency);                                            
+                 	        
+                aula.edit(newBeginDate, weekDay, begin, end, infoShift.getTipo(), frequency);
+                LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();
                 
                 if(salaNova != null) {
                     try {                
