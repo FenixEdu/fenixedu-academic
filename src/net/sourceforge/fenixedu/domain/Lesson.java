@@ -152,11 +152,9 @@ public class Lesson extends Lesson_Base {
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
 	if(hasPeriod()) {	    
 	    OccupationPeriod currentPeriod = getPeriod();	    		    
-	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {		
-		SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));				
-		refreshPeriod(newBeginDate, currentPeriod);	    
-		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
-		currentPeriod.delete();
+	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {				
+		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
+		refreshPeriod(newBeginDate, currentPeriod);	    				
 	    }
 	}
     }
@@ -165,19 +163,18 @@ public class Lesson extends Lesson_Base {
 	if(hasPeriod()) {	    
 	    OccupationPeriod currentPeriod = getPeriod();	    		    
 	    if(newBeginDate != null && !newBeginDate.isAfter(currentPeriod.getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay())) {					
-		removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);		
-		SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(newBeginDate.minusDays(1));		
-		refreshPeriod(newBeginDate, currentPeriod);	    
-		createAllLessonInstancesUntil(allLessonDatesBeforeRefreshPeriod, newBeginDate.minusDays(1));
-		currentPeriod.delete();
+		removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);				
+		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
+		refreshPeriod(newBeginDate, currentPeriod);	    				
 	    }
 	}
     }
 
-    private void createAllLessonInstancesUntil(SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod, YearMonthDay day) {
-
-	if(allLessonDatesBeforeRefreshPeriod != null && day != null) {
-
+    private void createAllLessonInstancesUntil(YearMonthDay day) {	
+	if(day != null) {
+	    
+	    SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(day);	
+	    
 	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
 	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
 		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
@@ -249,6 +246,7 @@ public class Lesson extends Lesson_Base {
 	    }
 	    setPeriod(null);
 	}	
+	currentPeriod.delete();
     }     
     
     private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate) {
