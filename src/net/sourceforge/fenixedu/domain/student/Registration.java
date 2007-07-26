@@ -576,12 +576,35 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public YearMonthDay getLastApprovedEnrolmentEvaluationDate() {
+	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
+		Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
+	enrolments.addAll(getApprovedEnrolments());
+
+	if (enrolments.isEmpty()) {
+	    throw new DomainException("Registration.no.approved.enrolments");
+	}
+
+	return enrolments.last().getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
+    }
+
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
 	return getLastStudentCurricularPlan().getApprovedCurriculumLines();
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
 	return getLastStudentCurricularPlan().hasAnyApprovedCurriculumLines();
+    }
+
+    final public YearMonthDay getLastApprovementDate() {
+	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE);
+	curriculumLines.addAll(getApprovedCurriculumLines());
+
+	if (curriculumLines.isEmpty()) {
+	    throw new DomainException("Registration.has.no.approved.curriculum.lines");
+	}
+
+	return curriculumLines.last().getApprovementDate();
     }
 
     final public Collection<IEnrolment> getApprovedIEnrolments() {
@@ -679,18 +702,6 @@ public class Registration extends Registration_Base {
 	result.addAll(getEnrolmentsExecutionPeriods());
 
 	return result;
-    }
-
-    final public YearMonthDay getLastApprovedEnrolmentEvaluationDate() {
-	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(
-		Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
-	enrolments.addAll(getApprovedEnrolments());
-
-	if (enrolments.isEmpty()) {
-	    throw new DomainException("Registration.no.approved.enrolments");
-	}
-
-	return enrolments.last().getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
     }
 
     final public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
