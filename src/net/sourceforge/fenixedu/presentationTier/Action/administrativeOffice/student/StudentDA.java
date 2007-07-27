@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState.RegistrationConcludedStateCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -28,12 +29,8 @@ public class StudentDA extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-	String registrationID = request.getParameter("registrationID");
-	if (registrationID == null) {
-	    registrationID = (String) request.getAttribute("registrationId");
-	}
-	final Registration registration = rootDomainObject.readRegistrationByOID(Integer
-		.valueOf(registrationID));
+	final Integer registrationID = getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request, "registrationID") : getIntegerFromRequest(request, "registrationId"); 
+	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
     }
@@ -100,5 +97,15 @@ public class StudentDA extends FenixDispatchAction {
 	request.setAttribute("bean", bean);
 	return mapping.findForward("view-registration-curriculum");
     }
-    
+
+    public ActionForward prepareRegistrationConclusionProcess(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+	
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registrationStateBean", new RegistrationConcludedStateCreator(registration));
+	
+	return mapping.findForward("registrationConclusion");
+    }
+
 }

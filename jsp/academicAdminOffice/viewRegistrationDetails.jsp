@@ -93,22 +93,30 @@
 			<bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>		
-	<span class="pleft1">	
-		<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
+	<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
+		<span class="pleft1">	
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 				<bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
-		</logic:equal>
-	</span>
-	<span class="pleft1">	
-		<logic:equal name="registration" property="registrationAgreement.normal" value="false">
+		</span>
+	</logic:equal>
+	<logic:equal name="registration" property="registrationAgreement.normal" value="false">
+		<span class="pleft1">	
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 				<bean:message key="link.student.manageExternalRegistrationData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
-		</logic:equal>
+		</span>	
+	</logic:equal>
+<%--
+	<span class="pleft1">	
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
 	</span>	
+--%>	
 </p>
 
 

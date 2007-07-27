@@ -231,6 +231,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
 				scope="request">
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+			<forward name="registrationConclusion" path="registrationConclusion"/>
 		</action>	
 
 		<action path="/viewCurriculum"
@@ -245,8 +246,8 @@
 	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
-	    </action>
-	    
+	    </action>			
+
 	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
 		</action>			
