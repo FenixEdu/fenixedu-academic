@@ -11,7 +11,7 @@
 
 <span class="error0 mtop0">
 	<html:messages id="message" message="true">
-		<bean:write name="message" />
+		<bean:write name="message" /><br/><br/>
 	</html:messages>
 </span>
 
