@@ -12262,4 +12262,13 @@
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+    	<name>AddFileToProtocol</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.protocol.AddFileToProtocol</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ProtocolsManagementGroup"></chain>
+        </filterChains>     
+    </service>
 </serviceDefinitions>

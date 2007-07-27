@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.protocols;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
-import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -55,13 +56,10 @@ public class Protocol extends Protocol_Base {
         setPartnerResponsibles(protocolFactory.getPartnerResponsibles());
         setUnits(protocolFactory.getUnits());
         setPartnerUnits(protocolFactory.getPartnerUnits());
-        if(areDatesActive()) {
+        if (areDatesActive()) {
             setActive(Boolean.TRUE);
         } else {
             setActive(Boolean.FALSE);
-        }
-        if (protocolFactory.getFileBeans() != null) {
-            writeFiles(protocolFactory.getFileBeans());
         }
     }
 
@@ -95,18 +93,10 @@ public class Protocol extends Protocol_Base {
         getProtocolHistories().add(protocolHistory);
     }
 
-    private void writeFiles(List<ProtocolFileBean> files) {
-        final VirtualPath filePath = getFilePath();
-        for (ProtocolFileBean protocolFileBean : files) {
-            writeFile(filePath, protocolFileBean.getInputStream(), protocolFileBean.getFileName(),
-                    protocolFileBean.getFilePermissionType());
-        }
-    }
-
-    private void writeFile(VirtualPath filePath, InputStream inputStream, String fileName,
-            FilePermissionType filePermissionType) {
+    private void writeFile(VirtualPath filePath, File file, String fileName,
+            FilePermissionType filePermissionType) throws FileNotFoundException {
         final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-                .saveFile(filePath, fileName, false, null, fileName, inputStream);
+                .saveFile(filePath, fileName, false, null, fileName, new FileInputStream(file));
 
         final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor
                 .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
@@ -127,14 +117,14 @@ public class Protocol extends Protocol_Base {
             for (Person responsible : getResponsibles()) {
                 PersonGroup personGroup = new PersonGroup(responsible);
                 if (unionGroup == null) {
-                    unionGroup = new GroupUnion(personGroup, personGroup);
+                    unionGroup = new GroupUnion(personGroup);
                 } else {
                     unionGroup = new GroupUnion(unionGroup, personGroup);
                 }
             }
             final RoleGroup roleGroup = new RoleGroup(Role
                     .getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-            return new GroupUnion(unionGroup, roleGroup);
+            return unionGroup != null ? new GroupUnion(unionGroup, roleGroup) : roleGroup;
         } else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
             return new InternalPersonGroup();
         }
@@ -219,9 +209,9 @@ public class Protocol extends Protocol_Base {
         }
     }
 
-    public void addFile(ProtocolFactory protocolFactory) {
-        writeFile(getFilePath(), protocolFactory.getInputStream(), protocolFactory.getFileName(),
-                protocolFactory.getFilePermissionType());
+    public void addFile(File file, String fileName, FilePermissionType filePermissionType)
+            throws FileNotFoundException {
+        writeFile(getFilePath(), file, fileName, filePermissionType);
     }
 
     public void deleteFile(ProtocolFactory protocolFactory) {

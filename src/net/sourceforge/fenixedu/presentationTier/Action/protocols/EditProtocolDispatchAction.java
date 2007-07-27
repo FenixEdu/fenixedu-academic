@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.protocols;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +24,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class EditProtocolDispatchAction extends FenixDispatchAction {
 
@@ -399,11 +403,14 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
             return mapping.findForward("view-protocol");
         }
         if (protocolFactory.getInputStream() != null) {
-            protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_FILE);
-            Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
-                    new Object[] { protocolFactory });
+            File file = FileUtils.copyToTemporaryFile(protocolFactory.getInputStream());
+            Protocol protocol = (Protocol) executeService(request, "AddFileToProtocol", new Object[] {
+                    protocolFactory.getProtocol(), file, protocolFactory.getFileName(),
+                    protocolFactory.getFilePermissionType() });
             protocolFactory = new ProtocolFactory(protocol);
+            file.delete();
         }
+        RenderUtils.invalidateViewState();
         protocolFactory.resetFile();
         request.setAttribute("protocolFactory", protocolFactory);
         return mapping.findForward("edit-protocol-files");

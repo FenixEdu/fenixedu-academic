@@ -969,5 +969,11 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.EditPrizeFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>      
+    </filter>  
+     <filter>
+        <name>ProtocolsManagementGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ProtocolsManagementGroup</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>        
 </filterDefinitions>

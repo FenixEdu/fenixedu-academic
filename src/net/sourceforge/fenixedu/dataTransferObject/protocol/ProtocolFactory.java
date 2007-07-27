@@ -26,7 +26,7 @@ import org.joda.time.YearMonthDay;
 public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public static enum EditProtocolAction {
-        EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, ADD_FILE, DELETE_FILE
+        EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, DELETE_FILE
     }
 
     public static enum FilePermissionType {
@@ -185,9 +185,6 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
                 break;
             case REMOVE_UNIT:
                 getProtocol().removeUnit(this);
-                break;
-            case ADD_FILE:
-                getProtocol().addFile(this);
                 break;
             case DELETE_FILE:
                 getProtocol().deleteFile(this);
