@@ -267,7 +267,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return true;
     }
 
-    public List<ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
+    public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
 	    final ExecutionPeriod executionPeriod) {
 	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
 	for (final ICurricularRule curricularRule : getCurricularRules(executionPeriod)) {

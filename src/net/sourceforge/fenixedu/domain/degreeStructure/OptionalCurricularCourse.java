@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 
 public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
@@ -64,12 +63,12 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
     
     private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+	final List<CreditsLimit> result = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
 	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
     }
     
     private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
+	final List<AnyCurricularCourse> result = (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
 	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0); // must have only one
     }
 

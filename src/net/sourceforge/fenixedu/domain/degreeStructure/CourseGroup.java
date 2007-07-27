@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
-import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -491,13 +490,27 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return result;
     }
+    
+    public Set<CourseGroup> getParentCourseGroups() {
+	final Set<CourseGroup> result = new HashSet<CourseGroup>();
+	for (final Context context : getParentContexts()) {
+	    result.add(context.getParentCourseGroup());	    	    
+	}
+	return result;
+    }
 
     @Override
     public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod) {
-	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
-	if (creditsLimit != null) {
-	    return creditsLimit.getMaximumCredits();
+	final List<CreditsLimit> creditsLimitRules = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+	if (!creditsLimitRules.isEmpty()) {
+	    for (final CreditsLimit creditsLimit : creditsLimitRules) {
+		if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
+		    return creditsLimit.getMaximumCredits();    
+		}
+	    }
+	    return creditsLimitRules.get(0).getMaximumCredits();
 	}
+	
 	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
 	if (modulesSelectionLimit != null) {
 	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
@@ -539,10 +552,16 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public Double getMinEctsCredits(final ExecutionPeriod executionPeriod) {
-	final CreditsLimit creditsLimit = getCreditsLimitRule(executionPeriod);
-	if (creditsLimit != null) {
-	    return creditsLimit.getMinimumCredits();
+	final List<CreditsLimit> creditsLimitRules = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+	if (!creditsLimitRules.isEmpty()) {
+	    for (final CreditsLimit creditsLimit : creditsLimitRules) {
+		if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
+		    return creditsLimit.getMaximumCredits();    
+		}
+	    }
+	    return creditsLimitRules.get(0).getMinimumCredits();
 	}
+	
 	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
 	if (modulesSelectionLimit != null) {
 	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
@@ -574,22 +593,16 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
+	final List<CreditsLimit> result = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
 		executionPeriod);
-	return result.isEmpty() ? null : (CreditsLimit) result.get(0); // must
-									// have
-									// only
-									// one
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
     }
 
     private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(
 	    final ExecutionPeriod executionPeriod) {
-	final List<ICurricularRule> result = getCurricularRules(
+	final List<DegreeModulesSelectionLimit> result = (List<DegreeModulesSelectionLimit>) getCurricularRules(
 		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); // must
-											// have
-											// only
-											// one
+	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0); 
     }
 
     @Override

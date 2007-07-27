@@ -27,6 +27,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     @Override
     protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	
 	final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation = groupEnrolmentInformationByYear(enrolmentContext, false);
 	final GenericPair<Boolean, Integer> result = isValidEnrolment(enrolmentInformation, enrolmentContext);
 	return result.getLeft() ? RuleResult.createTrue() : RuleResult.createFalse("curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", String.valueOf(result.getRight()));
@@ -35,6 +36,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(
 	    final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	
 	final Map<Integer, GenericTrio<Integer, Integer, Integer>> enrolmentInformation = groupEnrolmentInformationByYear(enrolmentContext, true);
 	final GenericPair<Boolean, Integer> result = isValidEnrolment(enrolmentInformation, enrolmentContext);
 	if (!result.getLeft()) {
@@ -98,7 +100,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     }
     
     private boolean checkRestrictionDoneDegreeModule(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
-	final List<ICurricularRule> curricularRules = curricularCourse.getCurricularRules(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE, enrolmentContext.getExecutionPeriod());
+	final List<RestrictionDoneDegreeModule> curricularRules = (List<RestrictionDoneDegreeModule>) curricularCourse.getCurricularRules(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE, enrolmentContext.getExecutionPeriod());
 	for (final ICurricularRule curricularRule : curricularRules) {
 	    
 	    final RestrictionDoneDegreeModule doneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
@@ -112,7 +114,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     }
     
     private boolean checkExclusiveness(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
-	final List<ICurricularRule> curricularRules = curricularCourse.getCurricularRules(CurricularRuleType.EXCLUSIVENESS, enrolmentContext.getExecutionPeriod());
+	final List<Exclusiveness> curricularRules = (List<Exclusiveness>) curricularCourse.getCurricularRules(CurricularRuleType.EXCLUSIVENESS, enrolmentContext.getExecutionPeriod());
 	for (final ICurricularRule curricularRule : curricularRules) {
 	    
 	    final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
