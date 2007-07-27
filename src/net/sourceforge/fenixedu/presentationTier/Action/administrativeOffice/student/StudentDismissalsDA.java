@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -64,10 +63,12 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
-	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent().getAllStudentCurricularPlans()) {
+	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
+		.getAllStudentCurricularPlans()) {
+	    
 	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan.getAprovedEnrolments());
-	    Collections.sort(approvedEnrolments, new BeanComparator("name"));
-	    for (Enrolment enrolment : approvedEnrolments) {
+	    Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+	    for (final Enrolment enrolment : approvedEnrolments) {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
 	    }
 	}
