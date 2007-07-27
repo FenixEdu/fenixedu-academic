@@ -60,7 +60,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	super();
     }
 
-    public CurriculumGroup(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
+    public CurriculumGroup(final CurriculumGroup curriculumGroup,final CourseGroup courseGroup) {
 	this();
 	init(curriculumGroup, courseGroup);
     }
@@ -646,13 +646,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 		|| checkAllModules(executionYear);
     }
 
-    private boolean checkAllModules(ExecutionYear executionYear) {
-	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+    private boolean checkAllModules(final ExecutionYear executionYear) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (!curriculumModule.isConcluded(executionYear)) {
 		return false;
 	    }
 	}
-	return true;
+	return hasAnyCurriculumModules();
     }
 
     @SuppressWarnings("unchecked")

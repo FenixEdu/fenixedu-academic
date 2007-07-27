@@ -651,9 +651,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     
     final public List<Enrolment> getAprovedEnrolments() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
-
 	addApprovedEnrolments(result);
-	
 	return result;
     }
 
