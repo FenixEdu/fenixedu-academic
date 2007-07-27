@@ -139,7 +139,7 @@ public class Lesson extends Lesson_Base {
     public AllocatableSpace getSala() {	
 	if(hasLessonSpaceOccupation()) {
 	    return getLessonSpaceOccupation().getRoom();
-	} else if(hasAnyLessonInstances()){
+	} else if(hasAnyLessonInstances() && wasFinished()){
 	    return getLastLessonInstance().getRoom();
 	}		
 	return null;
