@@ -48,7 +48,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	if (diplomaRequest.hasFinalAverageDescription()) {
 	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
 	} else if (diplomaRequest.hasDissertationTitle()) {
-	    parameters.put("dissertationTitle", Registration.readByNumberAndDegreeType(40785, DegreeType.BOLONHA_MASTER_DEGREE).get(0).getDissertationEnrolment().getThesis().getFinalFullTitle().getContent());
+	    parameters.put("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle().getContent());
 	}
 	
 	parameters.put("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
