@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -20,24 +23,45 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	final IRSDeclarationRequest IRSDeclarationRequest = (IRSDeclarationRequest) getDocumentRequest();
-	final Registration registration = IRSDeclarationRequest.getRegistration();
-	final Person person = registration.getPerson();
+	parameters.put("documentRequest", getDocumentRequest());
+
+	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	parameters.put("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 	
+	final Registration registration = getDocumentRequest().getRegistration();
 	parameters.put("registration", registration);
 	
+	final Person person = registration.getPerson();
+	setPersonFields(registration, person);
+	
+	final Integer civilYear = ((IRSDeclarationRequest) getDocumentRequest()).getYear();
+	parameters.put("civilYear", civilYear.toString());
+
+	setAmounts(person, civilYear);
+        setEmployeeFields();
+
+        parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+    }
+
+    final private void setPersonFields(final Registration registration, final Person person) {
 	final String name = person.getName().toUpperCase();
 	parameters.put("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 
 	final String registrationNumber = registration.getNumber().toString();
 	parameters.put("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
 	
-	final String documentIdNumber = person.getDocumentIdNumber();
-	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - "portador do Bilhete de Identidade ".length(), '-'));
-	
-	final Integer civilYear = IRSDeclarationRequest.getYear();
-	parameters.put("civilYear", civilYear.toString());
+	final StringBuilder documentIdType = new StringBuilder();
+	documentIdType.append("portador" + (person.isMale() ? "" : "a"));
+	documentIdType.append(" do ");
+	documentIdType.append(person.getIdDocumentType().getLocalizedName());
+	documentIdType.append(" Nº ");
+	parameters.put("documentIdType", documentIdType.toString());
 
+	final String documentIdNumber = person.getDocumentIdNumber();
+	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), '-'));
+    }
+
+    final private void setAmounts(final Person person, final Integer civilYear) {
 	Money gratuityPayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.GRATUITY, civilYear);
 	Money officeFeeAndInsurancePayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
 	Money othersPayedAmount = Money.ZERO;
@@ -67,9 +91,14 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
 	Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount).add(officeFeeAndInsurancePayedAmount);
 	parameters.put("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
+    }
+    
+    final private void setEmployeeFields() {
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	
+	parameters.put("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
+	parameters.put("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
-	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
 }

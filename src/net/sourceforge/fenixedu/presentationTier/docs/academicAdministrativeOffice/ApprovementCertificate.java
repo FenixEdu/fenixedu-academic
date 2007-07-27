@@ -5,15 +5,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.student.MobilityProgram;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
@@ -25,72 +23,91 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-
-	final ApprovementCertificateRequest approvementCertificateRequest = (ApprovementCertificateRequest) getDocumentRequest();
-	final Registration registration = approvementCertificateRequest.getRegistration();
-
-	final List<IEnrolment> approvedIEnrolments = new ArrayList<IEnrolment>(registration.getApprovedIEnrolments());
-	Collections.sort(approvedIEnrolments, IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-
-	parameters.put("numberApprovements", Integer.valueOf(approvedIEnrolments.size()));
-	parameters.put("approvementsInfo", getApprovementsInfo(approvementCertificateRequest, approvedIEnrolments));
+	parameters.put("approvementsInfo", getApprovementsInfo());
     }
 
-    final private String getApprovementsInfo(final ApprovementCertificateRequest approvementCertificateRequest, final List<IEnrolment> approvedIEnrolments) {
+    final private String getApprovementsInfo() {
 	final StringBuilder result = new StringBuilder();
 
+	final List<IEnrolment> approvedIEnrolments = new ArrayList<IEnrolment>(getDocumentRequest().getRegistration().getApprovedIEnrolments());
+	Collections.sort(approvedIEnrolments, IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+
+	final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
+	final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
 	final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
+
+	reportIEnrolments(result, approvedIEnrolments, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
+	
+	if (!extraCurricularEnrolments.isEmpty()) {
+	    reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
+	}
+	    
+	if (!propaedeuticEnrolments.isEmpty()) {
+	    reportRemainingEnrolments(result, propaedeuticEnrolments, "Propedêuticas");
+	}
+	
+    	if (getDocumentRequest().isToShowCredits()) {
+    	    result.append("\n").append(getDismissalsEctsCreditsInfo()).append("\n");
+    	}
+	
+    	result.append(generateEndLine());
+	
+    	if (!academicUnitIdentifiers.isEmpty()) {
+	    result.append("\n").append(getAcademicUnitInfo(academicUnitIdentifiers, ((ApprovementCertificateRequest) getDocumentRequest()).getMobilityProgram()));
+	}
+	
+	return result.toString();
+    }
+
+    final private void reportIEnrolments(final StringBuilder result, final List<IEnrolment> approvedIEnrolments, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
 	ExecutionYear lastReportedExecutionYear = approvedIEnrolments.get(0).getExecutionPeriod().getExecutionYear(); 
 	for (final IEnrolment approvedIEnrolment : approvedIEnrolments) {
+	    if (approvedIEnrolment.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) approvedIEnrolment;
+
+		if (enrolment.isExtraCurricular()) {
+		    extraCurricularEnrolments.add(enrolment);
+		    continue;
+		} else if (enrolment.isPropaedeutic()) {
+		    propaedeuticEnrolments.add(enrolment);
+		    continue;
+		}
+	    }
+	
 	    final ExecutionYear executionYear = approvedIEnrolment.getExecutionYear();
 	    if (executionYear != lastReportedExecutionYear) {
 		lastReportedExecutionYear = executionYear;
 		result.append("\n");
 	    }
 	    
-	    result.append(
-		    StringUtils.multipleLineRightPadWithSuffix(
-			    getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
-			    LINE_LENGTH, 
-			    '-', 
-			    getGradeInfo(approvedIEnrolment,executionYear)));
-
-	    result.append("\n");
+	    reportIEnrolment(result, approvedIEnrolment, academicUnitIdentifiers, executionYear);
 	}
-	result.append(generateEndLine());
-	
-	if (!academicUnitIdentifiers.isEmpty()) {
-	    result.append("\n").append(getAcademicUnitInfo(academicUnitIdentifiers, approvementCertificateRequest.getMobilityProgram()));
-	}
-	
-	return result.toString();
     }
 
-    final private String getEnrolmentName(final Map<Unit, String> academicUnitIdentifiers, final IEnrolment approvedIEnrolment) {
-	StringBuilder result = new StringBuilder();
+    final private void reportRemainingEnrolments(final StringBuilder result, final List<Enrolment> enrolments, final String title) {
+	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 	
-	if (approvedIEnrolment.isExternalEnrolment()) {
-	    result.append(getAcademicUnitIdentifier(academicUnitIdentifiers, approvedIEnrolment.getAcademicUnit()));
+	for (final Enrolment enrolment : enrolments) {
+	    reportIEnrolment(result, enrolment, null, enrolment.getExecutionYear());
 	}
-	
-	result.append(approvedIEnrolment.getName().toUpperCase());
-	
-	return result.toString();
     }
 
-    @SuppressWarnings("static-access")
-    final private String getAcademicUnitIdentifier(final Map<Unit, String> academicUnitIdentifiers, final Unit academicUnit) {
-	if (!academicUnitIdentifiers.containsKey(academicUnit)) {
-	    academicUnitIdentifiers.put(academicUnit, this.identifiers[academicUnitIdentifiers.size()]);
-	} 
-	
-	return academicUnitIdentifiers.get(academicUnit);
+    final private void reportIEnrolment(final StringBuilder result, final IEnrolment approvedIEnrolment, final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
+	result.append(
+	    StringUtils.multipleLineRightPadWithSuffix(
+		    getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
+		    LINE_LENGTH, 
+		    '-', 
+		    getCreditsAndGradeInfo(approvedIEnrolment,executionYear))).append("\n");
     }
 
-    final private String getGradeInfo(final IEnrolment approvedIEnrolment, final ExecutionYear executionYear) {
+    final private String getCreditsAndGradeInfo(final IEnrolment approvedIEnrolment, final ExecutionYear executionYear) {
 	final StringBuilder result = new StringBuilder();
 	
-	result.append(" ").append(approvedIEnrolment.getGradeValue());
+	if (getDocumentRequest().isToShowCredits()) {
+	    getCreditsInfo(result, approvedIEnrolment);
+	}
+	result.append(approvedIEnrolment.getGradeValue());
 	result.append(
 	    StringUtils.rightPad(
 		    "(" 
@@ -104,22 +121,4 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    final private String getAcademicUnitInfo(final Map<Unit, String> academicUnitIdentifiers, final MobilityProgram mobilityProgram) {
-	final StringBuilder result = new StringBuilder();
-	
-	for (final Entry<Unit,String> academicUnitIdentifier : academicUnitIdentifiers.entrySet()) {
-	    final StringBuilder academicUnit = new StringBuilder();
-	    
-	    academicUnit.append(academicUnitIdentifier.getValue());
-	    academicUnit.append(" ").append(resourceBundle.getString("documents.external.curricular.courses.program"));
-	    academicUnit.append(" ").append(enumerationBundle.getString(mobilityProgram.getQualifiedName()));
-	    academicUnit.append(" ").append(resourceBundle.getString("in.feminine"));
-	    academicUnit.append(" ").append(academicUnitIdentifier.getKey().getName().toUpperCase());
-	    
-	    result.append(StringUtils.multipleLineRightPad(academicUnit.toString(), LINE_LENGTH, '-') + "\n");
-	}
-	
-	return result.toString();
-    }
-    
 }

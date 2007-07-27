@@ -21,40 +21,65 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	
+	parameters.put("curricularYear", getCurricularYear());
+	
+	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getDocumentRequest().getExecutionYear());
+	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
+
+	parameters.put("approvementInfo", getApprovementInfo());
+	parameters.put("documentPurpose", getDocumentPurpose());
+    }
+
+    final private String getCurricularYear() {
+	final StringBuilder result = new StringBuilder();
+	
+	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
+	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getDocumentRequest().getExecutionYear()));
+	    
+	    result.append(enumerationBundle.getString(curricularYear.toString() + ".ordinal").toUpperCase());
+	    result.append(" ano curricular, do ");
+	}
+
+	return result.toString();
+    }
+
+    final private String getApprovementInfo() {
+	final StringBuilder result = new StringBuilder();
+	
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
 	final Registration registration = enrolmentDeclarationRequest.getRegistration();
 	final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
 	
-	final Integer curricularYear = Integer.valueOf(registration.getCurricularYear(executionYear));
-	parameters.put("curricularYear", curricularYear);
-
-	final List<Enrolment> enrolments = registration.getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
-	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
-
-	StringBuilder approvementInfo = new StringBuilder();
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    if (registration.isFirstTime(executionYear)) {
-		approvementInfo.append(", pela 1ª vez");
+		result.append(", pela 1ª vez");
 	    } else if (registration.hasApprovement(executionYear.getPreviousExecutionYear())) {
-		approvementInfo.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		result.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
 	    } else {
-		approvementInfo.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		result.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
 	    }
 	}
-	parameters.put("approvementInfo", approvementInfo.toString());
 	
-	StringBuilder documentPurpose = new StringBuilder();
+	return result.toString();
+    }
+
+    final private String getDocumentPurpose() {
+	final StringBuilder result = new StringBuilder();
+	
+	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
+	
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
-	    documentPurpose.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
+	    result.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
 	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
 		    && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
-		documentPurpose.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());		
+		result.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());		
 	    } else {
-		documentPurpose.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name()).toUpperCase());
+		result.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name()).toUpperCase());
 	    }
-	    documentPurpose.append(".");
-	} 
-	parameters.put("documentPurpose", documentPurpose.toString());
+	    result.append(".");
+	}
+	
+	return result.toString();
     }
 
 }

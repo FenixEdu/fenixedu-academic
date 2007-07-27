@@ -467,19 +467,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result.toString();
     }
 
-    final public String getSeniorTitle() {
-	final StringBuilder seniorTitle = new StringBuilder();
-
-	seniorTitle.append(getDegreeType().getSeniorTitle());
-	seniorTitle.append(" ");
-	seniorTitle.append(ResourceBundle.getBundle("resources.ApplicationResources",
-		LanguageUtils.getLocale()).getString("label.in"));
-	seniorTitle.append(" ");
-	seniorTitle.append(getFilteredName());
-
-	return seniorTitle.toString();
-    }
-
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
 	    ExecutionPeriod executionPeriod) {
 	for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
@@ -955,9 +942,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     	for (Thesis thesis : getThesis()) {
     		if (thesis.isFinalAndApprovedThesis()) {
     			return true;
-    		}
-    	}
-    	
+}
+}
     	return false;
     }
 }

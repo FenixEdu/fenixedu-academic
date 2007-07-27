@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -53,7 +52,6 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	super.fillReport();
 	
 	init(getDocumentRequest().getRegistration(), ((SchoolRegistrationDeclarationRequest)getDocumentRequest()).getExecutionYear(), AccessControl.getPerson());
-	parameters.put("situation", (getExecutionYear().containsDate(new DateTime())) ? " ESTÁ" : " ESTEVE");
     }
 
     public Person getEmployee() {
@@ -126,7 +124,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.nationality.prefix"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(student.getNationality().getName());
+	    stringBuilder.append(student.getCountry().getName());
 	    stringBuilder.append(resourceBundle.getString("message.declaration.registration.comma"));
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle
