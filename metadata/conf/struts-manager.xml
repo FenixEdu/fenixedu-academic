@@ -685,6 +685,11 @@
 			<form-property name="studentId" type="java.lang.Integer" />
 	    </form-bean>
 		
+		<!-- bolonhaStudentEnrolmentForm -->
+		<form-bean name="bolonhaStudentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+    	</form-bean>
+    	
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2379,9 +2384,21 @@
         	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />
         </action>
         <!-- End : Bolonha Transition Management -->
+        
+        <!-- Begin : Bolonha Student Enrolment -->
+		<action path="/bolonhaStudentEnrolment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments.BolonhaEnrolmentsManagementDA" 
+				parameter="method"
+				name="bolonhaStudentEnrolmentForm"
+				scope="request">
+		
+			<forward name="chooseStudentInformation" path="student.enrolment.bolonha.chooseStudentInformation" />
+			<forward name="showDegreeModulesToEnrol" path="student.enrolment.bolonha.showDegreeModulesToEnrol" />
+			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
+		</action>
+        <!-- end : Bolonha Student Enrollment -->
 
 	</action-mappings>
-
  
     
 	<!-- ========== Controller Configuration ================================ -->

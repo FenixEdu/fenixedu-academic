@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Added Bolonha Enrolment functionality to manager" changes-20070726182053.sql
