@@ -82,8 +82,7 @@ public class EditarTurno extends Service {
 	return InfoShift.newInfoFromDomain(shiftToEdit);
     }
 
-    private void newShiftIsValid(InfoShift infoShiftOld, ShiftType newShiftType,
-	    InfoExecutionCourse newShiftExecutionCourse, Integer newShiftCapacity)
+    private void newShiftIsValid(InfoShift infoShiftOld, ShiftType newShiftType, InfoExecutionCourse newShiftExecutionCourse, Integer newShiftCapacity)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	// 1. Read shift lessons
@@ -98,8 +97,7 @@ public class EditarTurno extends Service {
 	for (int i = 0; i < shiftLessons.size(); i++) {
 	    Lesson lesson = ((Lesson) shiftLessons.get(i));
 	    shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-	    if (((AllocatableSpace)lesson.getLessonSpaceOccupation().getRoom()).getCapacidadeNormal().intValue() > maxCapacity
-		    .intValue()) {
+	    if (lesson.hasSala() && ((AllocatableSpace)lesson.getSala()).getCapacidadeNormal().intValue() > maxCapacity.intValue()) {
 		maxCapacity = ((AllocatableSpace)lesson.getLessonSpaceOccupation().getRoom()).getCapacidadeNormal();
 	    }
 	}
