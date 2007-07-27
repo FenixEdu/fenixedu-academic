@@ -180,6 +180,22 @@ public class DismissalBean implements Serializable {
 	    this.selected = selected;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+	    if (!(obj instanceof SelectedEnrolment)) {
+		return false;
+	    }
+	    return equals((SelectedEnrolment) obj);
+	}
+	
+	public boolean equals(final SelectedEnrolment other) {
+	    return getEnrolment() == other.getEnrolment();
+	}
+	
+	@Override
+	public int hashCode() {
+	    return getEnrolment().hashCode();
+	}
     }
     
     public static class SelectedExternalEnrolment implements Serializable {
@@ -206,6 +222,23 @@ public class DismissalBean implements Serializable {
 
 	public void setSelected(Boolean selected) {
 	    this.selected = selected;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (!(obj instanceof SelectedExternalEnrolment)) {
+		return false;
+	    }
+	    return equals((SelectedExternalEnrolment) obj);
+	}
+	
+	public boolean equals(final SelectedExternalEnrolment other) {
+	    return getExternalEnrolment() == other.getExternalEnrolment();
+	}
+	
+	@Override
+	public int hashCode() {
+	    return getExternalEnrolment().hashCode();
 	}
     }
 
