@@ -51,7 +51,7 @@ public class ResearchUnitProcessor extends PathProcessor {
         }
         else {
         	ResearchUnitContext ownContext = (ResearchUnitContext) context;
-            return doForward(context, new Object[] { ownContext.getUnit().getSite().getIdInternal(), "frontPage" });
+            return doForward(context, new Object[] { "frontPage", ownContext.getUnit().getSite().getIdInternal()  });
         }
 	}
 
