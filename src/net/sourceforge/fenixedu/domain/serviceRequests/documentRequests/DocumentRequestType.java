@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public enum DocumentRequestType {
 
-    SCHOOL_REGISTRATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE), 
-    ENROLMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE), 
-    APPROVEMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE), 
-    DEGREE_FINALIZATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE), 
-    SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE), 
-    ENROLMENT_DECLARATION(false, true, AdministrativeOfficeType.DEGREE), 
-    IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE), 
+    SCHOOL_REGISTRATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    ENROLMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    APPROVEMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    DEGREE_FINALIZATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    ENROLMENT_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
+    IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
     DIPLOMA_REQUEST(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE);
 
     private boolean hasAdditionalInformation;
