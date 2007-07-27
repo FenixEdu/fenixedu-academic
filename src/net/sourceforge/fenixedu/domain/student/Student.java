@@ -546,8 +546,8 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentCurricularPlan> getAllStudentCurricularPlans() {
-	Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
-	for (Registration registration : getRegistrationsSet()) {
+	final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
+	for (final Registration registration : getRegistrationsSet()) {
 	    result.addAll(registration.getStudentCurricularPlansSet());
 	}
 	return result;
