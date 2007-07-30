@@ -1521,14 +1521,14 @@ public class Registration extends Registration_Base {
 		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
 		continue;
 	    }
-
+	    
 	    result.add(state);
-
-	    if (state.getStateDate().isBefore(
+		
+	    if (!state.getStateDate().isAfter(
 		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
 		break;
 	    }
-
+	    
 	}
 
 	return result;
