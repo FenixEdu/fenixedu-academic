@@ -22,11 +22,7 @@ public class ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType extends 
             return null;
         }
         StudentCurricularPlan studentCurricularPlan = registration
-                .getActiveOrConcludedStudentCurricularPlan();
-
-        if (studentCurricularPlan == null) {
-            studentCurricularPlan = registration.getLastStudentCurricularPlan();
-        }
+                .getLastStudentCurricularPlan();
 
         if (studentCurricularPlan != null) {
             return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);

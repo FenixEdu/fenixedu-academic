@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -28,7 +27,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Servic
         if(registration == null) {
         	return null;
         }
-        StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         if (studentCurricularPlan != null) {
             return InfoStudentCurricularPlan
                     .newInfoFromDomain(studentCurricularPlan);

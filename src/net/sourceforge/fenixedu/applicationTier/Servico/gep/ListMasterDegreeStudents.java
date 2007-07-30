@@ -53,11 +53,7 @@ public class ListMasterDegreeStudents extends Service {
 
 	for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-	    final RegistrationStateType stateType = studentCurricularPlan.getRegistration()
-		    .getActiveState().getStateType();
-	    if (!studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)
-		    || !(stateType.equals(RegistrationStateType.REGISTERED) || stateType
-			    .equals(RegistrationStateType.SCHOOLPARTCONCLUDED))) {
+	    if (!studentCurricularPlan.isActive()){
 		continue;
 	    }
 

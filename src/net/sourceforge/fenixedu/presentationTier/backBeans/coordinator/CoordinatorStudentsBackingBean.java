@@ -222,12 +222,6 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	    return false;
 	}
 
-	final StudentCurricularPlanState studentCurricularPlanState = getStudentCurricularPlanState();
-	if (studentCurricularPlanState != null
-		&& studentCurricularPlanState != studentCurricularPlan.getCurrentState()) {
-	    return false;
-	}
-
 	final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean();
 
 	final Double minGrade = getMinGrade();

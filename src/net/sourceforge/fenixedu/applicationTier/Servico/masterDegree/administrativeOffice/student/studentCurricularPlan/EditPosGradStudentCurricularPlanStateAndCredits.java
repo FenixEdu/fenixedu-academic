@@ -25,16 +25,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
-    public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
-	    Double credits, String startDate, List extraCurricularCourses, String observations,
-	    Integer branchId, String specialization) throws FenixServiceException, ExcepcaoPersistencia {
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(studentCurricularPlanId);
+    public void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
+	    List extraCurricularCourses, String observations, Integer branchId, String specialization)
+	    throws FenixServiceException, ExcepcaoPersistencia {
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 	if (studentCurricularPlan == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	StudentCurricularPlanState newState = StudentCurricularPlanState.valueOf(currentState);
+	// StudentCurricularPlanState newState =
+        // StudentCurricularPlanState.valueOf(currentState);
 
 	Person person = Person.readPersonByUsername(userView.getUtilizador());
 	if (person == null) {
@@ -52,7 +52,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	}
 
 	studentCurricularPlan.setStartDate(stringDateToCalendar(startDate).getTime());
-	studentCurricularPlan.setCurrentState(newState);
+	// studentCurricularPlan.setCurrentState(newState);
 	studentCurricularPlan.setEmployee(employee);
 	studentCurricularPlan.setGivenCredits(credits);
 	studentCurricularPlan.setObservations(observations);
@@ -61,98 +61,20 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
 	List enrollments = studentCurricularPlan.getEnrolments();
 	Iterator iterator = enrollments.iterator();
-	if (newState.equals(StudentCurricularPlanState.INACTIVE)) {
-	    while (iterator.hasNext()) {
-		Enrolment enrolment = (Enrolment) iterator.next();
-		if (enrolment.isEnroled()
-			|| enrolment.isTemporarilyEnroled()) {
-		    enrolment.setEnrollmentState(EnrollmentState.ANNULED);
+
+	while (iterator.hasNext()) {
+	    Enrolment enrolment = (Enrolment) iterator.next();
+	    if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
+		if (!enrolment.isExtraCurricular()) {
+		    enrolment.setIsExtraCurricular(true);
 		}
-	    }
-	} else {
-
-	    while (iterator.hasNext()) {
-		Enrolment enrolment = (Enrolment) iterator.next();
-		if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
-		    if (!(enrolment.isExtraCurricular())) {
-
-			Enrolment auxEnrolment = new Enrolment(enrolment.getStudentCurricularPlan(),
-				enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(),
-				enrolment.getEnrolmentCondition(), enrolment.getCreatedBy(), true);
-
-			copyEnrollment(enrolment, auxEnrolment);
-			setEnrolmentCreationInformation(userView, auxEnrolment);
-
-			changeAnnulled2ActiveIfActivePlan(newState, auxEnrolment);
-
-			enrolment.delete();
-		    } else {
-			changeAnnulled2ActiveIfActivePlan(newState, enrolment);
-		    }
-		} else {
-		    if (enrolment.isExtraCurricular()) {
-
-			Enrolment auxEnrolment = new Enrolment(enrolment.getStudentCurricularPlan(),
-				enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(),
-				enrolment.getEnrolmentCondition(), enrolment.getCreatedBy(), true);
-
-			copyEnrollment(enrolment, auxEnrolment);
-			setEnrolmentCreationInformation(userView, auxEnrolment);
-
-			changeAnnulled2ActiveIfActivePlan(newState, auxEnrolment);
-
-			enrolment.delete();
-		    } else {
-			changeAnnulled2ActiveIfActivePlan(newState, enrolment);
-		    }
+	    } else {
+		if (enrolment.isExtraCurricular()) {
+		    enrolment.setIsExtraCurricular(false);
 		}
 	    }
 	}
 
-    }
-
-    private void setEnrolmentCreationInformation(IUserView userView, Enrolment auxEnrolment) {
-	auxEnrolment.setCreationDate(Calendar.getInstance().getTime());
-	auxEnrolment.setCreatedBy(userView.getUtilizador());
-    }
-
-    /**
-         * @param enrolment
-         * @param auxEnrolment
-         * @throws FenixServiceException
-         */
-    private void copyEnrollment(Enrolment enrolment, Enrolment auxEnrolment) {
-
-	auxEnrolment.setCreationDate(enrolment.getCreationDate());
-	auxEnrolment.setAccumulatedWeight(enrolment.getAccumulatedWeight());
-	auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-	auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
-
-	for (final List<EnrolmentEvaluation> evaluations = enrolment.getEvaluations(); !evaluations
-		.isEmpty(); auxEnrolment.addEvaluations(evaluations.get(0)))
-	    ;
-	for (final List<EnrolmentEquivalence> equivalences = enrolment.getEnrolmentEquivalences(); !equivalences
-		.isEmpty(); auxEnrolment.addEnrolmentEquivalences(equivalences.get(0)))
-	    ;
-	for (final List<Attends> attends = enrolment.getAttends(); !attends.isEmpty(); auxEnrolment
-		.addAttends(attends.get(0)))
-	    ;
-	for (final List<CreditsInAnySecundaryArea> credits = enrolment.getCreditsInAnySecundaryAreas(); !credits
-		.isEmpty(); auxEnrolment.addCreditsInAnySecundaryAreas(credits.get(0)))
-	    ;
-	for (final List<CreditsInScientificArea> credits = enrolment.getCreditsInScientificAreas(); !credits
-		.isEmpty(); auxEnrolment.addCreditsInScientificAreas(credits.get(0)))
-	    ;
-
-    }
-
-    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
-	    Enrolment enrolment) throws ExcepcaoPersistencia {
-	if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
-	    if (enrolment.isAnnulled()) {
-		enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
-	    }
-	}
     }
 
     private Calendar stringDateToCalendar(String startDate) throws NumberFormatException {

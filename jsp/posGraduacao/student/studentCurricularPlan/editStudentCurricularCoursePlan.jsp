@@ -54,7 +54,7 @@
 		    </html:select>
 		</td>
 	</tr>		
-	<tr>
+<!--	<tr>
 		<td>
 			<strong><bean:message key="label.student.state" /></strong>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
@@ -62,7 +62,7 @@
 	          	 	<html:options collection="values" property="value" labelProperty="label"/>
 	    	 	</html:select>   
 		</td>						
-	</tr>	
+	</tr>	-->
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.startDate" /></strong>

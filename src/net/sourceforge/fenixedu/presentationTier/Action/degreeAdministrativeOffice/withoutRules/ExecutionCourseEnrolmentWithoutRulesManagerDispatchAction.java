@@ -240,7 +240,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	try {
 
 	    final Registration registration = getStudent(form);
-	    studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+	    studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	    result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
 		    getUserView(request), "PrepareDegreesListByStudentNumber", new Object[] {
@@ -341,18 +341,18 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	    final Integer userType = (Integer) form.get("userType");
 	    final Registration registration = getStudent(form);
-	    studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+	    studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	    if (userType.equals(0)) {
 		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
 			.executeService(getUserView(request), "ReadCurricularCoursesToEnroll",
-				new Object[] { registration.getActiveOrConcludedStudentCurricularPlan(), getDegreeType(form), executionPeriod,
+				new Object[] { registration.getLastStudentCurricularPlan(), getDegreeType(form), executionPeriod,
 					executionDegreeID, curricularYearsList, curricularSemesters });
 
 	    } else {
 		curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
 			.executeService(getUserView(request), "ReadCurricularCoursesToEnrollSuperUser",
-				new Object[] { registration.getActiveOrConcludedStudentCurricularPlan(), getDegreeType(form), executionPeriod,
+				new Object[] { registration.getLastStudentCurricularPlan(), getDegreeType(form), executionPeriod,
 					executionDegreeID, curricularYearsList, curricularSemesters });
 	    }
 

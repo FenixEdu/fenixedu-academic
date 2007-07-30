@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
@@ -100,8 +99,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	final ExecutionPeriod executionPeriod = getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = StudentCurricularPlan
 		.createBolonhaStudentCurricularPlan(registration, executionDegree
-			.getDegreeCurricularPlan(), StudentCurricularPlanState.ACTIVE,
-			new YearMonthDay(), executionPeriod);
+			.getDegreeCurricularPlan(), new YearMonthDay(), executionPeriod);
 
 	studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionPeriod, getCurrentUsername());
     }

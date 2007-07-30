@@ -44,12 +44,6 @@
 	</tr>		
 	<tr>
 		<td>
-			<b><bean:message key="label.student.state" /></b>
-			<bean:message name="studentCurricularPlan" property="currentState.name" bundle="ENUMERATION_RESOURCES"/>
-		</td>						
-	</tr>	
-	<tr>
-		<td>
 			<b><bean:message key="label.student.startDate" /></b>
 			<bean:write name="studentCurricularPlan" property="startDateFormatted" />
 		</td>								

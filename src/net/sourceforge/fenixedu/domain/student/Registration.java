@@ -70,7 +70,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredStat
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -125,9 +124,8 @@ public class Registration extends Registration_Base {
 	this(person, null, agreement, studentCandidacy, degreeCurricularPlan);
 
 	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		StudentCurricularPlanState.ACTIVE, new YearMonthDay(), ExecutionPeriod
-			.readActualExecutionPeriod(), cycleType);
+	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, new YearMonthDay(), ExecutionPeriod
+		.readActualExecutionPeriod(), cycleType);
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
@@ -210,24 +208,11 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    final public StudentCurricularPlan getActiveStudentCurricularPlan() {
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE
-		    || studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
-		return studentCurricularPlan;
-	    }
-	}
-	return null;
+    public StudentCurricularPlan getActiveStudentCurricularPlan() {
+	return isActive() ? getLastStudentCurricularPlan() : null;
     }
 
-    final public StudentCurricularPlan getConcludedStudentCurricularPlan() {
-	if (isConcluded()) {
-	    return getLastStudentCurricularPlanExceptPast();
-	}
-	return null;
-    }
-
-    final public StudentCurricularPlan getLastStudentCurricularPlan() {
+    public StudentCurricularPlan getLastStudentCurricularPlan() {
 
 	if (getStudentCurricularPlans().size() == 0) {
 	    return null;
@@ -236,20 +221,7 @@ public class Registration extends Registration_Base {
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
     }
 
-    final public StudentCurricularPlan getLastStudentCurricularPlanExceptPast() {
-
-	if (getStudentCurricularPlansExceptPast().size() == 0) {
-	    return null;
-	}
-	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlansExceptPast(),
-		new BeanComparator("startDateYearMonthDay"));
-    }
-
-    final public StudentCurricularPlan getCurrentStudentCurricularPlan() {
-	return getLastStudentCurricularPlanExceptPast();
-    }
-
-    final public StudentCurricularPlan getFirstStudentCurricularPlan() {
+    public StudentCurricularPlan getFirstStudentCurricularPlan() {
 	return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator(
 		"startDateYearMonthDay"));
     }
@@ -264,27 +236,7 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public StudentCurricularPlan getActiveOrConcludedStudentCurricularPlan() {
-	StudentCurricularPlan concludedStudentCurricularPlan = null;
-	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-		return studentCurricularPlan;
-	    }
-	    if (concludedStudentCurricularPlan == null
-		    && studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.SCHOOLPARTCONCLUDED) {
-		concludedStudentCurricularPlan = studentCurricularPlan;
-	    }
-	}
-	return concludedStudentCurricularPlan;
-    }
-
-    final public StudentCurricularPlan getActiveOrConcludedOrLastStudentCurricularPlan() {
-	StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedStudentCurricularPlan();
-	return studentCurricularPlan == null ? studentCurricularPlan = getLastStudentCurricularPlan()
-		: studentCurricularPlan;
-    }
-
-    final public boolean attends(final ExecutionCourse executionCourse) {
+    public boolean attends(final ExecutionCourse executionCourse) {
 	for (final Attends attends : getAssociatedAttends()) {
 	    if (attends.getExecutionCourse() == executionCourse) {
 		return true;
@@ -625,7 +577,7 @@ public class Registration extends Registration_Base {
 
     final public boolean hasAnyApprovedEnrolment() {
 	return getLastStudentCurricularPlan().hasAnyApprovedEnrolment();
-    }
+	    }
 
     final public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -733,20 +685,7 @@ public class Registration extends Registration_Base {
 	return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
     }
 
-    final public List<StudentCurricularPlan> getStudentCurricularPlansByStateAndType(
-	    StudentCurricularPlanState state, DegreeType type) {
-	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.getCurrentState().equals(state)
-		    && studentCurricularPlan.getDegreeCurricularPlan().getDegree().getDegreeType()
-			    .equals(type)) {
-		result.add(studentCurricularPlan);
-	    }
-	}
-	return result;
-    }
-
-    final public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(
+    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(
 	    Specialization specialization) {
 	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
@@ -768,21 +707,7 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<StudentCurricularPlan> getStudentCurricularPlansBySpecializationAndState(
-	    Specialization specialization, StudentCurricularPlanState state) {
-	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
-	    if (studentCurricularPlan.getSpecialization() != null
-		    && studentCurricularPlan.getSpecialization().equals(specialization)
-		    && studentCurricularPlan.getCurrentState() != null
-		    && studentCurricularPlan.getCurrentState().equals(state)) {
-		result.add(studentCurricularPlan);
-	    }
-	}
-	return result;
-    }
-
-    final public List<Attends> readAttendsInCurrentExecutionPeriod() {
+    public List<Attends> readAttendsInCurrentExecutionPeriod() {
 	final List<Attends> attends = new ArrayList<Attends>();
 	for (final Attends attend : this.getAssociatedAttendsSet()) {
 	    if (attend.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
@@ -1377,15 +1302,8 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    final public Tutorship getActiveTutorship() {
-
-	StudentCurricularPlan activeStudentCurricularPlan = this
-		.getActiveOrConcludedStudentCurricularPlan();
-	if (activeStudentCurricularPlan == null) {
-	    activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
-	}
-
-	return activeStudentCurricularPlan.getActiveTutorship();
+    public Tutorship getActiveTutorship() {
+	return getLastStudentCurricularPlan().getActiveTutorship();
     }
 
     @Override
@@ -1509,13 +1427,7 @@ public class Registration extends Registration_Base {
 	return testGroups;
     }
 
-    final public DegreeCurricularPlan getActiveOrConcludedOrLastDegreeCurricularPlan() {
-	final StudentCurricularPlan studentCurricularPlan = getActiveOrConcludedOrLastStudentCurricularPlan();
-	return studentCurricularPlan == null ? null : studentCurricularPlan.getDegreeCurricularPlan();
-
-    }
-
-    final public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
+    public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
 		return true;
@@ -2043,8 +1955,8 @@ public class Registration extends Registration_Base {
 	return getActiveStateType().isInactive();
     }
 
-    final public Campus getCampus() {
-	return getLastStudentCurricularPlanExceptPast().getLastCampus();
+    public Campus getCampus() {
+	return getLastStudentCurricularPlan().getLastCampus();
     }
 
     final public String getIstUniversity() {
@@ -2229,5 +2141,6 @@ public class Registration extends Registration_Base {
     public RegistrationAgreement getRegistrationAgreement() {
         return super.getRegistrationAgreement() == null ? RegistrationAgreement.NORMAL : super
 		.getRegistrationAgreement();
-}
+    }
+    
 }

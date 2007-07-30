@@ -32,7 +32,7 @@ public class DegreeStudentsGroup extends DegreeGroup {
 	for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
 	    for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
 		    .getStudentCurricularPlans()) {
-		if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
+		if (studentCurricularPlan.isActive()) {
 		    elements.add(studentCurricularPlan.getRegistration().getPerson());
 		}
 	    }

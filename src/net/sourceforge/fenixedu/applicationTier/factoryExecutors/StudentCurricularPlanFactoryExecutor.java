@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.YearMonthDay;
@@ -45,8 +44,8 @@ public class StudentCurricularPlanFactoryExecutor {
 	    }
 
 	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
-		    getDegreeCurricularPlan(), StudentCurricularPlanState.ACTIVE, new YearMonthDay(),
-		    ExecutionPeriod.readActualExecutionPeriod(), getCycleType());
+		    getDegreeCurricularPlan(), new YearMonthDay(), ExecutionPeriod
+			    .readActualExecutionPeriod(), getCycleType());
 	}
 
 	public DegreeCurricularPlan getDegreeCurricularPlan() {

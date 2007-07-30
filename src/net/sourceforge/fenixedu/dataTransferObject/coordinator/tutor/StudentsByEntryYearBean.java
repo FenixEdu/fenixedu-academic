@@ -142,7 +142,7 @@ public class StudentsByEntryYearBean implements Serializable {
 		Iterator iterator = this.studentsList.iterator();
 		while(iterator.hasNext() && i < this.numberOfStudentsToCreateTutorship) {
 			StudentCurricularPlan scp = ((DomainReference<StudentCurricularPlan>)iterator.next()).getObject();
-			if(scp.getRegistrationStateType() != null && scp.getRegistrationStateType().isActive()) {
+			if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
 				this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(scp));
 				i++;
 			}

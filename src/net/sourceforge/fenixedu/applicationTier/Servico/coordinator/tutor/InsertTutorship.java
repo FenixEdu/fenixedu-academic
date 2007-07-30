@@ -53,7 +53,7 @@ public class InsertTutorship extends TutorshipManagement {
 			Registration registration = studentCurricularPlan.getRegistration();
 			Integer studentNumber = registration.getNumber();
 			
-			if (!studentCurricularPlan.getRegistrationStateType().isActive()) {
+			if (!registration.isActive() || !studentCurricularPlan.isLastStudentCurricularPlanFromRegistration()) {
 				studentsWithErrors.add(new TutorshipErrorBean("error.tutor.notActiveRegistration", new String[] {Integer.toString(studentNumber)}));
 				continue;
 			}

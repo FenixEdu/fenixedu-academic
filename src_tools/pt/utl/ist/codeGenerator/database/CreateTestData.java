@@ -139,7 +139,6 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
@@ -576,7 +575,7 @@ public class CreateTestData {
             RootDomainObject.init();
             setPrivledges();
 
-            createTestData();
+                createTestData();
 //
 //            ISuportePersistente persistentSupport = null;
 //            try {
@@ -609,7 +608,6 @@ public class CreateTestData {
     private static final LessonRoomManager lessonRoomManager = new LessonRoomManager();
     private static final ExamRoomManager examRoomManager = new ExamRoomManager();
     private static final WrittenTestsRoomManager writtenTestsRoomManager = new WrittenTestsRoomManager();
-
 
     private static void createManagerUser() {
     }
@@ -939,7 +937,7 @@ public class CreateTestData {
 	final Registration registration = new Registration(person, Integer.valueOf(i));
 	registration.setDegree(degreeCurricularPlan.getDegree());
 	registration.setStudent(student);
-	final StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE, new YearMonthDay().minusMonths(6));
+	final StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreeCurricularPlan, new YearMonthDay().minusMonths(6));
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
         final Login login = person.getUser().readUserLoginIdentification();
         login.openLoginIfNecessary(RoleType.STUDENT);

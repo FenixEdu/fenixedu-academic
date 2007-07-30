@@ -7601,17 +7601,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ChangeStudentCurricularPlanState</name>
-		<implementationClass> 
-			net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeStudentCurricularPlanState
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadCostCenterByNumber</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadCostCenterByNumber
 		</implementationClass>
@@ -7854,15 +7843,6 @@
 		<filterChains>
 			<chain name="ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice" />
 		</filterChains>
-    </service>
-    <service>
-    	<name>ChangeDegree</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ChangeDegree</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain"/>
-        </filterChains>
     </service>
 	<service>
     	<name>ReadShiftsToEnroll</name>

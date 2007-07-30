@@ -18,7 +18,7 @@ public class WriteStudentAreasWithoutRestrictions extends Service {
 			throw new NonExistingServiceException("error.invalid.student");
 		}
 
-		final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new NonExistingServiceException("error.no.studentCurricularPlan");
 		}

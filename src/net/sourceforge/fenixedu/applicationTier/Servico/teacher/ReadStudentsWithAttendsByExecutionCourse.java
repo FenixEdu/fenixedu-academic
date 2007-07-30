@@ -67,7 +67,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 	while (i.hasNext()) {
 	    StudentCurricularPlan cp = (StudentCurricularPlan) i.next();
-	    if (cp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE))
+	    if (cp.isActive())
 		return cp;
 	}
 	return GetLastCurricularPlan(cps);

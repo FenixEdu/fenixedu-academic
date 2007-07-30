@@ -147,17 +147,6 @@
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
 
-	<!-- ==================== Change Degree ================== -->
-	<definition name="change-degree" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/changeDegree/changeDegree.jsp"></put>
-	</definition>
-	<definition name="confirm-change-degree" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/changeDegree/confirmChangeDegree.jsp"></put>
-	</definition>
-	<definition name="sucess-change-degree" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/changeDegree/sucessChangeDegree.jsp"></put>
-	</definition>
-
 	<!-- ===================== Equivalences ====================== -->
 	<definition name="show-not-need-to-enroll" 
 		extends="definition.degreeAdministrativeOffice.masterPage">

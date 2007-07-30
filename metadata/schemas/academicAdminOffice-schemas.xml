@@ -305,7 +305,7 @@
     <slot name="number" layout="null-as-label" key="label.number">
         <property name="label" value="-"/>
     </slot>	
-	<slot name="activeOrConcludedOrLastStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
+	<slot name="lastStudentCurricularPlan.degreeCurricularPlan" layout="format" key="label.degree" >
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
 	</slot>	
 	<slot name="activeStateType" key="label.currentState" />

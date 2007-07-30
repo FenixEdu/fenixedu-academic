@@ -87,7 +87,7 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 	} catch (Exception e) {
 	    setAcurateErrorMessage(request, e, studentNumber, "showAndChooseStudentAreas");
 	    prepareStudentAreasInformation(request, form, registration
-		    .getActiveOrConcludedStudentCurricularPlan());
+		    .getLastStudentCurricularPlan());
 	    return mapping.findForward("showAndChooseStudentAreas");
 	}
 	return chooseStudent(mapping, form, request, response);

@@ -1375,7 +1375,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
 						final Registration registration = groupStudent.getRegistration();
-						final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedOrLastStudentCurricularPlan();
+						final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 						if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
 							final Row row = spreadsheet.addRow();
 							row.setCell(registration.getNumber().toString());

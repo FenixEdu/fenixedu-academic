@@ -1509,7 +1509,7 @@ public class Person extends Person_Base {
 	for (final Registration registration : getStudentsSet()) {
 	    if (registration.isConcluded()) {
 		StudentCurricularPlan lastStudent = registration
-		.getLastStudentCurricularPlanExceptPast();
+		.getLastStudentCurricularPlan();
 		if (lastStudent != null) {
 		    studentCurricularPlans.add(lastStudent);
 		}
@@ -2081,15 +2081,10 @@ public class Person extends Person_Base {
 	if (getStudent() != null) {
 	    for (final Registration registration : getStudent().getRegistrationsSet()) {
 		if (registration.isActive()) {
-		    for (final StudentCurricularPlan studentCurricularPlan : registration
-			    .getStudentCurricularPlansSet()) {
-			if (studentCurricularPlan.isActive()) {
-			    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
-			    .getDegreeCurricularPlan();
-			    final Degree degree = degreeCurricularPlan.getDegree();
-			    organizationalUnits.add(degree.getPresentationName());
-			}
-		    }
+		    final DegreeCurricularPlan degreeCurricularPlan = registration
+			    .getLastDegreeCurricularPlan();
+		    final Degree degree = degreeCurricularPlan.getDegree();
+		    organizationalUnits.add(degree.getPresentationName());
 		}
 	    }
 	}
@@ -2497,8 +2492,7 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchUnit> getWorkingResearchUnits() {
-	
-	List<ResearchUnit> units = new ArrayList<ResearchUnit>();	
+	List<ResearchUnit> units = new ArrayList<ResearchUnit>();
 	Collection<? extends Accountability> parentAccountabilities = 
 	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearchContract.class);
 	
@@ -2506,12 +2500,12 @@ public class Person extends Person_Base {
 	for (Accountability accountability : parentAccountabilities) {
 	    if(accountability.isActive(currentDate)) {
 		units.add((ResearchUnit) accountability.getParentParty());
-	    }
+	}
 	}
 	
 	return units;
     }
-        
+
     public String getWorkingResearchUnitNames() {
 
 	String names = "";

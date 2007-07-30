@@ -23,7 +23,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndType extends Service {
     	Registration registration = Registration.readRegisteredRegistrationByNumberAndDegreeType(studentNumber, degreeType);
         StudentCurricularPlan scp = null;
         if(registration != null) {
-        	scp = registration.getActiveOrConcludedStudentCurricularPlan();
+        	scp = registration.getLastStudentCurricularPlan();
         }
 
         return InfoStudentCurricularPlan.newInfoFromDomain(scp);

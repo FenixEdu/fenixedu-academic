@@ -1069,9 +1069,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Integer studentExecutionDegreeId = (Integer) inquiryForm.get("studentExecutionDegreeId");
 	InfoExecutionDegree infoExecutionDegreeStudent;
 	if (studentExecutionDegreeId == null) {
-	    final ExecutionDegree executionDegree = registration
-		    .getActiveOrConcludedStudentCurricularPlan().getDegreeCurricularPlan()
-		    .getMostRecentExecutionDegree();
+	    final ExecutionDegree executionDegree = registration.getLastStudentCurricularPlan()
+		    .getDegreeCurricularPlan().getMostRecentExecutionDegree();
 	    infoExecutionDegreeStudent = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	} else {
 	    Object[] argsExecutionDegreeId = { studentExecutionDegreeId };

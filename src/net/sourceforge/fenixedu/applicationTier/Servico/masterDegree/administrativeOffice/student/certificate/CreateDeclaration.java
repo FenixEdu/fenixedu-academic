@@ -59,7 +59,7 @@ public class CreateDeclaration extends Service {
         if(registration == null) {
         	return null;
         }
-        List studentCurricularPlanList = registration.getStudentCurricularPlansBySpecializationAndState(specialization, state);   	
+        List studentCurricularPlanList = registration.getStudentCurricularPlansBySpecialization(specialization);   	
 
         if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
         	return null;
@@ -93,7 +93,7 @@ public class CreateDeclaration extends Service {
         }
         for (Iterator iter = states.iterator(); iter.hasNext();) {
         	StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();
-        	List<StudentCurricularPlan> studentCurricularPlanListTmp = registration.getStudentCurricularPlansBySpecializationAndState(specialization, state);
+        	List<StudentCurricularPlan> studentCurricularPlanListTmp = registration.getStudentCurricularPlansBySpecialization(specialization);
         	for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {
         		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 

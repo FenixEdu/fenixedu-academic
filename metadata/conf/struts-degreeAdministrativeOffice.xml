@@ -446,19 +446,6 @@
        		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
        	</action>
        	
-
-       	<!-- ==================== Change Degree ================== -->
-       	<action path="/changeDegree"
-       			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ChangeDegreeDA"
-				input="/changeDegree.do?method=prepare&amp;page=0"
-				name="changeDegreeForm"
-    	   		scope="request"
-       			parameter="method">
-       		<forward name="showForm" path="change-degree"/>
-       		<forward name="showConfirmationScreen" path="confirm-change-degree"/>
-			<forward name="showSucessPage" path="sucess-change-degree"/>
-       	</action>
-
        	<!-- ==================== Curricular Course Equivalencies ================== -->
        	<action path="/curricularCourseEquivalencies"
        			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCourseEquivalenciesDA"

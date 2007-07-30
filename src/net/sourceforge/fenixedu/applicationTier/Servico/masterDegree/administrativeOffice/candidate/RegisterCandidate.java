@@ -156,9 +156,8 @@ public class RegisterCandidate extends Service {
 	DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
 		.getDegreeCurricularPlan();
 
-	StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration,
-		degreecurricularPlan, branch, new YearMonthDay(), StudentCurricularPlanState.ACTIVE,
-		masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
+	StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreecurricularPlan, branch,
+		new YearMonthDay(), masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
 	return studentCurricularPlan;
     }
 

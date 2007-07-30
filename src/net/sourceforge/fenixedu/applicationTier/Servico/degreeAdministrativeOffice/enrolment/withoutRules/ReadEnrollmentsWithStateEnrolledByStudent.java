@@ -15,7 +15,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 			ExecutionPeriod executionPeriod) throws FenixServiceException {
 
 		final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration
-				.getActiveOrConcludedStudentCurricularPlan();
+				.getLastStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 		}

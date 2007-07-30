@@ -41,7 +41,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     private List<StudentCurricularPlan> getEnrolableStudentCurricularPlans(final Student student) {
 	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 	for (final Registration registration : student.getRegistrations()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlanExceptPast();
+	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 	    if (studentCurricularPlan != null && studentCurricularPlan.isEnrolable()) {
 		result.add(studentCurricularPlan);
 	    }

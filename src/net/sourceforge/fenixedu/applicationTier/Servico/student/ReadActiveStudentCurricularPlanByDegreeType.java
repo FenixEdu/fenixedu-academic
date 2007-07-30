@@ -26,7 +26,7 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
     	final Registration registration = person.getStudentByType(degreeType);
 
         if(registration != null) {
-        	final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+        	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
             if (studentCurricularPlan != null) {
             	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
                 return infoStudentCurricularPlan;

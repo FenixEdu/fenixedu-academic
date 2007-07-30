@@ -60,7 +60,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
             Registration registration = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2],
                     DegreeType.DEGREE);
             if (registration != null) {
-                studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
+                studentCurricularPlan = registration.getLastStudentCurricularPlan();
             }
         }
         return studentCurricularPlan;
