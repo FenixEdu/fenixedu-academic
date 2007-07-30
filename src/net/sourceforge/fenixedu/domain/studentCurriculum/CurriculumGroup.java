@@ -654,6 +654,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return hasAnyCurriculumModules();
     }
+    
+    private CurriculumModule getCurriculumModuleByDegreeModule(final DegreeModule degreeModule) {
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if(curriculumModule.getDegreeModule() == degreeModule) {
+		return curriculumModule;
+	    }
+	}
+	return null;
+    }
 
     @SuppressWarnings("unchecked")
     private boolean checkDegreeModulesSelectionLimit(ExecutionYear executionYear) {
