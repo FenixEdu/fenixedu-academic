@@ -66,7 +66,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
 		.getAllStudentCurricularPlans()) {
 	    
-	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan.getAprovedEnrolments());
+	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan.getDismissalApprovedEnrolments());
 	    Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 	    for (final Enrolment enrolment : approvedEnrolments) {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));

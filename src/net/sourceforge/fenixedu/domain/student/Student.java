@@ -526,6 +526,17 @@ public class Student extends Student_Base {
 	return aprovedEnrolments;
     }
 
+    public Set<Enrolment> getDismissalApprovedEnrolments(){
+	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+	for (Registration registration : getRegistrationsSet()) {
+	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+		aprovedEnrolments.addAll(studentCurricularPlan.getDismissalApprovedEnrolments());
+	    }
+	}
+	return aprovedEnrolments;
+    }
+    
+
     public boolean isHandicapped() {
 	for (Registration registration : getRegistrationsSet()) {
 	    if (registration.getIngression() != null

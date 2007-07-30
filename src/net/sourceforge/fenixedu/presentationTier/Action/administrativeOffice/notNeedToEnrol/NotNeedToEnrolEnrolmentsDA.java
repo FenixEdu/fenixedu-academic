@@ -59,7 +59,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction{
 	NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) bean.getSelected();
 	
 	Collection<SelectedAprovedEnrolment> aprovedEnrolments = new ArrayList<SelectedAprovedEnrolment>();
-	for (Enrolment enrolment : bean.getStudent().getApprovedEnrolments()) {
+	for (Enrolment enrolment : bean.getStudent().getDismissalApprovedEnrolments()) {
 	    aprovedEnrolments.add(new SelectedAprovedEnrolment(enrolment, notNeedToEnrollInCurricularCourse.getEnrolments().contains(enrolment)));
 	}
 	bean.setAprovedEnrolments(aprovedEnrolments);

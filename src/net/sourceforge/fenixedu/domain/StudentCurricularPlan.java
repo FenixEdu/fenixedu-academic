@@ -616,6 +616,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
     }
+    
+    public Set<Enrolment> getDismissalApprovedEnrolments() {
+	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (!enrolment.isInvisible() && enrolment.isApproved()) {
+		aprovedEnrolments.add(enrolment);
+	    }
+	}
+	return aprovedEnrolments;
+    }
+
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
