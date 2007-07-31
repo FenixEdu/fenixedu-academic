@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -185,7 +186,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	result.append(" em ").append(degree.getFilteredName().toUpperCase());
 	
 	if (degreeType.isComposite()) {
-	    result.append(" (").append(getDocumentRequest().getRegistration().getLastConcludedCycleType().getDescription()).append(")");
+	    final CycleType lastConcludedCycleType = getDocumentRequest().getRegistration().getLastConcludedCycleType();
+	    if(lastConcludedCycleType != null){
+		result.append(" (").append(lastConcludedCycleType.getDescription()).append(")");
+	    }
 	} else if (degreeType.hasExactlyOneCycleType()) {
 	    result.append(" (").append(degreeType.getCycleType().getDescription()).append(")");
 	}
