@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCurricularCourse extends Service {
@@ -21,5 +22,10 @@ public class EditCurricularCourse extends Service {
     public void run(CurricularCourse curricularCourse, String name, String nameEn)
             throws ExcepcaoPersistencia, FenixServiceException {        
         curricularCourse.edit(name, nameEn, CurricularStage.DRAFT);
+    }
+    
+    public void run(OptionalCurricularCourse curricularCourse, String name, String nameEn)
+	    throws ExcepcaoPersistencia, FenixServiceException {
+	run((CurricularCourse)curricularCourse,name,nameEn);
     }
 }
