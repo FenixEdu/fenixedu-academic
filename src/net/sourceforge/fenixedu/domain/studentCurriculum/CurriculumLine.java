@@ -71,6 +71,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	return getCurriculumGroup().isPropaedeutic();
     }
 
+    public boolean isExtraCurricular() {
+	return getCurriculumGroup().isExtraCurriculum();
+    }
+
     final protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup,
 	    CurricularCourse curricularCourse) {
 	if (!curriculumGroup.getDegreeModule().validate(curricularCourse)) {

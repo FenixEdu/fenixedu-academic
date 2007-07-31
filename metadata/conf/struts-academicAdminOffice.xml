@@ -338,6 +338,16 @@
 			<forward name="chooseExternalCurricularCourses" path="student.externalEnrolment.chooseExternalCurricularCourses"/>
 			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
 			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
+		</action>
+		
+		<action path="/curriculumLinesLocationManagement"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.CurriculumLinesLocationManagementDA">
+			    
+			<forward name="showCurriculum" path="student.curriculumLines.location.management.showCurriculum"/>
+			<forward name="chooseNewLocation" path="student.curriculumLines.location.management.chooseNewLocation" />
+			<forward name="backToStudentEnrolments" path="/studentEnrolments.do?method=prepare" />			
 		</action>         
 		
 		<!-- Academic Service Requests Management -->

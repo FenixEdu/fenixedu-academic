@@ -67,7 +67,7 @@ public class WriteEnrollmentsList extends Service {
 
 	    } else {
 		new Enrolment(studentCurricularPlan, curricularCourse, executionPeriod,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador(), true);
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador()).markAsExtraCurricular();
 	    }
 
 	} else {

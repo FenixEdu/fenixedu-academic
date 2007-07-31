@@ -27,8 +27,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     private DomainReference<ExecutionPeriod> executionPeriod;
 
-    public CurriculumModuleEnroledWrapper(final CurriculumModule curriculumModule,
-	    final ExecutionPeriod executionPeriod) {
+    public CurriculumModuleEnroledWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
 	setCurriculumModule(curriculumModule);
 	setExecutionPeriod(executionPeriod);
     }
@@ -38,16 +37,14 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
 
     public void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(
-		curriculumModule) : null;
+	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(curriculumModule) : null;
     }
 
     public Context getContext() {
 	if (context == null) {
 	    if (!getCurriculumModule().isRoot()) {
 		final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
-		for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(
-			getExecutionPeriod())) {
+		for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
 		    if (context.getChildDegreeModule() == getDegreeModule()) {
 			setContext(context);
 			break;
@@ -68,8 +65,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
 
     public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(
-		executionPeriod) : null;
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -122,22 +118,20 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     public int hashCode() {
 	final StringBuilder builder = new StringBuilder();
 	builder.append("|").append(getCurriculumModule().hashCode()).append("|");
-        return builder.hashCode();
+	return builder.hashCode();
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
-	return getDegreeModule().getCurricularRules(executionPeriod);
+	return getDegreeModule() != null ? getDegreeModule().getCurricularRules(executionPeriod) : Collections.EMPTY_LIST;
     }
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionPeriod executionPeriod) {
-	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
-		.getCurricularRules(executionPeriod);
+	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup().getCurricularRules(executionPeriod);
     }
-    
 
     public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
-	if(getCurriculumModule().isEnrolment()) {
-	    return ((Enrolment)getCurriculumModule()).getAccumulatedEctsCredits(executionPeriod);
+	if (getCurriculumModule().isEnrolment()) {
+	    return ((Enrolment) getCurriculumModule()).getAccumulatedEctsCredits(executionPeriod);
 	} else {
 	    return 0d;
 	}
@@ -148,7 +142,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
     }
 
     public String getYearFullLabel() {
-	if(getExecutionPeriod() != null) {
+	if (getExecutionPeriod() != null) {
 	    return getExecutionPeriod().getQualifiedName();
 	}
 	return "";
@@ -164,8 +158,9 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     public String getKey() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":").append(this.getCurriculumModule().getIdInternal())
-		.append(",").append(this.getExecutionPeriod().getClass().getName()).append(":").append(this.getExecutionPeriod().getIdInternal());
+	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":").append(
+		this.getCurriculumModule().getIdInternal()).append(",").append(this.getExecutionPeriod().getClass().getName())
+		.append(":").append(this.getExecutionPeriod().getIdInternal());
 	return stringBuilder.toString();
     }
 }

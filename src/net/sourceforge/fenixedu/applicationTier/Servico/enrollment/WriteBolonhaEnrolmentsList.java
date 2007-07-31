@@ -37,7 +37,7 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 	    } else {
 		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
 			executionPeriod, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador(), true);
+				.getUtilizador()).markAsExtraCurricular();
 	    }
 
 	} else {

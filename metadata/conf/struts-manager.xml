@@ -2397,6 +2397,19 @@
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
 		</action>
         <!-- end : Bolonha Student Enrollment -->
+        
+        
+        <!-- Begin: Curriculum Lines Location Management -->
+        <action path="/curriculumLinesLocationManagement"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments.CurriculumLinesLocationManagementDA">
+			    
+			<forward name="showCurriculum" path="student.curriculumLines.location.management.showCurriculum"/>
+			<forward name="chooseNewLocation" path="student.curriculumLines.location.management.chooseNewLocation" />
+			<forward name="backToChooseStudentCurricularPlan" path="/bolonhaStudentEnrolment.do?method=showEnrolableStudentCurricularPlans" />
+		</action>
+		<!-- End: Curriculum Lines Location Management -->
 
 	</action-mappings>
  

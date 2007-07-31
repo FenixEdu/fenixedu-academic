@@ -12251,4 +12251,14 @@
         	<chain name="ProtocolsManagementGroup"></chain>
         </filterChains>     
     </service>
+    <service>
+    	<name>MoveCurriculumLines</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.curriculumLines.MoveCurriculumLines</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
 </serviceDefinitions>

@@ -17,4 +17,14 @@ public class ExtraCurriculumGroup extends ExtraCurriculumGroup_Base {
     public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType() {
         return NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR;
     }
+    
+    @Override
+    public boolean canAdd(CurriculumLine curriculumLine) {
+	return true;
+    }
+    
+    @Override
+    public boolean isExtraCurriculum() {
+	return true;
+    }
 }

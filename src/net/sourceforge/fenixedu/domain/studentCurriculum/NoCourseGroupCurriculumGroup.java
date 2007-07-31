@@ -136,6 +136,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Double getCreditsConcluded(ExecutionYear executionYear) {
         return Double.valueOf(0d);
     }
+    
+    @Override
+    public boolean canAdd(CurriculumLine curriculumLine) {
+        return false;
+    }
    
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
 }

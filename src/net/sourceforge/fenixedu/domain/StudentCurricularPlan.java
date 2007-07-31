@@ -58,10 +58,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
+import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
+import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -636,13 +639,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	return result;
-    }
-
-    @Checked("StudentCurricularPlanPredicates.checkPermissionsToSetExtraCurricularEnrolments")
-    final public void setExtraCurricularEnrolments(final Collection<Enrolment> extraCurricularEnrolments) {
-	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    enrolment.setIsExtraCurricular(extraCurricularEnrolments.contains(enrolment));
-	}
     }
 
     final public Collection<Enrolment> getDissertationEnrolments() {
@@ -2221,6 +2217,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, getRoot());
     }
 
+    public ExtraCurriculumGroup createExtraCurriculumGroup() {
+	return (ExtraCurriculumGroup) createNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+    }
+
+    public ExtraCurriculumGroup getExtraCurriculumGroup() {
+	return (ExtraCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+    }
+
+    public boolean hasExtraCurriculumGroup() {
+	return getExtraCurriculumGroup() != null;
+    }
+
     final public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
@@ -2411,4 +2419,39 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return this == getRegistration().getLastStudentCurricularPlan();
     }
 
+    public void moveCurriculumLines(final Person responsiblePerson, final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+	boolean runRules = false;
+	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
+	    final CurriculumGroup curriculumGroup = curriculumLineLocationBean.getCurriculumGroup();
+	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
+
+	    if (curriculumLine.getCurriculumGroup() != curriculumGroup) {
+		if (!curriculumGroup.canAdd(curriculumLine)) {
+		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
+			    curriculumLine.getFullPath(), curriculumGroup.getFullPath());
+		}
+
+		runRules = true;
+	    }
+
+	    curriculumLine.setCurriculumGroup(curriculumGroup);
+	}
+
+	if (runRules) {
+	    checkEnrolmentRules(responsiblePerson);
+	}
+
+    }
+
+    public void checkEnrolmentRules(final Person responsiblePerson) {
+	checkEnrolmentRules(responsiblePerson, ExecutionPeriod.readActualExecutionPeriod());
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public void checkEnrolmentRules(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
+	enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST,
+		CurricularRuleLevel.ENROLMENT_WITH_RULES);
+    }
+  
 }

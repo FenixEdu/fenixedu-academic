@@ -18,7 +18,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-	Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+	Integer scpID = Integer.valueOf(getIntegerFromRequest(request,"scpID"));
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject
 		.readStudentCurricularPlanByOID(scpID);
 	StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();

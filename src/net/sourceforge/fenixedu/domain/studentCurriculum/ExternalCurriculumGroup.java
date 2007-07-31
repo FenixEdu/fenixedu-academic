@@ -36,7 +36,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 
     @Override
     public Integer getChildOrder() {
-	return Integer.MAX_VALUE;
+	return Integer.MAX_VALUE - 3;
     }
 
 }

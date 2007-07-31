@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding curriculum line location management functionalities to manager" changes-20070730163712.sql

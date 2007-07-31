@@ -20,9 +20,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
-    
-    public ActionForward prepareSearchStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward prepareSearchStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final Object renderedObject = getRenderedObject("student-number-bean");
 	if (renderedObject == null) {
@@ -34,8 +34,25 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 		request.setAttribute("studentCurricularPlans", getEnrolableStudentCurricularPlans(student));
 	    }
 	}
-	
+
 	return mapping.findForward("chooseStudentInformation");
+    }
+
+    public ActionForward showEnrolableStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final StudentNumberBean studentNumberBean = new StudentNumberBean();
+	final Student student = getStudent(request);
+	studentNumberBean.setNumber(student.getNumber());
+
+	request.setAttribute("studentNumberBean", studentNumberBean);
+	request.setAttribute("studentCurricularPlans", getEnrolableStudentCurricularPlans(student));
+
+	return mapping.findForward("chooseStudentInformation");
+
+    }
+
+    private Student getStudent(final HttpServletRequest request) {
+	return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
     }
 
     private List<StudentCurricularPlan> getEnrolableStudentCurricularPlans(final Student student) {
@@ -56,18 +73,19 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpId"));
     }
-    
-    public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(getStudentCurricularPlan(request), 
-		ExecutionPeriod.readActualExecutionPeriod(), getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form)));
+    public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(getStudentCurricularPlan(request),
+		ExecutionPeriod.readActualExecutionPeriod(), getCurricularYearForCurricularCourses(),
+		getCurricularRuleLevel(form)));
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
-    
+
     @Override
-    public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, BolonhaStudentEnrollmentBean bean) {
+    public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, BolonhaStudentEnrollmentBean bean) {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", bean);
 	return mapping.findForward("showDegreeModulesToEnrol");
@@ -82,13 +100,13 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
 	return CurricularRuleLevel.ENROLMENT_NO_RULES;
     }
-    
+
     @Override
     protected String getAction() {
 	// unnecessary method
 	return null;
     }
-    
+
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	// unnecessary method

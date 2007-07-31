@@ -49,7 +49,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 	    final CourseGroup courseGroup, final CurriculumGroup curriculumGroup) {
 
 	int numberOfDegreeModulesToEnrol = countNumberOfDegreeModulesToEnrol(enrolmentContext, courseGroup);
-	int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedEnrolments();
+	int numberOfApprovedEnrolments = curriculumGroup.getNumberOfApprovedCurriculumLines();
 	int numberOfEnrolments = curriculumGroup.getNumberOfEnrolments(enrolmentContext.getExecutionPeriod());
 	int numberOfChildCurriculumGroups = curriculumGroup.getNumberOfChildCurriculumGroupsWithCourseGroup();
 

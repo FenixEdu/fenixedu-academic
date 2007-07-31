@@ -7,6 +7,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 
 public class EnrollmentDomainException extends DomainException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
     private List<RuleResult> falseRuleResults;
 
     public EnrollmentDomainException(String key, String... args) {

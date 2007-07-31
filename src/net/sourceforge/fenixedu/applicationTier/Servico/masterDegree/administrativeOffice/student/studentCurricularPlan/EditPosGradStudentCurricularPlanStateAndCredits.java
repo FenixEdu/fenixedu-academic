@@ -34,7 +34,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	}
 
 	// StudentCurricularPlanState newState =
-        // StudentCurricularPlanState.valueOf(currentState);
+	// StudentCurricularPlanState.valueOf(currentState);
 
 	Person person = Person.readPersonByUsername(userView.getUtilizador());
 	if (person == null) {
@@ -66,7 +66,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	    Enrolment enrolment = (Enrolment) iterator.next();
 	    if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
 		if (!enrolment.isExtraCurricular()) {
-		    enrolment.setIsExtraCurricular(true);
+		    enrolment.markAsExtraCurricular();
 		}
 	    } else {
 		if (enrolment.isExtraCurricular()) {

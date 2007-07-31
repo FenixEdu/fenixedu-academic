@@ -36,9 +36,12 @@
 			<fr:view name="studentCurricularPlans" schema="student.studentCurricularPlans">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 mtop15" />
-				<fr:property name="linkFormat(view)" value="<%="/bolonhaStudentEnrolment.do?method=prepareShowDegreeModulesToEnrol&amp;scpId=${idInternal}"%>"/>
-				<fr:property name="key(view)" value="link.student.enrolInCourses"/>
-				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
+				<fr:property name="linkFormat(enrol)" value="<%="/bolonhaStudentEnrolment.do?method=prepareShowDegreeModulesToEnrol&amp;scpId=${idInternal}"%>"/>
+				<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
+				<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
+				<fr:property name="linkFormat(moveCurriculumLines)" value="<%="/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=${idInternal}"%>"/>
+				<fr:property name="key(moveCurriculumLines)" value="label.course.moveEnrolments"/>
+				<fr:property name="bundle(moveCurriculumLines)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			</fr:layout>
 		</fr:view>
 		

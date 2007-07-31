@@ -55,6 +55,10 @@
 			<bean:define id="url4">/studentExtraEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;type=EXTRA_CURRICULAR</bean:define>
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="EXTRA_CURRICULAR" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
+		<li>
+		<bean:define id="url7">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
+			<html:link action='<%= url7 %>'><bean:message key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+		</li>
 	</ul>
 
 	<logic:notEmpty name="studentEnrolments">

@@ -23,15 +23,16 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     public RootCurriculumGroup() {
 	super();
+
+	createExtraCurriculumGroup();
     }
 
-    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan,
-	    RootCourseGroup rootCourseGroup, ExecutionPeriod executionPeriod, CycleType cycleType) {
+    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
+	    ExecutionPeriod executionPeriod, CycleType cycleType) {
 	this();
 
 	if (studentCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.studentCurriculum.curriculumGroup.studentCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.studentCurriculum.curriculumGroup.studentCurricularPlan.cannot.be.null");
 	}
 
 	setParentStudentCurricularPlan(studentCurricularPlan);
@@ -51,8 +52,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     @Override
     public void setDegreeModule(DegreeModule degreeModule) {
 	if (degreeModule != null && !(degreeModule instanceof RootCourseGroup)) {
-	    throw new DomainException(
-		    "error.curriculumGroup.RootCurriculumGroup.degreeModuleMustBeRootCourseGroup");
+	    throw new DomainException("error.curriculumGroup.RootCurriculumGroup.degreeModuleMustBeRootCourseGroup");
 	}
 	super.setDegreeModule(degreeModule);
     }
@@ -74,8 +74,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return getParentStudentCurricularPlan();
     }
 
-    private void addChildCurriculumGroups(RootCourseGroup rootCourseGroup,
-	    ExecutionPeriod executionPeriod, CycleType cycle) {
+    private void addChildCurriculumGroups(RootCourseGroup rootCourseGroup, ExecutionPeriod executionPeriod, CycleType cycle) {
 
 	if (rootCourseGroup.hasCycleGroups()) {
 	    if (cycle == null) {
@@ -83,8 +82,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    }
 
 	    if (cycle != null) {
-		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle),
-			executionPeriod);
+		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionPeriod);
 	    }
 
 	} else {
@@ -92,69 +90,74 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
 
     }
-    
+
+    private void createExtraCurriculumGroup() {
+	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR,
+		this);
+    }
+
     public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if(curriculumModule.isCycleCurriculumGroup()) {
+	    if (curriculumModule.isCycleCurriculumGroup()) {
 		CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) curriculumModule;
-		if(cycleCurriculumGroup.isCycle(cycleType)) {
+		if (cycleCurriculumGroup.isCycle(cycleType)) {
 		    return cycleCurriculumGroup;
 		}
 	    }
 	}
 	return null;
     }
-    
+
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
 	Collection<CycleCurriculumGroup> cycleCurriculumGroups = new HashSet<CycleCurriculumGroup>();
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if(curriculumModule.isCycleCurriculumGroup()) {
+	    if (curriculumModule.isCycleCurriculumGroup()) {
 		cycleCurriculumGroups.add((CycleCurriculumGroup) curriculumModule);
 	    }
 	}
 	return cycleCurriculumGroups;
     }
-    
+
     public DegreeType getDegreeType() {
 	return getStudentCurricularPlan().getDegreeType();
     }
-    
+
     public boolean hasConcludedCycle(CycleType cycleType, ExecutionYear executionYear) {
 	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
-	    if(cycleType == null || degreeCycleType == cycleType) {
-		if(!isConcluded(degreeCycleType, executionYear)) {
+	    if (cycleType == null || degreeCycleType == cycleType) {
+		if (!isConcluded(degreeCycleType, executionYear)) {
 		    return false;
 		}
 	    }
 	}
-	
+
 	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
     }
-    
+
     private boolean isConcluded(CycleType cycleType, ExecutionYear executionYear) {
 	CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
-	if(cycleCurriculumGroup != null) {
+	if (cycleCurriculumGroup != null) {
 	    return cycleCurriculumGroup.isConcluded(executionYear);
 	} else {
 	    return false;
-	}	
+	}
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
 	if (!getDegreeType().hasAnyCycleTypes()) {
 	    return null;
 	}
-	
+
 	if (!hasConcludedCycle(cycleType, (ExecutionYear) null)) {
 	    throw new DomainException("RootCurriculumGroup.hasnt.concluded.cicle");
 	}
-	
+
 	return getCycleCurriculumGroup(cycleType).getConclusionDate();
     }
 
     @Override
     public void delete() {
-        removeParentStudentCurricularPlan();
-        super.delete();
+	removeParentStudentCurricularPlan();
+	super.delete();
     }
 }
