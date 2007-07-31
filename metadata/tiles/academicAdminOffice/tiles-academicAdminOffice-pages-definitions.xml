@@ -462,12 +462,12 @@
     
     
     <!-- Manage Curriculum Line Groups -->
-    <definition name="student.curriculumLines.location.management.showCurriculum" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/curriculumLines/locationManagement/showCurriculum.jsp"></put>
+    <definition name="curriculum.curriculumLines.location.management.showCurriculum" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"></put>
     </definition>
     
-    <definition name="student.curriculumLines.location.management.chooseNewLocation" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/curriculumLines/locationManagement/chooseNewLocation.jsp"></put>
+    <definition name="curriculum.curriculumLines.location.management.chooseNewLocation" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"></put>
     </definition>
     
     

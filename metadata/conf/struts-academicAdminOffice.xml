@@ -345,8 +345,8 @@
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.CurriculumLinesLocationManagementDA">
 			    
-			<forward name="showCurriculum" path="student.curriculumLines.location.management.showCurriculum"/>
-			<forward name="chooseNewLocation" path="student.curriculumLines.location.management.chooseNewLocation" />
+			<forward name="showCurriculum" path="curriculum.curriculumLines.location.management.showCurriculum"/>
+			<forward name="chooseNewLocation" path="curriculum.curriculumLines.location.management.chooseNewLocation" />
 			<forward name="backToStudentEnrolments" path="/studentEnrolments.do?method=prepare" />			
 		</action>         
 		

@@ -955,12 +955,12 @@
 	<!-- End: Bolonha Transition Management -->
 	
 	<!-- Start: Manage Curriculum Line Location -->
-    <definition name="student.curriculumLines.location.management.showCurriculum" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/student/curriculumLines/locationManagement/showCurriculum.jsp"></put>
+    <definition name="curriculum.curriculumLines.location.management.showCurriculum" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/curriculum/curriculumLines/location/showCurriculum.jsp"></put>
     </definition>
     
-    <definition name="student.curriculumLines.location.management.chooseNewLocation" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/student/curriculumLines/locationManagement/chooseNewLocation.jsp"></put>
+    <definition name="curriculum.curriculumLines.location.management.chooseNewLocation" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/curriculum/curriculumLines/location/chooseNewLocation.jsp"></put>
     </definition>
     <!-- End: Manage Curriculum Line Location -->
 	
