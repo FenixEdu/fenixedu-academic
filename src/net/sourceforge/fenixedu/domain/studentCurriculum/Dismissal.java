@@ -33,10 +33,6 @@ public class Dismissal extends Dismissal_Base {
 	super();
     }
 
-    public Dismissal(Credits credits, CurriculumGroup curriculumGroup) {
-	init(credits, curriculumGroup);
-    }
-
     public Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
 	init(credits, curriculumGroup, curricularCourse);
     }
@@ -68,7 +64,7 @@ public class Dismissal extends Dismissal_Base {
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup) {
-	return new Dismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup));
+	return new CreditsDismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup));
     }
 
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan,
@@ -133,20 +129,13 @@ public class Dismissal extends Dismissal_Base {
     }
 
     @Override
-    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	if (hasCurricularCourse()) {
-	    return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod))
-		    && getCurricularCourse().isEquivalent(curricularCourse);
-	} else {
-	    return false;
-	}
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod))
+		&& getCurricularCourse().isEquivalent(curricularCourse);
     }
 
     @Override
     public Double getEctsCredits() {
-	if (!hasCurricularCourse()) {
-	    return getCredits().getGivenCredits();
-	}
 	return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits(
 		getExecutionPeriod());
     }
@@ -163,23 +152,6 @@ public class Dismissal extends Dismissal_Base {
     @Override
     final public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
 	return Double.valueOf(0d);
-    }
-
-    @Override
-    final public boolean hasDegreeModule(DegreeModule degreeModule) {
-	return hasDegreeModule() ? super.hasDegreeModule(degreeModule) : false;
-    }
-
-    @Override
-    final public MultiLanguageString getName() {
-	if (hasDegreeModule()) {
-	    return super.getName();
-	} else {
-	    final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	    multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
-		    new Locale("pt", "PT")).getString("label.group.credits"));
-	    return multiLanguageString;
-	}
     }
 
     @Override
@@ -225,10 +197,10 @@ public class Dismissal extends Dismissal_Base {
 	if (!isConcluded((ExecutionYear) null)) {
 	    throw new DomainException("Dismissal.is.not.concluded");
 	}
-	
+
 	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
 	iEnrolments.addAll(getSourceIEnrolments());
-	
+
 	return iEnrolments.isEmpty() ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
     }
 
@@ -236,8 +208,8 @@ public class Dismissal extends Dismissal_Base {
     final public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
     }
-
-    @Override
+    
+        @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null && executionPeriod != getExecutionPeriod()) {
 	    return Collections.EMPTY_SET;
@@ -247,5 +219,6 @@ public class Dismissal extends Dismissal_Base {
 	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
 	return result;
     }
+    
 
 }

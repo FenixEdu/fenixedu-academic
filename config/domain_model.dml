@@ -1719,11 +1719,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 			}
 
-	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime extends net.sourceforge.fenixedu.domain.DomainObject {
-		String acronym;
-		String description;
-	}
-
 	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus extends net.sourceforge.fenixedu.domain.DomainObject {
 		String description;
 		DateTime lastModifiedDate;
@@ -3837,6 +3832,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal extends net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal {
 					Double ectsCredits;
 				}
+				
+				class net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal extends net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal {
+				}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper extends net.sourceforge.fenixedu.domain.DomainObject {
 		String className;
@@ -5174,6 +5172,18 @@ relation CreditsExecutionPeriod {
 		multiplicity *;
 	}
 }
+
+relation CreditsDismissalNoEnrolCurricularCourses {
+	net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal playsRole creditsDismissals {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole noEnrolCurricularCourses {
+		multiplicity *;
+	}
+}
+
+
 
 relation CronScriptStateCronScriptInvocation {
 	net.sourceforge.fenixedu.domain.system.CronScriptState playsRole cronScriptState;
@@ -8562,13 +8572,6 @@ relation RootDomainObjectAssiduousnessExtraWork {
 relation RootDomainObjectAssiduousnessRecord {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAssiduousnessRegime {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime playsRole assiduousnessRegimes {
 		multiplicity *;
 	}
 }
