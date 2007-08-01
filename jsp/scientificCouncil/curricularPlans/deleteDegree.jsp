@@ -7,8 +7,7 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText value="<i>#{DegreeManagement.degree.nome}" escape="false"/>
-	<h:outputText value=" (#{DegreeManagement.degree.sigla})</i>" escape="false"/>
+	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['delete.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
@@ -16,34 +15,39 @@
 		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 
 <%--
-		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/>" escape="false"/>
+		<h:outputText value="#{scouncilBundle['degree.data']}:<br/>" escape="false"/>
 --%>	
+
+	<h:outputText value="<p class='mvert2'><strong>#{DegreeManagement.degree.nome}" escape="false"/>
+	<h:outputText value=" (#{DegreeManagement.degree.sigla})</strong></p>" escape="false"/>
+
 
 		<h:outputText styleClass="error" rendered="#{!empty DegreeManagement.errorMessage}"
 			value="#{DegreeManagement.errorMessage}<br/><br/>" escape="false"/>
 		
-			<h:outputText value="<div class='simpleblock1'/>" escape="false"/>
-			<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
+			<h:outputText value="<div class='infoop2'/>" escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['name']} (pt): " escape="false"/>
 			<h:outputText id="name" value="#{DegreeManagement.name}</p>" escape="false"/>
 			
-			<h:outputText value="<p><b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['name']} (en): " escape="false"/>
 			<h:outputText id="nameEn" value="#{DegreeManagement.nameEn}</p>" escape="false"/>
 			
-			<h:outputText value="<p><b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['acronym']}: " escape="false"/>
 			<h:outputText id="acronym" value="#{DegreeManagement.acronym}</p>" escape="false"/>
 			
-			<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['degreeType']}: " escape="false"/>
 			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[DegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
 
-			<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['ectsCredits']}: " escape="false"/>
 			<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>
 			<h:outputText value="</div>" escape="false"/>
-<%-- 
- 			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
+
+<%--
+ 			<h:outputText value="#{scouncilBundle['gradeTypes']}: " escape="false"/>
 			<h:outputText id="gradeType" value="#{enumerationBundle[DegreeManagement.gradeType]}" escape="false"/>
 --%>
 
-		<h:outputText value="<br/><p>" escape="false"/>
+		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.confirm']}" styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{DegreeManagement.deleteDegree}" onclick="return confirm('#{scouncilBundle['confirm.delete.degree']}')"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

@@ -165,9 +165,11 @@
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 
 	<h:outputText value="<p><b>#{scouncilBundle['bibliographicReference']} #{enumerationBundle['MAIN']}</b></p>" escape="false"/>
+	
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:outputText value="<i>#{scouncilBundle['noBibliographicReferences']}</i><br/>" escape="false"/>
-	</h:panelGroup>	
+	</h:panelGroup>
+	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 			<h:outputText value="<ul class='nobullet cboth mbottom2'>" escape="false"/>					

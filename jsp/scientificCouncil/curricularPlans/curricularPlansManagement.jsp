@@ -8,7 +8,7 @@
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
+	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
 
 	<h:outputText value="<ul>" escape="false" />
@@ -24,7 +24,7 @@
 	<h:messages errorClass="error0" infoClass="success0"/>
 	
 	<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree">
-		<h:outputText value="<table style='width: 750px' class='showinfo1'>" escape="false"/>
+		<h:outputText value="<table style='width: 100%;' class='showinfo1'>" escape="false"/>
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
 		<h:outputText value="<td><em>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{scouncilBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</em></td>" escape="false"/>

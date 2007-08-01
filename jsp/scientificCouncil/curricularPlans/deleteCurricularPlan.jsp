@@ -17,16 +17,16 @@
 
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 		
-		<h:outputText value="<div class='simpleblock1'/>" escape="false"/>
- 			<h:outputText value="<p><b>#{scouncilBundle['curricularStage']}:</b> " escape="false"/>
-			<h:outputText value="#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]}</p>" escape="false"/>
+		<h:outputText value="<div class='infoop2'/>" escape="false"/>
+ 			<h:outputText value="<p>#{scouncilBundle['curricularStage']}: " escape="false"/>
+			<h:outputText value="<b>#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]}</b></p>" escape="false"/>
 
-			<h:outputText value="<p><b>#{scouncilBundle['name']}:</b>" escape="false"/>
-			<h:outputText value="#{DegreeCurricularPlanManagement.name}</p>" escape="false"/>
+			<h:outputText value="<p>#{scouncilBundle['name']}:" escape="false"/>
+			<h:outputText value="<b>#{DegreeCurricularPlanManagement.name}</b></p>" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>
 		
 		
-		<h:outputText value="<br/><p>" escape="false"/>
+		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.confirm']}" styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{DegreeCurricularPlanManagement.deleteCurricularPlan}" onclick="return confirm('#{scouncilBundle['confirm.delete.curricularPlan']}')"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

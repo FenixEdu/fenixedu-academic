@@ -7,22 +7,24 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-	
-	<h:outputText value="<i>#{DegreeCurricularPlanManagement.dcp.name}" escape="false"/>
-	<h:outputText value=" (#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
+
+	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
+
+	<h:outputText value="<p class='mtop15'>#{DegreeCurricularPlanManagement.dcp.name} (#{enumerationBundle[DegreeCurricularPlanManagement.dcp.curricularStage.name]})</p>" escape="false"/>
+	
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.dcpId' id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
 		<fc:viewState binding="#{DegreeCurricularPlanManagement.viewState}"/>
 		
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}</h4>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<div class='simpleblock4 mtop05'>" escape="false"/>
+		<h:outputText value="<p><strong>#{scouncilBundle['curricularPlan.data']}</strong></p>" escape="false"/>
 		
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{scouncilBundle['curricularStage']}:</label> " escape="false"/>
 		<h:selectOneMenu id="curricularStage" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
 			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
@@ -60,7 +62,7 @@
 			<h:outputText value="<p><em>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</em><p/>" escape="false" />
 		</h:panelGroup>
 		
-		<h:outputText value="<p>" escape="false" />
+		<h:outputText value="<p class='mtop15'>" escape="false" />
 		<h:outputLink value="editCurricularPlanMembersGroup.faces">
 			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
 			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}"/>

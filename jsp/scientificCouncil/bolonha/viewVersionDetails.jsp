@@ -21,7 +21,7 @@
 
 	<logic:notPresent name="changeRequest" property="approved">
 		<p>
-			<span class="highlight1"><bean:message key="question.aprove.proposal" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> 
+			<span class="warning0"><bean:message key="question.aprove.proposal" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span> 
 			<html:link page="<%= "/competenceCourses/manageVersions.do?method=approveRequest&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
 				<bean:message key="label.approve" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</html:link>,
