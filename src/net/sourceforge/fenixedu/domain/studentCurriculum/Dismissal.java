@@ -24,7 +24,7 @@ import org.joda.time.YearMonthDay;
 
 public class Dismissal extends Dismissal_Base {
 
-    private Dismissal() {
+    public Dismissal() {
 	super();
     }
 
