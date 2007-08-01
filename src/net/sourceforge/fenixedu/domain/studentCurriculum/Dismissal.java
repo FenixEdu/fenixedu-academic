@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -14,22 +12,19 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
 public class Dismissal extends Dismissal_Base {
 
-    public Dismissal() {
+    private Dismissal() {
 	super();
     }
 
@@ -46,11 +41,11 @@ public class Dismissal extends Dismissal_Base {
     }
 
     final protected void init(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
-	init(credits, curriculumGroup);
 	if (curricularCourse == null) {
 	    throw new DomainException("error.dismissal.wrong.arguments");
 	}
 	checkCurriculumGroupCurricularCourse(curriculumGroup, curricularCourse);
+	init(credits, curriculumGroup);
 	setCurricularCourse(curricularCourse);
     }
 
