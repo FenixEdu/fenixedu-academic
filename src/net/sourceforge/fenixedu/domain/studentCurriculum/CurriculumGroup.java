@@ -42,7 +42,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	super();
     }
 
-    public CurriculumGroup(final CurriculumGroup curriculumGroup,final CourseGroup courseGroup) {
+    public CurriculumGroup(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup) {
 	this();
 	init(curriculumGroup, courseGroup);
     }
@@ -613,10 +613,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return hasAnyCurriculumModules();
     }
-    
+
     private CurriculumModule getCurriculumModuleByDegreeModule(final DegreeModule degreeModule) {
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if(curriculumModule.getDegreeModule() == degreeModule) {
+	    if (curriculumModule.getDegreeModule() == degreeModule) {
 		return curriculumModule;
 	    }
 	}
@@ -716,6 +716,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return getDegreeModule().hasDegreeModule(curriculumLine.getCurricularCourse());
+	return getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 }
