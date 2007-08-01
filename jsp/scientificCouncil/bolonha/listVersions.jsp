@@ -31,7 +31,7 @@
 			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td>
 			<td><fr:view name="changeRequest" property="competenceCourse.name"/></td>
 			<td><fr:view name="changeRequest" property="requester.name"/></td>
-			<td>
+			<td class="acenter">
 				<fr:view name="changeRequest" property="analizedBy" type="net.sourceforge.fenixedu.domain.Person">
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
@@ -68,5 +68,7 @@
 </logic:notEmpty>
 
 <logic:empty name="changeRequests">
-	<bean:message key="label.no.request.for.department" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<p>
+		<em><bean:message key="label.no.request.for.department" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
+	</p>
 </logic:empty>

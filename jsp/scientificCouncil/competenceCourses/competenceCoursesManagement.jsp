@@ -15,6 +15,7 @@
 	
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
+
 		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
 			<h:outputText value="#{scouncilBundle['department']}:" escape="false"/>
 			<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
@@ -23,12 +24,15 @@
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 
+
 <%--
 		<h:outputText value="<p class='mtop2 mbottom2'><a href='#members' title='#{scouncilBundle['view.group.members.description']}'>#{scouncilBundle['view.group.members']}</a></p>" escape="false"/>
 --%>
 
+
+
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:<br/>" escape="false" />
+			<h:outputText value="<p class='mtop15 mbottom05'><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:</p>" escape="false" />
 			<h:outputText value="<ul>" escape="false"/>
 			<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
 				<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
@@ -73,7 +77,9 @@
 		</h:panelGroup>
 		
 		<h:outputText value="</ul>" escape="false"/>
-		</h:panelGroup>		
+		</h:panelGroup>
+		
+
 
 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
@@ -85,11 +91,11 @@
 				
 				<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
 					<h:outputText value="<ul class='list3'>" escape="false"/>
-					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
+					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit" style="width: 100%">
 							<h:column>
 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-										styleClass="showinfo1 smallmargin mtop05" style="width: 60em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+										styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2" columnClasses=",aright nowrap" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 										
 										<h:column>
 											<h:outputText value="#{competenceCourse.name} "/>

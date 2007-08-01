@@ -9,10 +9,9 @@
 	value="<%= String.valueOf(request.getParameter("proposal") != null) %>" />
 
 
-<em><bean:message key="label.manage.versions"
-	bundle="BOLONHA_MANAGER_RESOURCES" /></em>
-<h2><bean:message key="label.competenceCourse.createVersion"
-	bundle="BOLONHA_MANAGER_RESOURCES" /></h2>
+<em><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES" /></em>
+<h2><bean:message key="label.competenceCourse.createVersion" bundle="BOLONHA_MANAGER_RESOURCES" /></h2>
+
 
 <logic:equal name="proposal" value="false">
 	<logic:equal name="bean"
@@ -31,6 +30,9 @@
 	</html:messages>
 	</p>
 </logic:messagesPresent>
+
+
+<p class="mtop2 mbottom1 bold">1) Informação Geral</p>
 
 <div class="dinline forminline">
 
@@ -60,41 +62,38 @@
 
 	<fr:edit id="common-part" name="bean" schema="<%= schema %>">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright" />
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 		</fr:layout>
 		<fr:destination name="postBack"
 			path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "")%>" />
 	</fr:edit>
 
-	<logic:equal name="bean"
-		property="competenceCourseDefinedForExecutionPeriod" value="false">
-
-		<div class="separator2 mtop15">Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></div>
+	<logic:equal name="bean" property="competenceCourseDefinedForExecutionPeriod" value="false">
 		
 		<fr:edit id="pt-part" name="bean"
 			schema="editCompetenceCourseInformation.pt">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 				<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 			</fr:layout>
 		</fr:edit>
 
-		<div class="separator2 mtop15">Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></div>
+		<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
 		<fr:edit id="en-part" name="bean"
 			schema="editCompetenceCourseInformation.en">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 				<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 			</fr:layout>
 		</fr:edit>
 
-		<div class="separator2 mtop15">Carga Horária</div>
-			
+
+		<p class="mtop2 mbottom1 bold">4) Carga Horária</p>
 		<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
 		<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 				<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 			</fr:layout>
 			<fr:destination name="loadInformationPostBack"
@@ -107,7 +106,7 @@
 				<fr:edit id="versionLoad2" name="beanLoad"
 					schema="editCompetenceCourseLoad.anual.diferent.info">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight thright" />
+						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 					</fr:layout>
 				</fr:edit>
@@ -127,30 +126,34 @@
 		property="competenceCourseDefinedForExecutionPeriod" value="true">
 		<logic:equal name="proposal" value="true">
 
-			<div class="separator2 mtop15">Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></div>
+
+			
+			<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></p>
 
 			<fr:edit id="pt-part" name="bean"
 				schema="editCompetenceCourseInformation.pt">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight thright" />
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 					<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 				</fr:layout>
 			</fr:edit>
 
-			<div class="separator2 mtop15">Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></div>
+
+			<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
 			<fr:edit id="en-part" name="bean"
 				schema="editCompetenceCourseInformation.en">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight thright" />
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 					<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 				</fr:layout>
 			</fr:edit>
 
-			<div class="separator2 mtop15">Carga Horária</div>
+
+			<p class="mtop2 mbottom1 bold bold">4) Carga Horária</span></p>
 			<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
 			<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight thright" />
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 					<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 				</fr:layout>
 				<fr:destination name="loadInformationPostBack"

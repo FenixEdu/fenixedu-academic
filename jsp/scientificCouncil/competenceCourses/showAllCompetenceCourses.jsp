@@ -148,8 +148,8 @@
 		<h:outputText value="</div>" escape="false"/>
 
 		<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-		<h:outputText value="<h3 class='mbottom0'>#{scouncilBundle['bibliographicReference']}</h3>" escape="false"/>	
-		<h:outputText value="<p><b>#{enumerationBundle['MAIN']}</b></p>" escape="false"/>
+
+		<h:outputText value="<p><b>#{scouncilBundle['bibliographicReference']} #{enumerationBundle['MAIN']}</b></p>" escape="false"/>
 
 		<h:panelGroup rendered="#{empty competenceCourse.bibliographicReferences}">
 			<h:outputText value="<i>#{scouncilBundle['noBibliographicReferences']}</i><br/>" escape="false"/>
@@ -173,7 +173,7 @@
 			</h:panelGroup>
 		</fc:dataRepeater>
 		
-		<h:outputText value="<p><b>#{enumerationBundle['SECONDARY']}</b></p>" escape="false"/>
+		<h:outputText value="<p><b>#{scouncilBundle['bibliographicReference']} #{enumerationBundle['SECONDARY']}</b></p>" escape="false"/>
 		<h:panelGroup rendered="#{empty competenceCourse.bibliographicReferences}">
 			<h:outputText value="<i>#{scouncilBundle['noBibliographicReferences']}</i><br/>" escape="false"/>
 		</h:panelGroup>	

@@ -17,21 +17,21 @@
 </logic:messagesPresent>
 
 
-	<bean:message key="label.newBibliographicEntry" bundle="BOLONHA_MANAGER_RESOURCES"/>:
+	<p class="mbottom05"><strong><bean:message key="label.newBibliographicEntry" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 	<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=createBibliographicReference" %>">
 	<fr:edit id="createReference" name="referenceBean" schema="create.reference.from.bean">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 		</fr:layout>
 	</fr:edit>
 		<fr:edit name="bean" id="editVersion" visible="false"/>
 		<fr:edit name="beanLoad" id="editVersionLoad" visible="false"/>
-		<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="label.insert" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</fr:form>
 	
 	<logic:notEmpty name="bean" property="references">
-	<p class="mtop15 mbottom05"><strong><bean:message key="label.primaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.primaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 	<logic:notEmpty name="bean" property="references.mainBibliographicReferences">
 	<logic:iterate id="reference" name="bean" property="references.mainBibliographicReferences">
 		<bean:define id="index" name="reference" property="order"/>	
@@ -115,7 +115,7 @@
 	</logic:empty>
 	
 
-	<p class="mtop2 mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong>:</p>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 	<logic:notEmpty name="bean" property="references.secondaryBibliographicReferences">
 	<logic:iterate id="secondaryReference" name="bean" property="references.secondaryBibliographicReferences">
 		<bean:define id="index" name="secondaryReference" property="order"/>	
@@ -190,11 +190,12 @@
 	</logic:notEmpty>
 
 	<logic:empty name="bean" property="references.secondaryBibliographicReferences">
-		<p><em><bean:message key="label.noSecundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></em></p>
+		<p class="mtop05"><em><bean:message key="label.noSecundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></em></p>
 	</logic:empty>
+	
 	</logic:notEmpty>
 	
-<p class="mtop15">
+<div class="mtop2">
 	<div class="dinline forminline">	
 		<fr:form action="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competecenceCourseID + "&method=createVersion"%>">
 			<fr:edit name="bean" id="editVersion" visible="false"/>
@@ -207,4 +208,4 @@
 			<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
 		</fr:form>
 	</div>
-</p>
+</div>

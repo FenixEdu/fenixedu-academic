@@ -8,20 +8,23 @@
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText value="<em>#{CompetenceCourseManagement.competenceCourse.name}</em>" escape="false"/>
+	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['bibliographicReference']}</h2>" escape="false"/>	
 	<h:messages infoClass="infoMsg" errorClass="error0" globalOnly="true" />
 	
+
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
-		<h:outputText value="<p>" escape="false"/>
- 		<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
-				<h:outputText value="#{bolonhaBundle['createBibliographicReference']}"/>
-				<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
-				<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
-		</h:outputLink>
-		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<ul><li>" escape="false"/>
+	 		<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+					<h:outputText value="#{bolonhaBundle['createBibliographicReference']}"/>
+					<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
+					<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+			</h:outputLink>
+		<h:outputText value="</li></ul>" escape="false"/>
+
+		<h:outputText value="<h3>#{CompetenceCourseManagement.competenceCourse.name}</h3>" escape="false"/>
 		
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.bibliographicReferenceID || (!empty CompetenceCourseManagement.bibliographicReferenceID && CompetenceCourseManagement.bibliographicReferenceID != -1)}">
 			<h:outputText value="<div class='simpleblock4'>" escape="false"/>
@@ -79,8 +82,9 @@
 			<h:outputText value="</p></fieldset></div>" escape="false" />
 		</h:panelGroup>
 
-		<h:outputText value="<p>#{CompetenceCourseManagement.bibliographicReferencesCount} #{bolonhaBundle['totalItems']}</p>" escape="false"/>
-		<h:outputText value="<h3>#{enumerationBundle['MAIN']}</h3>" escape="false"/>
+		<h:outputText value="<p class='color888'>#{CompetenceCourseManagement.bibliographicReferencesCount} #{bolonhaBundle['totalItems']}</p>" escape="false"/>
+		
+		<h:outputText value="<p class='mtop15'><strong>#{enumerationBundle['MAIN']}</strong></p>" escape="false"/>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
 			<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em>" escape="false"/>
 		</h:panelGroup>
@@ -139,7 +143,7 @@
 				</h:panelGroup>
 			</h:column>
 		</h:dataTable>
-		<h:outputText value="<h3>#{enumerationBundle['SECONDARY']}</h3>" escape="false"/>
+		<h:outputText value="<p class='mtop15'><strong>#{enumerationBundle['SECONDARY']}</strong></p>" escape="false"/>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 			<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
 		</h:panelGroup>

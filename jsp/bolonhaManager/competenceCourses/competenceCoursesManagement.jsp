@@ -7,11 +7,11 @@
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['competenceCoursesManagement']}</em>" escape="false"/>
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['bolonhaManager']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{CompetenceCourseManagement.personDepartment.realName}</h2>" escape="false"/>
 
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-		<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:<br/>" escape="false" />
+		<h:outputText value="<p class='mtop15 mbottom05'><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:</p>" escape="false" />
 		<h:outputText value="<ul>" escape="false"/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
 			<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
@@ -41,7 +41,7 @@
 							<h:outputText value="<ul class='list3' style='padding-left: 2em;'>" escape="false"/>
 							<fc:dataRepeater value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>" escape="false"/>
-								<h:outputText value="<table style='width: 54em; background-color: #fff;'><tr>" escape="false"/>
+								<h:outputText value="<table style='width: 100%; background-color: #fff;'><tr>" escape="false"/>
 								<h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
 								<h:outputText value="<td class='aright'>" escape="false"/>
 									<h:outputLink value="createCompetenceCourse.faces">
@@ -54,7 +54,7 @@
 								
 
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse" 
-												styleClass="showinfo1 smallmargin mtop05" style="width: 54em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+												styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2" columnClasses=",aright nowrap" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 									<h:column>
 										<h:outputText value="#{competenceCourse.name} "/>
 										<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/>

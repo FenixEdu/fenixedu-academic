@@ -11,7 +11,7 @@
 	<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
 
-	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
+	<h:outputText value="<ul class='nobullet padding1 indent0 mtop15'>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
@@ -43,9 +43,10 @@
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToCompetenceCourseGroupUnitID}">
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>
 		</fc:selectOneMenu>
-		<h:outputText value="<p/><p>" escape="false"/>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.transfer']}" styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
-		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
+		<h:outputText value="<p/>" escape="false"/>
+		<h:outputText value="<p class='mtop15'>" escape="false"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.transfer']}" styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
 		<h:outputText value="<p/>" escape="false"/>
 	</h:form>
 </ft:tilesView>
