@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -53,6 +54,11 @@ public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAc
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final MoveCurriculumLinesBean moveCurriculumLinesBean = (MoveCurriculumLinesBean) getRenderedObject("move-curriculum-lines-bean");
+
+	if (!RenderUtils.getViewState("move-curriculum-lines-bean-entries").isValid()) {
+	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+	    return mapping.findForward("chooseNewLocation");
+	}
 
 	try {
 	    executeService("MoveCurriculumLines", moveCurriculumLinesBean);

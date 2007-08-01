@@ -228,7 +228,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
 	if (previousCourseGroupForNewDegreeModules != null) {
 	    for (final DegreeModule degreeModule : newDegreeModules) {
-		if (!previousCourseGroupForNewDegreeModules.hasDegreeModuleOnChilds(degreeModule)) {
+		if (!previousCourseGroupForNewDegreeModules.hasDegreeModule(degreeModule)) {
 		    throw new DomainException(
 			    "error.EquivalencePlanEntry.new.degree.modules.must.be.children.of.choosen.course.group");
 		}

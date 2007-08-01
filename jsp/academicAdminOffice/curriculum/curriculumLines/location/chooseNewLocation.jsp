@@ -25,10 +25,10 @@
 				</html:messages>
 			</ul>
 		</logic:messagesPresent>
-		<fr:hasMessages for="move-curriculum-lines-bean-entries" type="conversion">
+		<fr:hasMessages for="move-curriculum-lines-bean-entries">
 			<ul>
 				<fr:messages>
-					<li><span class="error0"><fr:message /></span></li>
+					<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
 				</fr:messages>
 			</ul>
 		</fr:hasMessages>
@@ -46,6 +46,8 @@
 					<fr:property name="classes" value="tstyle4 thlight mtop05" />
 					<fr:property name="columnClasses" value=",,,aright,aright,aright,acenter" />
 				</fr:layout>
+				<fr:destination name="invalid" path="<%="/curriculumLinesLocationManagement.do?method=moveCurriculumLines&scpID=" + studentCurricularPlanId.toString() %>"/>
+				<fr:destination name="cancel" path="<%="/curriculumLinesLocationManagement.do?method=prepare&scpID=" + studentCurricularPlanId.toString() %>"/>
 			</fr:edit>
 	
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"

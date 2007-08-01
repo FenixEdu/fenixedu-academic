@@ -325,13 +325,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return executionPeriods.first();
     }
 
-    public boolean hasDegreeModuleOnChilds(final DegreeModule degreeModuleToSearch) {
-	final Set<DegreeModule> allDegreeModules = new HashSet<DegreeModule>();
-	getAllDegreeModules(allDegreeModules);
-
-	return allDegreeModules.contains(degreeModuleToSearch);
-    }
-
     private ExecutionPeriod getBeginBolonhaExecutionPeriod() {
 	final String year = PropertiesManager.getProperty("start.year.for.bolonha.degrees");
 	final Integer semester = Integer.valueOf(PropertiesManager
