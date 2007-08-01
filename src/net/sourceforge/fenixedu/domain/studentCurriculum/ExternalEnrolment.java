@@ -150,7 +150,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     final public ExecutionYear getExecutionYear() {
-	return getExecutionPeriod().getExecutionYear();
+	return getExecutionPeriod() != null ? getExecutionPeriod().getExecutionYear() : null;
     }
 
     final public YearMonthDay getApprovementDate() {

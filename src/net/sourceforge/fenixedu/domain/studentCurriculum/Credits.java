@@ -117,7 +117,10 @@ public class Credits extends Credits_Base {
     final public Collection<IEnrolment> getIEnrolments() {
 	final Set<IEnrolment> result = new HashSet<IEnrolment>();
 	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
-	    result.add(enrolmentWrapper.getIEnrolment());
+	    IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
+	    if(enrolment != null) {
+		result.add(enrolmentWrapper.getIEnrolment());
+	    }
 	}
 	return result;
     }
@@ -181,6 +184,10 @@ public class Credits extends Credits_Base {
     }
 
     public boolean isSubstitution() {
+	return false;
+    }
+
+    public boolean isEquivalence() {
 	return false;
     }
 

@@ -52,4 +52,9 @@ public class Equivalence extends Equivalence_Base {
     public String getGivenGrade() {
         return getGrade().getValue();
     }
+    
+    @Override
+    public boolean isEquivalence() {
+        return true;
+    }
 }
