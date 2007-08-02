@@ -38,9 +38,6 @@
 		<p><html:submit>
 			<bean:message key="button.confirm" />
 		</html:submit>
-		<html:submit onclick="this.form.method.value='showEmptyBonusInstallment';">
-			<bean:message key="button.back"/>
-		</html:submit>
 		<html:submit onclick="this.form.method.value='exportBonusInstallment';">
 			<bean:message key="button.export"/>
 		</html:submit>

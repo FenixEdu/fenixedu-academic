@@ -1101,7 +1101,7 @@
 </schema>
 
 <schema name="edit.anualBonusInstallmentBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentBean">
-	<slot name="months" layout="option-select" key="label.assiduousnessMonths"
+	<slot name="yearMonths" layout="option-select" key="label.assiduousnessMonths"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />

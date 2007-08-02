@@ -59,14 +59,15 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
         if (isCancelled(request)) {
             return showAnualInstallment(mapping, form, request, response);
         }
-        AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentBean");
-        RenderUtils.invalidateViewState();
+        AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentBean");        
         if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
-            ActionMessage actionMessage = (ActionMessage) executeService(request,
+            List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService(request,
                     "ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
             ActionMessages actionMessages = getMessages(request);
-            if (actionMessage != null) {
-                actionMessages.add("message", actionMessage);
+            if (!actionMessageList.isEmpty()) {
+                for (ActionMessage actionMessage : actionMessageList) {
+                    actionMessages.add("message", actionMessage);
+                }
             } else {
                 actionMessages.add("successMessage", new ActionMessage(
                         "message.successUpdatingInstallmentsNumber"));
@@ -77,7 +78,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
         } else {
             anualBonusInstallmentFactory.updateAnualBonusInstallment();
         }
-
+        RenderUtils.invalidateViewState();
         request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
         return mapping.findForward("show-anual-installment");
 
@@ -219,9 +220,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
         stringBuilder.append(
                 employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
                         DateTimeFieldType.year())).append(separator);
-        stringBuilder.append(getMonthString(
-                employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-                        DateTimeFieldType.monthOfYear()))).append(endLine);
+        stringBuilder.append(
+                getMonthString(employeeBonusInstallment.getAnualBonusInstallment()
+                        .getPaymentPartialDate().get(DateTimeFieldType.monthOfYear()))).append(endLine);
         return stringBuilder.toString();
     }
 

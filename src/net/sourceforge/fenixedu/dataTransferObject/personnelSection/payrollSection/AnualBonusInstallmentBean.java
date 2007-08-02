@@ -9,22 +9,22 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList;
 public class AnualBonusInstallmentBean implements Serializable {
     private Integer year;
 
-    private List<YearMonth> months;
+    private List<YearMonth> yearMonths;
 
     private YearMonth paymentYearMonth;
 
-    public AnualBonusInstallmentBean(Integer year, YearMonthList months, YearMonth paymentYearMonth) {
-	setMonths(months.getYearsMonths());
+    public AnualBonusInstallmentBean(Integer year, YearMonthList yearMonths, YearMonth paymentYearMonth) {
+	setYearMonths(yearMonths.getYearsMonths());
 	setPaymentYearMonth(paymentYearMonth);
 	setYear(year);
     }
 
-    public List<YearMonth> getMonths() {
-	return months;
+    public List<YearMonth> getYearMonths() {
+	return yearMonths;
     }
 
-    public void setMonths(List<YearMonth> months) {
-	this.months = months;
+    public void setYearMonths(List<YearMonth> yearMonths) {
+	this.yearMonths = yearMonths;
     }
 
     public YearMonth getPaymentYearMonth() {
