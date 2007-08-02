@@ -190,6 +190,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public List<CurriculumLine> getChildCurriculumLines() {
+	final List<CurriculumLine> result = new ArrayList<CurriculumLine>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isLeaf()) {
+		result.add((CurriculumLine) curriculumModule);
+	    }
+	}
+
+	return result;
+    }
+
     @Override
     public boolean isRoot() {
 	return false;
