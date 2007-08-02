@@ -1131,6 +1131,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>StudentOrAcademicAdministrativeOfficeOrManagerAuthorization</name>
+        <expression>StudentAuthorization || AcademicAdministrativeOfficeAuthorization || ManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
+    <filterChain>
         <name>PersonOrAcademicAdministrativeOfficeAuthorization</name>
         <expression>PersonAuthorization || AcademicAdministrativeOfficeAuthorization</expression>
         <description/>
