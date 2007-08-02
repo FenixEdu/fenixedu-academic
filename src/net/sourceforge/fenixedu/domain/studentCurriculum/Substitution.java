@@ -42,4 +42,8 @@ public class Substitution extends Substitution_Base {
 	return null;
     }
 
+    @Override
+    public boolean isEquivalence() {
+        return false;
+    }
 }
