@@ -43,29 +43,37 @@
 <%-- rejection comment --%>
 <logic:present name="confirmReject">
     <div class="warning0" style="padding: 1em">
-        <p class="mvert0">
+        <p class="mtop0 mbottom1">
             <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
             <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
         </p>
+    
+	    <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+	        <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
+	            <fr:layout name="tabular">
+		           <fr:property name="classes" value="thtop thlight mbottom0"/>
+		           <fr:property name="columnClasses" value="width125px,,tdclear tderror1"/>
+	            </fr:layout>
+	            <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+	            <fr:destination name="invalid" path="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+	        </fr:edit>
+	        
+	        <table class="mtop0 tgluetop">
+	        <tr>
+		        <td class="width125px">
+		        </td>
+		        <td>
+		            <html:submit>
+		                <bean:message key="button.submit"/>
+		            </html:submit>
+		            <html:cancel>
+		                <bean:message key="button.cancel"/>
+		            </html:cancel>
+		        </td>
+	        </tr>
+	        </table>
+	    </fr:form>
     </div>
-    <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
-        <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
-            <fr:layout name="tabular">
-	           <fr:property name="classes" value="tstyle5 thtop thlight"/>
-            </fr:layout>
-            
-            <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
-            <fr:destination name="invalid" path="<%= String.format("/scientificCouncilManageThesis.do?method=confirmRejectProposal&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
-        </fr:edit>
-        <p class="mbottom15">
-            <html:submit>
-                <bean:message key="button.submit"/>
-            </html:submit>
-            <html:cancel>
-                <bean:message key="button.cancel"/>
-            </html:cancel>
-        </p>
-    </fr:form>
 </logic:present>
 
 <%-- general process message, under a notPresent to avoid having two message boxes next to each other --%>

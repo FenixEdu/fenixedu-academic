@@ -9,6 +9,7 @@
 <bean:define id="degreeId" name="degreeId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 
+<em><bean:message key="scientificCouncil"/></em>
 <h2><bean:message key="title.scientificCouncil.thesis.list"/></h2>
 
 <logic:messagesPresent message="true" property="error">

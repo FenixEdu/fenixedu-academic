@@ -22,6 +22,7 @@
 </ul>
 
 <%-- Dissertation --%>
+
 <h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.evaluation.details"/></h3>
 
 <fr:view name="thesis" schema="thesis.jury.proposal.information">
@@ -43,29 +44,31 @@
 </logic:notEqual>
 
 <logic:equal name="thesis" property="thesisAbstractInBothLanguages" value="true">
-    <p>
+    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
         <fr:view name="thesis" property="thesisAbstract">
             <fr:layout>
                 <fr:property name="language" value="pt"/>
                 <fr:property name="showLanguageForced" value="true"/>
             </fr:layout>
         </fr:view>
-    </p>
-    
-    <p>
-        <fr:view name="thesis" property="thesisAbstract">
-            <fr:layout>
-                <fr:property name="language" value="en"/>
-                <fr:property name="showLanguageForced" value="true"/>
-            </fr:layout>
-        </fr:view>
-    </p>
+    </div>
+
+    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
+		<fr:view name="thesis" property="thesisAbstract">
+			<fr:layout>
+				<fr:property name="language" value="en"/>
+				<fr:property name="showLanguageForced" value="true"/>
+			</fr:layout>
+		</fr:view>
+	</div>
 </logic:equal>
 
 <h3 class="mtop15 mbottom05"><bean:message key="label.thesis.keywords"/></h3>
 
 <logic:notEqual name="thesis" property="keywordsInBothLanguages" value="true">
-    <bean:message key="label.thesis.keywords.empty"/>
+	<p>
+		<em><bean:message key="label.thesis.keywords.empty"/></em>
+    </p>
 </logic:notEqual>
 
 <logic:equal name="thesis" property="keywordsInBothLanguages" value="true">

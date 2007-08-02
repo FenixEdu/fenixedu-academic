@@ -72,23 +72,23 @@
 </logic:notEqual>
 
 <logic:equal name="thesis" property="thesisAbstractInBothLanguages" value="true">
-    <p>
+    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
         <fr:view name="thesis" property="thesisAbstract">
             <fr:layout>
                 <fr:property name="language" value="pt"/>
                 <fr:property name="showLanguageForced" value="true"/>
             </fr:layout>
         </fr:view>
-    </p>
+    </div>
     
-    <p>
+    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
         <fr:view name="thesis" property="thesisAbstract">
             <fr:layout>
                 <fr:property name="language" value="en"/>
                 <fr:property name="showLanguageForced" value="true"/>
             </fr:layout>
         </fr:view>
-    </p>
+    </div>
 </logic:equal>
 
 <h3 class="mtop15 mbottom05"><bean:message key="label.thesis.keywords"/></h3>
