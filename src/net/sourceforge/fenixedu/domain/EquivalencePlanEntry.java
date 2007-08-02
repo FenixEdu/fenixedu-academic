@@ -24,6 +24,14 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    return o1.getCompareString().compareTo(o2.getCompareString());
 	}
     };
+    
+    public static Comparator<EquivalencePlanEntry> COMPARATOR_BY_SOURCE_NUMBER = new Comparator<EquivalencePlanEntry>() {
+	public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
+	    final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesCount());
+	    final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesCount());
+	    return count1.compareTo(count2);
+	}
+    };
 
     public static class EquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
 
