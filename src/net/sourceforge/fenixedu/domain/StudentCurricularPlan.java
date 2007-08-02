@@ -438,7 +438,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
 	    final Enrolment enrolment = getRoot().findEnrolmentFor(curricularCourse, executionPeriod);
-	    if (enrolment != null && !enrolment.getEnrollmentState().equals(EnrollmentState.NOT_APROVED)
+	    if (enrolment != null 
+		    && !enrolment.getEnrollmentState().equals(EnrollmentState.NOT_APROVED)
+		    && !enrolment.getEnrollmentState().equals(EnrollmentState.NOT_EVALUATED)
 		    && !enrolment.isFlunked()) {
 		result.add(enrolment);
 	    }
