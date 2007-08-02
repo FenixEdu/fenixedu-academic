@@ -18,7 +18,7 @@
 		<h:messages errorClass="error0" infoClass="success0"/>
 	
 		<fc:dataRepeater value="#{DegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.filteredBolonhaDegrees}">
-			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 100%;' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>

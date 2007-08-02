@@ -19,27 +19,38 @@
 		<h:outputText escape="false" value="<input alt='input.toOrder' id='toOrder' name='toOrder' type='hidden' value='#{CurricularCourseManagement.toOrder}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		
-		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>		
-		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
+		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{bolonhaBundle['name']} (pt): </th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 		<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
 			<h:outputText value=" " escape="false"/>
-			<h:message for="name" styleClass="error0"/>
 		</h:panelGroup>
-		<h:outputText value="</p>" escape="false"/>
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['name']} (en):</label>" escape="false"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="<td class='tderror1 tdclear'>" escape="false"/>
+			<h:message for="name" styleClass="error0"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+
+		<h:outputText value="<tr><th>" escape="false"/>
+		<h:outputText value="#{bolonhaBundle['name']} (en): " escape="false"/>
+		<h:outputText value="</th>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 		<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
 			<h:outputText value=" " escape="false"/>
-			<h:message for="nameEn" styleClass="error0"/>
 		</h:panelGroup>
-		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="<td class='tderror1 tdclear'>" escape="false"/>
+			<h:message for="nameEn" styleClass="error0"/>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		<h:outputText value="</table>" escape="false"/>
 		
-		<h:outputText value="</fieldset></div>" escape="false"/>
 
-		<br/>
+
+
 		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" styleClass="inputbutton" value="#{bolonhaBundle['create']}"
 			action="#{CourseGroupManagement.createCourseGroup}"/>

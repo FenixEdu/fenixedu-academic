@@ -77,7 +77,7 @@
 
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText value="<br/><p>" escape="false"/>
+		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" styleClass="inputbutton" value="#{bolonhaBundle['return']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false"/>

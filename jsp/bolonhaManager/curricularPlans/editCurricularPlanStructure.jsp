@@ -47,7 +47,7 @@
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		onlyStructure="true" 
-		toEdit="true" 
+		toEdit="true"
 		toOrder="<%=request.getParameter("toOrder")%>"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>

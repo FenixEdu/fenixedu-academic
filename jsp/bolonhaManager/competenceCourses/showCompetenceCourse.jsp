@@ -76,9 +76,9 @@
 	
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>
-	<h:outputText value="<li><strong>#{bolonhaBundle['regime']}: </strong>" escape="false"/>
+	<h:outputText value="<li>#{bolonhaBundle['regime']}: " escape="false"/>
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</li>" escape="false"/>	
-	<h:outputText value="<li><strong>#{bolonhaBundle['lessonHours']}: </strong>" escape="false"/>	
+	<h:outputText value="<li>#{bolonhaBundle['lessonHours']}: " escape="false"/>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
 		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>

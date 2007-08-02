@@ -15,7 +15,7 @@
 	</h:outputFormat>
 	
 	<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
-		<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):<br/>" escape="false" />
+		<h:outputText value="<p class='mtop2 mbottom05'><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):</p>" escape="false" />
 		<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
 			<h:column>
 				<h:outputText value="#{memberLabel}" escape="false"/>
@@ -23,12 +23,13 @@
 		</h:dataTable>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
-		<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.curricularPlanGroup.members']}</i><br/>" escape="false" />
+		<h:outputText value="<p class='mtop15'><i>#{bolonhaBundle['label.empty.curricularPlanGroup.members']}</i></p>" escape="false" />
 	</h:panelGroup>
 
-	<h:outputText value="<br/>" escape="false"/>
 	
 <h:outputText value="<div class='invisible'>" escape="false"/>
+
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 	<h:outputText value="<ul><li>" escape="false"/>
 	<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 		<h:outputFormat value="#{bolonhaBundle['view.param']}" escape="false">
@@ -41,9 +42,10 @@
 		<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 	</h:outputLink>
 	<h:outputText value="</li></ul>" escape="false"/>
+	</h:panelGroup>
 
 
-	<h:outputText value="<p class='mtop2 mbottom0'>" escape="false"/>
+	<h:outputText value="<p class='mtop15 mbottom0'>" escape="false"/>
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 		<h:outputText value="#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
 		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
@@ -119,7 +121,7 @@
 	<h:outputText value="</p>" escape="false"/>
 <h:outputText value="</div>" escape="false"/>
 	
-	<h:outputText value="<br/>" escape="false"/>
+
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		organizeBy="<%=request.getParameter("organizeBy")%>"

@@ -13,5 +13,9 @@
 </logic:messagesPresent>
 
 <logic:messagesNotPresent>
-		
+
+<h2><bean:message key="bolonhaManager.portal"/></h2>
+
+<p><bean:message key="bolonhaManager.portal.welcomeMessage"/></p>
+
 </logic:messagesNotPresent>
