@@ -39,10 +39,13 @@
 			<bean:message key="button.confirm" />
 		</html:submit>
 		<html:submit onclick="this.form.method.value='showEmptyBonusInstallment';">
-			<bean:message key="link.back"/>
+			<bean:message key="button.back"/>
 		</html:submit>
 		<html:submit onclick="this.form.method.value='exportBonusInstallment';">
 			<bean:message key="button.export"/>
+		</html:submit>
+		<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
+			<bean:message key="button.exportGIAF"/>
 		</html:submit></p>
 		<logic:present name="bonusInstallment" property="bonusInstallmentList">
 			<fr:view name="bonusInstallment" property="bonusInstallmentList" schema="show.employeeBonusInstallment">

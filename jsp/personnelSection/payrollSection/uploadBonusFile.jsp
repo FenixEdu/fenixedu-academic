@@ -36,10 +36,12 @@
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
-	<p><html:submit>
-		<bean:message key="button.confirm" />
-	</html:submit></p>
-	<p><html:submit onclick="this.form.method.value='prepareUploadAnualInstallment'">
-		<bean:message key="button.cancel"/>
-	</html:submit></p>
+	<p>
+		<html:submit>
+			<bean:message key="button.confirm" />
+		</html:submit>
+		<html:cancel>
+			<bean:message key="button.cancel"/>
+		</html:cancel>
+	</p>
 </fr:form>

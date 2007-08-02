@@ -321,7 +321,6 @@ public class ExportClosedExtraWorkMonth extends Service {
     }
 
     private boolean existAnyLeaveForThisDay(List<Leave> leaves, YearMonthDay day) {
-	// TODO Auto-generated method stub
 	if (leaves != null) {
 	    for (Leave leave : leaves) {
 		if (leave.getJustificationMotive().getJustificationType().equals(
@@ -356,7 +355,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 	if (code != 0) {
 	    if (leave.getJustificationMotive() == maternityJustificationMotive
 		    && endDate.getDayOfMonth() != 30
-		    && Days.daysBetween(start, end).getDays() == endDate.getDayOfMonth()) {
+		    && Days.daysBetween(start, end).getDays() +1 == endDate.getDayOfMonth()) {
 		if (!maternityJustificationList.contains(leave.getAssiduousness())
 			&& !isContractedEmployee(leave.getAssiduousness(), start, end)) {
 		    maternityJustificationList.add(leave.getAssiduousness());

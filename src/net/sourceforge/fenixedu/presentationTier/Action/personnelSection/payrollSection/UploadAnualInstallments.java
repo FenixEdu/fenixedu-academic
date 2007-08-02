@@ -28,6 +28,9 @@ public class UploadAnualInstallments extends FenixDispatchAction {
     public ActionForward uploadAnualInstallment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
+        if (isCancelled(request)) {
+            return prepareUploadAnualInstallment(mapping, form, request, response);
+        }
 	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBean");
 	RenderUtils.invalidateViewState();
 	if (bonusInstallmentFileBean.isComplete()) {

@@ -26,6 +26,9 @@
 			<logic:present name="anualBonusInstallmentFactory" property="year">
 				<fr:edit id="anualBonusInstallmentFactory" name="anualBonusInstallmentFactory" schema="edit.anualBonusInstallmentFactory"/>
 			</logic:present>
+			<p>
+				<html:submit><bean:message key="button.confirm" /></html:submit>
+			</p>
 		</logic:notPresent>
 
 		<logic:present name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
@@ -35,6 +38,11 @@
 					<fr:layout  name="tabular">
 					</fr:layout>
 				</fr:view>
+				<p>
+					<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
+						<bean:message key="button.back"/>
+					</html:cancel>
+				</p>
 			</logic:equal>
 			<logic:equal name="anualBonusInstallmentFactory" property="canEditAnualBonusInstallment" value="true">
 				<fr:view name="anualBonusInstallmentFactory" schema="edit.anualBonusInstallmentFactory"/>
@@ -42,11 +50,14 @@
 					<fr:layout  name="tabular">
 					</fr:layout>
 				</fr:edit>
+				<p>
+					<html:submit><bean:message key="button.confirm" /></html:submit>
+					<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
+						<bean:message key="button.back"/>
+					</html:cancel>
+				</p>
 			</logic:equal>
-		</logic:present>
-		<p><html:submit>
-			<bean:message key="button.confirm" />
-		</html:submit></p>
+		</logic:present>		
 	</fr:form>
 </logic:present>
 

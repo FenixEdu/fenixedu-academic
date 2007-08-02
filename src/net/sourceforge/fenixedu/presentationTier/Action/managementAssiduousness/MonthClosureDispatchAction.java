@@ -323,6 +323,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    saveMessages(request, actionMessages);
 	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
 	}
+        RenderUtils.invalidateViewState();
 	response.setContentType("text/plain");
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
 		LanguageUtils.getLocale());

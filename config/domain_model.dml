@@ -4427,7 +4427,7 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Empl
 }
 
 class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer month;
+	Partial partialYearMonth;
 	Double value;
 }
 

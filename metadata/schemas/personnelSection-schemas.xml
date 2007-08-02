@@ -1101,14 +1101,14 @@
 </schema>
 
 <schema name="edit.anualBonusInstallmentBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentBean">
-	<slot name="months" layout="option-select"
+	<slot name="months" layout="option-select" key="label.assiduousnessMonths"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />
 		<property name="eachSchema" value="show.date" />
   		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.InstallmentYearMonthAsProvider" />
 	</slot>
-	<slot name="paymentYearMonth" layout="menu-select" schema="choose.date"
+	<slot name="paymentYearMonth" key="label.paymentMonth" layout="menu-select" schema="choose.date"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
@@ -35,9 +36,9 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 	setExplorationUnit(explorationUnit);
     }
 
-    public EmployeeMonthlyBonusInstallment getEmployeeMonthlyBonusInstallment(int month) {
+    public EmployeeMonthlyBonusInstallment getEmployeeMonthlyBonusInstallment(YearMonth yearMonth) {
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : getEmployeeMonthlyBonusInstallments()) {
-	    if (employeeMonthlyBonusInstallment.getMonth() == month) {
+	    if (employeeMonthlyBonusInstallment.getPartialYearMonth().equals(yearMonth)) {
 		return employeeMonthlyBonusInstallment;
 	    }
 	}
