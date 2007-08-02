@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreditsDismissal extends CreditsDismissal_Base {
     
-    public  CreditsDismissal() {
+    public CreditsDismissal() {
         super();
     }
     
@@ -50,4 +50,9 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 	return multiLanguageString;
     }
 
+    @Override
+    public void delete() {
+        getNoEnrolCurricularCourses().clear();
+        super.delete();
+    }
 }

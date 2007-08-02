@@ -165,7 +165,7 @@ public class Dismissal extends Dismissal_Base {
     }
 
     @Override
-    final public void delete() {
+    public void delete() {
 	final Credits credits = getCredits();
 	removeCredits();
 	if (!credits.hasAnyDismissals()) {
