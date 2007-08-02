@@ -327,12 +327,14 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.writer = facesContext.getResponseWriter();
         
         writer.startElement("p", this);
-        writer.append("&nbsp;");
-        writer.endElement("p");
-
+        writer.writeAttribute("class", "mtop2 mbottom05", null);
+        writer.startElement("em", this);
         writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
+        writer.endElement("em");
+        writer.endElement("p");
+        
         writer.startElement("ul", this);
-        writer.writeAttribute("class", "nobullet", null);
+        writer.writeAttribute("class", "nobullet mtop05 mbottom2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
 
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
