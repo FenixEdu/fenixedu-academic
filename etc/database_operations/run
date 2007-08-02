@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Adding curriculum line location management functionalities to manager" changes-20070730163712.sql
+execute "Create DismissalNoEnrolCurricularCourse table" createCreditsDismissalNoEnrolCurricularCourseTable.sql
+execute "Update CreditsDismissal" updateCreditsDismissalClass.sql
