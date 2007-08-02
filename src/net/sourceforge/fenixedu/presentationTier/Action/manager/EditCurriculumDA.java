@@ -13,12 +13,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -68,6 +71,8 @@ public class EditCurriculumDA extends FenixDispatchAction {
             }
         }
 
+        request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
+        
         if (language == null)
             return mapping.findForward("editCurriculum");
 
@@ -85,14 +90,31 @@ public class EditCurriculumDA extends FenixDispatchAction {
         final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.
         		readDegreeModuleByOID(Integer.valueOf(request.getParameter("curricularCourseId")));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
+        Curriculum curriculum = curricularCourse.findLatestCurriculum();
+        
         infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-        infoCurriculum.setGeneralObjectives((String) editForm.get("generalObjectives"));
-        infoCurriculum.setOperacionalObjectives((String) editForm.get("operacionalObjectives"));
-        infoCurriculum.setProgram((String) editForm.get("program"));
-        infoCurriculum.setGeneralObjectivesEn((String) editForm.get("generalObjectivesEn"));
-        infoCurriculum.setOperacionalObjectivesEn((String) editForm.get("operacionalObjectivesEn"));
-        infoCurriculum.setProgramEn((String) editForm.get("programEn"));
+        
+        String objectives = (String) editForm.get("generalObjectives");
+        infoCurriculum.setGeneralObjectives((StringUtils.isEmpty(objectives)) ? curriculum.getGeneralObjectives() : objectives );
+        
+        String operationalObjectives = (String) editForm.get("operacionalObjectives");
+        infoCurriculum.setOperacionalObjectives(StringUtils.isEmpty(operationalObjectives) ? curriculum.getOperacionalObjectives() : operationalObjectives);
+                
+	String program = (String) editForm.get("program");
+	infoCurriculum.setProgram(StringUtils.isEmpty(program) ? curriculum.getProgram() : program);
+	
+        String objectivesEn = (String) editForm.get("generalObjectivesEn");
+	infoCurriculum.setGeneralObjectivesEn(StringUtils.isEmpty(objectivesEn) ? curriculum.getGeneralObjectivesEn() : objectivesEn);
+        
+	String operationalObjectivesEn = (String) editForm.get("operacionalObjectivesEn");
+	infoCurriculum.setOperacionalObjectivesEn(StringUtils.isEmpty(operationalObjectivesEn) ? curriculum.getOperacionalObjectivesEn() : operationalObjectivesEn);
+        
+	String programEn = (String) editForm.get("programEn");
+	infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) ? curriculum.getProgramEn() : programEn);
 
+	Integer executionYearId = (Integer)editForm.get("executionYearId");
+	infoCurriculum.setExecutionYearId(executionYearId);
+	
         Object args[] = { infoCurriculum, request.getParameter("language"), userView.getUtilizador() };
 
         try {

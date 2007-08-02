@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
  * @author João Mota
@@ -33,10 +36,24 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
 
     protected InfoPerson infoPersonWhoAltered;
 
+    protected Integer executionYearId;
+    
     public InfoCurriculum() {
 
     }
 
+    public void setExecutionYearId(Integer id) {
+	this.executionYearId = id;
+    }
+    
+    public Integer getExecutionYearId() {
+	return this.executionYearId;
+    }
+    
+    public ExecutionYear getExecutionYear() {
+	return this.executionYearId == null || this.executionYearId == 0 ? ExecutionYear.readCurrentExecutionYear() : RootDomainObject.getInstance().readExecutionYearByOID(this.executionYearId);
+    }
+    
     public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {
         setInfoCurricularCourse(infoCurricularCourse);
 

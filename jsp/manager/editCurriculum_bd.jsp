@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+
 <h2><bean:message bundle="MANAGER_RESOURCES" key="message.editCurriculum" /></h2>
 
 <table>
@@ -19,27 +20,46 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
-	
+		
 	<table>
 		<tr>
+			<td>
+			<html:select property="executionYearId">
+				<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+			</html:select>
+			</td>
+		</tr>	
+		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.generalObjectives"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectives" property="generalObjectives" rows="8" cols="60"/>
+			</td>
 		</tr>
 		<br/>
 		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.operacionalObjectives"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectives" property="operacionalObjectives" rows="8" cols="60"/>
+			</td>
 		</tr>
 		<br/>
 		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.program"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.program" property="program" rows="8" cols="60"/>
+			</td>
 		</tr>
 <%--		<br/>
 		<tr>

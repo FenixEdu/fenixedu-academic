@@ -20,27 +20,44 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.language" property="language" value="<%= request.getParameter("language") %>"/>
-	
+
 	<table>
 		<tr>
+			<td>
+			<html:select property="executionYearId">
+				<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+			</html:select>
+			</td>
+		</tr>	
+		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.generalObjectivesEn"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectivesEn" property="generalObjectivesEn" rows="8" cols="60"/>
+			</td>
 		</tr>
-		<br/>
 		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.operacionalObjectivesEn"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectivesEn" property="operacionalObjectivesEn" rows="8" cols="60"/>
+			</td>
 		</tr>
-		<br/>
 		<tr>
+			<td>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.programEn"/></b>
+			</td>
 		</tr>
 		<tr>
+			<td>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.programEn" property="programEn" rows="8" cols="60"/>
+			</td>
 		</tr>
 <%--		<br/>
 		<tr>

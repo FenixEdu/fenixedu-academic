@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.Calendar;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -34,20 +32,19 @@ public class EditCurriculum extends Service {
             throw new NonExistingServiceException();
         }
 
-        Curriculum curriculum = curricularCourse.findLatestCurriculum();
+        ExecutionYear executionYear = infoCurriculum.getExecutionYear();
+        
+        Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getBeginDate());
 
         if (curriculum == null) {
             curriculum = new Curriculum();
-
-            Calendar today = Calendar.getInstance();
-            curriculum.setLastModificationDate(today.getTime());
+            
+            curriculum.setLastModificationDate(executionYear.getBeginDate());
             curriculum.setCurricularCourse(curricularCourse);
         }
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-        if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-                && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
+        if (!curriculum.getLastModificationDate().before(executionYear.getBeginDate())
+                && !curriculum.getLastModificationDate().after(executionYear.getEndDate())) {
 
             curriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum
                     .getOperacionalObjectives(), infoCurriculum.getProgram(), infoCurriculum
@@ -62,7 +59,8 @@ public class EditCurriculum extends Service {
                     .getOperacionalObjectives(), infoCurriculum.getProgram(), infoCurriculum
                     .getGeneralObjectivesEn(), infoCurriculum.getOperacionalObjectivesEn(),
                     infoCurriculum.getProgramEn());
-
         }
+        
+        curriculum.setLastModificationDate(executionYear.getBeginDate());
     }
 }
