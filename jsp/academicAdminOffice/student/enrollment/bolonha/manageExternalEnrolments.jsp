@@ -12,7 +12,7 @@
 <h2><bean:message key="label.student.manageExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <p class="mvert2">
-<span style="background-color: #ecf3e1; border-bottom: 1px solid #ccdeb2; padding: 0.4em 0.6em;">
+<span class="showpersonid">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
 	<fr:view name="student" schema="student.show.personAndStudentInformation.short">
 		<fr:layout name="flow">
