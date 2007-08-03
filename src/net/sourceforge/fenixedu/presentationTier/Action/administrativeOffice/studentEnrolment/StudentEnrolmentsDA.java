@@ -75,7 +75,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     
     public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();
-	request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getIdInternal().toString());
+	request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getIdInternal());
 	return mapping.findForward("visualizeRegistration");
     }
 
