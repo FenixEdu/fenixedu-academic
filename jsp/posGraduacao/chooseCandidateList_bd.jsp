@@ -18,8 +18,11 @@
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
         <input alt="input.method" type="hidden" value="getCandidates" name="method"/>
+
+<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message name="title"/></h2>
-<table>    
+
+<table class="tstyle5">    
     <!-- Degree   
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/></td>
@@ -32,7 +35,7 @@
        
        <!-- Degree Type -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.specialization"/></td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.specialization"/>:</td>
          <td>
          	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
          	<html:select bundle="HTMLALT_RESOURCES" altKey="select.specialization" property="specialization">
@@ -45,7 +48,7 @@
 
        <!-- Candidate Situation List -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.candidateSituation"/></td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.candidateSituation"/>:</td>
          <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.candidateSituation" property="candidateSituation">
                 <html:options collection="situationList" property="value" labelProperty="label"/>
              </html:select>
@@ -54,13 +57,15 @@
     
        <!-- Candidate Number -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.candidateNumber"/></td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.candidateNumber"/>:</td>
          <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.candidateNumber" property="candidateNumber"/></td>
          </td>
        </tr>
 </table>
-<br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
+</p>
 </html:form>
 

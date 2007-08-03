@@ -19,15 +19,15 @@
  		<bean:define id="infoCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
    	<bean:define id="personalInfo" name="infoCandidate" property="infoPerson" />
     	<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+
+<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
-       	<!-- Dados Pessoais -->
-<table width="100%" cellspacing="0">    
-    <tr>
-    	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.personal.info" /></h2></td>
-    </tr>
-</table>
-<br />
-<table width="100%"> 
+
+<!-- Dados Pessoais -->
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.personal.info" /></h3>
+
+<table class="tstyle2">
         <!-- Nome -->
         <tr>
          <td width="30%"><bean:message key="label.person.name" /></td>
@@ -169,15 +169,14 @@
         </tr>
         
 </table>
-<br />
+
+
         <!-- Morada -->
-<table width="100%" cellspacing="0"> 
-     <tr>
-     	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.addressInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.addressInfo" /></h3>
+
+
+<table class="tstyle2">
         <tr>
          <td width="30%"><bean:message key="label.person.address" /></td>
           <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.address" property="address" size="75" /></td>
@@ -213,15 +212,12 @@
           <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.addressDistrict" property="addressDistrict"/></td>
         </tr>
 </table>
-<br />
+
+
      <!-- Contactos -->        
-<table width="100%" cellspacing="0"> 
-     <tr>
-     	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.contactInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.contactInfo" /></h3>
+
+<table class="tstyle2">
         <!-- telefone -->
         <tr>
          <td width="30%"><bean:message key="label.person.telephone" /></td>
@@ -243,18 +239,14 @@
           <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.webSite" property="webSite"/></td>
         </tr>
 </table>
-<br />
+
 	 <!-- Informacao de Licenciatura -->
-<table width="100%" cellspacing="0"> 
-     <tr>
-        <td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.candidate.majorDegreeInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+	<h3 class="separator2 mtop15"><bean:message key="label.candidate.majorDegreeInfo" /></h3>
+
+<table class="tstyle2">
 	   <tr>
         <td width="30%"><bean:message key="label.candidate.majorDegree" />:</td>
-        <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.majorDegree" property="majorDegree"/></td>
+        <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.majorDegree" property="majorDegree" size="50"/></td>
 	   </tr>
 	   <tr>
         <td width="30%"><bean:message key="label.candidate.majorDegreeSchool" />:</td>
@@ -304,9 +296,11 @@
 		 </td>
         </tr>
    </table>
-   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Dados</html:submit>
    
-   <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset">Dados Originais</html:reset>
+   <p class="mvert15">
+	   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Dados</html:submit>
+	   <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset">Dados Originais</html:reset>
+   </p>
    
    <% InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) request.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
       if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PRE_CANDIDATO_STRING)) {	%>
@@ -314,10 +308,10 @@
 		<bean:define id="link">/editCandidate.do?method=changePassword&candidateID=
 			<bean:write name="infoCandidate" property="idInternal"/>
 		</bean:define>
-
+		
         <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
        		<bean:message key="link.masterDegree.administrativeOffice.changePassword" />
        	</html:link>
    <% } %>
-   	<br/>
+
 	</html:form>

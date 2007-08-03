@@ -14,7 +14,7 @@
 <!-- Display existent execution years of execution degrees -->
 <logic:present name="<%= SessionConstants.EXECUTION_DEGREE_LIST %>" scope="request">
 	<bean:define id="executionDegreeList" name="<%= SessionConstants.EXECUTION_DEGREE_LIST %>" scope="request" />
-	<h2><bean:message key="label.masterDegree.administrativeOffice.chooseExecutionYear" />:<br/><br/></h2>
+	<p><strong><bean:message key="label.masterDegree.administrativeOffice.chooseExecutionYear" />:</strong></p>
 	<logic:iterate id="executionDegree" name="executionDegreeList">
 		<bean:define id="executionDegreeLink">
 			<bean:write name="link"/><bean:write name="executionDegree" property="idInternal"/>

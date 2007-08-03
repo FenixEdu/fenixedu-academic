@@ -5,10 +5,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+
+<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>  
-   <table>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>  
+</p>
+
     <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
     	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
     </logic:present>
@@ -23,12 +27,12 @@
 			<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE %>" property="<%= SessionConstants.EXECUTION_DEGREE %>" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />			
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
 		</logic:present>
-       <!-- Degree Type -->
-       <tr>
-			<td colspan="2">
-				<bean:message key="label.executionYear"/> <bean:write name="executionYearName"/>
-			</td>       
-       </tr>
+
+	<!-- Degree Type -->
+	<p class="mtop15"><strong><bean:message key="label.executionYear"/> <bean:write name="executionYearName"/></strong></p>
+
+   <table class="tstyle5">
+
        <tr>
          <td><bean:message key="label.candidate.specialization"/>:</td>
          <td>
@@ -44,7 +48,7 @@
        <!-- Name -->
        <tr>
          <td><bean:message key="label.candidate.name"/>:</td>
-         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name"/></td>
+         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="50"/></td>
          </td>
        </tr>
 
@@ -66,7 +70,10 @@
          </td>
        </tr>
 </table>
-<br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar Candidato" styleClass="inputbutton" property="ok"/>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Criar Candidato" styleClass="inputbutton" property="ok"/>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
+</p>
+
 </html:form>

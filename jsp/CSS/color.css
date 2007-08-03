@@ -27,7 +27,7 @@ background-color: #1a343d;
 #navlateral ul li a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
 #navlateral ul li.sub a { background: #f6f4ed url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; }
 #navlateral ul li a:hover  { background-color: #fff; }
-#navlateral ul li span { background: url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral ul li span { background: url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
 #navlateral ul li.navheader span { background: #f6f4ed; }
 #navlateral ul li.navheader { border-bottom: 1px solid #ebe6d6; }
 

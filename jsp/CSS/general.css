@@ -64,6 +64,12 @@ border-bottom: 1px solid #ddd;
 padding: 5px 2px;
 }
 
+.showpersonid {
+background-color: #e6f3e1;
+border-bottom: 1px solid #bddeb2;
+padding: 0.4em 0.6em;
+}
+
 /* ----------------------
 ------ Info Blocks -----
 ----------------------- */
@@ -385,6 +391,7 @@ ul.padding1 li { padding: 0.25em 0; }
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd; color: #070; }
 
 .warning0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em;*/ background-color: #fbf8cc; color: #805500; }
+.warning0 table { color: #805500; }
 
 
 /* ----------------------
@@ -393,7 +400,7 @@ ul.padding1 li { padding: 0.25em 0; }
 
 form { margin: 0; padding: 0; }
 form p { margin: 0.5em; margin-left: 0; }
-span.required { color: #d30; }
+span.required { color: #b55; }
 .forminline form { display: inline; }
 /*
 .forminline form table { display: inline; }
@@ -582,8 +589,9 @@ a.color888 { color: #888 !important; }
 .color007b4d { color: #007b4d; }
 a.color007b4d { color: #007b4d !important; }
 .color890 { color: #890; }
-.color973 { color: #973; }
-.color379 { color: #379; }
+
+.color973 { color: #8f613d; }
+.color379 { color: #3d868f; }
 
 /* anchor colors */
 .anchorcaaa a { color: #888; }
@@ -596,7 +604,7 @@ a.color007b4d { color: #007b4d !important; }
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
 .highlight6 { background-color: #ffc; }
 .bgcolor1 { background-color: #fcfcf0; }
-.bgcolor2 { background-color: #fbfbdd; }
+.bgcolor2 { background-color: #fcfae4; }
 .bgcolor3 { background-color: #fafaf6; }
 .bgcolor4 { background-color: #f8f8f8; }
 .bgcolorfafafa { background-color: #fbfbfb; }
@@ -2089,7 +2097,7 @@ background: #fff;
 }
 
 table.scplan tr.scplangroup td {
-background: #fbfbdd;
+background: #fcfae4;
 border: 1px solid #ddd;
 border-bottom: 1px solid #ddd;
 padding: 5px;

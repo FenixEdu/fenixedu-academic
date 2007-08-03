@@ -6,25 +6,33 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
+<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
+<h2><bean:message key="title.masterDegree.administrativeOffice.chooseDegree"/></h2>
+
    <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
     <bean:define id="masterDegreeList" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="request" />
     
     <bean:define id="link"><bean:write name="path"/>.do?method=chooseMasterDegree<%= "&" %>page=0<%= "&" %>degreeID=</bean:define>
-    <p>
-    <h3><%= ((List) masterDegreeList).size()%> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></h3>        
+
+    <p><strong><%= ((List) masterDegreeList).size()%> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></strong></p>
     <% if (((List) masterDegreeList).size() != 0) { %>
-    </p>
-    <bean:message key="label.masterDegree.chooseOne"/><br/><br/>
-	<bean:message key="label.manager.degrees" /><br/>
+
+    <%--<bean:message key="label.masterDegree.chooseOne"/><br/><br/>--%>
+    
+	<p><bean:message key="label.manager.degrees" />:</p>
+	
+		<ul>
    	     	<logic:iterate id="masterDegree" name="masterDegreeList">
+   	     	<li>
         	<bean:define id="masterDegreeLink">
         		<bean:write name="link"/><bean:write name="masterDegree" property="idInternal"/>
         	</bean:define>
         	<html:link page='<%= pageContext.findAttribute("masterDegreeLink").toString() %>'>
 				<bean:write name="masterDegree" property="nome"/> - 
 				<bean:write name="masterDegree" property="sigla"/>
-				<br/>
             </html:link>
-    	</logic:iterate>
+            </li>
+    		</logic:iterate>
+	    </ul>
 	<% } %>

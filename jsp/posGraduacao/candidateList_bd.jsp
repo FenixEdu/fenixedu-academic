@@ -16,41 +16,44 @@
 		<bean:define id="link">
 		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>personID=
 		</bean:define>
+		
+	<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 	<h2><bean:message name="title"/></h2>
-    	<p><b>Critérios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
-    	<br /> 
-    	<p>
-    		<h3>   
+	
+    	<p class="mtop15"><b>Critérios de procura:</b>
+    	<p><bean:write name="findQuery" filter="false"/></p>
+
+    	<p class="mtop2 mbottom05">
     		<%= ((List) candidateList).size()%> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>      
     		<% if (((List) candidateList).size() != 0) { %>
-    		</h3>
     	</p>  
-    <table>
+
+    <table class="tstyle2">
     	<tr>
-			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
-			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
-			<th class="listClasses-header"><bean:message key="label.candidate.degree" /></th>
-			<th class="listClasses-header"><bean:message key="label.candidate.specialization" /></th>
-			<th class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituation" /></th>
-			<th class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituationDate" /></th>	
+			<th><bean:message key="label.candidate.name" /></th>
+			<th><bean:message key="label.candidate.number" /></th>
+			<th><bean:message key="label.candidate.degree" /></th>
+			<th><bean:message key="label.candidate.specialization" /></th>
+			<th><bean:message key="label.candidate.infoCandidateSituation" /></th>
+			<th><bean:message key="label.candidate.infoCandidateSituationDate" /></th>	
 		</tr>
     		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
     			<bean:define id="candidateLink">
     				<bean:write name="link"/><bean:write name="candidate" property="infoPerson.idInternal"/><%= "&" %>candidateID=<bean:write name="candidate" property="idInternal"/>
     			</bean:define>
     	<tr>
-    		<td class="listClasses">
+    		<td>
       			<html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
     				<bean:write name="candidate" property="infoPerson.nome" />
     			</html:link>
     		</td>
-    		<td class="listClasses"><bean:write name="candidate" property="candidateNumber" /></td>
-    		<td class="listClasses"><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /></td>
-    		<td class="listClasses"><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></td>
-    		<td class="listClasses"><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
+    		<td><bean:write name="candidate" property="candidateNumber" /></td>
+    		<td><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /></td>
+    		<td><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></td>
+    		<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
 		    	<logic:present name="candidate" property="infoCandidateSituation.date" >
 	   	         	<bean:define id="date" name="candidate" property="infoCandidateSituation.date" />
-			<td class="listClasses"><%= Data.format2DayMonthYear((Date) date) %></td>  
+			<td><%= Data.format2DayMonthYear((Date) date) %></td>  
 				</logic:present>
     	</tr>
     		</logic:iterate>

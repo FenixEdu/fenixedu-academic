@@ -17,8 +17,13 @@
 <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:define id="link">/editCandidate.do?method=prepareEdit&candidateID=</bean:define>
-<br />
-<table>
+
+
+<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
+<h2><bean:message key="label.candidate"/></h2>
+
+
+<table class="tstyle2">
 	<logic:present name="personalInfo">
   	<!-- Nome -->
    	<tr>
@@ -41,17 +46,15 @@
         <td class="greytxt"><bean:write name="masterDegreeCandidate" property="specializationArea"/></td>
     </tr>
 </table>
-<br />
+
      
           
  	<!-- Dados Pessoais -->
-<table width="100%" cellspacing="0">    
-    <tr>
-    	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.personal.info" /></h2></td>
-    </tr>
-</table>
-<br />
-<table width="100%">  
+
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.personal.info" /></h3>
+
+
+<table class="tstyle2">  
     <!-- Sexo -->
     <tr>
     	<td width="30%"><bean:message key="label.person.sex" /></td>
@@ -157,15 +160,14 @@
         <td class="greytxt"><bean:write name="personalInfo" property="profissao"/></td>
      </tr>
 </table>
-<br />	
-     <!-- Dados de Residencia -->
-<table width="100%" cellspacing="0"> 
-     <tr>
-     	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.addressInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+
+
+
+<!-- Dados de Residencia -->
+
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.addressInfo" /></h3>
+
+<table class="tstyle2">
      <!-- Morada -->
      <tr>
      	<td width="30%"><bean:message key="label.person.address" /></td>
@@ -204,13 +206,11 @@
 </table>
 <br />
      <!-- Contactos -->
-<table width="100%" cellspacing="0"> 
-     <tr>
-     	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.person.title.contactInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+     
+<h3 class="separator2 mtop15"><bean:message key="label.person.title.contactInfo" /></h3>
+
+
+<table class="tstyle2">
      <!-- Telefone -->
      <tr>
      	<td width="30%"><bean:message key="label.person.telephone" /></td>
@@ -232,15 +232,12 @@
         <td class="greytxt"><bean:write name="personalInfo" property="enderecoWeb"/></td>
      </tr>
 </table>
-<br />
+
 	 <!-- Informacao de Licenciatura -->
-<table width="100%" cellspacing="0"> 
-     <tr>
-        <td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.candidate.majorDegreeInfo" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+
+<h3 class="separator2 mtop15"><bean:message key="label.candidate.majorDegreeInfo" /></h3>
+
+<table class="tstyle2">
      <!-- Licenciatura -->
      <tr>
      	<td width="30%"><bean:message key="label.candidate.majorDegree" />:</td>
@@ -262,20 +259,18 @@
         <td class="greytxt"><bean:write name="masterDegreeCandidate" property="average"/> <bean:message key="label.candidate.values"/></td>
      </tr>
 </table>
-<br />
-<table width="100%" cellspacing="0"> 
-     <tr>
-     	<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.masterDegree.administrativeOffice.situationHistory" /></h2></td>
-     </tr>
-</table>
-<br />
-<table width="100%">
+
+
+<h3 class="separator2 mtop15"><bean:message key="label.masterDegree.administrativeOffice.situationHistory" /></h3>
+
+
      	<logic:iterate id="situation" name="masterDegreeCandidate" property="situationList">
          	<% if (((InfoCandidateSituation) situation).getValidation().equals(new State(State.ACTIVE))) { 
 %>
-        <td width="30%"><h3 class="inline"><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></h3></td>
+        <p class="mbottom05"><strong><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></strong></p>
          	<% } 
 %>
+<table class="tstyle2">
      <tr>
      	<td width="30%"><bean:message key="label.masterDegree.administrativeOffice.situation" /></td>
         <td class="greytxt"><bean:write name="situation" property="situation"/></td>
@@ -293,32 +288,36 @@
 	 </logic:iterate>
 </table>
 
-<br />
-<table width="100%">
+
+
+
+<h3 class="separator2 mtop15"><bean:message key="label.masterDegree.studyPlan.studyPlanForCandidate"/></h3>
+
+
+<table class="tstyle2">
 		<tr>
-			<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.masterDegree.studyPlan.studyPlanForCandidate"/></h2></td>
-		<tr>
-		<tr>
-			<td>
-			<bean:message key="label.masterDegree.studyPlan.givenCredits"/><bean:write name="masterDegreeCandidate" property="givenCredits"/>
+			<td style="vertical-align: top;">
+			<bean:message key="label.masterDegree.studyPlan.givenCredits"/>
 			</td>
+			<td><bean:write name="masterDegreeCandidate" property="givenCredits"/></td>
          </tr>
-		<br/>
 		<tr>
+			<td style="vertical-align: top;">
+				<bean:message key="label.masterDegree.studyPlan.givenCreditsRemarks"/>
+			</td>
 			<td>
-			<bean:message key="label.masterDegree.studyPlan.givenCreditsRemarks"/><br/>
 				<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.givenCreditsRemarks" disabled="true" name="masterDegreeCandidate" property="givenCreditsRemarks"/>
 			</td>
 		</tr>
-		<tr>
-			<td>
-			<br/>
-	<logic:present name="studyPlan">
-            <h3><b><bean:message key="label.masterDegree.studyPlan.listOfCurricularCourses"/></b></h3><br/>
-			<table width="100%">
+</table>
+
+
+			<logic:present name="studyPlan">
+            <p class="mbottom05"><b><bean:message key="label.masterDegree.studyPlan.listOfCurricularCourses"/>:</b></p>
+			<table class="tstyle2 mtop05">
 				<tr>
-					<td class="infoop" width="70%"><b><bean:message key="label.masterDegree.studyPlan.curricularCourseName"/></b></td>
-					<td class="infoop" width="30%"><b><bean:message key="label.masterDegree.studyPlan.curricularCourseCredits"/></b></td>
+					<td width="70%"><bean:message key="label.masterDegree.studyPlan.curricularCourseName"/></td>
+					<td width="30%"><bean:message key="label.masterDegree.studyPlan.curricularCourseCredits"/></td>
 				</tr>
 			<logic:iterate id="StudyPlanItem" name="studyPlan">
 				<bean:define id="infoCourse" name="StudyPlanItem" property="infoCurricularCourse"/>
@@ -334,45 +333,38 @@
 				<bean:message key="label.masterDegree.studyPlan.noStudyPlanForCandidate"/>
 			</logic:notPresent>
 
-			</td>
-		</tr>
-</table>
-<br />
 
-<table width="100%" cellspacing="0">
-    <tr>
-        <td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.masterDegree.studyPlan.isClassAssistantTitle"/></h2></td>
-    </tr>
-</table>
-<table>
+
+<h3 class="separator2 mtop15"><bean:message key="label.masterDegree.studyPlan.isClassAssistantTitle"/></h3>
+
+
+<table class="tstyle2">
     <tr>
         <td>
-            <bean:message key="label.masterDegree.studyPlan.isClassAssistant"/><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.courseAssistant" disabled="true" name="masterDegreeCandidate" property="courseAssistant"/>
+            <bean:message key="label.masterDegree.studyPlan.isClassAssistant"/>
+        </td>
+        <td>
+            <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.courseAssistant" disabled="true" name="masterDegreeCandidate" property="courseAssistant"/>
         </td>
     </tr>
     <tr>
         <td>
             <bean:message key="label.masterDegree.studyPlan.executionCoursesToAssist"/>
         </td>
-    </tr>
-    <tr>
         <td>
             <html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.coursesToAssist" disabled="true" name="masterDegreeCandidate" property="coursesToAssist" cols="40" rows="2"/>
         </td>
     </tr>
 </table>
 
-<br />
 
-<table width="100%" cellspacing="0">
-    <tr>
-        <td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.masterDegree.studyPlan.advisorOrCoordinatorTitle"/></h2></td>
-    </tr>
-</table>
+
+<h3 class="separator2 mtop15"><bean:message key="label.masterDegree.studyPlan.advisorOrCoordinatorTitle"/></h3>
+
 
 <logic:notEmpty name="masterDegreeCandidate" property="infoGuider">
 
-<table>
+<table class="tstyle2">
     <tr>
         <td>
             <bean:define id="infoTeacher" name="masterDegreeCandidate" property="infoGuider"/>
@@ -400,15 +392,18 @@
 </logic:notEmpty>
 
 <logic:empty name="masterDegreeCandidate" property="infoGuider">
-    <bean:message key="label.masterDegree.studyPlan.NoAdvisorOrCoordinatorTitle"/>
+	<p>
+	    <em><bean:message key="label.masterDegree.studyPlan.NoAdvisorOrCoordinatorTitle"/></em>
+    </p>
 </logic:empty>
 <bean:define id="candidateID" name="masterDegreeCandidate" property="idInternal" />
 	
+
+
+<h3 class="separator2 mtop15"><bean:message key="label.masterDegree.applicationDocuments"/></h3>
+
+
 <table width="100%">
-		<br />
-        <tr>
-			<td class="infoop" colspan="2"><h2 class="inline"><bean:message key="label.masterDegree.applicationDocuments"/></h2></td>
-		</tr>
 				<tr>
 					<td>
 						<html:link action='<%= "/visualizeCandidates.do?method=showApplicationDocuments&documentType=CURRICULUM_VITAE&candidateID=" + candidateID %>'><bean:message key="label.masterDegree.showCurriculumVitae"/></html:link>
@@ -432,14 +427,17 @@
 </table>
     
 	</logic:present>
-<br />
-<table width="100%">
+
 	<bean:define id="candidateLink">
 		<bean:write name="link"/><bean:write name="candidateID"/>
 	</bean:define>
-	<tr>
-    <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>    	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
-    </html:link>    
-	</tr>
-</table>
+	
+	<ul class="mtop2">
+		<li>
+		    <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
+		    	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
+		    </html:link>    
+	    </li>
+    </ul>
+
  
