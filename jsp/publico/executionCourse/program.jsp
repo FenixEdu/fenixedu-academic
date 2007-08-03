@@ -63,12 +63,7 @@
 							<bean:message key="title.program"/>
 						</h4>
 						<div class="mtop05 coutput2" style="line-height: 1.5em;">
-						<fr:view name="curriculum" property="programI18N">
-							<fr:layout>
-								<fr:property name="escaped" value="false" />
-								<fr:property name="newlineAware" value="false" />
-							</fr:layout>
-						</fr:view>
+						<fr:view name="curriculum" property="programI18N"/>
 						</div>
 					</logic:present>
 					<logic:notPresent name="curriculum">
