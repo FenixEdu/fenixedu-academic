@@ -95,22 +95,22 @@ public class EditCurriculumDA extends FenixDispatchAction {
         infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
         
         String objectives = (String) editForm.get("generalObjectives");
-        infoCurriculum.setGeneralObjectives((StringUtils.isEmpty(objectives)) ? curriculum.getGeneralObjectives() : objectives );
+        infoCurriculum.setGeneralObjectives((StringUtils.isEmpty(objectives) && curriculum != null) ? curriculum.getGeneralObjectives() : objectives );
         
         String operationalObjectives = (String) editForm.get("operacionalObjectives");
-        infoCurriculum.setOperacionalObjectives(StringUtils.isEmpty(operationalObjectives) ? curriculum.getOperacionalObjectives() : operationalObjectives);
+        infoCurriculum.setOperacionalObjectives(StringUtils.isEmpty(operationalObjectives) && curriculum != null? curriculum.getOperacionalObjectives() : operationalObjectives);
                 
 	String program = (String) editForm.get("program");
-	infoCurriculum.setProgram(StringUtils.isEmpty(program) ? curriculum.getProgram() : program);
+	infoCurriculum.setProgram(StringUtils.isEmpty(program) && curriculum != null ? curriculum.getProgram() : program);
 	
         String objectivesEn = (String) editForm.get("generalObjectivesEn");
-	infoCurriculum.setGeneralObjectivesEn(StringUtils.isEmpty(objectivesEn) ? curriculum.getGeneralObjectivesEn() : objectivesEn);
+	infoCurriculum.setGeneralObjectivesEn(StringUtils.isEmpty(objectivesEn) && curriculum != null ? curriculum.getGeneralObjectivesEn() : objectivesEn);
         
 	String operationalObjectivesEn = (String) editForm.get("operacionalObjectivesEn");
-	infoCurriculum.setOperacionalObjectivesEn(StringUtils.isEmpty(operationalObjectivesEn) ? curriculum.getOperacionalObjectivesEn() : operationalObjectivesEn);
+	infoCurriculum.setOperacionalObjectivesEn(StringUtils.isEmpty(operationalObjectivesEn) && curriculum != null ? curriculum.getOperacionalObjectivesEn() : operationalObjectivesEn);
         
 	String programEn = (String) editForm.get("programEn");
-	infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) ? curriculum.getProgramEn() : programEn);
+	infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) && curriculum != null ? curriculum.getProgramEn() : programEn);
 
 	Integer executionYearId = (Integer)editForm.get("executionYearId");
 	infoCurriculum.setExecutionYearId(executionYearId);
