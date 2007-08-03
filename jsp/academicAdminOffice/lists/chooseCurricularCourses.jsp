@@ -21,6 +21,7 @@
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"
 			 schema="choose.curricularCourses">
 		<fr:destination name="executionYearPostBack" path="/studentsListByDegree.do?method=chooseDegreeCurricularByExecutionYearPlanPostBack"/>
+		<fr:destination name="degreeCurricularPlanPostBack" path="/studentsListByDegree.do?method=chooseDegreeCurricularPlanByExecutionYearPostBack"/>
 		
 	
 		<fr:layout name="tabular">

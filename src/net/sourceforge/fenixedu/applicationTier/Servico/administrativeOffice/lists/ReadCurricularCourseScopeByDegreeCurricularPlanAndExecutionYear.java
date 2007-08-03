@@ -4,18 +4,21 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+
+import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author nmgo
@@ -23,7 +26,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear extends Service {
 
-    public List<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID)
+	 public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
 		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
@@ -35,15 +38,18 @@ public class ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear ext
 	comparator.addComparator(new BeanComparator("curricularCourse.idInternal"));
 	comparator.addComparator(new BeanComparator("branch"));
 
-	final List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>();
+	final SortedSet<DegreeModuleScope> scopes = new TreeSet<DegreeModuleScope>(comparator);
 
 	for (DegreeModuleScope degreeModuleScope : degreeCurricularPlan.getDegreeModuleScopes()) {
 	    if (degreeModuleScope.isActiveForExecutionYear(executionYear)) {
 		scopes.add(degreeModuleScope);
 	    }
 	}
-	Collections.sort(scopes,comparator);
+
 	return scopes;
-    }
+ }
+    
+    
+    
 
 }

@@ -17,6 +17,7 @@
 <bean:define id="semester" name="semester"/>
 <bean:define id="year" name="year"/>
 
+
 <h2>
 		<bean:write name="executionBean" property="curricularCourse.name"/>
 			&nbsp;- &nbsp;
