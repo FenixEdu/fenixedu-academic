@@ -748,6 +748,33 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public YearMonthDay getEndDate(){
+	
+	final StudentCurricularPlan nextStudentCurricularPlan = getNextStudentCurricularPlan();
+	if(nextStudentCurricularPlan != null){
+	    return nextStudentCurricularPlan.getStartDateYearMonthDay().minusDays(1);
+	} else if (!getRegistration().isActive()){
+	    return getRegistration().getActiveState().getStateDate().toYearMonthDay();
+	}
+	
+	return null;
+    }
+    
+    private StudentCurricularPlan getNextStudentCurricularPlan() {
+	for (Iterator<StudentCurricularPlan> iter = getRegistration().getSortedStudentCurricularPlans().iterator(); iter
+		.hasNext();) {
+	    if(iter.next() == this){
+		return iter.hasNext() ? iter.next() : null;
+	    }
+	}
+	return null;
+    }
+
+    public boolean isActive(ExecutionYear executionYear){
+	return !getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay()) &&
+	    (getEndDate() == null || getEndDate().isBefore(executionYear.getBeginDateYearMonthDay()));
+    }
+    
     final public ExecutionYear getLastExecutionYear() {
 	ExecutionYear result = null;
 
@@ -2416,6 +2443,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	super.addTutorships(tutorships);
     }
+    
+    public boolean getHasAnyEquivalences() {	
+		return !this.getNotNeedToEnrollCurricularCourses().isEmpty();
+	}
 
     public boolean isLastStudentCurricularPlanFromRegistration() {
 	return this == getRegistration().getLastStudentCurricularPlan();

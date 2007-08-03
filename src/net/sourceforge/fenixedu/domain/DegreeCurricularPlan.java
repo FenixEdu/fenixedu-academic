@@ -1801,4 +1801,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
+    public List<StudentCurricularPlan> getStudentsCurricularPlans(ExecutionYear executionYear, List<StudentCurricularPlan> result) {
+	for(final StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()){
+	    if(studentCurricularPlan.isActive(executionYear)){
+		result.add(studentCurricularPlan);
+	    }
+	}
+	return result;
+    }
+
+    
 }

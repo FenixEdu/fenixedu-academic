@@ -4,11 +4,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents.SearchStudentPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean;
@@ -63,7 +67,6 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 		final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject();
 
 		executionDegreeBean.setDegreeCurricularPlan(null);
-		executionDegreeBean.setExecutionYear(null);
 		executionDegreeBean.setCurricularCourse(null);
 		RenderUtils.invalidateViewState();
 		request.setAttribute("executionDegreeBean", executionDegreeBean);
@@ -93,7 +96,7 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 
 		final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject();
-		executionDegreeBean.setExecutionYear(null);
+	//	executionDegreeBean.setExecutionYear(null);
 		executionDegreeBean.setCurricularCourse(null);
 		RenderUtils.invalidateViewState();
 		request.setAttribute("listInformationBean", new ListInformationBean());
@@ -108,12 +111,14 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 
 		final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("executionYear");
 		executionDegreeBean.setCurricularCourse(null);
+		executionDegreeBean.setDegreeCurricularPlan(null);
 		RenderUtils.invalidateViewState();
 		request.setAttribute("executionDegreeBean", executionDegreeBean);
 		request.setAttribute("listInformationBean", new ListInformationBean());
 
 		return mapping.findForward("chooseCurricularCourse");
 	}
+
 
 	public ActionForward searchByDegree(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -124,19 +129,32 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 
 		ListInformationBean ingressionInformationBean = (ListInformationBean) getRenderedObject("chooseIngression");
 
-		Object[] args = { executionDegreeBean, ingressionInformationBean };
+		SearchParameters searchParameters = new SearchStudents.SearchParameters(ingressionInformationBean.getRegistrationAgreement(), ingressionInformationBean.getRegistrationStateType(), ingressionInformationBean.getWith_equivalence(),
+				executionDegreeBean.getDegreeCurricularPlan(),executionDegreeBean.getExecutionYear());
+				
 
+			SearchStudentPredicate predicate = new SearchStudents.SearchStudentPredicate(searchParameters);
+
+			Object[] args = { searchParameters, predicate };
 		try {
-			List<StudentCurricularPlan> registrations = (List<StudentCurricularPlan>) ServiceUtils
+			final List<StudentCurricularPlan> registrations = (List<StudentCurricularPlan>) ServiceUtils
 					.executeService(getUserView(request),
-							"SearchStudentByCriteria", args);
+							"SearchStudents", args);
+
+		
+//		Object[] args = { executionDegreeBean, ingressionInformationBean };
+//
+//		try {
+//			final List<StudentCurricularPlan> registrations = (List<StudentCurricularPlan>) ServiceUtils
+//					.executeService(getUserView(request),
+//							"SearchStudentByCriteria", args);
 
 			request.setAttribute("executionDegreeBean", executionDegreeBean);
 			request.setAttribute("listInformationBean",
 					ingressionInformationBean);
 			request.setAttribute("studentCurricularPlanList", registrations);
 
-		} catch (DomainException e) {
+		} catch (FenixServiceException e) {
 			addActionMessage(request, e.getMessage());
 
 		}
@@ -155,7 +173,7 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 				executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
 				executionDegreeBean.getExecutionYear().getIdInternal() };
 
-		final List<DegreeModuleScope> degreeModuleScopes = (List<DegreeModuleScope>) ServiceUtils
+		final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) ServiceUtils
 				.executeService(
 						getUserView(request),
 						"ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear",
@@ -204,7 +222,7 @@ public class StudentsListDispatchAction extends FenixDispatchAction {
 		Object[] args = { executionDegreeBean, curricularCourseOID, semester };
 
 		try {
-			List<Enrolment> registrations = (List<Enrolment>) ServiceUtils
+			final List<Enrolment> registrations = (List<Enrolment>) ServiceUtils
 					.executeService(getUserView(request),
 							"SearchStudentByCriteria", args);
 

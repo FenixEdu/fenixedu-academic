@@ -33,6 +33,7 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
         }
 
         Collections.sort(result, DegreeModule.COMPARATOR_BY_NAME);
+        Collections.reverseOrder();
         return result;
     }
 

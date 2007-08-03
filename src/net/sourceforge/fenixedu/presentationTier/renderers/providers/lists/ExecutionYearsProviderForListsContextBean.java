@@ -23,7 +23,7 @@ public class ExecutionYearsProviderForListsContextBean implements DataProvider {
 	    for (ExecutionDegree exeDegree : executionDegrees) {
 		executionYears.add(exeDegree.getExecutionYear());
 	    }
-	} else if (executionDegreeBean.getDegree() == null) {
+	} else if (executionDegreeBean.getDegreeCurricularPlan() == null) {
 	    executionYears.addAll(ExecutionYear.readNotClosedExecutionYears());
 	}
 

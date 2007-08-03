@@ -912,12 +912,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	public List<StudentCurricularPlan> getLastStudentCurricularPlans() {
 		final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-		final List<Registration> registrations = new ArrayList<Registration>();
+		
 	for (final DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
 			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
 					.getStudentCurricularPlans()) {
-				if(!registrations.contains(studentCurricularPlan.getRegistration())){
-					registrations.add(studentCurricularPlan.getRegistration());
+				if(studentCurricularPlan.getRegistration()== null){
+					continue;
+				}
+				
+				if(!result.contains(studentCurricularPlan)){
+					
 					result.add(studentCurricularPlan.getRegistration()
 						.getLastStudentDegreeCurricularPlansByDegree(this));
 				}
@@ -927,6 +931,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		return new ArrayList<StudentCurricularPlan>(result);
 	}
 
+    public List<StudentCurricularPlan> getStudentCurricularPlans(ExecutionYear executionYear){
+	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {    
+	    degreeCurricularPlan.getStudentsCurricularPlans(executionYear, result);	    
+	}
+	return result;
+    }
+	
     public boolean isFirstCycle() {
 	return getDegreeType().isFirstCycle();
     }
