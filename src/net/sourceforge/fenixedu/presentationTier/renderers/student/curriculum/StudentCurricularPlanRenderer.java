@@ -725,7 +725,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateEnrolmentGradeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    generateCellWithText(enrolmentRow, enrolment.getGrade().isEmpty() ? "-" : enrolment.getGradeValue(),
+	    generateCellWithText(enrolmentRow, StringUtils.isEmpty(enrolment.getGradeValue()) ? "-" : enrolment.getGradeValue(),
 		    getGradeCellClass());
 	}
 
