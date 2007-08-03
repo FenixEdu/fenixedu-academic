@@ -1071,32 +1071,29 @@
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
-		<property name="destination" value="degreePostBack"/>
+		<property name="destination" value="executionYearPostBack"/>
 	</slot>
-	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+	<slot name="degree" key="label.degree"
 		layout="menu-select"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeCurricularPlansForExecutionYear" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
-		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
-		<property name="destination" value="degreeCurricularPlanPostBack"/>
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${degreeType.localizedName} - ${name}" />
 	</slot>
 	
 </schema>
 
 <schema name="studentCurricularPlanList.view" 
-	type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES">
+	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registration.number" key="label.number" read-only="true" layout="link">
 		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
 		<property name="contextRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>
 	<slot name="registration.person.name" key="label.name" read-only="true"/>
-  	<slot name="registration.activeStateType" key="label.registration.state" />
+  	<slot name="activeStateType" key="label.registration.state" />
 	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />  	
-    <slot name="hasAnyEquivalences" key="label.equivalence" />
 </schema>
 
 <schema name="ingression.information-list" bundle="ACADEMIC_OFFICE_RESOURCES" 

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -52,8 +51,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -1801,13 +1798,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
-    public List<StudentCurricularPlan> getStudentsCurricularPlans(ExecutionYear executionYear, List<StudentCurricularPlan> result) {
+    public Set<Registration> getRegistrations(ExecutionYear executionYear, Set<Registration> registrations) {
 	for(final StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()){
 	    if(studentCurricularPlan.isActive(executionYear)){
-		result.add(studentCurricularPlan);
+		registrations.add(studentCurricularPlan.getRegistration());
 	    }
 	}
-	return result;
+	return registrations;
     }
 
     

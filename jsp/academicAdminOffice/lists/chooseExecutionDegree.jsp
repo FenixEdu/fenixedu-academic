@@ -20,8 +20,7 @@
 			 name="executionDegreeBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"
 			 schema="choose.executionDegrees">
-		<fr:destination name="degreePostBack" path="/studentsListByDegree.do?method=chooseDegreePostBack"/>
-		<fr:destination name="degreeCurricularPlanPostBack" path="/studentsListByDegree.do?method=chooseDegreeCurricularPlanPostBack"/>
+		<fr:destination name="executionYearPostBack" path="/studentsListByDegree.do?method=executionYearPostBack"/>
 	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
@@ -29,16 +28,20 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<fr:edit id="chooseIngression"
-		name="listInformationBean"
-		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean"
-		schema="ingression.information-list">	
-		<fr:layout name="tabular-row">
+	<logic:present name="listInformationBean">
+	
+		<fr:edit id="chooseIngression"
+			name="listInformationBean"
+			type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean"
+			schema="ingression.information-list">	
+			<fr:layout name="tabular-row">
+				
+			</fr:layout>
+		</fr:edit>
 			
-		</fr:layout>
-	</fr:edit>
-		
-	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
+		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
+	
+	</logic:present>
 
 </fr:form>
 

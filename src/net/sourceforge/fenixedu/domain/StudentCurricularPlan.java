@@ -772,7 +772,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isActive(ExecutionYear executionYear){
 	return !getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay()) &&
-	    (getEndDate() == null || getEndDate().isBefore(executionYear.getBeginDateYearMonthDay()));
+	    (getEndDate() == null || !getEndDate().isBefore(executionYear.getBeginDateYearMonthDay()));
     }
     
     final public ExecutionYear getLastExecutionYear() {

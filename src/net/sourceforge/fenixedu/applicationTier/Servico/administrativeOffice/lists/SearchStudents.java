@@ -6,11 +6,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.li
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -52,28 +55,19 @@ public class SearchStudents extends Service {
 
 	private Degree degree;
 
-	public SearchParameters(
-		List<RegistrationAgreement> registrationAgreement,
-		List<RegistrationStateType> registrationStateType,
-		Boolean equivalence, DegreeCurricularPlan degreeCurricularPlan,
-		ExecutionYear executionYear) {
+	public SearchParameters(List<RegistrationAgreement> registrationAgreement,
+		List<RegistrationStateType> registrationStateType, Boolean equivalence, Degree degree, ExecutionYear executionYear) {
 
 	    this.registrationAgreement = registrationAgreement;
 	    this.registrationStateType = registrationStateType;
 	    this.equivalence = equivalence;
-	 //   this.degree = degree;
-	    if (executionYear != null) {
-		this.executionYear = executionYear;
-	    }
-	    if (degreeCurricularPlan != null) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	    }
+	    this.degree = degree;
+	    this.executionYear = executionYear;
 	}
 
 	private boolean emptyParameters() {
-	    return this.registrationAgreement.isEmpty()
-		    && this.registrationStateType.isEmpty()
-		    && !this.equivalence && this.executionYear == null;
+	    return this.registrationAgreement.isEmpty() && this.registrationStateType.isEmpty() && !this.equivalence
+		    && this.executionYear == null;
 	}
 
 	public List<RegistrationAgreement> getRegistrationAgreement() {
@@ -102,89 +96,54 @@ public class SearchStudents extends Service {
 
     }
 
-    public List<StudentCurricularPlan> run(SearchParameters searchParameters,
-	    Predicate predicate) throws FenixServiceException {
+    public List<RegistrationWithStateForExecutionYearBean> run(SearchParameters searchParameters, Predicate predicate)
+	    throws FenixServiceException {
 
-	final List<StudentCurricularPlan> registrations = new ArrayList<StudentCurricularPlan>();
-	
-	if (searchParameters.getDegreeCurricularPlan() == null
-		&& searchParameters.getExecutionYear() == null) {
-	    registrations.addAll(searchParameters.getDegree()
-		    .getLastStudentCurricularPlans());
-	    if (searchParameters.emptyParameters())
-		return sortList(registrations,predicate);
+	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
 
+	final ExecutionYear executionYear = searchParameters.getExecutionYear();
+	for (DegreeCurricularPlan degreeCurricularPlan : searchParameters.getDegree().getDegreeCurricularPlansForYear(
+		executionYear)) {
+	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
 	}
-	if (searchParameters.getDegreeCurricularPlan() == null
-		&& searchParameters.getExecutionYear() != null) {
-	    for (DegreeCurricularPlan degreeCurricularPlan : searchParameters
-		    .getDegree().getDegreeCurricularPlansForYear(
-			    searchParameters.getExecutionYear())) {
-		registrations
-			.addAll(degreeCurricularPlan
-				.getStudentsCurricularPlanGivenEntryYear(searchParameters
-					.getExecutionYear()));
-	    }
-	    if (searchParameters.emptyParameters())
-		return sortList(registrations,predicate);
 
+	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
+	for (Registration registration : registrations) {
+	    
+	    
+	    
+	    result.add(new RegistrationWithStateForExecutionYearBean(registration, executionYear));
 	}
-	if (searchParameters.getDegreeCurricularPlan() != null
-		&& searchParameters.getExecutionYear() == null) {
-	    registrations.addAll(searchParameters.getDegreeCurricularPlan()
-		    .getStudentCurricularPlans());
-	    if (searchParameters.emptyParameters())
-		return sortList(registrations,predicate);
-	}
-	if (searchParameters.getDegreeCurricularPlan() != null
-		&& searchParameters.getExecutionYear() != null) {
-	    registrations.addAll(searchParameters.getDegreeCurricularPlan().getStudentsCurricularPlans(searchParameters.getExecutionYear(), registrations));
-	    if (searchParameters.emptyParameters())
-		return sortList(registrations,predicate);
-	}
-	
-	return getStudentByDegree(searchParameters, sortList(registrations,predicate));
+
+	return result;
     }
 
-    private List<StudentCurricularPlan> getStudentByDegree(
-	    SearchParameters searchParameters,
-	    List<StudentCurricularPlan> result) {
+    private List<StudentCurricularPlan> getStudentByDegree(SearchParameters searchParameters, List<StudentCurricularPlan> result) {
 
 	final List<StudentCurricularPlan> scps = new ArrayList<StudentCurricularPlan>();
 	for (final StudentCurricularPlan studentCurricularPlan : result) {
-	    final Registration registration = studentCurricularPlan
-		    .getRegistration();
+	    final Registration registration = studentCurricularPlan.getRegistration();
 
 	    if (registration != null) {
 
-		if (!registration.hasAnyEnrolmentsIn(searchParameters
-			.getExecutionYear())) {
+		if (!registration.hasAnyEnrolmentsIn(searchParameters.getExecutionYear())) {
 		    continue;
 		}
 
 		if (!searchParameters.getRegistrationAgreement().isEmpty()
-			&& !searchParameters
-				.getRegistrationAgreement()
-				.contains(
-					registration.getRegistrationAgreement())) {
+			&& !searchParameters.getRegistrationAgreement().contains(registration.getRegistrationAgreement())) {
 		    continue;
 		}
 
 		if (!searchParameters.getRegistrationStateType().isEmpty()
-			&& !searchParameters
-				.getRegistrationStateType()
+			&& !searchParameters.getRegistrationStateType()
 				.contains(
-					registration
-						.getStateInDate(
-							registration
-								.getStartDate()
-								.toDateTimeAtCurrentTime())
+					registration.getStateInDate(registration.getStartDate().toDateTimeAtCurrentTime())
 						.getStateType())) {
 		    continue;
 		}
 
-		if (!searchParameters.equivalence
-			&& studentCurricularPlan.getHasAnyEquivalences()) {
+		if (!searchParameters.equivalence && studentCurricularPlan.getHasAnyEquivalences()) {
 		    continue;
 		}
 	    }
@@ -196,18 +155,13 @@ public class SearchStudents extends Service {
 	return scps;
     }
 
- 
-    private List<StudentCurricularPlan> sortList(
-	    List<StudentCurricularPlan> list, Predicate predicate) {
+    private List<StudentCurricularPlan> sortList(List<StudentCurricularPlan> list, Predicate predicate) {
 
-	list = (List<StudentCurricularPlan>) CollectionUtils.select(list,
-		predicate);
+	list = (List<StudentCurricularPlan>) CollectionUtils.select(list, predicate);
 	Collections.sort(list, new BeanComparator("registration.number"));
 	Collections.reverse(list);
 	return list;
     }
-
-   
 
     public static class SearchStudentPredicate implements Predicate {
 
@@ -238,31 +192,25 @@ public class SearchStudents extends Service {
 	    // person);
 	}
 
-	private boolean verifyIdDocumentType(IDDocumentType idDocumentType,
-		Person person) {
+	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
 	    return (idDocumentType == null || person.getIdDocumentType() == idDocumentType);
 	}
 
 	private boolean verifyStudentNumber(Integer studentNumber, Person person) {
-	    return (studentNumber == null || (person.hasStudent() && person
-		    .getStudent().getNumber().equals(studentNumber)));
+	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber)));
 	}
 
 	private boolean verifyActiveState(Boolean activePersons, Person person) {
-	    return (activePersons == null || person.hasRole(RoleType.PERSON)
-		    .equals(activePersons));
+	    return (activePersons == null || person.hasRole(RoleType.PERSON).equals(activePersons));
 	}
 
-	private boolean verifyUsernameEquality(String usernameToSearch,
-		Person person) {
+	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
 	    if (usernameToSearch == null) {
 		return true;
 	    }
-	    String normalizedUsername = StringNormalizer
-		    .normalize(usernameToSearch.trim());
+	    String normalizedUsername = StringNormalizer.normalize(usernameToSearch.trim());
 	    for (LoginAlias alias : person.getLoginAlias()) {
-		String normalizedAlias = StringNormalizer.normalize(alias
-			.getAlias());
+		String normalizedAlias = StringNormalizer.normalize(alias.getAlias());
 		if (normalizedAlias.indexOf(normalizedUsername) != -1) {
 		    return true;
 		}
@@ -270,58 +218,38 @@ public class SearchStudents extends Service {
 	    return false;
 	}
 
-	private boolean verifyDegreeType(final Degree degree,
-		final DegreeType degreeType, final Person person) {
-	    return degreeType == null
-		    || verifyDegreeType(degree, person
-			    .getStudentByType(degreeType));
+	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType, final Person person) {
+	    return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
 	}
 
-	private boolean verifyDegreeType(final Degree degree,
-		final Registration registrationByType) {
-	    return registrationByType != null
-		    && (degree == null || verifyDegree(degree,
-			    registrationByType));
+	private boolean verifyDegreeType(final Degree degree, final Registration registrationByType) {
+	    return registrationByType != null && (degree == null || verifyDegree(degree, registrationByType));
 	}
 
-	private boolean verifyDegree(final Degree degree,
-		final Registration registrationByType) {
-	    final StudentCurricularPlan studentCurricularPlan = registrationByType
-		    .getActiveStudentCurricularPlan();
-	    return (studentCurricularPlan != null && degree == studentCurricularPlan
-		    .getDegreeCurricularPlan().getDegree());
+	private boolean verifyDegree(final Degree degree, final Registration registrationByType) {
+	    final StudentCurricularPlan studentCurricularPlan = registrationByType.getActiveStudentCurricularPlan();
+	    return (studentCurricularPlan != null && degree == studentCurricularPlan.getDegreeCurricularPlan().getDegree());
 	}
 
-	private boolean verifySimpleParameter(String parameter,
-		String searchParameter) {
-	    return (searchParameter == null)
-		    || (parameter != null && simpleNnormalizeAndCompare(
-			    parameter, searchParameter));
+	private boolean verifySimpleParameter(String parameter, String searchParameter) {
+	    return (searchParameter == null) || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
 	}
 
 	private boolean verifyParameter(String parameter, String searchParameter) {
-	    return (searchParameter == null)
-		    || (parameter != null && normalizeAndCompare(parameter,
-			    searchParameter));
+	    return (searchParameter == null) || (parameter != null && normalizeAndCompare(parameter, searchParameter));
 	}
 
-	private boolean simpleNnormalizeAndCompare(String parameter,
-		String searchParameter) {
+	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
 	    String personParameter = parameter;
-	    return (personParameter.indexOf(searchParameter) == -1) ? false
-		    : true;
+	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
 
-	private boolean normalizeAndCompare(String parameter,
-		String searchParameter) {
-	    String personParameter = StringNormalizer.normalize(parameter
-		    .trim());
-	    return (personParameter.indexOf(searchParameter) == -1) ? false
-		    : true;
+	private boolean normalizeAndCompare(String parameter, String searchParameter) {
+	    String personParameter = StringNormalizer.normalize(parameter.trim());
+	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
 
-	private static boolean verifyNameEquality(String[] nameWords,
-		Person person) {
+	private static boolean verifyNameEquality(String[] nameWords, Person person) {
 	    return person.verifyNameEquality(nameWords);
 	}
 
