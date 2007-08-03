@@ -16,7 +16,7 @@
 		<%--  
 		<li>
 			<html:link page="/competenceCourses/manageVersions.do?method=prepare">
-				<bean:message key="navigation.competenceCourse.manageVersions"/>
+				<bean:message key="label.manage.versions"/>
 			</html:link>
 		</li>
 		--%>
