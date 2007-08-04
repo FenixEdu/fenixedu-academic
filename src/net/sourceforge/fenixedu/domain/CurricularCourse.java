@@ -1576,7 +1576,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     final public boolean isOptional() {
-	return getType().equals(CurricularCourseType.OPTIONAL_COURSE);
+	return getType() == CurricularCourseType.OPTIONAL_COURSE;
     }
 
     public boolean isOptionalCurricularCourse() {
@@ -1587,8 +1587,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	if (!isBolonhaDegree()) {
 	    return getRegimeType() == RegimeType.ANUAL;
 	}
-	return hasCompetenceCourse() ? getCompetenceCourse().isAnual() : false;
-	}
+	return hasCompetenceCourse() && getCompetenceCourse().isAnual();
+    }
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
 	return this.equals(oldCurricularCourse)
