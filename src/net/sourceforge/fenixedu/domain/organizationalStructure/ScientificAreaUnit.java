@@ -24,7 +24,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
         super.setType(PartyTypeEnum.SCIENTIFIC_AREA);
     }
     
-    public static Unit createNewInternalScientificArea(String name, Integer costCenterCode, String acronym,
+    public static ScientificAreaUnit createNewInternalScientificArea(String name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
