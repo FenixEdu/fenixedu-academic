@@ -192,6 +192,9 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
         @Override
         public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
+            if (parent == null) {
+                return;
+            }
 
             if (child.getPeriodType().getWeight() >= parent.getPeriodType().getWeight()) {
                 throw new DomainException("error.childTypeGreaterThanParentType");
