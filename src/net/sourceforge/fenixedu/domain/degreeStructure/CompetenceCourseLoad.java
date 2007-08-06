@@ -39,7 +39,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
         setTutorialOrientationHours(tutorialOrientationHours);
         setAutonomousWorkHours(autonomousWorkHours);
         setEctsCredits(ectsCredits);
-        setOrder(order);
+        setLoadOrder(order);
         setCurricularPeriodType(curricularPeriodType);
     }
     
