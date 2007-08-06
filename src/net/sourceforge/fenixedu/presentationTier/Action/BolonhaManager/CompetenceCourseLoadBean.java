@@ -27,10 +27,14 @@ public class CompetenceCourseLoadBean implements Serializable {
     private Double secondTutorialOrientationHours;
     private Double secondAutonomousWorkHours;
     private Double secondEctsCredits;
+    private Integer loadOrder;
     
     private boolean sameInformationForBothPeriods;
- 
     private CurricularPeriodType curricularPeriodType;
+    
+    // Values from CompetenceCourseLoad
+    private Double contactLoad;
+    private Double totalLoad;
     
     public CompetenceCourseLoadBean() {
 	setCurricularPeriodType(CurricularPeriodType.SEMESTER);
@@ -71,6 +75,9 @@ public class CompetenceCourseLoadBean implements Serializable {
 	setTutorialOrientationHours(competenceCourseLoad.getTutorialOrientationHours());
 	setAutonomousWorkHours(competenceCourseLoad.getAutonomousWorkHours());
 	setEctsCredits(competenceCourseLoad.getEctsCredits());
+	setLoadOrder(competenceCourseLoad.getLoadOrder());
+	setContactLoad(competenceCourseLoad.getContactLoad());
+	setTotalLoad(competenceCourseLoad.getTotalLoad());
     }
     
     public Double getAutonomousWorkHours() {
@@ -193,6 +200,23 @@ public class CompetenceCourseLoadBean implements Serializable {
     public void setSecondTutorialOrientationHours(Double secondTutorialOrientationHours) {
         this.secondTutorialOrientationHours = secondTutorialOrientationHours;
     }
-    
+    public Integer getLoadOrder() {
+        return loadOrder;
+    }
+    public void setLoadOrder(Integer loadOrder) {
+        this.loadOrder = loadOrder;
+    }
+    public Double getContactLoad() {
+        return contactLoad;
+    }
+    private void setContactLoad(Double contactLoad) {
+        this.contactLoad = contactLoad;
+    }
+    public Double getTotalLoad() {
+        return totalLoad;
+    }
+    private void setTotalLoad(Double totalLoad) {
+        this.totalLoad = totalLoad;
+    }
     
 }
