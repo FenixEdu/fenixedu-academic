@@ -32,14 +32,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    abstract public ExecutionPeriod getExecutionPeriod();
-    
     final public ExecutionYear getExecutionYear() {
 	final ExecutionPeriod executionPeriod = getExecutionPeriod();
 	return executionPeriod == null ? null : executionPeriod.getExecutionYear();
     }
-    
-    abstract public boolean isApproved();
     
     public YearMonthDay getApprovementDate() {
 	return isApproved() ? getConclusionDate() : null;
@@ -177,5 +173,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	CurricularCourse course = getCurricularCourse();
 	return MultiLanguageString.i18n().nadd("pt",course.getName(period)).nadd("en", course.getNameEn(period)).finish();
     }
+    
+    public boolean hasExecutionPeriod() {
+	return getExecutionPeriod() != null;
+    }
 
+    abstract public boolean isApproved();
+    abstract public ExecutionPeriod getExecutionPeriod();
 }
