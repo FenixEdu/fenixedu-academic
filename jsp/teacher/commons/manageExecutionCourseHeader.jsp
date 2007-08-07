@@ -16,9 +16,9 @@
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
 		<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />
 
-		(&nbsp; 
+		(
 		<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-			<bean:write name="degree" property="sigla"/>&nbsp;
+			<bean:write name="degree" property="sigla"/>
 		</logic:iterate>
 		)
     </em>
