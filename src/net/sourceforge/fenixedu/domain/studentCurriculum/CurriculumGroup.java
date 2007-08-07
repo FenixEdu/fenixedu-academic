@@ -727,6 +727,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
+	return !curriculumLine.hasCurricularCourse() || getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 }

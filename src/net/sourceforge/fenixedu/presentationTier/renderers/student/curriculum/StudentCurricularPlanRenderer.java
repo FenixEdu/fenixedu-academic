@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
@@ -529,7 +530,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private void generateDismissalLabelCell(final HtmlTable mainTable, HtmlTableRow dismissalRow, Dismissal dismissal,
 		int level) {
-	    if (dismissal.hasCurricularCourse()) {
+	    //TODO: temporary solution: hasRole
+	    if (dismissal.hasCurricularCourse() || loggedPersonIsManager()) {
 		final HtmlTableCell cell = dismissalRow.createCell();
 		cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
 		cell.setClasses(getLabelCellClass());
@@ -543,19 +545,22 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    container.addChild(checkBox);
 		}
 
-		final HtmlText text = new HtmlText(studentResources.getString("label.dismissal") + ": ");
-		container.addChild(text);
-
 		final CurricularCourse curricularCourse = dismissal.getCurricularCourse();
-		String codeAndName = "";
-		if (!StringUtils.isEmpty(curricularCourse.getCode())) {
-		    codeAndName += curricularCourse.getCode() + " - ";
+		if (curricularCourse != null) {
+		    final HtmlText text = new HtmlText(studentResources.getString("label.dismissal") + ": ");
+		    container.addChild(text);
+		    
+		    String codeAndName = "";
+		    if (!StringUtils.isEmpty(curricularCourse.getCode())) {
+			codeAndName += curricularCourse.getCode() + " - ";
+		    }
+		    codeAndName += dismissal.getName().getContent();
+		    final HtmlLink curricularCourseLink = createCurricularCourseLink(codeAndName, curricularCourse);
+		    container.addChild(curricularCourseLink);
+		} else {
+		    final HtmlText text = new HtmlText(studentResources.getString("label.creditsDismissal"));
+		    container.addChild(text);
 		}
-		codeAndName += dismissal.getName().getContent();
-
-		final HtmlLink curricularCourseLink = createCurricularCourseLink(codeAndName, curricularCourse);
-
-		container.addChild(curricularCourseLink);
 
 	    } else {
 		generateCellWithText(dismissalRow, studentResources.getString("label.creditsDismissal"), getLabelCellClass(),
@@ -566,6 +571,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		generateDismissalDetails(mainTable, dismissal, level);
 	    }
 
+	}
+
+	private Boolean loggedPersonIsManager() {
+	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
 	}
 
 	private void generateDismissalDetails(final HtmlTable mainTable, Dismissal dismissal, int level) {
