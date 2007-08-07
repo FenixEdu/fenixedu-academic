@@ -83,7 +83,7 @@
     </slot>
     <slot name="color" key="label.site.banner.color" /> <!-- layout="webcolor" disable, IE generates an error -->
     <slot name="link" key="label.site.banner.link" layout="input-with-comment">
-        <property name="size" value="40"/>
+        <property name="subProperty(size)" value="40"/>
 		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>

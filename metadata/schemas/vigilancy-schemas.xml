@@ -82,7 +82,7 @@
 			<property name="size" value="40"/>
 		</slot>
 		<slot name="rulesLink" key="label.vigilancy.rulesLink.optionalField" layout="input-with-comment">
-			<property name="size" value="60"/>
+			<property name="subProperty(size)" value="60"/>
 			<property name="bundle" value="VIGILANCY_RESOURCES"/>
 			<property name="comment" value="label.urlInput.explanation"/>
 			<property name="commentClasses" value="smalltxt color555"/>

@@ -189,8 +189,8 @@
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -247,8 +247,9 @@
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -274,8 +275,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -519,8 +521,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -549,8 +552,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -571,8 +575,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -585,8 +590,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -709,8 +715,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>	
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -747,8 +754,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -763,8 +771,9 @@ extends="eventCreation">
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="roleMessage" layout="input-with-comment">
-		<property name="columns" value="60"/>
-		<property name="rows" value="0"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(columns)" value="60"/>
+		<property name="subProperty(rows)" value="0"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.roleMessage.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -894,7 +903,7 @@ extends="eventCreation">
 	<slot name="local"/>
 	<slot name="patentNumber"/>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -923,7 +932,7 @@ extends="eventCreation">
 		<property name="format" value="${name}"/>
 	</slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1257,8 +1266,9 @@ extends="eventCreation">
 		<property name="columns" value="60"/>
 	</slot>
 	<slot name="keywords" layout="input-with-comment">
-		<property name="rows" value="2"/>
-		<property name="columns" value="60"/>
+		<property name="subLayout" value="area"/>
+		<property name="subProperty(rows)" value="2"/>
+		<property name="subProperty(columns)" value="60"/>
 		<property name="comment" value="label.keyword.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -1308,7 +1318,7 @@ extends="eventCreation">
 	</slot>
 	<slot name="scope" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1390,7 +1400,7 @@ extends="eventCreation">
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1457,7 +1467,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="50"/>
+		<property name="subProperty(size)" value="50"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1488,7 +1498,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		</slot>		
 		<slot name="month"/>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="50"/>
+		<property name="subProperty(size)" value="50"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1512,7 +1522,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		</slot>		
 		<slot name="month"/>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1563,7 +1573,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	</slot>
 	<slot name="language"><property name="size" value="15"/></slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1615,7 +1625,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	<slot name="eventType"/>
 	<slot name="scope"/>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1643,7 +1653,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	</slot>
 	<slot name="language"><property name="size" value="15"/></slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1677,7 +1687,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean">
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1756,19 +1766,19 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.create.NewEventEdition" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean">
 	<slot name="edition" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
+		<property name="subProperty(size)" value="50"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEdition.fieldHelp"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 	<slot name="eventLocation" key="label.event.eventLocation" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="30"/>
+		<property name="subProperty(size)" value="30"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEditionPlace"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 	<slot name="organization" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="45"/>
+		<property name="subProperty(size)" value="45"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEditionOrganization"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1787,7 +1797,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="size" value="10"/>
 	</slot>
 	<slot name="eventEditionUrl" key="label.url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEditionURL"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1798,7 +1808,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.createEvent" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean">
 	<slot name="eventName" key="label.event" layout="input-with-comment" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="45"/>
+		<property name="subProperty(size)" value="45"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventName.fieldHelp"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1806,7 +1816,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	<slot name="locationType" key="label.event.locationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="eventType" key="label.event.eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="eventUrl" key="label.url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventURL.fieldHelp"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1855,7 +1865,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	</slot>
 	<slot name="language"><property name="size" value="15"/></slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1905,7 +1915,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	</slot>
 	<slot name="address"><property name="size" value="40"/></slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -1957,7 +1967,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	</slot>
 	<slot name="language"><property name="size" value="15"/></slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -2023,7 +2033,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="url" layout="input-with-comment">
-		<property name="size" value="60"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.url.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>

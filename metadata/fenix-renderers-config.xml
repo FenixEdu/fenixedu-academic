@@ -478,7 +478,7 @@ Documentation:
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
 
-	<renderer mode="input" type="java.lang.String" layout="input-with-comment" class="net.sourceforge.fenixedu.renderers.StringInputRendererWithComment"/>
+	<renderer mode="input" type="java.lang.Object" layout="input-with-comment" class="net.sourceforge.fenixedu.renderers.GenericInputWithComment"/>
 	
     <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
           If the current browser is not supported by the html editor then it falls back to a simple text area. -->
@@ -498,7 +498,6 @@ Documentation:
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
-	<renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="input-with-comment" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRendererWithComment"/>
 	    
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
 
