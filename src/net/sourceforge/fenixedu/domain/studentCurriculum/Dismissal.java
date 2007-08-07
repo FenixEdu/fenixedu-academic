@@ -168,7 +168,7 @@ public class Dismissal extends Dismissal_Base {
     public void delete() {
 	final Credits credits = getCredits();
 	removeCredits();
-	if (!credits.hasAnyDismissals()) {
+	if (credits != null && !credits.hasAnyDismissals()) {
 	    credits.delete();
 	}
 	super.delete();
