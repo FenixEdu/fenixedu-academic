@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Table EmployeeMonthlyBonusInstallment" alterTableEmployeeMonthlyBonusInstallment.sql
+execute "Correct invalid ExecutionPeriod for CompetenceCourseInformation" correctInvalidExecutionPeriodForCompetenceCourseInformation.sql
