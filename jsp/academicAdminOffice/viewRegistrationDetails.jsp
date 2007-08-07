@@ -52,7 +52,7 @@
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight"/>
-		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
+		<fr:property name="rowClasses" value=",,,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
@@ -61,7 +61,7 @@
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+		<fr:property name="rowClasses" value=",,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
@@ -154,7 +154,7 @@
 			<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
-	<span>
+	<span class="pleft1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<html:link page="/studentExternalEnrolments.do?method=manageExternalEnrolments" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 			<bean:message key="label.student.manageExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
