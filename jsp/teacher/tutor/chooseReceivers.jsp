@@ -8,11 +8,11 @@
 
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
-<span class="error">
+<em>
 	<logic:notPresent name="receiversBean">
 		<bean:message key="error.tutor.noActiveTutorships" />
 	</logic:notPresent>
-</span>
+</em>
 
 <logic:messagesPresent property="error" message="true">
 	<html:messages id="message" property="error" message="true" bundle="MESSAGING_RESOURCES">

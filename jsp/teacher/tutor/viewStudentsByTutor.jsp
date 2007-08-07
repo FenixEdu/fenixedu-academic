@@ -9,13 +9,12 @@
 
 
 <!-- AVISOS E ERROS -->
-<span class="error">
+<em>
 	<html:errors/>
-
 	<logic:notPresent name="tutorshipHistory">
 		<bean:message key="error.tutor.noStudent" />
 	</logic:notPresent>
-</span>
+</em>
 
 <logic:present name="tutorshipHistory">
 	<fr:view name="tutorshipHistory" schema="teacher.tutorshipHistory.resume">
@@ -46,7 +45,9 @@
 	</logic:notEmpty>
 	
 	<logic:empty name="tutorshipHistory" property="activeTutorshipsByEntryYear">
-		<bean:message key="error.tutor.noActiveTutorships" />
+		<p>
+			<em><bean:message key="error.tutor.noActiveTutorships" /></em>
+		</p>
 	</logic:empty>
 
 	<logic:notEmpty name="tutorshipHistory" property="pastTutorshipsByEntryYear">

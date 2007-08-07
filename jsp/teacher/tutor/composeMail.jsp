@@ -37,11 +37,11 @@
     </html:messages>
 </logic:messagesPresent>
 
-<span class="error">
+<em>
 	<logic:notPresent name="mailBean">
 		<bean:message key="error.tutor.noActiveTutorships" />
 	</logic:notPresent>
-</span>
+</em>
 
 <logic:present name="mailBean">
 	<b><bean:message key="label.teacher.tutor.sendMail" bundle="APPLICATION_RESOURCES" /></b>

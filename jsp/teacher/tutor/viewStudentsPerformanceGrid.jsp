@@ -166,8 +166,11 @@
 	</logic:present>
 </logic:notEmpty>
 <logic:empty name="tutor" property="teacher.activeTutorships">
-		<p class="mtop1"><span class="error">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.tutor.emptyStudentsList" /></span></p>
+		<p class="mtop1">
+		<em>
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.tutor.emptyStudentsList" />
+		</em>
+		</p>
 </logic:empty>
 
 <div class="cboth"></div>
