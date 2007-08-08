@@ -206,7 +206,7 @@ public class MenuRenderer extends OutputRenderer {
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
 		HtmlText text = new HtmlText(functionality.getName().getContent());
-		//text.setFace(Face.STANDARD);
+		text.setFace(Face.STANDARD);
 		
 		HtmlComponent component = text;
         
