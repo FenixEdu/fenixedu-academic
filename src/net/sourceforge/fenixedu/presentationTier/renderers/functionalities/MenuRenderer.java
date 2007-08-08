@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
@@ -190,7 +188,7 @@ public class MenuRenderer extends OutputRenderer {
 	                	String existingStyle = item.getStyle() == null ? "" : item.getStyle();
 	                	
 	                	item.setClasses(existingClasses + getSelectedClasses());
-	                	item.setStyle(getSelectedStyle());
+	                	item.setStyle(existingStyle + getSelectedStyle());
                     }
 
             	}
@@ -208,7 +206,7 @@ public class MenuRenderer extends OutputRenderer {
      */
     public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, Functionality functionality, boolean canMakeLink) {
 		HtmlText text = new HtmlText(functionality.getName().getContent());
-		text.setFace(Face.STANDARD);
+		//text.setFace(Face.STANDARD);
 		
 		HtmlComponent component = text;
         
