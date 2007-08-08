@@ -2,7 +2,11 @@ package net.sourceforge.fenixedu.domain.assiduousness.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.util.Month;
@@ -23,6 +27,15 @@ public class YearMonthList implements Serializable {
 	    yearsMonths = new ArrayList<YearMonth>();
 	}
 	return yearsMonths;
+    }
+
+    public List<YearMonth> getSortedYearsMonths() {
+	List<YearMonth> result = new ArrayList<YearMonth>(getYearsMonths());
+	ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("year"));
+	comparatorChain.addComparator(new BeanComparator("month"));
+	Collections.sort(result, comparatorChain);
+	return result;
     }
 
     public void setYearsMonths(List<YearMonth> yearsMonths) {

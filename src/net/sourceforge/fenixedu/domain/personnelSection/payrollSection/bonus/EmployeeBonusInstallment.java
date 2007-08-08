@@ -38,7 +38,7 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 
     public EmployeeMonthlyBonusInstallment getEmployeeMonthlyBonusInstallment(YearMonth yearMonth) {
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : getEmployeeMonthlyBonusInstallments()) {
-	    if (employeeMonthlyBonusInstallment.getPartialYearMonth().equals(yearMonth)) {
+	    if (new YearMonth(employeeMonthlyBonusInstallment.getPartialYearMonth()).equals(yearMonth)) {
 		return employeeMonthlyBonusInstallment;
 	    }
 	}
@@ -48,7 +48,7 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
     public List<EmployeeMonthlyBonusInstallment> getEmployeeMonthlyBonusInstallmentsOrdered() {
 	List<EmployeeMonthlyBonusInstallment> result = new ArrayList<EmployeeMonthlyBonusInstallment>(
 		getEmployeeMonthlyBonusInstallments());
-	Collections.sort(result, new BeanComparator("month"));
+	Collections.sort(result, new BeanComparator("partialYearMonth"));
 	return result;
     }
 

@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
-import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.util.Region;
@@ -67,19 +67,16 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.addHeader(bundle.getString("label.subCostCenter"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.explorationUnit"), 2000);
 
-	List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment
-		.readByYear(getYear());
-	int monthsNumber = Month.values().length / anualBonusInstallmentList.size();
-	int beginMonth = (getInstallment().intValue() - 1) * monthsNumber + 1;
-	if (anualBonusInstallmentList.size() == getInstallment().intValue()) {
-	    monthsNumber = monthsNumber + Month.values().length % anualBonusInstallmentList.size();
-	}
-	int endMonth = beginMonth + monthsNumber;
+	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(
+		getYear(), getInstallment());
 
-	for (int monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++) {
-	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
-	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
-	    spreadsheet.addHeader(enumBundle.getString(Month.values()[monthIndex].name()));
+	List<YearMonth> sortedYearMonths = anualBonusInstallment.getAssiduousnessYearMonths()
+		.getSortedYearsMonths();
+
+	for (YearMonth yearMonth : sortedYearMonths) {
+	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
+	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
+	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
 	}
 
 	for (int columnIndex = 0; columnIndex < 7; columnIndex++) {
@@ -88,7 +85,7 @@ public class BonusInstallment implements Serializable {
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
-	for (int index = 7, monthIndex = beginMonth; monthIndex <= endMonth; monthIndex++, index += 3) {
+	for (int index = 7, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 3) {
 	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index);
 	    spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000, index + 1);
 	    spreadsheet.addHeader(bundle.getString("label.value"), 2000, index + 2);
