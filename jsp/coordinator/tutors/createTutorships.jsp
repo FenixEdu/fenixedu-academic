@@ -80,12 +80,12 @@
 			<fr:destination name="invalid" path="<%= "/createTutorship.do?method=prepareCreateTutorships&selectedEntryYear=" + entryYear + "&" +  parameters %>" />
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 mbottom0" />
-				<fr:property name="columnClasses" value="width100px,width100px,tdclear tderror1" />
+				<fr:property name="columnClasses" value="width150px,width100px,tdclear tderror1" />
 			</fr:layout>
 		</fr:edit>
 		<table class="tstyle5 gluetop mtop0">
 			<tr>
-				<td class="width100px"></td>
+				<td class="width150px"></td>
 				<td class="width100px">
 					<html:submit><bean:message key="button.coordinator.tutor.select" bundle="APPLICATION_RESOURCES"/></html:submit>
 				</td>
@@ -137,9 +137,13 @@
 	<p class="color888 mvert05">
 		<bean:message key="label.coordinator.tutor.createTutorship.selectTutor.help" bundle="APPLICATION_RESOURCES" /></p>
 	<ul>
-		<li><p class="mtop1 mbottom2">
-			<html:link target="_blank" page="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutorHistory&" + parameters %>">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.tutor.chooseTutorFromListLink" /></html:link></p>
+		<li>
+			<p class="mtop1 mbottom2">
+				<html:link target="_blank" page="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutorHistory&" + parameters %>">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.tutor.chooseTutorFromListLink" />
+					<img src="<%= request.getContextPath() %>/images/external_icon.gif"/>
+				</html:link>
+			</p>
 		</li>
 	</ul>
 	

@@ -29,7 +29,7 @@
 </schema>
 
 <schema name="teacher.tutor.performanceGrid.filters" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean" >
-	<slot name="degree" key="label.degree" layout="menu-select-postback">
+	<slot name="degree" key="label.Degree" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider"/> 
 		<property name="format" value="${sigla} - ${nome}"/>
 		<property name="sortBy" value="nome"/>
@@ -120,7 +120,7 @@
 	<slot name="studentsList" layout="tabular-option" schema="teacher.tutor.tutorship">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.StudentsGivenTutorDataProvider"/>
 		<property name="classes" value="tstyle1 acenter mtop0"/>
-		<property name="columnClasses" value=",,width250px aleft,"/>
+		<property name="columnClasses" value=",,aleft,"/>
 	</slot>
 </schema>
 

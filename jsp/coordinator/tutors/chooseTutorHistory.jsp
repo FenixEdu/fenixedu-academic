@@ -20,12 +20,13 @@
 
 <html:errors />
 
-<br />
 
 <logic:present name="teachers">
 	<logic:notEmpty name="teachers">
-		<b><bean:message key="label.coordinator.tutor.chooseTutorHistory" bundle="APPLICATION_RESOURCES" /></b>
-		<br />
+		<p>
+			<b><bean:message key="label.coordinator.tutor.chooseTutorHistory" bundle="APPLICATION_RESOURCES" /></b>
+		</p>
+
 		<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.chooseTutorHistory.help" bundle="APPLICATION_RESOURCES" /></p>
 		
 		<bean:message key="label.coordinator.tutor.chooseTutorHistory.filter" bundle="APPLICATION_RESOURCES"/>: 

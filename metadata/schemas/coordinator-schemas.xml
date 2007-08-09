@@ -615,8 +615,8 @@
 	</slot>
 	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
 	<slot name="teacher.category.longName" key="label.teacherCategory"/>
-	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>
-	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>	
+	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents.br"/>
+	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.allTutoredStudents.br"/>	
 </schema>
 
 <schema name="coordinator.tutor.transferTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">

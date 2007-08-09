@@ -122,6 +122,19 @@ padding: 0.25em;
 ------- Lists ----------
 ----------------------- */
 
+/* modular */
+
+ul.ulindent0 {
+margin-left: 0; /* IE */
+padding-left: 0; /* FF */
+}
+ul.ulindent05 {
+margin-left: 0.25em; /* IE */
+padding-left: 0.25em; /* FF */
+}
+ul-lheight15 { line-height: 1.5em; } /* default */
+
+
 ul.list1, ul.list2, ul.list3 {
 list-style: none;
 }

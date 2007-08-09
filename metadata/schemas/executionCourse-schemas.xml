@@ -285,7 +285,7 @@
     </slot>
     <slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
-   		<property name="columns" value="85"/>
+   		<property name="columns" value="75"/>
    		<property name="rows" value="25"/>
    		<property name="config" value="advanced" />
 	</slot>

@@ -17,14 +17,14 @@
 	<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	
 		<!-- SELECTED TEACHER -->
-		<p class="mvert025"><b><bean:message key="label.tutor" />:&nbsp;</b>
+		<p class="mvert025"><bean:message key="label.tutor" />: 
 			<bean:write name="tutorshipManagementBean" property="teacher.person.name" />
-			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
+			(<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />)
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
 		<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
 		<p class="mvert025">
-			<b><bean:message key="label.masterDegree.coordinator.executionYear"/></b>
+			<bean:message key="label.masterDegree.coordinator.executionYear"/> 
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
 		</p>
 	</logic:present>
@@ -36,31 +36,36 @@
 
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-			<p><span class="error"><bean:write name="message" /></span></p>
+		<p><span class="error"><bean:write name="message" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
-<br />
+
 
 <!-- TUTORSHIP INFORMATION -->
-<b><bean:message key="label.coordinator.tutor.tutorshipInfo.tutorshipHistory" bundle="APPLICATION_RESOURCES" /></b>
-<br />
+<p class="mbottom05">
+	<b><bean:message key="label.coordinator.tutor.tutorshipInfo.tutorshipHistory" bundle="APPLICATION_RESOURCES" /></b>
+</p>
+
 <fr:view name="tutorshipManagementBean" schema="coordinator.tutor.tutorshipInfo">
 	<fr:layout name="tabular">
-   	    <fr:property name="classes" value="tstyle2 thlight thright"/>
+   	    <fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
     </fr:layout>
 </fr:view>
+
 <ul>
 	<li>
 		<html:link page="<%= "/tutorManagement.do?method=viewTutorshipHistory&forwardTo=readTutor&" + parameters %>">
-			<bean:message key="link.coordinator.tutor.viewHistory" bundle="APPLICATION_RESOURCES" /></html:link>
+			<bean:message key="link.coordinator.tutor.viewHistory" bundle="APPLICATION_RESOURCES" />
+		</html:link>
 	</li>
 </ul>
-<br />
 
 <!-- ADD NEW TUTORSHIP FORM -->
 <!-- ASSOCIATE A SINGLE STUDENT TO SELECTED TUTOR -->
-<b><bean:message key="label.coordinator.tutor.associateStudent" bundle="APPLICATION_RESOURCES" /></b>
-<br />
+<p class="mtop15 mbottom05">
+	<b><bean:message key="label.coordinator.tutor.associateStudent" bundle="APPLICATION_RESOURCES" /></b>
+</p>
+
 <p class="color888 mvert05"><bean:message key="message.coordinator.tutor.associateOneStudent.help" bundle="APPLICATION_RESOURCES" /></p>
 <fr:form action="/tutorshipManagement.do?method=insertTutorshipWithOneStudent">
 	<fr:edit id="associateOneStudentBean" name="tutorshipManagementBean" schema="coordinator.tutor.addTutorship">
@@ -79,12 +84,14 @@
 		</tr>
 	</table>
 </fr:form>
-<br />
+
 
 <!-- TUTORSHIP MANAGEMENT FORM -->
 <!-- IT SHOWS ALL STUDENTS FROM SELECTED TUTOR, ORDERED BY ENTRY YEAR -->
-<b><bean:message key="label.coordinator.tutor.manageStudents" bundle="APPLICATION_RESOURCES" /></b>
-<br />
+<p>
+	<b><bean:message key="label.coordinator.tutor.manageStudents" bundle="APPLICATION_RESOURCES" /></b>
+</p>
+
 <p class="color888 mtop05 mbottom0">
 	<bean:message key="message.coordinator.tutor.manageStudents.help" bundle="APPLICATION_RESOURCES" /></p>
 <p class="color888 mtop0 mbottom1">
@@ -95,7 +102,7 @@
 			<bean:message key="link.coordinator.tutor.manageStudents.changeTutorshipDate" bundle="APPLICATION_RESOURCES" /></html:link>
 	</li>
 </ul>
-<br />
+
 <logic:present name="tutorshipManagementBeansByEntryYear">
 	<fr:form action="/tutorshipManagement.do?method=manageTutorships">
 		<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" visible="false"/>

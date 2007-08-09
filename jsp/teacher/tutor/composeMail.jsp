@@ -6,6 +6,7 @@
 
 <html:xhtml/>
 
+<em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:messagesPresent property="error" message="true">

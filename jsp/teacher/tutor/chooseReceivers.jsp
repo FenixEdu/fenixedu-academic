@@ -6,6 +6,7 @@
 
 <html:xhtml/>
 
+<em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
 <em>
@@ -44,8 +45,10 @@
 </logic:messagesPresent>
 
 <logic:present name="receiversBean">
-	<b><bean:message key="label.teacher.tutor.sendMail.chooseReceivers" bundle="APPLICATION_RESOURCES" /></b>
-	<br />
+	<p>
+		<b><bean:message key="label.teacher.tutor.sendMail.chooseReceivers" bundle="APPLICATION_RESOURCES" /></b>
+	</p>
+
 	<p class="color888 mvert05"><bean:message key="label.teacher.tutor.sendMail.chooseReceivers.help" bundle="APPLICATION_RESOURCES" /></p>
 
 	<fr:form action="/sendMailToTutoredStudents.do?method=prepareCreateMail">

@@ -9,12 +9,14 @@
 
 
 <!-- AVISOS E ERROS -->
-<em>
-	<html:errors/>
-	<logic:notPresent name="tutorshipHistory">
-		<bean:message key="error.tutor.noStudent" />
-	</logic:notPresent>
-</em>
+<p>
+	<em>
+		<html:errors/>
+		<logic:notPresent name="tutorshipHistory">
+			<bean:message key="error.tutor.noStudent" />
+		</logic:notPresent>
+	</em>
+</p>
 
 <logic:present name="tutorshipHistory">
 	<fr:view name="tutorshipHistory" schema="teacher.tutorshipHistory.resume">
@@ -24,8 +26,9 @@
 	</fr:view>
 	
 	<logic:notEmpty name="tutorshipHistory" property="activeTutorshipsByEntryYear">
-		<p class="mtop2 mbottom1"/>
-			<span class="warning0"><b><bean:message key="label.tutor.tutorshipInfo.currentTutoredStudents" bundle="APPLICATION_RESOURCES"/></b></span></p>
+		<p class="mtop2 mbottom1 separator2"/>
+			<b><bean:message key="label.tutor.tutorshipInfo.currentTutoredStudents" bundle="APPLICATION_RESOURCES"/></b>
+		</p>
 		<logic:iterate id="studentsByTutorBean" name="tutorshipHistory" property="activeTutorshipsByEntryYear">
 			<ul>
 				<li>
@@ -36,11 +39,10 @@
 			<bean:define id="students" name="studentsByTutorBean" property="studentsList" />
 			<fr:view name="students" layout="tabular" schema="teacher.viewStudentsByTutor">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle1 mtop0 mbottom0 tdcenter"/>
-					<fr:property name="columnClasses" value=",width15em aleft,,width6em,width12em"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
+					<fr:property name="columnClasses" value=",aleft,,,"/>
 				</fr:layout>
 			</fr:view>
-			<br />
 		</logic:iterate>
 	</logic:notEmpty>
 	
@@ -51,8 +53,9 @@
 	</logic:empty>
 
 	<logic:notEmpty name="tutorshipHistory" property="pastTutorshipsByEntryYear">
-		<p class="mtop2 mbottom1"/>
-			<span class="warning0"><b><bean:message key="label.tutor.tutorshipInfo.pastTutoredStudents" bundle="APPLICATION_RESOURCES"/></b></span></p>
+		<p class="mtop2 mbottom1 separator2"/>
+			<b><bean:message key="label.tutor.tutorshipInfo.pastTutoredStudents" bundle="APPLICATION_RESOURCES"/></b>
+		</p>
 		<logic:iterate id="studentsByTutorBean" name="tutorshipHistory" property="pastTutorshipsByEntryYear">
 			<ul>
 				<li>
@@ -63,11 +66,10 @@
 			<bean:define id="students" name="studentsByTutorBean" property="studentsList" />
 			<fr:view name="students" layout="tabular" schema="teacher.viewStudentsByTutor">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle1 mtop0 mbottom0 tdcenter"/>
-					<fr:property name="columnClasses" value=",width15em aleft,,width6em,width12em"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
+					<fr:property name="columnClasses" value=",aleft,,,"/>
 				</fr:layout>
 			</fr:view>
-			<br />
 		</logic:iterate>
 	</logic:notEmpty>
 </logic:present>

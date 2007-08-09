@@ -5,11 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
-<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
-
 <em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="label.teacher.tutor.viewStudentsPerformanceGrid"/></h2>
+
+<p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
 <fr:view name="tutor" schema="teacher.tutor.name">
 	<fr:layout name="tabular">
@@ -92,11 +91,9 @@
 					</logic:iterate>
 		 			 
 				</table>
-				<p>
-					<strong>
-						<bean:message bundle="APPLICATION_RESOURCES" key="label.totalTutorStudents" />:
-						<bean:write name="totalStudents" />
-					</strong>
+				<p class="mtop05">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.totalTutorStudents" />:
+					<bean:write name="totalStudents" />
 				</p>
 			</div>
 		</logic:notEmpty>		
@@ -153,12 +150,10 @@
 						</logic:iterate>
 					</table>
 			
-					<p>
-						<strong>
-							<bean:message bundle="APPLICATION_RESOURCES" key="label.totalEntryStudents" />
-							<bean:write name="entryYear" property="year" />: 
-							<bean:write name="totalEntryStudents" />
-						</strong>
+					<p class="mtop05">
+						<bean:message bundle="APPLICATION_RESOURCES" key="label.totalEntryStudents" />
+						<bean:write name="entryYear" property="year" />: 
+						<bean:write name="totalEntryStudents" />
 					</p>
 				</logic:notEmpty>
 			</logic:present>		

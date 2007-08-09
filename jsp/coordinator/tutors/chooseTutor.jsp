@@ -21,10 +21,11 @@
 
 <html:errors />
 
-<br />
+<p class="mtop15 mbottom05">
+	<b><bean:message key="label.coordinator.tutor.chooseTutor" bundle="APPLICATION_RESOURCES" /></b>
+</p>
 
-<b><bean:message key="label.coordinator.tutor.chooseTutor" bundle="APPLICATION_RESOURCES" /></b>
-<br />
+
 <p class="color888 mvert05"><bean:message key="message.coordinator.tutor.chooseTutor.help" bundle="APPLICATION_RESOURCES" /></p>
 <logic:present name="tutorshipManagementBean">
 	<fr:form action="/tutorManagement.do?method=prepare&forwardTo=readTutor">
@@ -32,13 +33,13 @@
 			<fr:destination name="invalid" path="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&" +  parameters %>"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 mbottom0" />
-				<fr:property name="columnClasses" value="width80px,width125px,tdclear tderror1" />
+				<fr:property name="columnClasses" value="width100px,width200px,tdclear tderror1" />
 			</fr:layout>
 		</fr:edit>
 		<table class="tstyle5 gluetop mtop0">
 			<tr>
-				<td class="width80px"></td>
-				<td class="width125px">
+				<td class="width100px"></td>
+				<td class="width200px">
 					<html:submit><bean:message key="button.coordinator.tutor.chooseTutor" bundle="APPLICATION_RESOURCES"/></html:submit>
 				</td>
 			</tr>
@@ -50,16 +51,17 @@
 	<ul>
 		<li><p class="mtop1 mbottom2">
 			<html:link page="<%="/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&chooseFromList=true&" + parameters%>">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.tutor.chooseTutorFromListLink" /></html:link> 
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.tutor.chooseTutorFromListLink" /></html:link>
+				<img src="<%= request.getContextPath() %>/images/external_icon.gif"/>
 		</li>
 	</ul>
 </logic:notPresent>
 		
 <logic:present name="tutors">
 	<logic:notEmpty name="tutors">
-		<br />
-		<b><bean:message key="label.coordinator.tutor.chooseTutor.tutorList" bundle="APPLICATION_RESOURCES" /></b>
-		<br />
+		<p>
+			<b><bean:message key="label.coordinator.tutor.chooseTutor.tutorList" bundle="APPLICATION_RESOURCES" /></b>
+		</p>
 		<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.chooseTutor.tutorList.help" bundle="APPLICATION_RESOURCES" /></p>
 		<fr:view name="tutors" layout="tabular-sortable" schema="coordinator.chooseTutor.tutorList">
 			<fr:layout>
