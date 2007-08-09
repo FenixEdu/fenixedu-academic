@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table EmployeeMonthlyBonusInstallment" alterTableEmployeeMonthlyBonusInstallment.sql
+execute "Correct invalid ExecutionPeriod for CompetenceCourseInformation" correctInvalidExecutionPeriodForCompetenceCourseInformation.sql
+execute "Alter Table Anual Bonus Installment" alterTableAnualBonusInstallment.sql
