@@ -778,14 +778,20 @@
 		
 		<!-- Begin: Lists -->
 		<action path="/studentsListByDegree"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.StudentsListDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.StudentsListByDegreeDA"
 				parameter="method"
-				scope="request"
-				>
-				<forward name="chooseExecutionDegree" path="lists.chooseExecutionDegree"/>
+				scope="request" >
+				<forward name="searchRegistrations" path="lists.searchRegistrationsByDegree"/>
+		</action>
+		
+		<action path="/studentsListByCurricularCourse"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.StudentsListByCurricularCourseDA"
+				parameter="method"
+				scope="request" >
 				<forward name="chooseCurricularCourse" path="lists.chooseCurricularCourse"/>
 				<forward name="studentByCurricularCourse" path="lists.studentByCurricularCourse"/>
-		</action>
+		</action>		
+		
 		<!-- End : Lists -->
 
         <action path="/degreeCurricularPlan/studentEquivalencyPlan"

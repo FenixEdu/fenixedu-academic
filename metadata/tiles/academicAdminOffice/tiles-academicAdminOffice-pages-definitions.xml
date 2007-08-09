@@ -450,8 +450,8 @@
 		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
 	</definition>	
 	<!-- Lists -->
-	<definition name="lists.chooseExecutionDegree" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/lists/chooseExecutionDegree.jsp"></put>
+	<definition name="lists.searchRegistrationsByDegree" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/searchRegistrationsByDegree.jsp"></put>
     </definition>
     <definition name="lists.chooseCurricularCourse" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/lists/chooseCurricularCourses.jsp"></put>

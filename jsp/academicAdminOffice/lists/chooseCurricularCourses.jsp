@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -14,32 +13,23 @@
 	</p>
 </html:messages>
 
-<fr:form action="/studentsListByDegree.do?method=showActiveCurricularCourseScope">
-	
-	<fr:edit id="executionYear"
-			 name="executionDegreeBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean"
-			 schema="choose.curricularCourses">
-		<fr:destination name="executionYearPostBack" path="/studentsListByDegree.do?method=chooseDegreeCurricularByExecutionYearPlanPostBack"/>
-		<fr:destination name="degreeCurricularPlanPostBack" path="/studentsListByDegree.do?method=chooseDegreeCurricularPlanByExecutionYearPostBack"/>
-		
-	
+<fr:form action="/studentsListByCurricularCourse.do?method=showActiveCurricularCourseScope">
+	<fr:edit name="searchBean" schema="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan">
+		<fr:destination name="executionYearPostBack" path="/studentsListByCurricularCourse.do?method=chooseExecutionYearPostBack"/>	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
-	
-		
 	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
-
 </fr:form>
-	<p>
-	</p>
+
+<p/>
+
 <logic:present name="degreeModuleScopes">
 
-	<bean:define id="executionYear" name="executionYearID"/>
+	<bean:define id="executionYear" name="searchBean" property="executionYear.idInternal"/>
 
 	<table class="tstyle4 thleft">
 		<%
@@ -79,7 +69,7 @@
 					<bean:define id="curricularCourseCode" name="degreeModuleScope" property="curricularCourse.idInternal"/>
 					<bean:define id="currentSemester" name="degreeModuleScope" property="curricularSemester"/>
 					<bean:define id="currentYear" name="degreeModuleScope" property="curricularYear"/>
-					<html:link page="<%="/studentsListByDegree.do?method=searchByCurricularCourse&amp;curricularCourseCode=" + curricularCourseCode +"&amp;semester=" + pageContext.findAttribute("currentSemester").toString() +"&amp;year=" + pageContext.findAttribute("currentYear").toString() + "&amp;executionYearID=" + pageContext.findAttribute("executionYear").toString() %>">
+					<html:link page="<%="/studentsListByCurricularCourse.do?method=searchByCurricularCourse&amp;curricularCourseCode=" + curricularCourseCode +"&amp;semester=" + pageContext.findAttribute("currentSemester").toString() +"&amp;year=" + pageContext.findAttribute("currentYear").toString() + "&amp;executionYearID=" + pageContext.findAttribute("executionYear").toString() %>">
 						<bean:write name="degreeModuleScope" property="curricularCourse.name"/>
 					</html:link>
 				</td>

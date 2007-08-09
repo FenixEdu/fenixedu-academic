@@ -14,11 +14,14 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@SuppressWarnings("serial")
 public class RegistrationWithStateForExecutionYearBean implements Serializable {
 
     private DomainReference<Registration> registration;
 
     private DomainReference<ExecutionYear> executionYear;
+
+    private RegistrationStateType registrationState;
 
     public RegistrationWithStateForExecutionYearBean(Registration registration, ExecutionYear executionYear) {
 	super();
@@ -26,8 +29,14 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
 	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
     }
 
+    public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState) {
+	this.registration = new DomainReference<Registration>(registration);
+	this.registrationState = registrationState;
+    }
+
     public RegistrationStateType getActiveStateType() {
-	return getRegistration().getLastRegistrationState(getExecutionYear()).getStateType();
+	return registrationState != null ? registrationState : getRegistration().getLastRegistrationState(getExecutionYear())
+		.getStateType();
     }
 
     private ExecutionYear getExecutionYear() {

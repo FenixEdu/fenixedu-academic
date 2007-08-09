@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -21,8 +21,8 @@ public class DegreesForExecutionYear implements DataProvider {
 	final Set<Degree> administratedDegrees = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
 		.getAdministratedDegrees();
 
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) source;
-	final ExecutionYear executionYear = executionDegreeBean.getExecutionYear();
+	final SearchStudentsByDegreeParametersBean chooseDegreeBean = (SearchStudentsByDegreeParametersBean) source;
+	final ExecutionYear executionYear = chooseDegreeBean.getExecutionYear();
 
 	if (executionYear != null) {
 	    for (ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {

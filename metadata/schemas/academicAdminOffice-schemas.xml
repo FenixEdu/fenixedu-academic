@@ -1061,27 +1061,39 @@
 	<slot name="selected.curricularCourse.name" key="label.notNeedToEnrol.name"/>
 </schema>
 
-<schema name="choose.executionDegrees"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.list.searchByDegree.chooseDegree"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" key="label.executionYear" 
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.ExecutionYearsProviderForListsContextBean" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
-		<property name="destination" value="executionYearPostBack"/>
+		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degree" key="label.degree"
-		layout="menu-select"
+		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${degreeType.localizedName} - ${name}" />
+		<property name="destination" value="postBack"/>
 	</slot>
-	
+</schema>
+
+<schema name="student.list.searchByDegree.parameters" bundle="ACADEMIC_OFFICE_RESOURCES" 
+		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean" >
+	<slot name="registrationAgreements" key="label.registrationAgreement" layout="option-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.student.RegistrationAgreement" />
+		<property name="classes" value="list2" />
+	</slot>	
+	<slot name="registrationStateTypes" key="label.registrationState" layout="option-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType" />
+		<property name="classes" value="list2" />
+	</slot>	
 </schema>
 
 <schema name="studentCurricularPlanList.view" 
@@ -1096,34 +1108,19 @@
 	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />  	
 </schema>
 
-<schema name="ingression.information-list" bundle="ACADEMIC_OFFICE_RESOURCES" 
-		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ListInformationBean" >
-		<slot name="registrationAgreement" key="label.registrationAgreement" layout="option-select">
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.RegistrationAgreementTypeProvider"/>
-			<property name="classes" value="list2" />
-		</slot>	
-		<slot name="registrationStateType" key="label.registrationState" layout="option-select">
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.RegistrationStateTypeProvider"/>
-			<property name="classes" value="list2" />
-		</slot>	
-		<slot name="with_equivalence" key="label.equivalence" layout="option-select">
-			<property name="classes" value="list2" />
-		</slot>			
-</schema>
 
-<schema name="choose.curricularCourses" 
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
-	
+<schema name="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan" 
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean" 
+	bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<slot name="executionYear" key="label.executionYear" 
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.ExecutionYearsProviderForListsContextBean" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="executionYearPostBack"/>
-	
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select"
@@ -1135,8 +1132,6 @@
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>	
 </schema>
-
-
 
 <schema name="enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true" layout="link">
