@@ -943,6 +943,9 @@
 	<!-- End: Bolonha Transition Management -->
 	
 	<!-- Begin: Bolonha Transition Management -->
+	<definition name="student.enrolment.bolonha.viewStudentCurriculum" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/enrolments/displayStudentCurriculum.jsp"/>
+	</definition>
 	<definition name="student.enrolment.bolonha.chooseStudentInformation" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/chooseStudentInformation.jsp"/>
 	</definition>

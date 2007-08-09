@@ -2393,6 +2393,7 @@
 				name="bolonhaStudentEnrolmentForm"
 				scope="request">
 		
+			<forward name="viewStudentCurriculum" path="student.enrolment.bolonha.viewStudentCurriculum" />
 			<forward name="chooseStudentInformation" path="student.enrolment.bolonha.chooseStudentInformation" />
 			<forward name="showDegreeModulesToEnrol" path="student.enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
@@ -2408,7 +2409,7 @@
 			    
 			<forward name="showCurriculum" path="curriculum.curriculumLines.location.management.showCurriculum"/>
 			<forward name="chooseNewLocation" path="curriculum.curriculumLines.location.management.chooseNewLocation" />
-			<forward name="backToChooseStudentCurricularPlan" path="/bolonhaStudentEnrolment.do?method=showEnrolableStudentCurricularPlans" />
+			<forward name="backToChooseStudentCurricularPlan" path="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" />
 		</action>
 		<!-- End: Curriculum Lines Location Management -->
 

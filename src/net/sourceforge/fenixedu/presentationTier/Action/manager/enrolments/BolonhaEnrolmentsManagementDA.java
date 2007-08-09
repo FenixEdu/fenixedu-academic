@@ -31,21 +31,21 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	    final StudentNumberBean numberBean = (StudentNumberBean) renderedObject;
 	    final Student student = getStudent(numberBean);
 	    if (student != null) {
-		request.setAttribute("studentCurricularPlans", getEnrolableStudentCurricularPlans(student));
+		request.setAttribute("studentCurricularPlans", getAllStudentCurricularPlans(student));
 	    }
 	}
 
 	return mapping.findForward("chooseStudentInformation");
     }
 
-    public ActionForward showEnrolableStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward showAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final StudentNumberBean studentNumberBean = new StudentNumberBean();
 	final Student student = getStudent(request);
 	studentNumberBean.setNumber(student.getNumber());
 
 	request.setAttribute("studentNumberBean", studentNumberBean);
-	request.setAttribute("studentCurricularPlans", getEnrolableStudentCurricularPlans(student));
+	request.setAttribute("studentCurricularPlans", getAllStudentCurricularPlans(student));
 
 	return mapping.findForward("chooseStudentInformation");
 
@@ -55,13 +55,10 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
     }
 
-    private List<StudentCurricularPlan> getEnrolableStudentCurricularPlans(final Student student) {
+    private List<StudentCurricularPlan> getAllStudentCurricularPlans(final Student student) {
 	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 	for (final Registration registration : student.getRegistrations()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	    if (studentCurricularPlan != null && studentCurricularPlan.isEnrolable()) {
-		result.add(studentCurricularPlan);
-	    }
+	    result.addAll(registration.getStudentCurricularPlans());
 	}
 	return result;
     }
@@ -81,6 +78,21 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 		ExecutionPeriod.readActualExecutionPeriod(), getCurricularYearForCurricularCourses(),
 		getCurricularRuleLevel(form)));
 	return mapping.findForward("showDegreeModulesToEnrol");
+    }
+    
+    public ActionForward backToAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final BolonhaStudentEnrollmentBean bean = (BolonhaStudentEnrollmentBean) getRenderedObject("bolonhaStudentEnrolments");
+	request.setAttribute("studentId", bean.getStudentCurricularPlan().getRegistration().getStudent().getIdInternal());
+	return showAllStudentCurricularPlans(mapping, form, request, response);
+    }
+    
+    public ActionForward viewStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+	return mapping.findForward("viewStudentCurriculum");
     }
 
     @Override
