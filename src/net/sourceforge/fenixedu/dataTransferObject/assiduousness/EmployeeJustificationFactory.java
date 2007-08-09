@@ -323,10 +323,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		setBeginTime(((Leave) justification).getDate().toTimeOfDay());
 		setEndDate(((Leave) justification).getEndYearMonthDay());
 		setEndTime(((Leave) justification).getEndTimeOfDay());
+
 		if (justification.getJustificationMotive().getJustificationType().equals(
 			JustificationType.HALF_OCCURRENCE_TIME)
 			|| getJustificationMotive().getJustificationType().equals(
 				JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
+		    setJustificationDayType(JustificationDayType.HALF_DAY);
 		    Schedule schedule = getEmployee().getAssiduousness().getSchedule(getBeginDate());
 		    WorkSchedule workSchedule = schedule.workScheduleWithDate(getBeginDate());
 		    if (getBeginTime().equals(
@@ -335,6 +337,17 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    } else {
 			setWorkPeriodType(WorkPeriodType.SECOND_PERIOD);
 		    }
+		}
+
+		if (JustificationType.getDayJustificationTypes().contains(
+			justification.getJustificationMotive().getJustificationType())) {
+		    setJustificationDayType(JustificationDayType.DAY);
+		} else if (JustificationType.getHalfDayJustificationTypes().contains(
+			justification.getJustificationMotive().getJustificationType())) {
+		    setJustificationDayType(JustificationDayType.HALF_DAY);
+		} else if (JustificationType.getHoursJustificationTypes().contains(
+			justification.getJustificationMotive().getJustificationType())) {
+		    setJustificationDayType(JustificationDayType.HOURS);
 		}
 	    } else {
 		setCorrectionType(CorrectionType.REGULARIZATION);
@@ -1104,7 +1117,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     protected boolean isOverlapingOtherJustification(Duration duration, Justification justitication) {
 	List<Leave> leaves = getEmployee().getAssiduousness().getLeaves(getBeginDate(),
 		getBeginDate().toDateTimeAtMidnight().plus(duration).toYearMonthDay());
-	return !leaves.isEmpty() && (justitication == null || !leaves.contains(justitication));
+	return !leaves.isEmpty()
+		&& (justitication == null || !leaves.contains(justitication) || leaves.size() != 1);
     }
 
     protected Duration getDuration(TimeOfDay begin, TimeOfDay end) {
