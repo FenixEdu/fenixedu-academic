@@ -77,6 +77,7 @@
 							<f:param name="organizeBy" value="groups"/>
 							<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 							<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
@@ -88,6 +89,7 @@
 							<f:param name="organizeBy" value="years"/>
 							<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 							<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'years'}" escape="false"/>
@@ -104,6 +106,7 @@
 							<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 							<f:param name="showRules" value="true"/>
 							<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>		
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{CurricularCourseManagement.showRules == 'true'}" escape="false"/>
@@ -115,6 +118,7 @@
 							<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 							<f:param name="showRules" value="false"/>
 							<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.showRules == 'false'}" escape="false"/>
@@ -131,6 +135,7 @@
 							<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 							<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 							<f:param name="hideCourses" value="false"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
@@ -142,6 +147,7 @@
 							<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 							<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 							<f:param name="hideCourses" value="true"/>
+							<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
 							<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 						</h:outputLink>
 						<h:outputText value="<span class='highlight3'>#{bolonhaBundle['hide']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'true'}" escape="false"/>

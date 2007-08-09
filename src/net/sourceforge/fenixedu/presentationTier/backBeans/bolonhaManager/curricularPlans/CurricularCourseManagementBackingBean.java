@@ -690,12 +690,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        //ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegrees()) {
             result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear().getYear()));
-            if (executionDegree.getExecutionYear().equals(currentExecutionYear)) {
-                setExecutionYearID(currentExecutionYear.getIdInternal());
-            }
+            //if (executionDegree.getExecutionYear().equals(currentExecutionYear)) {
+            //    setExecutionYearID(currentExecutionYear.getIdInternal());
+            //}
         }
         
         if (getExecutionYearID() == null) {
