@@ -1701,7 +1701,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public List<StudentCurricularPlan> getStudentsCurricularPlanGivenEntryYear(ExecutionYear entryYear) {
 		List<StudentCurricularPlan> studentsGivenEntryYear = new ArrayList<StudentCurricularPlan>();
-		ExecutionYear currentExecutionYear = ExecutionYear.getExecutionYearByDate(new YearMonthDay());
+		ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 		
 		for (Registration registration : this.getActiveRegistrations()) {
 			if (registration.getStartDate() != null && registration.getStartExecutionYear().equals(entryYear)

@@ -452,7 +452,7 @@
 		<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear"/>
 		<slot name="startDate" key="label.tutorship.startDate"/>
 		<slot name="endDate" key="label.tutorship.endDate"/>
-		<slot name="studentCurricularPlan.registrationStateType" key="label.coordinator.registrationStateType"/>
+		<slot name="studentCurricularPlan.registration.activeStateType" key="label.coordinator.registrationStateType"/>
 </schema>
 
 <schema name="coordinator.tutorshipHistory.pastStudentsList" extends="coordinator.tutorshipHistory.studentsList" type="net.sourceforge.fenixedu.domain.Tutorship" bundle="APPLICATION_RESOURCES">
@@ -500,7 +500,7 @@
 	<slot name="registration.number" key="label.coordinator.studentNumber" />
 	<slot name="registration.person.name" key="label.coordinator.studentName"/>
 	<slot name="registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
-	<slot name="registrationStateType" key="label.coordinator.registrationStateType"/>
+	<slot name="registration.activeStateType" key="label.coordinator.registrationStateType"/>
 </schema>
 
 <schema name="coordinator.createTutorship.randomNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
@@ -530,7 +530,7 @@
 	<slot name="registration.person.name" key="label.coordinator.studentName"/>
 	<slot name="registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
 	<slot name="registration.startExecutionYear.year" key="label.entryYear"/>
-	<slot name="registrationStateType" key="label.coordinator.registrationStateType"/>
+	<slot name="registration.activeStateType" key="label.coordinator.registrationStateType"/>
 </schema>
 
 <schema name="coordinator.createTutorship.tutorNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
