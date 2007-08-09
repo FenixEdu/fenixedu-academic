@@ -197,6 +197,8 @@ padding-left: 0em;
 
 
 
+
+
 /* --- new nav / renderer generated --- */
 
 /* reset properties */
@@ -216,15 +218,15 @@ width: auto;
 }
 
 /* general */
-#navlateral div.newnav ul li > a {
+#navlateral div.newnav ul li a {
 display: block;
 width: 12.45em;
 padding: 0.7ex 1em 0.7ex 1.5em;
 text-decoration: none;
 }
-#navlateral div.newnav ul li > span {
+#navlateral div.newnav ul li span {
 display: block;
-/*width: 12.45em;*/
+width: 12.45em;
 padding: 0.7ex 1em 0.7ex 1.5em;
 text-decoration: none;
 }
@@ -242,15 +244,18 @@ width: 10.95em;
 }
 
 /* navheader specific */
-#navlateral div.newnav ul li.navheader > a { font-weight: bold; }
-#navlateral div.newnav ul li.navheader > span { font-weight: bold; }
 #navlateral div.newnav ul li.navheader { margin-top: 1.0em; }
 	#navlateral div.newnav ul li.navheader ul li.navheader { padding-top: 0; }
 	#navlateral div.newnav ul li.navheader ul li.navheader a { font-weight: normal; }
 
-#navlateral div.newnav ul li.navheader span { width: 13.45em; }
-#navlateral div.newnav ul li.navheader span, #navlateral div.newnav ul li.navheader span { padding: 0.7ex 1em 0.7ex 0.5em; }
-	
+#navlateral div.newnav ul li.navheader strong { width: 13.45em; }
+#navlateral div.newnav ul li.navheader strong, #navlateral div.newnav ul li.navheader strong {
+display: block;
+width: 13.45em;
+padding: 0.7ex 1em 0.7ex 0.5em;
+text-decoration: none;
+}
+
 
 
 

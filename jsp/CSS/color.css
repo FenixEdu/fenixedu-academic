@@ -36,14 +36,19 @@ background-color: #1a343d;
 #navlateral div.newnav ul li span { border: none; }
 #navlateral div.newnav ul li.navheader { border: none; }
 /* general */
-#navlateral div.newnav ul li > a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
-#navlateral div.newnav ul li > a:hover  { background-color: #fff; }
-#navlateral div.newnav ul li > span { background: url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral div.newnav ul li a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
+#navlateral div.newnav ul li a:hover  { background: #fff url(../images/0bullet05.gif) 0.3em 0.85em no-repeat !important; }
+#navlateral div.newnav ul li span { background: url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; border-bottom: 1px solid #ebe6d6; }
 /* navheader specific */
-#navlateral div.newnav ul li.navheader > a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border: none;  border-bottom: 1px solid #ebe6d6;}
-#navlateral div.newnav ul li.navheader > span { background: #f6f4ed; border-bottom: 1px solid #ebe6d6; }
+#navlateral div.newnav ul li.navheader a { background: #f6f4ed url(../images/0bullet05.gif) 0.3em 0.85em no-repeat; border: none;  border-bottom: 1px solid #ebe6d6;}
+#navlateral div.newnav ul li.navheader strong { background: #f6f4ed; border-bottom: 1px solid #ebe6d6; }
 /* navheader sub - to delete */
 #navlateral div.newnav ul li.sub a { background: #f6f4ed url(../images/0bullet02.gif) 0.3em 0.85em no-repeat; }
+
+#navlateral div.newnav ul li a span {
+padding: 0;
+border: 0;
+}
 
 
 
