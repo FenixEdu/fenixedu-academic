@@ -353,7 +353,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public void delete() {
 	removeRootDomainObject();
 	removeEquivalencePlan();
-	removePreviousCourseGroupForNewDegreeModules();
+	super.setPreviousCourseGroupForNewDegreeModules(null);
 	super.getEquivalencePlansSet().clear();
 	super.getOldDegreeModulesSet().clear();
 	super.getNewDegreeModulesSet().clear();
