@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -38,12 +39,16 @@ public class Substitution extends Substitution_Base {
     }
 
     @Override
-    final public String getGivenGrade() {
-	return null;
-    }
-
-    @Override
     public boolean isEquivalence() {
         return false;
+    }
+    
+    @Override
+    public Grade getGrade() {
+	return super.getGrade() != null ? super.getGrade() : getEnrolmentsAverageGrade();
+    }
+
+    private Grade getEnrolmentsAverageGrade() {
+	return null;
     }
 }

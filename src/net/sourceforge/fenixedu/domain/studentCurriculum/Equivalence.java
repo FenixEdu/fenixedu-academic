@@ -50,7 +50,7 @@ public class Equivalence extends Equivalence_Base {
     
     @Override
     public String getGivenGrade() {
-        return getGrade().getValue();
+        return getGrade() != null ? getGrade().getValue() : null;
     }
     
     @Override
