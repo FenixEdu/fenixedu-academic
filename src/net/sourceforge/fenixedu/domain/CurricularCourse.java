@@ -1966,10 +1966,20 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return true;
     }
     
-    public DegreeModuleScope getOldestDegreeModuleScope(){
-		List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>(this.getDegreeModuleScopes());
-		Collections.sort(scopes, DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-		return scopes.get(0);
-	}
+    public DegreeModuleScope getOldestDegreeModuleScope() {
+	List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>(this.getDegreeModuleScopes());
+	Collections.sort(scopes, DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
+	return scopes.get(0);
+    }
+    
+    @Override
+    public Integer getMinimumValueForAcumulatedEnrollments() {
+        return super.getMinimumValueForAcumulatedEnrollments() == null ? Integer.valueOf(0) : super.getMinimumValueForAcumulatedEnrollments();
+    }
+    
+    @Override
+    public Integer getMaximumValueForAcumulatedEnrollments() {
+        return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer.valueOf(0) : super.getMaximumValueForAcumulatedEnrollments();
+    }
 
 }
