@@ -10,7 +10,7 @@
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 
 <ul>
-	<li class="institution"><a href="<%= institutionUrl %>" target="_blank"><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li class="institution"><a href="<%= institutionUrl %>" target="_blank"><bean:message key="label.institution" bundle="GLOBAL_RESOURCES"/></a></li>
 	<li class="support"><a href="<%= supportLink %>"><bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/></a></li>
 	<li class="logout"><a href="<%= request.getContextPath() %>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES"/></a></li>
 </ul>
