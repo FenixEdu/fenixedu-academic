@@ -243,18 +243,18 @@
 	<field name="octoberInfo.usedDismissal" class="java.lang.Integer"/>
 	<field name="novemberInfo.usedDismissal" class="java.lang.Integer"/>
 	<field name="decemberInfo.usedDismissal" class="java.lang.Integer"/>
-	<field name="januaryInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="februaryInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="marchInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="aprilInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="mayInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="juneInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="julyInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="augustInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="septemberInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="octoberInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="novemberInfo.vacationsInWorkDays" class="java.lang.Integer"/>
-	<field name="decemberInfo.vacationsInWorkDays" class="java.lang.Integer"/>
+	<field name="januaryInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="februaryInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="marchInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="aprilInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="mayInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="juneInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="julyInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="augustInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="septemberInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="octoberInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="novemberInfo.vacationsInWorkDays" class="java.lang.Double"/>
+	<field name="decemberInfo.vacationsInWorkDays" class="java.lang.Double"/>
 	<field name="januaryInfo.medicalLeaveInWorkDays" class="java.lang.Integer"/>
 	<field name="februaryInfo.medicalLeaveInWorkDays" class="java.lang.Integer"/>
 	<field name="marchInfo.medicalLeaveInWorkDays" class="java.lang.Integer"/>
@@ -531,18 +531,18 @@
 	<field name="octoberInfo.missWithLostOfIncome" class="java.lang.Integer"/>
 	<field name="novemberInfo.missWithLostOfIncome" class="java.lang.Integer"/>
 	<field name="decemberInfo.missWithLostOfIncome" class="java.lang.Integer"/>
-	<field name="januaryInfo.strike" class="java.lang.Integer"/>
-	<field name="februaryInfo.strike" class="java.lang.Integer"/>
-	<field name="marchInfo.strike" class="java.lang.Integer"/>
-	<field name="aprilInfo.strike" class="java.lang.Integer"/>
-	<field name="mayInfo.strike" class="java.lang.Integer"/>
-	<field name="juneInfo.strike" class="java.lang.Integer"/>
-	<field name="julyInfo.strike" class="java.lang.Integer"/>
-	<field name="augustInfo.strike" class="java.lang.Integer"/>
-	<field name="septemberInfo.strike" class="java.lang.Integer"/>
-	<field name="octoberInfo.strike" class="java.lang.Integer"/>
-	<field name="novemberInfo.strike" class="java.lang.Integer"/>
-	<field name="decemberInfo.strike" class="java.lang.Integer"/>
+	<field name="januaryInfo.strike" class="java.lang.Double"/>
+	<field name="februaryInfo.strike" class="java.lang.Double"/>
+	<field name="marchInfo.strike" class="java.lang.Double"/>
+	<field name="aprilInfo.strike" class="java.lang.Double"/>
+	<field name="mayInfo.strike" class="java.lang.Double"/>
+	<field name="juneInfo.strike" class="java.lang.Double"/>
+	<field name="julyInfo.strike" class="java.lang.Double"/>
+	<field name="augustInfo.strike" class="java.lang.Double"/>
+	<field name="septemberInfo.strike" class="java.lang.Double"/>
+	<field name="octoberInfo.strike" class="java.lang.Double"/>
+	<field name="novemberInfo.strike" class="java.lang.Double"/>
+	<field name="decemberInfo.strike" class="java.lang.Double"/>
 	<field name="totalVacations" class="java.lang.Double"/>
 
 	<variable name="unjustifiedMiss1" class="java.lang.Double" resetType="Report" calculation="Nothing">
@@ -1409,53 +1409,53 @@
 		<variableExpression><![CDATA[$F{decemberInfo.usedDismissal}==null ? new Integer(0) : $F{decemberInfo.usedDismissal}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays1" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{januaryInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{januaryInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays1" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{januaryInfo.vacationsInWorkDays}==null ? new Double(0) : $F{januaryInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays2" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{februaryInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{februaryInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays2" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{februaryInfo.vacationsInWorkDays}==null ? new Double(0) : $F{februaryInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays3" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{marchInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{marchInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays3" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{marchInfo.vacationsInWorkDays}==null ? new Double(0) : $F{marchInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays4" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{aprilInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{aprilInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays4" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{aprilInfo.vacationsInWorkDays}==null ? new Double(0) : $F{aprilInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays5" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{mayInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{mayInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays5" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{mayInfo.vacationsInWorkDays}==null ? new Double(0) : $F{mayInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays6" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{juneInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{juneInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays6" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{juneInfo.vacationsInWorkDays}==null ? new Double(0) : $F{juneInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays7" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{julyInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{julyInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays7" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{julyInfo.vacationsInWorkDays}==null ? new Double(0) : $F{julyInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays8" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{augustInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{augustInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays8" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{augustInfo.vacationsInWorkDays}==null ? new Double(0) : $F{augustInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays9" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{septemberInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{septemberInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays9" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{septemberInfo.vacationsInWorkDays}==null ? new Double(0) : $F{septemberInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays10" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{octoberInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{octoberInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays10" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{octoberInfo.vacationsInWorkDays}==null ? new Double(0) : $F{octoberInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays11" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{novemberInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{novemberInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays11" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{novemberInfo.vacationsInWorkDays}==null ? new Double(0) : $F{novemberInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="vacationsInWorkDays12" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{decemberInfo.vacationsInWorkDays}==null ? new Integer(0) : $F{decemberInfo.vacationsInWorkDays}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="vacationsInWorkDays12" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{decemberInfo.vacationsInWorkDays}==null ? new Double(0) : $F{decemberInfo.vacationsInWorkDays}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
 	<variable name="medicalLeaveInWorkDays1" class="java.lang.Integer" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[$F{januaryInfo.medicalLeaveInWorkDays}==null ? new Integer(0) : $F{januaryInfo.medicalLeaveInWorkDays}]]></variableExpression>
@@ -2561,53 +2561,53 @@
 		<variableExpression><![CDATA[$F{decemberInfo.missWithLostOfIncome}==null ? new Integer(0) : $F{decemberInfo.missWithLostOfIncome}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike1" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{januaryInfo.strike}==null ? new Integer(0) : $F{januaryInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike1" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{januaryInfo.strike}==null ? new Double(0) : $F{januaryInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike2" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{februaryInfo.strike}==null ? new Integer(0) : $F{februaryInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike2" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{februaryInfo.strike}==null ? new Double(0) : $F{februaryInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike3" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{marchInfo.strike}==null ? new Integer(0) : $F{marchInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike3" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{marchInfo.strike}==null ? new Double(0) : $F{marchInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike4" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{aprilInfo.strike}==null ? new Integer(0) : $F{aprilInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike4" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{aprilInfo.strike}==null ? new Double(0) : $F{aprilInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike5" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{mayInfo.strike}==null ? new Integer(0) : $F{mayInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike5" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{mayInfo.strike}==null ? new Double(0) : $F{mayInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike6" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{juneInfo.strike}==null ? new Integer(0) : $F{juneInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike6" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{juneInfo.strike}==null ? new Double(0) : $F{juneInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike7" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{julyInfo.strike}==null ? new Integer(0) : $F{julyInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike7" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{julyInfo.strike}==null ? new Double(0) : $F{julyInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike8" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{augustInfo.strike}==null ? new Integer(0) : $F{augustInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike8" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{augustInfo.strike}==null ? new Double(0) : $F{augustInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike9" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{septemberInfo.strike}==null ? new Integer(0) : $F{septemberInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike9" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{septemberInfo.strike}==null ? new Double(0) : $F{septemberInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike10" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{octoberInfo.strike}==null ? new Integer(0) : $F{octoberInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike10" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{octoberInfo.strike}==null ? new Double(0) : $F{octoberInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike11" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{novemberInfo.strike}==null ? new Integer(0) : $F{novemberInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike11" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{novemberInfo.strike}==null ? new Double(0) : $F{novemberInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
-	<variable name="strike12" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[$F{decemberInfo.strike}==null ? new Integer(0) : $F{decemberInfo.strike}]]></variableExpression>
-		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	<variable name="strike12" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{decemberInfo.strike}==null ? new Double(0) : $F{decemberInfo.strike}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 	</variable>
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -6758,7 +6758,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{januaryInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{januaryInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6771,7 +6771,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{februaryInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{februaryInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6784,7 +6784,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{marchInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{marchInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6797,7 +6797,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{aprilInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{aprilInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6810,7 +6810,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{mayInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{mayInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6823,7 +6823,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{juneInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{juneInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6836,7 +6836,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{julyInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{julyInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6849,7 +6849,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{augustInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{augustInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6862,7 +6862,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{septemberInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{septemberInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6875,7 +6875,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{octoberInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{octoberInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6888,7 +6888,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{novemberInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{novemberInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6901,7 +6901,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{decemberInfo.vacationsInWorkDays}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{decemberInfo.vacationsInWorkDays}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -6914,10 +6914,10 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[($V{vacationsInWorkDays1} + $V{vacationsInWorkDays2} + $V{vacationsInWorkDays3} + $V{vacationsInWorkDays4}
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($V{vacationsInWorkDays1} + $V{vacationsInWorkDays2} + $V{vacationsInWorkDays3} + $V{vacationsInWorkDays4}
  + $V{vacationsInWorkDays5} + $V{vacationsInWorkDays6} + $V{vacationsInWorkDays7} + $V{vacationsInWorkDays8}
  + $V{vacationsInWorkDays9} + $V{vacationsInWorkDays10} + $V{vacationsInWorkDays11} + $V{vacationsInWorkDays12})
-!= new Integer(0) ? ($V{vacationsInWorkDays1} + $V{vacationsInWorkDays2} + $V{vacationsInWorkDays3} + $V{vacationsInWorkDays4}
+!= new Double(0) ? ($V{vacationsInWorkDays1} + $V{vacationsInWorkDays2} + $V{vacationsInWorkDays3} + $V{vacationsInWorkDays4}
  + $V{vacationsInWorkDays5} + $V{vacationsInWorkDays6} + $V{vacationsInWorkDays7} + $V{vacationsInWorkDays8}
  + $V{vacationsInWorkDays9} + $V{vacationsInWorkDays10} + $V{vacationsInWorkDays11} + $V{vacationsInWorkDays12}) : null]]></textFieldExpression>
 				</textField>
@@ -10773,7 +10773,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{januaryInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{januaryInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10786,7 +10786,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{februaryInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{februaryInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10799,7 +10799,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{marchInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{marchInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10812,7 +10812,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{aprilInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{aprilInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10825,7 +10825,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{mayInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{mayInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10838,7 +10838,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{juneInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{juneInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10851,7 +10851,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{julyInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{julyInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10864,7 +10864,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{augustInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{augustInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10877,7 +10877,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{septemberInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{septemberInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10890,7 +10890,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{octoberInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{octoberInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10903,7 +10903,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{novemberInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{novemberInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10916,7 +10916,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{decemberInfo.strike}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{decemberInfo.strike}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -10929,10 +10929,10 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[($V{strike1} + $V{strike2} + $V{strike3} + $V{strike4}
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($V{strike1} + $V{strike2} + $V{strike3} + $V{strike4}
  + $V{strike5} + $V{strike6} + $V{strike7} + $V{strike8}
  + $V{strike9} + $V{strike10} + $V{strike11} + $V{strike12})
-!= new Integer(0) ? ($V{strike1} + $V{strike2} + $V{strike3} + $V{strike4}
+!= new Double(0) ? ($V{strike1} + $V{strike2} + $V{strike3} + $V{strike4}
  + $V{strike5} + $V{strike6} + $V{strike7} + $V{strike8}
  + $V{strike9} + $V{strike10} + $V{strike11} + $V{strike12}) : null]]></textFieldExpression>
 				</textField>

@@ -32,7 +32,7 @@ public class AssignedEmployeeMonthInfo implements Serializable {
 
     private Integer leaveWithoutPayment;
 
-    private  Integer pointTolerance;
+    private Integer pointTolerance;
 
     private Integer article17;
 
@@ -44,7 +44,7 @@ public class AssignedEmployeeMonthInfo implements Serializable {
 
     private Integer usedDismissal;
 
-    private Integer vacationsInWorkDays;
+    private Double vacationsInWorkDays;
 
     private Integer medicalLeaveInWorkDays;
 
@@ -61,7 +61,7 @@ public class AssignedEmployeeMonthInfo implements Serializable {
     private Double relativeClinicMedicalTreatment;
 
     private Double childClinicMedicalTreatment;
-    
+
     private Integer medicalGroupCheckup;
 
     private Integer AFCT;
@@ -92,371 +92,371 @@ public class AssignedEmployeeMonthInfo implements Serializable {
 
     private Integer missWithLostOfIncome;
 
-    private Integer strike;
+    private Double strike;
 
     public AssignedEmployeeMonthInfo(AssignedEmployeeAnualInfo assignedEmployeeAnualInfo,
-            YearMonth yearMonth) {
-        setAssignedEmployeeAnualInfo(assignedEmployeeAnualInfo);
-        setYearMonth(yearMonth);
+	    YearMonth yearMonth) {
+	setAssignedEmployeeAnualInfo(assignedEmployeeAnualInfo);
+	setYearMonth(yearMonth);
     }
 
     public Integer getAccidentInServiceInIter() {
-        return accidentInServiceInIter;
+	return accidentInServiceInIter;
     }
 
     public void setAccidentInServiceInIter(Integer accidentInServiceInIter) {
-        this.accidentInServiceInIter = accidentInServiceInIter;
+	this.accidentInServiceInIter = accidentInServiceInIter;
     }
 
     public Integer getAccidentInServiceInLocal() {
-        return accidentInServiceInLocal;
+	return accidentInServiceInLocal;
     }
 
     public void setAccidentInServiceInLocal(Integer accidentInServiceInLocal) {
-        this.accidentInServiceInLocal = accidentInServiceInLocal;
+	this.accidentInServiceInLocal = accidentInServiceInLocal;
     }
 
     public Integer getAcquiredExtraWorkVacations() {
-        return acquiredExtraWorkVacations;
+	return acquiredExtraWorkVacations;
     }
 
     public void setAcquiredExtraWorkVacations(Integer acquiredExtraWorkVacations) {
-        this.acquiredExtraWorkVacations = acquiredExtraWorkVacations;
+	this.acquiredExtraWorkVacations = acquiredExtraWorkVacations;
     }
 
     public Integer getAcquiredDismissal() {
-        return acquiredDismissal;
+	return acquiredDismissal;
     }
 
     public void setAcquiredDismissal(Integer acquiredDismissal) {
-        this.acquiredDismissal = acquiredDismissal;
+	this.acquiredDismissal = acquiredDismissal;
     }
 
     public Integer getAFCT() {
-        return AFCT;
+	return AFCT;
     }
 
     public void setAFCT(Integer afct) {
-        AFCT = afct;
+	AFCT = afct;
     }
 
     public Integer getArticle17() {
-        return article17;
+	return article17;
     }
 
     public void setArticle17(Integer article17) {
-        this.article17 = article17;
+	this.article17 = article17;
     }
 
     public Double getArticle52() {
-        return article52;
+	return article52;
     }
 
     public void setArticle52(Double article52) {
-        this.article52 = article52;
+	this.article52 = article52;
     }
 
     public Double getArticle66() {
-        return article66;
+	return article66;
     }
 
     public void setArticle66(Double article66) {
-        this.article66 = article66;
+	this.article66 = article66;
     }
 
     public Integer getBloodDonation() {
-        return bloodDonation;
+	return bloodDonation;
     }
 
     public void setBloodDonation(Integer bloodDonation) {
-        this.bloodDonation = bloodDonation;
+	this.bloodDonation = bloodDonation;
     }
 
     public Integer getChildbirthInWorkDays() {
-        return childbirthInWorkDays;
+	return childbirthInWorkDays;
     }
 
     public void setChildbirthInWorkDays(Integer childbirthInWorkDays) {
-        this.childbirthInWorkDays = childbirthInWorkDays;
+	this.childbirthInWorkDays = childbirthInWorkDays;
     }
 
     public Integer getChildbirthLeave() {
-        return childbirthLeave;
+	return childbirthLeave;
     }
 
     public void setChildbirthLeave(Integer childbirthLeave) {
-        this.childbirthLeave = childbirthLeave;
+	this.childbirthLeave = childbirthLeave;
     }
 
     public Integer getChildbirthOrPaternity() {
-        return childbirthOrPaternity;
+	return childbirthOrPaternity;
     }
 
     public void setChildbirthOrPaternity(Integer childbirthOrPaternity) {
-        this.childbirthOrPaternity = childbirthOrPaternity;
+	this.childbirthOrPaternity = childbirthOrPaternity;
     }
 
     public Integer getDeficiencyLeave() {
-        return deficiencyLeave;
+	return deficiencyLeave;
     }
 
     public void setDeficiencyLeave(Integer deficiencyLeave) {
-        this.deficiencyLeave = deficiencyLeave;
+	this.deficiencyLeave = deficiencyLeave;
     }
 
     public Integer getFormationCoursesAuthorized() {
-        return formationCoursesAuthorized;
+	return formationCoursesAuthorized;
     }
 
     public void setFormationCoursesAuthorized(Integer formationCoursesAuthorized) {
-        this.formationCoursesAuthorized = formationCoursesAuthorized;
+	this.formationCoursesAuthorized = formationCoursesAuthorized;
     }
 
     public Integer getFormationCoursesNotAuthorized() {
-        return formationCoursesNotAuthorized;
+	return formationCoursesNotAuthorized;
     }
 
     public void setFormationCoursesNotAuthorized(Integer formationCoursesNotAuthorized) {
-        this.formationCoursesNotAuthorized = formationCoursesNotAuthorized;
+	this.formationCoursesNotAuthorized = formationCoursesNotAuthorized;
     }
 
     public Integer getInfectumContagious() {
-        return infectumContagious;
+	return infectumContagious;
     }
 
     public void setInfectumContagious(Integer infectumContagious) {
-        this.infectumContagious = infectumContagious;
+	this.infectumContagious = infectumContagious;
     }
 
     public Integer getInternmentMedicalLeave() {
-        return internmentMedicalLeave;
+	return internmentMedicalLeave;
     }
 
     public void setInternmentMedicalLeave(Integer internmentMedicalLeave) {
-        this.internmentMedicalLeave = internmentMedicalLeave;
+	this.internmentMedicalLeave = internmentMedicalLeave;
     }
 
     public Integer getLeaveWithoutPayment() {
-        return leaveWithoutPayment;
+	return leaveWithoutPayment;
     }
 
     public void setLeaveWithoutPayment(Integer leaveWithoutPayment) {
-        this.leaveWithoutPayment = leaveWithoutPayment;
+	this.leaveWithoutPayment = leaveWithoutPayment;
     }
 
     public Integer getLeaveWithoutPaymentInWorkDays() {
-        return leaveWithoutPaymentInWorkDays;
+	return leaveWithoutPaymentInWorkDays;
     }
 
     public void setLeaveWithoutPaymentInWorkDays(Integer leaveWithoutPaymentInWorkDays) {
-        this.leaveWithoutPaymentInWorkDays = leaveWithoutPaymentInWorkDays;
+	this.leaveWithoutPaymentInWorkDays = leaveWithoutPaymentInWorkDays;
     }
 
     public Integer getMarriageInWorkDays() {
-        return marriageInWorkDays;
+	return marriageInWorkDays;
     }
 
     public void setMarriageInWorkDays(Integer marriageInWorkDays) {
-        this.marriageInWorkDays = marriageInWorkDays;
+	this.marriageInWorkDays = marriageInWorkDays;
     }
 
     public Integer getMarriageLeave() {
-        return marriageLeave;
+	return marriageLeave;
     }
 
     public void setMarriageLeave(Integer marriageLeave) {
-        this.marriageLeave = marriageLeave;
+	this.marriageLeave = marriageLeave;
     }
 
     public Integer getMedicalGroupCheckup() {
-        return medicalGroupCheckup;
+	return medicalGroupCheckup;
     }
 
     public void setMedicalGroupCheckup(Integer medicalGroupCheckup) {
-        this.medicalGroupCheckup = medicalGroupCheckup;
+	this.medicalGroupCheckup = medicalGroupCheckup;
     }
 
     public Integer getMedicalLeaveInWorkDays() {
-        return medicalLeaveInWorkDays;
+	return medicalLeaveInWorkDays;
     }
 
     public void setMedicalLeaveInWorkDays(Integer medicalLeaveInWorkDays) {
-        this.medicalLeaveInWorkDays = medicalLeaveInWorkDays;
+	this.medicalLeaveInWorkDays = medicalLeaveInWorkDays;
     }
 
     public Integer getMissForFulfilmentOfObligation() {
-        return missForFulfilmentOfObligation;
+	return missForFulfilmentOfObligation;
     }
 
     public void setMissForFulfilmentOfObligation(Integer missForFulfilmentOfObligation) {
-        this.missForFulfilmentOfObligation = missForFulfilmentOfObligation;
+	this.missForFulfilmentOfObligation = missForFulfilmentOfObligation;
     }
 
     public Integer getMissWithLostOfIncome() {
-        return missWithLostOfIncome;
+	return missWithLostOfIncome;
     }
 
     public void setMissWithLostOfIncome(Integer missWithLostOfIncome) {
-        this.missWithLostOfIncome = missWithLostOfIncome;
+	this.missWithLostOfIncome = missWithLostOfIncome;
     }
 
     public Integer getBereavementLeave() {
-        return bereavementLeave;
+	return bereavementLeave;
     }
 
     public void setBereavementLeave(Integer bereavementLeave) {
-        this.bereavementLeave = bereavementLeave;
+	this.bereavementLeave = bereavementLeave;
     }
 
     public Integer getBereavementLeaveInWorkDays() {
-        return bereavementLeaveInWorkDays;
+	return bereavementLeaveInWorkDays;
     }
 
     public void setBereavementLeaveWorkDays(Integer bereavementLeaveInWorkDays) {
-        this.bereavementLeaveInWorkDays = bereavementLeaveInWorkDays;
+	this.bereavementLeaveInWorkDays = bereavementLeaveInWorkDays;
     }
 
     public Integer getPointTolerance() {
-        return pointTolerance;
+	return pointTolerance;
     }
 
     public void setPointTolerance(Integer pointTolerance) {
-        this.pointTolerance = pointTolerance;
+	this.pointTolerance = pointTolerance;
     }
 
     public Integer getPrison() {
-        return prison;
+	return prison;
     }
 
     public void setPrison(Integer prison) {
-        this.prison = prison;
+	this.prison = prison;
     }
 
     public Integer getRelativeMedicalLeave() {
-        return relativeMedicalLeave;
+	return relativeMedicalLeave;
     }
 
     public void setRelativeMedicalLeave(Integer relativeMedicalLeave) {
-        this.relativeMedicalLeave = relativeMedicalLeave;
+	this.relativeMedicalLeave = relativeMedicalLeave;
     }
 
     public Integer getSonInternmentMedicalLeave() {
-        return sonInternmentMedicalLeave;
+	return sonInternmentMedicalLeave;
     }
 
     public void setSonInternmentMedicalLeave(Integer sonInternmentMedicalLeave) {
-        this.sonInternmentMedicalLeave = sonInternmentMedicalLeave;
+	this.sonInternmentMedicalLeave = sonInternmentMedicalLeave;
     }
 
     public Integer getSonMedicalLeave() {
-        return sonMedicalLeave;
+	return sonMedicalLeave;
     }
 
     public void setSonMedicalLeave(Integer sonMedicalLeave) {
-        this.sonMedicalLeave = sonMedicalLeave;
+	this.sonMedicalLeave = sonMedicalLeave;
     }
 
-    public Integer getStrike() {
-        return strike;
+    public Double getStrike() {
+	return strike;
     }
 
-    public void setStrike(Integer strike) {
-        this.strike = strike;
+    public void setStrike(Double strike) {
+	this.strike = strike;
     }
 
     public Integer getTotalMedicalLeave() {
-        return totalMedicalLeave;
+	return totalMedicalLeave;
     }
 
     public void setTotalMedicalLeave(Integer totalMedicalLeave) {
-        this.totalMedicalLeave = totalMedicalLeave;
+	this.totalMedicalLeave = totalMedicalLeave;
     }
 
     public Integer getUnionActivity() {
-        return unionActivity;
+	return unionActivity;
     }
 
     public void setUnionActivity(Integer unionActivity) {
-        this.unionActivity = unionActivity;
+	this.unionActivity = unionActivity;
     }
 
     public Double getUnjustifiedMiss() {
-        return unjustifiedMiss;
+	return unjustifiedMiss;
     }
 
     public void setUnjustifiedMiss(Double unjustifiedMiss) {
-        this.unjustifiedMiss = unjustifiedMiss;
+	this.unjustifiedMiss = unjustifiedMiss;
     }
 
     public Integer getUsedDismissal() {
-        return usedDismissal;
+	return usedDismissal;
     }
 
     public void setUsedDismissal(Integer usedDismissal) {
-        this.usedDismissal = usedDismissal;
+	this.usedDismissal = usedDismissal;
     }
 
     public Integer getUsedExtraWorkVacations() {
-        return usedExtraWorkVacations;
+	return usedExtraWorkVacations;
     }
 
     public void setUsedExtraWorkVacations(Integer usedExtraWorkVacations) {
-        this.usedExtraWorkVacations = usedExtraWorkVacations;
+	this.usedExtraWorkVacations = usedExtraWorkVacations;
     }
 
-    public Integer getVacationsInWorkDays() {
-        return vacationsInWorkDays;
+    public Double getVacationsInWorkDays() {
+	return vacationsInWorkDays;
     }
 
-    public void setVacationsInWorkDays(Integer vacationsInWorkDays) {
-        this.vacationsInWorkDays = vacationsInWorkDays;
+    public void setVacationsInWorkDays(Double vacationsInWorkDays) {
+	this.vacationsInWorkDays = vacationsInWorkDays;
     }
 
     public Integer getWorkStudentExamDay() {
-        return workStudentExamDay;
+	return workStudentExamDay;
     }
 
     public void setWorkStudentExamDay(Integer workStudentExamDay) {
-        this.workStudentExamDay = workStudentExamDay;
+	this.workStudentExamDay = workStudentExamDay;
     }
 
     public Integer getWorkStudentExamEve() {
-        return workStudentExamEve;
+	return workStudentExamEve;
     }
 
     public void setWorkStudentExamEve(Integer workStudentExamEve) {
-        this.workStudentExamEve = workStudentExamEve;
+	this.workStudentExamEve = workStudentExamEve;
     }
 
     public YearMonth getYearMonth() {
-        return yearMonth;
+	return yearMonth;
     }
 
     public void setYearMonth(YearMonth yearMonth) {
-        this.yearMonth = yearMonth;
+	this.yearMonth = yearMonth;
     }
 
     public AssignedEmployeeAnualInfo getAssignedEmployeeAnualInfo() {
-        return assignedEmployeeAnualInfo;
+	return assignedEmployeeAnualInfo;
     }
 
     public void setAssignedEmployeeAnualInfo(AssignedEmployeeAnualInfo assignedEmployeeAnualInfo) {
-        this.assignedEmployeeAnualInfo = assignedEmployeeAnualInfo;
+	this.assignedEmployeeAnualInfo = assignedEmployeeAnualInfo;
     }
 
     public Double getChildClinicMedicalTreatment() {
-        return childClinicMedicalTreatment;
+	return childClinicMedicalTreatment;
     }
 
     public void setChildClinicMedicalTreatment(Double childClinicMedicalTreatment) {
-        this.childClinicMedicalTreatment = childClinicMedicalTreatment;
+	this.childClinicMedicalTreatment = childClinicMedicalTreatment;
     }
 
     public Double getRelativeClinicMedicalTreatment() {
-        return relativeClinicMedicalTreatment;
+	return relativeClinicMedicalTreatment;
     }
 
     public void setRelativeClinicMedicalTreatment(Double relativeClinicMedicalTreatment) {
-        this.relativeClinicMedicalTreatment = relativeClinicMedicalTreatment;
+	this.relativeClinicMedicalTreatment = relativeClinicMedicalTreatment;
     }
 }
