@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -132,8 +134,17 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     private void setInfoDegrees(final HttpServletRequest request, final IUserView userView)
 	    throws FenixFilterException, FenixServiceException {
-	SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	
+	final SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
+	
+	//FIXME: temporary solution because interface is used simultaneously in manager and admin office
+	if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
+	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
+	}
+	
 	request.setAttribute("infoDegrees", degrees);
     }
 

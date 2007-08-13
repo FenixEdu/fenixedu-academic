@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
@@ -2452,6 +2451,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return this == getRegistration().getLastStudentCurricularPlan();
     }
 
+    @Checked("StudentCurricularPlanPredicates.moveCurriculumLines")
     public void moveCurriculumLines(final Person responsiblePerson, final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	boolean runRules = false;
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
@@ -2459,7 +2459,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
 
 	    if (curriculumLine.getCurriculumGroup() != curriculumGroup) {
-		if (!curriculumGroup.canAdd(curriculumLine)) {
+		if (!responsiblePerson.hasRole(RoleType.MANAGER) && !curriculumGroup.canAdd(curriculumLine)) {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
 			    curriculumLine.getFullPath(), curriculumGroup.getFullPath());
 		}
