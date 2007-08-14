@@ -23,8 +23,8 @@ public class CheckPasswordKerberosAction extends FenixAction {
 
     private static final String UNEXPECTED_ERROR_MESSAGE = "UNEXPECTED_ERROR";
 
-    public final ActionForward execute(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	// check hosts accessing this action
 	if (!HostAccessControl.isAllowed(this, request)) {
@@ -45,7 +45,8 @@ public class CheckPasswordKerberosAction extends FenixAction {
 		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
 			"KerberosExternalAuthentication", authenticationArgs);
 
-		result = SUCCESS_MESSAGE + "\n" + userView.getPerson().getIstUsername();
+		result = SUCCESS_MESSAGE + "\n"
+			+ (userView.getPerson().hasIstUsername() ? userView.getPerson().getIstUsername() : username);
 
 	    } catch (PasswordExpiredServiceException e) {
 		result = e.getMessage();
@@ -64,4 +65,5 @@ public class CheckPasswordKerberosAction extends FenixAction {
 	return null;
 
     }
+
 }
