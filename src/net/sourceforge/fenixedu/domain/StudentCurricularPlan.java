@@ -430,23 +430,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return count;
     }
 
-    final public List<Enrolment> findEnrolmentsFor(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
-	if (!isBoxStructure()) {
-	    return Collections.emptyList();
-	}
-	final List<Enrolment> result = new ArrayList<Enrolment>();
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-	    final Enrolment enrolment = getRoot().findEnrolmentFor(curricularCourse, executionPeriod);
-	    if (enrolment != null 
-		    && !enrolment.getEnrollmentState().equals(EnrollmentState.NOT_APROVED)
-		    && !enrolment.getEnrollmentState().equals(EnrollmentState.NOT_EVALUATED)
-		    && !enrolment.isFlunked()) {
-		result.add(enrolment);
-	    }
-	}
-	return result;
-    }
-
     final public List<Enrolment> getEnrolmentsByState(final EnrollmentState state) {
 	List<Enrolment> results = new ArrayList<Enrolment>();
 	for (Enrolment enrolment : this.getEnrolmentsSet()) {
