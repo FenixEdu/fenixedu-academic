@@ -1112,10 +1112,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isValid(executionPeriod) && this.getCurricularCourse().equals(curricularCourse);
     }
 
-    final public boolean isValid(final ExecutionPeriod executionPeriod) {
+    public boolean isValid(final ExecutionPeriod executionPeriod) {
 	return getExecutionPeriod() == executionPeriod
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionPeriod
 			.getExecutionYear());
+    }
+    
+    public boolean isValid(final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    if (isValid(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Override
