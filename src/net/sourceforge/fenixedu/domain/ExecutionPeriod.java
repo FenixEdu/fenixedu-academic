@@ -241,7 +241,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     public static ExecutionPeriod readLastExecutionPeriod() {
         final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
-	return exeutionPeriods.isEmpty() ? null : Collections.max(exeutionPeriods);
+        final int size = exeutionPeriods.size();
+	return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);
     }
 
     public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {

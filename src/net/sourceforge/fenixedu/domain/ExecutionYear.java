@@ -81,7 +81,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
     public int compareTo(Object object) {
 	final ExecutionYear executionYear = (ExecutionYear) object;
-	return getYear().compareTo(executionYear.getYear());
+	return executionYear == null ? -1 : getYear().compareTo(executionYear.getYear());
     }
 
     public boolean isAfter(final ExecutionYear executionYear) {
