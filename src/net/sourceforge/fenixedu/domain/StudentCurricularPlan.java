@@ -291,10 +291,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Temporary method, after all degrees migration this is no longer
-         * necessary
-         * 
-         */
+     * Temporary method, after all degrees migration this is no longer
+     * necessary
+     * 
+     */
     final public boolean isBoxStructure() {
 	return hasRoot();
     }
@@ -730,33 +730,33 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public YearMonthDay getEndDate(){
-	
+    public YearMonthDay getEndDate() {
+
 	final StudentCurricularPlan nextStudentCurricularPlan = getNextStudentCurricularPlan();
-	if(nextStudentCurricularPlan != null){
+	if (nextStudentCurricularPlan != null) {
 	    return nextStudentCurricularPlan.getStartDateYearMonthDay().minusDays(1);
-	} else if (!getRegistration().isActive()){
+	} else if (!getRegistration().isActive()) {
 	    return getRegistration().getActiveState().getStateDate().toYearMonthDay();
 	}
-	
+
 	return null;
     }
-    
+
     private StudentCurricularPlan getNextStudentCurricularPlan() {
 	for (Iterator<StudentCurricularPlan> iter = getRegistration().getSortedStudentCurricularPlans().iterator(); iter
 		.hasNext();) {
-	    if(iter.next() == this){
+	    if (iter.next() == this) {
 		return iter.hasNext() ? iter.next() : null;
 	    }
 	}
 	return null;
     }
 
-    public boolean isActive(ExecutionYear executionYear){
-	return !getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay()) &&
-	    (getEndDate() == null || !getEndDate().isBefore(executionYear.getBeginDateYearMonthDay()));
+    public boolean isActive(ExecutionYear executionYear) {
+	return !getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())
+		&& (getEndDate() == null || !getEndDate().isBefore(executionYear.getBeginDateYearMonthDay()));
     }
-    
+
     final public ExecutionYear getLastExecutionYear() {
 	ExecutionYear result = null;
 
@@ -2097,14 +2097,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Note: This is enrolment without rules and should only be used for
-         * first time enrolments
-         * 
-         * @param curriculumGroup
-         * @param curricularPeriod
-         * @param executionPeriod
-         * @param createdBy
-         */
+     * Note: This is enrolment without rules and should only be used for
+     * first time enrolments
+     * 
+     * @param curriculumGroup
+     * @param curricularPeriod
+     * @param executionPeriod
+     * @param createdBy
+     */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod executionPeriod, String createdBy) {
 
@@ -2425,10 +2425,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	super.addTutorships(tutorships);
     }
-    
-    public boolean getHasAnyEquivalences() {	
-		return !this.getNotNeedToEnrollCurricularCourses().isEmpty();
-	}
+
+    public boolean getHasAnyEquivalences() {
+	return !this.getNotNeedToEnrollCurricularCourses().isEmpty();
+    }
 
     public boolean isLastStudentCurricularPlanFromRegistration() {
 	return this == getRegistration().getLastStudentCurricularPlan();
@@ -2469,5 +2469,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
-  
+
 }
