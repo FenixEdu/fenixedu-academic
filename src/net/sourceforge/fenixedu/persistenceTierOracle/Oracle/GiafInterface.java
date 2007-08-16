@@ -116,17 +116,11 @@ public class GiafInterface {
 		query.append(" and a.mes=");
 		query.append(extraWorkRequest.getPartialPayingDate()
 			.get(DateTimeFieldType.monthOfYear()) + 1);
-		query.append(" and a.ano_pag=");
+		query.append(" and extract(year from data_mov)=");
 		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
-		query.append(" and a.mes_pag=");
-		if (!extraWorkRequest.getPartialPayingDate().equals(
-			extraWorkRequest.getHoursDoneInPartialDate())) {
-		    query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
-			    DateTimeFieldType.monthOfYear()));
-		} else {
-		    query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
-			    DateTimeFieldType.monthOfYear()) + 1);
-		}
+		query.append(" and extract(month from data_mov)=");
+		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
+			DateTimeFieldType.monthOfYear()));
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
