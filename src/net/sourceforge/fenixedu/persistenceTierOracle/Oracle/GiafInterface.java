@@ -105,7 +105,7 @@ public class GiafInterface {
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
-		query.append(") extract(year from data_mov)=");
+		query.append(") and extract(year from data_mov)=");
 		query.append(extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()));
 		query.append(" and extract(month from data_mov)=");
 		query.append(extraWorkRequest.getPartialPayingDate()
