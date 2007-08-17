@@ -576,12 +576,6 @@ public class CourseGroup extends CourseGroup_Base {
 	return Double.valueOf(result);
     }
 
-    private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<CreditsLimit> result = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
-		executionPeriod);
-	return result.isEmpty() ? null : (CreditsLimit) result.get(0);
-    }
-
     private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
 	final List<DegreeModulesSelectionLimit> result = (List<DegreeModulesSelectionLimit>) getCurricularRules(
 		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
@@ -644,7 +638,11 @@ public class CourseGroup extends CourseGroup_Base {
 		return true;
 	    }
 	}
-
 	return false;
+    }
+    
+    @Override
+    public boolean isCourseGroup() {
+        return true;
     }
 }

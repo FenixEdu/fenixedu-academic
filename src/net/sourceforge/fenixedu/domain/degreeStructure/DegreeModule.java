@@ -241,6 +241,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public boolean isCurricularCourse() {
 	return false;
     }
+    
+    public boolean isCourseGroup() {
+	return false;
+    }
 
     final public Degree getDegree() {
 	return getParentDegreeCurricularPlan().getDegree();
