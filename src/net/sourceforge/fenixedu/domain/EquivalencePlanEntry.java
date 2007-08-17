@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -256,6 +257,22 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public void addNewDegreeModules(DegreeModule newDegreeModule) {
 	throw new DomainException(
 		"error.net.sourceforge.fenixedu.domain.EquivalencePlanEntry.cannot.add.newDegreeModule");
+    }
+    
+    public List<DegreeModule> getNewDegreeModulesSortedByType() {
+	final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModules());
+	Collections.sort(result, new Comparator<DegreeModule>() {
+	    public int compare(final DegreeModule o1, final DegreeModule o2) {
+		if (o1.isCourseGroup() && !o2.isCourseGroup()) {
+		    return -1;
+		}
+		if (!o1.isCourseGroup() && o2.isCourseGroup()) {
+		    return 1;
+		}
+		return 0;
+	    }});
+	
+	return result;
     }
 
     @Override
