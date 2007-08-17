@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularR
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,7 +32,9 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	    final StudentNumberBean numberBean = (StudentNumberBean) renderedObject;
 	    final Student student = getStudent(numberBean);
 	    if (student != null) {
+		RenderUtils.invalidateViewState();
 		request.setAttribute("studentCurricularPlans", getAllStudentCurricularPlans(student));
+		request.setAttribute("studentNumberBean", numberBean);
 	    }
 	}
 
@@ -40,6 +43,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
     public ActionForward showAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	
 	final StudentNumberBean studentNumberBean = new StudentNumberBean();
 	final Student student = getStudent(request);
 	studentNumberBean.setNumber(student.getNumber());
