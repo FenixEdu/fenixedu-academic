@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean;
+import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -28,9 +29,9 @@ public class UploadAnualInstallments extends FenixDispatchAction {
     public ActionForward uploadAnualInstallment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
-        if (isCancelled(request)) {
-            return prepareUploadAnualInstallment(mapping, form, request, response);
-        }
+	if (isCancelled(request)) {
+	    return prepareUploadAnualInstallment(mapping, form, request, response);
+	}
 	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBean");
 	RenderUtils.invalidateViewState();
 	if (bonusInstallmentFileBean.isComplete()) {
@@ -45,16 +46,42 @@ public class UploadAnualInstallments extends FenixDispatchAction {
 	    }
 	    saveMessages(request, actionMessages);
 	}
-
+	setBonusInstallmentList(request, bonusInstallmentFileBean);
 	request.setAttribute("bonusInstallmentFileBean", bonusInstallmentFileBean);
 	return mapping.findForward("upload-bonus-file");
     }
 
     public ActionForward chooseYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	request.setAttribute("bonusInstallmentFileBean",
-		(BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBeanYear"));
+	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBeanYear");
+	request.setAttribute("bonusInstallmentFileBean", bonusInstallmentFileBean);
+	setBonusInstallmentList(request, bonusInstallmentFileBean);
 	return mapping.findForward("upload-bonus-file");
+    }
+
+    public ActionForward chooseInstallment(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException {
+	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBean");
+	RenderUtils.invalidateViewState();
+
+	setBonusInstallmentList(request, bonusInstallmentFileBean);
+
+	request.setAttribute("bonusInstallmentFileBean", bonusInstallmentFileBean);
+
+	return mapping.findForward("upload-bonus-file");
+    }
+
+    private void setBonusInstallmentList(HttpServletRequest request,
+	    BonusInstallmentFileBean bonusInstallmentFileBean) {
+	if (bonusInstallmentFileBean.getYear() != null
+		&& bonusInstallmentFileBean.getInstallment() != null) {
+	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment
+		    .readByYearAndInstallment(bonusInstallmentFileBean.getYear(),
+			    bonusInstallmentFileBean.getInstallment());
+	    request.setAttribute("bonusInstallmentList", anualBonusInstallment
+		    .getEmployeeBonusInstallments());
+	}
     }
 
 }

@@ -4,6 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<em><bean:message key="title.payrollSectionStaff" /></em>
+<h2><bean:message key="label.consultAndExportBonus" /></h2>
+
 <logic:messagesPresent message="true" property="message">
 	<html:messages id="message" message="true">
 		<p><span class="error0"><bean:write name="message" /></span></p>
@@ -19,17 +22,19 @@
 <logic:present name="bonusInstallment">
 	<fr:form action="/anualInstallments.do" encoding="multipart/form-data">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showBonusInstallment"/>
-		<fr:edit id="bonusInstallmentYear" name="bonusInstallment" schema="choose.bonusInstallment.year">
-			<fr:destination name="bonusInstallmentYearPostBack" path="/anualInstallments.do?method=showBonusInstallment" />
-			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
-				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-			</fr:layout>
-		</fr:edit>
+		<logic:empty name="bonusInstallment" property="year">
+			<fr:edit id="bonusInstallmentYear" name="bonusInstallment" schema="choose.bonusInstallment.year">
+				<fr:destination name="bonusInstallmentYearPostBack" path="/anualInstallments.do?method=showBonusInstallment" />
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
+					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:empty>
 		<logic:notEmpty name="bonusInstallment" property="year">
 			<fr:edit id="bonusInstallmentInstallment" name="bonusInstallment" schema="choose.bonusInstallment.installment">
 				<fr:destination name="bonusInstallmentPostBack" path="/anualInstallments.do?method=showBonusInstallment" />
-				<fr:layout>
+				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
@@ -38,6 +43,9 @@
 		<p><html:submit>
 			<bean:message key="button.confirm" />
 		</html:submit>
+		<html:cancel>
+			<bean:message key="button.cancel"/>
+		</html:cancel>
 		<html:submit onclick="this.form.method.value='exportBonusInstallment';">
 			<bean:message key="button.export"/>
 		</html:submit>

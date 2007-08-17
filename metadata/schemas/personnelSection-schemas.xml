@@ -1101,13 +1101,6 @@
 </schema>
 
 <schema name="edit.anualBonusInstallmentBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentBean">
-	<slot name="yearMonths" layout="option-select" key="label.assiduousnessMonths"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="eachLayout" value="values" />
-		<property name="saveOptions" value="true" />
-		<property name="eachSchema" value="show.date" />
-  		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.InstallmentYearMonthAsProvider" />
-	</slot>
 	<slot name="paymentYearMonth" key="label.paymentMonth" layout="menu-select" schema="choose.date"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
@@ -1115,14 +1108,22 @@
 		<property name="eachSchema" value="show.date" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.PaymentYearMonthAsProvider" />
 	</slot>
+	<slot name="yearMonths" layout="option-select" key="label.assiduousnessMonths"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="eachLayout" value="values" />
+		<property name="saveOptions" value="true" />
+		<property name="eachSchema" value="show.date" />
+  		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.InstallmentYearMonthAsProvider" />
+	</slot>
 </schema>
 
 <schema name="upload.bonusInstallmentFileBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean">
 	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="readOnly" value="true" />
 	</slot>
-	<slot name="installment" key="label.installment" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 	<!--  	<property name="format" value="${installment}ª prestação" />-->
+		<property name="destination" value="bonusInstallmentsNumberPostBack"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentsAsProvider" />
 	</slot>
 	<slot name="inputStream" key="label.file" bundle="ASSIDUOUSNESS_RESOURCES">
@@ -1146,6 +1147,9 @@
 </schema>
 
 <schema name="choose.bonusInstallment.installment" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment">
+	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="readOnly" value="true" />
+	</slot>
 	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentsAsProvider" />
 		<property name="destination" value="bonusInstallmentPostBack"/> 

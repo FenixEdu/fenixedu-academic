@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSect
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -146,21 +148,33 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 				    .getSubCostCenterCode(), employeeBonusInstallmentBean
 				    .getExplorationUnit());
 		}
-		for (YearMonth yearMonth : choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-			.getYearsMonths()) {
+
+		double value = formatDouble(thisEmployeeBonusInstallment.getValue()
+			/ choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths()
+				.size());
+		double lastValue = formatDouble(thisEmployeeBonusInstallment.getValue()
+			- (value * (choosenAnualBonusInstallment.getAssiduousnessYearMonths()
+				.getYearsMonths().size() - 1)));
+
+		for (int yearMonthIndex = 0; yearMonthIndex < choosenAnualBonusInstallment
+			.getAssiduousnessYearMonths().getYearsMonths().size(); yearMonthIndex++) {
+		    YearMonth yearMonth = choosenAnualBonusInstallment.getAssiduousnessYearMonths()
+			    .getYearsMonths().get(yearMonthIndex);
+
+		    double thisValue = value;
+		    if (yearMonthIndex == choosenAnualBonusInstallment.getAssiduousnessYearMonths()
+			    .getYearsMonths().size() - 1) {
+			thisValue = lastValue;
+		    }
 		    EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment = thisEmployeeBonusInstallment
 			    .getEmployeeMonthlyBonusInstallment(yearMonth);
-
-		    double value = thisEmployeeBonusInstallment.getValue()
-			    / choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths()
-				    .size();
 		    ClosedMonth closedMonth = closedMonthMap.get(yearMonth.getNumberOfMonth());
 		    if (closedMonth.getAssiduousnessClosedMonth(thisEmployeeBonusInstallment
 			    .getEmployee().getAssiduousness()) == null
 			    || closedMonth.getAssiduousnessClosedMonth(
 				    thisEmployeeBonusInstallment.getEmployee().getAssiduousness())
 				    .getWorkedDays() < miniumWorkedDays) {
-			value = 0;
+			thisValue = -thisValue;
 		    }
 		    if (employeeMonthlyBonusInstallment == null) {
 			DateTimeFieldType[] dateTimeFields = { DateTimeFieldType.year(),
@@ -168,14 +182,25 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 			int[] fieldValues = { yearMonth.getYear(), yearMonth.getNumberOfMonth() };
 			employeeMonthlyBonusInstallment = new EmployeeMonthlyBonusInstallment(
 				thisEmployeeBonusInstallment, new Partial(dateTimeFields, fieldValues),
-				value);
+				thisValue);
 		    } else {
-			employeeMonthlyBonusInstallment.edit(value);
+			employeeMonthlyBonusInstallment.edit(thisValue);
 		    }
 		}
 	    }
 	}
 	return null;
+    }
+
+    private Double formatDouble(Double value) {
+	Double result = value;
+	String pattern = new String("0.00");
+	try {
+	    DecimalFormat simpledf = new DecimalFormat(pattern);
+	    result = new Double(simpledf.parse(simpledf.format(value)).toString());
+	} catch (ParseException e) {
+	}
+	return result;
     }
 
     public class EmployeeBonusInstallmentBean implements Serializable {

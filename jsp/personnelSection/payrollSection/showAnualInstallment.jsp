@@ -4,6 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<em class="invisible"><bean:message key="title.payrollSectionStaff" /></em>
+<h2><bean:message key="title.bonusInstallmentsManagement" /></h2>
+
+
 <logic:messagesPresent message="true" property="message">
 	<html:messages id="message" message="true">
 		<p><span class="error0"><bean:write name="message" /></span></p>
@@ -34,10 +38,33 @@
 		<logic:present name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
 			<logic:equal name="anualBonusInstallmentFactory" property="canEditAnualBonusInstallment" value="false">
 				<fr:view name="anualBonusInstallmentFactory" schema="edit.anualBonusInstallmentFactory"/>
-				<fr:view  name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" schema="edit.anualBonusInstallmentBean">
-					<fr:layout  name="tabular">
-					</fr:layout>
-				</fr:view>
+				<table class="tstyle1 thlight thright"><tr>
+					<th><bean:message key="label.installment" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" indexId="index">
+						<bean:define id="myIndex" value="<%=new Integer( index.intValue()+1).toString()%>"/>
+						<th style="text-align: center !important;"><bean:write name="myIndex"/>ª</th>
+					</logic:iterate>
+					</tr><tr><th><bean:message key="label.payments" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
+						<td>
+						<fr:view name="anualBonusInstallmentBean" property="paymentYearMonth" layout="values" schema="show.date"/>
+						</td>
+					</logic:iterate>
+					</tr><tr><th><bean:message key="label.months" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
+						<td>
+						<fr:view  name="anualBonusInstallmentBean" property="yearMonths" layout="option-select">
+							<fr:layout>
+								<fr:property name="eachLayout" value="values" />
+								<fr:property name="saveOptions" value="true" />
+								<fr:property name="eachSchema" value="show.date" />
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.InstallmentYearMonthAsProvider" />
+							</fr:layout>
+						</fr:view>
+						</td>
+					</logic:iterate>
+				</tr>
+				</table>
 				<p>
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
 						<bean:message key="button.back"/>
@@ -46,24 +73,64 @@
 			</logic:equal>
 			<logic:equal name="anualBonusInstallmentFactory" property="canEditAnualBonusInstallment" value="true">
 				<fr:view name="anualBonusInstallmentFactory" schema="edit.anualBonusInstallmentFactory"/>
-				<fr:edit id="anualBonusInstallmentList" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" schema="edit.anualBonusInstallmentBean">
-					<fr:layout  name="tabular">
-					</fr:layout>
-				</fr:edit>
+				<table class="tstyle1 thlight thright"><tr>
+					<th><bean:message key="label.installment" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" indexId="index">
+						<bean:define id="myIndex" value="<%=new Integer( index.intValue()+1).toString()%>"/>
+						<th style="text-align: center !important;"><bean:write name="myIndex"/>ª</th>
+					</logic:iterate>
+					</tr><tr><th><bean:message key="label.payments" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
+						<td>
+						<fr:edit id="anualBonusInstallmentBean" name="anualBonusInstallmentBean" slot="paymentYearMonth" layout="menu-select" schema="choose.date"
+							validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+							<fr:layout>
+								<fr:property name="eachLayout" value="values" />
+								<fr:property name="saveOptions" value="true" />
+								<fr:property name="eachSchema" value="show.date" />
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.PaymentYearMonthAsProvider" />
+							</fr:layout>
+						</fr:edit>
+						</td>
+					</logic:iterate>
+					</tr><tr><th><bean:message key="label.months" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
+					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
+						<td>
+						<fr:edit id="anualBonusInstallmentBean" name="anualBonusInstallmentBean" slot="yearMonths" layout="option-select" 
+							validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+							<fr:layout>
+								<fr:property name="eachLayout" value="values" />
+								<fr:property name="saveOptions" value="true" />
+								<fr:property name="eachSchema" value="show.date" />
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.InstallmentYearMonthAsProvider" />
+							</fr:layout>
+						</fr:edit>
+						</td>
+					</logic:iterate>
+				</tr>
+				</table>
+				
 				<p>
 					<html:submit><bean:message key="button.confirm" /></html:submit>
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
-						<bean:message key="button.back"/>
+						<bean:message key="button.cancel"/>
 					</html:cancel>
 				</p>
 			</logic:equal>
 		</logic:present>		
 	</fr:form>
 </logic:present>
-
+<br/><br/>
 <logic:present name="anualBonusInstallmentsList">
 	<fr:view name="anualBonusInstallmentsList" schema="edit.anualBonusInstallmentFactory">
 		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 printborder" />
+			<fr:property name="columnClasses" value="acenter" />
+			<fr:property name="headerClasses" value="acenter" />
+            <fr:property name="link(edit)" value="<%="/anualInstallments.do?method=editAnualInstallment"%>" />
+			<fr:property name="key(edit)" value="label.edit" />
+			<fr:property name="param(edit)" value="year" />
+			<fr:property name="bundle(edit)" value="ASSIDUOUSNESS_RESOURCES" />
 		</fr:layout>
 	</fr:view>
 </logic:present>

@@ -18,7 +18,8 @@
 	</html:messages>
 </logic:messagesPresent>
 
-<fr:form action="/uploadAnualInstallments.do?method=uploadAnualInstallment" encoding="multipart/form-data">
+<fr:form action="/uploadAnualInstallments.do" encoding="multipart/form-data">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="uploadAnualInstallment"/>
 	<logic:empty name="bonusInstallmentFileBean" property="year">
 		<fr:edit id="bonusInstallmentFileBeanYear" name="bonusInstallmentFileBean" schema="upload.bonusInstallmentFileBean.year">
 			<fr:destination name="bonusInstallmentFileBeanPostBack" path="/uploadAnualInstallments.do?method=chooseYear" />
@@ -30,6 +31,7 @@
 	</logic:empty>
 	<logic:notEmpty name="bonusInstallmentFileBean" property="year">
 		<fr:edit id="bonusInstallmentFileBean" name="bonusInstallmentFileBean" schema="upload.bonusInstallmentFileBean">
+			<fr:destination name="bonusInstallmentsNumberPostBack" path="/uploadAnualInstallments.do?method=chooseInstallment" />
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
@@ -45,3 +47,11 @@
 		</html:cancel>
 	</p>
 </fr:form>
+
+<logic:present name="bonusInstallmentList">
+	<fr:view name="bonusInstallmentList" schema="show.employeeBonusInstallment">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
+		</fr:layout>
+	</fr:view>
+</logic:present>

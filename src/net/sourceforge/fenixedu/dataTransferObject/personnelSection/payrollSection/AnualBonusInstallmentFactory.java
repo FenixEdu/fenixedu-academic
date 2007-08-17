@@ -24,6 +24,11 @@ public class AnualBonusInstallmentFactory implements Serializable, FactoryExecut
     public AnualBonusInstallmentFactory() {
     }
 
+    public AnualBonusInstallmentFactory(Integer year, int installmentsNumber) {
+	setYear(year);
+	setInstallmentsNumber(installmentsNumber);
+    }
+
     public Object execute() {
 	List<ActionMessage> errors = new ArrayList<ActionMessage>();
 

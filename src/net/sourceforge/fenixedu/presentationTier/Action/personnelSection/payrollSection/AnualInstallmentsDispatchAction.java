@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrol
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -53,6 +54,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	    }
 	}
 	request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
+	request.setAttribute("anualBonusInstallmentsList", getOrderedAnualBonusInstallmentsList());
+
 	return mapping.findForward("show-anual-installment");
     }
 
@@ -66,6 +69,17 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentBean");
 	RenderUtils.invalidateViewState();
 	ActionMessages actionMessages = getMessages(request);
+	if (anualBonusInstallmentFactory == null) {
+	    Integer year = new Integer(request.getParameter("year"));
+	    anualBonusInstallmentFactory = new AnualBonusInstallmentFactory();
+	    anualBonusInstallmentFactory.setYear(year);
+	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment
+		    .readByYear(year);
+	    if (anualBonusInstallmentList != null) {
+		anualBonusInstallmentFactory.setInstallmentsNumber(anualBonusInstallmentList.size());
+	    }
+
+	}
 	if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
 	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService(request,
 		    "ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
@@ -85,14 +99,34 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	}
 	saveMessages(request, actionMessages);
 	request.setAttribute("anualBonusInstallmentFactory", anualBonusInstallmentFactory);
+	request.setAttribute("anualBonusInstallmentsList", getOrderedAnualBonusInstallmentsList());
 	return mapping.findForward("show-anual-installment");
 
     }
 
-    public List<AnualBonusInstallment> getOrderedAnualBonusInstallmentsList() {
-	List<AnualBonusInstallment> result = new ArrayList<AnualBonusInstallment>(rootDomainObject
-		.getAnualBonusInstallments());
+    public List<AnualBonusInstallmentFactory> getOrderedAnualBonusInstallmentsList() {
+	List<AnualBonusInstallment> anualBonusInstallmentList = new ArrayList<AnualBonusInstallment>(
+		rootDomainObject.getAnualBonusInstallments());
+	HashMap<Integer, Integer> anualBonusInstallments = new HashMap<Integer, Integer>();
+
+	for (AnualBonusInstallment anualBonusInstallment : anualBonusInstallmentList) {
+	    Integer installmentsNumber = anualBonusInstallments.get(anualBonusInstallment.getYear());
+	    if (installmentsNumber == null) {
+		installmentsNumber = new Integer(0);
+	    }
+	    installmentsNumber = installmentsNumber + 1;
+	    anualBonusInstallments.put(anualBonusInstallment.getYear(), installmentsNumber);
+
+	}
+
+	List<AnualBonusInstallmentFactory> result = new ArrayList<AnualBonusInstallmentFactory>();
+	for (Integer year : anualBonusInstallments.keySet()) {
+	    Integer installmentsNumber = anualBonusInstallments.get(year);
+	    result.add(new AnualBonusInstallmentFactory(year, installmentsNumber));
+	}
+
 	Collections.sort(result, new BeanComparator("year"));
+
 	return result;
     }
 
@@ -106,6 +140,11 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
     public ActionForward showBonusInstallment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
+	if (isCancelled(request)) {
+	    RenderUtils.invalidateViewState();
+	    request.setAttribute("bonusInstallment", new BonusInstallment());
+	    return mapping.findForward("show-bonus-installment");
+	}
 	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
@@ -181,16 +220,13 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	StringBuilder stringBuilder = new StringBuilder();
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
 		.getEmployeeMonthlyBonusInstallments()) {
-	    if (employeeMonthlyBonusInstallment.getValue() == 0) {
+	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
 		stringBuilder.append(employeeBonusInstallment.getEmployee().getEmployeeNumber()).append(
 			separator);
 		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
 			separator);
 		stringBuilder.append(employeeBonusInstallment.getCostCenterCode()).append(separator);
-		stringBuilder.append(
-			-employeeBonusInstallment.getValue()
-				/ employeeBonusInstallment.getEmployeeMonthlyBonusInstallmentsCount())
-			.append(separator);
+		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
 		stringBuilder.append("3").append(separator);
 		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
 		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);

@@ -181,6 +181,7 @@
 		<action path="/uploadAnualInstallments"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection.UploadAnualInstallments" 
 				parameter="method"
+				name="parametrizationForm"
 				scope="request"
 				validate="true">
 				<forward name="upload-bonus-file" path="upload-bonus-file"/>
