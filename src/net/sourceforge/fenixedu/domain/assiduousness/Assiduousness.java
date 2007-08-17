@@ -565,18 +565,6 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastAssiduousnessClosedMonth;
     }
 
-    public double getTotalArticle66ByYear(int year) {
-	double result = 0;
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
-		    DateTimeFieldType.year()) == year) {
-		result += assiduousnessClosedMonth.getAccumulatedArticle66()
-			+ assiduousnessClosedMonth.getArticle66();
-	    }
-	}
-	return result;
-    }
-
     public Duration getAverageWorkTimeDuration(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Schedule> schedules = getSchedules(beginDate, endDate);
 	Duration averageWorkTimeDuration = Duration.ZERO;

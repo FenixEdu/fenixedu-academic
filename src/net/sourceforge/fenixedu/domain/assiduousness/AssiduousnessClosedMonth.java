@@ -185,9 +185,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
 	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
 
-	double anualRemaining = (double) Assiduousness.MAX_A66_PER_YEAR
-		- getAssiduousness().getTotalArticle66ByYear(
-			getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()));
+	double anualRemaining = (double) Assiduousness.MAX_A66_PER_YEAR - previousAccumulatedA66;
 	double monthRemaining = anualRemaining > Assiduousness.MAX_A66_PER_MONTH ? Assiduousness.MAX_A66_PER_MONTH
 		: anualRemaining;
 	if (getArticle66() < monthRemaining && unjustified > 0) {
