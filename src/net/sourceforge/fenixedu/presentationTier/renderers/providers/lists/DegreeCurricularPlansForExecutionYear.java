@@ -36,6 +36,8 @@ public class DegreeCurricularPlansForExecutionYear implements DataProvider {
 			result.add(plan);
 		    }
 		}
+	    } else {
+		result.addAll(executionYear.getDegreeCurricularPlans());
 	    }
 	}
 
