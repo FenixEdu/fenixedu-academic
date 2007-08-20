@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -66,6 +67,7 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
@@ -121,6 +123,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
@@ -916,6 +919,66 @@ public class CreateTestData {
         }
     }
 
+    public static class CreateEvaluations extends AtomicAction {
+        public void doIt() {
+            final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+            for (final ExecutionPeriod executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
+                createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
+                for (int i = 0; i++ < 500 ; writtenTestsRoomManager.getNextDateTime(executionPeriod));
+                createWrittenEvaluations(executionPeriod, new Season(Season.SEASON2), "Teste2");
+            }
+        }
+
+        private static void createWrittenEvaluations(final ExecutionPeriod executionPeriod, final Season season, final String writtenTestName) {
+            for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+                createWrittenEvaluation(executionPeriod, executionCourse, writtenTestName);
+                createExam(executionPeriod, executionCourse, season);
+            }
+        }
+
+        private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final String name) {
+            DateTime startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
+            DateTime endDateTime = startDateTime.plusMinutes(120);
+            if (startDateTime.getDayOfMonth() != endDateTime.getDayOfMonth()) {
+                startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
+                endDateTime = startDateTime.plusMinutes(120);
+            }
+            final Room room = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
+            final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+            executionCourses.add(executionCourse);
+            final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+                degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
+            }
+            final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+            rooms.add(room);
+            final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
+                    degreeModuleScopes, rooms, name);
+            createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
+        }
+
+        private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse, final Season season) {
+            DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
+            DateTime endDateTime = startDateTime.plusMinutes(180);
+            if (startDateTime.getDayOfMonth() != endDateTime.getDayOfMonth()) {
+                startDateTime = examRoomManager.getNextDateTime(executionPeriod);
+                endDateTime = startDateTime.plusMinutes(180);
+            }
+            final Room room = examRoomManager.getNextOldRoom(executionPeriod);
+            final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+            executionCourses.add(executionCourse);
+            final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+                degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
+            }
+            final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+            rooms.add(room);
+            final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses, degreeModuleScopes,
+                    rooms, season);
+            createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
+        }
+    }
+
     private static void createTestData() {
         doAction(new CreateManagerUser());
         doAction(new CreateExecutionYears());
@@ -925,6 +988,7 @@ public class CreateTestData {
         doAction(new CreateCurricularPeriods());
         doAction(new CreateCurricularStructure());
         doAction(new CreateExecutionCourses());
+        doAction(new CreateEvaluations());
 
 //        createUnits();
 //        createExecutionYears();
