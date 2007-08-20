@@ -10,7 +10,7 @@
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
-	<h:form>
+	<h:form id="shezadIsSuperman">
 		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
 		<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
