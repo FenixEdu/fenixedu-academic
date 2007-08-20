@@ -55,23 +55,20 @@
 
 <bean:define id="currentSemester" name="execution_period" property="semester"/>
 <bean:define id="degree" name="degree" type="net.sourceforge.fenixedu.domain.Degree"/>
-<table class="tab_lay" cellspacing="0">
 
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
-		<tr>
-			<th colspan="<%=degree.buildFullCurricularYearList().size() %>" scope="col">
-				<bean:write name="execution_period" property="infoExecutionYear.year"/>,
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/>
-				<bean:write name="execution_period" property="semester"/>
-			</th>	
-		</tr>
-	
+<table class="tab_lay" cellspacing="0">
+		<caption>
+			<bean:write name="execution_period" property="infoExecutionYear.year"/>,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester"/>
+			<bean:write name="execution_period" property="semester"/>
+		</caption>
 	
 		<tr>
 		<%  java.util.Iterator iter = degree.buildFullCurricularYearList().iterator();
 			while (iter.hasNext()) {
 				Integer curricularYear = (Integer)iter.next(); %>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></td>
+			<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></th>
 		<% } %>
 		</tr>
 	
@@ -109,22 +106,24 @@
 			</logic:iterate>
 		</tr>
 		<% } %>
+</table>
 	</logic:equal>
 
+
+
 	<logic:equal value="true" name="renderNextExecutionPeriod">
-		<tr>
-			<th colspan="<%=degree.buildFullCurricularYearList().size() %>" scope="col">
+<table class="tab_lay" cellspacing="0">
+		<caption>
 				<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>,
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester"/>
 				<bean:write name="nextInfoExecutionPeriod" property="semester"/>
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/>
-			</th>	
-		</tr>
-	
+		</caption>
+
 		<tr>
 		<%  java.util.Iterator iter = degree.buildFullCurricularYearList().iterator();
 			while (iter.hasNext()) {
 				Integer curricularYear = (Integer)iter.next(); %>
-			<td class="subheader"><%= String.valueOf(curricularYear) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/></td>
+			<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></th>
 		<% } %>
 		</tr>
 	
@@ -161,6 +160,5 @@
 			</logic:iterate>		
 		</tr>
 		<% } %>
-	</logic:equal>
-
 </table>
+	</logic:equal>

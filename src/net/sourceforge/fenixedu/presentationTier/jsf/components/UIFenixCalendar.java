@@ -116,17 +116,19 @@ public class UIFenixCalendar extends UIInput {
     }
 
     private void encodeMonthRow(ResponseWriter writer, Calendar date, Locale locale) throws IOException {
-        writer.startElement("tr", this);
-        writer.startElement("td", this);
+//        writer.startElement("tr", this);
+//        writer.startElement("td", this);
+        writer.startElement("caption", this);
         writer.writeAttribute("class", "fenixCalendar_monthRow", null);
-        writer.writeAttribute("colspan", 6, null);
+//        writer.writeAttribute("colspan", 6, null);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
         DateFormatSymbols dfs = sdf.getDateFormatSymbols();
         writer.write((dfs.getMonths())[date.get(Calendar.MONTH)]);
 
-        writer.endElement("td");
-        writer.endElement("tr");
+        writer.endElement("caption");
+//        writer.endElement("td");
+//        writer.endElement("tr");
     }
 
     private void encodeDaysOfWeek(ResponseWriter writer, Locale locale) throws IOException {
@@ -147,9 +149,9 @@ public class UIFenixCalendar extends UIInput {
     }
 
     private void encodeDayOfWeek(ResponseWriter writer, String dayLabel) throws IOException {
-        writer.startElement("td", this);
+        writer.startElement("th", this);
         writer.write(dayLabel);
-        writer.endElement("td");
+        writer.endElement("th");
     }
 
     private void encodeWeeks(ResponseWriter writer, Calendar begin, Calendar end) throws IOException {

@@ -77,18 +77,16 @@
 <!-- CURRENT EXECUTION PERIOD -->
 <logic:equal value="true" name="renderCurrentExecutionPeriod">
 	<table class="tab_lay" cellspacing="0" width="90%">
-		<tr>
-			<th colspan="2" scope="col">
-				<bean:write name="execution_period" property="infoExecutionYear.year" />,
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
-				<bean:write name="execution_period" property="semester"/>
-			</th>
-		</tr>
+		<caption id="currentSem">
+			<bean:write name="execution_period" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester" />
+			<bean:write name="execution_period" property="semester"/>
+		</caption>
 	
 		<logic:greaterThan name="numberRowsCurrent1_2" value="0">
 			<tr>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.first.year"/></td>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.second.year"/></td>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.first.year"/></th>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.second.year"/></th>
 			</tr>
 		
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsCurrent1_2").toString()).intValue(); rowIndex++) { %>
@@ -115,8 +113,8 @@
 	
 		<logic:greaterThan name="numberRowsCurrent3_4" value="0">
 			<tr>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.third.year"/></td>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fourth.year"/></td>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.third.year"/></th>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fourth.year"/></th>
 			</tr>
 	
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsCurrent3_4").toString()).intValue(); rowIndex++) { %>
@@ -141,7 +139,7 @@
 		
 		<logic:greaterThan name="numberRowsCurrent5" value="0">
 			<tr>
-				<td colspan="2" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fiveth.year" /></td>
+				<th colspan="2" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fiveth.year" /></th>
 			</tr>
 		
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsCurrent5").toString()).intValue(); rowIndex++) { %>
@@ -170,18 +168,16 @@
 <!-- PREVIOUS EXECUTION PERIOD -->
 <logic:equal value="true" name="renderPreviousExecutionPeriod">
 	<table class="tab_lay" cellspacing="0" width="90%">
-		<tr>
-			<th colspan="2" scope="col">
-				<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
-				<bean:write name="previousInfoExecutionPeriod" property="semester"/>
-			</th>
-		</tr>
+		<caption id="otherSem">
+			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester" />
+			<bean:write name="previousInfoExecutionPeriod" property="semester"/>
+		</caption>
 		
 		<logic:greaterThan name="numberRowsPrevious1_2" value="0">
 			<tr>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.first.year"/></td>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.second.year"/></td>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.first.year"/></th>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.second.year"/></th>
 			</tr>	
 		
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsPrevious1_2").toString()).intValue(); rowIndex++) { %>
@@ -206,8 +202,8 @@
 		
 		<logic:greaterThan name="numberRowsPrevious3_4" value="0">
 			<tr>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.third.year"/></td>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fourth.year"/></td>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.third.year"/></th>
+				<th class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fourth.year"/></th>
 			</tr>
 		
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsPrevious3_4").toString()).intValue(); rowIndex++) { %>
@@ -232,7 +228,7 @@
 		
 		<logic:greaterThan name="numberRowsPrevious5" value="0">
 			<tr>
-				<td colspan="2" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fiveth.year" /></td>
+				<th colspan="2" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.fiveth.year" /></th>
 			</tr>	
 		
 			<% for (int rowIndex=0; rowIndex < Integer.valueOf(pageContext.findAttribute("numberRowsPrevious5").toString()).intValue(); rowIndex++) { %>

@@ -56,7 +56,5 @@
 
 <bean:define id="lessonList" name="component" property="lessons" />
 
-<h2><bean:message bundle="PUBLIC_DEGREE_INFORMATION"
-	key="public.degree.information.title.class.timetable" /><bean:write
-	name="className" /></h2>
 <app:gerarHorario name="lessonList" />
+

@@ -69,12 +69,25 @@ public class TimeTableRenderer {
         }
         strBuffer.append(">");
 
+        final String className = (String) pageContext.getRequest().getAttribute("className");
+        if (className != null) {
+            strBuffer.append("<caption>");
+            final String captionPrefix = getMessageResource(pageContext, "public.degree.information.title.class.timetable", locale);
+            strBuffer.append(captionPrefix);
+            strBuffer.append(' ');
+            strBuffer.append(className);
+            strBuffer.append("</caption>");
+        }
+
         renderHeader(strBuffer, locale, pageContext, definedWidth);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
             strBuffer.append("<tr>\r\n");
-            strBuffer.append("<td class='period-hours'>");
-            strBuffer.append(getHourLabelByIndex(hourIndex)).append("</td>\r\n");
+            strBuffer.append("<th class='period-hours'");
+            strBuffer.append(" id='hour");
+            strBuffer.append(hourIndex);
+            strBuffer.append("'>");
+            strBuffer.append(getHourLabelByIndex(hourIndex)).append("</th>\r\n");
 
             /* iterate over days */
             for (int dayIndex = 0; dayIndex < timeTable.getNumberOfDays().intValue(); dayIndex++) {
@@ -105,6 +118,14 @@ public class TimeTableRenderer {
                             strBuffer.append(" colspan ='").append(slotColspan).append("'");
                             slotIndex += slotColspan - 1;
                         }
+
+                        strBuffer.append(" headers='weekday");
+                        strBuffer.append(dayIndex);
+                        for (int hourHeader = hourIndex; hourHeader < hourIndex + slotColspan; hourHeader++) {
+                            strBuffer.append(" hour");
+                            strBuffer.append(hourHeader);
+                        }
+                        strBuffer.append("' ");                        
 
                         strBuffer.append(" class='");
                         strBuffer.append(getSlotCssClass(infoLessonWrapper, hourIndex));
@@ -174,6 +195,14 @@ public class TimeTableRenderer {
 
         strBuffer.append("</table>");
         return strBuffer;
+    }
+
+    private String getMessageResource(PageContext pageContext, String key, Locale locale) {
+        try {
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+        } catch (JspException e) {
+            return "???" + key + "???"; 
+        }
     }
 
     /**
@@ -264,6 +293,10 @@ public class TimeTableRenderer {
                 strBuffer.append(cellWidth);
                 strBuffer.append("%'");
             }
+
+            strBuffer.append(" id='weekday");
+            strBuffer.append(index);
+            strBuffer.append("'");
 
             strBuffer.append(">\r\n");
             strBuffer.append(timeTable.getDayColumn(index).getLabel());
