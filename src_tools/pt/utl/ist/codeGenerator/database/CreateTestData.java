@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -19,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -35,20 +34,17 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
-import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.FunctionalitySection;
+import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Identification;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
@@ -66,67 +62,61 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SiteTemplate;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
-import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyFromDatePR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
-import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -134,14 +124,12 @@ import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
+import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -198,7 +186,7 @@ public class CreateTestData {
 
     public static class CreateExecutionYears extends AtomicAction {
         public void doIt() {
-            final int numYearsToCreate = 7;
+            final int numYearsToCreate = 5;
             final YearMonthDay today = new YearMonthDay();
             final YearMonthDay yearMonthDay = new YearMonthDay(today.getYear() - numYearsToCreate + 2, 9, 1);
             for (int i = 0; i < numYearsToCreate; createExecutionYear(yearMonthDay, i++));
@@ -283,28 +271,31 @@ public class CreateTestData {
 
         private void createCampi(int i) {
             final Campus campus = new Campus("Herdade do Conhecimento " + i, new YearMonthDay(), null, null);
-            for (int j = i; j < i + 7; j++) {
+            for (int j = i; j < i + 3; j++) {
                 createBuilding(campus, j);
             }
         }
 
         private void createBuilding(final Campus campus, final int j) {
             final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null);
-            for (int k = -1; k < 6; k++) {
+            for (int k = -1; k < 2; k++) {
                 createFloor(building, k);
             }
         }
 
         private void createFloor(final Building building, final int k) {
             final Floor floor = new Floor(building, k, new YearMonthDay(), null, null);
-            for (int l = 0; l < 255; l++) {
+            for (int l = 0; l < 25; l++) {
                 createRoom(floor);
             }
         }
 
         private void createRoom(Floor floor) {
-            new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
+            final Room room = new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
                     Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1));
+            lessonRoomManager.push(room);
+            examRoomManager.add(room);
+            writtenTestsRoomManager.add(room);
         }
 
         private String getRoomName() {
@@ -379,7 +370,19 @@ public class CreateTestData {
             final DepartmentUnit departmentUnit = createDepartmentUnut(departmentUnits, 3020 + i, department);
             department.setDepartmentUnit(departmentUnit);
 
+            createCompetenceCourseGroupUnit(departmentUnit);
+
             new DepartmentSite(department);
+        }
+
+        private int areaCounter = 0;
+        private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
+            final ScientificAreaUnit scientificAreaUnit = ScientificAreaUnit.createNewInternalScientificArea("Scientific Area",
+                    null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+                    null, null, Boolean.FALSE, null);
+            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit("Competence Courses", null, null,
+                    new YearMonthDay(), null, scientificAreaUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+                    null, null, Boolean.FALSE, null);
         }
 
         private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber, final Department department) {
@@ -419,19 +422,21 @@ public class CreateTestData {
             final SiteTemplate siteTemplate = findSiteTemplate();
             final Unit unit = findUnitByName("Degrees");
             for (final DegreeType degreeType : DegreeType.values()) {
-                for (int i = 0; i < 5 ; i++) {
-                    final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
-                    createDegreeInfo(degree);
-                    associateToDepartment(degree);
-                    final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
-                    createExecutionDegrees(degreeCurricularPlan, getCampus());
+                if (degreeType.isBolonhaType()) {
+                    for (int i = 0; i < 1 ; i++) {
+                        final Degree degree = createDegree(degreeType, (degreeType.ordinal() * 10) + i);
+                        createDegreeInfo(degree);
+                        associateToDepartment(degree);
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree);
+                        createExecutionDegrees(degreeCurricularPlan, getCampus());
 
-                    final DegreeSite degreeSite = degree.getSite();
-                    degreeSite.setTemplate(siteTemplate);
+                        final DegreeSite degreeSite = degree.getSite();
+                        degreeSite.setTemplate(siteTemplate);
 
-                    DegreeUnit.createNewInternalDegreeUnit(degree.getName(), null, degree.getSigla(), new YearMonthDay(), null, unit,
-                            AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
-                            null, degree, null, Boolean.FALSE, null);
+                        DegreeUnit.createNewInternalDegreeUnit(degree.getName(), null, degree.getSigla(), new YearMonthDay(), null, unit,
+                                AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+                                null, degree, null, Boolean.FALSE, null);
+                    }
                 }
             }
         }
@@ -466,15 +471,64 @@ public class CreateTestData {
             final DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
             degreeCurricularPlan.setDegree(degree);
             degreeCurricularPlan.setName(degree.getSigla());
-            degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
+            degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
             degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
+            degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
+            if (degree.getDegreeType().isBolonhaType()) {
+                RootCourseGroup.createRoot(degreeCurricularPlan, degree.getSigla(), degree.getSigla());
+            }
             return degreeCurricularPlan;
         }
 
         private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Campus campus) {
             for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
-                degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
+                final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
+                for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+                    final Degree degree = executionDegree.getDegree();
+                    for (int y = 1 ; y <= degree.getDegreeType().getYears(); y++) {
+                        for (int i = 0; i < 1; i++) {
+                            final String name = degree.getSigla() + y + executionPeriod.getSemester() + i;
+                            new SchoolClass(executionDegree, executionPeriod, name, Integer.valueOf(y));
+                        }
+                    }
+                }
+                createPeriodsForExecutionDegree(executionDegree);
+                createEnrolmentPeriods(degreeCurricularPlan, executionYear);
+            }
+        }
+
+        private static void createPeriodsForExecutionDegree(ExecutionDegree executionDegree) {
+            final ExecutionYear executionYear = executionDegree.getExecutionYear();
+            final ExecutionPeriod executionPeriod1 = executionYear.getFirstExecutionPeriod();
+            final ExecutionPeriod executionPeriod2 = executionYear.getLastExecutionPeriod();
+
+            final OccupationPeriod occupationPeriod1 = readOccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
+            final OccupationPeriod occupationPeriod2 = readOccupationPeriod(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
+            final OccupationPeriod occupationPeriod3 = readOccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
+            final OccupationPeriod occupationPeriod4 = readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
+            final OccupationPeriod occupationPeriod5 = readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
+
+            executionDegree.setPeriodLessonsFirstSemester(occupationPeriod1);
+            executionDegree.setPeriodExamsFirstSemester(occupationPeriod2);
+            executionDegree.setPeriodLessonsSecondSemester(occupationPeriod3);
+            executionDegree.setPeriodExamsSecondSemester(occupationPeriod4);
+            executionDegree.setPeriodExamsSpecialSeason(occupationPeriod5);
+        }
+
+        private static OccupationPeriod readOccupationPeriod(YearMonthDay yearMonthDay1, YearMonthDay yearMonthDay2) {
+            OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(yearMonthDay1, yearMonthDay2);
+            return occupationPeriod == null ? new OccupationPeriod(yearMonthDay1, yearMonthDay2) : occupationPeriod;
+        }
+
+        private static void createEnrolmentPeriods(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
+            for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+                final Date start = executionPeriod.getBeginDateYearMonthDay().toDateMidnight().toDate();
+                final Date end = executionPeriod.getEndDateYearMonthDay().toDateMidnight().toDate();
+
+                new EnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, start, end);
+                new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, start, end);
+                new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, start, end);
             }
         }
 
@@ -502,51 +556,363 @@ public class CreateTestData {
         }
 
         private void createDegreeInfo(final Degree degree) {
-            final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
-            degreeInfo.setDescription(new MultiLanguageString("Descrição do curso. Bla bla bla bla bla."));
-            degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
-            degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
-            degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
-            degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
-            degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
-            degreeInfo.setDesignedFor(new MultiLanguageString("Propósito do curso. Bla bla bla bla bla."));
-            degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
-            degreeInfo.setProfessionalExits(new MultiLanguageString("Saídas profissionais. Bla bla bla bla bla."));
-            degreeInfo.getProfessionalExits().setContent(Language.en, "Professional exists of the degree. Blur blur blur and more blur.");
-            degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
-            degreeInfo.getOperationalRegime().setContent(Language.en, "Operational regime of the degree. Blur blur blur and more blur.");
-            degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
-            degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
-            degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendário escolar. Bla bla bla bla bla."));
-            degreeInfo.getSchoolCalendar().setContent(Language.en, "School calendar of the degree. Blur blur blur and more blur.");
-            degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
-            degreeInfo.getCandidacyPeriod().setContent(Language.en, "Candidacy period of the degree. Blur blur blur and more blur.");
-            degreeInfo.setSelectionResultDeadline(new MultiLanguageString("Prazo de publicação de resultados de candidaturas. Bla bla bla bla bla."));
-            degreeInfo.getSelectionResultDeadline().setContent(Language.en, "Seletion result deadline of the degree. Blur blur blur and more blur.");
-            degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscrições. Bla bla bla bla bla."));
-            degreeInfo.getEnrolmentPeriod().setContent(Language.en, "Enrolment period of the degree. Blur blur blur and more blur.");
-            degreeInfo.setAdditionalInfo(new MultiLanguageString("Informação adicional. Bla bla bla bla bla."));
-            degreeInfo.getAdditionalInfo().setContent(Language.en, "Additional information of the degree. Blur blur blur and more blur.");
-            degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
-            degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
-            degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressão. Bla bla bla bla bla."));
-            degreeInfo.getTestIngression().setContent(Language.en, "Ingression tests of the degree. Blur blur blur and more blur.");
-            degreeInfo.setClassifications(new MultiLanguageString("Classificações. Bla bla bla bla bla."));
-            degreeInfo.getClassifications().setContent(Language.en, "Classifications of the degree. Blur blur blur and more blur.");
-            degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
-            degreeInfo.getAccessRequisites().setContent(Language.en, "Access requisites of the degree. Blur blur blur and more blur.");
-            degreeInfo.setCandidacyDocuments(new MultiLanguageString("Documentos de candidatura. Bla bla bla bla bla."));
-            degreeInfo.getCandidacyDocuments().setContent(Language.en, "Candidacy documents of the degree. Blur blur blur and more blur.");
-            degreeInfo.setDriftsInitial(Integer.valueOf(1));
-            degreeInfo.setDriftsFirst(Integer.valueOf(1));
-            degreeInfo.setDriftsSecond(Integer.valueOf(1));
-            degreeInfo.setMarkMin(Double.valueOf(12));
-            degreeInfo.setMarkMax(Double.valueOf(20));
-            degreeInfo.setMarkAverage(Double.valueOf(15));
-            degreeInfo.setQualificationLevel(new MultiLanguageString("Nível de qualificação. Bla bla bla bla bla."));
-            degreeInfo.getQualificationLevel().setContent(Language.en, "Qualification level of the degree. Blur blur blur and more blur.");
-            degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
-            degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
+            for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+                final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
+                degreeInfo.setExecutionYear(executionYear);
+                degreeInfo.setDescription(new MultiLanguageString("Descrição do curso. Bla bla bla bla bla."));
+                degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
+                degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
+                degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
+                degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
+                degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
+                degreeInfo.setDesignedFor(new MultiLanguageString("Propósito do curso. Bla bla bla bla bla."));
+                degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
+                degreeInfo.setProfessionalExits(new MultiLanguageString("Saídas profissionais. Bla bla bla bla bla."));
+                degreeInfo.getProfessionalExits().setContent(Language.en, "Professional exists of the degree. Blur blur blur and more blur.");
+                degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
+                degreeInfo.getOperationalRegime().setContent(Language.en, "Operational regime of the degree. Blur blur blur and more blur.");
+                degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
+                degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
+                degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendário escolar. Bla bla bla bla bla."));
+                degreeInfo.getSchoolCalendar().setContent(Language.en, "School calendar of the degree. Blur blur blur and more blur.");
+                degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
+                degreeInfo.getCandidacyPeriod().setContent(Language.en, "Candidacy period of the degree. Blur blur blur and more blur.");
+                degreeInfo.setSelectionResultDeadline(new MultiLanguageString("Prazo de publicação de resultados de candidaturas. Bla bla bla bla bla."));
+                degreeInfo.getSelectionResultDeadline().setContent(Language.en, "Seletion result deadline of the degree. Blur blur blur and more blur.");
+                degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscrições. Bla bla bla bla bla."));
+                degreeInfo.getEnrolmentPeriod().setContent(Language.en, "Enrolment period of the degree. Blur blur blur and more blur.");
+                degreeInfo.setAdditionalInfo(new MultiLanguageString("Informação adicional. Bla bla bla bla bla."));
+                degreeInfo.getAdditionalInfo().setContent(Language.en, "Additional information of the degree. Blur blur blur and more blur.");
+                degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
+                degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
+                degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressão. Bla bla bla bla bla."));
+                degreeInfo.getTestIngression().setContent(Language.en, "Ingression tests of the degree. Blur blur blur and more blur.");
+                degreeInfo.setClassifications(new MultiLanguageString("Classificações. Bla bla bla bla bla."));
+                degreeInfo.getClassifications().setContent(Language.en, "Classifications of the degree. Blur blur blur and more blur.");
+                degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
+                degreeInfo.getAccessRequisites().setContent(Language.en, "Access requisites of the degree. Blur blur blur and more blur.");
+                degreeInfo.setCandidacyDocuments(new MultiLanguageString("Documentos de candidatura. Bla bla bla bla bla."));
+                degreeInfo.getCandidacyDocuments().setContent(Language.en, "Candidacy documents of the degree. Blur blur blur and more blur.");
+                degreeInfo.setDriftsInitial(Integer.valueOf(1));
+                degreeInfo.setDriftsFirst(Integer.valueOf(1));
+                degreeInfo.setDriftsSecond(Integer.valueOf(1));
+                degreeInfo.setMarkMin(Double.valueOf(12));
+                degreeInfo.setMarkMax(Double.valueOf(20));
+                degreeInfo.setMarkAverage(Double.valueOf(15));
+                degreeInfo.setQualificationLevel(new MultiLanguageString("Nível de qualificação. Bla bla bla bla bla."));
+                degreeInfo.getQualificationLevel().setContent(Language.en, "Qualification level of the degree. Blur blur blur and more blur.");
+                degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
+                degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
+            }
+        }
+    }
+
+    public static class CreateCurricularPeriods extends AtomicAction {
+
+        public void doIt() {
+            for (final CurricularPeriodType curricularPeriodType : CurricularPeriodType.values()) {
+                final float weight = curricularPeriodType.getWeight();
+                if (weight > 1) {
+                    final CurricularPeriod curricularPeriod = new CurricularPeriod(curricularPeriodType, null, null);
+                    for (int i = 1; i <= curricularPeriodType.getWeight(); i++) {
+                        final CurricularPeriod curricularYear = new CurricularPeriod(CurricularPeriodType.YEAR, Integer.valueOf(i), curricularPeriod);
+                        for (int j = 1; j <=2; j++) {
+                            new CurricularPeriod(CurricularPeriodType.SEMESTER, Integer.valueOf(j), curricularYear);
+                        }
+                    }
+                } else if (weight == 1) {
+                    final CurricularPeriod curricularPeriod = new CurricularPeriod(curricularPeriodType, null, null);
+                    for (int j = 1; j <=2; j++) {
+                        new CurricularPeriod(CurricularPeriodType.SEMESTER, Integer.valueOf(j), curricularPeriod);
+                    }
+                }
+            }
+        }
+        
+    }
+
+    public static class CreateCurricularStructure extends AtomicAction {
+
+        public void doIt() {
+            for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlansSet()) {
+                createCurricularCourses(degreeCurricularPlan);
+            }
+        }
+
+        private void createCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan) {
+            final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
+            for (int y = 1; y <= degreeType.getYears(); y++) {
+                for (int s = 1; s <= 2; s++) {
+                    for (int i = 0; i < 3 ; i++) {
+                        final String name = getCurricularCourseName();
+                        final String code = getCurricularCourseCode(degreeCurricularPlan, y, s);
+                        final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(name,
+                                code, code, Boolean.TRUE, CurricularStage.PUBLISHED);
+                        curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
+                        curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+                        createDegreeModuleScopes(degreeCurricularPlan, curricularCourse, y, s);
+                        createCompetenceCourse(degreeCurricularPlan, curricularCourse);
+                    }
+                }
+            }
+        }
+
+        private void createDegreeModuleScopes(final DegreeCurricularPlan degreeCurricularPlan,
+                final CurricularCourse curricularCourse, final int y, final int s) {
+            if (degreeCurricularPlan.hasRoot()) {
+                createContext(degreeCurricularPlan, curricularCourse, y, s);
+            } else {
+                createCurricularCourseScope(degreeCurricularPlan, curricularCourse, y, s);
+            }
+        }
+
+        private void createContext(final DegreeCurricularPlan degreeCurricularPlan,
+                final CurricularCourse curricularCourse, final int y, final int s) {
+            final RootCourseGroup rootCourseGroup = degreeCurricularPlan.getRoot();
+            for (final CycleType cycleType : degreeCurricularPlan.getDegreeType().getCycleTypes()) {                
+                final CycleCourseGroup cycleCourseGroup = rootCourseGroup.getCycleCourseGroup(cycleType);
+                new Context(cycleCourseGroup, curricularCourse, findCurricularPeriod(degreeCurricularPlan, y, s),
+                        findFirstExecutionPeriod(), null);
+            }
+        }
+
+        private CurricularPeriod findCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final int y, final int s) {
+            final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
+            final CurricularPeriodType curricularPeriodType = degreeType.getCurricularPeriodType();
+            for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
+                if (curricularPeriod.getPeriodType() == curricularPeriodType) {
+                    for (final CurricularPeriod curricularYear : curricularPeriod.getChildsSet() ) {
+                        if (curricularYear.getChildOrder().intValue() == y) {
+                            for (final CurricularPeriod curricularSemester : curricularYear.getChildsSet() ) {
+                                if (curricularSemester.getChildOrder().intValue() == s) {
+                                    return curricularSemester;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
+                if (curricularPeriod.getPeriodType() == curricularPeriodType && curricularPeriodType == CurricularPeriodType.YEAR) {
+                        if (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder().intValue() == y) {
+                            for (final CurricularPeriod curricularSemester : curricularPeriod.getChildsSet() ) {
+                                if (curricularSemester.getChildOrder().intValue() == s) {
+                                    return curricularSemester;
+                                }
+                            }
+                        }
+                }
+            }
+            System.out.println("found no curricular period for: " + curricularPeriodType + " y " + y + " s " + s);
+            if (true) throw new Error();
+            return null;
+        }
+
+        private void createCurricularCourseScope(final DegreeCurricularPlan degreeCurricularPlan,
+                final CurricularCourse curricularCourse, final int y, final int s) {
+            final CurricularSemester curricularSemester = findCurricularSemester(y, s);
+            new CurricularCourseScope(null, curricularCourse, curricularSemester,
+                    new DateTime().minusYears(5).toCalendar(null), null, "Some annotation...");
+        }
+
+        private CurricularSemester findCurricularSemester(final int y, final int s) {
+            return CurricularSemester.readBySemesterAndYear(Integer.valueOf(s), Integer.valueOf(y));
+        }
+
+        private int counter = 0;
+        private String getCurricularCourseName() {
+            return "Knowledge Germination " + counter;
+        }
+        private String getCurricularCourseCode(final DegreeCurricularPlan degreeCurricularPlan, final int y, final int s) {
+            final Degree degree = degreeCurricularPlan.getDegree();
+            return degree.getSigla() + '-' + y + '-' + s + '-' + counter++;
+        }
+
+        private void createCompetenceCourse(final DegreeCurricularPlan degreeCurricularPlan, final CurricularCourse curricularCourse) {
+            final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
+            final CompetenceCourseLevel competenceCourseLevel = getCompetenceCourseLevel(degreeType);
+            final CompetenceCourseGroupUnit competenceCourseGroupUnit = findCompetenceCourseGroupUnit(degreeCurricularPlan);
+            final CompetenceCourse competenceCourse = new CompetenceCourse(curricularCourse.getName(), curricularCourse.getName(),
+                    Boolean.TRUE, RegimeType.SEMESTRIAL, competenceCourseLevel, CompetenceCourseType.REGULAR, CurricularStage.APPROVED,
+                    competenceCourseGroupUnit);
+            final ExecutionPeriod executionPeriod = firstExecutionPeriod();
+            competenceCourse.setCreationDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
+            final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(null);
+            competenceCourseInformation.setExecutionPeriod(executionPeriod);
+            final CompetenceCourseLoad competenceCourseLoad = new CompetenceCourseLoad(Double.valueOf(2), Double.valueOf(0),
+                    Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0),
+                    Double.valueOf(0), Double.valueOf(degreeType.getDefaultEctsCredits()), Integer.valueOf(0), CurricularPeriodType.SEMESTER);
+            competenceCourseInformation.addCompetenceCourseLoads(competenceCourseLoad);
+            curricularCourse.setCompetenceCourse(competenceCourse);
+        }
+
+        private ExecutionPeriod firstExecutionPeriod() {
+            return Collections.min(RootDomainObject.getInstance().getExecutionPeriodsSet());
+        }
+
+        private CompetenceCourseGroupUnit findCompetenceCourseGroupUnit(final DegreeCurricularPlan degreeCurricularPlan) {
+            final Degree degree = degreeCurricularPlan.getDegree();
+            for (final Department department : degree.getDepartmentsSet()) {
+                final DepartmentUnit departmentUnit = department.getDepartmentUnit();
+                for (final Accountability accountability : departmentUnit.getChildsSet()) {
+                    final Party party = accountability.getChildParty();
+                    if (party.isScientificAreaUnit()) {
+                        for (final Accountability accountability2 : ((ScientificAreaUnit) party).getChildsSet()) {
+                            final Party party2 = accountability2.getChildParty();
+                            if (party2.isCompetenceCourseGroupUnit()) {
+                                return (CompetenceCourseGroupUnit) party2;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private CompetenceCourseLevel getCompetenceCourseLevel(final DegreeType degreeType) {
+            for (final CycleType cycleType : degreeType.getCycleTypes()) {
+                return cycleType == CycleType.FIRST_CYCLE ? CompetenceCourseLevel.FIRST_CYCLE : CompetenceCourseLevel.SECOND_CYCLE;
+            }
+            return CompetenceCourseLevel.FORMATION;
+        }
+    }
+
+    public static class CreateExecutionCourses extends AtomicAction {
+        public void doIt() {
+            for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
+                if (degreeModule.isCurricularCourse()) {
+                    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+                    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+                        if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {                            
+                            final ExecutionCourse executionCourse = new ExecutionCourse(
+                                    curricularCourse.getName(), curricularCourse.getCode(), executionPeriod);
+                            executionCourse.setTheoreticalHours(Double.valueOf(3));
+                            executionCourse.setPraticalHours(Double.valueOf(2));
+                            executionCourse.setLabHours(Double.valueOf(0));
+                            executionCourse.setTheoPratHours(Double.valueOf(0));
+                            executionCourse.setTrainingPeriodHours(Double.valueOf(0));
+                            executionCourse.setTutorialOrientationHours(Double.valueOf(0));
+                            executionCourse.setFieldWorkHours(Double.valueOf(0));
+                            executionCourse.setSeminaryHours(Double.valueOf(0));
+                            executionCourse.setProblemsHours(Double.valueOf(0));
+                            curricularCourse.addAssociatedExecutionCourses(executionCourse);
+
+                            executionCourse.createSite();
+
+                            createAnnouncementsAndPlanning(executionCourse);
+                            createEvaluationMethod(executionCourse);
+                            createBibliographicReferences(executionCourse);
+
+                            createShifts(executionCourse);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
+            final AnnouncementBoard announcementBoard = executionCourse.getBoard();
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
+            final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
+            for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(7)) {
+                createAnnouncements(announcementBoard, day);
+                createPlanning(executionCourse, ShiftType.TEORICA);
+                createPlanning(executionCourse, ShiftType.TEORICA);
+                createPlanning(executionCourse, ShiftType.PRATICA);
+            }
+        }
+
+        private static void createPlanning(ExecutionCourse executionCourse, ShiftType shiftType) {
+            final LessonPlanning lessonPlanning = new LessonPlanning(new MultiLanguageString("Titulo do Planeamento"), new MultiLanguageString("Corpo do Planeamento"), shiftType, executionCourse);
+            lessonPlanning.getTitle().setContent(Language.en, "Title of the planning.");
+            lessonPlanning.getPlanning().setContent(Language.en, "Planning contents.");
+        }
+
+        private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
+            final Announcement announcement = new Announcement();
+            announcement.setAnnouncementBoard(announcementBoard);
+            announcement.setAuthor("Autor do anúncio");
+            announcement.setAuthorEmail("http://www.google.com/");
+            announcement.setBody(new MultiLanguageString("Corpo do anúncio. Bla bla bla bla."));
+            announcement.getBody().setContent(Language.en, "Content of the announcement. Blur blur blur blur.");
+            announcement.setCreationDate(day.toDateTimeAtMidnight());
+            announcement.setCreator(null);
+            announcement.setExcerpt(new MultiLanguageString("Bla ..."));
+            announcement.getExcerpt().setContent(Language.en, "Blur ...");
+            announcement.setKeywords(new MultiLanguageString("Bla"));
+            announcement.getKeywords().setContent(Language.en, "Blur");
+            announcement.setLastModification(day.toDateTimeAtCurrentTime());
+            announcement.setPlace("Here.");
+//            announcement.setPublicationBegin();
+//            announcement.setPublicationEnd();
+//            announcement.setReferedSubjectBegin();
+//            announcement.setReferedSubjectEnd();
+            announcement.setSubject(new MultiLanguageString("Assunto Bla."));
+            announcement.getSubject().setContent(Language.en, "Subject blur.");
+            announcement.setVisible(Boolean.TRUE);
+        }
+
+        private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
+            final EvaluationMethod evaluationMethod = new EvaluationMethod();
+            evaluationMethod.setExecutionCourse(executionCourse);
+            evaluationMethod.setEvaluationElements(new MultiLanguageString("Método de avaliação. Bla bla bla bla bla."));
+            evaluationMethod.getEvaluationElements().setContent(Language.en, "Evaluation method. Blur blur ble blur bla.");
+        }
+
+        private static void createBibliographicReferences(final ExecutionCourse executionCourse) {
+            createBibliographicReference(executionCourse, Boolean.FALSE);
+            createBibliographicReference(executionCourse, Boolean.TRUE);
+        }
+
+        private static void createBibliographicReference(final ExecutionCourse executionCourse, final Boolean optional) {
+            final BibliographicReference bibliographicReference = new BibliographicReference();
+            bibliographicReference.setAuthors("Nome do Autor");
+            bibliographicReference.setExecutionCourse(executionCourse);
+            bibliographicReference.setOptional(optional);
+            bibliographicReference.setReference("Referência");
+            bibliographicReference.setTitle("Título");
+            bibliographicReference.setYear("Ano");
+        }
+
+        private static void createShifts(final ExecutionCourse executionCourse) {
+            final Shift shift1 = new Shift(executionCourse, ShiftType.TEORICA, Integer.valueOf(50), Integer.valueOf(50));
+            createLesson(shift1, 90);
+            createLesson(shift1, 90);
+            final Shift shift2 = new Shift(executionCourse, ShiftType.PRATICA, Integer.valueOf(50), Integer.valueOf(50));
+            createLesson(shift2, 120);
+
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+
+                for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                    final int year = degreeModuleScope.getCurricularYear().intValue();
+                    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+                        if (executionDegree.getExecutionYear() == executionCourse.getExecutionPeriod().getExecutionYear()) {
+                            for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+                                if (schoolClass.getExecutionPeriod() == executionCourse.getExecutionPeriod()) {
+                                    if (schoolClass.getAnoCurricular().intValue() == year) {
+                                        shift1.addAssociatedClasses(schoolClass);
+                                        shift2.addAssociatedClasses(schoolClass);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void createLesson(final Shift shift, int durationInMinutes) {
+            final HourMinuteSecond start = lessonRoomManager.getNextHourMinuteSecond(durationInMinutes);
+            final HourMinuteSecond end = start.plusMinutes(durationInMinutes);
+            final Calendar cStart = toCalendar(start);
+            final Calendar cEnd = toCalendar(end);
+            final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
+            final Room room = lessonRoomManager.getNextOldRoom();
+            final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
+            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), shift, FrequencyType.WEEKLY, executionPeriod);
+            new LessonSpaceOccupation(room, lesson);
         }
     }
 
@@ -556,6 +922,9 @@ public class CreateTestData {
         doAction(new CreateResources());
         doAction(new CreateOrganizationalStructure());
         doAction(new CreateDegrees());
+        doAction(new CreateCurricularPeriods());
+        doAction(new CreateCurricularStructure());
+        doAction(new CreateExecutionCourses());
 
 //        createUnits();
 //        createExecutionYears();
@@ -574,29 +943,7 @@ public class CreateTestData {
             SuportePersistenteOJB.fixDescriptors();
             RootDomainObject.init();
             setPrivledges();
-
-                createTestData();
-//
-//            ISuportePersistente persistentSupport = null;
-//            try {
-//                persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-//                persistentSupport.iniciarTransaccao();
-//        	setPrivledges();
-//                clearData();
-//                createManagerUser();
-//                createTestData();
-//                persistentSupport.confirmarTransaccao();
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//
-//                try {
-//                    if (persistentSupport != null) {
-//                        persistentSupport.cancelarTransaccao();
-//                    }
-//                } catch (ExcepcaoPersistencia e) {
-//                    throw new Error(e);
-//                }
-//            }
+            createTestData();
         } finally {
             System.err.flush();
             System.out.flush();
@@ -609,265 +956,6 @@ public class CreateTestData {
     private static final ExamRoomManager examRoomManager = new ExamRoomManager();
     private static final WrittenTestsRoomManager writtenTestsRoomManager = new WrittenTestsRoomManager();
 
-    private static void createManagerUser() {
-    }
-
-    private static void clearData() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-
-//        if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship()
-//                || hasAnySupportLessons() || hasAnyDegreeTeachingServices()
-//                || hasAnyTeacherMasterDegreeServices()) {
-
-        System.out.println("Deleting shift professorships.");
-        for (final Set<ShiftProfessorship> shiftProfessorships = rootDomainObject.getShiftProfessorshipsSet(); !shiftProfessorships.isEmpty(); shiftProfessorships.iterator().next().delete());
-
-        System.out.println("Deleting support lessons");
-        for (final Set<SupportLesson> supportLessons = rootDomainObject.getSupportLessonsSet(); !supportLessons.isEmpty(); supportLessons.iterator().next().delete());
-
-        System.out.println("Deleting teacher service items.");
-        for (final Set<TeacherServiceItem> teacherServiceItems = rootDomainObject.getTeacherServiceItemsSet(); !teacherServiceItems.isEmpty(); teacherServiceItems.iterator().next().delete());
-
-        System.out.println("Deleting teacher services.");
-        for (final Set<TeacherService> teacherServices = rootDomainObject.getTeacherServicesSet(); !teacherServices.isEmpty(); teacherServices.iterator().next().delete());
-
-        System.out.println("Deleting events.");
-        for (final Set<Event> events = rootDomainObject.getAccountingEventsSet(); !events.isEmpty(); events.iterator().next().delete());
-
-        System.out.println("Deleting service agreements.");
-        for (final Set<ServiceAgreement> serviceAgreements = rootDomainObject.getServiceAgreementsSet(); !serviceAgreements.isEmpty(); serviceAgreements.iterator().next().delete());
-
-        System.out.println("Deleting posting rules.");
-        for (final Set<PostingRule> postingRules = rootDomainObject.getPostingRulesSet(); !postingRules.isEmpty(); postingRules.iterator().next().delete());
-
-        System.out.println("Deleting service agreement templates.");
-        for (final Set<ServiceAgreementTemplate> serviceAgreementTemplateSet = rootDomainObject.getServiceAgreementTemplatesSet(); !serviceAgreementTemplateSet.isEmpty(); serviceAgreementTemplateSet.iterator().next().delete());
-
-        System.out.println("Deleting writtenEvaluation enrolments.");
-        for (final Set<WrittenEvaluationEnrolment> writtenEvaluationEnrolment = rootDomainObject.getWrittenEvaluationEnrolmentsSet(); !writtenEvaluationEnrolment.isEmpty(); writtenEvaluationEnrolment.iterator().next().delete());
-
-        System.out.println("Deleting students from shifts.");
-        if (!rootDomainObject.getShiftsSet().isEmpty()) {
-            for (final Iterator<Shift> shiftIterator = rootDomainObject.getShiftsSet().iterator(); !shiftIterator.hasNext(); ) {
-                final Shift shift = shiftIterator.next();
-                for (final Set<Registration> registrations = shift.getStudentsSet(); !registrations.isEmpty(); registrations.remove(registrations.iterator().next()));
-            }
-            for (final Shift shift : rootDomainObject.getShiftsSet()) {
-                if (!shift.getStudentsSet().isEmpty()) {
-                    shift.getStudentsSet().clear();
-                }
-            }
-        }
-        for (final Set<StudentGroup> studentGroups = rootDomainObject.getStudentGroupsSet(); !studentGroups.isEmpty(); studentGroups.iterator().next().delete());
-        System.out.println("Deleting student data by execution year.");
-        for (final Set<StudentDataByExecutionYear> data = rootDomainObject.getStudentDataByExecutionYearSet(); !data.isEmpty(); data.iterator().next().delete());
-        System.out.println("Deleting attends.");
-        for (final Set<Attends> attends = rootDomainObject.getAttendssSet(); !attends.isEmpty(); attends.iterator().next().delete());
-
-        System.out.println("Deleting enrolment periods.");
-        for (final Set<EnrolmentPeriod> enrolmentPeriods = rootDomainObject.getEnrolmentPeriodsSet(); !enrolmentPeriods.isEmpty(); enrolmentPeriods.iterator().next().delete());
-
-        System.out.println("Deleting curriculum modules.");
-        for (final Set<CurriculumModule> curriculumModules = rootDomainObject.getCurriculumModulesSet(); !curriculumModules.isEmpty(); curriculumModules.iterator().next().delete());
-        System.out.println("Deleting student curricular plans.");
-        for (final Set<StudentCurricularPlan> studentCurricularPlans = rootDomainObject.getStudentCurricularPlansSet(); !studentCurricularPlans.isEmpty(); studentCurricularPlans.iterator().next().delete());
-        System.out.println("Deleting registrations.");
-        for (final Set<Registration> registrations = rootDomainObject.getRegistrationsSet(); !registrations.isEmpty(); registrations.iterator().next().delete());
-        System.out.println("Deleting students.");
-        for (final Set<Student> students = rootDomainObject.getStudentsSet(); !students.isEmpty(); students.iterator().next().delete());
-
-        System.out.println("Deleting school classes.");
-        for (final Set<SchoolClass> schoolClasses = rootDomainObject.getSchoolClasssSet(); !schoolClasses.isEmpty(); schoolClasses.iterator().next().delete());
-        System.out.println("Deleting lessons.");
-        for (final Set<Lesson> lessons = rootDomainObject.getLessonsSet(); !lessons.isEmpty(); lessons.iterator().next().delete());
-        System.out.println("Deleting shifts.");
-        for (final Set<Shift> shifts = rootDomainObject.getShiftsSet(); !shifts.isEmpty(); shifts.iterator().next().delete());
-        System.out.println("Deleting evaluation methods.");
-        for (final Set<EvaluationMethod> evaluationMethods = rootDomainObject.getEvaluationMethodsSet(); !evaluationMethods.isEmpty(); evaluationMethods.iterator().next().delete());
-        System.out.println("Deleting bibliographic references.");
-        for (final Set<BibliographicReference> bibliographicReferences = rootDomainObject.getBibliographicReferencesSet(); !bibliographicReferences.isEmpty(); bibliographicReferences.iterator().next().delete());
-
-        System.out.println("Deleting sites.");
-        for (final Set<Site> sites = rootDomainObject.getSitesSet(); !sites.isEmpty(); sites.iterator().next().delete());
-        System.out.println("Deleting forums.");
-        for (final Set<Forum> forums = rootDomainObject.getForunsSet(); !forums.isEmpty(); forums.iterator().next().delete());
-        System.out.println("Deleting announcements.");
-        for (final Set<Announcement> announcements = rootDomainObject.getAnnouncementsSet(); !announcements.isEmpty(); announcements.iterator().next().delete());
-        System.out.println("Deleting announcement boards.");
-        for (final Set<AnnouncementBoard> announcementBoards = rootDomainObject.getAnnouncementBoardsSet(); !announcementBoards.isEmpty(); announcementBoards.iterator().next().delete());
-        System.out.println("Deleting lesson plannings.");
-        for (final Set<LessonPlanning> lessonPlannings = rootDomainObject.getLessonPlanningsSet(); !lessonPlannings.isEmpty(); lessonPlannings.iterator().next().deleteWithoutReOrder());
-        System.out.println("Deleting evaluations.");
-        for (final Set<Evaluation> evaluations = rootDomainObject.getEvaluationsSet(); !evaluations.isEmpty(); evaluations.iterator().next().delete());
-        System.out.println("Deleting professorships.");
-        for (final Set<Professorship> professorships = rootDomainObject.getProfessorshipsSet(); !professorships.isEmpty(); professorships.iterator().next().delete());
-        System.out.println("Deleting execution courses.");
-        for (final Set<ExecutionCourse> executionCourses = rootDomainObject.getExecutionCoursesSet(); !executionCourses.isEmpty(); executionCourses.iterator().next().delete());
-
-        System.out.println("Deleting coordinators.");
-        for (final Set<Coordinator> coordinators = rootDomainObject.getCoordinatorsSet(); !coordinators.isEmpty(); coordinators.iterator().next().delete());
-        System.out.println("Deleting teachers.");
-        for (final Set<Teacher> teachers = rootDomainObject.getTeachersSet(); !teachers.isEmpty(); teachers.iterator().next().delete());
-
-        for (final Iterator<Accountability> acountabilityIterator = RootDomainObject.getInstance().getAccountabilitysIterator(); acountabilityIterator.hasNext(); ) {
-            final Accountability accountability = acountabilityIterator.next();
-            if (accountability instanceof Contract) {
-                acountabilityIterator.remove();
-                accountability.delete();
-            }
-        }
-
-        System.out.println("Deleting employees.");
-        for (final Set<Employee> employees = rootDomainObject.getEmployeesSet(); !employees.isEmpty(); employees.iterator().next().delete());
-
-        System.out.println("Deleting person roles.");
-        for (final Party party : rootDomainObject.getPartysSet()) {
-            if (party.isPerson()) {
-                final Person person = (Person) party;
-                person.getPersonRolesSet().clear();
-            }
-        }
-
-        System.out.println("Deleting identifications.");
-        for (final Set<Identification> identifications = rootDomainObject.getIdentificationsSet(); !identifications.isEmpty(); identifications.iterator().next().delete());
-        System.out.println("Deleting users.");
-        for (final Set<User> users = rootDomainObject.getUsersSet(); !users.isEmpty(); users.iterator().next().delete());
-        System.out.println("Deleting accounts.");
-        for (final Set<Account> accounts = rootDomainObject.getAccountsSet(); !accounts.isEmpty(); accounts.iterator().next().delete());
-        System.out.println("Deleting people.");
-        for (final Set<Party> parties = new HashSet<Party>(rootDomainObject.getPartysSet()); !parties.isEmpty(); ) {
-            final Party party = parties.iterator().next();
-            if (party.isPerson()) {
-                final Person person = (Person) party;
-                person.delete();
-            }
-            parties.remove(party);
-        }
-
-        System.out.println("Deleting execution degrees.");
-        for (final Set<ExecutionDegree> executionDegrees = rootDomainObject.getExecutionDegreesSet(); !executionDegrees.isEmpty(); executionDegrees.iterator().next().delete());
-        System.out.println("Deleting curricular course scopes.");
-        for (final Set<CurricularCourseScope> curricularCourseScopes = rootDomainObject.getCurricularCourseScopesSet(); !curricularCourseScopes.isEmpty(); curricularCourseScopes.iterator().next().delete());
-        System.out.println("Deleting degree modules.");
-        for (final Set<DegreeModule> degreeModules = rootDomainObject.getDegreeModulesSet(); !degreeModules.isEmpty(); degreeModules.iterator().next().delete());
-        System.out.println("Deleting branches.");
-        for (final Set<Branch> branches = rootDomainObject.getBranchsSet(); !branches.isEmpty(); branches.iterator().next().delete());
-        System.out.println("Deleting degree curricular plans.");
-        for (final Set<DegreeCurricularPlan> degreeCurricularPlanss = rootDomainObject.getDegreeCurricularPlansSet(); !degreeCurricularPlanss.isEmpty(); degreeCurricularPlanss.iterator().next().delete());
-        System.out.println("Deleting degree infos.");
-        for (final Set<DegreeInfo> degreeInfos = rootDomainObject.getDegreeInfosSet(); !degreeInfos.isEmpty(); degreeInfos.iterator().next().delete());
-        System.out.println("Deleting degrees.");
-        for (final Set<Degree> degrees = rootDomainObject.getDegreesSet(); !degrees.isEmpty(); degrees.iterator().next().delete());
-        System.out.println("Deleting execution years.");
-        for (final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet(); !executionYears.isEmpty(); executionYears.iterator().next().delete());
-        System.out.println("Deleting occupation periods.");
-        for (final Set<OccupationPeriod> occupationPeriods = rootDomainObject.getOccupationPeriodsSet(); !occupationPeriods.isEmpty(); occupationPeriods.iterator().next().delete());
-
-        System.out.println("Deleting spaces.");        
-        Iterator<Resource> resourcesIterator = rootDomainObject.getResourcesIterator();
-        for (; resourcesIterator.hasNext() ;) {
-	    Resource resource = resourcesIterator.next();
-	    if(resource.isSpace()) {
-		resourcesIterator.remove();
-		((Space)resource).delete();
-	    }	    
-	}
-                
-        System.out.println("Deleting campi.");
-        for (final List<Campus> campi = Space.getAllCampus(); !campi.isEmpty(); campi.iterator().next().delete());
-
-        System.out.println("Deleting administrative offices.");
-        for (final Set<AdministrativeOffice> administrativeOffices = rootDomainObject.getAdministrativeOfficesSet(); !administrativeOffices.isEmpty(); administrativeOffices.iterator().next().delete());
-
-        System.out.println("Deleting administrative offices.");
-        for (final Set<Department> departments = rootDomainObject.getDepartmentsSet(); !departments.isEmpty(); departments.iterator().next().delete());
-
-        System.out.println("Completed clearing any existing data.");
-        System.out.println("Loading the test data...");
-    }
-
-    private static void createUnits() {
-	createInstitutionalUnit();
-	createDegreeAdministrativeOfficeUnit(AdministrativeOfficeType.DEGREE, 1);
-	createDegreeAdministrativeOfficeUnit(AdministrativeOfficeType.MASTER_DEGREE, 2);
-    }
-
-    private static void createInstitutionalUnit() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final Unit institutionUnit = Unit.createNewUnit(
-        	"Escola do Galo", null, "Fenix", new YearMonthDay().minusYears(10), null, null, null, null, null, Boolean.TRUE, null);
-        rootDomainObject.setInstitutionUnit(institutionUnit);
-        institutionUnit.setType(PartyTypeEnum.SCHOOL);
-    }
-
-    private static void createDegreeAdministrativeOfficeUnit(final AdministrativeOfficeType administrativeOfficeType, final int someNumber) {
-        final AdministrativeOffice administrativeOfficeDegree = new AdministrativeOffice(administrativeOfficeType);
-
-	final AdministrativeOfficeUnit unit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-		"Secretaria Academica " + someNumber, Integer.valueOf(2001 + someNumber), "SA" + someNumber, new YearMonthDay().minusMonths(1), null,
-		RootDomainObject.getInstance().getInstitutionUnit(),
-		AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null,
-		UnitClassification.ACADEMIC_SERVICES_SUPERVISION, administrativeOfficeDegree, false, null);
-
-        final UnitServiceAgreementTemplate unitServiceAgreementTemplate = new UnitServiceAgreementTemplate(unit);
-        new FixedAmountPR(EntryType.INSURANCE_FEE, EventType.INSURANCE, new DateTime().minusYears(1), null, unitServiceAgreementTemplate, Money.valueOf(2));
-        new AdministrativeOfficeServiceAgreementTemplate(administrativeOfficeDegree);
-
-        new FixedAmountWithPenaltyFromDatePR(EntryType.ADMINISTRATIVE_OFFICE_FEE,
-                    EventType.ADMINISTRATIVE_OFFICE_FEE, new DateTime(), null, administrativeOfficeDegree
-                            .getServiceAgreementTemplate(), new Money("21"), new Money("10.50"),
-                    new YearMonthDay(2006, 12, 16));
-        new AdministrativeOfficeFeeAndInsurancePR(new DateTime(), null, administrativeOfficeDegree
-                .getServiceAgreementTemplate());
-
-        createAdminPostingRules(administrativeOfficeDegree.getServiceAgreementTemplate());
-    }
-
-    private static DegreeUnit createNewDegreeUnit(int i, Degree degree) {
-	return DegreeUnit.createNewInternalDegreeUnit(
-		degree.getName() + " " + i, Integer.valueOf(5020 + i), degree.getSigla() + (1000 + i), new YearMonthDay().minusYears(1), null,
-		RootDomainObject.getInstance().getInstitutionUnit(), AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
-		null, degree, null, Boolean.FALSE, null);
-    }
-
-    private static void createAdminPostingRules(AdministrativeOfficeServiceAgreementTemplate agreementTemplate) {
-            new CertificateRequestPR(EntryType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST_FEE,
-                    EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, new DateTime(), null,
-                    agreementTemplate, new Money("7"), new Money("0"), new Money("0.12"));
-
-            new CertificateRequestPR(EntryType.ENROLMENT_CERTIFICATE_REQUEST_FEE,
-                    EventType.ENROLMENT_CERTIFICATE_REQUEST, new DateTime(), null, agreementTemplate,
-                    new Money("7"), new Money("1"), new Money("0.12"));
-
-            new CertificateRequestPR(EntryType.APPROVEMENT_CERTIFICATE_REQUEST_FEE,
-                    EventType.APPROVEMENT_CERTIFICATE_REQUEST, new DateTime(), null, agreementTemplate,
-                    new Money("7"), new Money("1"), new Money("0.12"));
-
-            new CertificateRequestPR(EntryType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE,
-                    EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, new DateTime(), null,
-                    agreementTemplate, new Money("15"), new Money("1"), new Money("0.12"));
-    }
-
-    private static void createRooms() {
-	final Campus campus = Space.getAllCampus().iterator().next();
-	for (int b = 1; b <= 10; b++) {
-//	    final OldBuilding oldBuilding = new OldBuilding();
-//	    oldBuilding.setCampus(campus);
-//	    oldBuilding.setName("Edifício" + b);
-//	    for (int r = 1; r <= 100; r++) {
-//		final OldRoom oldRoom = new OldRoom();
-//		oldRoom.setBuilding(oldBuilding);
-//		oldRoom.setName("Sala" + b + r);
-//		oldRoom.setCapacidadeNormal(Integer.valueOf(50));
-//		oldRoom.setCapacidadeExame(Integer.valueOf(25));
-//		oldRoom.setPiso(Integer.valueOf(0));
-//		oldRoom.setTipo(new TipoSala(TipoSala.PLANA));
-//		lessonRoomManager.push(oldRoom);
-//		examRoomManager.add(oldRoom);
-//		writtenTestsRoomManager.add(oldRoom);
-//	    }
-	}
-    }
 
     private static Teacher createTeachers(final int i) {
         final Person person = createPerson("Guru Diplomado", "teacher", i);
@@ -950,101 +1038,6 @@ public class CreateTestData {
         //new InsuranceEvent(student.getPerson(), executionYear);
     }
 
-    private static void createExecutionYears() {
-	final YearMonthDay yearMonthDay = new YearMonthDay();
-        final ExecutionYear executionYear = new ExecutionYear();
-        executionYear.setYear(constructExecutionYearString());
-        executionYear.setState(PeriodState.CURRENT);
-        final ExecutionPeriod executionPeriod1 = new ExecutionPeriod();
-        executionPeriod1.setSemester(Integer.valueOf(1));
-        executionPeriod1.setExecutionYear(executionYear);
-        executionPeriod1.setName("Semester 1");
-        final ExecutionPeriod executionPeriod2 = new ExecutionPeriod();
-        executionPeriod2.setSemester(Integer.valueOf(2));
-        executionPeriod2.setExecutionYear(executionYear);
-        executionPeriod2.setName("Semester 2");
-        executionPeriod1.setNextExecutionPeriod(executionPeriod2);
-
-        if (yearMonthDay.getMonthOfYear() < 8) {
-            final YearMonthDay previousYear = yearMonthDay.minusYears(1);
-            executionYear.setBeginDateYearMonthDay(new YearMonthDay(previousYear.getYear(), 9, 1));
-            executionYear.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 7, 31));
-            executionPeriod1.setBeginDateYearMonthDay(new YearMonthDay(previousYear.getYear(), 9, 1));
-            executionPeriod1.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 1, 31));
-            executionPeriod2.setBeginDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 2, 1));
-            executionPeriod2.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 7, 31));
-            if (yearMonthDay.getMonthOfYear() < 2) {
-                executionPeriod1.setState(PeriodState.CURRENT);
-                executionPeriod2.setState(PeriodState.OPEN);
-            } else {
-                executionPeriod1.setState(PeriodState.OPEN);
-                executionPeriod2.setState(PeriodState.CURRENT);                
-            }
-        } else {
-            executionYear.setBeginDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 9, 1));
-            executionYear.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear() + 1, 7, 31));
-            executionPeriod1.setBeginDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear(), 9, 1));
-            executionPeriod1.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear() + 1, 1, 31));
-            executionPeriod2.setBeginDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear() + 1, 2, 1));
-            executionPeriod2.setEndDateYearMonthDay(new YearMonthDay(yearMonthDay.getYear() + 1, 7, 31));
-            executionPeriod1.setState(PeriodState.CURRENT);
-            executionPeriod2.setState(PeriodState.OPEN);
-        }
-
-        new OccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
-        new OccupationPeriod(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
-        new OccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
-        new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
-        new OccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
-
-        new InquiryResponsePeriod(executionPeriod1, executionPeriod1.getBeginDate(), executionPeriod1.getEndDate()); 
-        new InquiryResponsePeriod(executionPeriod2, executionPeriod2.getBeginDate(), executionPeriod2.getEndDate());
-
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 1, "2005/2006");
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 2, "2004/2005");
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 3, "2003/2004");
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 4, "2002/2003");
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 5, "2001/2002");
-        createOtherExecutionYears(executionYear, executionPeriod1, executionPeriod2, 6, "2000/2001");
-    }
-
-    private static void createOtherExecutionYears(final ExecutionYear executionYear, final ExecutionPeriod executionPeriod1, final ExecutionPeriod executionPeriod2, int i, final String yearString) {
-        final ExecutionPeriod firstExecutionPeriod = findFirstExecutionPeriod();
-        final ExecutionYear otherExecutionYear = new ExecutionYear();
-        otherExecutionYear.setYear(yearString);
-        otherExecutionYear.setState(PeriodState.NOT_OPEN);
-        final ExecutionPeriod otherExecutionPeriod1 = new ExecutionPeriod();
-        otherExecutionPeriod1.setSemester(Integer.valueOf(1));
-        otherExecutionPeriod1.setExecutionYear(otherExecutionYear);
-        otherExecutionPeriod1.setName("Semester 1");
-        final ExecutionPeriod otherExecutionPeriod2 = new ExecutionPeriod();
-        otherExecutionPeriod2.setSemester(Integer.valueOf(2));
-        otherExecutionPeriod2.setExecutionYear(otherExecutionYear);
-        otherExecutionPeriod2.setName("Semester 2");
-        otherExecutionPeriod1.setNextExecutionPeriod(otherExecutionPeriod2);
-        otherExecutionPeriod2.setNextExecutionPeriod(firstExecutionPeriod);
-
-        otherExecutionYear.setBeginDateYearMonthDay(executionYear.getBeginDateYearMonthDay().minusYears(i));
-        otherExecutionYear.setEndDateYearMonthDay(executionYear.getEndDateYearMonthDay().minusYears(i));
-        otherExecutionPeriod1.setBeginDateYearMonthDay(executionPeriod1.getBeginDateYearMonthDay().minusYears(i));
-        otherExecutionPeriod1.setEndDateYearMonthDay(executionPeriod1.getEndDateYearMonthDay().minusYears(i));
-        otherExecutionPeriod2.setBeginDateYearMonthDay(executionPeriod2.getBeginDateYearMonthDay().minusYears(i));
-        otherExecutionPeriod2.setEndDateYearMonthDay(executionPeriod2.getEndDateYearMonthDay().minusYears(i));
-        otherExecutionPeriod1.setState(PeriodState.NOT_OPEN);
-        otherExecutionPeriod2.setState(PeriodState.NOT_OPEN);
-
-//        new OccupationPeriod(otherExecutionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
-//        new OccupationPeriod(execuotherotherExecutionPeriodEndDateYearMonthDay().minusDays(31), otherExecutionPeriod1.getEndDateYearMonthDay());
-//        new OccupationPeriod(otherExecutionPeriod2.getBeginDateYearMonthDay(), otherExecutionPeriod2.getEndDateYearMonthDay().minusDays(32));
-//        new OccupationPeriod(otherExecutionPeriod2.getEndDateYearMonthDay().minusDays(31), otherExecutionPeriod2.getEndDateYearMonthDay());
-//        new OccupationPeriod(otherExecutionPeriod2.getEndDateYearMonthDay().plusDays(31), otherExecutionPeriod2.getEndDateYearMonthDay().plusDays(46));
-//
-//        otherExecutionPeriod1.setInquiryResponseBeginDateTime(otherExecutionPeriod1.getBeginDateYearMonthDay().toDateTimeAtMidnight());
-//        otherExecutionPeriod1.setInquiryResponseEndDateTime(otherExecutionPeriod1.getEndDateYearMonthDay().toDateTimeAtMidnight());
-//        otherExecutionPeriod2.setInquiryResponseBeginDateTime(otherExecutionPeriod2.getBeginDateYearMonthDay().toDateTimeAtMidnight());
-//        otherExecutionPeriod2.setInquiryResponseEndDateTime(otherExecutionPeriod2.getEndDateYearMonthDay().toDateTimeAtMidnight());
-    }
-
     private static ExecutionPeriod findFirstExecutionPeriod() {
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
             if (executionPeriod.getPreviousExecutionPeriod() == null) {
@@ -1052,10 +1045,6 @@ public class CreateTestData {
             }
         }
         return null;
-    }
-
-    private static void createCampus() {
-        final Campus campus = new Campus("Herdade do Conhecimento", new YearMonthDay(), new YearMonthDay().plusYears(10),"");
     }
 
     private static void createDegrees() {
@@ -1094,7 +1083,7 @@ public class CreateTestData {
 //            department.setDepartmentUnit(departmentUnit);
             department.addDegrees(degree);
 
-            createNewDegreeUnit(4020 + i, degree);
+//            createNewDegreeUnit(4020 + i, degree);
 
             //createDegreeInfo(degree);
             degreeCurricularPlan.setDescription("Bla bla bla. Descrição do plano curricular do curso. Bla bla bla");
@@ -1104,9 +1093,9 @@ public class CreateTestData {
             final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
             final Teacher teacher = createTeachers(i);
             new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
-            createPeriodsForExecutionDegree(executionDegree);
+//            createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
-            createEnrolmentPeriods(degreeCurricularPlan, executionYear);
+//            createEnrolmentPeriods(degreeCurricularPlan, executionYear);
             executionDegree.setCampus(Space.getAllCampus().iterator().next());
 
             createAgreementsAndPostingRules(executionYear, degreeCurricularPlan);
@@ -1138,17 +1127,6 @@ public class CreateTestData {
         new GratuityWithPaymentPlanPR(EntryType.GRATUITY_FEE, EventType.GRATUITY, new DateTime(), null, degreeCurricularPlan.getServiceAgreementTemplate());
     }
 
-    private static void createEnrolmentPeriods(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-	    final Date start = executionPeriod.getBeginDateYearMonthDay().toDateMidnight().toDate();
-	    final Date end = executionPeriod.getEndDateYearMonthDay().toDateMidnight().toDate();
-
-	    new EnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, start, end);
-	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, start, end);
-	    new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, start, end);
-	}
-    }
-
     private static void createSchoolClasses(final ExecutionDegree executionDegree) {
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	final Degree degree = executionDegree.getDegree();
@@ -1161,24 +1139,6 @@ public class CreateTestData {
 		}
 	    }
 	}
-    }
-
-    private static void createPeriodsForExecutionDegree(ExecutionDegree executionDegree) {
-        final ExecutionYear executionYear = executionDegree.getExecutionYear();
-        final ExecutionPeriod executionPeriod1 = executionYear.getFirstExecutionPeriod();
-        final ExecutionPeriod executionPeriod2 = executionYear.getLastExecutionPeriod();
-
-        final OccupationPeriod occupationPeriod1 = OccupationPeriod.readOccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(), executionPeriod1.getEndDateYearMonthDay().minusDays(32));
-        final OccupationPeriod occupationPeriod2 = OccupationPeriod.readOccupationPeriod(executionPeriod1.getEndDateYearMonthDay().minusDays(31), executionPeriod1.getEndDateYearMonthDay());
-        final OccupationPeriod occupationPeriod3 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getBeginDateYearMonthDay(), executionPeriod2.getEndDateYearMonthDay().minusDays(32));
-        final OccupationPeriod occupationPeriod4 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().minusDays(31), executionPeriod2.getEndDateYearMonthDay());
-        final OccupationPeriod occupationPeriod5 = OccupationPeriod.readOccupationPeriod(executionPeriod2.getEndDateYearMonthDay().plusDays(31), executionPeriod2.getEndDateYearMonthDay().plusDays(46));
-
-        executionDegree.setPeriodLessonsFirstSemester(occupationPeriod1);
-        executionDegree.setPeriodExamsFirstSemester(occupationPeriod2);
-        executionDegree.setPeriodLessonsSecondSemester(occupationPeriod3);
-        executionDegree.setPeriodExamsSecondSemester(occupationPeriod4);
-        executionDegree.setPeriodExamsSpecialSeason(occupationPeriod5);
     }
 
     private static void createExecutionCourses() {
@@ -1207,10 +1167,10 @@ public class CreateTestData {
         executionCourseSite.setLessonPlanningAvailable(Boolean.TRUE);
         createProfessorship(executionCourse, Boolean.TRUE);
         createProfessorship(executionCourse, Boolean.FALSE);
-        createAnnouncementsAndPlanning(executionCourse);
-        createShifts(executionCourse);
-        createEvaluationMethod(executionCourse);
-        createBibliographicReferences(executionCourse);
+//        createAnnouncementsAndPlanning(executionCourse);
+//        createShifts(executionCourse);
+//        createEvaluationMethod(executionCourse);
+//        createBibliographicReferences(executionCourse);
         createShiftProfessorhips(executionCourse);
     }
 
@@ -1243,99 +1203,12 @@ public class CreateTestData {
         }
     }
 
-    private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
-	final EvaluationMethod evaluationMethod = new EvaluationMethod();
-	evaluationMethod.setExecutionCourse(executionCourse);
-	evaluationMethod.setEvaluationElements(new MultiLanguageString("Método de avaliação. Bla bla bla bla bla."));
-	evaluationMethod.getEvaluationElements().setContent(Language.en, "Evaluation method. Blur blur ble blur bla.");
-    }
-
-    private static void createBibliographicReferences(final ExecutionCourse executionCourse) {
-	createBibliographicReference(executionCourse, Boolean.FALSE);
-	createBibliographicReference(executionCourse, Boolean.TRUE);
-    }
-
-    private static void createBibliographicReference(final ExecutionCourse executionCourse, final Boolean optional) {
-	final BibliographicReference bibliographicReference = new BibliographicReference();
-	bibliographicReference.setAuthors("Nome do Autor");
-	bibliographicReference.setExecutionCourse(executionCourse);
-	bibliographicReference.setOptional(optional);
-	bibliographicReference.setReference("Referência");
-	bibliographicReference.setTitle("Título");
-	bibliographicReference.setYear("Ano");
-    }
-
-    private static void createShifts(final ExecutionCourse executionCourse) {
-        final Shift shift1 = new Shift(executionCourse, ShiftType.TEORICA, Integer.valueOf(50), Integer.valueOf(50));
-        createLesson(shift1, 90);
-        createLesson(shift1, 90);
-        final Shift shift2 = new Shift(executionCourse, ShiftType.PRATICA, Integer.valueOf(50), Integer.valueOf(50));
-        createLesson(shift2, 120);
-    }
-
-    private static void createLesson(final Shift shift, int durationInMinutes) {
-	final HourMinuteSecond start = lessonRoomManager.getNextHourMinuteSecond(durationInMinutes);
-	final HourMinuteSecond end = start.plusMinutes(durationInMinutes);
-	final Calendar cStart = toCalendar(start);
-	final Calendar cEnd = toCalendar(end);
-	final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
-//	final OldRoom oldRoom = lessonRoomManager.getNextOldRoom();
-	final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-	final OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay().minusDays(32));
-//	final RoomOccupation roomOccupation = new RoomOccupation(oldRoom, cStart, cEnd, diaSemana, 1, occupationPeriod);              
-//	final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), oldRoom, roomOccupation, shift, Integer.valueOf(0), Integer.valueOf(1));
-//      lesson.setExecutionPeriod(executionPeriod);
-    }
-
     private static Calendar toCalendar(final HourMinuteSecond hourMinuteSecond) {
 	Calendar calendar = Calendar.getInstance();
 	calendar.set(Calendar.HOUR_OF_DAY, hourMinuteSecond.getHour());
 	calendar.set(Calendar.MINUTE, hourMinuteSecond.getMinuteOfHour());
 	calendar.set(Calendar.SECOND, hourMinuteSecond.getSecondOfMinute());
 	return calendar;
-    }
-
-    private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
-        final AnnouncementBoard announcementBoard = executionCourse.getBoard();
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
-        final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
-        for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(7)) {
-            createAnnouncements(announcementBoard, day);
-            createPlanning(executionCourse, ShiftType.TEORICA);
-            createPlanning(executionCourse, ShiftType.TEORICA);
-            createPlanning(executionCourse, ShiftType.PRATICA);
-        }
-    }
-
-    private static void createPlanning(ExecutionCourse executionCourse, ShiftType shiftType) {
-        final LessonPlanning lessonPlanning = new LessonPlanning(new MultiLanguageString("Titulo do Planeamento"), new MultiLanguageString("Corpo do Planeamento"), shiftType, executionCourse);
-        lessonPlanning.getTitle().setContent(Language.en, "Title of the planning.");
-        lessonPlanning.getPlanning().setContent(Language.en, "Planning contents.");
-    }
-
-    private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
-        final Announcement announcement = new Announcement();
-        announcement.setAnnouncementBoard(announcementBoard);
-        announcement.setAuthor("Autor do anúncio");
-        announcement.setAuthorEmail("http://www.google.com/");
-        announcement.setBody(new MultiLanguageString("Corpo do anúncio. Bla bla bla bla."));
-        announcement.getBody().setContent(Language.en, "Content of the announcement. Blur blur blur blur.");
-        announcement.setCreationDate(day.toDateTimeAtMidnight());
-        announcement.setCreator(null);
-        announcement.setExcerpt(new MultiLanguageString("Bla ..."));
-        announcement.getExcerpt().setContent(Language.en, "Blur ...");
-        announcement.setKeywords(new MultiLanguageString("Bla"));
-        announcement.getKeywords().setContent(Language.en, "Blur");
-        announcement.setLastModification(day.toDateTimeAtCurrentTime());
-        announcement.setPlace("Here.");
-//        announcement.setPublicationBegin();
-//        announcement.setPublicationEnd();
-//        announcement.setReferedSubjectBegin();
-//        announcement.setReferedSubjectEnd();
-        announcement.setSubject(new MultiLanguageString("Assunto Bla."));
-        announcement.getSubject().setContent(Language.en, "Subject blur.");
-        announcement.setVisible(Boolean.TRUE);
     }
 
     private static void createPreBolonhaCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan, int dcpCounter, final ExecutionYear executionYear, final Branch branch) {
@@ -1350,6 +1223,7 @@ public class CreateTestData {
                 curricularCourse.setPraticalHours(Double.valueOf(2d));
                 curricularCourse.setMinimumValueForAcumulatedEnrollments(Integer.valueOf(1));
                 curricularCourse.setMaximumValueForAcumulatedEnrollments(Integer.valueOf(2));
+                curricularCourse.setWeigth(Double.valueOf(6));
 		new CurricularCourseScope(branch, curricularCourse, curricularSemester, executionYear.getBeginDateYearMonthDay().toDateMidnight().toCalendar(null), null, null);
                 final Curriculum curriculum = new Curriculum();
                 curriculum.setCurricularCourse(curricularCourse);
