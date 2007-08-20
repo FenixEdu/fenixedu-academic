@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 
 import org.joda.time.Partial;
 
@@ -22,17 +19,4 @@ public class EmployeeMonthlyBonusInstallment extends EmployeeMonthlyBonusInstall
 	setValue(value);
     }
 
-    public Integer getAbsences() {
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(getPartialYearMonth()));
-	if (closedMonth != null) {
-	    AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
-		    .getAssiduousnessClosedMonth(getEmployeeBonusInstallment().getEmployee()
-			    .getAssiduousness());
-	    if (assiduousnessClosedMonth != null) {
-		return new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-			- assiduousnessClosedMonth.getWorkedDays());
-	    }
-	}
-	return 0;
-    }
 }

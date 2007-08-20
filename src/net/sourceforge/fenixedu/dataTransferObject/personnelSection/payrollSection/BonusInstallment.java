@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DomainListReference;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
@@ -77,6 +79,8 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
 	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
 	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
+	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
+	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
 	}
 
 	for (int columnIndex = 0; columnIndex < 7; columnIndex++) {
@@ -85,12 +89,14 @@ public class BonusInstallment implements Serializable {
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
-	for (int index = 7, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 3) {
-	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index);
-	    spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000, index + 1);
-	    spreadsheet.addHeader(bundle.getString("label.value"), 2000, index + 2);
+	for (int index = 7, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 5) {
+	    spreadsheet.addHeader(bundle.getString("label.maximumWorkingDays"), 2000, index);
+	    spreadsheet.addHeader(bundle.getString("label.workedDays"), 2000, index + 1);
+	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index + 2);
+	    spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000, index + 3);
+	    spreadsheet.addHeader(bundle.getString("label.value"), 2000, index + 4);
 	    spreadsheet.getSheet().addMergedRegion(
-		    new Region(rowNumber, (short) index, rowNumber, (short) (index + 2)));
+		    new Region(rowNumber, (short) index, rowNumber, (short) (index + 4)));
 	}
     }
 
@@ -109,12 +115,31 @@ public class BonusInstallment implements Serializable {
 		    .getExcelStyle().getIntegerStyle());
 	    for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
 		    .getEmployeeMonthlyBonusInstallmentsOrdered()) {
-		spreadsheet.addCell(employeeMonthlyBonusInstallment.getAbsences(), spreadsheet
-			.getExcelStyle().getIntegerStyle());
+		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(
+			employeeMonthlyBonusInstallment.getPartialYearMonth()));
+		Integer maximumWorkingDays = 0;
+		Integer workedDays = 0;
+		Integer absences = 0;
+		if (closedMonth != null) {
+		    AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
+			    .getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment
+				    .getEmployeeBonusInstallment().getEmployee().getAssiduousness());
+		    if (assiduousnessClosedMonth != null) {
+			maximumWorkingDays = new Integer(assiduousnessClosedMonth
+				.getMaximumWorkingDays());
+			workedDays = new Integer(assiduousnessClosedMonth.getWorkedDays());
+			absences = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
+				- assiduousnessClosedMonth.getWorkedDays());
+		    }
+		}
+		spreadsheet.addCell(maximumWorkingDays);
+		spreadsheet.addCell(workedDays);
+		spreadsheet.addCell(absences);
 		spreadsheet
 			.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
 		spreadsheet.addCell(employeeMonthlyBonusInstallment.getValue());
 	    }
 	}
     }
+
 }

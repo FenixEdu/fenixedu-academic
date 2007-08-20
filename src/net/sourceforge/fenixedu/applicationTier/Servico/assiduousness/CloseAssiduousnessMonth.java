@@ -76,6 +76,7 @@ public class CloseAssiduousnessMonth extends Service {
 
         for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
                 .plusDays(1)) {
+            int thisDayWorked = 0;
             WorkDaySheet workDaySheet = new WorkDaySheet();
             workDaySheet.setDate(thisDay);
             final Schedule schedule = assiduousness.getSchedule(thisDay);
@@ -153,13 +154,13 @@ public class CloseAssiduousnessMonth extends Service {
                         if (!leave.getJustificationMotive().getDiscountBonus()
                                 || !leave.getJustificationMotive().getJustificationType().equals(
                                         JustificationType.OCCURRENCE)) {
-                            workedDays += 1;
+                            thisDayWorked = 1;
                         }
                     }
                     Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(
                             new DateMidnight());
                     if (leavesList.isEmpty()) {
-                        workedDays += 1;
+                	thisDayWorked = 1;
                     }
                     if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
                             ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
@@ -176,6 +177,7 @@ public class CloseAssiduousnessMonth extends Service {
                     holidayRest = holidayRest.plus(workDaySheet.getHolidayRest());
                 }
             }
+            workedDays += thisDayWorked;
         }
 
         AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousness,

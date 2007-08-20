@@ -269,9 +269,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private String getMovementCode(BonusType bonusType) {
 	if (bonusType.equals(BonusType.DEDICATION_BONUS)) {
-	    return "P1";
+	    return "6001";
 	} else {
-	    return "P2";
+	    return "6002";
 	}
     }
 
