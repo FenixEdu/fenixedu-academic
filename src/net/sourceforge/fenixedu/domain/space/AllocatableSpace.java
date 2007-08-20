@@ -182,7 +182,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
             for (Resource space : RootDomainObject.getInstance().getResources()) {
                 if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive() && ((AllocatableSpace)space).isForEducation() 
                 	&& ((AllocatableSpace)space).getNormalCapacity() != null 
-                	&& ((AllocatableSpace)space).getNormalCapacity().equals(normalCapacity)) {
+                	&& ((AllocatableSpace)space).getNormalCapacity().intValue() >= normalCapacity.intValue()) {
                     result.add((AllocatableSpace) space);
                 }
             }
