@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,26 +39,13 @@ import org.jfree.data.DefaultCategoryDataset;
 public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-    	//final Person person = getLoggedPerson(request);
-    	
+
     	Registration registration = rootDomainObject.readRegistrationByOID(new Integer(request.getParameter("registrationOID")));
     	
-    	List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
-    
-    	List<Registration> registrations = registration.getStudent().getRegistrations();
-
-    	for(Registration studentRegistration : registrations) {
-    		List<StudentCurricularPlan> studentCurricularPlans = studentRegistration.getStudentCurricularPlans();
-    		for(StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {		
-    			Set<ExecutionPeriod> executionPeriodsWithEnrolments = studentCurricularPlan.getEnrolmentsExecutionPeriods();
-    			for(ExecutionPeriod executionPeriod : executionPeriodsWithEnrolments) {
-    				ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionPeriod, studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
-    				studentStatistics.add(executionPeriodStatisticsBean);    			
-    			}
-    		}
-    	}
-    	Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));
+    	final List<Registration> registrations = registration.getStudent().getRegistrations();
     	
+    	List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
+    	Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));
     	
     	final CategoryDataset dataset1 = createDataset1(studentStatistics);
 		
@@ -124,5 +113,32 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
         	dataset.addValue(executionPeriodStatisticsBean.getApprovedEnrolmentsNumber(), series2, year+" - "+semester+"º sem");
         }
         return dataset;
+    }
+    
+    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+    	List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
+    	
+    	Map<ExecutionPeriod, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<ExecutionPeriod, ExecutionPeriodStatisticsBean>();
+    	
+    	for(Registration registration : registrations) {
+    		for(StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {	
+    			for(ExecutionPeriod executionPeriod : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+    				if (enrolmentsByExecutionPeriod.containsKey(executionPeriod)) {
+    					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod.get(executionPeriod);
+    					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
+    					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+    				}
+    				else {
+    					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionPeriod);
+    					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
+    					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+    				}
+    			}
+    		}
+    	}
+    	
+    	studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
+    	
+    	return studentStatistics;
     }
 }

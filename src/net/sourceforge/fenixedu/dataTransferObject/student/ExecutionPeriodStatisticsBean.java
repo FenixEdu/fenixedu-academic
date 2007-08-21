@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 public class ExecutionPeriodStatisticsBean implements Serializable {
@@ -20,20 +23,15 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 	
 	public ExecutionPeriodStatisticsBean() {
 		setExecutionPeriod(null);
+		this.totalEnrolmentsNumber = 0;
+		this.approvedEnrolmentsNumber = 0;
+		this.approvedRatio = 0;
+		this.aritmeticAverage = 0.0;
 	}
 	
-	public ExecutionPeriodStatisticsBean(ExecutionPeriod executionPeriod, List<Enrolment> enrolmentsWithinExecutionPeriod) {
+	public ExecutionPeriodStatisticsBean(ExecutionPeriod executionPeriod) {
 		setExecutionPeriod(executionPeriod);
-		setEnrolmentsWithinExecutionPeriod(enrolmentsWithinExecutionPeriod);
-		
-		fillRequiredInfo();
-	}
-
-	private void fillRequiredInfo() {
-		setTotalEnrolmentsNumber();
-		setApprovedEnrolmentsNumber();
-		calculateApprovedRatio();
-		calculateAritmeticAverage();
+		this.enrolmentsWithinExecutionPeriod = new ArrayList<Enrolment>();
 	}
 	
 	public ExecutionPeriod getExecutionPeriod() {
@@ -44,7 +42,7 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
 	}
 	
-	private List<Enrolment> getEnrolmentsWithinExecutionPeriod() {
+	public List<Enrolment> getEnrolmentsWithinExecutionPeriod() {
 		return this.enrolmentsWithinExecutionPeriod;
 	}
 
@@ -56,21 +54,15 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 		return totalEnrolmentsNumber;
 	}
 
-	public void setTotalEnrolmentsNumber() {
-		this.totalEnrolmentsNumber = getEnrolmentsWithinExecutionPeriod().size();
+	public void setTotalEnrolmentsNumber(Integer totalEnrolmentsNumber) {
+		this.totalEnrolmentsNumber = totalEnrolmentsNumber;
 	}
 	
 	public Integer getApprovedEnrolmentsNumber() {
 		return approvedEnrolmentsNumber;
 	}
 
-	public void setApprovedEnrolmentsNumber() {
-		int approvedEnrolmentsNumber = 0;
-		for(Enrolment enrolment : getEnrolmentsWithinExecutionPeriod()) {
-			if(enrolment.isApproved()) {
-				approvedEnrolmentsNumber++;
-			}
-		}
+	public void setApprovedEnrolmentsNumber(Integer approvedEnrolmentsNumber) {
 		this.approvedEnrolmentsNumber = approvedEnrolmentsNumber;
 	}
 	
@@ -88,6 +80,20 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 
 	public void setAritmeticAverage(Double aritmeticAverage) {
 		this.aritmeticAverage = aritmeticAverage;
+	}
+	
+	private void calculateTotalEnrolmentsNumber() {
+		setTotalEnrolmentsNumber(getEnrolmentsWithinExecutionPeriod().size());
+	}
+	
+	private void calculateApprovedEnrolmentsNumber() {
+		int approvedEnrolmentsNumber = 0;
+		for(Enrolment enrolment : getEnrolmentsWithinExecutionPeriod()) {
+			if(enrolment.isApproved()) {
+				approvedEnrolmentsNumber++;
+			}
+		}
+		setApprovedEnrolmentsNumber(approvedEnrolmentsNumber);
 	}
 	
 	private void calculateAritmeticAverage() {
@@ -114,6 +120,47 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 		}
 		int ratio = Math.round(((float)concludedEnrolments / (float)getTotalEnrolmentsNumber()) * 100);	
 		setApprovedRatio(ratio);
+	}
+	
+	public void addEnrolmentsWithinExecutionPeriod(List<Enrolment> enrolments) {
+		//Checks if already exists enrolments for this execution period
+		if(!this.enrolmentsWithinExecutionPeriod.isEmpty()) {
+			for (Enrolment newEnrolment : enrolments) {
+				StudentCurricularPlan newEnrolmentSCP = newEnrolment.getStudentCurricularPlan();
+				Enrolment previousAddedEnrolment = getPreviousEnrolmentGivenCurricularCourse(newEnrolment.getCurricularCourse());
+				//Checks if exists a repeated enrolment
+				if(previousAddedEnrolment != null) {
+					StudentCurricularPlan previousEnrolmentSCP = previousAddedEnrolment.getStudentCurricularPlan();
+					if(newEnrolmentSCP.getStartExecutionYear().isAfterOrEquals(previousEnrolmentSCP.getStartExecutionYear())) {
+						this.enrolmentsWithinExecutionPeriod.remove(previousAddedEnrolment);
+						this.enrolmentsWithinExecutionPeriod.add(newEnrolment);
+					}
+				}
+				else {
+					this.enrolmentsWithinExecutionPeriod.add(newEnrolment);
+				}
+			}
+		}
+		else {
+			this.enrolmentsWithinExecutionPeriod = enrolments;
+		}
+		recalculateStatistics();
+	}
+	
+	private Enrolment getPreviousEnrolmentGivenCurricularCourse(CurricularCourse curricular) {
+		for (Enrolment enrolment : this.enrolmentsWithinExecutionPeriod) {
+			if(enrolment.getCurricularCourse().equals(curricular)) {
+				return enrolment;
+			}
+		}
+		return null;
+	}
+	
+	private void recalculateStatistics() {
+		calculateTotalEnrolmentsNumber();
+		calculateApprovedEnrolmentsNumber();
+		calculateApprovedRatio();
+		calculateAritmeticAverage();
 	}
 
 }
