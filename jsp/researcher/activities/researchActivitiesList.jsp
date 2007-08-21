@@ -9,7 +9,7 @@
 <bean:define id="forwardTo" name="forwardTo" scope="request" type="java.lang.String"/>
 <bean:define id="schema" name="schema" scope="request" type="java.lang.String"/>
 
-<div style="width: 600px;">
+<div>
 <ul class="listresearch">
 	<logic:iterate id="participation" name="participations">
 		<bean:define id="participationId" name="participation" property="idInternal"/>

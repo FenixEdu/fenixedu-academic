@@ -26,7 +26,7 @@
 	<li><html:link page="<%= backAction + "?" + parameters %>"><bean:message key="link.back" bundle="RESEARCHER_RESOURCES"/></html:link>
 </ul>
 
-<strong><bean:message key="label.result.prize" bundle="RESEARCHER_RESOURCES"/>:</strong>
+<p><strong><bean:message key="label.result.prize" bundle="RESEARCHER_RESOURCES"/></strong></p>
 <logic:notEmpty name="publication" property="prizes">
 	<fr:view name="publication" property="prizes" schema="prize.details">
 		<fr:layout name="tabular">
@@ -50,14 +50,15 @@
 </logic:notEmpty>
 
 <logic:empty name="publication" property="prizes">
-	<bean:message bundle="RESEARCHER_RESOURCES" key="label.no.prizes.associated"/>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.no.prizes.associated"/></em>
 </logic:empty>
 
-<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.prize.association.add"/></b>:</p>
+<p class="mtop2 mbottom0"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.prize.association.add"/></strong></p>
 
 <fr:create type="net.sourceforge.fenixedu.domain.research.Prize" schema="result.prize.association">
 	<fr:layout>
-		<fr:property name="classes" value="tstyle5"/>
+		<fr:property name="classes" value="tstyle5 thlight thright"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
 	<fr:hidden name="publication" slot="researchResult"/>
 	<fr:destination name="success" path="<%= "/resultPublications/associatePrize.do?" + parameters  %>"/>

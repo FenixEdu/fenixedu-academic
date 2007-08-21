@@ -19,7 +19,7 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></h2>
 
-	<ul class="mvert2 list5">
+	<ul class="mvert15">
 		<li>
 			<html:link page="<%= "/resultPublications/goBackFromDetails.do?" + parameters %>">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />

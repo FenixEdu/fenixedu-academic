@@ -10,7 +10,7 @@
 
 		<bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
 
-		<ul style="width: 600px;">
+		<ul>
 		<logic:iterate id="result" name="results" scope="request">
  			<bean:define id="resultId" name="result" property="idInternal"/>
 				<li>

@@ -25,7 +25,9 @@
 	<logic:notEqual name="resultType" value="ResultPatent">
 		<em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em> 
 	</logic:notEqual>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.useCase.title"/>: <fr:view name="result" property="title"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.useCase.title"/></h2>
+	
+	<h3><fr:view name="result" property="title"/></h3>
 	
 	<ul class="list5 mvert2">
 		<li>
