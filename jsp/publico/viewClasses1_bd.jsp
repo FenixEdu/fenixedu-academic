@@ -93,7 +93,7 @@
 				<tr>
 				    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
 				    <td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.indice" property="indice" size="1" onchange='this.form.submit();'>
+						<html:select bundle="HTMLALT_RESOURCES" property="indice" size="1" onchange='this.form.submit();'>
 							<logic:notEmpty name="chooseSearchContextForm" property="indice" >
 								<bean:define id="ind" name="chooseSearchContextForm" property="indice" />	
 							</logic:notEmpty>
@@ -106,6 +106,8 @@
 				</tr>
 			</table>
 		</html:form> 
+
+<br/>
 
 		<logic:present name="classList">	
 			<table class="tab_lay" cellspacing="0" cellpadding="0" width="50%">

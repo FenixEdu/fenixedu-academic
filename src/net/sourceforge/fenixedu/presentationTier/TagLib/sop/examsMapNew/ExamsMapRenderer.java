@@ -108,26 +108,6 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                             + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName()
                             + "</strong><br/>");
                 }
-                if (year2 == null) {
-                    strBuffer.append("<h2>");
-                    strBuffer.append(getMessageResource(pageContext,
-                            "public.degree.information.label.year"));
-                    strBuffer.append(" ");
-                    strBuffer.append(year1);
-                    strBuffer.append("</h2>");
-                } else {
-                    strBuffer.append("<h2>");
-                    strBuffer.append(getMessageResource(pageContext,
-                            "public.degree.information.label.years"));
-                    strBuffer.append(" ");
-                    strBuffer.append(year1);
-                    strBuffer.append(" ");
-                    strBuffer.append(getMessageResource(pageContext,
-                            "public.degree.information.label.and"));
-                    strBuffer.append(" ");
-                    strBuffer.append(year2);
-                    strBuffer.append("</h2>");
-                }
 
                 renderExamsMapForFilteredYears(strBuffer, year1, year2, pageContext);
             }
@@ -721,6 +701,25 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         if (numberOfWeks != 0) {
             strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
 
+            strBuffer.append("<caption>");
+            if (year2 == null) {
+                strBuffer.append(getMessageResource(pageContext,
+                        "public.degree.information.label.year"));
+                strBuffer.append(" ");
+                strBuffer.append(year1);
+            } else {
+                strBuffer.append(getMessageResource(pageContext,
+                        "public.degree.information.label.years"));
+                strBuffer.append(" ");
+                strBuffer.append(year1);
+                strBuffer.append(" ");
+                strBuffer.append(getMessageResource(pageContext,
+                        "public.degree.information.label.and"));
+                strBuffer.append(" ");
+                strBuffer.append(year2);
+            }
+            strBuffer.append("</caption>");
+
             strBuffer.append("<tr>");
             renderHeader(strBuffer, pageContext);
             strBuffer.append("</tr>");
@@ -796,7 +795,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
             if (index == 0) {
                 classCSS.append("_first");
             }
-            strBuffer.append("<td class='").append(classCSS).append("'>\r\n").append(daysOfWeek[index]).append("</td>\r\n");
+            strBuffer.append("<th class='").append(classCSS).append("'>\r\n").append(daysOfWeek[index]).append("</th>\r\n");
         }
     }
 

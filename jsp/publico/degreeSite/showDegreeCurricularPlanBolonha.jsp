@@ -52,7 +52,7 @@
 		<h:outputText value="<p><em>#{applicationBundle['error.curricularPlanNotApproved']}</em><p>" escape="false"/>
 	</h:panelGroup>
 
-	<h:form>
+	<h:form id="someIdSoFacesWillGenerateValidHTML">
 
 		<h:panelGroup rendered="#{CurricularCourseManagement.degreeCurricularPlan.approved}">
 
