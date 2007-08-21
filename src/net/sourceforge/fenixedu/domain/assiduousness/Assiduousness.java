@@ -508,10 +508,12 @@ public class Assiduousness extends Assiduousness_Base {
 	DateInterval scheduleInterval = new DateInterval(beginDate, endDate);
 	for (final Schedule otherSchedule : getSchedules()) {
 	    if (schedule != otherSchedule) {
+
 		DateInterval otherScheduleInterval = new DateInterval(otherSchedule.getBeginDate(),
 			otherSchedule.getEndDate());
-		if (scheduleInterval.containsInterval(otherScheduleInterval)
-			|| otherScheduleInterval.containsInterval(scheduleInterval)) {
+		if ((schedule.getException().equals(otherSchedule.getException()))
+			&& (scheduleInterval.containsInterval(otherScheduleInterval) || otherScheduleInterval
+				.containsInterval(scheduleInterval))) {
 		    return true;
 		}
 	    }
