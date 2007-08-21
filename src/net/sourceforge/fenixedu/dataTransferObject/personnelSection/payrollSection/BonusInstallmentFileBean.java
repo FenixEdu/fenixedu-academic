@@ -220,16 +220,23 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
 	public EmployeeBonusInstallmentBean(HSSFRow row, String bonusType) {
 	    setBonusType(getBonusTypeEnum(bonusType));
-	    setEmployee(Employee.readByNumber(new Double(row.getCell((short) 0).getNumericCellValue())
-		    .intValue()));
-	    setValue(row.getCell((short) 2).getNumericCellValue());
-	    setCostCenterCode(new Double(row.getCell((short) 3).getNumericCellValue()).intValue());
+	    setEmployee(Employee.readByNumber(getDoubleFromCell(row.getCell((short) 0)).intValue()));
+	    setValue(getDoubleFromCell(row.getCell((short) 2)));
+	    setCostCenterCode(getDoubleFromCell(row.getCell((short) 3)).intValue());
 	    if (row.getCell((short) 4).getCellType() == HSSFCell.CELL_TYPE_STRING) {
 		setSubCostCenterCode(row.getCell((short) 4).getStringCellValue());
 	    } else {
 		setSubCostCenterCode(new Double(row.getCell((short) 4).getNumericCellValue()).toString());
 	    }
-	    setExplorationUnit(new Double(row.getCell((short) 5).getNumericCellValue()).intValue());
+	    setExplorationUnit(getDoubleFromCell(row.getCell((short) 5)).intValue());
+	}
+
+	private Double getDoubleFromCell(HSSFCell cell) {
+	    try {
+		return new Double(cell.getNumericCellValue());
+	    } catch (Exception e) {
+		return new Double(cell.getStringCellValue());
+	    }
 	}
 
 	private BonusType getBonusTypeEnum(String bonusType) {
