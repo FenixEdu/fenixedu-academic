@@ -12,22 +12,23 @@
 
 
 <!-- Protocol Data -->
-<div class="mtop2 mbottom05">
-<h3 class="dinline"><bean:message key="label.protocol.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolData&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>)</p>
+<div class="mtop2 mbottom05 separator2">
+	<h3 class="dinline"><bean:message key="label.protocol.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolData&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>)</p>
 </div>
 
 <fr:view name="protocolFactory" schema="show.protocol.data">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight thright"/>
+		<fr:property name="columnClasses" value="nowrap,"/>
 	</fr:layout>
 </fr:view>
 
 
 <!-- Responsibles -->
-<div class="mtop2 mbottom05">
-<h3 class="dinline"><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditResponsibles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>)</p>
+<div class="mtop2 mbottom05 separator2">
+	<h3 class="dinline"><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditResponsibles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>)</p>
 </div>
 
 <p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
@@ -56,15 +57,15 @@
 
 
 <!-- Units -->
-<div class="mtop2 mbottom05">
-<h3 class="dinline"><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditUnits&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></html:link>)</p>
+<div class="mtop2 mbottom05 separator2">
+	<h3 class="dinline"><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditUnits&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></html:link>)</p>
 </div>
 
 <p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <fr:view name="protocolFactory" property="units" schema="show.protocol.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thlight"/>
+		<fr:property name="classes" value="tstyle1 thlight mvert0"/>
 	</fr:layout>
 </fr:view>
 <logic:empty name="protocolFactory" property="units">
@@ -85,9 +86,9 @@
 
 
 <!-- Files -->
-<div class="mtop2 mbottom05">
-<h3 class="dinline"><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolFiles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></html:link>)</p>
+<div class="mtop2 mbottom05 separator2">
+	<h3 class="dinline"><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditProtocolFiles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></html:link>)</p>
 </div>
 
 

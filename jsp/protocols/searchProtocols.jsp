@@ -4,8 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
+
 <em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></h2>
+
 <logic:present name="protocolSearch">
 	<html:errors/>
 	<fr:form action="/protocols.do?method=searchProtocols">
@@ -19,23 +21,24 @@
 		<fr:edit name="protocolSearch" id="number" schema="edit.protocolSearch.number">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mbottom05"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="columnClasses" value="width100px,width500px,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 
 		<fr:edit name="protocolSearch" id="protocolSearchNationalityType" schema="edit.protocolSearch.nationalityType">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="columnClasses" value="width100px,width500px inobullet,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="searchCountry" path="/protocols.do?method=searchProtocols"/>
 		</fr:edit>
+		
 		<logic:notEmpty name="protocolSearch" property="searchNationalityType">
 			<logic:equal name="protocolSearch" property="searchNationalityType" value="<%= net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch.SearchNationalityType.COUNTRY.toString()%>">
 				<fr:edit name="protocolSearch" id="protocolSearchCountry" schema="edit.protocolSearch.country">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
-						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						<fr:property name="columnClasses" value="width100px,width500px,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>			
 			</logic:equal>
@@ -44,7 +47,7 @@
 		<fr:edit name="protocolSearch" id="protocolSearch" schema="edit.protocolSearch">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="columnClasses" value="width100px,width500px,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 
@@ -96,6 +99,7 @@
 		<fr:view name="protocolSearch" property="search" layout="tabular" schema="show.protocol.toList" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>
+				<fr:property name="columnClasses" value="acenter,nowrap,,"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

@@ -28,7 +28,7 @@
 
 <fr:edit name="protocolHistoryFactory" id="protocolHistoryFactory" schema="edit.protocolHistoryFactory">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright" />
+		<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
 		<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 	</fr:layout>
 

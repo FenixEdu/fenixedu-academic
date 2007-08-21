@@ -12,6 +12,7 @@
 	<fr:view name="protocolHistories" schema="show.protocolHistories.alerts">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="columnClasses" value="acenter,acenter,acenter,"/>
 			<fr:property name="link(renew)" value="/protocols.do?method=prepareRenewProtocol" />
 			<fr:property name="key(renew)" value="link.renew" />
 			<fr:property name="param(renew)" value="protocol.idInternal/idInternal" />
@@ -25,6 +26,7 @@
 	<fr:view name="protocolHistoriesNullEndDate" schema="show.protocolHistories.alerts">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="columnClasses" value="acenter,acenter,acenter,"/>
 			<fr:property name="link(edit)" value="/protocols.do?method=prepareEditProtocolHistory" />
 			<fr:property name="key(edit)" value="link.editDates" />
 			<fr:property name="param(edit)" value="protocol.idInternal/idInternal" />

@@ -31,11 +31,11 @@
 
 	<table class="tdtop mvert0" style=" padding: 0; margin: 0;">
 		<tr>
-			<td>
+			<td style="width: 390px;">
 				<fr:view name="protocol" schema="show.protocol.toList">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 fleft thlight thright mvert0"/>
-						<fr:property name="columnClasses" value=",width250px"/>
+						<fr:property name="columnClasses" value="nowrap,width225px"/>
 					</fr:layout>
 				</fr:view>
 			</td>
