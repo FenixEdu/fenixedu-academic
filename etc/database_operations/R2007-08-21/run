@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table employeeBonusInstallment" alterTableEmployeeBonusInstallment.sql
