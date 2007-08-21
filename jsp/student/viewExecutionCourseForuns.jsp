@@ -31,7 +31,7 @@
 					</html:link>
 				</td>
 				<td>
-					<span class="color888">Tópicos:</span> <bean:write name="threadsCount"/>
+					<span class="color888">Tópicos: <bean:write name="threadsCount"/></span>
 				</td>
 			</tr>
 		</logic:iterate>

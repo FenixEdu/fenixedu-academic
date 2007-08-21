@@ -13,6 +13,20 @@
 
 <logic:notEmpty name="foruns">
 	<bean:define id="executionCourseId" name="executionCourse" property="idInternal" />
+	
+	<logic:notEmpty name="executionCourse" property="foruns">
+		<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
+			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
+			<p>
+				<html:link action="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
+					<bean:write name="executionCourseForum" property="name"/>
+				</html:link>
+				<span class="color888"> (<bean:write name="threadsCount"/> tópicos)</span>
+			</p>
+		</logic:iterate>
+	</logic:notEmpty>
+
+	<%--
 	<fr:view name="foruns" layout="tabular-list">
 		<fr:layout>
 			<fr:property name="subLayout" value="values"/>
@@ -22,6 +36,7 @@
 			<fr:property name="param(view)" value="idInternal/forumId"/>
 		</fr:layout>
 	</fr:view>
+	--%>
 </logic:notEmpty>
 
 <logic:empty name="foruns">

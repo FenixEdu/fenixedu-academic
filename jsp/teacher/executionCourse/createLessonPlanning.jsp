@@ -25,9 +25,9 @@
 		<h2><bean:message key="link.create.lessonPlanning"/></h2>
 		<fr:edit id="lessonPlanningBeanID" name="lessonPlanningBean" action="<%= createLessonPlanningPath %>" type="net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean" schema="CreateLessonPlanning">	
 			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>
-			
 			<fr:layout name="tabular">
-	    	    <fr:property name="classes" value="thtop thlight thright mbottom1"/>
+	    	    <fr:property name="classes" value="tstyle5 thtop thlight thright mbottom1"/>
+	    	    <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
