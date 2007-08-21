@@ -40,7 +40,7 @@
 	</logic:notEmpty>
 	<p>
 		<html:submit>
-			<bean:message key="button.confirm" />
+			<bean:message key="button.import" />
 		</html:submit>
 		<html:cancel>
 			<bean:message key="button.cancel"/>

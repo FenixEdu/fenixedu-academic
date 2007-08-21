@@ -18,7 +18,6 @@
 	</html:messages>
 </logic:messagesPresent>
 
-
 <logic:present name="bonusInstallment">
 	<fr:form action="/anualInstallments.do" encoding="multipart/form-data">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showBonusInstallment"/>
@@ -30,9 +29,13 @@
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
 			</fr:edit>
-			<p><html:submit>
-				<bean:message key="button.confirm" />
-			</html:submit></p>
+
+			<noscript>
+				<p>
+					<html:submit><bean:message key="button.choose" /></html:submit>
+				</p>
+			</noscript>
+
 		</logic:empty>
 		<logic:notEmpty name="bonusInstallment" property="year">
 			<fr:edit id="bonusInstallmentInstallment" name="bonusInstallment" schema="choose.bonusInstallment.installment">
@@ -42,29 +45,32 @@
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
 			</fr:edit>
-			<p><html:submit onclick="this.form.method.value='showBonusInstallment';">
-				<bean:message key="button.confirm" />
-			</html:submit>
-			<html:cancel onclick="this.form.method.value='showBonusInstallment';">
-				<bean:message key="button.cancel"/>
-			</html:cancel>
-			<logic:present name="bonusInstallment" property="bonusInstallmentList">
-				<logic:notEmpty name="bonusInstallment" property="bonusInstallmentList">
-					<html:submit onclick="this.form.method.value='exportBonusInstallment';">
-						<bean:message key="button.export"/>
+			<p>
+				<noscript>
+					<html:submit onclick="this.form.method.value='showBonusInstallment';">
+						<bean:message key="button.choose" />
 					</html:submit>
-					<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
-						<bean:message key="button.exportGIAF"/>
-					</html:submit>
-				</logic:notEmpty>
-			</logic:present>
+				</noscript>
+				<html:cancel onclick="this.form.method.value='showBonusInstallment';">
+					<bean:message key="button.back"/>
+				</html:cancel>
+				<logic:present name="bonusInstallment" property="bonusInstallmentList">
+					<logic:notEmpty name="bonusInstallment" property="bonusInstallmentList">
+						<html:submit onclick="this.form.method.value='exportBonusInstallment';">
+							<bean:message key="button.export"/>
+						</html:submit>
+						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
+							<bean:message key="button.exportGIAF"/>
+						</html:submit>
+					</logic:notEmpty>
+				</logic:present>
 			</p>
 		</logic:notEmpty>
 
 		<logic:present name="bonusInstallment" property="bonusInstallmentList">
 			<fr:view name="bonusInstallment" property="bonusInstallmentList" schema="show.employeeBonusInstallment">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
+					<fr:property name="classes" value="tstyle2 thlight tdcenter"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
