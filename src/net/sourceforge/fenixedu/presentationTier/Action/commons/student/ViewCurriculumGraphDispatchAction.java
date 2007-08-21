@@ -42,9 +42,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 
     	Registration registration = rootDomainObject.readRegistrationByOID(new Integer(request.getParameter("registrationOID")));
     	
-    	final List<Registration> registrations = registration.getStudent().getRegistrations();
-    	
-    	List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
+    	List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registration);
     	Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));
     	
     	final CategoryDataset dataset1 = createDataset1(studentStatistics);
@@ -115,28 +113,25 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
         return dataset;
     }
     
-    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(Registration registration) {
     	List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
     	
     	Map<ExecutionPeriod, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<ExecutionPeriod, ExecutionPeriodStatisticsBean>();
     	
-    	for(Registration registration : registrations) {
-    		for(StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {	
-    			for(ExecutionPeriod executionPeriod : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-    				if (enrolmentsByExecutionPeriod.containsKey(executionPeriod)) {
-    					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod.get(executionPeriod);
-    					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
-    					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
-    				}
-    				else {
-    					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionPeriod);
-    					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
-    					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
-    				}
-    			}
-    		}
-    	}
-    	
+		for(StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {	
+			for(ExecutionPeriod executionPeriod : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+				if (enrolmentsByExecutionPeriod.containsKey(executionPeriod)) {
+					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod.get(executionPeriod);
+					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
+					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+				}
+				else {
+					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionPeriod);
+					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
+					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+				}
+			}
+		}
     	studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
     	
     	return studentStatistics;
