@@ -32,8 +32,9 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         super();
         
         this.hiddenFields = new ArrayList<HtmlHiddenField>();
-        this.submitButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.submit.name"));
-        this.cancelButton = new HtmlCancelButton(RenderUtils.getResourceString("renderers.form.cancel.name"));
+        
+        setSubmitButton(new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.submit.name")));
+        setCancelButton(new HtmlCancelButton(RenderUtils.getResourceString("renderers.form.cancel.name")));
      
         setEncoding(URL_ENCODED);
     }
@@ -83,7 +84,7 @@ public class HtmlForm extends HtmlComponent implements Controllable {
     }
 
     public void setCancelButton(HtmlCancelButton cancelButton) {
-        this.cancelButton = cancelButton;
+        configureButton(this.cancelButton = cancelButton);
     }
 
     public HtmlSubmitButton getSubmitButton() {
@@ -91,7 +92,13 @@ public class HtmlForm extends HtmlComponent implements Controllable {
     }
 
     public void setSubmitButton(HtmlSubmitButton submitButton) {
-        this.submitButton = submitButton;
+        configureButton(this.submitButton = submitButton);
+    }
+
+    protected void configureButton(HtmlSubmitButton button) {
+        if (button != null) {
+            button.setClasses("inputbutton");
+        }
     }
 
     @Override
