@@ -15,7 +15,7 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 
     public EmployeeBonusInstallment(AnualBonusInstallment anualBonusInstallment, Employee employee,
 	    Double installmentValue, BonusType bonusType, Integer costCenterCode,
-	    Integer subCostCenterCode, Integer explorationUnit) {
+	    String subCostCenterCode, Integer explorationUnit) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAnualBonusInstallment(anualBonusInstallment);
@@ -28,7 +28,7 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
     }
 
     public void edit(Double installmentValue, BonusType bonusType, Integer costCenterCode,
-	    Integer subCostCenterCode, Integer explorationUnit) {
+	    String subCostCenterCode, Integer explorationUnit) {
 	setValue(installmentValue);
 	setBonusType(bonusType);
 	setCostCenterCode(costCenterCode);

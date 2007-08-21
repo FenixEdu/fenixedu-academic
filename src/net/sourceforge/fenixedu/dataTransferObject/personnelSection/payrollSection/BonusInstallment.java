@@ -109,8 +109,7 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addCell(employeeBonusInstallment.getValue());
 	    spreadsheet.addCell(employeeBonusInstallment.getCostCenterCode(), spreadsheet
 		    .getExcelStyle().getIntegerStyle());
-	    spreadsheet.addCell(employeeBonusInstallment.getSubCostCenterCode(), spreadsheet
-		    .getExcelStyle().getIntegerStyle());
+	    spreadsheet.addCell(employeeBonusInstallment.getSubCostCenterCode());
 	    spreadsheet.addCell(employeeBonusInstallment.getExplorationUnit(), spreadsheet
 		    .getExcelStyle().getIntegerStyle());
 	    for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment

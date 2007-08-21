@@ -21,9 +21,11 @@ import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.uti
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.contrib.HSSFCellUtil;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
@@ -90,18 +92,18 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		for (int rowIndex = sheet.getFirstRowNum() + 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 		    HSSFRow row = sheet.getRow(rowIndex);
-		    String bonusType = row.getCell((short) 0).getStringCellValue();
-		    if (bonusType != null
-			    && (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim()
-				    .toUpperCase().equals("P2"))) {
-			try {
+		    try {
+			String bonusType = row.getCell((short) 1).getStringCellValue();
+			if (bonusType != null
+				&& (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim()
+					.toUpperCase().equals("P2"))) {
 			    employeeBonusInstallmentList.add(new EmployeeBonusInstallmentBean(row,
 				    bonusType.trim().toUpperCase()));
-			} catch (Exception e) {
+			} else {
 			    return new ActionMessage("error.errorReadingFileLine",
 				    new Object[] { rowIndex + 1 });
 			}
-		    } else {
+		    } catch (Exception e) {
 			return new ActionMessage("error.errorReadingFileLine",
 				new Object[] { rowIndex + 1 });
 		    }
@@ -212,18 +214,22 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
 	private Integer costCenterCode;
 
-	private Integer subCostCenterCode;
+	private String subCostCenterCode;
 
 	private Integer explorationUnit;
 
 	public EmployeeBonusInstallmentBean(HSSFRow row, String bonusType) {
 	    setBonusType(getBonusTypeEnum(bonusType));
-	    setEmployee(Employee.readByNumber(new Double(row.getCell((short) 1).getNumericCellValue())
+	    setEmployee(Employee.readByNumber(new Double(row.getCell((short) 0).getNumericCellValue())
 		    .intValue()));
-	    setValue(row.getCell((short) 3).getNumericCellValue());
-	    setCostCenterCode(new Double(row.getCell((short) 4).getNumericCellValue()).intValue());
-	    setSubCostCenterCode(new Double(row.getCell((short) 5).getNumericCellValue()).intValue());
-	    setExplorationUnit(new Double(row.getCell((short) 6).getNumericCellValue()).intValue());
+	    setValue(row.getCell((short) 2).getNumericCellValue());
+	    setCostCenterCode(new Double(row.getCell((short) 3).getNumericCellValue()).intValue());
+	    if (row.getCell((short) 4).getCellType() == HSSFCell.CELL_TYPE_STRING) {
+		setSubCostCenterCode(row.getCell((short) 4).getStringCellValue());
+	    } else {
+		setSubCostCenterCode(new Double(row.getCell((short) 4).getNumericCellValue()).toString());
+	    }
+	    setExplorationUnit(new Double(row.getCell((short) 5).getNumericCellValue()).intValue());
 	}
 
 	private BonusType getBonusTypeEnum(String bonusType) {
@@ -259,11 +265,11 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	    this.explorationUnit = explorationUnit;
 	}
 
-	public Integer getSubCostCenterCode() {
+	public String getSubCostCenterCode() {
 	    return subCostCenterCode;
 	}
 
-	public void setSubCostCenterCode(Integer subCostCenterCode) {
+	public void setSubCostCenterCode(String subCostCenterCode) {
 	    this.subCostCenterCode = subCostCenterCode;
 	}
 

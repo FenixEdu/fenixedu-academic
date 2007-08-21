@@ -4422,7 +4422,7 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Empl
 	BonusType bonusType;
 	Double value;
 	Integer costCenterCode;
-	Integer subCostCenterCode;
+	String subCostCenterCode;
 	Integer explorationUnit;
 }
 

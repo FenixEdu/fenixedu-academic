@@ -30,6 +30,9 @@
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
 			</fr:edit>
+			<p><html:submit>
+				<bean:message key="button.confirm" />
+			</html:submit></p>
 		</logic:empty>
 		<logic:notEmpty name="bonusInstallment" property="year">
 			<fr:edit id="bonusInstallmentInstallment" name="bonusInstallment" schema="choose.bonusInstallment.installment">
@@ -39,19 +42,25 @@
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
 			</fr:edit>
+			<p><html:submit onclick="this.form.method.value='showBonusInstallment';">
+				<bean:message key="button.confirm" />
+			</html:submit>
+			<html:cancel onclick="this.form.method.value='showBonusInstallment';">
+				<bean:message key="button.cancel"/>
+			</html:cancel>
+			<logic:present name="bonusInstallment" property="bonusInstallmentList">
+				<logic:notEmpty name="bonusInstallment" property="bonusInstallmentList">
+					<html:submit onclick="this.form.method.value='exportBonusInstallment';">
+						<bean:message key="button.export"/>
+					</html:submit>
+					<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
+						<bean:message key="button.exportGIAF"/>
+					</html:submit>
+				</logic:notEmpty>
+			</logic:present>
+			</p>
 		</logic:notEmpty>
-		<p><html:submit>
-			<bean:message key="button.confirm" />
-		</html:submit>
-		<html:cancel>
-			<bean:message key="button.cancel"/>
-		</html:cancel>
-		<html:submit onclick="this.form.method.value='exportBonusInstallment';">
-			<bean:message key="button.export"/>
-		</html:submit>
-		<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
-			<bean:message key="button.exportGIAF"/>
-		</html:submit></p>
+
 		<logic:present name="bonusInstallment" property="bonusInstallmentList">
 			<fr:view name="bonusInstallment" property="bonusInstallmentList" schema="show.employeeBonusInstallment">
 				<fr:layout name="tabular">
