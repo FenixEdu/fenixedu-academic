@@ -72,10 +72,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 			.getCurricularRulesFromCurriculumGroup(executionPeriod));
 
 		if (degreeModuleToEvaluate.isLeaf()) {
-		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate
-			    .getDegreeModule();
-		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(
-			    curricularCourse));
+		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+		    curricularRules.add(new AssertUniqueApprovalInCurricularCourseContexts(curricularCourse));
 		}
 		result.put(degreeModuleToEvaluate, curricularRules);
 	    }

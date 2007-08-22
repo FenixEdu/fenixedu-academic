@@ -204,7 +204,7 @@ public class Dismissal extends Dismissal_Base {
 	return getCredits().getExecutionPeriod();
     }
     
-        @Override
+    @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null && executionPeriod != getExecutionPeriod()) {
 	    return Collections.EMPTY_SET;
