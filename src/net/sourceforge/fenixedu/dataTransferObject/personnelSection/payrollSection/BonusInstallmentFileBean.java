@@ -85,7 +85,7 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
     public Object execute() {
 	if (isComplete()) {
-	    List<EmployeeBonusInstallmentBean> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallmentBean>();
+	    HashMap<Employee, EmployeeBonusInstallmentBean> employeeBonusInstallmentMap = new HashMap<Employee, EmployeeBonusInstallmentBean>();
 	    try {
 		POIFSFileSystem fs = new POIFSFileSystem(inputStream);
 		HSSFWorkbook wb = new HSSFWorkbook(fs);
@@ -97,8 +97,17 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 			if (bonusType != null
 				&& (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim()
 					.toUpperCase().equals("P2"))) {
-			    employeeBonusInstallmentList.add(new EmployeeBonusInstallmentBean(row,
-				    bonusType.trim().toUpperCase()));
+
+			    EmployeeBonusInstallmentBean employeeBonusInstallmentBean = new EmployeeBonusInstallmentBean(
+				    row, bonusType.trim().toUpperCase());
+			    EmployeeBonusInstallmentBean old = employeeBonusInstallmentMap
+				    .get(employeeBonusInstallmentBean.getEmployee());
+			    if (old != null) {
+				return new ActionMessage("error.duplicatedBonus",
+					employeeBonusInstallmentBean.getEmployee().getEmployeeNumber());
+			    }
+			    employeeBonusInstallmentMap.put(employeeBonusInstallmentBean.getEmployee(),
+				    employeeBonusInstallmentBean);
 			} else {
 			    return new ActionMessage("error.errorReadingFileLine",
 				    new Object[] { rowIndex + 1 });
@@ -129,7 +138,8 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
 	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment
 		    .readByYearAndInstallment(getYear(), getInstallment());
-	    for (EmployeeBonusInstallmentBean employeeBonusInstallmentBean : employeeBonusInstallmentList) {
+	    for (EmployeeBonusInstallmentBean employeeBonusInstallmentBean : employeeBonusInstallmentMap
+		    .values()) {
 		EmployeeBonusInstallment thisEmployeeBonusInstallment = null;
 		if (!anualBonusInstallment.getEmployeeBonusInstallments().isEmpty()) {
 		    thisEmployeeBonusInstallment = anualBonusInstallment.getEmployeeBonusInstallment(
@@ -221,7 +231,7 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	public EmployeeBonusInstallmentBean(HSSFRow row, String bonusType) {
 	    setBonusType(getBonusTypeEnum(bonusType));
 	    setEmployee(Employee.readByNumber(getDoubleFromCell(row.getCell((short) 0)).intValue()));
-	    setValue(getDoubleFromCell(row.getCell((short) 2)));
+	    setValue(formatDouble(getDoubleFromCell(row.getCell((short) 2))));
 	    setCostCenterCode(getDoubleFromCell(row.getCell((short) 3)).intValue());
 	    if (row.getCell((short) 4).getCellType() == HSSFCell.CELL_TYPE_STRING) {
 		setSubCostCenterCode(row.getCell((short) 4).getStringCellValue());
