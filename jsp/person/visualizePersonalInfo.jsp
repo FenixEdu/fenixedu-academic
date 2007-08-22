@@ -36,7 +36,7 @@
 	</ul>
 </logic:messagesPresent>
 
-<table class="tstyle2 thlight thleft">
+<table class="tstyle2 thlight thleft thwhite">
 <bean:define id="phones" name="person" property="phones" />
 <bean:size id="size" name="phones" />
 <logic:notEmpty name="phones">
@@ -221,7 +221,7 @@
 <fr:form action="/visualizePersonalInfo.do">
 	<fr:edit id="photo" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.information.to.publish">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
@@ -239,10 +239,12 @@
 	</tr>
 </table>
 <fr:form action="/visualizePersonalInfo.do">
-	<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
+	<p class="mtop15">
+		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
+	</p>
 	<fr:edit id="nickname" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
 		</fr:layout>
 	</fr:edit>
@@ -253,7 +255,7 @@
 
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight mtop15"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
 </fr:view>
 
@@ -267,7 +269,7 @@
 </table>
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
 </fr:view>
 
@@ -281,7 +283,7 @@
 </table>
 <fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thleft thlight"/>
+		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
 </fr:view>
 
@@ -296,7 +298,7 @@
 <logic:iterate id="address" name="UserView" property="person.physicalAddresses">
 	<fr:view name="address" schema="contacts.PhysicalAddress.view-for-student">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 		</fr:layout>	
 	</fr:view>
 </logic:iterate>
