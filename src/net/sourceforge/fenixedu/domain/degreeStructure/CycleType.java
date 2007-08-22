@@ -12,7 +12,7 @@ public enum CycleType {
 
     FIRST_CYCLE(1, 180d),
 
-    SECOND_CYCLE(2, 120d),
+    SECOND_CYCLE(2, 120d, FIRST_CYCLE),
 
     THIRD_CYCLE(3, 300d);
 
@@ -23,12 +23,20 @@ public enum CycleType {
     };
 
     private Integer weight;
-    
+
     private Double ectsCredits;
 
+    private CycleType sourceCycleAffinity;
+
     private CycleType(Integer weight, Double ectsCredits) {
+	this(weight, ectsCredits, null);
+
+    }
+
+    private CycleType(Integer weight, Double ectsCredits, CycleType sourceCycleAffinity) {
 	this.weight = weight;
 	this.ectsCredits = ectsCredits;
+	this.sourceCycleAffinity = sourceCycleAffinity;
     }
 
     public Integer getWeight() {
@@ -38,13 +46,14 @@ public enum CycleType {
     public Double getDefaultEcts() {
 	return ectsCredits;
     }
-    
+
     public String getQualifiedName() {
 	return this.getClass().getSimpleName() + "." + name();
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(getQualifiedName());
     }
 
     static final public Collection<CycleType> getSortedValues() {
@@ -52,9 +61,17 @@ public enum CycleType {
 	result.addAll(Arrays.asList(values()));
 	return result;
     }
-    
+
     public boolean isBeforeOrEquals(final CycleType cycleType) {
 	return CYCLE_TYPE_COMPARATOR.compare(this, cycleType) <= 0;
+    }
+
+    public boolean hasSourceCycleAffinity() {
+	return this.sourceCycleAffinity != null;
+    }
+
+    public CycleType getSourceCycleAffinity() {
+	return this.sourceCycleAffinity;
     }
 
 }

@@ -11,9 +11,14 @@ public class StudentCurricularPlanPredicates {
     public static final AccessControlPredicate<StudentCurricularPlan> enrol = new AccessControlPredicate<StudentCurricularPlan>() {
 
 	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-	    final Person person = AccessControl.getPerson();
-	    return person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		    || person.hasRole(RoleType.MANAGER);
+	    return isStudentOrAcademicAdminOfficeOrManager();
+	}
+
+    };
+
+    public static final AccessControlPredicate<StudentCurricularPlan> enrolInAffinityCycle = new AccessControlPredicate<StudentCurricularPlan>() {
+	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+	    return isStudentOrAcademicAdminOfficeOrManager();
 	}
 
     };
@@ -26,5 +31,11 @@ public class StudentCurricularPlanPredicates {
 	}
 
     };
+
+    private static boolean isStudentOrAcademicAdminOfficeOrManager() {
+	final Person person = AccessControl.getPerson();
+	return person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		|| person.hasRole(RoleType.MANAGER);
+    }
 
 }

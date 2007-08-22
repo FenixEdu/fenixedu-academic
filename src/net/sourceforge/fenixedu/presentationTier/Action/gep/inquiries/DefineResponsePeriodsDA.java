@@ -42,7 +42,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	    final String label = executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear(); executionPeriodLVBs
 		    .add(new LabelValueBean(label, executionPeriod.getIdInternal().toString()));
 
-	    if (executionPeriodID == null && executionPeriod.getState() == PeriodState.CURRENT) {
+	    if (executionPeriodID == null && executionPeriod.getState().equals(PeriodState.CURRENT)) {
 		selectedExecutionPeriod = executionPeriod;
 		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 	    } else if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {

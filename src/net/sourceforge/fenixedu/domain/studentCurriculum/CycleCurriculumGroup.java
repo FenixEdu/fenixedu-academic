@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 /**
  * 
@@ -18,14 +20,35 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super();
     }
 
-    public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup, ExecutionPeriod executionPeriod) {
+    public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup,
+	    ExecutionPeriod executionPeriod) {
 	this();
 	init(rootCurriculumGroup, cycleCourseGroup, executionPeriod);
     }
-    
+
     public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup) {
 	this();
 	init(rootCurriculumGroup, cycleCourseGroup);
+    }
+
+    @Override
+    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup) {
+	checkInitConstraints((RootCurriculumGroup) curriculumGroup, (CycleCourseGroup) courseGroup);
+	super.init(curriculumGroup, courseGroup);
+    }
+
+    @Override
+    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+	checkInitConstraints((RootCurriculumGroup) curriculumGroup, (CycleCourseGroup) courseGroup);
+	super.init(curriculumGroup, courseGroup, executionPeriod);
+    }
+
+    private void checkInitConstraints(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup) {
+	if (rootCurriculumGroup.getCycleCurriculumGroup(cycleCourseGroup.getCycleType()) != null) {
+	    throw new DomainException(
+		    "error.studentCurriculum.RootCurriculumGroup.cycle.course.group.already.exists.in.curriculum",
+		    cycleCourseGroup.getName());
+	}
     }
 
     @Override
@@ -39,38 +62,67 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Override
     public void setDegreeModule(DegreeModule degreeModule) {
 	if (degreeModule != null && !(degreeModule instanceof CycleCourseGroup)) {
-	    throw new DomainException(
-		    "error.curriculumGroup.CycleParentDegreeModuleCanOnlyBeCycleCourseGroup");
+	    throw new DomainException("error.curriculumGroup.CycleParentDegreeModuleCanOnlyBeCycleCourseGroup");
 	}
 	super.setDegreeModule(degreeModule);
     }
 
     @Override
     public boolean isCycleCurriculumGroup() {
-        return true;
+	return true;
     }
-    
+
     public boolean isCycle(final CycleType cycleType) {
 	return getCycleType() == cycleType;
     }
-    
+
     public boolean isFirstCycle() {
 	return isCycle(CycleType.FIRST_CYCLE);
     }
-    
+
     public CycleCourseGroup getCycleCourseGroup() {
 	return (CycleCourseGroup) getDegreeModule();
     }
-    
+
     public CycleType getCycleType() {
 	return getCycleCourseGroup().getCycleType();
     }
-    
+
     @Override
     public boolean isConcluded(ExecutionYear executionYear) {
-        final Double defaultEctsCredits = getCycleType().getDefaultEcts();
-        final Double creditsConcluded = getCreditsConcluded(executionYear);
-        return creditsConcluded >= defaultEctsCredits;
+	final Double defaultEctsCredits = getCycleType().getDefaultEcts();
+	final Double creditsConcluded = getCreditsConcluded(executionYear);
+	return creditsConcluded >= defaultEctsCredits;
+    }
+
+    @Override
+    public RootCurriculumGroup getCurriculumGroup() {
+	return (RootCurriculumGroup) super.getCurriculumGroup();
+    }
+
+    @Override
+    public void delete() {
+	checkRulesToDelete();
+
+	super.delete();
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void deleteRecursive() {
+	for (final CurriculumModule child : getCurriculumModules()) {
+	    child.deleteRecursive();
+	}
+
+	super.delete();
+    }
+
+    private void checkRulesToDelete() {
+	if (!getCurriculumGroup().getDegreeType().canRemoveEnrolmentIn(getCycleType())) {
+	    throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
+		    getName().getContent());
+	}
+
     }
 
 }

@@ -23,7 +23,7 @@
 			</ul>
 		</logic:messagesPresent>
 		<fr:hasMessages for="move-curriculum-lines-bean-entries">
-			<ul>
+			<ul class="nobullet list6">
 				<fr:messages>
 					<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
 				</fr:messages>
@@ -31,7 +31,7 @@
 		</fr:hasMessages>
 		
 		<logic:empty name="moveCurriculumLinesBean" property="curriculumLineLocations">
-			<i><bean:message  key="label.student.moveCurriculumLines.noCurriculumLinesSelected" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			<p><i><bean:message  key="label.student.moveCurriculumLines.noCurriculumLinesSelected" bundle="ACADEMIC_OFFICE_RESOURCES"/></i></p>
 		</logic:empty>
 
 		<logic:notEmpty name="moveCurriculumLinesBean" property="curriculumLineLocations">
@@ -40,8 +40,8 @@
 				name="moveCurriculumLinesBean" property="curriculumLineLocations"
 				schema="CurriculumLineLocationBean.edit">
 				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="tstyle4 thlight mtop05" />
-					<fr:property name="columnClasses" value=",,,aright,aright,aright,acenter" />
+					<fr:property name="classes" value="tstyle2 thlight" />
+					<fr:property name="columnClasses" value="nowrap," />
 				</fr:layout>
 				<fr:destination name="invalid" path="<%="/curriculumLinesLocationManagement.do?method=moveCurriculumLines&scpID=" + studentCurricularPlanId.toString() %>"/>
 				<fr:destination name="cancel" path="<%="/curriculumLinesLocationManagement.do?method=prepare&scpID=" + studentCurricularPlanId.toString() %>"/>

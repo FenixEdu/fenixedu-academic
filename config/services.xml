@@ -12268,5 +12268,20 @@
         	<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    
+    <service>
+    	<name>TransitToBolonha</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.registration.TransitToBolonha</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    <name>EnrolInAffinityCycle</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains />
+    </service>    
 </serviceDefinitions>

@@ -17,32 +17,26 @@ import org.apache.struts.action.ActionMapping;
 
 public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStudentEnrollmentDA {
 
-    private static final int[] CURRICULAR_YEARS_FOR_CURRICULAR_COURSES = { 1 };
-
     @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final Registration registration = (Registration) request.getAttribute("registration");
 
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration
-		.getLastStudentCurricularPlan(), ExecutionPeriod.readActualExecutionPeriod());
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration.getLastStudentCurricularPlan(),
+		ExecutionPeriod.readActualExecutionPeriod());
 
     }
 
     @Override
-    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
 
 	if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() == null) {
-	    final EnrolmentPeriod nextEnrollmentPeriod = studentCurricularPlan.getDegreeCurricularPlan()
-		    .getNextEnrolmentPeriod();
+	    final EnrolmentPeriod nextEnrollmentPeriod = studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod();
 	    if (nextEnrollmentPeriod != null) {
-		addActionMessage(request, "message.out.curricular.course.enrolment.period",
-			nextEnrollmentPeriod.getStartDateDateTime().toString(
-				DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod
-				.getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+		addActionMessage(request, "message.out.curricular.course.enrolment.period", nextEnrollmentPeriod
+			.getStartDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod
+			.getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 	    } else {
 		addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
 	    }
@@ -50,35 +44,34 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	if (!studentCurricularPlan.getRegistration().getPayedTuition()) {
+	if (studentCurricularPlan.getRegistration().getStudent().isAnyTuitionInDebt()) {
 	    addActionMessage(request, "error.message.tuitionNotPayed");
-	    
+
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response,
-		studentCurricularPlan, executionPeriod);
+	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionPeriod);
     }
 
-    public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showEnrollmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	return mapping.findForward("showEnrollmentInstructions");
     }
 
     @Override
     protected int[] getCurricularYearForCurricularCourses() {
-	return CURRICULAR_YEARS_FOR_CURRICULAR_COURSES;
+	return null; // all years
     }
 
     @Override
     protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm actionForm) {
-	return CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT;
+	return CurricularRuleLevel.ENROLMENT_WITH_RULES;
     }
-    
+
     @Override
     protected String getAction() {
-        return "";
+	return "";
     }
 
 }

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -70,6 +71,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredStat
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -79,6 +81,7 @@ import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -90,6 +93,13 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
+
+    private static final List<DegreeType> DEGREE_TYPES_TO_ENROL_IN_SHIFTS_BY_STUDENT = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
+	    DegreeType.MASTER_DEGREE });
+
+    private static final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
 
     private transient Double approvationRatio;
 
@@ -1466,26 +1476,23 @@ public class Registration extends Registration_Base {
     final public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
 
-	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
-		getRegistrationStates());
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
 
-	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
-		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
+		.hasPrevious();) {
 	    RegistrationState state = (RegistrationState) iter.previous();
 
-	    if (state.getStateDate().isAfter(
-		    executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+	    if (state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
 		continue;
 	    }
-	    
+
 	    result.add(state);
-		
-	    if (!state.getStateDate().isAfter(
-		    executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
+
+	    if (!state.getStateDate().isAfter(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
 		break;
 	    }
-	    
+
 	}
 
 	return result;
@@ -1551,6 +1558,10 @@ public class Registration extends Registration_Base {
 
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
+    }
+
+    final public boolean isTransited() {
+	return getActiveStateType() == RegistrationStateType.TRANSITED;
     }
 
     final public YearMonthDay getConclusionDate() {
@@ -1630,8 +1641,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * Retrieve concluded cycles before or equal to the given cycle
-         */
+     * Retrieve concluded cycles before or equal to the given cycle
+     */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
 
@@ -2082,6 +2093,85 @@ public class Registration extends Registration_Base {
     @Override
     public RegistrationAgreement getRegistrationAgreement() {
 	return super.getRegistrationAgreement() == null ? RegistrationAgreement.NORMAL : super.getRegistrationAgreement();
+    }
+
+    public Registration getSourceRegistrationForTransition() {
+	if (!isTransition() || !getLastDegreeCurricularPlan().hasEquivalencePlan()) {
+	    return null;
+	}
+
+	return getStudent().getActiveRegistrationFor(
+		getLastDegreeCurricularPlan().getEquivalencePlan().getSourceDegreeCurricularPlan());
+    }
+
+    public List<Registration> getTargetTransitionRegistrations() {
+	final List<Registration> result = new ArrayList<Registration>();
+
+	for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : getLastDegreeCurricularPlan()
+		.getTargetEquivalencePlans()) {
+	    final Registration transitionRegistration = getStudent().getTransitionRegistrationFor(
+		    equivalencePlan.getDegreeCurricularPlan());
+	    if (transitionRegistration != null) {
+		result.add(transitionRegistration);
+	    }
+	}
+
+	return result;
+
+    }
+
+    @Checked("RegistrationPredicates.transitToBolonha")
+    public void transitToBolonha(final Person person) {
+	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
+
+	for (final Registration registration : getTargetTransitionRegistrations()) {
+	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		RegistrationState.createState(registration, person, new DateTime(),
+			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
+	    } else {
+		RegistrationState.createState(registration, person, new DateTime(), RegistrationStateType.REGISTERED);
+	    }
+
+	    registration.setRegistrationAgreement(getRegistrationAgreement());
+	}
+    }
+
+    /**
+     * 
+     * FIXME:Temporary solution until implementation of concluded first cycle is
+     * finished
+     */
+    public boolean hasConcluded() {
+	boolean result = true;
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
+	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
+	    result &= cycle != null && cycle.getAprovedEctsCredits() >= cycleType.getDefaultEcts();
+	}
+
+	return result;
+    }
+
+    public boolean isSecondCycleInternalCandidacyIngression() {
+	return getIngressionEnum() == Ingression.CIA2C;
+    }
+
+    public boolean isEnrolmentByStudentAllowed() {
+	return isActive() && getRegistrationAgreement().isEnrolmentByStudentAllowed()
+		&& getDegreeTypesToEnrolByStudent().contains(getDegreeType()) && !isSecondCycleInternalCandidacyIngression();
+    }
+
+    private List<DegreeType> getDegreeTypesToEnrolByStudent() {
+	return DEGREE_TYPES_TO_ENROL_BY_STUDENT;
+    }
+
+    public boolean isEnrolmentByStudentInShiftsAllowed() {
+	return isActive() && getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
+		&& !isSecondCycleInternalCandidacyIngression();
+    }
+
+    private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {
+	return DEGREE_TYPES_TO_ENROL_IN_SHIFTS_BY_STUDENT;
     }
 
 }

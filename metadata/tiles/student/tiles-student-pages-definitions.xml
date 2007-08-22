@@ -321,6 +321,10 @@
 		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
 	</definition>
 	
+	<definition name="enrolment.confirmBolonhaTransition" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/confirmBolonhaTransition.jsp"/>
+	</definition>
+	
 	
 	<!-- Begin: Bolonha Student Enrolment -->
 	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
@@ -335,6 +339,10 @@
 	<definition name="enrolment.bolonha.showEnrollmentInstructions" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showEnrollmentInstructions.jsp"/>
 	</definition>
+	<definition name="enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
+	
 	<!-- End: Bolonha Student Enrolment -->
 	
     <definition name="thesis-notFound" extends="definition.student.masterPage">

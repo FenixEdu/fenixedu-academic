@@ -25,8 +25,7 @@
 	    <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="APPLICATION_RESOURCES"/></h3>
 		<fr:view name="toEnrol" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
-				<fr:property name="columnClasses" value=",tdhl1,,"/>
+				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
 				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${idInternal}" />
 				<fr:property name="key(enrol)" value="enrol.in.shift"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>

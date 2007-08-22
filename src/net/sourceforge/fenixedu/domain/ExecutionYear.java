@@ -233,7 +233,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     }
 
     public boolean isCurrent() {
-	return this.getState() == PeriodState.CURRENT;
+	return this.getState().equals(PeriodState.CURRENT);
     }
 
     public static ExecutionYear getExecutionYearByDate(YearMonthDay date) {

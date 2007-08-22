@@ -203,7 +203,7 @@ public class Dismissal extends Dismissal_Base {
     final public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
     }
-    
+
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null && executionPeriod != getExecutionPeriod()) {
@@ -214,6 +214,5 @@ public class Dismissal extends Dismissal_Base {
 	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
 	return result;
     }
-    
 
 }

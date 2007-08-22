@@ -3764,6 +3764,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.student.registrationStates.TransitionalState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
 		}
+		
+		class net.sourceforge.fenixedu.domain.student.registrationStates.TransitedState extends net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState {
+		}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.Credits extends net.sourceforge.fenixedu.domain.DomainObject {
 		Double givenCredits;

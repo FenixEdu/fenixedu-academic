@@ -134,7 +134,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-                if (executionPeriod.getState() == PeriodState.CURRENT) {
+                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
                     return executionPeriod;
                 }
             }

@@ -2,7 +2,14 @@ package net.sourceforge.fenixedu.domain.student;
 
 public enum RegistrationAgreement {
 
-    NORMAL, AFA, MA, NC, ERASMUS, SOCRATES, SOCRATES_ERASMUS, TEMPUS, BILATERAL_AGREEMENT, ALFA2, UNIFOR,TIME, OTHER_EXTERNAL;
+    NORMAL(true), AFA(false), MA(false), NC(false), ERASMUS(false), SOCRATES(false), SOCRATES_ERASMUS(false), TEMPUS(false), BILATERAL_AGREEMENT(
+	    false), ALFA2(false), UNIFOR(false), TIME(false), OTHER_EXTERNAL(false);
+
+    private boolean enrolmentByStudentAllowed;
+
+    private RegistrationAgreement(final boolean enrolmentByStudentAllowed) {
+	this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
+    }
 
     public boolean isNormal() {
 	return this.equals(RegistrationAgreement.NORMAL);
@@ -14,6 +21,10 @@ public enum RegistrationAgreement {
 
     public String getName() {
 	return name();
+    }
+
+    public boolean isEnrolmentByStudentAllowed() {
+	return this.enrolmentByStudentAllowed;
     }
 
     public static RegistrationAgreement getByLegacyCode(int code) {

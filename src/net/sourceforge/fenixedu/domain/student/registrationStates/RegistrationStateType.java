@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum RegistrationStateType {
 
-    REGISTERED(true), MOBILITY(true), CANCELED(false), CONCLUDED(false), FLUNKED(false), INTERRUPTED(
-	    false), SCHOOLPARTCONCLUDED(true), INTERNAL_ABANDON(false), EXTERNAL_ABANDON(false), TRANSITION(false);
+    REGISTERED(true), MOBILITY(true), CANCELED(false), CONCLUDED(false), FLUNKED(false), INTERRUPTED(false), SCHOOLPARTCONCLUDED(
+	    true), INTERNAL_ABANDON(false), EXTERNAL_ABANDON(false), TRANSITION(false), TRANSITED(false);
 
     private RegistrationStateType(boolean active) {
 	this.active = active;
@@ -33,7 +33,7 @@ public enum RegistrationStateType {
     public boolean isInactive() {
 	return !active;
     }
-    
+
     public String getQualifiedName() {
 	return RegistrationStateType.class.getSimpleName() + "." + name();
     }
@@ -41,9 +41,10 @@ public enum RegistrationStateType {
     public String getFullyQualifiedName() {
 	return RegistrationStateType.class.getName() + "." + name();
     }
-    
+
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+		.getString(getQualifiedName());
     }
 
 }

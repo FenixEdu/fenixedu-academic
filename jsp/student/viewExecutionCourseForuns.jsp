@@ -48,9 +48,7 @@
 </logic:notEmpty>
 
 <logic:empty name="attendsForExecutionPeriod">
-	<div>
-		<p>
-			<span class="error">#</span>
-		</p>
-	</div>
+	<p class="mtop15">
+		<em><bean:message  key="label.viewExecutionCourseForuns.noAttendsForExecutionPeriod" bundle="STUDENT_RESOURCES"/></em>
+	</p>
 </logic:empty>

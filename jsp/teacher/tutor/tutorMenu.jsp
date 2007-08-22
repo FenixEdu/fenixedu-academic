@@ -21,9 +21,5 @@
 		<html:link page="<%= "/sendMailToTutoredStudents.do?method=prepare"%>">
 		    <bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" /></html:link>
 	</li>
-	<li>
-		<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"%>">
-		    <bean:message key="link.student.enrollment" /></html:link>
-	</li>		
 </ul>
 --%>

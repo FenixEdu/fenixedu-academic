@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.dataTransferObject.ISmsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.IdInternalBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -34,8 +33,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public static Comparator<RegistrationState> DATE_COMPARATOR = new Comparator<RegistrationState>() {
 	public int compare(RegistrationState leftState, RegistrationState rightState) {
 	    int comparationResult = leftState.getStateDate().compareTo(rightState.getStateDate());
-	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(
-		    rightState.getIdInternal()) : comparationResult;
+	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
 
@@ -44,8 +42,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public static RegistrationState createState(Registration registration, Person person,
-	    DateTime dateTime, RegistrationStateType stateType) {
+    public static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
+	    RegistrationStateType stateType) {
 
 	switch (stateType) {
 	case REGISTERED:
@@ -68,6 +66,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return new MobilityState(registration, person, dateTime);
 	case TRANSITION:
 	    return new TransitionalState(registration, person, dateTime);
+	case TRANSITED:
+	    return new TransitedState(registration, person, dateTime);
 	}
 
 	return null;
@@ -76,8 +76,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
 	setRegistration(registration != null ? registration : null);
 
-	final Person person = responsiblePerson != null ? responsiblePerson : (AccessControl
-		.getUserView() != null ? AccessControl.getPerson() : null);
+	final Person person = responsiblePerson != null ? responsiblePerson
+		: (AccessControl.getUserView() != null ? AccessControl.getPerson() : null);
 	setResponsiblePerson(person);
 	setStateDate(stateDate != null ? stateDate : new DateTime());
     }
@@ -87,8 +87,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public void nextState(String nextState) {
-	createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType
-		.valueOf(nextState));
+	createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType.valueOf(nextState));
     }
 
     public abstract RegistrationStateType getStateType();
@@ -111,7 +110,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
+
     public void deleteWithoutCheckRules() {
 	removeRegistration();
 	removeResponsiblePerson();
@@ -120,11 +119,10 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     private RegistrationState getNext() {
-	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
-		getRegistration().getRegistrationStates());
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistration()
+		.getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
-	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(); iter
-		.hasNext();) {
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(); iter.hasNext();) {
 	    RegistrationState state = (RegistrationState) iter.next();
 	    if (state.equals(this)) {
 		if (iter.hasNext()) {
@@ -137,11 +135,11 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     private RegistrationState getPrevious() {
-	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(
-		getRegistration().getRegistrationStates());
+	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistration()
+		.getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
-	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates
-		.listIterator(sortedRegistrationsStates.size()); iter.hasPrevious();) {
+	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
+		.hasPrevious();) {
 	    RegistrationState state = (RegistrationState) iter.previous();
 	    if (state.equals(this)) {
 		if (iter.hasPrevious()) {
@@ -165,8 +163,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	}
     }
 
-    public static class RegistrationStateCreator extends RegistrationStateBean implements
-	    FactoryExecutor {
+    public static class RegistrationStateCreator extends RegistrationStateBean implements FactoryExecutor {
 
 	public RegistrationStateCreator(Registration registration) {
 	    super(registration);
@@ -174,15 +171,14 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	public Object execute() {
 
-	    final DateTime stateDateTime = new YearMonthDay().equals(getStateDate()) ? getStateDate()
-		    .toDateTimeAtCurrentTime() : getStateDate().toDateTimeAtMidnight();
+	    final DateTime stateDateTime = new YearMonthDay().equals(getStateDate()) ? getStateDate().toDateTimeAtCurrentTime()
+		    : getStateDate().toDateTimeAtMidnight();
 
 	    RegistrationState createdState = null;
 
 	    final RegistrationState previousState = getRegistration().getStateInDate(stateDateTime);
 	    if (previousState == null) {
-		createdState = RegistrationState.createState(getRegistration(), null, stateDateTime,
-			getStateType());
+		createdState = RegistrationState.createState(getRegistration(), null, stateDateTime, getStateType());
 	    } else {
 		StateMachine.execute(previousState, getStateType().name());
 		createdState = getRegistration().getActiveState();
@@ -191,8 +187,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    createdState.setRemarks(getRemarks());
 
 	    RegistrationState nextState = createdState.getNext();
-	    if (nextState != null
-		    && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
+	    if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
 		throw new DomainException("error.cannot.add.registrationState.incoherentState");
 	    }
 
@@ -210,7 +205,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    final DateTime mobilityDate = getStateDate();
 	    return externalEnrolment.hasExecutionPeriod() && externalEnrolment.getExecutionYear().containsDate(mobilityDate);
 	}
-	
+
 	throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
     }
 

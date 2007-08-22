@@ -955,6 +955,10 @@
 	<definition name="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/chooseOptionalCurricularCourseToEnrol.jsp"/>
 	</definition>
+	<definition name="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
+	
 	<!-- End: Bolonha Transition Management -->
 	
 	<!-- Start: Manage Curriculum Line Location -->

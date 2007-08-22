@@ -18,11 +18,14 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
 public abstract class CurriculumModule extends CurriculumModule_Base {
+
+
 
     static final public Comparator<CurriculumModule> COMPARATOR_BY_NAME_AND_ID = new Comparator<CurriculumModule>() {
 	public int compare(CurriculumModule o1, CurriculumModule o2) {
@@ -36,6 +39,11 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void deleteRecursive() {
+	delete();
+    }
+
     public void delete() {
 	removeDegreeModule();
 	removeCurriculumGroup();
@@ -44,8 +52,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     public RootCurriculumGroup getRootCurriculumGroup() {
-	return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup()
-		: (RootCurriculumGroup) this;
+	return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup() : (RootCurriculumGroup) this;
     }
 
     public StudentCurricularPlan getRootStudentCurricularPlan() {
@@ -88,8 +95,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
 	    multiLanguageString.setContent(Language.pt, this.getDegreeModule().getName());
 	}
-	if (this.getDegreeModule().getNameEn() != null
-		&& this.getDegreeModule().getNameEn().length() > 0) {
+	if (this.getDegreeModule().getNameEn() != null && this.getDegreeModule().getNameEn().length() > 0) {
 	    multiLanguageString.setContent(Language.en, this.getDegreeModule().getNameEn());
 	}
 	return multiLanguageString;
@@ -140,26 +146,23 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod);
 
-    abstract public boolean isApproved(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod);
+    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
 
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod);
 
     abstract public boolean hasAnyEnrolments();
-    
+
     abstract public void addApprovedCurriculumLines(final Collection<CurriculumLine> result);
-    
+
     abstract public boolean hasAnyApprovedCurriculumLines();
 
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod);
 
-    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod);
+    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
 
-    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(
-	    final ExecutionPeriod executionPeriod);
+    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
 
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
 
@@ -170,13 +173,13 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void collectDismissals(final List<Dismissal> result);
 
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
-    
+
     abstract public boolean isConcluded(ExecutionYear executionYear);
-    
+
     abstract public YearMonthDay getConclusionDate();
-    
+
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
-    
+
     abstract public boolean isPropaedeutic();
 
 }

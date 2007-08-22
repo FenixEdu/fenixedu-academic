@@ -81,17 +81,16 @@ public class Student extends Student_Base {
 
     public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : this.getRegistrations()) {
-	    StudentCurricularPlan studentCurricularPlan = registration
-		    .getStudentCurricularPlan(degreeCurricularPlan);
+	    StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(degreeCurricularPlan);
 	    if (studentCurricularPlan != null) {
 		return registration;
 	    }
 	}
 	return null;
     }
-    
-    public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(
-	    DegreeType degreeType, ExecutionPeriod executionPeriod) {
+
+    public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(DegreeType degreeType,
+	    ExecutionPeriod executionPeriod) {
 	List<Registration> result = new ArrayList<Registration>();
 	for (Registration registration : getRegistrations()) {
 	    if (registration.getDegreeType().equals(degreeType)
@@ -135,15 +134,13 @@ public class Student extends Student_Base {
 
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
-	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(
-		activeRegistrations, new BeanComparator("startDate"));
+	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations, new BeanComparator(
+		"startDate"));
     }
 
-    public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType,
-	    final ExecutionYear executionYear) {
+    public boolean hasActiveRegistrationForDegreeType(final DegreeType degreeType, final ExecutionYear executionYear) {
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.hasAnyEnrolmentsIn(executionYear)
-		    && registration.getDegreeType() == degreeType) {
+	    if (registration.hasAnyEnrolmentsIn(executionYear) && registration.getDegreeType() == degreeType) {
 		return true;
 	    }
 	}
@@ -196,13 +193,12 @@ public class Student extends Student_Base {
 
     public void setResidenceCandidacyForCurrentExecutionYear(String observations) {
 	createCurrentYearStudentData();
-	getActualExecutionYearStudentData()
-		.setResidenceCandidacy(new ResidenceCandidacies(observations));
+	getActualExecutionYearStudentData().setResidenceCandidacy(new ResidenceCandidacies(observations));
     }
 
     public void setResidenceCandidacy(ResidenceCandidacies residenceCandidacy) {
-	ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(residenceCandidacy
-		.getCreationDateDateTime().toYearMonthDay());
+	ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(residenceCandidacy.getCreationDateDateTime()
+		.toYearMonthDay());
 	StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
 	if (studentData == null) {
 	    studentData = createStudentDataForExecutionYear(executionYear);
@@ -239,8 +235,8 @@ public class Student extends Student_Base {
 	getActualExecutionYearStudentData().setPersonalDataAuthorization(personalDataAuthorization);
     }
 
-    public void setPersonalDataAuthorizationForExecutionYear(
-	    StudentPersonalDataAuthorizationChoice personalDataAuthorization, ExecutionYear executionYear) {
+    public void setPersonalDataAuthorizationForExecutionYear(StudentPersonalDataAuthorizationChoice personalDataAuthorization,
+	    ExecutionYear executionYear) {
 	StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
 	if (studentData == null) {
 	    studentData = createStudentDataForExecutionYear(executionYear);
@@ -320,8 +316,7 @@ public class Student extends Student_Base {
     }
 
     public boolean getHasRegistrationForOffice() {
-	return hasRegistrationForOffice(AccessControl.getPerson().getEmployee()
-		.getAdministrativeOffice());
+	return hasRegistrationForOffice(AccessControl.getPerson().getEmployee().getAdministrativeOffice());
     }
 
     public boolean attends(ExecutionCourse executionCourse) {
@@ -391,33 +386,27 @@ public class Student extends Student_Base {
 
     // TODO: This should be removed when master degree payments start using
     // Events and Posting Rules for payments
-    public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(
-	    final ExecutionYear executionYear) {
+    public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
 	if (!hasMasterDegreeInsurancePaymentCodeFor(executionYear)) {
 	    return createMasterDegreeInsurancePaymentCode(executionYear);
 	} else {
 	    final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode = getMasterDegreeInsurancePaymentCodeFor(executionYear);
-	    final Money insuranceAmount = new Money(executionYear.getInsuranceValue()
-		    .getAnnualValueBigDecimal());
+	    final Money insuranceAmount = new Money(executionYear.getInsuranceValue().getAnnualValueBigDecimal());
 	    masterDegreeInsurancePaymentCode.update(new YearMonthDay(),
-		    calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount,
-		    insuranceAmount);
+		    calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount, insuranceAmount);
 
 	    return masterDegreeInsurancePaymentCode;
 	}
     }
 
-    private MasterDegreeInsurancePaymentCode createMasterDegreeInsurancePaymentCode(
-	    final ExecutionYear executionYear) {
-	final Money insuranceAmount = new Money(executionYear.getInsuranceValue()
-		.getAnnualValueBigDecimal());
+    private MasterDegreeInsurancePaymentCode createMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
+	final Money insuranceAmount = new Money(executionYear.getInsuranceValue().getAnnualValueBigDecimal());
 	return MasterDegreeInsurancePaymentCode.create(new YearMonthDay(),
-		calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount,
-		insuranceAmount, this, executionYear);
+		calculateMasterDegreeInsurancePaymentCodeEndDate(executionYear), insuranceAmount, insuranceAmount, this,
+		executionYear);
     }
 
-    private YearMonthDay calculateMasterDegreeInsurancePaymentCodeEndDate(
-	    final ExecutionYear executionYear) {
+    private YearMonthDay calculateMasterDegreeInsurancePaymentCodeEndDate(final ExecutionYear executionYear) {
 	final YearMonthDay insuranceEndDate = executionYear.getInsuranceValue().getEndDateYearMonthDay();
 	final YearMonthDay now = new YearMonthDay();
 
@@ -429,8 +418,7 @@ public class Student extends Student_Base {
 	}
     }
 
-    private MasterDegreeInsurancePaymentCode getMasterDegreeInsurancePaymentCodeFor(
-	    final ExecutionYear executionYear) {
+    private MasterDegreeInsurancePaymentCode getMasterDegreeInsurancePaymentCodeFor(final ExecutionYear executionYear) {
 	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
 	    if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
 		final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode = ((MasterDegreeInsurancePaymentCode) paymentCode);
@@ -526,7 +514,7 @@ public class Student extends Student_Base {
 	return aprovedEnrolments;
     }
 
-    public Set<Enrolment> getDismissalApprovedEnrolments(){
+    public Set<Enrolment> getDismissalApprovedEnrolments() {
 	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
 	for (Registration registration : getRegistrationsSet()) {
 	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
@@ -535,12 +523,10 @@ public class Student extends Student_Base {
 	}
 	return aprovedEnrolments;
     }
-    
 
     public boolean isHandicapped() {
 	for (Registration registration : getRegistrationsSet()) {
-	    if (registration.getIngression() != null
-		    && registration.getIngressionEnum().equals(Ingression.CNA07)) {
+	    if (registration.getIngression() != null && registration.getIngressionEnum().equals(Ingression.CNA07)) {
 		return true;
 	    }
 	}
@@ -568,8 +554,8 @@ public class Student extends Student_Base {
 	Set<DistributedTest> result = new HashSet<DistributedTest>();
 	for (final Registration registration : getRegistrationsSet()) {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(
-			ExecutionCourse.class.getName())
+		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
+			.equals(ExecutionCourse.class.getName())
 			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
 				executionCourse.getIdInternal())) {
 		    result.add(studentTestQuestion.getDistributedTest());
@@ -594,41 +580,26 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsToEnrolByStudent() {
-	final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolByStudent();
-	return getRegistrationsToEnrol(degreeTypesToEnrolByStudent);
-    }
-
-    public List<Registration> getRegistrationsToEnrolInShiftByStudent() {
-	final List<DegreeType> degreeTypesToEnrolByStudent = getDegreeTypesToEnrolInShiftsByStudent();
-	return getRegistrationsToEnrol(degreeTypesToEnrolByStudent);
-    }
-
-    private List<Registration> getRegistrationsToEnrol(List<DegreeType> degreeTypesToEnrolByStudent) {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isActive()
-		    && degreeTypesToEnrolByStudent.contains(registration.getDegreeType())) {
-
-		if (registration.hasStudentCandidacy()
-			&& registration.getIngressionEnum() == Ingression.CIA2C) {
-		    continue;
-		}
-
+	    if (registration.isEnrolmentByStudentAllowed()) {
 		result.add(registration);
 	    }
 	}
 
 	return result;
+
     }
 
-    private List<DegreeType> getDegreeTypesToEnrolByStudent() {
-	return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
-		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
-    }
+    public List<Registration> getRegistrationsToEnrolInShiftByStudent() {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.isEnrolmentByStudentInShiftsAllowed()) {
+		result.add(registration);
+	    }
+	}
 
-    private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {
-	return Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE,
-		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.MASTER_DEGREE });
+	return result;
     }
 
     public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
@@ -637,8 +608,7 @@ public class Student extends Student_Base {
 		continue;
 	    }
 
-	    StudentCurricularPlan lastStudentCurricularPlan = registration
-		    .getLastStudentCurricularPlan();
+	    StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 	    if (lastStudentCurricularPlan == null) {
 		continue;
 	    }
@@ -663,8 +633,7 @@ public class Student extends Student_Base {
 		continue;
 	    }
 
-	    final Enrolment dissertationEnrolment = registration
-		    .getDissertationEnrolment(degreeCurricularPlan);
+	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
 	    if (dissertationEnrolment != null) {
 		return dissertationEnrolment;
 	    }
@@ -675,8 +644,7 @@ public class Student extends Student_Base {
 
     public boolean doesNotWantToRespondToInquiries() {
 	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
-	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod().getState().equals(
-		    PeriodState.CURRENT)
+	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)
 		    && inquiriesStudentExecutionPeriod.getDontWantToRespond().booleanValue()) {
 		return true;
 	    }
@@ -698,6 +666,10 @@ public class Student extends Student_Base {
 	    }
 	}
 	return Collections.unmodifiableList(result);
+    }
+
+    public Collection<Registration> getAllRegistrations() {
+	return Collections.unmodifiableCollection(super.getRegistrations());
     }
 
     @Override
@@ -743,16 +715,45 @@ public class Student extends Student_Base {
     }
 
     @Checked("StudentPredicates.checkIfLoggedPersonIsCoordinator")
-    public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(
-	    final Person coordinator) {
+    public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
-			    ExecutionYear.readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
+			    .readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
 	return result;
+    }
+
+    public boolean isAnyTuitionInDebt() {
+	for (final Registration registration : super.getRegistrations()) {
+	    if (!registration.getPayedTuition()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final Registration registration : getActiveRegistrations()) {
+	    if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
+		return registration;
+	    }
+	}
+
+	return null;
+    }
+
+    public Registration getTransitionRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final Registration registration : getTransitionRegistrations()) {
+	    if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
+		return registration;
+	    }
+	}
+
+	return null;
     }
 }

@@ -4,16 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message bundle="MANAGER"  key="label.academicAdminOffice" /></em>
+<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 <h2>
 	<bean:message key="label.student.enrollment.optional.course" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	<bean:define id="withRules" name="bolonhaStudentEnrollmentForm" property="withRules" />
-	<logic:equal name="withRules" value="true">
-		(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withRules"/>)
-	</logic:equal>
-	<logic:equal name="withRules" value="false">
-		(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withoutRules"/>)
-	</logic:equal>
+	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.student.enrollment.withoutRules"/>)
 </h2>
 
 <html:form action="/bolonhaStudentEnrolment.do">
@@ -59,7 +53,7 @@
 <bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.idInternal" />
 
 
-<html:form action="<%= "/bolonhaStudentEnrolment.do?method=cancelChooseOptionalCurricularCourseToEnrol&amp;withRules=" + withRules.toString() %>">
+<html:form action="<%= "/bolonhaStudentEnrolment.do?method=cancelChooseOptionalCurricularCourseToEnrol" %>">
 <fr:context>
 	<fr:edit id="optionalEnrolment" name="optionalEnrolmentBean" visible="false"/>
 	<p class="mtop15">

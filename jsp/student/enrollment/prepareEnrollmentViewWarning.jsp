@@ -14,7 +14,7 @@
 	</div>
 	
 	<p>
-		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2006</span>
+		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2007</span>
 	</p>
 
 	<logic:messagesPresent message="true">
@@ -32,8 +32,7 @@
 			<ul>
 				<li>Alunos Externos</li>
 				<li>Melhorias de Nota</li>
-				<li>Alunos inscritos em Época Especial 2003/2004</li>
-				<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
+				<li>Alunos inscritos em Época Especial 2006/2007</li>
 				<li>Alunos com processos de Equivalência em curso</li>
 			</ul>
 		</li>

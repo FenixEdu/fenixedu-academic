@@ -435,9 +435,13 @@
 	<definition name="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
 	</definition>
+	<definition name="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
 	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
-	</definition>		
+	</definition>
+			
 	
 	<!-- NotNeedToEnrol -->
 	<definition name="notNeedToEnrol.chooseStudent" extends="academicAdminOffice.masterPage">

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,12 +23,16 @@ public class EnrolmentContext {
     private List<CurriculumModule> curriculumModulesToRemove;
 
     private CurricularRuleLevel curricularRuleLevel;
+    
+    private Person responsiblePerson;
 
-    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan,
+    public EnrolmentContext(final Person responsiblePerson, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionPeriod executionPeriod,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, 
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
+	
+	this.responsiblePerson = responsiblePerson;
 	
 	this.studentCurricularPlan = studentCurricularPlan;
 	
@@ -85,6 +90,14 @@ public class EnrolmentContext {
 
     public void setCurricularRuleLevel(CurricularRuleLevel curricularRuleLevel) {
         this.curricularRuleLevel = curricularRuleLevel;
+    }
+
+    public Person getResponsiblePerson() {
+        return responsiblePerson;
+    }
+
+    public void setResponsiblePerson(Person responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
     }
 
 }

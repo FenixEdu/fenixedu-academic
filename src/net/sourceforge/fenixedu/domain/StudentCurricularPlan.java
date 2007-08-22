@@ -57,6 +57,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
@@ -291,8 +292,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Temporary method, after all degrees migration this is no longer
-     * necessary
+     * Temporary method, after all degrees migration this is no longer necessary
      * 
      */
     final public boolean isBoxStructure() {
@@ -2097,8 +2097,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Note: This is enrolment without rules and should only be used for
-     * first time enrolments
+     * Note: This is enrolment without rules and should only be used for first
+     * time enrolments
      * 
      * @param curriculumGroup
      * @param curricularPeriod
@@ -2143,35 +2143,57 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionPeriod) : Collections.EMPTY_SET;
     }
 
+    @Checked("StudentCurricularPlanPredicates.enrol")
     final public List<RuleResult> enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
-	assertEnrolmentPreConditions(responsiblePerson, executionPeriod);
+	assertEnrolmentPreConditions(responsiblePerson, executionPeriod, curricularRuleLevel);
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionPeriod, degreeModulesToEnrol,
-		curriculumModulesToRemove, curricularRuleLevel);
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(responsiblePerson, this, executionPeriod,
+		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(this,
 		enrolmentContext, responsiblePerson).manage();
     }
 
-    private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
+    @Checked("StudentCurricularPlanPredicates.enrolInAffinityCycle")
+    public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionPeriod executionPeriod) {
+	if (getDegreeCurricularPlan().getRoot().hasDegreeModule(cycleCourseGroup)) {
+	    new CycleCurriculumGroup(getRoot(), cycleCourseGroup, executionPeriod);
+	} else {
+	    new ExternalCurriculumGroup(getRoot(), cycleCourseGroup, executionPeriod);
+	}
+    }
+
+    private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
+	    final CurricularRuleLevel level) {
 	final Registration registration = this.getRegistration();
 	if (!registration.isActive()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
+	if (registration.getStudent().isAnyTuitionInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
+	}
+
 	final DegreeCurricularPlan degreeCurricularPlan = this.getDegreeCurricularPlan();
 	if (responsiblePerson.hasRole(RoleType.STUDENT)) {
+
+	    if (!responsiblePerson.getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
+		throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
+	    }
+
+	    if (level != CurricularRuleLevel.ENROLMENT_WITH_RULES) {
+		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
+	    }
+
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
-	    if (!registration.getPayedTuition()) {
-		throw new DomainException(
-			"error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
-	    }
+
 	}
+
     }
 
     final public String getName() {
@@ -2468,6 +2490,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void checkEnrolmentRules(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
 	enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
+    }
+
+    public CurriculumGroup getCycle(final CycleType cycleType) {
+	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
+    }
+
+    public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
+	return getCycle(cycleType) != null;
     }
 
 }

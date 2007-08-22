@@ -386,7 +386,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	    final Collection<ExecutionPeriod> executionPeriods = getExecutionPeriods();
 	    if (executionPeriods != null) {
 		for (final ExecutionPeriod executionPeriod : executionPeriods) {
-		    if (executionPeriod.getState() == PeriodState.CURRENT) {
+		    if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
 			setExecutionPeriodID(executionPeriod.getIdInternal());
 			break;
 		    }

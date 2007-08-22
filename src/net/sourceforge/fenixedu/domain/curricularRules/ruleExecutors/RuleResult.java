@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 public class RuleResult {
 
     private RuleResultType result;
@@ -13,6 +15,11 @@ public class RuleResult {
     private EnrolmentResultType enrolmentResultType;
 
     private RuleResult(final RuleResultType result, final EnrolmentResultType enrolmentResultType) {
+
+	if (enrolmentResultType == null) {
+	    throw new DomainException("error.curricularRules.ruleExecutors.RuleResult.enrolmentResultType.cannot.be.null");
+	}
+
 	this.result = result;
 	this.enrolmentResultType = enrolmentResultType;
 	this.messages = new ArrayList<RuleResultMessage>();
@@ -42,8 +49,7 @@ public class RuleResult {
 	if (copyMessages && andResult.isToCopyMessages()) {
 	    messages.addAll(ruleResult.getMessages());
 	}
-	return new RuleResult(andResult, getEnrolmentResultType().and(
-		ruleResult.getEnrolmentResultType()), messages);
+	return new RuleResult(andResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
 
     public RuleResult or(final RuleResult ruleResult) {
@@ -59,8 +65,7 @@ public class RuleResult {
 		messages.addAll(ruleResult.getMessages());
 	    }
 	}
-	return new RuleResult(orResult, getEnrolmentResultType()
-		.and(ruleResult.getEnrolmentResultType()), messages);
+	return new RuleResult(orResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
 
     public boolean isTrue() {
@@ -82,7 +87,7 @@ public class RuleResult {
     public EnrolmentResultType getEnrolmentResultType() {
 	return enrolmentResultType;
     }
-    
+
     public boolean isTemporaryEnrolmentResultType() {
 	return enrolmentResultType == EnrolmentResultType.TEMPORARY;
     }
@@ -105,9 +110,10 @@ public class RuleResult {
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType) {
 	return new RuleResult(RuleResultType.TRUE, enrolmentResultType);
     }
-    
-    static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final String message, final String ... args) {
-	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message, true, args)));
+
+    static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final String message, final String... args) {
+	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message,
+		true, args)));
     }
 
     static public RuleResult createFalse() {
@@ -122,10 +128,10 @@ public class RuleResult {
 	return createFalse(EnrolmentResultType.VALIDATED, message, args);
     }
 
-    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType,
-	    final String message, final String... args) {
-	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections
-		.singletonList(new RuleResultMessage(message, args)));
+    static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType, final String message,
+	    final String... args) {
+	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message,
+		args)));
     }
 
     static public RuleResult createFalseWithLiteralMessage(final String message) {
@@ -140,4 +146,10 @@ public class RuleResult {
     static public RuleResult createWarning(final List<RuleResultMessage> ruleResultMessages) {
 	return new RuleResult(RuleResultType.WARNING, EnrolmentResultType.VALIDATED, ruleResultMessages);
     }
+
+    static public RuleResult createWarning(final String message, final String... args) {
+	return createWarning(Collections.singletonList(new RuleResultMessage(message, args)));
+
+    }
+
 }

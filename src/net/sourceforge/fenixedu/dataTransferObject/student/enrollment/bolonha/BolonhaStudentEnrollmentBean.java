@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
@@ -16,6 +17,11 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class BolonhaStudentEnrollmentBean implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5614162187691303580L;
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
 
@@ -28,19 +34,20 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
     private List<DomainReference<CurriculumModule>> curriculumModulesToRemove;
 
     private IDegreeModuleToEvaluate optionalDegreeModuleToEnrol;
-    
+
     private CurricularRuleLevel curricularRuleLevel;
 
-    public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod,
-	    final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
-	this(studentCurricularPlan, executionPeriod, 
-		new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionPeriod, curricularYears), curricularRuleLevel);
-    }
+    private CycleType cycleTypeToEnrol;
     
+    public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
+	this(studentCurricularPlan, executionPeriod, new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
+		executionPeriod, curricularYears), curricularRuleLevel);
+    }
+
     protected BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod,
-	    final StudentCurriculumGroupBean rootStudentCurriculumGroupBean, CurricularRuleLevel curricularRuleLevel) {
+	    final ExecutionPeriod executionPeriod, final StudentCurriculumGroupBean rootStudentCurriculumGroupBean,
+	    CurricularRuleLevel curricularRuleLevel) {
 	super();
 	setStudentCurricularPlan(studentCurricularPlan);
 	setExecutionPeriod(executionPeriod);
@@ -57,8 +64,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 
     private void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan)
-		: null;
+		studentCurricularPlan) : null;
     }
 
     public ExecutionPeriod getExecutionPeriod() {
@@ -66,8 +72,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
     }
 
     private void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(
-		executionPeriod) : null;
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
 
     public StudentCurriculumGroupBean getRootStudentCurriculumGroupBean() {
@@ -95,11 +100,11 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
     }
 
     public CurricularRuleLevel getCurricularRuleLevel() {
-        return curricularRuleLevel;
+	return curricularRuleLevel;
     }
 
     public void setCurricularRuleLevel(CurricularRuleLevel curricularRuleLevel) {
-        this.curricularRuleLevel = curricularRuleLevel;
+	this.curricularRuleLevel = curricularRuleLevel;
     }
 
     public List<CurriculumModule> getCurriculumModulesToRemove() {
@@ -119,17 +124,18 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 	    this.curriculumModulesToRemove.add(new DomainReference<CurriculumModule>(curriculumModule));
 	}
     }
-    
+
     public Converter getDegreeModulesToEvaluateConverter() {
 	return new DegreeModuleToEnrolKeyConverter();
     }
 
     public String getFuncionalityTitle() {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
-	
+	final ResourceBundle resourceBundle = ResourceBundle
+		.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+
 	final StringBuilder result = new StringBuilder();
 	result.append(resourceBundle.getString("label.student.enrollment.courses")).append(" ");
-	
+
 	switch (curricularRuleLevel) {
 
 	case ENROLMENT_WITH_RULES:
@@ -137,10 +143,18 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 
 	case ENROLMENT_NO_RULES:
 	    result.append("(").append(resourceBundle.getString("label.student.enrollment.withoutRules")).append(")");
-	
+
 	}
-	
+
 	return result.toString();
     }
-    
+
+    public CycleType getCycleTypeToEnrol() {
+	return cycleTypeToEnrol;
+    }
+
+    public void setCycleTypeToEnrol(CycleType cycleTypeToEnrol) {
+	this.cycleTypeToEnrol = cycleTypeToEnrol;
+    }
+
 }

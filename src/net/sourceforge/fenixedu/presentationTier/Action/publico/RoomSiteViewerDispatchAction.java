@@ -200,7 +200,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                     .getExecutionPeriodsSet();
             final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
             for (final ExecutionPeriod ep : executionPeriods) {
-                if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
+                if (ep.getState().equals(PeriodState.OPEN) || ep.getState().equals(PeriodState.CURRENT)) {
                     executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " "
                             + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
                 }

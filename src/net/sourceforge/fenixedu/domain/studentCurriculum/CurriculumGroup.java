@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.YearMonthDay;
 
@@ -60,6 +61,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
 	    throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup", courseGroup.getName());
 	}
+	
     }
 
     final protected void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
@@ -76,7 +78,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	init(parentCurriculumGroup, courseGroup, executionPeriod);
     }
 
-    final protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup,
+    protected void init(final CurriculumGroup curriculumGroup, final CourseGroup courseGroup,
 	    final ExecutionPeriod executionPeriod) {
 	checkInitConstraints(curriculumGroup.getStudentCurricularPlan(), courseGroup);
 	checkParameters(curriculumGroup, courseGroup, executionPeriod);
@@ -115,6 +117,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    throw new DomainException("error.studentCurriculum.CurriculumGroup.notEmptyCurriculumGroupModules", getName()
 		    .getContent());
 	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Override
+    public void deleteRecursive() {
+	for (final CurriculumModule child : getCurriculumModules()) {
+	    child.deleteRecursive();
+	}
+
+	delete();
     }
 
     @Override
@@ -727,6 +739,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return !curriculumLine.hasCurricularCourse() || getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
+	return !curriculumLine.hasCurricularCourse()
+		|| getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
+
 }

@@ -22,6 +22,15 @@
 	<p class="mtop0 mbottom15">
 		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.registration"/>:</strong> <bean:write name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.degreeCurricularPlan.presentationName"/> 
 	</p>
+	
+	<bean:define id="student" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.registration.student" />
+	
+
+	<logic:equal name="student" property="anyTuitionInDebt" value="true">
+		<div class="error0" style="padding: 0.5em;">
+			<p><strong><bean:message  key="label.student.gratuity.events.in.debt.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+		</div>
+	</logic:equal>
 
 	
 	<logic:messagesPresent message="true" property="success">

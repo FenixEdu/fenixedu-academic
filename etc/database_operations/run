@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding unique constraint on AffinityCycleCourseGroup" AlterTableAffinityCycleCourseGroup.sql
+

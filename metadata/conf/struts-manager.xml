@@ -2397,6 +2397,7 @@
 			<forward name="chooseStudentInformation" path="student.enrolment.bolonha.chooseStudentInformation" />
 			<forward name="showDegreeModulesToEnrol" path="student.enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
+			<forward name="chooseCycleCourseGroupToEnrol" path="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" />
 		</action>
         <!-- end : Bolonha Student Enrollment -->
         

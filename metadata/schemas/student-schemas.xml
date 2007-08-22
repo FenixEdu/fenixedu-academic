@@ -119,7 +119,7 @@
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="" />
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeProvider" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaDegreeTypesProvider" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
 	<slot name="degree" key="label.degree"
@@ -138,6 +138,23 @@
 		<property name="format" value="${name}" />
 		<property name="destination" value="updateComboBoxes"/>
 	</slot>
+</schema>
+
+<schema name="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot 	name="cycleCourseGroupToEnrol" 
+			layout="radio-select"
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.CompatibleCycleCourseGroupsProvider" />
+		<property name="eachSchema" value="CycleCourseGroup.view" />
+		<property name="eachLayout" value="values-dash" />
+	</slot>
+</schema>
+
+<schema name="CycleCourseGroup.view" type="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" bundle="APPLICATION_RESOURCES">
+	<slot name="name" />		
+	<slot name="parentDegreeCurricularPlan.name" />
 </schema>
 
 <schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
@@ -359,4 +376,13 @@
 	<slot name="approvedEnrolmentsNumber" key="label.student.statistics.approvedEnrolmentsNumber"/>
 	<slot name="approvedRatio" key="label.student.statistics.approvedRatio"/>
 	<slot name="aritmeticAverage" key="label.student.statistics.aritmeticAverage"/>
+</schema>
+
+<schema name="student.registrations.with.transition.origin" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
+	<slot name="lastStudentCurricularPlan.degreeCurricularPlan" layout="format">
+		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
+	</slot>	
+	<slot name="sourceRegistrationForTransition.lastStudentCurricularPlan.degreeCurricularPlan" layout="format">
+		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
+	</slot>
 </schema>

@@ -17,39 +17,35 @@ import org.apache.struts.action.DynaActionForm;
 public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolonhaStudentEnrollmentDA {
 
     @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
-		getStudentCurricularPlan(request), getExecutionPeriod(request));
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, getStudentCurricularPlan(request),
+		getExecutionPeriod(request));
     }
-    
+
     @Override
-    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
 	request.setAttribute("action", getAction());
-        return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan,
-        	executionPeriod);
+	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionPeriod);
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request,
-		"scpID"));
+	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
     }
 
     protected ExecutionPeriod getExecutionPeriod(final HttpServletRequest request) {
-	return rootDomainObject.readExecutionPeriodByOID(getRequestParameterAsInteger(request,
-		"executionPeriodID"));
+	return rootDomainObject.readExecutionPeriodByOID(getRequestParameterAsInteger(request, "executionPeriodID"));
     }
 
     private Boolean getWithRules(final ActionForm form) {
 	return (Boolean) ((DynaActionForm) form).get("withRules");
     }
 
-    public ActionForward backToStudentEnrollments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward backToStudentEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
-	request.setAttribute("studentCurricularPlan", bolonhaStudentEnrollmentBean
-		.getStudentCurricularPlan());
+	request.setAttribute("studentCurricularPlan", bolonhaStudentEnrollmentBean.getStudentCurricularPlan());
 	request.setAttribute("executionPeriod", bolonhaStudentEnrollmentBean.getExecutionPeriod());
 
 	return mapping.findForward("showStudentEnrollmentMenu");
@@ -66,10 +62,24 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT
 		: CurricularRuleLevel.ENROLMENT_NO_RULES;
     }
-    
+
     @Override
     protected String getAction() {
-        return "/bolonhaStudentEnrollment.do";
+	return "/bolonhaStudentEnrollment.do";
+    }
+
+    @Override
+    public ActionForward prepareChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("withRules", request.getParameter("withRules"));
+	return super.prepareChooseCycleCourseGroupToEnrol(mapping, form, request, response);
+    }
+
+    public ActionForward cancelChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, getStudentCurricularPlan(request),
+		getExecutionPeriod(request));
     }
 
 }

@@ -9,10 +9,14 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4707696936211804716L;
 
     private DegreeType degreeType;
 

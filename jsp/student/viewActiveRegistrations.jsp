@@ -11,8 +11,7 @@
 <logic:notEmpty name="registrations">
 	<fr:view name="registrations" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight mtop025 asdasd"/>
-			<fr:property name="columnClasses" value=",tdhl1,,"/>
+			<fr:property name="classes" value="tstyle4 thlight mtop025"/>
 			<fr:property name="linkFormat(view)" value="/viewEnroledExecutionCourses.do?method=select&registrationId=${idInternal}" />
 			<fr:property name="key(view)" value="link.grouping.chooseGroups"/>
 			<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
