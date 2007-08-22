@@ -1281,12 +1281,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
-	if (!isValid(executionPeriod)) {
-	    return Collections.EMPTY_SET;
+	if (isValid(executionPeriod) && isEnroled()) {
+	    final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
+	    result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
+	    return result;
 	}
-	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
-	return result;
+	return Collections.emptySet();
     }
 
     final public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
