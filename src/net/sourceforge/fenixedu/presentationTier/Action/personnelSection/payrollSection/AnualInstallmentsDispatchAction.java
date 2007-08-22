@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -225,7 +226,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 			separator);
 		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
 			separator);
-		stringBuilder.append(employeeBonusInstallment.getCostCenterCode()).append(separator);
+		stringBuilder.append(
+			new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
+			.append(separator);
 		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
 		stringBuilder.append("3").append(separator);
 		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
@@ -253,7 +256,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	stringBuilder.append(employeeBonusInstallment.getEmployee().getEmployeeNumber()).append(
 		separator);
 	stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
-	stringBuilder.append(employeeBonusInstallment.getCostCenterCode()).append(separator);
+	stringBuilder.append(
+		new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
+		separator);
 	stringBuilder.append(employeeBonusInstallment.getValue()).append(separator);
 	stringBuilder.append("3").append(separator);
 	stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
