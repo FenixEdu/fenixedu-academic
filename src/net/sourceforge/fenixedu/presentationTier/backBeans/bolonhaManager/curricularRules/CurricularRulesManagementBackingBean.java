@@ -578,13 +578,16 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             return executionPeriodItems;
         }
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        
+        final DegreeModule degreeModule = getDegreeModule();
+        final ExecutionPeriod currentExecutionPeriod = degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionPeriod.readActualExecutionPeriod();
+        
         final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);
+        
         for (final ExecutionPeriod notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {                
-                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(),
-                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
+                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(), notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
             }
         }
         return (executionPeriodItems = result);
