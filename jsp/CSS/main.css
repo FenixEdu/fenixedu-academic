@@ -469,6 +469,8 @@ text-decoration: underline;
 }
 
 
+ul.ostructure li.osrootunit h3 { margin: 0; }
+
 /* ----------------------
 ------ Feedback  -------
 ----------------------- */
@@ -491,3 +493,5 @@ text-decoration: underline;
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd; color: #070; }
 
 .warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fbf8cc; color: #805500; }
+
+

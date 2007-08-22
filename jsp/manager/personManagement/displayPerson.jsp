@@ -6,7 +6,7 @@
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
 
 <logic:notPresent name="personListFinded">
-	<span class="errors"><bean:message bundle="MANAGER_RESOURCES" key="error.manager.implossible.findPerson" /></span>
+	<p><span class="errors"><bean:message bundle="MANAGER_RESOURCES" key="error.manager.implossible.findPerson" /></span></p>
 </logic:notPresent>
 
 <logic:notEmpty name="personListFinded">
