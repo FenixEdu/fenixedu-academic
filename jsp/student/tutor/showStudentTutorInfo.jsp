@@ -41,7 +41,7 @@
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="actualTutor" >
-	<span class="error0"><b><bean:message key="label.student.tutorship.noActualTutor" bundle="APPLICATION_RESOURCES"/></b></span>
+	<p class="mtop2 mbottom2"><span class="error0"><b><bean:message key="label.student.tutorship.noActualTutor" bundle="APPLICATION_RESOURCES"/></b></span></p>
 </logic:notPresent>
 
 
@@ -79,10 +79,3 @@
 			</fr:view>
 	</logic:notEmpty>
 </logic:present>
-
-<div class="mtop2">
-	<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-	<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-	<bean:define id="graph" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/student/viewTutorInfo.do?method=createAreaXYChart</bean:define>
-	<html:img align="middle" src="<%= graph %>" altKey="" bundle="IMAGE_RESOURCES"/>
-</div>
