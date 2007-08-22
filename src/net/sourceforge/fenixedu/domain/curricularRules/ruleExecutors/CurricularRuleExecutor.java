@@ -84,6 +84,10 @@ abstract public class CurricularRuleExecutor {
     protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
 	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse);
     }
+    
+    protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
+    }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	return degreeModule.isLeaf() ? isEnroled(enrolmentContext, (CurricularCourse) degreeModule) : isEnroled(enrolmentContext, (CourseGroup) degreeModule);
