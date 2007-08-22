@@ -81,7 +81,6 @@ if (month != null && year!=null)
 		<%-- Event Date OR Publication Date --%>
 			<p class="mvert025 smalltxt greytxt2">
 				<span>
-				<!--  <span id="10367">-->
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" /> 

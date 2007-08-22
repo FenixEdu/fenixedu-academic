@@ -26,7 +26,7 @@
 		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
+	<h:outputLink value="departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
 		<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
@@ -210,7 +210,7 @@
 		</h:panelGroup>
 	</fc:dataRepeater>
 
-	<h:form>
+	<h:form id="SomeIdFoRvAlidHtmlGeneration">
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
  		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{CurricularCourseManagement.executionPeriodOID}'/>"/>
 	</h:form>

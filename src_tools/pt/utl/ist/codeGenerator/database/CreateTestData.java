@@ -267,7 +267,10 @@ public class CreateTestData {
     public static class CreateResources extends AtomicAction {
         private int roomCounter = 0;
 
+        Group managersGroup = null;
+
         public void doIt() {
+            managersGroup = getRoleGroup(RoleType.MANAGER);
             createCampi(1);
             createCampi(2);
         }
@@ -296,13 +299,20 @@ public class CreateTestData {
         private void createRoom(Floor floor) {
             final Room room = new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
                     Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1));
+            room.setExtensionOccupationsAccessGroup(managersGroup);
+            room.setGenericEventOccupationsAccessGroup(managersGroup);
+            room.setLessonOccupationsAccessGroup(managersGroup);
+            room.setPersonOccupationsAccessGroup(managersGroup);
+            room.setSpaceManagementAccessGroup(managersGroup);
+            room.setUnitOccupationsAccessGroup(managersGroup);
+            room.setWrittenEvaluationOccupationsAccessGroup(managersGroup);
             lessonRoomManager.push(room);
             examRoomManager.add(room);
             writtenTestsRoomManager.add(room);
         }
 
         private String getRoomName() {
-            return "Room " + roomCounter++;
+            return "Room" + roomCounter++;
         }
     }
 
@@ -401,10 +411,6 @@ public class CreateTestData {
             return new GroupUnion(teachersGroup, managersGroup);
         }
 
-        private Group getRoleGroup(final RoleType roleType) {
-            return new RoleGroup(Role.getRoleByRoleType(roleType));
-        }
-
         private String getDepartmentName(final int i) {
             return "Department " + i;
         }
@@ -418,6 +424,10 @@ public class CreateTestData {
                 createAggregateUnit(degreeUnits, degreeType.getName());
             }
         }
+    }
+
+    private static Group getRoleGroup(final RoleType roleType) {
+        return new RoleGroup(Role.getRoleByRoleType(roleType));
     }
 
     public static class CreateDegrees extends AtomicAction {
@@ -724,7 +734,7 @@ public class CreateTestData {
 
         private int counter = 0;
         private String getCurricularCourseName() {
-            return "Knowledge Germination " + counter;
+            return "KnowledgeGermination" + counter;
         }
         private String getCurricularCourseCode(final DegreeCurricularPlan degreeCurricularPlan, final int y, final int s) {
             final Degree degree = degreeCurricularPlan.getDegree();
@@ -1281,7 +1291,7 @@ public class CreateTestData {
 	    for (int i = 1; i < 6; i++) {
 		final String x = "" + dcpCounter + i + curricularYear.getYear() + curricularSemester.getSemester();
 		final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse("Germinação do Conhecimento" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
-                curricularCourse.setNameEn("Knowledge Germination" + x);
+                curricularCourse.setNameEn("KnowledgeGermination" + x);
 		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
                 curricularCourse.setTheoreticalHours(Double.valueOf(3d));
                 curricularCourse.setPraticalHours(Double.valueOf(2d));

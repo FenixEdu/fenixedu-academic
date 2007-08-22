@@ -22,20 +22,19 @@
 			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
-		<h:outputLink value="departmentSite.do?method=presentation&selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
+		<h:outputLink value="departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
 			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
 		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
 	<h:outputText value="</div>" escape="false"/>
 	
-	
-	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
+	<h:messages rendered="#{!empty error0 || !empty success0}" infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:outputText value="<h1>#{publicDepartmentBundle['department.courses']} #{publicDepartmentBundle['from.masculine']} " escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}</h1>" escape="false"/>
 
-	<h:form>
+	<h:form id="SomeId">
 
 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
@@ -50,7 +49,7 @@
 							<h:column>
 								<h:outputText value="<h2 class='arrow_bullet'>#{competenceCourseGroupUnit.name}</h2>" escape="false"/>
 								<h:panelGroup rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
-								<h:outputText value="<table class='showinfo1 smallmargin mtop05' style='width: 50em;'" escape="false"/>
+								<h:outputText value="<table class='showinfo1 smallmargin mtop05' style='width: 50em;'>" escape="false"/>
 								<fc:dataRepeater value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse">
 										<h:panelGroup rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}">
 										<h:outputText value="<tr class='color2'><td>" escape="false"/>	

@@ -22,7 +22,7 @@
 
 	<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
-		<span id="10367">
+		<span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 			<logic:notEmpty name="announcement" property="publicationBegin">
                 <bean:message key="label.messaging.announcement.publicationDate" bundle="MESSAGING_RESOURCES"/>
@@ -122,7 +122,7 @@
 	%>
 
 <%-- Data de Criação --%>
-	<html:link linkName="<%=announcement.getIdInternal().toString()%>"/>
+	<html:link linkName="<%="a" + announcement.getIdInternal().toString()%>"/>
         <bean:message key="label.messaging.announcement.creationDate" bundle="MESSAGING_RESOURCES"/>:
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
 	</em>

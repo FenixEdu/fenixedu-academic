@@ -24,7 +24,7 @@
    		</tr>
     	<tr><td>
    		<bean:message key="property.message"/></td><td>
-    	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.body" property="body" value=""/></td>
+    	<html:textarea bundle="HTMLALT_RESOURCES" property="body" value=""/></td>
     	</tr>	
       </table>	
       <center>

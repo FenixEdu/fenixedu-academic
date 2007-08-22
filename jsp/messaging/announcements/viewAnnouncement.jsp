@@ -24,7 +24,6 @@
 	<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
 	<span>
-	<!--  	<span id="10367">-->
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 			<logic:notEmpty name="announcement" property="publicationBegin">
 				Publicado em 

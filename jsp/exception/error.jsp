@@ -63,7 +63,7 @@
 					   		<bean:message key="property.message"/>
 				   		</td>
 				   		<td>
-					    	<html:textarea cols="36" rows="5" bundle="HTMLALT_RESOURCES" altKey="textarea.body" property="body" value=""/>
+					    	<html:textarea cols="36" rows="5" bundle="HTMLALT_RESOURCES" property="body" value=""/>
 				    	</td>
 			   		</tr>
 			    	<tr>
