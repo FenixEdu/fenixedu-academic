@@ -92,7 +92,7 @@
 			       		</logic:equal>
 			       	</logic:notEmpty>
 				
-					<bean:write name="summary" property="infoShift.tipo.fullNameTipoAula" />	
+					<bean:write name="summary" property="infoShift.shiftTypesPrettyPrint" />	
 				</span>       	
 			</h3>
 			</logic:present>

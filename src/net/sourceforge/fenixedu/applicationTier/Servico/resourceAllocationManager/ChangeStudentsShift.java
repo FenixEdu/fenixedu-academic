@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -22,8 +23,10 @@ public class ChangeStudentsShift extends Service {
         final Shift newShift = rootDomainObject.readShiftByOID(newShiftId);
 
         if (newShift != null) {
-            if (oldShift == null || !oldShift.getTipo().equals(newShift.getTipo())
-                    || !oldShift.getDisciplinaExecucao().getIdInternal().equals(newShift.getDisciplinaExecucao().getIdInternal())) {
+            if (oldShift == null 
+        	    || !oldShift.getTypes().containsAll(newShift.getTypes())
+        	    || !newShift.getTypes().containsAll(oldShift.getTypes())
+                    || !oldShift.getExecutionCourse().equals(newShift.getExecutionCourse())) {
                 throw new UnableToTransferStudentsException();
             }
         }

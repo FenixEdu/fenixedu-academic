@@ -35,7 +35,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append("'>");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("</a>");        
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");
+            strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")");
         
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
@@ -54,7 +54,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append("'>");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("</a>");        
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");                 
+            strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")");                 
             
         } else if (showOccupation instanceof InfoExam) {
           

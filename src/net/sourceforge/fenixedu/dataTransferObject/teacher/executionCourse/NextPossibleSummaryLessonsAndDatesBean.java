@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -23,6 +24,8 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("lesson.beginHourMinuteSecond"), true);
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("lesson.idInternal"));
     }
+    
+    private ShiftType lessonType;
     
     private DomainReference<Lesson> lessonReference;
 
@@ -97,15 +100,31 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     }
 
     public static NextPossibleSummaryLessonsAndDatesBean getNewInstance(String value) {
+	
 	int year = Integer.parseInt(value.substring(0, 4));
 	int month = Integer.parseInt(value.substring(5, 7));
 	int day = Integer.parseInt(value.substring(8, 10));
 	if (year == 0 || month == 0 || day == 0) {
 	    return null;
 	}
+	
 	YearMonthDay date = new YearMonthDay(year, month, day);
 	Integer lessonIdInternal = Integer.parseInt(value.substring(11));
-	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);	
-	return new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
+	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
+	NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
+	
+	if(lesson != null && lesson.getShift().getCourseLoadsCount() == 1) {
+	    bean.setLessonType(lesson.getShift().getCourseLoads().get(0).getType());
+	}
+	
+	return bean;
+    }
+
+    public ShiftType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(ShiftType lessonType) {
+        this.lessonType = lessonType;
     }
 }

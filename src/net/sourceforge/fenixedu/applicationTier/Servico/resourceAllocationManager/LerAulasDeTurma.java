@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAulasDeTurma extends Service {
 
-    public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
+    public List<InfoLesson> run(InfoClass infoClass) throws ExcepcaoPersistencia {
         SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID( infoClass.getIdInternal());
         
         final List<Shift> shiftList = schoolClass.getAssociatedShifts();

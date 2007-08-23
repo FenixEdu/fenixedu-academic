@@ -70,7 +70,7 @@
 		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="net.sourceforge.fenixedu.dataTransferObject.InfoShift">
 	<tr>
 		<td class="listClasses"><bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/></td>
-		<td class="listClasses"><bean:write name="enroledShift" property="tipo.fullNameTipoAula"/></td>
+		<td class="listClasses"><bean:write name="enroledShift" property="shiftTypesPrettyPrint"/></td>
 		<td class="listClasses">
 				<logic:iterate id="lesson" name="enroledShift" property="infoLessons">
 						&nbsp;

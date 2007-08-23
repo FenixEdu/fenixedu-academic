@@ -200,7 +200,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     private BigDecimal readDeclaredLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {                                     
         BigDecimal shiftLessonHoursSum = EMPTY;
 	for (Lesson lesson : shift.getAssociatedLessons()) {
-	    shiftLessonHoursSum = shiftLessonHoursSum.add(BigDecimal.valueOf(lesson.getAllLessonDates().size() * lesson.hours()));
+	    shiftLessonHoursSum = shiftLessonHoursSum.add(lesson.getUnitHours().multiply(BigDecimal.valueOf(lesson.getAllLessonDates().size())));
 	}
 	return lessonHours.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonHoursSum));                
     }
@@ -210,9 +210,9 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    if(summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
                 BigDecimal lessonHours = EMPTY;
                 if(summary.getLesson() != null) {
-                    lessonHours = BigDecimal.valueOf(summary.getLesson().hours());		
+                    lessonHours = summary.getLesson().getUnitHours();		
                 } else if(!shift.getAssociatedLessons().isEmpty()) {	
-                    lessonHours = BigDecimal.valueOf(shift.getAssociatedLessons().get(0).hours());		
+                    lessonHours = shift.getAssociatedLessons().get(0).getUnitHours();		
                 }	
                 summaryHours = summaryHours.add(lessonHours);
 	    }

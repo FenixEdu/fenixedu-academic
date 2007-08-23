@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -17,12 +16,13 @@ public class LastSummariesToSummariesManagementProvider implements DataProvider 
 
     public Object provide(Object source, Object currentValue) {
         SummariesManagementBean bean = (SummariesManagementBean) source;
-        Shift shift = bean.getShift();
-        if(shift != null) {
-            ShiftType tipo = shift.getTipo();
+        ShiftType lessonType = bean.getLessonType();
+        
+        if(lessonType != null) {
+            
             ExecutionCourse executionCourse = bean.getExecutionCourse();
             List<Summary> summaries = new ArrayList<Summary>();
-            summaries.addAll(executionCourse.getSummariesByShiftType(tipo));            
+            summaries.addAll(executionCourse.getSummariesByShiftType(lessonType));            
             Collections.sort(summaries, Summary.COMPARATOR_BY_DATE_AND_HOUR);
             
             List<Summary> result = new ArrayList<Summary>();

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -52,18 +53,16 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         List infoExecutionPeriods = null;
+        
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
-                    null);
+            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+            
         } catch (FenixServiceException ex) {
             throw new FenixActionException();
         }
-        if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-            // exclude closed execution periods
+        if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {            
             infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate() {
-
                 public boolean evaluate(Object input) {
-
                     InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
                     if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED)) {
                         return true;
@@ -78,9 +77,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             Collections.sort(infoExecutionPeriods, comparator);
 
             List executionPeriodLabels = buildLabelValueBeanForJsp(infoExecutionPeriods);
-
             request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
         }
+        
         return mapping.findForward("prepareEditECChooseExecutionPeriod");
     }
 
@@ -109,16 +108,13 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         buildCurricularYearLabelValueBean(request);
 
-        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
-                "executionPeriodName");
-
+        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
         request.setAttribute("executionPeriodId", executionPeriodId);
 
         Object args[] = { executionPeriodId };
         List executionDegreeList = null;
         try {
-            executionDegreeList = (List) ServiceUtils.executeService(userView,
-                    "ReadExecutionDegreesByExecutionPeriodId", args);
+            executionDegreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionPeriodId", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -214,12 +210,13 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
+        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null") 
+        	|| executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
+            
             separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-
             String curYear = getAndSetStringToRequest(request, "curYear");
             executionCourseForm.set("curYear", curYear);
+
         } else {
             executionCourseForm.set("executionCoursesNotLinked", new Boolean(executionCoursesNotLinked));
         }
@@ -227,23 +224,22 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Object args[] = { Integer.valueOf(executionCourseId) };
         InfoExecutionCourse infoExecutionCourse;
         try {
-            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadInfoExecutionCourseByOID", args);
+            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadInfoExecutionCourseByOID", args);
+        
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         if (infoExecutionCourse.getAssociatedInfoCurricularCourses() != null) {
-            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(),
-                    new BeanComparator("name"));
+            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
         }
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
-        fillForm(form, infoExecutionCourse);
+        fillForm(form, infoExecutionCourse, request);
 
         return mapping.findForward("editExecutionCourse");
     }
-
+           
     public ActionForward updateExecutionCourse(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -253,12 +249,10 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         separateLabel(actionForm, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) actionForm;
-        Boolean executionCoursesNotLinked = (Boolean) executionCourseForm
-                .get("executionCoursesNotLinked");
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals(Boolean.FALSE)) {
-            separateLabel(actionForm, request, "executionDegree", "executionDegreeId",
-                    "executionDegreeName");
 
+        Boolean executionCoursesNotLinked = (Boolean) executionCourseForm.get("executionCoursesNotLinked");
+        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals(Boolean.FALSE)) {
+            separateLabel(actionForm, request, "executionDegree", "executionDegreeId", "executionDegreeName");
             String curYear = getAndSetStringToRequest(request, "curYear");
             executionCourseForm.set("curYear", curYear);
         } else {
@@ -271,13 +265,14 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         try {
             infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
                     userView, "EditExecutionCourseByManager", args);
+        
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
         }
+        
         if (infoExecutionCourse.getAssociatedInfoCurricularCourses() != null) {
-            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(),
-                    new BeanComparator("name"));
+            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
         }
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
@@ -304,9 +299,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         } else {
             executionCourseForm.set("executionCoursesNotLinked", new Boolean(executionCoursesNotLinked));
         }
-
-        //		List internalIds = Arrays.asList((Integer[])
-        // deleteForm.get("internalIds"));
 
         List internalIds = new ArrayList();
         internalIds.add(new Integer(executionCourseId));
@@ -374,29 +366,19 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         return parameter;
     }
 
-    private InfoExecutionCourseEditor fillInfoExecutionCourseFromForm(ActionForm actionForm,
-            HttpServletRequest request) {
+    private InfoExecutionCourseEditor fillInfoExecutionCourseFromForm(ActionForm actionForm, HttpServletRequest request) {
 
         InfoExecutionCourseEditor infoExecutionCourse = new InfoExecutionCourseEditor();
 
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
 
         try {
-            infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm
-                    .get("executionCourseId")));
+            infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm.get("executionCourseId")));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
-            infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
-            infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm.get("theoreticalHours")));
-            infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm.get("theoPratHours")));
-            infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm.get("praticalHours")));
-            infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));            
-            infoExecutionCourse.setSeminaryHours(new Double((String) editExecutionCourseForm.get("seminaryHours")));
-            infoExecutionCourse.setProblemsHours(new Double((String) editExecutionCourseForm.get("problemsHours")));
-            infoExecutionCourse.setFieldWorkHours(new Double((String) editExecutionCourseForm.get("fieldWorkHours")));
-            infoExecutionCourse.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
-            infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
+            infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));            
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
             infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm.getString("availableGradeSubmission")));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -404,39 +386,14 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         return infoExecutionCourse;
     }
 
-    private void fillForm(ActionForm form, InfoExecutionCourse infoExecutionCourse) {
-        DynaActionForm executionCourseForm = (DynaActionForm) form;
+    private void fillForm(ActionForm form, InfoExecutionCourse infoExecutionCourse, HttpServletRequest request) {
+     
+	DynaActionForm executionCourseForm = (DynaActionForm) form;
         executionCourseForm.set("name", infoExecutionCourse.getNome());
-        executionCourseForm.set("code", infoExecutionCourse.getSigla());
-        if (infoExecutionCourse.getTheoreticalHours() != null) {
-            executionCourseForm.set("theoreticalHours", infoExecutionCourse.getTheoreticalHours()
-                    .toString());
-        }
-        if (infoExecutionCourse.getPraticalHours() != null) {
-            executionCourseForm.set("praticalHours", infoExecutionCourse.getPraticalHours().toString());
-        }
-        if (infoExecutionCourse.getTheoPratHours() != null) {
-            executionCourseForm.set("theoPratHours", infoExecutionCourse.getTheoPratHours().toString());
-        }
-        if (infoExecutionCourse.getLabHours() != null) {
-            executionCourseForm.set("labHours", infoExecutionCourse.getLabHours().toString());
-        }
-        if (infoExecutionCourse.getSeminaryHours() != null) {
-            executionCourseForm.set("seminaryHours", infoExecutionCourse.getSeminaryHours().toString());
-        }
-        if (infoExecutionCourse.getProblemsHours() != null) {
-            executionCourseForm.set("problemsHours", infoExecutionCourse.getProblemsHours().toString());
-        }
-        if (infoExecutionCourse.getFieldWorkHours() != null) {
-            executionCourseForm.set("fieldWorkHours", infoExecutionCourse.getFieldWorkHours().toString());
-        }
-        if (infoExecutionCourse.getTrainingPeriodHours() != null) {
-            executionCourseForm.set("trainingPeriodHours", infoExecutionCourse.getTrainingPeriodHours().toString());
-        }
-        if (infoExecutionCourse.getTutorialOrientationHours() != null) {
-            executionCourseForm.set("tutorialOrientationHours", infoExecutionCourse.getTutorialOrientationHours().toString());
-        }
-        if(infoExecutionCourse.getAvailableGradeSubmission() != null)
-        executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
+        executionCourseForm.set("code", infoExecutionCourse.getSigla());        
+        if(infoExecutionCourse.getAvailableGradeSubmission() != null) {
+            executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
+        }                       
+        request.setAttribute("courseLoadBean", new CourseLoadBean(infoExecutionCourse.getExecutionCourse()));   
     }
 }

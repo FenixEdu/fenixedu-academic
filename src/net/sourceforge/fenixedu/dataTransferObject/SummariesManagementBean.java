@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -25,6 +26,8 @@ public class SummariesManagementBean implements Serializable {
     
     private SummaryType summaryType;
 
+    private ShiftType lessonType;
+    
     private DomainReference<Lesson> lessonReference;
 
     private DomainReference<Shift> shiftReference;
@@ -58,9 +61,7 @@ public class SummariesManagementBean implements Serializable {
     private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
     
 
-    protected SummariesManagementBean() {
-	
-    }
+    protected SummariesManagementBean() {}
     
     public SummariesManagementBean(SummaryType summaryType, ExecutionCourse executionCourse, Professorship professorship, List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {        
         setSummaryType(summaryType);
@@ -73,7 +74,7 @@ public class SummariesManagementBean implements Serializable {
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, SummaryType summaryType,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift,
             Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
-            Professorship professorshipLogged) {
+            Professorship professorshipLogged, ShiftType lessonType) {
         
         setTitle(title);
         setSummaryText(summaryText);
@@ -88,8 +89,9 @@ public class SummariesManagementBean implements Serializable {
         setSummaryRoom(summaryRoom);  
         setSummaryTime(summaryTime);
         setStudentsNumber(studentsNumber);
-        setExecutionCourse(shift.getDisciplinaExecucao());
+        setExecutionCourse(shift.getExecutionCourse());
         setProfessorshipLogged(professorshipLogged);
+        setLessonType(lessonType);
     }
 
     public String getTeacherName() {
@@ -264,5 +266,13 @@ public class SummariesManagementBean implements Serializable {
     public void setNextPossibleSummaryLessonsAndDatesBean(
     	List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean) {
         this.nextPossibleSummaryLessonsAndDatesBean = nextPossibleSummaryLessonsAndDatesBean;
+    }
+
+    public ShiftType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(ShiftType lessonType) {
+        this.lessonType = lessonType;
     }
 }

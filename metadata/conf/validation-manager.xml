@@ -290,18 +290,6 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="message.manager.execution.course.code" resource="true"/>
       </field>
-      <field property="theoreticalHours" depends="required, double" page="1" >
-        <arg0 key="message.manager.theoreticalHours" resource="true"/>
-      </field>
-      <field property="praticalHours" depends="required, double" page="1" >
-        <arg0 key="message.manager.praticalHours" resource="true"/>
-      </field>
-      <field property="theoPratHours" depends="required, double" page="1" >
-        <arg0 key="message.manager.theoPratHours" resource="true"/>
-      </field>
-      <field property="labHours" depends="required, double" page="1" >
-        <arg0 key="message.manager.labHours" resource="true"/>
-      </field>
     </form>
     
     <form name="rolesForm">
@@ -435,18 +423,7 @@
       <field property="code" depends="required" page="3" >
         <arg0 key="message.manager.execution.course.code" resource="true"/>
       </field>
-      <field property="theoreticalHours" depends="required, double" page="3" >
-        <arg0 key="message.manager.theoreticalHours" resource="true"/>
-      </field>
-      <field property="praticalHours" depends="required, double" page="3" >
-        <arg0 key="message.manager.praticalHours" resource="true"/>
-      </field>
-      <field property="theoPratHours" depends="required, double" page="3" >
-        <arg0 key="message.manager.theoPratHours" resource="true"/>
-      </field>
-      <field property="labHours" depends="required, double" page="3" >
-        <arg0 key="message.manager.labHours" resource="true"/>
-      </field>      
+           
     </form>
     
     <form name="chooseForGenerateFilesForm">

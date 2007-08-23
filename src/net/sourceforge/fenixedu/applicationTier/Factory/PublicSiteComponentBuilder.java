@@ -118,9 +118,7 @@ public class PublicSiteComponentBuilder {
             infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
             infoExecutionCourse.setNome(executionCourse.getNome());
             infoExecutionCourse.setSigla(executionCourse.getSigla());
-            infoExecutionCourse
-                    .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse
-                            .getExecutionPeriod()));
+            infoExecutionCourse.setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod()));
         }
         return infoExecutionCourse;
     }

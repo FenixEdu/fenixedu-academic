@@ -7,6 +7,8 @@
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
+	
 	<h:form>	
 
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
@@ -37,7 +39,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitType']}" />
 				</f:facet>				
-				<h:outputText value="#{bundleEnum[function.type.name]}" escape="false"/>
+				<h:outputText value="#{bundleEnum[function.functionType.name]}" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">

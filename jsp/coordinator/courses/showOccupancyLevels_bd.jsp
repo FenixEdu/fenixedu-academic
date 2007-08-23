@@ -50,7 +50,7 @@
 				</td>
 	
 				<td class="listClasses">
-					<bean:write name="shift" property="tipo" />
+					<bean:write name="shift" property="shiftTypesPrettyPrint" />
 				</td>
 	
 				<td class="listClasses">

@@ -58,7 +58,7 @@
 						<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>											
 						<tr>
 							<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
-							<td><bean:message name="degreeTeachingService" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/></td>
+							<td><bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/></td>
 							
 							<td>
 								<logic:iterate id="lesson" name="lessonList" indexId="index">
@@ -91,7 +91,7 @@
 							<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>												
 							<tr>
 								<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
-								<td><bean:message name="degreeTeachingService" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/></td>
+								<td><bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/></td>
 								
 								<td>
 									<logic:iterate id="lesson" name="lessonList" indexId="index">

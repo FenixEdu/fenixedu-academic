@@ -10,7 +10,9 @@ package net.sourceforge.fenixedu.dataTransferObject;
  * @author tfc130
  */
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -20,8 +22,19 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 public class InfoShift extends InfoObject {
 
+    public static final Comparator<InfoShift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
+    static {
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shift.executionCourse.nome"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shiftTypesIntegerComparator"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shift.idInternal"));
+    }
+    
     private final DomainReference<Shift> shift;
 
     public InfoShift(final Shift shift) {
@@ -37,13 +50,29 @@ public class InfoShift extends InfoObject {
     }
 
     public InfoExecutionCourse getInfoDisciplinaExecucao() {
-        return InfoExecutionCourse.newInfoFromDomain(getShift().getDisciplinaExecucao());
+        return InfoExecutionCourse.newInfoFromDomain(getShift().getExecutionCourse());
     }
-
-    public ShiftType getTipo() {
-        return getShift().getTipo();
+ 
+    public Set<ShiftType> getSortedTypes() {
+	return getShift().getSortedTypes();
     }
-
+    
+    public Integer getShiftTypesIntegerComparator() {
+	return getShift().getShiftTypesIntegerComparator();
+    }
+    
+    public String getLessonsStringComparator() {
+	return getShift().getLessonsStringComparator();
+    }
+    
+    public String getShiftTypesPrettyPrint() {
+	return getShift().getShiftTypesPrettyPrint();
+    }
+    
+    public String getShiftTypesCodePrettyPrint() {
+	return getShift().getShiftTypesCodePrettyPrint();
+    }
+    
     public Integer getLotacao() {
         return getShift().getLotacao();
     }
@@ -101,13 +130,13 @@ public class InfoShift extends InfoObject {
 
     public List<InfoLesson> getInfoLessons() {
         final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
-        for (final Lesson lesson : getShift().getAssociatedLessonsSet()) {
+        for (final Lesson lesson : getShift().getLessonsOrderedByWeekDayAndStartTime()) {
             infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
         }
         return infoLessons;
     }
 
-    public List getInfoClasses() {
+    public List<InfoClass> getInfoClasses() {
         final List<InfoClass> infoClasses = new ArrayList<InfoClass>();
         for (final SchoolClass schoolClass : getShift().getAssociatedClassesSet()) {
             infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
@@ -133,4 +162,7 @@ public class InfoShift extends InfoObject {
         return shift == null ? null : shift.getObject();
     }
 
+    public boolean containsType(ShiftType shiftType) {
+	return getShift().containsType(shiftType);
+    }      
 }

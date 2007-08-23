@@ -114,16 +114,17 @@
 					<span class="greytxt">
 						<logic:empty name="summary" property="isExtraLesson">
 							<bean:message key="label.summary.lesson" />
+							<bean:message name="summary" property="summaryType.name" bundle="ENUMERATION_RESOURCES"/>
 						</logic:empty>
 						<logic:notEmpty name="summary" property="isExtraLesson">
-				       		<logic:equal name="summary" property="isExtraLesson" value="false">		
+				       		<logic:equal name="summary" property="isExtraLesson" value="false">						       		
 								<bean:message key="label.summary.lesson" />
+								<bean:message name="summary" property="summaryType.name" bundle="ENUMERATION_RESOURCES"/>
 				       		</logic:equal>
 				       		<logic:equal name="summary" property="isExtraLesson" value="true">		     
 								<bean:message key="label.extra.lesson" />
 				       		</logic:equal>
-				       	</logic:notEmpty>
-				       	<bean:message name="summary" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/>
+				       	</logic:notEmpty>				       	
 					</span>     	
 				</p>
 			</logic:present>

@@ -97,7 +97,7 @@
 					<logic:equal name="numberOfLessons" value="0">
 						<tr>
 							<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
-							<td><bean:write name="degreeTeachingService" property="shift.tipo.siglaTipoAula"/></td>
+							<td><bean:write name="degreeTeachingService" property="shift.shiftTypesCodePrettyPrint"/></td>
 							<td colspan="7"> <bean:message key="label.shift.noLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 						</tr>
 					</logic:equal>
@@ -110,7 +110,7 @@
 										<bean:write name="degreeTeachingService" property="shift.nome"/>
 									</td>
 									<td rowspan="<%= numberOfLessons %>">
-										<bean:write name="degreeTeachingService" property="shift.tipo"/>
+										<bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/>
 									</td>
 									<td>
 										<bean:write name="lesson" property="diaSemana"/>

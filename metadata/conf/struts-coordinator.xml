@@ -1018,6 +1018,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>

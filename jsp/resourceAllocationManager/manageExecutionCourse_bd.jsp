@@ -1,16 +1,21 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ page import="java.util.List"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 <em><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></h2>
 
-<jsp:include page="contextExecutionCourse.jsp"/>
+<logic:notEmpty name="courseLoadBean">
+	<logic:notEmpty name="courseLoadBean" property="executionCourse">
+		<bean:define id="executionCourse"name="courseLoadBean" property="executionCourse" toScope="request"/>
+		<jsp:include page="contextExecutionCourse.jsp"/>		
+	</logic:notEmpty>
+</logic:notEmpty>
 
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -18,81 +23,49 @@
 
 <p><span class="warning0"><bean:message key="label.manage.execution.course.note" bundle="SOP_RESOURCES"/></span></p>
 
-<html:form action="/manageExecutionCourse" focus="theoreticalHours">
+<logic:messagesPresent message="true">
+	<p>
+		<span class="error0"><!-- Error messages go here -->
+			<html:messages id="message" message="true">
+				<bean:write name="message" filter="true"/>
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
-				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+<logic:notEmpty name="courseLoadBean">
+	<logic:notEmpty name="courseLoadBean" property="executionCourse">
+	
+		<logic:notEmpty name="courseLoadBean" property="executionCourse.courseLoads">
+			<fr:view name="courseLoadBean" property="executionCourse.courseLoads" schema="ExecutionCourseCourseLoadView">			
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 vamiddle thlight" />
+					<fr:property name="columnClasses" value="acenter,acenter,acenter"/>
+					
+					<fr:property name="link(delete)" value="/manageExecutionCourse.do?method=deleteCourseLoad"/>
+		            <fr:property name="param(delete)" value="idInternal/courseLoadID"/>
+			        <fr:property name="key(delete)" value="link.delete"/>
+		            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>
+		            <fr:property name="order(delete)" value="0"/>	            				
+				</fr:layout>				
+			</fr:view>
+		</logic:notEmpty>
+		
+		<p><b><bean:message key="label.edit.executionCourse.course.load" bundle="SOP_RESOURCES"/></b></p>
+		
+		<fr:form action="/manageExecutionCourse.do?method=edit">
+			<fr:edit name="courseLoadBean" id="courseLoadBeanID" schema="ExecutionCourseCourseLoadManagement">			 
+				<fr:destination name="postBack" path="/manageExecutionCourse.do?method=preparePostBack"/> 
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 vamiddle thlight" />				
+				</fr:layout>				
+				<fr:destination name="invalid" path="/manageExecutionCourse.do?method=preparePostBack"/>
+			</fr:edit>
+			<html:submit><bean:message key="label.edit"/></html:submit>
+		</fr:form>
 
-	<table class="tstyle4 tdcenter">
-			<tr>
-				<th>
-					<bean:message key="label.hours.load.theoretical"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.theoretical_practical"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.practical"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.laboratorial"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.seminary"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.problems"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.fieldWork"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.trainingPeriod"/>
-				</th>
-				<th>
-					<bean:message key="label.hours.load.tutorialOrientation"/>
-				</th>
-			</tr>
-			<tr>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" name="executionCourse" property="theoreticalHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" name="executionCourse" property="theoPratHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" name="executionCourse" property="praticalHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.labHours" name="executionCourse" property="labHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.seminaryHours" name="executionCourse" property="seminaryHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.problemsHours" name="executionCourse" property="problemsHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.fieldWorkHours" name="executionCourse" property="fieldWorkHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.trainingPeriodHours" name="executionCourse" property="trainingPeriodHours" size="4"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorialOrientationHours" name="executionCourse" property="tutorialOrientationHours" size="4"/>
-				</td>
-				
-			</tr>
-	</table>
-	<br />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-	<bean:message key="label.change"/>
-	</html:submit>
-</html:form>
+	</logic:notEmpty>
+</logic:notEmpty>
 
 <p class="mtop15 mbottom05"><bean:message key="label.execution.course.classes"/>:</p>
 <logic:present name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
@@ -115,20 +88,13 @@
 				</td>
 				<td>
 					<html:link page="<%= "/manageClass.do?method=prepare&amp;"
-							+ SessionConstants.CLASS_VIEW_OID
-							+ "="
-							+ pageContext.findAttribute("classOID")
-							+ "&amp;"
-							+ SessionConstants.EXECUTION_PERIOD_OID
-							+ "="
-							+ pageContext.findAttribute("executionPeriodOID")
-							+ "&amp;"
-							+ SessionConstants.CURRICULAR_YEAR_OID
-							+ "="
-							+ pageContext.findAttribute("curricularYearOID")
-							+ "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID
-							+ "="
+							+ SessionConstants.CLASS_VIEW_OID + "="
+							+ pageContext.findAttribute("classOID")	+ "&amp;"
+							+ SessionConstants.EXECUTION_PERIOD_OID + "="
+							+ pageContext.findAttribute("executionPeriodOID") + "&amp;"
+							+ SessionConstants.CURRICULAR_YEAR_OID + "="
+							+ pageContext.findAttribute("curricularYearOID") + "&amp;"
+							+ SessionConstants.EXECUTION_DEGREE_OID	+ "="
 							+ pageContext.findAttribute("executionDegreeOID") %>">
 						<bean:write name="infoClass" property="nome"/>
 					</html:link>

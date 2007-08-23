@@ -54,7 +54,7 @@ public class EditGroupShift extends Service {
         }
 
         final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
-        if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
+        if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
             throw new InvalidStudentNumberServiceException();
         }
 

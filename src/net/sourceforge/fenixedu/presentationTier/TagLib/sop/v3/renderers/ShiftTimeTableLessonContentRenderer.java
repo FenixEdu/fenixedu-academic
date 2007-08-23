@@ -26,7 +26,7 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
 
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
-            strBuffer.append(lesson.getTipo()).append(")");
+            strBuffer.append(lesson.getInfoShift().getShiftTypesPrettyPrint()).append(")");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append("<a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
@@ -40,7 +40,7 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
            
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
-            strBuffer.append(lesson.getTipo()).append(")");
+            strBuffer.append(lesson.getShiftTypesPrettyPrint()).append(")");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append("<a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");

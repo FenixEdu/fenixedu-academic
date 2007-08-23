@@ -21,8 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends Service {
 
-    public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID)
-            throws ExcepcaoPersistencia {
+    public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) throws ExcepcaoPersistencia {
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionPeriod);
         for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
@@ -36,26 +35,13 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                     final String originalCode = getCodeForCurricularCourse(curricularCourse);
                     if (originalCode != null) {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
-                        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), sigla, executionPeriod);
-                        initLessonLoad(executionCourse, curricularCourse);
+                        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), sigla, executionPeriod);                        
                         executionCourse.createSite();
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                     }
 		}
             }
         }
-    }
-
-    private void initLessonLoad(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
-	executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
-	executionCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
-	executionCourse.setPraticalHours(curricularCourse.getPraticalHours());
-	executionCourse.setLabHours(curricularCourse.getLabHours());
-	executionCourse.setSeminaryHours(curricularCourse.getSeminaryHours());
-	executionCourse.setProblemsHours(curricularCourse.getProblemsHours());
-	executionCourse.setTutorialOrientationHours(curricularCourse.getTutorialOrientationHours());
-	executionCourse.setTrainingPeriodHours(curricularCourse.getTrainingPeriodHours());
-	executionCourse.setFieldWorkHours(curricularCourse.getFieldWorkHours());
     }
 
     private String getCodeForCurricularCourse(final CurricularCourse curricularCourse) {

@@ -34,8 +34,8 @@ public class TimePeriod extends FenixUtil {
     }
 
     public Double hours() {
+	
         Calendar endCalendar = Calendar.getInstance();
-
         endCalendar.setTimeInMillis(this.end);
 
         Calendar startCalendar = Calendar.getInstance();
@@ -48,11 +48,10 @@ public class TimePeriod extends FenixUtil {
         endCalendar.roll(Calendar.MINUTE, -(startCalendar.get(Calendar.MINUTE)));
 
         int minutes = endCalendar.get(Calendar.MINUTE);
-        int hours = endMinutes < startMinutes ? endCalendar.get(Calendar.HOUR_OF_DAY) - 1 : endCalendar
-                .get(Calendar.HOUR_OF_DAY);
+        int hours = endMinutes < startMinutes ? endCalendar.get(Calendar.HOUR_OF_DAY) - 1 
+        	: endCalendar.get(Calendar.HOUR_OF_DAY);
 
         double minutesInHours = minutes / 60.0;
-
-        return new Double(hours + minutesInHours);
+        return Double.valueOf(hours + minutesInHours);
     }
 }

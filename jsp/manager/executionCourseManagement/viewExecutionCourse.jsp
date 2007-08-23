@@ -1,8 +1,9 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
@@ -41,78 +42,6 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="theoreticalHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="praticalHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="theoPratHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.labHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="labHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.seminaryHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="seminaryHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.problemsHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="problemsHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.fieldWorkHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="fieldWorkHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.trainingPeriodHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="trainingPeriodHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.tutorialOrientationHours"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="tutorialOrientationHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/></b>
 			</td>
 			<td>
@@ -128,6 +57,15 @@
 			</td>
 		</tr>
 	</table>
+	
+	<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE%>" property="courseLoads">
+		<fr:view name="<%=SessionConstants.EXECUTION_COURSE%>" property="courseLoads" schema="ExecutionCourseCourseLoadView">			
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 vamiddle thlight" />
+				<fr:property name="columnClasses" value="acenter,acenter,acenter"/>					            			
+			</fr:layout>				
+		</fr:view>
+	</logic:notEmpty>
 
 	<br />
 	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h2>

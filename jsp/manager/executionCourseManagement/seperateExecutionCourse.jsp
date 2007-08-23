@@ -115,7 +115,7 @@
 						<bean:write name="infoShift" property="nome"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoShift" property="tipo"/>
+						<bean:write name="infoShift" property="shiftTypesPrettyPrint"/>
 					</td>
 					<td class="listClasses">
 						<logic:iterate indexId="infoLessonIndexId" id="infoLesson" name="infoShift" property="infoLessons">

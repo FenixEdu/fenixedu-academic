@@ -80,10 +80,13 @@
 	 	<tr>
 	        <th><bean:message key="property.lesson.new.begin.date"/>: </th>
     	    <td>
-        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.new.begin.date" property="newBeginDate" size="10" disabled="true"/>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.new.begin.date" property="newBeginDate" size="8" disabled="true"/>
         	 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="newBeginDate"/>
+        	 	<bean:message key="label.until"/>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.new.end.date" property="newEndDate" size="8" disabled="true"/>
+        	 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="newEndDate"/>
     	    </td> 
-	 	</tr>	 	
+	 	</tr>		 	 
 	    <tr>
     		<th><bean:message key="property.aula.sala"/>: </th> 
        		<td>

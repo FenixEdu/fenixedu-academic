@@ -5,20 +5,82 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="java.util.List"%>
-
 <html:xhtml/>
+
 <em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="link.manage.turnos"/></h2>
 
 <jsp:include page="context.jsp"/>
 
-
 <span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 
+<h3 class="mbottom05"><bean:message key="title.create.shift"/></h3>
 
-<jsp:include page="createShift.jsp"/>
+<html:form action="/manageShifts" focus="nome">
+
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createShift"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+
+	<table class="tstyle5 thlight thright mtop05">
+		<tr>
+			<th>
+				<bean:message key="property.turno.disciplina"/>:
+			</th>
+			<td>
+				<bean:define id="executionCourseList" name="<%= SessionConstants.EXECUTION_COURSE_LIST_KEY %>"/>
+				<html:select bundle="HTMLALT_RESOURCES" property="courseInitials" size="1" 
+					onchange="this.form.method.value='listExecutionCourseCourseLoads';this.form.submit();">
+					<html:option value=""><!-- w3c complient --></html:option>
+					<html:options property="sigla" labelProperty="nome" collection="executionCourseList"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<bean:message key="property.turno.types"/>:
+			</th>
+			<td>			
+				<logic:notEmpty name="tiposAula">									
+					<logic:iterate id="tipoAula" name="tiposAula">
+						<html:multibox property="shiftTiposAula">
+							<bean:write name="tipoAula" property="value"/>
+						</html:multibox>
+						<bean:write name="tipoAula" property="label"/>
+					</logic:iterate>				
+				</logic:notEmpty>		
+				<logic:empty name="tiposAula">
+					--
+				</logic:empty>					
+			</td>
+		</tr>
+        <tr>
+            <th>
+                <bean:message key="property.turno.capacity"/>:
+            </th>
+            <td>
+                <html:text bundle="HTMLALT_RESOURCES" altKey="text.lotacao" property="lotacao" size="11" maxlength="20"/>
+            </td>
+        </tr>		
+	</table>
+
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="label.create"/>
+	</html:submit>
+
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>
+
+</html:form>
 
 
 <h3 class="mtop2 mbottom05"><bean:message key="title.manage.turnos"/></h3>
@@ -82,9 +144,7 @@
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
 			<bean:define id="infoShiftLessonList" name="infoShift" property="infoLessons"/>
-			<bean:define id="numberOfLessons">
-				<%= ((List) pageContext.findAttribute("infoShiftLessonList")).size() %>
-			</bean:define>
+			<bean:define id="numberOfLessons"><%= ((List) pageContext.findAttribute("infoShiftLessonList")).size() %></bean:define>
 		<tr align="center">
 			<logic:equal name="numberOfLessons" value="0">
 				<td class="listClasses">
@@ -138,8 +198,8 @@
 			</logic:equal>
 			<logic:notEqual name="numberOfLessons" value="0">
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
-			</logic:notEqual>
-            	<bean:message name="infoShift" property="tipo.name" bundle="ENUMERATION_RESOURCES"/>
+			</logic:notEqual>            	
+            	<bean:write name="infoShift" property="shift.shiftTypesPrettyPrint"/>            	            	
             </td>
 			<logic:equal name="numberOfLessons" value="0">
 				<td class="listClasses">

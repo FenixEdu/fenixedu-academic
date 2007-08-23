@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
@@ -799,15 +800,11 @@ public class CreateTestData {
                         if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {                            
                             final ExecutionCourse executionCourse = new ExecutionCourse(
                                     curricularCourse.getName(), curricularCourse.getCode(), executionPeriod);
-                            executionCourse.setTheoreticalHours(Double.valueOf(3));
-                            executionCourse.setPraticalHours(Double.valueOf(2));
-                            executionCourse.setLabHours(Double.valueOf(0));
-                            executionCourse.setTheoPratHours(Double.valueOf(0));
-                            executionCourse.setTrainingPeriodHours(Double.valueOf(0));
-                            executionCourse.setTutorialOrientationHours(Double.valueOf(0));
-                            executionCourse.setFieldWorkHours(Double.valueOf(0));
-                            executionCourse.setSeminaryHours(Double.valueOf(0));
-                            executionCourse.setProblemsHours(Double.valueOf(0));
+                                                      
+                            BigDecimal numberOfWeeks = BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS);
+                            new CourseLoad(executionCourse, ShiftType.TEORICA, BigDecimal.valueOf(1.5), BigDecimal.valueOf(1.5).multiply(numberOfWeeks));
+                            new CourseLoad(executionCourse, ShiftType.TEORICA, BigDecimal.valueOf(2), BigDecimal.valueOf(2).multiply(numberOfWeeks));
+                            
                             curricularCourse.addAssociatedExecutionCourses(executionCourse);
 
                             executionCourse.createSite();
@@ -889,10 +886,17 @@ public class CreateTestData {
         }
 
         private static void createShifts(final ExecutionCourse executionCourse) {
-            final Shift shift1 = new Shift(executionCourse, ShiftType.TEORICA, Integer.valueOf(50), Integer.valueOf(50));
+            List<ShiftType> shiftTypes = new ArrayList<ShiftType>();
+            shiftTypes.add(ShiftType.TEORICA);
+            
+            final Shift shift1 = new Shift(executionCourse, shiftTypes, Integer.valueOf(50));
             createLesson(shift1, 90);
             createLesson(shift1, 90);
-            final Shift shift2 = new Shift(executionCourse, ShiftType.PRATICA, Integer.valueOf(50), Integer.valueOf(50));
+            
+            shiftTypes.clear();
+            shiftTypes.add(ShiftType.PRATICA);
+
+            final Shift shift2 = new Shift(executionCourse, shiftTypes, Integer.valueOf(50));
             createLesson(shift2, 120);
 
             for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
@@ -924,7 +928,7 @@ public class CreateTestData {
             final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
             final Room room = lessonRoomManager.getNextOldRoom();
             final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift.getTipo(), shift, FrequencyType.WEEKLY, executionPeriod);
+            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod);
             new LessonSpaceOccupation(room, lesson);
         }
     }
@@ -1230,15 +1234,15 @@ public class CreateTestData {
 
     private static void createExecutionCourse(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
         final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod);
-        executionCourse.addAssociatedCurricularCourses(curricularCourse);
-        executionCourse.setTheoreticalHours(Double.valueOf(3d));
-        executionCourse.setPraticalHours(Double.valueOf(2d));
+        executionCourse.addAssociatedCurricularCourses(curricularCourse);               
         executionCourse.setAvailableForInquiries(Boolean.TRUE);
+       
         final ExecutionCourseSite executionCourseSite = executionCourse.createSite();
         executionCourseSite.setInitialStatement("Bla bla bla bla bla bla bla.");
         executionCourseSite.setAlternativeSite("http://www.google.com/");
         executionCourseSite.setIntroduction("Blur blur bla blur ble blur bla.");
         executionCourseSite.setLessonPlanningAvailable(Boolean.TRUE);
+        
         createProfessorship(executionCourse, Boolean.TRUE);
         createProfessorship(executionCourse, Boolean.FALSE);
 //        createAnnouncementsAndPlanning(executionCourse);
@@ -1247,18 +1251,20 @@ public class CreateTestData {
 //        createBibliographicReferences(executionCourse);
         createShiftProfessorhips(executionCourse);
     }
-
+    
     private static void createShiftProfessorhips(final ExecutionCourse executionCourse) {
         final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
             final Teacher teacher = professorship.getTeacher();
-            for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
-                if ((professorship.isResponsibleFor() && shift.getTipo() == ShiftType.TEORICA)
-                        || (!professorship.isResponsibleFor() && shift.getTipo() != ShiftType.TEORICA)) {
+            for (final Shift shift : executionCourse.getAssociatedShifts()) {
+                if ((professorship.isResponsibleFor() && shift.containsType(ShiftType.TEORICA))
+                	|| (!professorship.isResponsibleFor() && !shift.containsType(ShiftType.TEORICA))) {
+                  
                     final ShiftProfessorship shiftProfessorship = new ShiftProfessorship();
                     shiftProfessorship.setShift(shift);
                     shiftProfessorship.setProfessorship(professorship);
                     shiftProfessorship.setPercentage(Double.valueOf(100));
+                    
                     TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
                     if (teacherService == null) {
                         teacherService = new TeacherService(teacher, executionPeriod);
@@ -1271,12 +1277,13 @@ public class CreateTestData {
                     supportLessonDTO.setStartTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 20).toDate());
                     supportLessonDTO.setEndTime(new DateTime().withField(DateTimeFieldType.hourOfDay(), 21).toDate());
                     supportLessonDTO.setWeekDay(new DiaSemana(DiaSemana.SABADO));
+                    
                     SupportLesson.create(supportLessonDTO, professorship, RoleType.SCIENTIFIC_COUNCIL);
                 }
             }
         }
     }
-
+        
     private static Calendar toCalendar(final HourMinuteSecond hourMinuteSecond) {
 	Calendar calendar = Calendar.getInstance();
 	calendar.set(Calendar.HOUR_OF_DAY, hourMinuteSecond.getHour());
@@ -1332,7 +1339,7 @@ public class CreateTestData {
 	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 	    final ExecutionCourse executionCourse = curricularCourse.getAssociatedExecutionCoursesSet().iterator().next();
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreesSet().iterator().next();
-	    for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
 		for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
 		    if (schoolClass.getExecutionPeriod() == executionCourse.getExecutionPeriod()
 			    && schoolClass.getAnoCurricular().intValue() == curricularYear.getYear().intValue()) {
@@ -1450,17 +1457,17 @@ public class CreateTestData {
 
     private static void createStudentShifts(final Attends attends) {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
-	    if (!isEnroledInShift(attends, shift.getTipo())) {
+	for (final Shift shift : executionCourse.getAssociatedShifts()) {
+	    if (!isEnroledInShift(attends, shift.getTypes())) {
 		shift.reserveForStudent(attends.getRegistration());
 	    }
 	}
     }
 
-    private static boolean isEnroledInShift(final Attends attends, final ShiftType shiftType) {
+    private static boolean isEnroledInShift(final Attends attends, final List<ShiftType> shiftTypes) {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	for (final Shift shift : attends.getRegistration().getShiftsSet()) {
-	    if (shift.getTipo() == shiftType && shift.getDisciplinaExecucao() == executionCourse) {
+	    if (shift.getTypes().containsAll(shiftTypes) && shift.getExecutionCourse() == executionCourse) {
 		return true;
 	    }
 	}

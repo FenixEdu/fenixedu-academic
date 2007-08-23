@@ -85,7 +85,7 @@
         <form-property name="page" type="java.lang.Integer"/>
         <form-property name="nome" type="java.lang.String"/>
         <form-property name="courseInitials" type="java.lang.String"/>
-        <form-property name="tipoAula" type="java.lang.String"/>
+        <form-property name="shiftTiposAula" type="java.lang.String[]"/>
         <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
 
@@ -111,6 +111,7 @@
         <form-property name="nomeSala" type="java.lang.String"/>
         <form-property name="quinzenal" type="java.lang.Boolean"/>        
         <form-property name="newBeginDate" type="java.lang.String"/>
+        <form-property name="newEndDate" type="java.lang.String"/>
       </form-bean>
 
 	  <!-- Dynamic-FormBean for adding shifts to class -->

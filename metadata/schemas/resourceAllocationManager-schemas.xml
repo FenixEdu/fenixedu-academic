@@ -171,3 +171,29 @@
 		<property name="saveOptions" value="true"/>
     </slot>        
 </schema>
+
+<!-- ExecutionCourse CourseLoad Management Schemas -->
+
+<schema name="ExecutionCourseCourseLoadManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean" bundle="SOP_RESOURCES">
+	<slot name="type" layout="menu-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.course.load.type">
+		<property name="bundle" value="SOP_RESOURCES"/>
+		<property name="destination" value="postBack"/>	
+	</slot> 	
+	<slot name="totalQuantity" key="label.course.load.totalQuantity" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="unitQuantity" key="label.course.load.unitQuantity"/>	
+</schema>	
+
+<schema name="ExecutionCourseCourseLoadView" type="net.sourceforge.fenixedu.domain.CourseLoad" bundle="SOP_RESOURCES">
+	<slot name="type" key="label.course.load.type" >
+		<property name="bundle" value="SOP_RESOURCES" />
+	</slot>			 
+	<slot name="totalQuantity" key="label.course.load.totalQuantity"/>
+	<slot name="unitQuantity" key="label.course.load.unitQuantity"/>
+</schema>	
+
+<schema name="ExecutionCourseWeeklyCourseLoadView" type="net.sourceforge.fenixedu.domain.CourseLoad" bundle="SOP_RESOURCES">
+	<slot name="type" key="label.course.load.type" >
+		<property name="bundle" value="SOP_RESOURCES" />
+	</slot>			 
+	<slot name="weeklyHours" key="label.course.load.weeklyQuantity"/>	
+</schema>	

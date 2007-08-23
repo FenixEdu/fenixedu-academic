@@ -249,17 +249,17 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
         while (iterator.hasNext()) {
             InfoShift infoShift = (InfoShift) iterator.next();
-            if (infoShift.getTipo().equals(ShiftType.TEORICA)) {
+            if (infoShift.containsType(ShiftType.TEORICA)) {
                 theoreticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.PRATICA)) {
+            } else if (infoShift.containsType(ShiftType.PRATICA)) {
                 praticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.DUVIDAS)) {
+            } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
                 doubtsShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.LABORATORIAL)) {
+            } else if (infoShift.containsType(ShiftType.LABORATORIAL)) {
                 labShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.RESERVA)) {
+            } else if (infoShift.containsType(ShiftType.RESERVA)) {
                 reserveShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
+            } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
                 theoPraticalShifts.add(infoShift);
             }
         }

@@ -115,7 +115,21 @@ function check(e,v){
 						</fr:edit>
 					</fr:form>
 				</td>
-			</tr>		
+			</tr>
+			<tr>
+				<td class="aright"><bean:message key="label.lessonPlanning.lessonType"/>:</td>
+				<td>
+					<fr:form action="/summariesManagement.do?method=chooseLessonType">
+						<fr:edit id="summariesManagementBeanWithLessonTypes" name="summariesManagementBean" schema="ListLessonTypesToCreateSummary" nested="true">
+							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonType"/>				
+							<fr:layout name="flow">
+								<fr:property name="labelTerminator" value=""/>
+								<fr:property name="labelExcluded" value="true"/>
+							</fr:layout>
+						</fr:edit>
+					</fr:form>
+				</td>				
+			</tr>					
 			<tr>
 				<td class="aright"><bean:message key="label.date" />:</td>
 				<td>
@@ -135,39 +149,41 @@ function check(e,v){
 	</table>	
 	
 	<%-- Associate --%>
-	<h3 class="mbottom0"> <bean:message key="label.associate"/></h3>
-	<table class="tstyle5 thright">
-		<%-- LessonPlannings --%>
-		<tr>
-			<td class="aright"><bean:message key="label.lessonPlanning" />:</td>
-			<td>				
-				<fr:form action="/summariesManagement.do?method=chooseLessonPlanning">
-					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonPlanning"/>	
-							<fr:layout name="flow">
-								<fr:property name="labelTerminator" value=""/>
-								<fr:property name="labelExcluded" value="true"/>
-							</fr:layout>	
-					</fr:edit>	
-				</fr:form>
-			</td>
-		</tr>	
-		<%-- LastSummaries --%>
-		<tr>
-			<td class="aright"><bean:message key="message.summaryText.last"/>:</td>
-			<td>				
-				<fr:form action="/summariesManagement.do?method=chooseLastSummary">
-					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLastSummary"/>	
-							<fr:layout name="flow">
-								<fr:property name="labelTerminator" value=""/>
-								<fr:property name="labelExcluded" value="true"/>
-							</fr:layout>	
-					</fr:edit>	
-				</fr:form>	
-			</td>
-		</tr>
-	</table>		
+	<logic:empty name="notShowLessonPlanningsAndSummaries">
+		<h3 class="mbottom0"> <bean:message key="label.associate"/></h3>
+		<table class="tstyle5 thright">
+			<%-- LessonPlannings --%>
+			<tr>
+				<td class="aright"><bean:message key="label.lessonPlanning" />:</td>
+				<td>				
+					<fr:form action="/summariesManagement.do?method=chooseLessonPlanning">
+						<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
+							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLessonPlanning"/>	
+								<fr:layout name="flow">
+									<fr:property name="labelTerminator" value=""/>
+									<fr:property name="labelExcluded" value="true"/>
+								</fr:layout>	
+						</fr:edit>	
+					</fr:form>
+				</td>
+			</tr>	
+			<%-- LastSummaries --%>
+			<tr>
+				<td class="aright"><bean:message key="message.summaryText.last"/>:</td>
+				<td>				
+					<fr:form action="/summariesManagement.do?method=chooseLastSummary">
+						<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
+							<fr:destination name="postBack" path="/summariesManagement.do?method=chooseLastSummary"/>	
+								<fr:layout name="flow">
+									<fr:property name="labelTerminator" value=""/>
+									<fr:property name="labelExcluded" value="true"/>
+								</fr:layout>	
+						</fr:edit>	
+					</fr:form>	
+				</td>
+			</tr>
+		</table>		
+	</logic:empty>
 			
 	<bean:define id="invalidLink">/summariesManagement.do?method=goToInsertSummaryAgain&executionCourseID=<bean:write name="executionCourseID"/></bean:define>			
 						

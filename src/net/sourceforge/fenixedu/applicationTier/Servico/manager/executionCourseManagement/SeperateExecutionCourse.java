@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -53,7 +55,7 @@ public class SeperateExecutionCourse extends Service {
             final Integer[] curricularCourseIdsToTransfer) {
         for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
             final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(
-                    originExecutionCourse.getAssociatedCurricularCourses(), curricularCourseID);
+                    originExecutionCourse.getAssociatedCurricularCoursesSet(), curricularCourseID);
             originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
             destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
         }
@@ -71,15 +73,26 @@ public class SeperateExecutionCourse extends Service {
         }
     }
 
-    private void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse, 
-            final Integer[] shiftIdsToTransfer) {
+    private void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse, final Integer[] shiftIdsToTransfer) {
         for (final Integer shiftId : shiftIdsToTransfer) {
-            final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
-            shift.setDisciplinaExecucao(destinationExecutionCourse);
+            final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);            
+            List<CourseLoad> courseLoads = shift.getCourseLoads();
+            for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
+		CourseLoad courseLoad = iter.next();
+		CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());
+		if(newCourseLoad == null) {
+		    newCourseLoad = new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
+			    courseLoad.getTotalQuantity());
+		}
+		iter.remove();		
+		shift.removeCourseLoads(courseLoad);
+		shift.addCourseLoads(newCourseLoad);
+	    }
+            
         }
     }
 
-    private DomainObject findDomainObjectByID(final List domainObjects, final Integer id) {
+    private DomainObject findDomainObjectByID(final Set<? extends DomainObject> domainObjects, final Integer id) {
         for (final DomainObject domainObject : (List<DomainObject>) domainObjects) {
             if (domainObject.getIdInternal().equals(id)) {
                 return domainObject;
@@ -116,11 +129,11 @@ public class SeperateExecutionCourse extends Service {
 	final ExecutionCourse destinationExecutionCourse = new ExecutionCourse(originExecutionCourse
 		.getNome(), sigla, originExecutionCourse.getExecutionPeriod());
 
-	destinationExecutionCourse.setTheoreticalHours(originExecutionCourse.getTheoreticalHours());
-	destinationExecutionCourse.setTheoPratHours(originExecutionCourse.getTheoPratHours());
-	destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
-	destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
-
+	for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
+	    new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(), 
+		    courseLoad.getTotalQuantity());
+	}
+	
 	for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
 	    final Professorship newProfessorship = new Professorship();
 	    newProfessorship.setExecutionCourse(destinationExecutionCourse);
@@ -135,7 +148,7 @@ public class SeperateExecutionCourse extends Service {
 
     private String getUniqueExecutionCourseCode(final String executionCourseName,
             final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode) {
-        Set executionCourseCodes = getExecutionCourseCodes(executionPeriod);
+        Set<String> executionCourseCodes = getExecutionCourseCodes(executionPeriod);
 
         StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
         executionCourseCode.append("-1");
@@ -150,9 +163,9 @@ public class SeperateExecutionCourse extends Service {
         return destinationExecutionCourseCode;
     }
 
-    private Set getExecutionCourseCodes(ExecutionPeriod executionPeriod) {
-        List executionCourses = executionPeriod.getAssociatedExecutionCourses();
-        return new HashSet(CollectionUtils.collect(executionCourses, new Transformer() {
+    private Set<String> getExecutionCourseCodes(ExecutionPeriod executionPeriod) {
+        List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
+        return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
                 return executionCourse.getSigla().toUpperCase();

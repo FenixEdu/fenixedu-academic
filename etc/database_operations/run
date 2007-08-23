@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+executeWithTempFile "Create Course Load Table" createCourseLoadTable.sql
+executeWithTempFile "Create Course Load Table 2" createCourseLoadTable2.sql
+executeWithTempFile "Create Course Load Table 3" createCourseLoadTable3.sql
+execute "Alter Table Accountability Type Table" alterTableAccountabilityType.sql

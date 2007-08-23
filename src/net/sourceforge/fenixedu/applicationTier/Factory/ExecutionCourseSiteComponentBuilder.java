@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -50,7 +51,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -191,7 +191,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	List<InfoShiftWithAssociatedInfoClassesAndInfoLessons> shiftsWithAssociatedClassesAndLessons = new ArrayList<InfoShiftWithAssociatedInfoClassesAndInfoLessons>();
 
 	ExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-	List<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
+	Set<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
 
 	for (final Shift shift : shifts) {
 	    List<Lesson> lessons = shift.getAssociatedLessons();
@@ -230,12 +230,10 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	List aulas = new ArrayList();
 
-	List shifts = executionCourse.getAssociatedShifts();
-	for (int i = 0; i < shifts.size(); i++) {
-	    Shift shift = (Shift) shifts.get(i);
+	Set<Shift> shifts = executionCourse.getAssociatedShifts();
+	for (Shift shift : shifts) {
 	    List aulasTemp = shift.getAssociatedLessons();
-
-	    aulas.addAll(aulasTemp);
+	    aulas.addAll(aulasTemp);    
 	}
 
 	Iterator iterator = aulas.iterator();

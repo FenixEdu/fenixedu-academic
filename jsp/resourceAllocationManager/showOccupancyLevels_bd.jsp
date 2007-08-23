@@ -46,7 +46,7 @@
 				</td>
 	
 				<td>
-					<bean:write name="shift" property="tipo" />
+					<bean:write name="shift" property="shiftTypesPrettyPrint" />
 				</td>
 	
 				<td>

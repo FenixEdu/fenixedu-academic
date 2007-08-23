@@ -50,26 +50,23 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             HttpServletRequest request, DynaActionForm dynaForm) throws NumberFormatException,
             FenixFilterException, FenixServiceException {
 
-        List<TeachingServicePercentage> teachingServicePercentages = new ArrayList();
-        HashMap teacherPercentageMap = new HashMap();
-        for (Iterator iter = professorship.getExecutionCourse().getAssociatedShiftsIterator(); iter
-                .hasNext();) {
-            Shift shift = (Shift) iter.next();
-            Double availablePercentage = shift.getAvailableShiftPercentageForTeacher(professorship
-                    .getTeacher());
+        List<TeachingServicePercentage> teachingServicePercentages = new ArrayList<TeachingServicePercentage>();
+        HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
+        
+        for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {	 
+            Double availablePercentage = shift.getAvailableShiftPercentageForTeacher(professorship.getTeacher());
             teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
-            for (Iterator iterator = shift.getDegreeTeachingServices().iterator(); iterator.hasNext();) {
-                DegreeTeachingService degreeTeachingService = (DegreeTeachingService) iterator.next();
+            for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServices()) {		                
                 if (professorship == degreeTeachingService.getProfessorship()) {
-                    teacherPercentageMap.put(shift.getIdInternal().toString(), round(degreeTeachingService
-                            .getPercentage()));
+                    teacherPercentageMap.put(shift.getIdInternal().toString(), round(degreeTeachingService.getPercentage()));
                     break;
                 }
             }
         }
 
-        Iterator teachingServicePercentagesIterator = new OrderedIterator(teachingServicePercentages
-                .iterator(), TEACHING_SERVICE_PERCENTAGE_COMPARATOR_BY_SHIFT);
+        Iterator<TeachingServicePercentage> teachingServicePercentagesIterator = 
+            new OrderedIterator<TeachingServicePercentage>(teachingServicePercentages.iterator(),
+        	    TEACHING_SERVICE_PERCENTAGE_COMPARATOR_BY_SHIFT);
 
         request.setAttribute("professorship", professorship);
         request.setAttribute("teachingServicePercentages", teachingServicePercentagesIterator);
@@ -82,20 +79,19 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
-        HashMap teacherPercentageMap = (HashMap) teachingServiceForm.get("teacherPercentageMap");
+        HashMap<String, String> teacherPercentageMap = (HashMap<String, String>) teachingServiceForm.get("teacherPercentageMap");
 
         Integer professorshipID = (Integer) teachingServiceForm.get("professorshipID");
 
         List<ShiftIDTeachingPercentage> shiftIDPercentages = new ArrayList<ShiftIDTeachingPercentage>();
-        Iterator entryInterator = teacherPercentageMap.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> entryInterator = teacherPercentageMap.entrySet().iterator();
         while (entryInterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) entryInterator.next();
-            String percentage = (String) entry.getValue();
+            Map.Entry<String, String> entry = entryInterator.next();
+            String percentage = entry.getValue();
             if ((percentage != null) && (percentage.length() != 0)) {
                 percentage = percentage.replace(',', '.');
                 Integer shiftID = Integer.valueOf((String) entry.getKey());
-                ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID,
-                        Double.valueOf(percentage));
+                ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID,Double.valueOf(percentage));
                 shiftIDPercentages.add(shiftIDPercentage);
             }
         }

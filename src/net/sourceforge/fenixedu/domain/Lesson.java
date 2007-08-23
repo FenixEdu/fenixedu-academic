@@ -4,6 +4,7 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author Manuel Pinto
  */
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -21,16 +22,17 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.Interval;
+import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
 public class Lesson extends Lesson_Base {
 
+    public static int NUMBER_OF_MINUTES_IN_HOUR = 60;
     public static final Comparator<Lesson> LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
     static {
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("diaSemana.diaSemana"));
@@ -38,51 +40,57 @@ public class Lesson extends Lesson_Base {
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, Shift shift, 
-	    FrequencyType frequency, ExecutionPeriod executionPeriod) {
-
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency, ExecutionPeriod executionPeriod) {
 	super();
 	
 	OccupationPeriod period = null;
 	if(shift != null) {
-	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();
+	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 	    period = OccupationPeriod.readOccupationPeriod(maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight());
 	    if(period == null) {
 		period = new OccupationPeriod(maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight());
 	    }	    
 	}
-	
+
 	setRootDomainObject(RootDomainObject.getInstance());
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
-	setFim(fim);
-	setTipo(tipo);	
+	setFim(fim);	
 	setShift(shift);
 	setFrequency(frequency);	
 	setExecutionPeriod(executionPeriod);
 	setPeriod(period);
+
+	checkShiftLoad(shift);	
     }
 
-    public void edit(YearMonthDay newBeginDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, FrequencyType frequency) {			
+    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, FrequencyType frequency) {			
 
 	if(wasFinished()) {
 	    throw new DomainException("error.Lesson.already.finished");
 	}
 	
-	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = getShift().getDisciplinaExecucao().getMaxLessonsPeriod();		
-	if(newBeginDate == null || newBeginDate.isBefore(maxLessonsPeriod.getLeft()) 
-		|| newBeginDate.isAfter(getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay())) {
-	    throw new DomainException("error.invalid.new.begin.date");
+	if(newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
+	    throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
 	}
-	
-	refreshPeriodAndInstancesInEditOperation(newBeginDate);
+
+	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = getShift().getExecutionCourse().getMaxLessonsPeriod();	
+	if(newBeginDate == null || newBeginDate.isBefore(maxLessonsPeriod.getLeft())) {
+	    throw new DomainException("error.Lesson.invalid.new.begin.date");
+	}	
+	if(newEndDate == null || newEndDate.isAfter(maxLessonsPeriod.getRight())) {
+	    throw new DomainException("error.invalid.new.end.date");
+	}
+
+	refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate);
 
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
-	setFim(fim);
-	setTipo(tipo);	
-	setFrequency(frequency);	
-    }
+	setFim(fim);	
+	setFrequency(frequency);
+
+	checkShiftLoad(getShift());	
+    }   
 
     public void delete() {
 
@@ -111,7 +119,7 @@ public class Lesson extends Lesson_Base {
 	while(hasAnyLessonInstances()) {
 	    getLessonInstances().get(0).delete();
 	}
-	
+
 	removeExecutionPeriod();	
 	removeShift();	
 	removeRootDomainObject();
@@ -122,11 +130,14 @@ public class Lesson extends Lesson_Base {
 	return !hasPeriod();
     }
     
+    public ExecutionCourse getExecutionCourse() {
+	return getShift().getExecutionCourse();
+    }
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return (!hasLessonSpaceOccupation() && hasAnyLessonInstances() || hasPeriod())
-	&& getFrequency() != null && getTipo() != null && getDiaSemana() != null	
-	&& hasExecutionPeriod() && hasShift();		 
+		&& getFrequency() != null && getDiaSemana() != null && hasExecutionPeriod() && hasShift();		 
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -148,24 +159,24 @@ public class Lesson extends Lesson_Base {
     public boolean hasSala() {
 	return getSala() != null;
     }
-      
+
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
 	if(hasPeriod()) {	    
 	    OccupationPeriod currentPeriod = getPeriod();	    		    
-	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {				
+	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {						
 		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
-		refreshPeriod(newBeginDate, currentPeriod);	    				
+		refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(), currentPeriod);	    				
 	    }
 	}
     }
-    
-    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate) {
+
+    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate) {
 	if(hasPeriod()) {	    
 	    OccupationPeriod currentPeriod = getPeriod();	    		    
-	    if(newBeginDate != null && !newBeginDate.isAfter(currentPeriod.getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay())) {					
+	    if(newBeginDate != null && newEndDate != null && newBeginDate.isBefore(newEndDate)) {					
 		removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);				
 		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
-		refreshPeriod(newBeginDate, currentPeriod);	    				
+		refreshPeriod(newBeginDate, newEndDate, currentPeriod);	    				
 	    }
 	}
     }
@@ -173,14 +184,14 @@ public class Lesson extends Lesson_Base {
     private void createAllLessonInstancesUntil(YearMonthDay day) {	
 	if(day != null) {
 	    
-	    SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(day);	
-	    
+	    SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(day);	    	    
+	
 	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
 	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
 		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
-	    }
-	    	   
-	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {
+	    }	    	   
+	    
+	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {		
 		new LessonInstance(this, dateToCreate);		
 	    }	    	   
 	}
@@ -199,9 +210,9 @@ public class Lesson extends Lesson_Base {
 	    throw new DomainException("error.invalid.new.begin.date");
 	}	
     }
-    
+
     private Map<Boolean, List<LessonInstance>> getLessonInstancesWithOrWithoutSummaryAfterOrEqual(YearMonthDay afterDate){
-	
+
 	Map<Boolean, List<LessonInstance>> result = new HashMap<Boolean, List<LessonInstance>>();
 	result.put(Boolean.TRUE, new ArrayList<LessonInstance>());
 	result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
@@ -218,51 +229,69 @@ public class Lesson extends Lesson_Base {
 	}	
 	return result;
     }
-    
-    private void refreshPeriod(YearMonthDay newBeginDate, OccupationPeriod currentPeriod) {	
-	
+
+    private void refreshPeriod(YearMonthDay newBeginDate, YearMonthDay newEndDate, OccupationPeriod currentPeriod) {	
+
 	if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {								
-	    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate));			
+	    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));			
 
 	} else if (currentPeriod.hasNextPeriod()){				
 
 	    OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();		
 
-	    if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
-		setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay()));		    		
-
-	    } else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
-		setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate));    
-
-	    } else {
-		if(hasLessonSpaceOccupation()) {
-		    getLessonSpaceOccupation().delete();
+	    if(!currentNextPeriod.getStartYearMonthDay().isAfter(newEndDate)) {
+		
+		if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
+		    setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay(), newEndDate));		    		
+		    
+		} else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
+		    setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate, newEndDate));    
 		}
-		setPeriod(null);
+		
+	    } else {
+		removeLessonSpaceOccupationAndPeriod();
 	    }
 	} else {		
-	    if(hasLessonSpaceOccupation()) {
-		getLessonSpaceOccupation().delete();
-	    }
-	    setPeriod(null);
+	    removeLessonSpaceOccupationAndPeriod();
 	}	
 	currentPeriod.delete();
-    }     
-    
-    private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate) {
-	OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());
-	OccupationPeriod newPeriodPointer = newPeriod;
-	while(currentPeriod.hasNextPeriod()) {	    
-	    OccupationPeriod newNextPeriod = new OccupationPeriod(
-	    	    currentPeriod.getNextPeriod().getStartYearMonthDay(), 
-		    currentPeriod.getNextPeriod().getEndYearMonthDay());
-	    newPeriodPointer.setNextPeriod(newNextPeriod);
-	    newPeriodPointer = newNextPeriod;
-	    currentPeriod = currentPeriod.getNextPeriod();
-	}	
-	return newPeriod;
     }
-   
+
+    private void removeLessonSpaceOccupationAndPeriod() {
+	if(hasLessonSpaceOccupation()) {
+	    getLessonSpaceOccupation().delete();
+	}
+	setPeriod(null);
+    } 
+
+    private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate, YearMonthDay newEndDate) {	
+	if(!currentPeriod.getEndYearMonthDay().isBefore(newEndDate)) {
+	    return new OccupationPeriod(newBeginDate, newEndDate); 
+	} else {	    
+	    OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());
+	    OccupationPeriod newPeriodPointer = newPeriod;	    
+	    while(currentPeriod.hasNextPeriod()) {			
+		if(currentPeriod.getNextPeriod().getStartYearMonthDay().isAfter(newEndDate)) {
+		    break;
+		}		
+		if(!currentPeriod.getNextPeriod().getEndYearMonthDay().isBefore(newEndDate)) {		    
+		    OccupationPeriod newNextPeriod = new OccupationPeriod(currentPeriod.getNextPeriod().getStartYearMonthDay(), newEndDate);
+		    newPeriodPointer.setNextPeriod(newNextPeriod);
+		    break;		    
+		
+		} else {
+		    OccupationPeriod newNextPeriod = new OccupationPeriod(
+			    currentPeriod.getNextPeriod().getStartYearMonthDay(), 
+			    currentPeriod.getNextPeriod().getEndYearMonthDay());
+		    newPeriodPointer.setNextPeriod(newNextPeriod);
+		    newPeriodPointer = newNextPeriod;
+		    currentPeriod = currentPeriod.getNextPeriod();
+		}
+	    }
+	    return newPeriod;
+	}		
+    }
+
     public Calendar getInicio() {
 	if (this.getBegin() != null) {
 	    Calendar result = Calendar.getInstance();
@@ -301,9 +330,16 @@ public class Lesson extends Lesson_Base {
 	return getLessonSpaceOccupation();
     }
 
-    public double hours() {
-	TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
-	return timePeriod.hours().doubleValue();
+    private int getUnitMinutes() {	
+	return Minutes.minutesBetween(getBeginHourMinuteSecond(), getEndHourMinuteSecond()).getMinutes();
+    }
+
+    public BigDecimal getTotalHours() {
+	return getUnitHours().multiply(BigDecimal.valueOf(getFinalNumberOfLessonInstances()));
+    }
+
+    public BigDecimal getUnitHours() {	
+	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR));
     }
 
     public String getInicioString() {
@@ -312,23 +348,14 @@ public class Lesson extends Lesson_Base {
 
     public double hoursAfter(int hour) {
 
-	final Calendar start = this.getInicio();
-	final Calendar end = this.getFim();
+	HourMinuteSecond afterHour = new HourMinuteSecond(hour, 0, 0);
+	
+	if(!getBeginHourMinuteSecond().isBefore(afterHour)) {
+	    return getUnitHours().doubleValue();
 
-	final Calendar specifiedHour = Calendar.getInstance();
-	specifiedHour.setTime(this.getEnd());
-	specifiedHour.set(Calendar.HOUR_OF_DAY, hour);
-	specifiedHour.set(Calendar.MINUTE, 0);
-	specifiedHour.set(Calendar.SECOND, 0);
-	specifiedHour.set(Calendar.MILLISECOND, 0);
-
-	if (!start.before(specifiedHour)) {
-	    TimePeriod timePeriod = new TimePeriod(start, end);
-	    return timePeriod.hours().doubleValue();
-
-	} else if (end.after(specifiedHour)) {
-	    TimePeriod timePeriod = new TimePeriod(specifiedHour, end);
-	    return timePeriod.hours().doubleValue();
+	} else if(getEndHourMinuteSecond().isAfter(afterHour)) {
+	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes()).
+	    	divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR)).doubleValue();	    
 	}
 
 	return 0.0;
@@ -396,7 +423,8 @@ public class Lesson extends Lesson_Base {
     private YearMonthDay getLessonStartDay() {	
 	if(hasPeriod()) {	    
 	    YearMonthDay periodBegin = getPeriod().getStartYearMonthDay();
-	    YearMonthDay lessonBegin = periodBegin.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	    YearMonthDay lessonBegin = periodBegin.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana()
+		    .getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
 	    if(lessonBegin.isBefore(periodBegin)) {
 		lessonBegin = lessonBegin.plusDays(7);
 	    }     
@@ -408,7 +436,8 @@ public class Lesson extends Lesson_Base {
     private YearMonthDay getLessonEndDay() {	
 	if(hasPeriod()) {
 	    YearMonthDay periodEnd = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();
-	    YearMonthDay lessonEnd = periodEnd.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	    YearMonthDay lessonEnd = periodEnd.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().
+		    getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
 	    if(lessonEnd.isAfter(periodEnd)) {
 		lessonEnd = lessonEnd.minusDays(7);
 	    } 
@@ -503,6 +532,15 @@ public class Lesson extends Lesson_Base {
 	return dates;
     }
 
+    public int getFinalNumberOfLessonInstances() {
+	int count = getLessonInstancesCount();
+	if(hasPeriod()) {	   	    
+	    YearMonthDay endDateToSearch = getLessonEndDay();	    	   
+	    count += getAllValidLessonDatesUntil(endDateToSearch).size();
+	}		
+	return count;
+    }
+
     private SortedSet<YearMonthDay> getAllLessonDatesUntil(YearMonthDay day) {			
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();				
 
@@ -573,7 +611,7 @@ public class Lesson extends Lesson_Base {
 	}	
 	return result;
     }
-    
+
     public LessonInstance getLastLessonInstance() {
 	SortedSet<LessonInstance> result = new TreeSet<LessonInstance>(LessonInstance.COMPARATOR_BY_BEGIN_DATE_TIME);	
 	result.addAll(getLessonInstances());
@@ -610,7 +648,7 @@ public class Lesson extends Lesson_Base {
 	}
 	return null;
     }
-      
+
     public boolean contains(Interval interval) {
 	return contains(interval, getAllLessonDates());
     }
@@ -652,5 +690,51 @@ public class Lesson extends Lesson_Base {
 	result.append(getEndHourMinuteSecond().toString("HH:mm")).append(") ");
 	result.append(hasSala() ? ((AllocatableSpace)getSala()).getName().toString() : "");	
 	return result.toString();
-    }        
+    }
+
+    private void checkShiftLoad(Shift shift) {
+
+	if(shift != null) { 
+	   
+	    List<CourseLoad> courseLoads = shift.getCourseLoads();
+
+	    if(courseLoads.size() == 1) {
+
+		CourseLoad courseLoad = courseLoads.get(0);
+		if(getUnitHours().compareTo(courseLoad.getUnitQuantity()) != 0) {
+		    throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded");
+		}		
+		
+		BigDecimal totalHours = shift.getTotalHours();
+		if(totalHours.compareTo(courseLoad.getTotalQuantity()) == 1) {
+		    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded");
+		}
+
+	    } else if(courseLoads.size() > 1){
+		
+		boolean unitValid = false, totalValid = false;
+		BigDecimal lessonHours = getUnitHours();
+		BigDecimal totalHours = shift.getTotalHours();
+		
+		for (CourseLoad courseLoad : courseLoads) {		    
+		    unitValid = false;
+		    totalValid = false;		    
+		    		   
+		    if(lessonHours.compareTo(courseLoad.getUnitQuantity()) == 0) {
+			unitValid = true;			
+		    }		    		    		    
+		    if(totalHours.compareTo(courseLoad.getTotalQuantity()) != 1) {
+			totalValid = true;
+			if(unitValid) {
+			    break;
+			}
+		    }
+		}
+		
+		if(!totalValid || !unitValid) {
+		    throw new DomainException("error.Lesson.shift.load.exceeded");
+		}
+	    }
+	}
+    }
 }

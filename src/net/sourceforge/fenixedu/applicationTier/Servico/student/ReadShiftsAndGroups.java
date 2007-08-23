@@ -60,7 +60,7 @@ public class ReadShiftsAndGroups extends Service {
             for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
                 final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
                 for (final Shift shift : executionCourse.getAssociatedShifts()) {
-                    if (shift.getTipo() == grouping.getShiftType()) {
+                    if (shift.containsType(grouping.getShiftType())) {
                         infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(shift, grouping));
                     }
                 }

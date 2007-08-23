@@ -17,9 +17,7 @@ import dml.runtime.RelationAdapter;
  */
 public class StudentGroup extends StudentGroup_Base {
 
-    public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator(
-	    "groupNumber");
-
+    public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("groupNumber");
     static {
 	StudentGroupAttend.addListener(new StudentGroupAttendListener());
     }
@@ -29,7 +27,7 @@ public class StudentGroup extends StudentGroup_Base {
 	public void beforeRemove(StudentGroup studentGroup, Attends attends) {
 	    if (!studentGroup.getProjectSubmissions().isEmpty()) {
 		throw new DomainException(
-			"error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
+		"error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
 	    }
 
 	    super.beforeRemove(studentGroup, attends);
@@ -67,16 +65,14 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void editShift(Shift shift) {
-	if (this.getGrouping().getShiftType() == null
-		|| (!this.getGrouping().getShiftType().equals(shift.getTipo()))) {
+	if (this.getGrouping().getShiftType() == null || (!shift.containsType(this.getGrouping().getShiftType()))) {
 	    throw new DomainException(this.getClass().getName(), "");
 	}
-
 	this.setShift(shift);
     }
 
     public boolean isPersonInStudentGroup(Person person) {
-	
+
 	for(Attends attend : getAttends()) {
 	    if(attend.getRegistration().getStudent().getPerson().equals(person)) {
 		return true;

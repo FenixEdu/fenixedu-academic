@@ -172,7 +172,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public void delete() {
-	if (!canDelete()) {
+	if (!canBeDeleted()) {
 	    throw new DomainException("error.messaging.announcementBoard.cannot.delete");
 	}
 	
@@ -181,7 +181,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	deleteDomainObject();
     }
 
-    public boolean canDelete() {
+    public boolean canBeDeleted() {
 	return !hasAnyAnnouncements();
     }
 

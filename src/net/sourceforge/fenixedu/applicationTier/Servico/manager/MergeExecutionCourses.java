@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
@@ -206,20 +207,27 @@ public class MergeExecutionCourses extends Service {
         }
     }
 
-    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
-                .getAssociatedBibliographicReferences().add(
-                        executionCourseFrom.getAssociatedBibliographicReferences().get(0)))
+        	.getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0)))
             ;
     }
 
-    private void copyShifts(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
-        final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom
-                .getAssociatedShifts());
-        for (final Shift shift : associatedShifts) {
-            shift.setDisciplinaExecucao(executionCourseTo);
+    private void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+        final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom.getAssociatedShifts());
+        for (final Shift shift : associatedShifts) {                        
+            List<CourseLoad> courseLoadsFrom = new ArrayList<CourseLoad>(shift.getCourseLoads());                       
+            for (Iterator<CourseLoad> iter = courseLoadsFrom.iterator(); iter.hasNext();) {
+		CourseLoad courseLoadFrom = iter.next();			   
+		CourseLoad courseLoadTo = executionCourseTo.getCourseLoadByShiftType(courseLoadFrom.getType());
+		if(courseLoadTo == null) {
+		    courseLoadTo = new CourseLoad(executionCourseTo, courseLoadFrom.getType(), 
+			    courseLoadFrom.getUnitQuantity(), courseLoadFrom.getTotalQuantity());
+		}
+		iter.remove();
+		shift.removeCourseLoads(courseLoadFrom);
+		shift.addCourseLoads(courseLoadTo);
+	    }                                  
         }
     }
 

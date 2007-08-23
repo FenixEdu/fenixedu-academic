@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
@@ -100,14 +102,62 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     public Double getProblemsHours() {
 	return getCurricularCourse().getProblemsHours();
     }
+    
     public Double getSeminaryHours() {
 	return getCurricularCourse().getSeminaryHours();
     }
+    
     public Double getTrainingPeriodHours() {
 	return getCurricularCourse().getTrainingPeriodHours();
     }
+    
     public Double getTutorialOrientationHours() {
 	return getCurricularCourse().getTutorialOrientationHours();
+    }
+    
+    public Double getTotalLabHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.LABORATORIAL, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+
+    public Double getTotalPraticalHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PRATICA, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+
+    public Double getTotalTheoPratHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICO_PRATICA, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+
+    public Double getTotalTheoreticalHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICA, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+
+    public Double getTotalFieldWorkHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.FIELD_WORK, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+    
+    public Double getTotalProblemsHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PROBLEMS, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;    
+    }
+    
+    public Double getTotalSeminaryHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.SEMINARY, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+    
+    public Double getTotalTrainingPeriodHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TRAINING_PERIOD, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
+    }
+    
+    public Double getTotalTutorialOrientationHours() {
+	BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TUTORIAL_ORIENTATION, null);
+	return totalHours != null ? totalHours.doubleValue() : 0d;
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {

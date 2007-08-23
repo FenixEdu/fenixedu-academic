@@ -75,8 +75,10 @@
 	 	<tr>
 	        <th><bean:message key="property.lesson.new.begin.date"/>:</th>
     	    <td>
-        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="10"/>
-        	 	<bean:message key="property.lesson.new.begin.date.format"/> <bean:message key="label.until"/> <b><bean:write name="executionDegreeLessonsEndDate"/></b>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="8" maxlength="10"/>        	 	
+        	 	<b><bean:message key="label.until"/></b>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDate" size="8" maxlength="10"/>
+        	 	<bean:message key="property.lesson.new.begin.date.format"/>        	 	        	 
     	    </td> 
 	 	</tr>
 	 	<tr>

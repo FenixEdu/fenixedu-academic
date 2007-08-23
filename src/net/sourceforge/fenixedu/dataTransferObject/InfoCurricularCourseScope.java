@@ -33,9 +33,9 @@ public class InfoCurricularCourseScope extends InfoObject {
 		public int compare(InfoCurricularCourseScope o1, InfoCurricularCourseScope o2) {
 		    return o1.getInfoCurricularSemester().getInfoCurricularYear().getYear().compareTo(o2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
 		}
-	    
+
 	    });
-	    
+
 	    comparatorChain.addComparator(new Comparator<InfoCurricularCourseScope>() {
 
 		public int compare(InfoCurricularCourseScope o1, InfoCurricularCourseScope o2) {
@@ -71,7 +71,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
 	    return comparatorChain.compare(o1, o2);
 	}
-	
+
     };
 
     private final DomainReference<CurricularCourseScope> curricularCourseScopeDomainReference;
@@ -79,61 +79,61 @@ public class InfoCurricularCourseScope extends InfoObject {
     private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
-    	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);
+	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);
     }
 
     public CurricularCourseScope getCurricularCourseScope() {
-        return curricularCourseScopeDomainReference == null ? null : curricularCourseScopeDomainReference.getObject();
+	return curricularCourseScopeDomainReference == null ? null : curricularCourseScopeDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoCurricularCourseScope && getCurricularCourseScope() == ((InfoCurricularCourseScope) obj).getCurricularCourseScope();
+	return obj instanceof InfoCurricularCourseScope && getCurricularCourseScope() == ((InfoCurricularCourseScope) obj).getCurricularCourseScope();
     }
 
     public String toString() {
-    	return getCurricularCourseScope().toString();
+	return getCurricularCourseScope().toString();
     }
 
     public Boolean isActive() {
-    	return getCurricularCourseScope().isActive();
+	return getCurricularCourseScope().isActive();
     }
 
     public Calendar getBeginDate() {
-        return getCurricularCourseScope().getBeginDate();
+	return getCurricularCourseScope().getBeginDate();
     }
 
     public Calendar getEndDate() {
-        return getCurricularCourseScope().getEndDate();
+	return getCurricularCourseScope().getEndDate();
     }
 
     public InfoBranch getInfoBranch() {
-    	return InfoBranch.newInfoFromDomain(getCurricularCourseScope().getBranch());
+	return InfoBranch.newInfoFromDomain(getCurricularCourseScope().getBranch());
     }
 
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return InfoCurricularCourse.newInfoFromDomain(getCurricularCourseScope().getCurricularCourse());
+	return InfoCurricularCourse.newInfoFromDomain(getCurricularCourseScope().getCurricularCourse());
     }
 
     public InfoCurricularSemester getInfoCurricularSemester() {
-        return InfoCurricularSemester.newInfoFromDomain(getCurricularCourseScope().getCurricularSemester());
+	return InfoCurricularSemester.newInfoFromDomain(getCurricularCourseScope().getCurricularSemester());
     }
 
     public static InfoCurricularCourseScope newInfoFromDomain(final CurricularCourseScope curricularCourseScope) {
-    	return curricularCourseScope == null ? null : new InfoCurricularCourseScope(curricularCourseScope);
+	return curricularCourseScope == null ? null : new InfoCurricularCourseScope(curricularCourseScope);
     }
 
     public String getAnotation() {
-        return getCurricularCourseScope().getAnotation();
+	return getCurricularCourseScope().getAnotation();
     }
 
     @Override
     public Integer getIdInternal() {
-    	return getCurricularCourseScope().getIdInternal();
+	return getCurricularCourseScope().getIdInternal();
     }
-    
+
     @Override
     public void setIdInternal(Integer integer) {
-        throw new Error("Method should not be called!");
+	throw new Error("Method should not be called!");
     }
 
 }

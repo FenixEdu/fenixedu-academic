@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -137,22 +139,22 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     }
 
     private Integer getNumberOfLessons(final Collection<Shift> shifts) {
-        int result = 0;
-	
+        int result = 0;	
         for (final Shift shift : shifts) {
             result += shift.getAssociatedLessonsCount();
-        }
-        
+        }        
         return result;
     }
-
+       
     static final private int MIN_LENGTH = 10;
     
     public Integer getNumberOfFieldsFilled() {
         int result = 0;
 
-        if (!getInfoLecturingTeachers().isEmpty())
+        if (!getInfoLecturingTeachers().isEmpty()) {
             result++;
+        }
+        
         Iterator iter = getInfoBibliographicReferences().iterator();
         while (iter.hasNext()) {
             InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
@@ -165,8 +167,9 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         }
         if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
                 && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH)
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
             result++;
+        }
 
         iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
@@ -193,12 +196,13 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     public Integer getNumberOfFieldsFilledEn() {
         int numberOfFieldsFilled = 0;
 
-        if (!getInfoLecturingTeachers().isEmpty())
+        if (!getInfoLecturingTeachers().isEmpty()) {
             numberOfFieldsFilled++;
+        }
+        
         Iterator iter = getInfoBibliographicReferences().iterator();
         while (iter.hasNext()) {
-            InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
-                    .next();
+            InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter.next();
             if (infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
@@ -207,8 +211,9 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         if (getInfoEvaluationMethod() != null
                 && getInfoEvaluationMethod().getEvaluationElements() != null
                 && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH)
+                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
             numberOfFieldsFilled++;
+        }
 
         iter = getInfoCurriculums().iterator();
         while (iter.hasNext()) {
@@ -312,30 +317,37 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         final List<InfoLesson> result = new ArrayList<InfoLesson>();
         
         InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICA);
-        if (infoLesson != null)
+        if (infoLesson != null) {
             result.add(infoLesson);
+        }
 
         infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.PRATICA);
-        if (infoLesson != null)
+        if (infoLesson != null) {
             result.add(infoLesson);
+        }
 
         infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.LABORATORIAL);
-        if (infoLesson != null)
+        if (infoLesson != null) {
             result.add(infoLesson);
+        }
 
         infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICO_PRATICA);
-        if (infoLesson != null)
+        if (infoLesson != null) {
             result.add(infoLesson);
-        
+        }
+
         return result;
     }
 
-    private InfoLesson getFilteredInfoLessonByType(List infoLessons, ShiftType type) {
+    private InfoLesson getFilteredInfoLessonByType(List<InfoLesson> infoLessons, ShiftType type) {
         final ShiftType lessonType = type;
         InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
             public boolean evaluate(Object o) {
                 InfoLesson infoLesson = (InfoLesson) o;
-                return infoLesson.getTipo().equals(lessonType);
+                if(infoLesson.getInfoShift().getShift().getCourseLoadsCount() == 1) {
+                    return infoLesson.getInfoShift().getShift().containsType(lessonType);
+                }
+                return false;
             }
         });
         return infoLesson;

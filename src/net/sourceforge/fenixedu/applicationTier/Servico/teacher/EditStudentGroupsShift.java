@@ -31,7 +31,7 @@ public class EditStudentGroupsShift extends Service {
 		}
 
 		// grouping.checkShiftCapacity(shift);
-		if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
+		if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
 			throw new NonValidChangeServiceException();
 		}
 

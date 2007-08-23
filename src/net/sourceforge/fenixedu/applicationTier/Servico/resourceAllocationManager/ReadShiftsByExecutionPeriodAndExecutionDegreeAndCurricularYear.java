@@ -28,24 +28,24 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear extends Service {
 
-    public Object run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
-            InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
+    public List<InfoShift> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
+	    InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
 
-    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
+	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
-        final List infoShifts = new ArrayList();
-        final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, curricularYear, "%");
-        for (final ExecutionCourse executionCourse : executionCourses) {
-        for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
-        	final InfoShift infoShift = new InfoShift(shift);
-            infoShifts.add(infoShift);
-        }
-        }
+	final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+	final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, curricularYear, "%");
+	for (final ExecutionCourse executionCourse : executionCourses) {
+	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
+		final InfoShift infoShift = new InfoShift(shift);
+		infoShifts.add(infoShift);
+	    }
+	}
 
-        return infoShifts;
+	return infoShifts;
 
     }
 

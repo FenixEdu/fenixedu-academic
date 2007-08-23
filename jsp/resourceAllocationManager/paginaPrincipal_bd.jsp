@@ -27,18 +27,6 @@ e alterar aulas).</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
-    <td class="infoop"><strong><html:link page="/principalSalas.do"><bean:message key="link.rooms.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
-  </tr>
-</table>
-<p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
-  e a sua calendariza&ccedil;&atilde;o.</p>
-
-<br />
-
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
-    </td>
     <td class="infoop"><strong><html:link page="/mainExamsNew.do?method=prepare"><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
@@ -66,3 +54,15 @@ e alterar aulas).</p>
   </tr>
 </table>
 <p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></p>
+
+<table width="98%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
+    </td>
+    <td class="infoop"><strong><html:link page="/principalSalas.do"><bean:message key="link.rooms.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
+  </tr>
+</table>
+<p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
+  e a sua calendariza&ccedil;&atilde;o.</p>
+
+<br />

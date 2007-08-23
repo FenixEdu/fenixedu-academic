@@ -28,7 +28,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append("<a href='");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")").append("</a>");
+            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")").append("</a>");
             
         } else if (showOccupation instanceof InfoLessonInstance) {
             
@@ -37,13 +37,12 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append("<a href='");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")").append("</a>");                                                    
+            strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")").append("</a>");                                                    
             
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam
-                        .getAssociatedExecutionCourse().get(iterEC);
+                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
                 if (iterEC != 0) {
                     strBuffer.append(", ");
                 }
@@ -53,6 +52,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append(" - ");
             strBuffer.append(infoExam.getSeason().getSeason());
             strBuffer.append("ª época");
+            
         } else if (showOccupation instanceof InfoWrittenTest) {
             InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
             for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
@@ -68,5 +68,4 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
 
         return strBuffer;
     }
-
 }

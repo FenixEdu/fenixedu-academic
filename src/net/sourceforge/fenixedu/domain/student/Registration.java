@@ -1180,7 +1180,7 @@ public class Registration extends Registration_Base {
 	return CollectionUtils.exists(enroledShifts, new Predicate() {
 	    final public boolean evaluate(Object object) {
 		Shift enroledShift = (Shift) object;
-		return enroledShift.getDisciplinaExecucao() == executionCourse && enroledShift.getTipo() == shiftType;
+		return enroledShift.getExecutionCourse() == executionCourse && enroledShift.containsType(shiftType);
 	    }
 	});
     }

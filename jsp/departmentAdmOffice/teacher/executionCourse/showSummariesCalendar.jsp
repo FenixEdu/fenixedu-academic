@@ -29,7 +29,7 @@
 			</html:link>
 		</li>
 		<li>
-			<bean:define id="createSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+			<bean:define id="createSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareInsertExtraSummary&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
 			<html:link page="<%= createSummaryURL %>">
 				<bean:message key="label.insert.extra.summary" bundle="DEFAULT"/>
 			</html:link>							

@@ -29,7 +29,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");
+            strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")");
 
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
@@ -44,7 +44,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");           
+            strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")");           
                         
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;

@@ -35,7 +35,7 @@ public class ReadShiftsByDistributedTest extends Service {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		final List<Shift> shiftList = executionCourse.getAssociatedShifts();
+		final Set<Shift> shiftList = executionCourse.getAssociatedShifts();
 
 		List<InfoShift> result = new ArrayList<InfoShift>();
 		for (Shift shift : shiftList) {

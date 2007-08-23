@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -23,6 +25,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 
 /**
  * @author tfc130
@@ -65,6 +69,42 @@ public class InfoExecutionCourse extends InfoObject {
 
     //=================== FIELDS RETRIEVED BY DOMAIN LOGIC =======================
 
+    public Double getWeeklyTheoreticalHours() {	
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TEORICA).doubleValue();
+    }
+
+    public Double getWeeklyPraticalHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.PRATICA).doubleValue();
+    }
+
+    public Double getWeeklyTheoPratHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TEORICO_PRATICA).doubleValue();
+    }
+
+    public Double getWeeklyLabHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.LABORATORIAL).doubleValue();
+    }
+
+    public Double getWeeklyFieldWorkHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.FIELD_WORK).doubleValue();
+    }
+
+    public Double getWeeklyProblemsHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.PROBLEMS).doubleValue();
+    }
+
+    public Double getWeeklySeminaryHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.SEMINARY).doubleValue();
+    }
+
+    public Double getWeeklyTrainingPeriodHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TRAINING_PERIOD).doubleValue();
+    }
+
+    public Double getWeeklyTutorialOrientationHours() {
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();    
+    }
+    
     public String getNome() {
 	return getExecutionCourse().getNome();
     }
@@ -80,50 +120,13 @@ public class InfoExecutionCourse extends InfoObject {
     public Boolean getHasSite() {
 	return getExecutionCourse().hasSite();
     }
-
-    public Double getTheoreticalHours() {
-	return getExecutionCourse().getTheoreticalHours();
-    }
-
-    public Double getPraticalHours() {
-	return getExecutionCourse().getPraticalHours();
-    }
-
-    public Double getTheoPratHours() {
-	return getExecutionCourse().getTheoPratHours();
-    }
-
-    public Double getLabHours() {
-	return getExecutionCourse().getLabHours();
-    }
-
-    public Double getFieldWorkHours() {
-	return getExecutionCourse().getFieldWorkHours();
-    }
-
-    public Double getProblemsHours() {
-	return getExecutionCourse().getProblemsHours();
-    }
-
-    public Double getSeminaryHours() {
-	return getExecutionCourse().getSeminaryHours();
-    }
-
-    public Double getTrainingPeriodHours() {
-	return getExecutionCourse().getTrainingPeriodHours();
-    }
-
-    public Double getTutorialOrientationHours() {
-	return getExecutionCourse().getTutorialOrientationHours();
-    }
-
+   
     public Integer getNumberOfAttendingStudents() {
 	return getExecutionCourse().getAttendsCount();
     }
 
     public String getCourseReportFilled() {
-	return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport()
-		.getReport() == null) ? "false" : "true";
+	return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport().getReport() == null) ? "false" : "true";
     }
 
     public String getEqualLoad() {
@@ -231,14 +234,12 @@ public class InfoExecutionCourse extends InfoObject {
 	return result;
     }
     
-    public List getAssociatedInfoExams() {
+    public List<InfoExam> getAssociatedInfoExams() {
 	if (filteredAssociatedInfoExams == null) {
 	    List<InfoExam> result = new ArrayList<InfoExam>();
-
 	    for (final Exam exam : getExecutionCourse().getAssociatedExams()) {
 		result.add(InfoExam.newInfoFromDomain(exam));
 	    }
-
 	    return result;
 	} else {
 	    return getFilteredAssociatedInfoExams();
@@ -260,6 +261,9 @@ public class InfoExecutionCourse extends InfoObject {
     }
     
 
+    public List<CourseLoad> getCourseLoads(){
+	return getExecutionCourse().getCourseLoads();
+    }
     //=================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC =======================
 
     // The following variable serves the purpose of indicating the
@@ -334,5 +338,5 @@ public class InfoExecutionCourse extends InfoObject {
     public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
 	this.filteredInfoGroupings = filteredInfoGroupings;
     }
-
+    
 }

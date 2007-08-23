@@ -31,7 +31,7 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
         final Shift shift = rootDomainObject.readShiftByOID(shiftCode);
 
-        if (grouping.getShiftType() != shift.getTipo()) {
+        if (!shift.containsType(grouping.getShiftType())) {
             return false;
         }
 

@@ -38,7 +38,7 @@ function invertSelect(){
 
 <bean:define id="shiftName" name="<%= SessionConstants.SHIFT %>" property="nome"/>
 <bean:define id="shiftId" name="<%= SessionConstants.SHIFT %>" property="idInternal"/>
-<bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="tipo"/>
+<bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
 <h3>Alunos Inscritos</h3>
 
@@ -130,12 +130,10 @@ function invertSelect(){
 				</th>
 			</tr>
 			<logic:iterate id="otherShift" name="<%= SessionConstants.SHIFTS %>">
-				<logic:notEqual name="otherShift" property="nome"
-						value="<%= pageContext.findAttribute("shiftName").toString() %>">
+				<logic:notEqual name="otherShift" property="nome" value="<%= pageContext.findAttribute("shiftName").toString() %>">
 					<bean:define id="otherShiftId" name="otherShift" property="idInternal"/>
-					<bean:define id="otherShiftType" name="otherShift" property="tipo"/>
-					<logic:equal name="shiftType"
-							value="<%= pageContext.findAttribute("otherShiftType").toString() %>">
+					<bean:define id="otherShiftType" name="otherShift" property="shiftTypesIntegerComparator"/>
+					<logic:equal name="shiftType" value="<%= pageContext.findAttribute("otherShiftType").toString() %>">
 						<tr>
 							<td>
 								<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.newShiftId" property="newShiftId" value="<%= pageContext.findAttribute("otherShiftId").toString() %>"/>

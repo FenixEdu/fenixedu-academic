@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -23,7 +24,7 @@ public class LerAulasDeDisciplinaExecucao extends Service {
     public Object run(final InfoExecutionCourse infoExecutionCourse) {
     	
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
-        final List<Shift> shifts = executionCourse.getAssociatedShifts();
+        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
         // An estimated upper bound for the number of elements is three lessons per shift.
         final int estimatedNumberOfLessons = shifts.size() * 3;

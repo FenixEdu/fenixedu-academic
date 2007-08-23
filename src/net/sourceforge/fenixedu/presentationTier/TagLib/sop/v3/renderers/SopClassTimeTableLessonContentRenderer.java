@@ -53,7 +53,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
             				"&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
             				.append("&amp;execution_degree_oid=")
             				.append(infoExecutionDegree.getIdInternal()).append("'>").append(
-            						lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
+            						lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");
@@ -87,7 +87,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
             				"&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
             				.append("&amp;execution_degree_oid=")
             				.append(infoExecutionDegree.getIdInternal()).append("'>").append(
-            						lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
+            						lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");

@@ -260,15 +260,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return firstExecutionDegree.equals(this);
     }
 
-    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear,
-	    final ExecutionPeriod executionPeriod) {
+    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionPeriod executionPeriod) {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final Set<Shift> shifts = new HashSet<Shift>();
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear,
-		    degreeCurricularPlan, executionPeriod)) {
-		for (final ExecutionCourse executionCourse : curricularCourse
-			.getAssociatedExecutionCourses()) {
+	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {
+		for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
 		    if (executionCourse.getExecutionPeriod() == executionPeriod) {
 			shifts.addAll(executionCourse.getAssociatedShifts());
 		    }

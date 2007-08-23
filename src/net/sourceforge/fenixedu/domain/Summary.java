@@ -38,44 +38,46 @@ public class Summary extends Summary_Base {
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
-	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour) {
+	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour, 
+	    ShiftType type) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour);
+		teacher, shift, lesson, date, room, hour, type);
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,
-	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour) {
+	    Shift shift, Lesson lesson, YearMonthDay date, AllocatableSpace room, Partial hour, 
+	    ShiftType type) {
 
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName,
-		teacher, shift, lesson, date, room, hour);
+		teacher, shift, lesson, date, room, hour, type);
     }
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText,
 	    Integer studentsNumber, Boolean isExtraLesson, Professorship professorship,
 	    String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay day,
-	    AllocatableSpace room, Partial hour) {
+	    AllocatableSpace room, Partial hour, ShiftType type) {
 
 	setShift(shift);
 	setSummaryDateYearMonthDay(day);
-	setExecutionCourse(shift.getDisciplinaExecucao());
+	setExecutionCourse(shift.getExecutionCourse());
 	setTitle(title);
 	setSummaryText(summaryText);	
 	setIsExtraLesson(isExtraLesson);
 
 	checkSpecialParameters(isExtraLesson, professorship, teacherName, teacher, lesson, hour);	
 	checkIfInternalTeacherHasProfessorhipInExecutionCourse(teacher, shift.getDisciplinaExecucao());
-	checkIfSummaryDateIsValid(day, shift.getDisciplinaExecucao().getExecutionPeriod(), lesson, isExtraLesson);
+	checkIfSummaryDateIsValid(day, shift.getExecutionPeriod(), lesson, isExtraLesson);
 
 	setStudentsNumber(studentsNumber);	
 	setProfessorship(professorship);
 	setTeacherName(teacherName);
 	setTeacher(teacher);		
 	setLastModifiedDateDateTime(new DateTime());
-	setSummaryType(shift.getTipo());
+	setSummaryType(type);		
 
 	if (isExtraLesson) {
 	    super.setLessonInstance(null);
@@ -93,8 +95,8 @@ public class Summary extends Summary_Base {
 	super.setExecutionCourse(null);
 	super.setShift(null);
 	super.setLessonInstance(null);
-	removeProfessorship();
-	removeRoom();		
+	removeRoom();
+	removeProfessorship();	
 	removeTeacher();	
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -105,7 +107,7 @@ public class Summary extends Summary_Base {
 	return hasShift() && hasExecutionCourse() && (hasTeacher() || hasProfessorship() || !StringUtils.isEmpty(getTeacherName()))
 	&& !getTitle().isEmpty() && !getSummaryText().isEmpty() && getSummaryDateYearMonthDay() != null
 	&& getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null 
-	&& getSummaryType() != null;	
+	&& (getIsExtraLesson() || (hasLessonInstance() && getSummaryType() != null));	
     }
 
     private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {		
@@ -113,7 +115,7 @@ public class Summary extends Summary_Base {
 	if(lessonInstance == null) {	    
 	    new LessonInstance(this, lesson);	    
 	} else {
-	    setLessonInstance(lessonInstance);
+	    lessonInstance.editSummaryAndCourseLoad(this, lesson);	    
 	}
     }
 
@@ -261,5 +263,9 @@ public class Summary extends Summary_Base {
 	    setTeacher(null);
 	    setProfessorship(professorship);
 	}
+    }
+    
+    public ShiftType getShiftType() {
+	return getLessonInstance().getCourseLoad().getType();
     }
 }

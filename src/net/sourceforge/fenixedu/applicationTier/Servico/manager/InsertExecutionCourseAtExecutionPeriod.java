@@ -17,35 +17,20 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 public class InsertExecutionCourseAtExecutionPeriod extends Service {
 
     public void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
-	final ExecutionPeriod executionPeriod = rootDomainObject
-		.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+
+	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 	if (executionPeriod == null) {
 	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 	}
 
-	final ExecutionCourse existentExecutionCourse = executionPeriod
-		.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+	final ExecutionCourse existentExecutionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
 	if (existentExecutionCourse != null) {
 	    throw new ExistingServiceException("A disciplina execução com sigla "
 		    + existentExecutionCourse.getSigla() + " e período execução "
 		    + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear());
 	}
 
-	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(),
-		infoExecutionCourse.getSigla(), executionPeriod);
-
-	executionCourse.setLabHours(infoExecutionCourse.getLabHours());
-	executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
-	executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
-	executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
-	executionCourse.setSeminaryHours(infoExecutionCourse.getSeminaryHours());
-	executionCourse.setProblemsHours(infoExecutionCourse.getProblemsHours());
-	executionCourse.setFieldWorkHours(infoExecutionCourse.getFieldWorkHours());
-	executionCourse.setTrainingPeriodHours(infoExecutionCourse.getTrainingPeriodHours());
-	executionCourse.setTutorialOrientationHours(infoExecutionCourse.getTutorialOrientationHours());
-	executionCourse.setComment(infoExecutionCourse.getComment());
-
+	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionPeriod);
 	executionCourse.createSite();
     }
-
 }

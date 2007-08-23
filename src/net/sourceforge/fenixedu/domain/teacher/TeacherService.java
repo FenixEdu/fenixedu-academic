@@ -107,12 +107,12 @@ public class TeacherService extends TeacherService_Base {
                 if (teacherCategory != null 
                         && ((teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")) ||
                                 (teacherCategory.getCode().equals("ASC") && teacherCategory.getLongName().equals("ASSISTENTE CONVIDADO")))
-                        && degreeTeachingService.getShift().getTipo().equals(ShiftType.TEORICA)) {                    
-                    double hours = degreeTeachingService.getShift().hours();
+                        && degreeTeachingService.getShift().containsType(ShiftType.TEORICA)) {                    
+                    double hours = degreeTeachingService.getShift().getUnitHours().doubleValue();
                     credits += (hours * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;                    
                 } else {                    
                     double hoursAfter20PM = degreeTeachingService.getShift().hoursAfter(20);
-                    double hoursBefore20PM = degreeTeachingService.getShift().hours() - hoursAfter20PM;
+                    double hoursBefore20PM = degreeTeachingService.getShift().getUnitHours().doubleValue() - hoursAfter20PM;
                     credits += hoursBefore20PM * (degreeTeachingService.getPercentage().doubleValue() / 100);
                     credits += (hoursAfter20PM * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
                 }                

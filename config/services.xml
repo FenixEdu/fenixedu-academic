@@ -191,6 +191,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteCourseLoad</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceAllocationManagerAuthorization" />
+		</filterChains>
+	</service>	
+	<service>
 		<name>EditarSala</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarSala</implementationClass>
 		<description />
@@ -5990,7 +5999,7 @@
 	</service>
 	<service>
 		<name>EditExecutionCourseByManager</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.EditExecutionCourseInfo</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

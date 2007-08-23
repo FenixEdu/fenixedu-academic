@@ -59,11 +59,10 @@ import org.joda.time.YearMonthDay;
 public class Unit extends Unit_Base {
 
     public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
-	static {
-        FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder"); 
-		UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
-	}
-	
+    static {
+	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder"); 
+	UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
+    }	
     static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
 
     protected Unit() {
@@ -132,7 +131,7 @@ public class Unit extends Unit_Base {
 	final YearMonthDay end = getEndDateYearMonthDay();	
 	return start != null && (end == null || !start.isAfter(end));
     }
-       
+
     public void delete() {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
@@ -163,9 +162,9 @@ public class Unit extends Unit_Base {
 
     @Override
     public Campus getCampus() {
-        
+
 	Campus campus = super.getCampus();        
-	
+
 	if(campus != null) {
 	    return campus;
 	}
@@ -174,10 +173,10 @@ public class Unit extends Unit_Base {
 	if(parentUnits.size() == 1) {
 	    campus = parentUnits.iterator().next().getCampus();
 	}
-	
+
 	return campus;
     }
-    
+
     public boolean isInternal() {
 	if (this.equals(UnitUtils.readInstitutionUnit())) {
 	    return true;
@@ -482,19 +481,19 @@ public class Unit extends Unit_Base {
     }
 
     public List<Contract> getContracts(YearMonthDay begin, YearMonthDay end, AccountabilityTypeEnum ... types) {
-    	List<Contract> contracts = new ArrayList<Contract>();
-		for (Contract contract : getContracts(types)) {
-			if (contract.belongsToPeriod(begin, end)) {
-				contracts.add(contract);
-			}
-		}
-		return contracts;
+	List<Contract> contracts = new ArrayList<Contract>();
+	for (Contract contract : getContracts(types)) {
+	    if (contract.belongsToPeriod(begin, end)) {
+		contracts.add(contract);
+	    }
+	}
+	return contracts;
     }
 
     public Collection<Contract> getContracts(AccountabilityTypeEnum ... types) {
-    	return (Collection<Contract>) getChildAccountabilities(Contract.class, types);
+	return (Collection<Contract>) getChildAccountabilities(Contract.class, types);
     }
-    
+
     public List<Teacher> getAllTeachers() {
 	List<Teacher> teachers = new ArrayList<Teacher>();
 	List<Employee> employees = getAllWorkingEmployees();
@@ -1191,65 +1190,62 @@ public class Unit extends Unit_Base {
 
 	return people;
     }
-    
+
     public Collection<Function> getVirtualFunctions() {
-    	return getFunctions(FunctionType.VIRTUAL);
+	return getFunctions(FunctionType.VIRTUAL);
     }
- 
+
     public void setFunctionsOrder(Collection<Function> functions) {
-    	Unit.FUNCTION_ORDERED_ADAPTER.updateOrder(this, functions);
+	Unit.FUNCTION_ORDERED_ADAPTER.updateOrder(this, functions);
     }
-    
+
     public Collection<Function> getFunctions(boolean active) {
-    	List<Function> result = new ArrayList<Function>();
-    	
-    	YearMonthDay today = new YearMonthDay();
-    	for (Function function : getFunctions()) {
-    		if (function.isActive(today) != active) {
-    			continue;
-    		}
-    		
-    		result.add(function);
-    	}
-    	
-    	return result;
+	List<Function> result = new ArrayList<Function>();
+	YearMonthDay today = new YearMonthDay();
+	for (Function function : getFunctions()) {
+	    if (function.isActive(today) != active) {
+		continue;
+	    }
+	    result.add(function);
+	}	
+	return result;
     }
-    
+
     public Collection<Function> getActiveFunctions() {
-    	return getFunctions(true);
+	return getFunctions(true);
     }
 
     public Collection<Function> getInactiveFunctions() {
-    	return getFunctions(false);
+	return getFunctions(false);
     }
-    
+
     public SortedSet<Function> getOrderedFunctions() {
-    	SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
-    	functions.addAll(getFunctions());
-    	
-    	return functions;
+	SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
+	functions.addAll(getFunctions());
+
+	return functions;
     }
 
     public SortedSet<Function> getOrderedActiveFunctions() {
-    	SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
-    	functions.addAll(getActiveFunctions());
-    	
-    	return functions;
+	SortedSet<Function> functions = new TreeSet<Function>(Function.COMPARATOR_BY_ORDER);
+	functions.addAll(getActiveFunctions());
+
+	return functions;
     }
-    
+
     @Override
     protected UnitSite createSite() {
-    	if (this == RootDomainObject.getInstance().getInstitutionUnit()) {
-    		// TODO: to be removed if institution unit becomes a specific class
-    		return InstitutionSite.initialize();
-    	}
-    	else {
-    		return new UnitSite(this);
-    	}
+	if (this == RootDomainObject.getInstance().getInstitutionUnit()) {
+	    // TODO: to be removed if institution unit becomes a specific class
+	    return InstitutionSite.initialize();
+	}
+	else {
+	    return new UnitSite(this);
+	}
     }
 
     @Override
     public UnitSite initializeSite() {
-		return (UnitSite) super.initializeSite();
+	return (UnitSite) super.initializeSite();
     }
 }

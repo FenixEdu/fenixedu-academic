@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -68,7 +69,7 @@ public class ReadGroupingShifts extends Service {
 			while (iterExecutionCourses.hasNext()) {
 				ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
 
-				List someShifts = executionCourse.getAssociatedShifts();
+				Set<Shift> someShifts = executionCourse.getAssociatedShifts();
 
 				executionCourseShifts.addAll(someShifts);
 			}

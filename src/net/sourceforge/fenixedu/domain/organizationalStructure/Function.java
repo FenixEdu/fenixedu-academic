@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -15,23 +16,18 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public static final Comparator<Function> COMPARATOR_BY_ORDER = new Comparator<Function>() {
-        
-        private ComparatorChain chain = null;
-        
+    public static final Comparator<Function> COMPARATOR_BY_ORDER = new Comparator<Function>() {        
+        private ComparatorChain chain = null;        
         public int compare(Function one, Function other) {
             if (this.chain == null) {
-                chain = new ComparatorChain();
-                
+                chain = new ComparatorChain();                
                 chain.addComparator(new BeanComparator("functionOrder", new NullComparator()));
                 chain.addComparator(new BeanComparator("functionType", new NullComparator()));
                 chain.addComparator(new BeanComparator("name"));
                 chain.addComparator(DomainObject.COMPARATOR_BY_ID);
-            }
-            
+            }           
             return chain.compare(one, other);
-        }
-        
+        }        
     };
 	
     public Function(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
@@ -41,6 +37,16 @@ public class Function extends Function_Base {
 	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
+    public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
+	super();
+	setTypeName(functionName);
+	setFunctionType(type);
+	setBeginDateYearMonthDay(beginDate);
+	setEndDateYearMonthDay(endDate);
+	setUnit(unit);
+	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+    }
+        
     public void edit(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
 	setName(functionName);
 	setFunctionType(type);
@@ -118,16 +124,15 @@ public class Function extends Function_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasUnit() && !StringUtils.isEmpty(getName()); 	
+	return hasUnit() && !getTypeName().isEmpty(); 	
     }
 
-    public static Function createVirtualFunction(Unit unit, String name) {
+    public static Function createVirtualFunction(Unit unit, MultiLanguageString name) {
     	return new Function(name, new YearMonthDay(), null, FunctionType.VIRTUAL, unit);
     }
     
-	public boolean isVirtual() {
-		FunctionType type = getFunctionType();
-		return type != null && type.equals(FunctionType.VIRTUAL);
-	}
-	
+    public boolean isVirtual() {
+	FunctionType type = getFunctionType();
+	return type != null && type.equals(FunctionType.VIRTUAL);
+    }
 }

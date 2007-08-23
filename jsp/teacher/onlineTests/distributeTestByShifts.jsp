@@ -72,10 +72,10 @@ function cleanSelect() {
 	</tr>
 	<logic:iterate id="shift" name="shiftList" indexId="index">
 		<logic:equal name="index" value="0">
-			<bean:define id="tipoBefore" name="shift" property="tipo.fullNameTipoAula"/>
+			<bean:define id="tipoBefore" name="shift" property="shiftTypesPrettyPrint"/>
 		</logic:equal>
 		<logic:notEqual name="index" value="0">
-			<logic:notEqual name="shift" property="tipo.fullNameTipoAula" value="<%tipoBefore%>">
+			<logic:notEqual name="shift" property="shiftTypesPrettyPrint" value="<%tipoBefore%>">
 				<tr height=20><td></td></tr>
 				<tr><td></td>
 					<th class="listClasses-header"><bean:message key="link.executionCourse.shifts"/></th>
@@ -86,14 +86,14 @@ function cleanSelect() {
 		</logic:notEqual>
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="shift" property="nome"/></td>
-			<td class="listClasses"><bean:write name="shift" property="tipo.fullNameTipoAula"/></td>
+			<td class="listClasses"><bean:write name="shift" property="shiftTypesPrettyPrint"/></td>
 			<td class="listClasses">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			    <bean:write name="shift" property="idInternal"/>
 				</html:multibox> 
 			</td>
 		</tr>
-		<bean:define id="tipoBefore" name="shift" property="tipo.fullNameTipoAula"/>
+		<bean:define id="tipoBefore" name="shift" property="shiftTypesPrettyPrint"/>
 	</logic:iterate>
 </table>
 <table><tr>

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -50,18 +51,11 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         //Get list of shifts and place them in request
         Object args[] = { infoClass };
 
-        List infoShifts = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(SessionUtils.getUserView(request),
                 "ReadShiftsByClass", args);
 
-        if (infoShifts != null && !infoShifts.isEmpty()) {
-            /* Sort the list of shifts */
-            ComparatorChain chainComparator = new ComparatorChain();
-            chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
-            chainComparator.addComparator(new BeanComparator("tipo"));
-            chainComparator.addComparator(new BeanComparator("nome"));
-            Collections.sort(infoShifts, chainComparator);
-
-            /* Place list of shifts in request */
+        if (infoShifts != null && !infoShifts.isEmpty()) {            
+            Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
             request.setAttribute(SessionConstants.SHIFTS, infoShifts);
         }
 
@@ -126,7 +120,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         //Get list of available shifts and place them in request
         Object args[] = { infoClass };
 
-        List infoShifts = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(SessionUtils.getUserView(request),
                 "ReadAvailableShiftsForClass", args);
 
         /* Sort the list of shifts */
@@ -157,7 +151,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         Object argsApagarTurma[] = { infoClass };
 
         /** InfoLesson List */
-        List lessonList = (ArrayList) ServiceUtils.executeService(userView, "LerAulasDeTurma",
+        List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService(userView, "LerAulasDeTurma",
                 argsApagarTurma);
 
         request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
@@ -178,7 +172,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             return mapping.getInputForward();
 
         }
-        List shiftOIDs = new ArrayList();
+        List<Integer> shiftOIDs = new ArrayList<Integer>();
         for (int i = 0; i < selectedShifts.length; i++) {
             shiftOIDs.add(new Integer(selectedShifts[i]));
         }

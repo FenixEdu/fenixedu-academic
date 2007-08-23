@@ -17,7 +17,7 @@ public class ListShiftsToSummariesManagementProvider implements DataProvider {
         ExecutionCourse executionCourse = bean.getExecutionCourse();
         Set<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         if(executionCourse != null) {            
-            shifts.addAll(executionCourse.getAssociatedShiftsSet());
+            shifts.addAll(executionCourse.getAssociatedShifts());
         }
         return shifts;
     }

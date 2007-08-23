@@ -128,8 +128,8 @@
 			</logic:equal>
 			<logic:notEqual name="numberOfLessons" value="0">
 	        	<td rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
-			</logic:notEqual>
-            	<bean:message name="infoShift" property="tipo.name" bundle="ENUMERATION_RESOURCES"/>
+			</logic:notEqual>            	
+            	<bean:write name="infoShift" property="shift.shiftTypesPrettyPrint"/>
             </td>
 			<logic:equal name="numberOfLessons" value="0">
 				<td>

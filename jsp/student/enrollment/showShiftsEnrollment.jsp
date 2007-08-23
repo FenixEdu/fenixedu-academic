@@ -357,7 +357,7 @@
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</td>
 					<td style="text-align:center">
-						<bean:write name="lesson" property="tipo" />								
+						<bean:write name="shift" property="shiftTypesPrettyPrint" />								
 					</td>
 					<td style="text-align:center">
 						<bean:write name="lesson" property="diaSemana" />

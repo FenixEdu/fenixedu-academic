@@ -677,20 +677,7 @@
     <form name="createShiftForm">
       <field property="courseInitials" depends="required" page="1">
         <arg0 key="property.course"/>
-      </field>
-      <field property="tipoAula" depends="required" page="1">
-        <arg0 key="property.aula.type"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>6</var-value>
-        </var>
-      </field>
+      </field>      
 	  <field property="lotacao" depends="required, integer, intRange" page="1">
         <arg0 key="property.shift.capacity" />
         <arg1 key="${var:min}" resource="false"/>

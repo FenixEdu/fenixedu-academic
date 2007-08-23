@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -33,7 +34,12 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     	super.copyFromDomain(lesson);
     	this.lesson = new DomainReference<Lesson>(lesson);
     }
-
+    
+    @Override
+    public ShiftType getTipo() {
+	return null;
+    }
+    
     public DiaSemana getDiaSemana() {
         return getLesson().getDiaSemana();
     }
@@ -44,12 +50,8 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     public Calendar getInicio() {
         return getLesson().getInicio();
-    }
-
-    public ShiftType getTipo() {
-        return getLesson().getTipo();
-    }
-
+    }   
+    
     public FrequencyType getFrequency() {        
         return getLesson().getFrequency();
     }
@@ -75,15 +77,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     }
 
     public String getLessonDuration() {
-        int hours = this.getFim().get(Calendar.HOUR_OF_DAY) - this.getInicio().get(Calendar.HOUR_OF_DAY);
-        int minutes = this.getFim().get(Calendar.MINUTE) - this.getInicio().get(Calendar.MINUTE);
-
-        if (minutes < 0) {
-            minutes *= -1;
-            hours = hours - 1;
-        }
-
-        return hours + ":" + minutes;
+        return getLesson().getUnitHours().toString();
     }
     
     public InfoRoom getInfoSala() {
@@ -133,7 +127,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
         String result = "";
         result += getDiaSemana().toString() + "\n";
-        result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " (" + getTipo().getSiglaTipoAula() + ")";
+        result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " (" + getInfoShift().getShiftTypesCodePrettyPrint() + ")";
         result += "\n" + beginTime;
         result += "-" + endTime;
         result += "\nSala=" + getInfoSala().getNome();
@@ -145,5 +139,4 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     private Lesson getLesson(){
         return lesson == null ? null : lesson.getObject();
     }
-
 }

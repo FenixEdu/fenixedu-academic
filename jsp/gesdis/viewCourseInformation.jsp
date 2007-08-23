@@ -1,14 +1,14 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<html:xhtml/>
 
 <h2><bean:message key="title.courseInformation"/></h2>
 
 <logic:present name="siteView"> 
 	<bean:define id="siteCourseInformation" name="siteView" property="component"/>
-	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
+	<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse"/>
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
 
@@ -76,41 +76,39 @@
 		</tr>
 		<logic:iterate id="infoLesson" name="siteCourseInformation" property="infoLessons">
 			<tr>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="T">
-					<td><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
-					<td><bean:write name="siteCourseInformation" property="numberOfTheoLessons"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="P">
-					<td><bean:message key="message.courseInformation.typeClassPraticas"/></td>
-					<td><bean:write name="siteCourseInformation" property="numberOfPratLessons"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="TP">
-					<td><bean:message key="message.courseInformation.typeClassTeoPrat"/></td>
-					<td><bean:write name="siteCourseInformation" property="numberOfTheoPratLessons"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="L">
-					<td><bean:message key="message.courseInformation.typeClassLab"/></td>
-					<td><bean:write name="siteCourseInformation" property="numberOfLabLessons"/></td>
-				</logic:equal>
-				
-				<td><bean:write name="infoLesson" property="lessonDuration"/></td>
-				
-			<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="T">
+				<logic:iterate id="">
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="T">
+						<td><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
+						<td><bean:write name="siteCourseInformation" property="numberOfTheoLessons"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="P">
+						<td><bean:message key="message.courseInformation.typeClassPraticas"/></td>
+						<td><bean:write name="siteCourseInformation" property="numberOfPratLessons"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="TP">
+						<td><bean:message key="message.courseInformation.typeClassTeoPrat"/></td>
+						<td><bean:write name="siteCourseInformation" property="numberOfTheoPratLessons"/></td>
+					</logic:equal>
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="L">
+						<td><bean:message key="message.courseInformation.typeClassLab"/></td>
+						<td><bean:write name="siteCourseInformation" property="numberOfLabLessons"/></td>
+					</logic:equal>
 					
-					<td><bean:write name="executionCourse" property="theoreticalHours"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="P">
+					<td><bean:write name="infoLesson" property="lessonDuration"/></td>
 					
-					<td><bean:write name="executionCourse" property="praticalHours"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="TP">
-					
-					<td><bean:write name="executionCourse" property="theoPratHours"/></td>
-				</logic:equal>
-				<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="L">
-					
-					<td><bean:write name="executionCourse" property="labHours"/></td>
-				</logic:equal>
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="T">				
+						<td><bean:write name="executionCourse" property="weeklyTheoreticalHours"/></td>
+					</logic:equal>				
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="P">				
+						<td><bean:write name="executionCourse" property="weeklyPraticalHours"/></td>
+					</logic:equal>				
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="TP">				
+						<td><bean:write name="executionCourse" property="weeklyTheoPratHours"/></td>
+					</logic:equal>				
+					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="L">				
+						<td><bean:write name="executionCourse" property="weeklyLabHours"/></td>
+					</logic:equal>						
+				</logic:iterate>															
 			</tr>
 		</logic:iterate>
 	</table>

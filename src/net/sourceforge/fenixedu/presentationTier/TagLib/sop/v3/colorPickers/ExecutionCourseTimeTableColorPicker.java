@@ -12,7 +12,7 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
         if (infoShowOccupation instanceof InfoLesson) {
             InfoLesson infoLesson = (InfoLesson) infoShowOccupation;
 
-            strBuffer.append(infoLesson.getTipo().getSiglaTipoAula());
+            strBuffer.append(infoLesson.getInfoShift().getShiftTypesCodePrettyPrint());
         } else {
             strBuffer.append("EXAM");
         }

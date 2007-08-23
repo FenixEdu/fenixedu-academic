@@ -624,18 +624,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean availableForInquiries;
 		Boolean availableGradeSubmission;
-		String comment;
-		Double fieldWorkHours;
-		Double labHours;
-		String nome;
-		Double praticalHours;
-		Double problemsHours;
-		Double seminaryHours;
-		String sigla;
-		Double theoPratHours;
-		Double theoreticalHours;
-		Double trainingPeriodHours;
-		Double tutorialOrientationHours;
+		String comment;		
+		String nome;		
+		String sigla;		
+	}
+	
+	class net.sourceforge.fenixedu.domain.CourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
+		ShiftType type;
+		BigDecimal totalQuantity;
+		BigDecimal unitQuantity;	
 	}
 
 	class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -844,7 +841,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DiaSemana diaSemana;
 		HourMinuteSecond endHourMinuteSecond;
 		FrequencyType frequency;
-		ShiftType tipo;		
 	}
 
 	class net.sourceforge.fenixedu.domain.LessonInstance extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1122,8 +1118,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer availabilityFinal;
 		Integer lotacao;
-		String nome;
-		ShiftType tipo;
+		String nome;		
 	}
 
 	class net.sourceforge.fenixedu.domain.ShiftEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1258,7 +1253,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString summaryText;
 		ShiftType summaryType;
 		String teacherName;
-		MultiLanguageString title;
+		MultiLanguageString title;		
 	}
 
 	class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2848,8 +2843,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay endDate;
 	}
 
-	class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {
-		String name;
+	class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {		
+		MultiLanguageString typeName;
 		AccountabilityTypeEnum type;
 	}
 
@@ -11007,13 +11002,6 @@ relation ShiftEnrolmentShift {
 	}
 }
 
-relation ShiftExecutionCourse {
-	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
-}
-
 relation ShiftSchoolClass {
 	net.sourceforge.fenixedu.domain.SchoolClass playsRole associatedClasses {
 		multiplicity *;
@@ -12171,6 +12159,36 @@ relation CompetenceCourseInformationChangeRequestRootDomainObject {
 relation CompetenceCourseInformationExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
+		multiplicity *;
+	}
+}
+
+relation CourseLoadRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CourseLoad playsRole courseLoads {
+		multiplicity *;
+	}
+}
+
+relation CourseLoadExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.CourseLoad playsRole courseLoads {
+		multiplicity *;
+	}
+}
+
+relation CourseLoadShift {
+	net.sourceforge.fenixedu.domain.Shift playsRole shifts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CourseLoad playsRole courseLoads {
+		multiplicity *;
+	}
+}
+
+relation CourseLoadLessonInstance {
+	net.sourceforge.fenixedu.domain.CourseLoad playsRole courseLoad;
+	net.sourceforge.fenixedu.domain.LessonInstance playsRole lessonInstances {
 		multiplicity *;
 	}
 }

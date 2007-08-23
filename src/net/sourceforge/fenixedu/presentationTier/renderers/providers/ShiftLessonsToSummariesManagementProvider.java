@@ -20,7 +20,7 @@ public class ShiftLessonsToSummariesManagementProvider implements DataProvider {
         Set<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);        
         if(shift != null && summaryType != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
            lessons.addAll(shift.getAssociatedLessons());
-        }
+        }               
         return lessons;
     }
 

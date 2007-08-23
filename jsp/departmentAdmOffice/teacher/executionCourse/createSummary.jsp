@@ -119,7 +119,22 @@ function check(e,v){
 						</fr:edit>
 					</fr:form>
 				</td>
-			</tr>		
+			</tr>	
+			<tr>
+				<td class="aright"><bean:message key="label.lessonPlanning.lessonType" bundle="DEFAULT"/>:</td>
+				<td>
+					<bean:define id="chooseLessonTypeUrl">/summariesManagement.do?method=chooseLessonType&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+					<fr:form action="<%= chooseLessonTypeUrl %>">
+						<fr:edit id="summariesManagementBeanWithLessonTypes" name="summariesManagementBean" schema="ListLessonTypesToCreateSummary" nested="true">
+							<fr:destination name="postBack" path="<%= chooseLessonTypeUrl %>"/>				
+							<fr:layout name="flow">
+								<fr:property name="labelTerminator" value=""/>
+								<fr:property name="labelExcluded" value="true"/>
+							</fr:layout>
+						</fr:edit>
+					</fr:form>
+				</td>				
+			</tr>			
 			<tr>
 				<td class="aright"><bean:message key="label.date" bundle="DEFAULT"/>:</td>
 				<td>
@@ -140,42 +155,44 @@ function check(e,v){
 	</table>	
 	
 	<%-- Associate --%>
-	<h3 class="mbottom0"> <bean:message key="label.use" bundle="DEFAULT"/></h3>
-	<table class="tstyle5">
-		<%-- LessonPlannings --%>
-		<tr>
-			<td class="aright"><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
-			<td>				
-				<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-				<fr:form action="<%= chooseLessonPlanningURL %>">					
-					<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
-							<fr:layout name="flow">
-								<fr:property name="labelTerminator" value=""/>
-								<fr:property name="labelExcluded" value="true"/>
-							</fr:layout>	
-					</fr:edit>	
-				</fr:form>
-			</td>
-		</tr>	
-		<%-- LastSummaries --%>
-		<tr>
-			<td class="aright"><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
-			<td>				
-				<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
-				<fr:form action="<%= chooseLastSummaryURL %>">					
-					<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
-						<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	
-							<fr:layout name="flow">
-								<fr:property name="labelTerminator" value=""/>
-								<fr:property name="labelExcluded" value="true"/>
-							</fr:layout>	
-					</fr:edit>	
-				</fr:form>	
-			</td>
-		</tr>
-	</table>								
-	
+	<logic:empty name="notShowLessonPlanningsAndSummaries">
+		<h3 class="mbottom0"> <bean:message key="label.use" bundle="DEFAULT"/></h3>	
+		<table class="tstyle5">
+			<%-- LessonPlannings --%>
+			<tr>
+				<td class="aright"><bean:message key="label.lessonPlanning" bundle="DEFAULT"/>:</td>
+				<td>				
+					<bean:define id="chooseLessonPlanningURL">/summariesManagement.do?method=chooseLessonPlanning&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+					<fr:form action="<%= chooseLessonPlanningURL %>">					
+						<fr:edit id="summariesManagementBeanWithLessonPlanning" name="summariesManagementBean" schema="ListLessonPlanningsToSummariesManagement" nested="true">
+							<fr:destination name="postBack" path="<%= chooseLessonPlanningURL %>"/>	
+								<fr:layout name="flow">
+									<fr:property name="labelTerminator" value=""/>
+									<fr:property name="labelExcluded" value="true"/>
+								</fr:layout>	
+						</fr:edit>	
+					</fr:form>
+				</td>
+			</tr>	
+			<%-- LastSummaries --%>
+			<tr>
+				<td class="aright"><bean:message key="message.summaryText.last" bundle="DEFAULT"/>:</td>
+				<td>				
+					<bean:define id="chooseLastSummaryURL">/summariesManagement.do?method=chooseLastSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+					<fr:form action="<%= chooseLastSummaryURL %>">					
+						<fr:edit id="summariesManagementBeanWithLastSummary" name="summariesManagementBean" schema="ListLastSummariesToSummariesManagement" nested="true">
+							<fr:destination name="postBack" path="<%= chooseLastSummaryURL %>"/>	
+								<fr:layout name="flow">
+									<fr:property name="labelTerminator" value=""/>
+									<fr:property name="labelExcluded" value="true"/>
+								</fr:layout>	
+						</fr:edit>	
+					</fr:form>	
+				</td>
+			</tr>
+		</table>								
+	</logic:empty>
+		
 	<bean:define id="invalidLink">/summariesManagement.do?method=goToInsertSummaryAgain&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>									
 	<bean:define id="createSummaryURL">/summariesManagement.do?teacherNumber_=<bean:write name="teacherNumber"/></bean:define>		
 

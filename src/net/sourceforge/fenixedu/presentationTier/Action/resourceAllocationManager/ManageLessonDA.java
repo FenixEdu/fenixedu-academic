@@ -77,12 +77,13 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 	Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();
+	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 		
 	if(maxLessonsPeriod != null) {
 	    request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
 	    request.setAttribute("executionDegreeLessonsEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
 	    manageLessonForm.set("newBeginDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
+	    manageLessonForm.set("newEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
 	
 	} else {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -117,10 +118,13 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	if(infoLesson.getLessonBegin() != null) {	    
 	    manageLessonForm.set("newBeginDate", infoLesson.getLessonBegin().toString("dd/MM/yyyy"));
-	} 
-	
+	}
+	if(infoLesson.getLessonEnd() != null) {	    
+	    manageLessonForm.set("newEndDate", infoLesson.getLessonEnd().toString("dd/MM/yyyy"));
+	}
+		
 	Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
-	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getDisciplinaExecucao().getMaxLessonsPeriod();	
+	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();	
 	if(maxLessonsPeriod != null) {
 	    request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
 	    request.setAttribute("executionDegreeLessonsEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));	
@@ -172,28 +176,30 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    	    
 	    if (action != null && action.equals("edit")) {
 		Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
-		maxLessonsPeriod = lesson.getShift().getDisciplinaExecucao().getMaxLessonsPeriod();
+		maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
 	    } else {				
 		Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-		maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();
+		maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 	    }	    	    
 			    	      
-	    YearMonthDay lessonNewBeginDate = getNewBeginDate(manageLessonForm);
-	    YearMonthDay lessonEndDate = null;	
-	    List<InfoRoom> emptyRoomsList = null;	    
+	    YearMonthDay lessonNewBeginDate = getDateFromForm(manageLessonForm, "newBeginDate");
+	    YearMonthDay lessonEndDate = getDateFromForm(manageLessonForm, "newEndDate");
 	    
-	    if (action != null && action.equals("edit")) {	    			       	   	   
-		lessonEndDate = infoLesson.getLessonEnd();	    				
-	    } else {				
-		lessonEndDate = maxLessonsPeriod.getRight();		
-	    }
-	    	    
+	    List<InfoRoom> emptyRoomsList = null;	    
+	    	    	   
 	    if(lessonEndDate != null) {		
 
 		YearMonthDay executionDegreeLessonsBeginDate = maxLessonsPeriod.getLeft();
+		YearMonthDay executionDegreeLessonsEndDate = maxLessonsPeriod.getRight();
 		
 		if(lessonNewBeginDate == null || lessonNewBeginDate.isAfter(lessonEndDate) || lessonNewBeginDate.isBefore(executionDegreeLessonsBeginDate)) {			
-		    actionErrors.add("error.invalid.new.begin.date", new ActionError("error.invalid.new.begin.date"));
+		    actionErrors.add("error.Lesson.invalid.new.begin.date", new ActionError("error.Lesson.invalid.new.begin.date"));
+		    saveErrors(request, actionErrors);    
+		    return mapping.getInputForward();
+		}
+		
+		if(lessonEndDate.isAfter(executionDegreeLessonsEndDate)) {			
+		    actionErrors.add("error.Lesson.invalid.new.end.date", new ActionError("error.Lesson.invalid.new.end.date"));
 		    saveErrors(request, actionErrors);    
 		    return mapping.getInputForward();
 		}
@@ -222,7 +228,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    	   	    
 	    if (action != null && action.equals("edit")
 		    && ((InfoLesson) request.getAttribute(SessionConstants.LESSON)).getInfoRoomOccupation() != null) {
-		
+				
 		emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());		
 		manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
 	    }
@@ -332,8 +338,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	request.setAttribute("manageLessonForm", manageLessonForm);
 
 	ContextUtils.setExecutionPeriodContext(request);
+	
 	DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) manageLessonForm.get("diaSemana"))));	
-	YearMonthDay newBeginDate = getNewBeginDate(manageLessonForm);
+	YearMonthDay newBeginDate = getDateFromForm(manageLessonForm, "newBeginDate");
+	YearMonthDay newEndDate = getDateFromForm(manageLessonForm, "newEndDate");
              	
 	Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
 	if (quinzenal == null) {
@@ -392,7 +400,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 		try {
 		    
-		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate };		    
+		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, 
+			    newBeginDate, newEndDate };		    
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);
 		    
 		} catch (EditLesson.InvalidLoadException ex) {
@@ -464,13 +473,13 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	return mapping.findForward("LessonDeleted");
     }
     
-    private YearMonthDay getNewBeginDate(DynaActionForm manageLessonForm) {	
-	String newBeginDateString = (String) manageLessonForm.get("newBeginDate");        
-        if(!StringUtils.isEmpty(newBeginDateString)) {
+    private YearMonthDay getDateFromForm(DynaActionForm manageLessonForm, String property) {		 
+	String newDateString = (String) manageLessonForm.get(property);	
+        if(!StringUtils.isEmpty(newDateString)) {
             try {
-        	int day = Integer.parseInt(newBeginDateString.substring(0, 2));
-        	int month = Integer.parseInt(newBeginDateString.substring(3, 5));
-        	int year = Integer.parseInt(newBeginDateString.substring(6, 10));
+        	int day = Integer.parseInt(newDateString.substring(0, 2));
+        	int month = Integer.parseInt(newDateString.substring(3, 5));
+        	int year = Integer.parseInt(newDateString.substring(6, 10));
         	if (year == 0 || month == 0 || day == 0) {
         	    return null;
         	} else {

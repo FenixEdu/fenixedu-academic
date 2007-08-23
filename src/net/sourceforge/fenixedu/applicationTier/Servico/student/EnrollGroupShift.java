@@ -43,7 +43,7 @@ public class EnrollGroupShift extends Service {
 
         Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
-                || (!groupProperties.getShiftType().equals(shift.getTipo()))) {
+        	|| (!shift.containsType(groupProperties.getShiftType()))) {
             throw new InvalidStudentNumberServiceException();
         }
 

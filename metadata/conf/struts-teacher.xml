@@ -2244,7 +2244,7 @@
     <message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_OFFICE_RESOURCES" null="false"/>
 	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/>
     <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
-    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

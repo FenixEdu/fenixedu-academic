@@ -104,9 +104,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return getSubUnits(active, this.getUnit(), currentDate);
     }
 
-    public List<Function> getAllNonInherentFunctions() throws FenixFilterException,
-	    FenixServiceException {
-
+    public List<Function> getAllNonInherentFunctions() throws FenixFilterException, FenixServiceException {
 	List<Function> allNonInherentFunctions = new ArrayList<Function>();
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Function function : this.getUnit().getFunctions()) {
@@ -121,7 +119,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public List<Function> getAllInherentFunctions() throws FenixFilterException, FenixServiceException {
-
 	List<Function> allInherentFunctions = new ArrayList<Function>();
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Function function : this.getUnit().getFunctions()) {
@@ -135,9 +132,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return allInherentFunctions;
     }
 
-    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException,
-	    ExcepcaoPersistencia {
-
+    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	if (this.getUnit().isNoOfficialExternal()) {

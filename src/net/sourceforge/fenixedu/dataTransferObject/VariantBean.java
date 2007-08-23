@@ -3,12 +3,15 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 public class VariantBean implements Serializable {
 
     public static enum Type {
 	INTEGER,
 	STRING,
-	DATE
+	DATE,
+	MULTI_LANGUAGE_STRING
     };
     
     /**
@@ -58,4 +61,12 @@ public class VariantBean implements Serializable {
 	setType(Type.STRING);
     }
     
+    public MultiLanguageString getMLString() {
+	return (MultiLanguageString) this.value;
+    }
+    
+    public void setMLString(MultiLanguageString value) {
+	this.value = value;
+	setType(Type.MULTI_LANGUAGE_STRING);
+    }
 }

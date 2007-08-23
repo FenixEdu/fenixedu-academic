@@ -39,7 +39,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
             strBuffer.append("&nbsp;");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -57,7 +57,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
             strBuffer.append("&nbsp;");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());

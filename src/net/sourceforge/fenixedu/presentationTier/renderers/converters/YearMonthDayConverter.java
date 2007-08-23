@@ -28,7 +28,7 @@ public class YearMonthDayConverter extends BiDirectionalConverter {
     public String deserialize(Object object) {
         YearMonthDay date = (YearMonthDay) object;
         if(date != null) {
-            return date.toString();   
+            return date.toString("yyyy-MM-dd");   
         }        
         return "";
     }

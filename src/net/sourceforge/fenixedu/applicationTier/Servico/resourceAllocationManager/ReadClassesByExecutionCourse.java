@@ -16,11 +16,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassesByExecutionCourse extends Service {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+    public List<InfoClass> run(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
-        final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
-        final List infoClasses = new ArrayList(classes.size());
+	final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
+        final List<InfoClass> infoClasses = new ArrayList<InfoClass>(classes.size());
 
         for (final SchoolClass schoolClass : classes) {
             final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);

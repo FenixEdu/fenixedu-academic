@@ -12,45 +12,45 @@ public class EnrollStudentInShifts extends Service {
 
     public ShiftEnrollmentErrorReport run(final Registration registration, final Integer shiftId) throws FenixServiceException {
 
-        final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
+	final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        if (registration == null) {
-            throw new StudentNotFoundServiceException();
-        }
+	if (registration == null) {
+	    throw new StudentNotFoundServiceException();
+	}
 
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
-            throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-        }
+	if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+	    throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+	}
 
-        final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
-        if (selectedShift == null) {
-            errorReport.getUnExistingShifts().add(shiftId);
-        }             
+	final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
+	if (selectedShift == null) {
+	    errorReport.getUnExistingShifts().add(shiftId);
+	}             
 
-        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(registration, selectedShift);
-        
-        if (selectedShift != shiftFromStudent) {
-            //Registration is not yet enroled, so let's reserve the shift...
-            if (selectedShift.reserveForStudent(registration)) {
-                if (shiftFromStudent != null) {
-                    shiftFromStudent.removeStudents(registration);
-                }
-            } else {
-                errorReport.getUnAvailableShifts().add(selectedShift);
-            }
-        }
+	final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(registration, selectedShift);
 
-        return errorReport;
+	if (selectedShift != shiftFromStudent) {
+	    //Registration is not yet enroled, so let's reserve the shift...
+	    if (selectedShift.reserveForStudent(registration)) {
+		if (shiftFromStudent != null) {
+		    shiftFromStudent.removeStudents(registration);
+		}
+	    } else {
+		errorReport.getUnAvailableShifts().add(selectedShift);
+	    }
+	}
+
+	return errorReport;
     }
 
     private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration registration, final Shift shift) {
-		for (final Shift shiftFromStudent : registration.getShifts()) {
-			if (shiftFromStudent.getTipo() == shift.getTipo()
-					&& shiftFromStudent.getDisciplinaExecucao() == shift.getDisciplinaExecucao()) {
-				return shiftFromStudent;
-			}
-		}
-		return null;
-	}    
+	for (final Shift shiftFromStudent : registration.getShifts()) {	    
+	    if (shiftFromStudent.getTypes().containsAll(shift.getTypes())
+		    && shiftFromStudent.getExecutionCourse() == shift.getExecutionCourse()) {
+		return shiftFromStudent;
+	    }
+	}
+	return null;
+    }    
 
 }

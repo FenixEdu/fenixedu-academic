@@ -16,30 +16,30 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class AssociateCurricularCoursesToExecutionCourse extends Service {
 
-	public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException, ExcepcaoPersistencia {
-		if (executionCourseId == null) {
-			throw new FenixServiceException("nullExecutionCourseId");
-		}
-
-		if (curricularCourseIds != null) {
-			ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-
-			if (executionCourse == null) {
-				throw new NonExistingServiceException("noExecutionCourse");
-			}
-
-			Iterator iter = curricularCourseIds.iterator();
-			while (iter.hasNext()) {
-				Integer curricularCourseId = (Integer) iter.next();
-
-				CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
-				if (curricularCourse == null) {
-					throw new NonExistingServiceException("noCurricularCourse");
-				}
-				if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
-					curricularCourse.addAssociatedExecutionCourses(executionCourse);
-				}
-			}
-		}
+    public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException, ExcepcaoPersistencia {
+	if (executionCourseId == null) {
+	    throw new FenixServiceException("nullExecutionCourseId");
 	}
+
+	if (curricularCourseIds != null) {
+	    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+
+	    if (executionCourse == null) {
+		throw new NonExistingServiceException("noExecutionCourse");
+	    }
+
+	    Iterator iter = curricularCourseIds.iterator();
+	    while (iter.hasNext()) {
+		Integer curricularCourseId = (Integer) iter.next();
+
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+		if (curricularCourse == null) {
+		    throw new NonExistingServiceException("noCurricularCourse");
+		}
+		if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+		    curricularCourse.addAssociatedExecutionCourses(executionCourse);
+		}
+	    }
+	}
+    }
 }

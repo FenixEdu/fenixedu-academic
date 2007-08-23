@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftsByExecutionCourseID extends Service {
 
     public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws ExcepcaoPersistencia {
-        final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
+       
+	final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        final List<Shift> shifts = executionCourse.getAssociatedShifts();
+        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
         infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 

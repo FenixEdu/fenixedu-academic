@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -34,7 +36,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -84,7 +85,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	List attends = executionCourse.getAttendsEnrolledOrWithActiveSCP();
 
 	List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
-	List allShifts = executionCourse.getAssociatedShifts();
+	Set allShifts = executionCourse.getAssociatedShifts();
 	List groupProperties = executionCourse.getGroupings();
 
 	Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties);
@@ -191,7 +192,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 	// building the info
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = new InfoForReadStudentsWithAttendsByExecutionCourse();
-	List shifts = executionCourse.getAssociatedShifts();
+	Set shifts = executionCourse.getAssociatedShifts();
 
 	List infoCompositions = new ArrayList();
 	Iterator it = attends.iterator();
@@ -352,7 +353,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return degreeCurricularPlans;
     }
 
-    private Map getShiftsByAttends(final List shifts, final Attends attend,
+    private Map getShiftsByAttends(final Set shifts, final Attends attend,
 	    final Map<Integer, InfoShift> clonedShifts) throws ExcepcaoPersistencia {
 	final Map result = new HashMap();
 
@@ -374,7 +375,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		    infoShift = InfoShift.newInfoFromDomain(shift);
 		    clonedShifts.put(infoShift.getIdInternal(), infoShift);
 		}
-		result.put(shift.getTipo().getSiglaTipoAula(), infoShift);
+		result.put(shift.getShiftTypesCodePrettyPrint(), infoShift);
 	    }
 	}
 
@@ -382,23 +383,45 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private List getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
-	List classTypes = new ArrayList();
-	if (executionCourse.getTheoreticalHours().doubleValue() > 0) classTypes.add(ShiftType.TEORICA);
-	if (executionCourse.getLabHours().doubleValue() > 0) classTypes.add(ShiftType.LABORATORIAL);
-	if (executionCourse.getPraticalHours().doubleValue() > 0) classTypes.add(ShiftType.PRATICA);
-	if (executionCourse.getTheoPratHours().doubleValue() > 0) classTypes.add(ShiftType.TEORICO_PRATICA);
-        if (executionCourse.getSeminaryHours().doubleValue() > 0) classTypes.add(ShiftType.SEMINARY);
-        if (executionCourse.getProblemsHours().doubleValue() > 0) classTypes.add(ShiftType.PROBLEMS);
-        if (executionCourse.getFieldWorkHours().doubleValue() > 0) classTypes.add(ShiftType.FIELD_WORK);
-        if (executionCourse.getTrainingPeriodHours().doubleValue() > 0) classTypes.add(ShiftType.TRAINING_PERIOD);
-        if (executionCourse.getTutorialOrientationHours().doubleValue() > 0) classTypes.add(ShiftType.TUTORIAL_ORIENTATION);
+	
+	List classTypes = new ArrayList();	
+	Map<ShiftType, CourseLoad> courseLoadsMap = executionCourse.getCourseLoadsMap();	
+	
+	if (courseLoadsMap.containsKey(ShiftType.TEORICA) && !courseLoadsMap.get(ShiftType.TEORICA).isEmpty()) {
+	    classTypes.add(ShiftType.TEORICA);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.LABORATORIAL) && !courseLoadsMap.get(ShiftType.LABORATORIAL).isEmpty()) {
+	    classTypes.add(ShiftType.LABORATORIAL);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.PRATICA) && !courseLoadsMap.get(ShiftType.PRATICA).isEmpty()) {
+	    classTypes.add(ShiftType.PRATICA);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.TEORICO_PRATICA) && !courseLoadsMap.get(ShiftType.TEORICO_PRATICA).isEmpty()) {
+	    classTypes.add(ShiftType.TEORICO_PRATICA);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.SEMINARY) && !courseLoadsMap.get(ShiftType.SEMINARY).isEmpty()) {
+	    classTypes.add(ShiftType.SEMINARY);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.PROBLEMS) && !courseLoadsMap.get(ShiftType.PROBLEMS).isEmpty()) {
+	    classTypes.add(ShiftType.PROBLEMS);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.FIELD_WORK) && !courseLoadsMap.get(ShiftType.FIELD_WORK).isEmpty()) {
+	    classTypes.add(ShiftType.FIELD_WORK);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.TRAINING_PERIOD) && !courseLoadsMap.get(ShiftType.TRAINING_PERIOD).isEmpty()) {
+	    classTypes.add(ShiftType.TRAINING_PERIOD);
+	}
+	if (courseLoadsMap.containsKey(ShiftType.TUTORIAL_ORIENTATION) && !courseLoadsMap.get(ShiftType.TUTORIAL_ORIENTATION).isEmpty()) {
+	    classTypes.add(ShiftType.TUTORIAL_ORIENTATION);
+	}
+	
 	return classTypes;
     }
 
-    private List getInfoShiftsFromList(List shifts) {
+    private List getInfoShiftsFromList(Set allShifts) {
 	List result = new ArrayList();
 
-	for (Iterator shIterator = shifts.iterator(); shIterator.hasNext();) {
+	for (Iterator shIterator = allShifts.iterator(); shIterator.hasNext();) {
 	    Shift sh = (Shift) shIterator.next();
 	    result.add(InfoShift.newInfoFromDomain(sh));
 	}

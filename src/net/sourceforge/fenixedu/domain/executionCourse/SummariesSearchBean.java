@@ -58,7 +58,7 @@ public class SummariesSearchBean implements Serializable {
 	for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
 	    final Shift shift = summary.getShift();
 	    if (getShift() == null || getShift() == shift) {
-		if (getShiftType() == null || getShiftType() == shift.getTipo()) {
+		if (getShiftType() == null || getShiftType() == summary.getSummaryType()) {
 		    final Professorship professorship = summary.getProfessorship();
 		    if (getProfessorship() == null && showOtherProfessors == null) {
 			summaries.add(summary);
@@ -79,8 +79,8 @@ public class SummariesSearchBean implements Serializable {
 
     public SortedSet<ShiftType> getShiftTypes() {
 	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
-	for (final Shift shift : getExecutionCourse().getAssociatedShiftsSet()) {
-	    shiftTypes.add(shift.getTipo());
+	for (final Shift shift : getExecutionCourse().getAssociatedShifts()) {
+	    shiftTypes.addAll(shift.getTypes());
 	}
 	return shiftTypes;
     }

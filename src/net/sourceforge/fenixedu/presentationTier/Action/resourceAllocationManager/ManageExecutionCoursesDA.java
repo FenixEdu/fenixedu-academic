@@ -256,69 +256,66 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         infoExecutionCourseOccupancy.setShiftsInGroups(new ArrayList());
 
         Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
+      
         while (iterator.hasNext()) {
             InfoShift infoShift = (InfoShift) iterator.next();
-            if (infoShift.getTipo().equals(ShiftType.TEORICA)) {
+            if (infoShift.containsType(ShiftType.TEORICA)) {
                 theoreticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.PRATICA)) {
+            } else if (infoShift.containsType(ShiftType.PRATICA)) {
                 praticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.DUVIDAS)) {
+            } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
                 doubtsShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.LABORATORIAL)) {
+            } else if (infoShift.containsType(ShiftType.LABORATORIAL)) {
                 labShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.RESERVA)) {
+            } else if (infoShift.containsType(ShiftType.RESERVA)) {
                 reserveShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
+            } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
                 theoPraticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.FIELD_WORK)) {
+            } else if (infoShift.containsType(ShiftType.FIELD_WORK)) {
                 fieldWork.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.PROBLEMS)) {
+            } else if (infoShift.containsType(ShiftType.PROBLEMS)) {
                 problems.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.SEMINARY)) {
+            } else if (infoShift.containsType(ShiftType.SEMINARY)) {
                 seminary.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.TRAINING_PERIOD)) {
+            } else if (infoShift.containsType(ShiftType.TRAINING_PERIOD)) {
                 trainingPeriod.add(infoShift);
-            } else if (infoShift.getTipo().equals(ShiftType.TUTORIAL_ORIENTATION)) {
+            } else if (infoShift.containsType(ShiftType.TUTORIAL_ORIENTATION)) {
                 tutorialOrientation.add(infoShift);
             }
         }
+        
         infoExecutionCourseOccupancy.setInfoShifts(null);
         InfoShiftGroupStatistics infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+        
         if (!theoreticalShifts.isEmpty()) {
             infoShiftGroupStatistics.setShiftsInGroup(theoreticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!theoPraticalShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(theoPraticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!labShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(labShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!praticalShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(praticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!reserveShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(reserveShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!doubtsShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(doubtsShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
-
         if (!fieldWork.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(fieldWork);

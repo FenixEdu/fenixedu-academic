@@ -148,13 +148,12 @@ public abstract class RequestUtils {
 	return infoSite;
     }
 
-    public static final List getSectionsFromRequest(HttpServletRequest request)
-	    throws FenixActionException, FenixFilterException {
-	List sections = null;
+    public static final List<InfoSection> getSectionsFromRequest(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+	List<InfoSection> sections = null;
 	try {
 	    InfoSite infoSite = getSiteFromRequest(request);
 	    Object[] args = { infoSite };
-	    sections = (List) ServiceUtils.executeService(null, "ReadSections", args);
+	    sections = (List<InfoSection>) ServiceUtils.executeService(null, "ReadSections", args);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -231,10 +230,10 @@ public abstract class RequestUtils {
 	if (infoSite != null) {
 	    Object argsReadSections[] = { infoSite };
 
-	    List infoSections = null;
+	    List<InfoSection> infoSections = null;
 
 	    try {
-		infoSections = (List) ServiceManagerServiceFactory.executeService(null, "ReadSections",
+		infoSections = (List<InfoSection>) ServiceManagerServiceFactory.executeService(null, "ReadSections",
 			argsReadSections);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);

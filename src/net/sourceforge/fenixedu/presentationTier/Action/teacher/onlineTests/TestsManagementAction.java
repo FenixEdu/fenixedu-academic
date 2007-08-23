@@ -612,7 +612,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         if (executionCourse == null) {
             throw new FenixActionException();
         }
-        final List<Shift> shiftList = executionCourse.getAssociatedShifts();
+        final Set<Shift> shiftList = executionCourse.getAssociatedShifts();
         // Collections.sort(shifts, new InfoShiftComparatorByLessonType());
         request.setAttribute("shiftList", shiftList);
         request.setAttribute("testCode", testCode);
@@ -792,7 +792,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             throw new FenixActionException();
         }
         final Set<Registration> students = distributedTest.findStudents();
-        final List<Shift> associatedShifts = executionCourse.getAssociatedShifts();
+        final Set<Shift> associatedShifts = executionCourse.getAssociatedShifts();
         List<Shift> shiftList = new ArrayList<Shift>();
         for (Shift shift : associatedShifts) {
             List<Registration> shiftStudents = shift.getStudents();

@@ -71,7 +71,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 
     public boolean checkShiftType(Grouping grouping, Shift shift) {
         if (shift != null) {
-            return shift.getTipo().equals(grouping.getShiftType());
+            return shift.containsType(grouping.getShiftType());
         } else {
             return grouping.getShiftType() == null;
         }
@@ -81,7 +81,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         List result = new ArrayList();
         if (grouping.getShiftType() != null) {
             for (final Shift shift : (List<Shift>) shifts) {
-                if (shift.getTipo().equals(grouping.getShiftType())) {
+                if (shift.containsType(grouping.getShiftType())) {
                     result.add(shift);
                 }
             }

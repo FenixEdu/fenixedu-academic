@@ -196,16 +196,7 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
                 <form-property name="name" type="java.lang.String" />
-                <form-property name="code" type="java.lang.String" />
-                <form-property name="theoreticalHours" type="java.lang.String" />
-				<form-property name="praticalHours" type="java.lang.String" />
-				<form-property name="theoPratHours" type="java.lang.String" />
-				<form-property name="labHours" type="java.lang.String" />
-				<form-property name="seminaryHours" type="java.lang.String" />
-				<form-property name="problemsHours" type="java.lang.String" />
-				<form-property name="fieldWorkHours" type="java.lang.String" />
-				<form-property name="trainingPeriodHours" type="java.lang.String" />
-				<form-property name="tutorialOrientationHours" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />                
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
 				<form-property name="executionPeriod" type="java.lang.String" />
@@ -227,16 +218,7 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
                 <form-property name="name" type="java.lang.String" />
-                <form-property name="code" type="java.lang.String" />
-                <form-property name="theoreticalHours" type="java.lang.String" />
-				<form-property name="praticalHours" type="java.lang.String" />
-				<form-property name="theoPratHours" type="java.lang.String" />
-				<form-property name="labHours" type="java.lang.String" />
-				<form-property name="seminaryHours" type="java.lang.String" />
-				<form-property name="problemsHours" type="java.lang.String" />
-				<form-property name="fieldWorkHours" type="java.lang.String" />
-				<form-property name="trainingPeriodHours" type="java.lang.String" />
-				<form-property name="tutorialOrientationHours" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />                
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
 				<form-property name="executionPeriodId" type="java.lang.String" />

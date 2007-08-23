@@ -124,7 +124,7 @@ public class PersonFunction extends PersonFunction_Base {
 	}
     }
 
-	public boolean hasCredits() {
-		return getCredits() > 0d;
-	}
+    public boolean hasCredits() {
+	return getCredits() > 0d;
+    }
 }

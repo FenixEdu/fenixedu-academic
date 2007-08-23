@@ -13,16 +13,16 @@ public class ScientificCouncilSiteManagementDA extends CustomUnitSiteManagementD
 
     @Override
     protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
-        return getUserView(request).getPerson().getName();
+	return getUserView(request).getPerson().getName();
     }
 
-	@Override
-	protected String getDirectLinkContext(HttpServletRequest request) {
-        try {
-            return RequestUtils.absoluteURL(request, ScientificCouncilProcessor.getScientificCouncilPath()).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
+    @Override
+    protected String getDirectLinkContext(HttpServletRequest request) {
+	try {
+	    return RequestUtils.absoluteURL(request, ScientificCouncilProcessor.getScientificCouncilPath()).toString();
+	} catch (MalformedURLException e) {
+	    return null;
 	}
+    }
 
 }

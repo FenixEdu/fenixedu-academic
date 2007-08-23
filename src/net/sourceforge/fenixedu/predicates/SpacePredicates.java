@@ -49,7 +49,7 @@ public class SpacePredicates {
     public static final AccessControlPredicate<LessonSpaceOccupation> checkPermissionsToManageLessonSpaceOccupationsWithoutCheckSpaceManagerRole = new AccessControlPredicate<LessonSpaceOccupation>() {
 	public boolean evaluate(LessonSpaceOccupation spaceOccupation) {
 	    Person loggedPerson = AccessControl.getPerson();
-	    ExecutionCourse executionCourse = spaceOccupation.getLesson().getShift().getDisciplinaExecucao();
+	    ExecutionCourse executionCourse = spaceOccupation.getLesson().getShift().getExecutionCourse();
 	    List<Professorship> professorships = executionCourse.getProfessorships();
 	    for (Professorship professorship : professorships) {
 		if(professorship.getTeacher().getPerson().equals(loggedPerson)) {

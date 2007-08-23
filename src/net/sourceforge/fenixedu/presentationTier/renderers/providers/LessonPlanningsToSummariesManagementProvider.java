@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
@@ -15,11 +14,10 @@ public class LessonPlanningsToSummariesManagementProvider implements DataProvide
 
     public Object provide(Object source, Object currentValue) {
         SummariesManagementBean bean = (SummariesManagementBean) source;
-        Shift shift = bean.getShift();
-        if(shift != null) {
-            ShiftType tipo = shift.getTipo();
+        ShiftType lessonType = bean.getLessonType();
+        if(lessonType != null) {            
             ExecutionCourse executionCourse = bean.getExecutionCourse();
-            return executionCourse.getLessonPlanningsOrderedByOrder(tipo);   
+            return executionCourse.getLessonPlanningsOrderedByOrder(lessonType);   
         }               
         return new ArrayList<LessonPlanning>();
     }

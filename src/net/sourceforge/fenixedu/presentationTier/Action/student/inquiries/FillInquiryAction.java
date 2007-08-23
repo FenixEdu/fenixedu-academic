@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +35,11 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeache
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
+import net.sourceforge.fenixedu.domain.CourseLoad;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -53,6 +57,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import com.sun.java_cup.internal.shift_action;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -85,17 +91,21 @@ public class FillInquiryAction extends FenixDispatchAction {
 	    return actionMapping.findForward("unavailableInquiry");
 	}
 
-	InfoExecutionCourse executionCourse = (InfoExecutionCourse) request
-		.getAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE);
-	if ((executionCourse.getTheoPratHours() == 0) && (executionCourse.getTheoreticalHours() == 0)
-		&& (executionCourse.getPraticalHours() == 0) && (executionCourse.getLabHours() == 0)
-		&& (executionCourse.getSeminaryHours() == 0)
-		&& (executionCourse.getProblemsHours() == 0)
-		&& (executionCourse.getFieldWorkHours() == 0)
-		&& (executionCourse.getTrainingPeriodHours() == 0)
-		&& (executionCourse.getTutorialOrientationHours() == 0)) {
-	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY,
-		    "message.inquiries.unavailable.course");
+	InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE);
+	
+	Map<ShiftType, CourseLoad> courseLoadsMap = executionCourse.getExecutionCourse().getCourseLoadsMap();
+	
+	if((!courseLoadsMap.containsKey(ShiftType.TEORICA) || courseLoadsMap.get(ShiftType.TEORICA).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.TEORICO_PRATICA) || courseLoadsMap.get(ShiftType.TEORICO_PRATICA).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.PRATICA) || courseLoadsMap.get(ShiftType.PRATICA).isEmpty())&& (!courseLoadsMap.containsKey(ShiftType.TEORICO_PRATICA) || courseLoadsMap.get(ShiftType.TEORICO_PRATICA).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.PROBLEMS) || courseLoadsMap.get(ShiftType.PROBLEMS).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.LABORATORIAL) || courseLoadsMap.get(ShiftType.LABORATORIAL).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.FIELD_WORK) || courseLoadsMap.get(ShiftType.FIELD_WORK).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.TRAINING_PERIOD) || courseLoadsMap.get(ShiftType.TRAINING_PERIOD).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.TUTORIAL_ORIENTATION) || courseLoadsMap.get(ShiftType.TUTORIAL_ORIENTATION).isEmpty())
+		&& (!courseLoadsMap.containsKey(ShiftType.SEMINARY) || courseLoadsMap.get(ShiftType.SEMINARY).isEmpty())) {
+	    	
+	    request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.course");
 	    return actionMapping.findForward("unavailableInquiry");
 	}
 
@@ -1087,9 +1097,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 		.executeService(userView, "student.ReadAttendsByOID", argsAttendsId);
 
 	// Obtaining all School Classes associated with the attending course
-	Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( attends.getDisciplinaExecucao().getIdInternal());	    		
 	List<InfoClass> attendingCourseSchoolClasses = (List<InfoClass>) ServiceUtils.executeService(
-		userView, "ReadClassesByExecutionCourse", argsAttendingCourse);
+		userView, "ReadClassesByExecutionCourse", new Object[] {executionCourse});
 	// sort by school class name
 	InquiriesUtil.removeDuplicates(attendingCourseSchoolClasses);
 	Collections.sort(attendingCourseSchoolClasses, new BeanComparator("nome"));
@@ -1112,6 +1122,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	Collections.sort(attendingCourseTeachers, new BeanComparator("teacherName"));
 
 	// Obtaining the rooms associated with the attending course
+	Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
 	List<InfoLesson> attendingClassLessons = (List<InfoLesson>) ServiceUtils.executeService(
 		userView, "LerAulasDeDisciplinaExecucao", argsAttendingCourse);
 	List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = new ArrayList<InfoRoomWithInfoInquiriesRoom>();

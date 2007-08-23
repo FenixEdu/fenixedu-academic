@@ -38,7 +38,7 @@
 				<logic:equal name="lessonsSize" value="0">
 					<tr>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
-						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
+						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.shiftTypesCodePrettyPrint"/></td>
 						<td class="listClasses" colspan="7"> Não tem aulas </td>
 					</tr>
 				</logic:equal>
@@ -52,7 +52,7 @@
 			            <logic:equal name="indexLessons" value="0">
 							<tr>
 							<td class="listClasses" rowspan="<%= lessonsSize %>"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
-							<td class="listClasses" rowspan="<%= lessonsSize %>"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
+							<td class="listClasses" rowspan="<%= lessonsSize %>"><bean:write name="infoShiftPercentage" property="shift.shiftTypesCodePrettyPrint"/></td>
 							<td class="listClasses">
 								<bean:write name="infoLesson" property="diaSemana"/>
 							</td>

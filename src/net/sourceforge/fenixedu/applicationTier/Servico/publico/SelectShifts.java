@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -18,7 +19,7 @@ public class SelectShifts extends Service {
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
     	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
     	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-        final List<Shift> shifts = executionCourse.getAssociatedShifts();
+        final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
         for (Shift taux : shifts) {

@@ -80,9 +80,10 @@ public class InsertExecutionCourseDA extends FenixDispatchAction {
 
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException(ex.getMessage(), ex);
+            
         } catch (NonExistingServiceException exception) {
-            throw new NonExistingActionException(exception.getMessage(), mapping
-                    .findForward("readExecutionPeriods"));
+            throw new NonExistingActionException(exception.getMessage(), mapping.findForward("readExecutionPeriods"));
+            
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

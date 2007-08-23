@@ -312,7 +312,7 @@
 </schema>
 
 <schema name="site.functions.create.function" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
-	<slot name="string" key="label.function.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="MLString" key="label.function.name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 </schema>

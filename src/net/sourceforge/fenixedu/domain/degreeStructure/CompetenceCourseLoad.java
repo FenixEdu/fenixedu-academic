@@ -5,6 +5,8 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 
 public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements Comparable {
     
+    public static int NUMBER_OF_WEEKS = 14;
+    
     protected CompetenceCourseLoad() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -56,7 +58,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     }
     
     public Double getContactLoad() {
-        return 14 * getTotalLessonHours();
+        return NUMBER_OF_WEEKS * getTotalLessonHours();
     }
     
     public Double getTotalLoad() {

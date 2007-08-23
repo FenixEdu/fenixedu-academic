@@ -123,7 +123,7 @@ function check(e,v){
 				</fr:edit>				
 			</logic:iterate>			
 		</logic:notEmpty>
-		
+					
 		<%-- Teacher --%>
 		<jsp:include page="../../../teacher/executionCourse/chooseTeacher.jsp"/>						
 		

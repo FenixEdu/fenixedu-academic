@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
 public class LessonInstance extends LessonInstance_Base {
@@ -49,20 +51,28 @@ public class LessonInstance extends LessonInstance_Base {
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
 	setLesson(lesson);      
-	setSummary(summary);
-		
+	editSummaryAndCourseLoad(summary, lesson);
+	
 	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
 	
 	AllocatableSpace room = lesson.getSala();
 	if(room != null) {	 
 	    lessonInstanceSpaceOccupationManagement(room);
 	}	
+		
+	if(getCourseLoad() != null && getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
+	    throw new DomainException("error.LessonInstance.shift.load.unit.quantity.exceeded");		
+	}
     }
 
     public LessonInstance(Lesson lesson, YearMonthDay day) {
 	
 	super();
 
+	if(day == null) {
+	    throw new DomainException("error.LessonInstance.empty.day");
+	}
+	
 	if(lesson == null) {
 	    throw new DomainException("error.LessonInstance.empty.Lesson");
 	}
@@ -80,12 +90,12 @@ public class LessonInstance extends LessonInstance_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
-	setLesson(lesson);      
+	setLesson(lesson); 	
 		
 	AllocatableSpace room = lesson.getSala();
 	if(room != null) {
 	    lessonInstanceSpaceOccupationManagement(room);
-	}
+	}	
     }    
 
     public void delete() {	
@@ -100,11 +110,29 @@ public class LessonInstance extends LessonInstance_Base {
 	    occupation.delete();
 	}
 	
+	super.setCourseLoad(null);
 	super.setLesson(null);		
 	removeRootDomainObject();
 	deleteDomainObject();	
     }
     
+    public void editSummaryAndCourseLoad(Summary summary, Lesson lesson) {
+	CourseLoad courseLoad = null;
+	if(lesson != null && summary != null) {	
+	    courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());		 
+	}
+	setSummary(summary);	
+	setCourseLoad(courseLoad);		
+    } 
+    
+    private int getUnitMinutes() {	
+	return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
+    }
+
+    public BigDecimal getInstanceDurationInHours() {	
+	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR));
+    }
+          
     private boolean canBeDeleted() {
 	return !hasSummary();
     }
@@ -118,7 +146,7 @@ public class LessonInstance extends LessonInstance_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasLesson();	
+	return hasLesson() && (!hasSummary() || hasCourseLoad());	
     }
     
     private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
@@ -141,6 +169,14 @@ public class LessonInstance extends LessonInstance_Base {
     }
     
     @Override
+    public void setCourseLoad(CourseLoad courseLoad) {
+	if (courseLoad == null) {
+	    throw new DomainException("error.lessonInstance.empty.courseLoad");
+	}
+	super.setCourseLoad(courseLoad);
+    }
+    
+    @Override
     public void setLesson(Lesson lesson) {
 	if (lesson == null) {
 	    throw new DomainException("error.lessonInstance.empty.lesson");
@@ -153,11 +189,13 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public HourMinuteSecond getStartTime() {
-	return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(), getBeginDateTime().getSecondOfMinute());
+	return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(),
+		getBeginDateTime().getSecondOfMinute());
     }
     
     public HourMinuteSecond getEndTime() {
-	return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(), getEndDateTime().getSecondOfMinute());
+	return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(),
+		getEndDateTime().getSecondOfMinute());
     }
     
     public AllocatableSpace getRoom() {
@@ -175,5 +213,5 @@ public class LessonInstance extends LessonInstance_Base {
 	result.append(getEndDateTime().toString("HH:mm")).append(") ");
 	result.append(getRoom() != null ? getRoom().getName() : "");
 	return result.toString();
-    }  
+    }
 }

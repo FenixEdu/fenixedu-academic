@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -89,7 +88,8 @@ public class TransferCurricularCourse extends Service {
      */
     private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, CurricularCourse curricularCourse)
             throws ExcepcaoPersistencia {
-        List<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
+        
+	Set<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 
         for (Shift shift : shifts) {
             Iterator<Registration> iter = shift.getStudentsIterator();

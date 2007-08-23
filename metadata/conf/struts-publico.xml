@@ -1184,6 +1184,7 @@
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>  
    	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.WebSiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

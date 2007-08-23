@@ -18,27 +18,24 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerTurnosDeDisciplinaExecucao extends Service {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+    public List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
 
-        List infoShiftList = new ArrayList();
-        List infoShiftAndLessons = new ArrayList();
-
-        infoShiftList = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal()).getAssociatedShifts();
-        Iterator itShiftList = infoShiftList.iterator();
+        List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+        
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());        
+        Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
         while (itShiftList.hasNext()) {
-            Shift shift = (Shift) itShiftList.next();
-
-            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            infoShiftAndLessons.add(infoShift);
-
+            Shift shift = itShiftList.next();
+            infoShifts.add(InfoShift.newInfoFromDomain(shift));
         }
 
-        return infoShiftAndLessons;
+        return infoShifts;
     }
 }

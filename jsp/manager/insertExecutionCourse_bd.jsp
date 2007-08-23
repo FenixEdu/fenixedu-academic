@@ -29,80 +29,7 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.code" size="5" property="code" />
 			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/>
-			</td>
-			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" size="5" property="theoreticalHours" />
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/>
-			</td>
-			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" size="5" property="praticalHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/>
-			</td>
-			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" size="5" property="theoPratHours" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.labHours"/>
-			</td>
-			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.labHours" size="5" property="labHours" />
-			</td>
-		</tr>
-			<tr>
-				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.seminaryHours"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.seminaryHours" size="5" property="seminaryHours" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.problemsHours"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.problemsHours" size="5" property="problemsHours" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.fieldWorkHours"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.fieldWorkHours" size="5" property="fieldWorkHours" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.trainingPeriodHours"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.trainingPeriodHours" size="5" property="trainingPeriodHours" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.tutorialOrientationHours"/>
-				</td>
-				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorialOrientationHours" size="5" property="tutorialOrientationHours" />
-				</td>
-			</tr>
+		</tr>	
 		<tr>
 			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
@@ -117,8 +44,7 @@
 	</table>
 	
 	<br/>
-	
-	
+
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>

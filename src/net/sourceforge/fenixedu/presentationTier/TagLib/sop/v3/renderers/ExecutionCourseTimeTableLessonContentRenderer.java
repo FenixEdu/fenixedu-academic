@@ -25,7 +25,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             
             InfoLesson lesson = (InfoLesson) showOccupation;
             
-            strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");            
+            strBuffer.append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("&nbsp;");            
             if(lesson.getInfoSala() != null) {
                 strBuffer.append("<a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
@@ -44,7 +44,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
 
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             
-            strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");           
+            strBuffer.append(lesson.getShiftTypeCodesPrettyPrint()).append("&nbsp;");           
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append("<a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");

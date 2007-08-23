@@ -32,7 +32,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 
             if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
 
-                strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+                strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
                 if(lesson.getInfoRoomOccupation() != null) {
                     strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -64,7 +64,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 
             if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
 
-                strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+                strBuffer.append("(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
                 if(lesson.getInfoRoomOccupation() != null) {
                     strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());

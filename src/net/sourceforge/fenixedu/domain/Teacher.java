@@ -421,17 +421,14 @@ public class Teacher extends Teacher_Base {
 	return executionCourses;
     }
 
-    public Double getHoursLecturedOnExecutionCourse(ExecutionCourse executionCourse) {
+    public Double getHoursLecturedOnExecutionCourse(ExecutionCourse executionCourse) {	
 	double returnValue = 0;
-
 	Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
-	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse
-		.getExecutionPeriod());
+	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
 	if (teacherService != null) {
-	    List<DegreeTeachingService> teachingServices = teacherService
-		    .getDegreeTeachingServiceByProfessorship(professorship);
+	    List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
 	    for (DegreeTeachingService teachingService : teachingServices) {
-		returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift().hours());
+		returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift().getUnitHours().doubleValue());
 	    }
 	}
 	return returnValue;
@@ -1128,20 +1125,15 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
-    public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse,
-	    ShiftType shiftType) {
+    public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
 	double returnValue = 0;
-
 	Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
-	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse
-		.getExecutionPeriod());
+	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
 	if (teacherService != null) {
-	    List<DegreeTeachingService> teachingServices = teacherService
-		    .getDegreeTeachingServiceByProfessorship(professorship);
+	    List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
 	    for (DegreeTeachingService teachingService : teachingServices) {
-		if (teachingService.getShift().getTipo() == shiftType) {
-		    returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift()
-			    .hours());
+		if (teachingService.getShift().containsType(shiftType)) {
+		    returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift().getUnitHours().doubleValue());
 		}
 	    }
 	}
@@ -1179,7 +1171,7 @@ public class Teacher extends Teacher_Base {
     public boolean hasLessons(DateTime begin, DateTime end, ExecutionYear executionYear) {
 	final Interval interval = new Interval(begin, end);
 	for (Professorship professorship : getProfessorships(executionYear)) {
-	    List<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
+	    Set<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
 	    for (Shift shift : associatedShifts) {
 		List<Lesson> associatedLessons = shift.getAssociatedLessons();
 		for (Lesson lesson : associatedLessons) {

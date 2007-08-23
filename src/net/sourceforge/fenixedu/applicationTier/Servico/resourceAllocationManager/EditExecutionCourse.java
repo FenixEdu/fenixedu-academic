@@ -2,27 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public class EditExecutionCourse extends Service {
 
-    public InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
-        
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-
-        executionCourse.edit(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
-                infoExecutionCourse.getTheoreticalHours(), infoExecutionCourse.getTheoPratHours(),
-                infoExecutionCourse.getPraticalHours(), infoExecutionCourse.getLabHours(), infoExecutionCourse.getSeminaryHours(),
-                infoExecutionCourse.getProblemsHours(), infoExecutionCourse.getFieldWorkHours(), infoExecutionCourse.getTrainingPeriodHours(),
-                infoExecutionCourse.getTutorialOrientationHours(), infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission());
-
-        return new InfoExecutionCourse(executionCourse);
+    public void run(CourseLoadBean bean) throws FenixServiceException {        
+	if(bean != null) {
+	    ExecutionCourse executionCourse = bean.getExecutionCourse();
+	    executionCourse.editCourseLoad(bean.getType(), bean.getUnitQuantity(), bean.getTotalQuantity());    
+	}	
     }
-
 }

@@ -11,17 +11,11 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class LessonPlanning extends LessonPlanning_Base {
 
-    public static final Comparator<LessonPlanning> COMPARATOR_BY_ORDER = new BeanComparator(
-	    "orderOfPlanning");
+    public static final Comparator<LessonPlanning> COMPARATOR_BY_ORDER = new BeanComparator("orderOfPlanning");
 
-    private LessonPlanning() {
+    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
-	    ExecutionCourse executionCourse) {
-	this();
 	setLastOrder(executionCourse, lessonType);
 	setTitle(title);
 	setPlanning(planning);
@@ -29,6 +23,23 @@ public class LessonPlanning extends LessonPlanning_Base {
 	setExecutionCourse(executionCourse);
     }
 
+    public void delete() {
+	reOrderLessonPlannings();
+	deleteWithoutReOrder();
+    }
+
+    public void deleteWithoutReOrder() {
+	super.setExecutionCourse(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getLessonType() != null && hasExecutionCourse() && getPlanning() != null && !getPlanning().isEmpty()
+		&& getTitle() != null && !getTitle().isEmpty() && getOrderOfPlanning() != null;		 
+    }
+    
     @Override
     public void setLessonType(ShiftType lessonType) {
 	if (lessonType == null) {
@@ -60,23 +71,10 @@ public class LessonPlanning extends LessonPlanning_Base {
 	}
 	super.setTitle(title);
     }
-
-    public void delete() {
-	reOrderLessonPlannings();
-	deleteWithoutReOrder();
-    }
-
-    public void deleteWithoutReOrder() {
-	super.setExecutionCourse(null);
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-
+    
     public void moveTo(Integer order) {
-	List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(
-		getLessonType());
-	if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning()
-		&& order <= lessonPlannings.size() && order >= 1) {
+	List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
+	if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning() && order <= lessonPlannings.size() && order >= 1) {
 	    LessonPlanning posPlanning = lessonPlannings.get(order - 1);
 	    Integer posOrder = posPlanning.getOrderOfPlanning();
 	    posPlanning.setOrderOfPlanning(getOrderOfPlanning());
@@ -85,8 +83,7 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     private void reOrderLessonPlannings() {
-	List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(
-		getLessonType());
+	List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
 	if (!lessonPlannings.isEmpty() && !lessonPlannings.get(lessonPlannings.size() - 1).equals(this)) {
 	    for (int i = getOrderOfPlanning(); i < lessonPlannings.size(); i++) {
 		LessonPlanning planning = lessonPlannings.get(i);
@@ -96,10 +93,8 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     private void setLastOrder(ExecutionCourse executionCourse, ShiftType lessonType) {
-	List<LessonPlanning> lessonPlannings = executionCourse
-		.getLessonPlanningsOrderedByOrder(lessonType);
-	Integer order = (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1)
-		.getOrderOfPlanning() + 1) : 1;
+	List<LessonPlanning> lessonPlannings = executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
+	Integer order = (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1).getOrderOfPlanning() + 1) : 1;
 	setOrderOfPlanning(order);
     }
 

@@ -31,7 +31,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
@@ -57,7 +57,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")

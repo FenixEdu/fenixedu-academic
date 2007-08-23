@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModu
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -1111,7 +1113,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	final Double theoPratHours = getTheoPratHours() == null ? 0d : getTheoPratHours();
 	final Double praticalHours = getPraticalHours() == null ? 0d : getPraticalHours();
 	final Double labHours = getLabHours() == null ? 0d : getLabHours();
-	return 14 * (theoreticalHours.doubleValue() + theoPratHours.doubleValue()
+	return CompetenceCourseLoad.NUMBER_OF_WEEKS * (theoreticalHours.doubleValue() + theoPratHours.doubleValue()
 		+ praticalHours.doubleValue() + labHours.doubleValue());
     }
 
@@ -1981,5 +1983,44 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Integer getMaximumValueForAcumulatedEnrollments() {
         return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer.valueOf(0) : super.getMaximumValueForAcumulatedEnrollments();
     }
-
+    
+    public BigDecimal getTotalHoursByShiftType(ShiftType type, ExecutionPeriod executionPeriod) {
+	if(type != null) {	    
+	    Double hours = null;	    
+	    switch(type) {	    
+	    case TEORICA:
+		hours = getTheoreticalHours(executionPeriod);		
+		break;
+	    case TEORICO_PRATICA:
+		hours = getTheoPratHours();		
+		break;
+	    case PRATICA:
+		hours = getPraticalHours();		
+		break;
+	    case PROBLEMS:
+		hours = getProblemHours(executionPeriod);		
+		break;
+	    case LABORATORIAL:
+		hours = getLabHours(executionPeriod);		
+		break;
+	    case TRAINING_PERIOD:
+		hours = getTrainingPeriodHours(executionPeriod);		
+		break;
+	    case SEMINARY:
+		hours = getSeminaryHours(executionPeriod);		
+		break;
+	    case TUTORIAL_ORIENTATION:
+		hours = getTutorialOrientationHours(executionPeriod);		
+		break;
+	    case FIELD_WORK:
+		hours = getFieldWorkHours(executionPeriod);		
+		break;	    
+	    default:
+		break;
+	    }
+	    return hours != null ? BigDecimal.valueOf(hours).
+		    multiply(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS)) : null;
+	}
+	return null;
+    }
 }

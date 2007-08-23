@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -71,6 +72,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -79,7 +81,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -1155,7 +1156,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			List<Shift> shifts = new ArrayList<Shift>();
 			while (iterExecutionCourses.hasNext()) {
 				ExecutionCourse executionCourse2 = (ExecutionCourse) iterExecutionCourses.next();
-				List<Shift> someShifts = executionCourse2.getAssociatedShifts();
+				Set<Shift> someShifts = executionCourse2.getAssociatedShifts();
 
 				shifts.addAll(someShifts);
 			}

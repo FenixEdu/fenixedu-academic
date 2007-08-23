@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class AccountabilityType extends AccountabilityType_Base {
     
@@ -35,8 +37,29 @@ public class AccountabilityType extends AccountabilityType_Base {
         return null;
     }
     
+    @Override
+    public void setTypeName(MultiLanguageString typeName) {
+	if(typeName == null || typeName.isEmpty()) {
+	    throw new DomainException("error.accountabilityType.empty.typeName");
+	}
+	super.setTypeName(typeName);
+    }
+    
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return getType() != null; 	
+    }
+    
+    public String getName() {
+	return getTypeName().getContent(Language.pt);
+    }
+    
+    public void setName(String name) {	
+	MultiLanguageString typeName = getTypeName();
+	if(typeName == null) {
+	    typeName = new MultiLanguageString();
+	}
+	typeName.setContent(Language.pt, name);
+	setTypeName(typeName);
     }
 }   

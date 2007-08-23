@@ -69,7 +69,7 @@
 				<logic:equal name="lessonsSize" value="0">
 					<tr>
 						<td><bean:write name="shift" property="nome"/></td>
-						<td><bean:write name="shift" property="tipo.siglaTipoAula"/></td>
+						<td><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
 						<td colspan="7"> Não tem aulas </td>
 					</tr>
 				</logic:equal>
@@ -80,7 +80,7 @@
 
 							<tr>
 							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="nome"/></td>
-							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="tipo.siglaTipoAula"/></td>
+							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
 							<td>
 								<bean:write name="lesson" property="diaSemana"/>
 							</td>
