@@ -38,7 +38,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private final String separator = ";";
 
-    private final String endLine = "\r\n";
+    private final String endLine = ";\r\n";
 
     public ActionForward showAnualInstallment(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
@@ -290,8 +290,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
 		.getEmployeeMonthlyBonusInstallments()) {
 	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
-		stringBuilder.append(employeeBonusInstallment.getEmployee().getEmployeeNumber()).append(
-			separator);
+		stringBuilder.append(
+			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
+				.getEmployeeNumber())).append(separator);
 		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
 			separator);
 		stringBuilder.append(
@@ -321,8 +322,9 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private String getLine(EmployeeBonusInstallment employeeBonusInstallment) {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(employeeBonusInstallment.getEmployee().getEmployeeNumber()).append(
-		separator);
+	stringBuilder.append(
+		new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
+			.getEmployeeNumber())).append(separator);
 	stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
 	stringBuilder.append(
 		new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
