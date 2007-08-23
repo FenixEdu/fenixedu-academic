@@ -43,7 +43,7 @@
             <fr:property name="labelExcluded" value="true"/>
             <fr:property name="hideValidators" value="true"/>
         </fr:layout>
-        <fr:destination name="module.view" path="/module/view.do?module=${idInternal}" module="/functionalities"/>
+        <fr:destination name="module.view" path="/module/view.do?module=${idInternal}" module="/manager/functionalities"/>
     </fr:edit>
     
     <html:submit>
