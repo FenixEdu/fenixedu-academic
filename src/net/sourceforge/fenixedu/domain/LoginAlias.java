@@ -160,11 +160,15 @@ public class LoginAlias extends LoginAlias_Base {
 	final SoftReference<LoginAlias> loginAliasReference = loginAliasMap.get(lowerCaseUsername);
 	if (loginAliasReference != null) {
 	    final LoginAlias loginAlias = loginAliasReference.get();
-	    if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
-		    && loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
-		return loginAlias;
-	    } else {
-		loginAliasMap.remove(lowerCaseUsername);
+	    try {
+	        if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
+	                && loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
+	            return loginAlias;
+	        } else {
+	            loginAliasMap.remove(lowerCaseUsername);
+	        }
+	    } catch (NullPointerException npe) {
+	        loginAliasMap.remove(lowerCaseUsername);
 	    }
 	}
 	// *** end of hack
