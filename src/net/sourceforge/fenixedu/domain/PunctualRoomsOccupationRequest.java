@@ -30,6 +30,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
         super();
+        checkIfRequestAlreadyExists(requestor, subject, description);
         setRootDomainObject(RootDomainObject.getInstance());
         setRequestor(requestor);        
         DateTime now = new DateTime();
@@ -39,8 +40,18 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         setTeacherReadComments(1);
         setEmployeeReadComments(0);
         setIdentification(getNextRequestIdentification());        
+    }       
+    
+    private void checkIfRequestAlreadyExists(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+	Set<PunctualRoomsOccupationRequest> requests = requestor.getPunctualRoomsOccupationRequestsSet();
+	for (PunctualRoomsOccupationRequest request : requests) {
+	    PunctualRoomsOccupationComment firstComment = request.getFirstComment();
+	    if(firstComment.getSubject().compareTo(subject) == 0 && firstComment.getDescription().compareTo(description) == 0) {
+		throw new DomainException("error.PunctualRoomsOccupationRequest.request.already.exists");
+	    }
+	}
     }
-          
+
     public Integer getNumberOfNewComments(Person person) {		
 	if(person.equals(getOwner())) {
 	    return getCommentsCount() - getEmployeeReadComments();	    
