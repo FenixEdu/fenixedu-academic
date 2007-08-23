@@ -11,7 +11,8 @@
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-	
+
+	<h:outputText value="<div class='breadcumbs mvert0'>"  escape="false"/>
 	<h:outputLink value="#{globalBundle['institution.url']}" >
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 	</h:outputLink>
@@ -34,8 +35,7 @@
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
-
-	<h:outputText value="<br/><br/>" escape="false"/>
+	<h:outputText value="</div>" escape="false"/>
 	
 	<h:outputFormat value="<h1>#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.degree.bolonhaDegreeType.name]}" escape="false"/>
 	<h:outputFormat value="#{publicDegreeInfoBundle['public.degree.information.label.in']}"/>
