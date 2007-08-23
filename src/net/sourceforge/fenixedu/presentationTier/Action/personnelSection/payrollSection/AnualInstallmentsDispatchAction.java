@@ -217,6 +217,74 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward exportBonusInstallmentToGIAFP1(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException, IOException {
+	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	if (bonusInstallment == null) {
+	    bonusInstallment = new BonusInstallment();
+	}
+	bonusInstallment.updateList();
+	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
+		bonusInstallment.getBonusInstallmentList());
+
+	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
+	StringBuilder stringBuilder = new StringBuilder();
+	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
+	    if (employeeBonusInstallment.getBonusType() == BonusType.DEDICATION_BONUS) {
+		stringBuilder.append(getLine(employeeBonusInstallment));
+		String aditionalLines = getAditionalLines(employeeBonusInstallment);
+		if (!StringUtils.isEmpty(aditionalLines)) {
+		    stringBuilder.append(aditionalLines);
+		}
+	    }
+	}
+	response.setContentType("text/plain");
+	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf_p1.txt");
+	final ServletOutputStream writer = response.getOutputStream();
+	byte[] data = stringBuilder.toString().getBytes();
+	response.setContentLength(data.length);
+	writer.write(data);
+	writer.flush();
+	writer.close();
+	response.flushBuffer();
+	return null;
+    }
+
+    public ActionForward exportBonusInstallmentToGIAFP2(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException, IOException {
+	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	if (bonusInstallment == null) {
+	    bonusInstallment = new BonusInstallment();
+	}
+	bonusInstallment.updateList();
+	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
+		bonusInstallment.getBonusInstallmentList());
+
+	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
+	StringBuilder stringBuilder = new StringBuilder();
+	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
+	    if (employeeBonusInstallment.getBonusType() == BonusType.EXCEPTIONAL_BONUS) {
+		stringBuilder.append(getLine(employeeBonusInstallment));
+		String aditionalLines = getAditionalLines(employeeBonusInstallment);
+		if (!StringUtils.isEmpty(aditionalLines)) {
+		    stringBuilder.append(aditionalLines);
+		}
+	    }
+	}
+	response.setContentType("text/plain");
+	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf_p2.txt");
+	final ServletOutputStream writer = response.getOutputStream();
+	byte[] data = stringBuilder.toString().getBytes();
+	response.setContentLength(data.length);
+	writer.write(data);
+	writer.flush();
+	writer.close();
+	response.flushBuffer();
+	return null;
+    }
+
     private String getAditionalLines(EmployeeBonusInstallment employeeBonusInstallment) {
 	StringBuilder stringBuilder = new StringBuilder();
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
