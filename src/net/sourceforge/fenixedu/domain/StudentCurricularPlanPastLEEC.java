@@ -9,5 +9,10 @@ public class StudentCurricularPlanPastLEEC extends StudentCurricularPlanPastLEEC
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
         return;
     }
+    
+    @Override
+    public boolean hasAnyApprovedEnrolment() {
+        return false;
+    }
 
 }
