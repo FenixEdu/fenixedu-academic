@@ -12,10 +12,12 @@
 <logic:notEmpty name="executionCourse" property="courseLoads">
 	<fr:view name="executionCourse" property="courseLoads" schema="ExecutionCourseWeeklyCourseLoadView">			
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 vamiddle thlight" />
-			<fr:property name="columnClasses" value="acenter,acenter"/>					      		
+			<fr:property name="classes" value="tstyle2 thwhite vamiddle tdcenter mtop05" />
+			<fr:property name="columnClasses" value="aleft,acenter" />
 		</fr:layout>				
 	</fr:view>
 </logic:notEmpty>
 
+<div class="mtop15">
 <app:gerarHorario name="infoLessons" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/>
+</div>

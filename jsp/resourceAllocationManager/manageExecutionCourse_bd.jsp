@@ -51,17 +51,17 @@
 			</fr:view>
 		</logic:notEmpty>
 		
-		<p><b><bean:message key="label.edit.executionCourse.course.load" bundle="SOP_RESOURCES"/></b></p>
+		<p class="mbottom05"><b><bean:message key="label.edit.executionCourse.course.load" bundle="SOP_RESOURCES"/></b></p>
 		
 		<fr:form action="/manageExecutionCourse.do?method=edit">
 			<fr:edit name="courseLoadBean" id="courseLoadBeanID" schema="ExecutionCourseCourseLoadManagement">			 
 				<fr:destination name="postBack" path="/manageExecutionCourse.do?method=preparePostBack"/> 
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 vamiddle thlight" />				
+					<fr:property name="classes" value="tstyle2 vamiddle thright thlight mtop05" />				
 				</fr:layout>				
 				<fr:destination name="invalid" path="/manageExecutionCourse.do?method=preparePostBack"/>
 			</fr:edit>
-			<html:submit><bean:message key="label.edit"/></html:submit>
+			<html:submit><bean:message key="label.submit"/></html:submit>
 		</fr:form>
 
 	</logic:notEmpty>
