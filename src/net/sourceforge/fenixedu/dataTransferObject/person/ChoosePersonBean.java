@@ -18,6 +18,10 @@ public class ChoosePersonBean implements Serializable {
 
     private YearMonthDay dateOfBirth;
 
+    private String name;
+
+    private boolean firstTimeSearch = true;
+
     public ChoosePersonBean() {
 	super();
     }
@@ -57,6 +61,22 @@ public class ChoosePersonBean implements Serializable {
 
     public void setDateOfBirth(YearMonthDay dateOfBirth) {
 	this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public boolean isFirstTimeSearch() {
+	return firstTimeSearch;
+    }
+
+    public void setFirstTimeSearch(boolean firstTimeSearch) {
+	this.firstTimeSearch = firstTimeSearch;
     }
 
 }

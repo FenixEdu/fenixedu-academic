@@ -1440,6 +1440,16 @@ public class Person extends Person_Base {
 	}
 	return null;
     }
+    
+    public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
+	List<Person> result = new ArrayList<Person>();
+	for (Person person : persons) {
+	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+		result.add(person);
+	    }
+	}
+	return result;
+    }    
 
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex,
@@ -1901,7 +1911,7 @@ public class Person extends Person_Base {
     final public boolean isMale() {
 	return getGender() == Gender.MALE;
     }
-
+   
     @Deprecated
     public List<Registration> getStudents() {
 	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
@@ -2401,6 +2411,12 @@ public class Person extends Person_Base {
 	    people.add(personName.getPerson());
 	}
 	return people;
+    }
+    
+    public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
+	String[] splittedName = completeName.split(" ");
+	return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1])
+		: Collections.EMPTY_LIST;
     }
     
     public static Collection<Person> findExternalPerson(final String name) {

@@ -34,18 +34,17 @@ import org.joda.time.YearMonthDay;
  */
 public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareCreateStudent(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("executionDegreeBean", new ExecutionDegreeBean());
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState()
-		.getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState().getMetaObject().getObject();
 	executionDegreeBean.setDegreeCurricularPlan(null);
 	executionDegreeBean.setExecutionDegree(null);
 	RenderUtils.invalidateViewState();
@@ -54,11 +53,10 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseDegreeCurricularPlanPostBack(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseDegreeCurricularPlanPostBack(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState()
-		.getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState().getMetaObject().getObject();
 
 	ExecutionDegree executionDegree = null;
 	if (executionDegreeBean.getDegreeCurricularPlan() != null) {
@@ -74,13 +72,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseAgreementPostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseAgreementPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearIngressionAndEntryPhase();
 
 	RenderUtils.invalidateViewState();
@@ -96,13 +94,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseIngressionPostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseIngressionPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState();
@@ -110,21 +108,20 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
 	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
 
-	if (ingressionInformationBean.getIngression() != null
-		&& !ingressionInformationBean.getIngression().hasEntryPhase()) {
+	if (ingressionInformationBean.getIngression() != null && !ingressionInformationBean.getIngression().hasEntryPhase()) {
 	    request.setAttribute("choosePersonBean", new ChoosePersonBean());
 	}
 
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseEntryPhasePostBack(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseEntryPhasePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState();
@@ -136,75 +133,87 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward chooseExecutionDegreeInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseExecutionDegreeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("executionDegreeBean", RenderUtils.getViewState().getMetaObject()
-		.getObject());
+	request.setAttribute("executionDegreeBean", RenderUtils.getViewState().getMetaObject().getObject());
 
 	return mapping.getInputForward();
     }
 
-    public ActionForward choosePerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward choosePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
-	PrecedentDegreeInformationBean precedentDegreeInformationBean = RenderUtils
-		.getViewState("precedentDegreeInformation") == null ? new PrecedentDegreeInformationBean()
-		: (PrecedentDegreeInformationBean) RenderUtils
-			.getViewState("precedentDegreeInformation").getMetaObject().getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
+	PrecedentDegreeInformationBean precedentDegreeInformationBean = RenderUtils.getViewState("precedentDegreeInformation") == null ? new PrecedentDegreeInformationBean()
+		: (PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()
+			.getObject();
 
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
 	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
 	request.setAttribute("precedentDegreeInformationBean", precedentDegreeInformationBean);
 
 	PersonBean personBean = null;
+	Person person = null;
 
-	if (RenderUtils.getViewState("choosePerson") != null) { // 1st time
-	    ChoosePersonBean choosePersonBean = (ChoosePersonBean) RenderUtils.getViewState(
-		    "choosePerson").getMetaObject().getObject();
+	if (RenderUtils.getViewState("person") != null) { // Postback
+	    request.setAttribute("personBean", RenderUtils.getViewState("person").getMetaObject().getObject());
+	    return mapping.findForward("fillNewPersonData");
+	}
 
-	    final String identificationNumber = choosePersonBean.getIdentificationNumber();
-	    final YearMonthDay dateOfBirth = choosePersonBean.getDateOfBirth();
+	ChoosePersonBean choosePersonBean = (ChoosePersonBean) RenderUtils.getViewState("choosePerson").getMetaObject()
+		.getObject();
 
-	    Person person = Person.readByDocumentIdNumberAndDateOfBirth(identificationNumber,
-		    dateOfBirth);
+	final String identificationNumber = choosePersonBean.getIdentificationNumber();
+	final YearMonthDay dateOfBirth = choosePersonBean.getDateOfBirth();
 
-	    if (person != null) {
-		personBean = new PersonBean(person);
+	if (choosePersonBean.getPerson() == null) {
 
-		if (person.getEmployee() != null
-			&& person.getEmployee().getCurrentWorkingContract() != null) {
-		    request.setAttribute("personBean", personBean);
-		    return mapping.findForward("fillNewPersonDataForEmployee");
+	    person = Person.readByDocumentIdNumberAndDateOfBirth(identificationNumber, dateOfBirth);
+
+	    if (person == null && choosePersonBean.isFirstTimeSearch()) {
+		choosePersonBean.setFirstTimeSearch(false);
+		if (!Person.findByDateOfBirth(dateOfBirth,
+			Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()) {
+		    // show similar persons
+		    RenderUtils.invalidateViewState();
+		    request.setAttribute("choosePersonBean", choosePersonBean);
+		    return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
 		}
-
-	    } else {
-		personBean = new PersonBean(identificationNumber, choosePersonBean.getDocumentType(),
-			dateOfBirth);
 	    }
 
-	} else if (RenderUtils.getViewState("person") != null) { // Postback
-	    personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
+	} else {
+	    person = choosePersonBean.getPerson();
+	}
+
+	if (person != null) {
+	    personBean = new PersonBean(person);
+
+	    if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
+		request.setAttribute("personBean", personBean);
+		return mapping.findForward("fillNewPersonDataForEmployee");
+	    }
+
+	} else {
+	    personBean = new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
+		    dateOfBirth);
 	}
 
 	request.setAttribute("personBean", personBean);
 	return mapping.findForward("fillNewPersonData");
-
     }
 
-    public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
-	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject()
-		.getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
+	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
 	PrecedentDegreeInformationBean precedentDegreeInformationBean = (PrecedentDegreeInformationBean) RenderUtils
 		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
@@ -216,25 +225,21 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("showCreateStudentConfirmation");
     }
 
-    public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState(
-		"executionDegree").getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
-		.getViewState("chooseIngression").getMetaObject().getObject();
-	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject()
-		.getObject();
+	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
+		.getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
+		"chooseIngression").getMetaObject().getObject();
+	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
 	PrecedentDegreeInformationBean precedentDegreeInformationBean = (PrecedentDegreeInformationBean) RenderUtils
 		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
-	Object[] args = { personBean, executionDegreeBean, precedentDegreeInformationBean,
-		ingressionInformationBean };
+	Object[] args = { personBean, executionDegreeBean, precedentDegreeInformationBean, ingressionInformationBean };
 
 	try {
-	    Registration registration = (Registration) ServiceUtils.executeService(getUserView(request),
-		    "CreateStudent", args);
+	    Registration registration = (Registration) ServiceUtils.executeService(getUserView(request), "CreateStudent", args);
 	    request.setAttribute("registration", registration);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -244,8 +249,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("createStudentSuccess");
     }
 
-    public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping,
-	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	Integer registrationID = Integer.valueOf(request.getParameter("registrationID"));
 	request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationID));
