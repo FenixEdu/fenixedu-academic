@@ -382,6 +382,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (hasImprovementOfApprovedEnrolmentEvent()) {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
+        removeExecutionPeriod();
 
         removeRootDomainObject();
         
