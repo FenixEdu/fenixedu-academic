@@ -13,7 +13,7 @@
 
 	<h:outputText value="<ul>" escape="false" />
 	<h:outputText value="<li>" escape="false" />
-	<h:outputLink value="createDegree.faces">
+	<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/createDegree.faces">
 		<h:outputFormat value="#{scouncilBundle['create.param']}">
 			<f:param value="#{scouncilBundle['degree']}"/>
 		</h:outputFormat>
@@ -29,17 +29,17 @@
 
 		<h:outputText value="<td><em>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{scouncilBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</em></td>" escape="false"/>
 		<h:outputText value="<td style='width: 180px'>" escape="false"/>
-		<h:outputLink value="editDegree.faces">
+		<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="deleteDegree.faces">
+		<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/deleteDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['delete']}"/>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>		
-		<h:outputLink value="createCurricularPlan.faces">
+		<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/createCurricularPlan.faces">
 			<h:outputFormat value="#{scouncilBundle['create.param']}">
 				<f:param value="#{scouncilBundle['plan']}"/>
 			</h:outputFormat>
@@ -62,7 +62,7 @@
 			<h:outputText value=" #{degreeCurricularPlan.name}</td>" escape="false" />
 
 			<h:outputText value="<td>" escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces">
+			<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces">
 				<h:outputText value="#{scouncilBundle['view']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 				<f:param name="action" value="view"/>
@@ -71,17 +71,17 @@
 				<f:param name="hideCourses" value="false"/>
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="editCurricularPlan.faces">
+			<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editCurricularPlan.faces">
 				<h:outputText value="#{scouncilBundle['edit']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="deleteCurricularPlan.faces">
+			<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/deleteCurricularPlan.faces">
 				<h:outputFormat value="#{scouncilBundle['delete']}"/>
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="editCurricularPlanMembersGroup.faces">
+			<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editCurricularPlanMembersGroup.faces">
 				<h:outputText value="#{scouncilBundle['group']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>

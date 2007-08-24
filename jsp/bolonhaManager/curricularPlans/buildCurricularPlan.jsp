@@ -14,7 +14,7 @@
 	<h:outputText value="<h2>#{bolonhaBundle['buildCurricularPlan']}</h2>" escape="false"/>
 
 	<h:outputText value="<ul><li>" escape="false"/>
-	<h:outputLink value="editCurricularPlanStructure.faces">
+	<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/editCurricularPlanStructure.faces">
 		<h:outputText value="#{bolonhaBundle['edit.curricularPlan.structure']}" escape="false" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -27,7 +27,7 @@
 	
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 		<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="setCurricularRules.faces" >
+			<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/setCurricularRules.faces" >
 			<h:outputText value="#{bolonhaBundle['setCurricularRules']}" escape="false"/>
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -43,7 +43,7 @@
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:outputText value="#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
-		<h:outputLink value="buildCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
+		<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
 			<h:outputText value="#{bolonhaBundle['groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="groups"/>
@@ -53,7 +53,7 @@
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="buildCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
+		<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="years"/>

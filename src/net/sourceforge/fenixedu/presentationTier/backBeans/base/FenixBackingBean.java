@@ -56,7 +56,7 @@ public class FenixBackingBean {
         this.errorMessage = errorMessage;
     }
 
-    protected HttpServletRequest getRequest() {
+    public HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 

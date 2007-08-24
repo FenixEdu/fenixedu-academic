@@ -28,7 +28,7 @@
 			<h:outputText value="<ul>" escape="false"/>
 			<h:outputText value="<li>" escape="false"/>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['manage.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'false'}" escape="false"/>
-			<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
+			<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/degreeAdministrativeOffice/curricularPlans/editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'true'}">
 				<h:outputText value="#{bolonhaBundle['manage.groups']}" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>
@@ -40,7 +40,7 @@
 			</h:outputLink>
 			<h:outputText value=" , " escape="false"/>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['order.groups']}</span>" rendered="#{CurricularCourseManagement.toOrder == 'true'}" escape="false"/>
-			<h:outputLink value="editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'false'}">
+			<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/degreeAdministrativeOffice/curricularPlans/editCurricularPlanStructure.faces" rendered="#{CurricularCourseManagement.toOrder == 'false'}">
 				<h:outputText value="#{bolonhaBundle['order.groups']}" escape="false"/>
 				<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}"/>

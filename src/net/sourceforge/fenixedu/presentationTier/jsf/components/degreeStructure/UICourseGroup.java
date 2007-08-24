@@ -280,6 +280,11 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append("(");
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
         String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
+
+        System.out.println("request context path: " + facesContext.getExternalContext().getRequestContextPath());
+        System.out.println("request path info: " + facesContext.getExternalContext().getRequestPathInfo());
+        System.out.println("request servlet path: " + facesContext.getExternalContext().getRequestServletPath());
+
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
         writer.append(" , ");
         encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");

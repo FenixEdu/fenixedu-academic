@@ -318,7 +318,7 @@
 
 <tr>
 	<td>
-		<bean:define id="graph" type="java.lang.String">viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
+		<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
 		<html:img align="middle" src="<%= graph %>"/>
 	</td>
 </tr>

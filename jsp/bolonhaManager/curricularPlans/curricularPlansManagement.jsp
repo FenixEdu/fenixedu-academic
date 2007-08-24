@@ -23,7 +23,7 @@
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{bolonhaBundle['label.curricularPlansManagement.in']} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
 			<h:outputText value="<td style='width: 110px'>" escape="false"/>
-			<h:outputLink value="viewDegree.faces">
+			<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.idInternal}"/>
 			</h:outputLink>
@@ -45,7 +45,7 @@
 				<h:outputText value=" #{degreeCurricularPlan.name}</td>" escape="false" />
 		
 				<h:outputText value="<td>" escape="false"/>
-				<h:outputLink value="viewCurricularPlan.faces">
+				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="organizeBy" value="groups"/>
@@ -54,7 +54,7 @@
 					<f:param name="action" value="view"/>
 				</h:outputLink>
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
-				<h:outputLink value="buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
+				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="organizeBy" value="groups"/>

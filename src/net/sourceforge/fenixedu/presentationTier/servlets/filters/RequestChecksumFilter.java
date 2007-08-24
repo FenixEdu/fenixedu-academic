@@ -499,20 +499,25 @@ public class RequestChecksumFilter implements Filter {
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
 	final String uri = httpServletRequest.getRequestURI();
 	final String queryString = httpServletRequest.getQueryString();
-//	final TreeSet<String> strings = new TreeSet<String>();
-//	strings.add(uri);
-//	for (final Enumeration enumeration = httpServletRequest.getParameterNames(); enumeration.hasMoreElements(); ) {
-//	    final String name = (String) enumeration.nextElement();
-//	    if (!name.equals(CHECKSUM_ATTRIBUTE_NAME) && !name.equals("part")) {
-//		for (final String value : httpServletRequest.getParameterValues(name)) {
-//		    strings.add(name);
-//		    strings.add(value);
-//		}
-//	    }
-//	}
 	final String request = queryString != null ? uri + '?' + queryString : uri;
 	final String calculatedChecksum = calculateChecksum(request);
-	return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
+	final boolean result = checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
+	return result || isValidChecksumIgnoringPath(httpServletRequest, checksum);
+    }
+
+    private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum) {
+        final String uri = httpServletRequest.getRequestURI();
+        if (uri.endsWith(".faces")) {
+            final int lastSlash = uri.lastIndexOf('/');
+            if (lastSlash >= 0) {
+                final String chopedUri = uri.substring(lastSlash + 1);
+                final String queryString = httpServletRequest.getQueryString();
+                final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
+                final String calculatedChecksum = calculateChecksum(request);
+                return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
+            }
+        }
+        return false;
     }
 
 }
