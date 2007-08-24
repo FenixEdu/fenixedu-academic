@@ -580,7 +580,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    final public boolean hasAnyApprovedEnrolment() {
+    public boolean hasAnyApprovedEnrolment() {
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.isApproved()) {
 		return true;
@@ -2192,9 +2192,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
 
+	    }
 	}
-
-    }
 
     final public String getName() {
 	return getDegreeCurricularPlan().getName();
@@ -2494,8 +2493,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CurriculumGroup getCycle(final CycleType cycleType) {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
-    }
-
+}
     public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
 	return getCycle(cycleType) != null;
     }
