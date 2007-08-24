@@ -6,14 +6,20 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DomainListReference;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.util.Region;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 public class BonusInstallment implements Serializable {
     private Integer year;
@@ -63,6 +69,7 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundle.getString("label.number"), 1250);
 	spreadsheet.addHeader(bundle.getString("label.employee.name"), 7500);
+	spreadsheet.addHeader(bundle.getString("label.contractType"), 4000);
 	spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.value"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 2000);
@@ -100,11 +107,40 @@ public class BonusInstallment implements Serializable {
 	}
     }
 
+    private AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBefore(
+	    EmployeeBonusInstallment employeeBonusInstallment) {
+	YearMonthDay day = new YearMonthDay(employeeBonusInstallment.getAnualBonusInstallment()
+		.getPaymentPartialDate().get(DateTimeFieldType.year()),
+		employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+			DateTimeFieldType.monthOfYear()), 1);
+	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = employeeBonusInstallment
+		.getEmployee().getAssiduousness().getStatusBetween(day, day).get(0);
+	if (lastAssiduousnessStatusHistory == null) {
+	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : employeeBonusInstallment
+		    .getEmployee().getAssiduousness().getAssiduousnessStatusHistories()) {
+		if (assiduousnessStatusHistory.getEndDate() == null) {
+		    return assiduousnessStatusHistory;
+		}
+		if (lastAssiduousnessStatusHistory == null
+			|| assiduousnessStatusHistory.getEndDate().isAfter(
+				lastAssiduousnessStatusHistory.getEndDate())) {
+		    lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
+		}
+	    }
+	}
+	return lastAssiduousnessStatusHistory;
+    }
+
     public void getRows(StyledExcelSpreadsheet spreadsheet, ResourceBundle enumBundle) {
 	for (EmployeeBonusInstallment employeeBonusInstallment : getBonusInstallmentList()) {
 	    spreadsheet.newRow();
 	    spreadsheet.addCell(employeeBonusInstallment.getEmployee().getEmployeeNumber());
 	    spreadsheet.addCell(employeeBonusInstallment.getEmployee().getPerson().getName());
+
+	    AssiduousnessStatusHistory assiduousnessStatusHistory = getLastAssiduousnessStatusHistoryBefore(employeeBonusInstallment);
+	    spreadsheet.addCell(assiduousnessStatusHistory != null ? assiduousnessStatusHistory
+		    .getAssiduousnessStatus().getDescription() : "");
+
 	    spreadsheet.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
 	    spreadsheet.addCell(employeeBonusInstallment.getValue());
 	    spreadsheet.addCell(employeeBonusInstallment.getCostCenterCode(), spreadsheet
@@ -140,5 +176,4 @@ public class BonusInstallment implements Serializable {
 	    }
 	}
     }
-
 }

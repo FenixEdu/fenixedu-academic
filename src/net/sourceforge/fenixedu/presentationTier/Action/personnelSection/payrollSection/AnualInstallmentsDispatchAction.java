@@ -168,7 +168,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		LanguageUtils.getLocale());
 	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
 		LanguageUtils.getLocale());
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"));
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"),
+		false);
 
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);
 	bonusInstallment.getRows(spreadsheet, enumBundle);
