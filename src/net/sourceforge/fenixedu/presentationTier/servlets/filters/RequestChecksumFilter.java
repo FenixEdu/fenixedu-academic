@@ -4,6 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.TreeSet;
 
 import javax.servlet.Filter;
@@ -496,9 +499,17 @@ public class RequestChecksumFilter implements Filter {
 	}
     }
 
+    private String decodeURL(final String url) {
+        try {
+            return URLDecoder.decode(url, "iso8859-1");
+        } catch (UnsupportedEncodingException e) {
+            return url;
+        }
+    }
+
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
 	final String uri = httpServletRequest.getRequestURI();
-	final String queryString = httpServletRequest.getQueryString();
+	final String queryString = decodeURL(httpServletRequest.getQueryString());
 	final String request = queryString != null ? uri + '?' + queryString : uri;
 	final String calculatedChecksum = calculateChecksum(request);
 	final boolean result = checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
@@ -511,7 +522,7 @@ public class RequestChecksumFilter implements Filter {
             final int lastSlash = uri.lastIndexOf('/');
             if (lastSlash >= 0) {
                 final String chopedUri = uri.substring(lastSlash + 1);
-                final String queryString = httpServletRequest.getQueryString();
+                final String queryString = decodeURL(httpServletRequest.getQueryString());
                 final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
                 final String calculatedChecksum = calculateChecksum(request);
                 return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
