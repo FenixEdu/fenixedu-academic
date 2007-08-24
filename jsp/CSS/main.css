@@ -160,6 +160,7 @@ table.smalltxt tr td { font-size: 0.85em;}
 table.thlight th { font-weight: normal; }
 table.thright th { text-align: right; }
 table.thleft th { text-align: left; }
+table.thwhite th { background: #fff; }
 
 .bold { font-weight: bold; }
 
