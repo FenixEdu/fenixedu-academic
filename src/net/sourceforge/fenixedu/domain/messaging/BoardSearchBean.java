@@ -10,22 +10,21 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class BoardSearchBean implements Serializable {
 
     private Boolean searchExecutionCourseBoards;
 
-    private String unitName;
-
-    private DomainReference<UnitName> unitNameObject;
+    private DomainReference<Unit> unit;
 
     private DomainReference<ExecutionPeriod> executionPeriod;
 
     private DomainReference<ExecutionDegree> executionDegree;
 
     public BoardSearchBean() {
-	super();
+        super();
     }
 
     public Boolean getSearchExecutionCourseBoards() {
@@ -56,20 +55,12 @@ public class BoardSearchBean implements Serializable {
         this.executionPeriod = executionPeriod == null ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
     }
 
-    public UnitName getUnitNameObject() {
-        return unitNameObject == null ? null : unitNameObject.getObject();
+    public void setUnit(Unit unit) {
+        this.unit = new DomainReference<Unit>(unit);
     }
 
-    public void setUnitNameObject(UnitName unitName) {
-        this.unitNameObject = unitName == null ? null : new DomainReference<UnitName>(unitName);
-    }
-
-    public String getUnitName() {
-        return unitName;
-    }
-
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
+    public Unit getUnit() {
+        return this.unit == null ? null : this.unit.getObject();
     }
 
     public Set getSearchResult() {
@@ -88,9 +79,9 @@ public class BoardSearchBean implements Serializable {
 		}
 	    }
 	} else {
-	    final UnitName unitName = getUnitNameObject();
-	    if (unitName != null) {
-		boards.addAll(unitName.getUnit().getBoardsSet());
+	    final Unit unit = getUnit();
+	    if (unit != null) {
+		boards.addAll(unit.getBoards());
 	    }
 	}
 	return boards;

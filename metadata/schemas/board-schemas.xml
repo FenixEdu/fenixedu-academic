@@ -37,14 +37,16 @@
 		<property name="classes" value="dinline liinline nobullet"/>
 		<property name="destination" value="search"/>
 	</slot>
-	<slot name="unitNameObject" key="label.organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="rawSlotName" value="unitName"/>
-		<property name="labelField" value="unit.shortPresentationName"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchInternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="3"/>
+	<slot name="unit" key="label.organization" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitsWithAnnouncementsProvider"/>
+		<property name="sortBy" value="nameWithAcronym"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.unit.name"/>
+		<property name="destination" value="search"/>
 	</slot>
+</schema>
+
+<schema name="net.sourceforge.fenixedu.domain.messaging.BoardSearchBean.unit.name"
+		type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MESSAGING_RESOURCES">
+	<slot name="nameWithAcronym"/>
 </schema>
