@@ -286,6 +286,34 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward exportBonusInstallmentToGIAFP3(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+	    FenixFilterException, IOException {
+	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	if (bonusInstallment == null) {
+	    bonusInstallment = new BonusInstallment();
+	}
+	bonusInstallment.updateList();
+	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
+		bonusInstallment.getBonusInstallmentList());
+
+	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
+	StringBuilder stringBuilder = new StringBuilder();
+	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
+	    stringBuilder.append(getAllLines(employeeBonusInstallment));
+	}
+	response.setContentType("text/plain");
+	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf.txt");
+	final ServletOutputStream writer = response.getOutputStream();
+	byte[] data = stringBuilder.toString().getBytes();
+	response.setContentLength(data.length);
+	writer.write(data);
+	writer.flush();
+	writer.close();
+	response.flushBuffer();
+	return null;
+    }
+
     private String getAditionalLines(EmployeeBonusInstallment employeeBonusInstallment) {
 	StringBuilder stringBuilder = new StringBuilder();
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
@@ -349,6 +377,65 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	} else {
 	    return "6002";
 	}
+    }
+
+    private String getAllLines(EmployeeBonusInstallment employeeBonusInstallment) {
+	StringBuilder stringBuilder = new StringBuilder();
+	StringBuilder positiveLines = new StringBuilder();
+	int cutNumber = 0;
+	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
+		.getEmployeeMonthlyBonusInstallments()) {
+	    positiveLines.append(
+		    new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
+			    .getEmployeeNumber())).append(separator);
+	    positiveLines.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
+		    separator);
+	    positiveLines.append(
+		    new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
+		    .append(separator);
+
+	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
+		cutNumber++;
+		positiveLines.append((employeeMonthlyBonusInstallment.getValue() * -1))
+			.append(separator);
+		stringBuilder.append(
+			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
+				.getEmployeeNumber())).append(separator);
+		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
+			separator);
+		stringBuilder.append(
+			new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
+			.append(separator);
+		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+		stringBuilder.append("3").append(separator);
+		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+		stringBuilder.append(
+			employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+				DateTimeFieldType.year())).append(separator);
+		stringBuilder.append(
+			getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+				DateTimeFieldType.monthOfYear()))).append(endLine);
+	    } else {
+		positiveLines.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+	    }
+
+	    positiveLines.append("3").append(separator);
+	    positiveLines.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+	    positiveLines.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+	    positiveLines.append(
+		    employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year()))
+		    .append(separator);
+	    positiveLines.append(
+		    getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+			    DateTimeFieldType.monthOfYear()))).append(endLine);
+	}
+	if (cutNumber == 0) {
+	    stringBuilder.append(getLine(employeeBonusInstallment));
+	} else {
+	    stringBuilder.append(positiveLines);
+	}
+	return stringBuilder.toString();
     }
 
 }

@@ -68,6 +68,9 @@
 						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAFP2';">
 							<bean:message key="button.exportGIAFP2"/>
 						</html:submit>
+						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAFP3';">
+							GIAF
+						</html:submit>
 					</logic:notEmpty>
 				</logic:present>
 			</p>
