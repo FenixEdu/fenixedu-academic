@@ -500,6 +500,9 @@ public class RequestChecksumFilter implements Filter {
     }
 
     private String decodeURL(final String url) {
+        if (url == null) {
+            return null;
+        }
         try {
             return URLDecoder.decode(url, "iso8859-1");
         } catch (UnsupportedEncodingException e) {
