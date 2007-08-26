@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -439,22 +440,22 @@ public class RequestChecksumFilter implements Filter {
 
 	final ResponseWrapper responseWrapper = new ResponseWrapper(httpServletResponse);
 
-	final long start1 = System.currentTimeMillis();
+//	final long start1 = System.currentTimeMillis();
 	if (isRedirectRequest(httpServletRequest)) {
 	    filterChain.doFilter(servletRequest, servletResponse);
 	} else {
 	    filterChain.doFilter(servletRequest, responseWrapper);
 	}
-	final long end1 = System.currentTimeMillis();
+//	final long end1 = System.currentTimeMillis();
 
-	final long start2 = System.currentTimeMillis();
+//	final long start2 = System.currentTimeMillis();
 	responseWrapper.writeRealResponse();
-	final long end2 = System.currentTimeMillis();
+//	final long end2 = System.currentTimeMillis();
 
-	final long time1 = end1 - start1;
-	final long time2 = end2 - start2;
-	final long percent = time1 == 0 ? 0 : (100 * time2) / time1;
-	System.out.println("Actual response took: " + time1 + " ms. Parse and replace took: " + time2 + " ms. Performance loss: " + percent + " %.");
+//	final long time1 = end1 - start1;
+//	final long time2 = end2 - start2;
+//	final long percent = time1 == 0 ? 0 : (100 * time2) / time1;
+//	System.out.println("Actual response took: " + time1 + " ms. Parse and replace took: " + time2 + " ms. Performance loss: " + percent + " %.");
     }
 
     private boolean isRedirectRequest(final HttpServletRequest httpServletRequest) {
@@ -494,7 +495,9 @@ public class RequestChecksumFilter implements Filter {
 	    checksum = (String) httpServletRequest.getAttribute(CHECKSUM_ATTRIBUTE_NAME);
 	}
 	if (!isValidChecksum(httpServletRequest, checksum)) {
-	    System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString());
+	    final IUserView userView = SessionUtils.getUserView(httpServletRequest);
+	    final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
+	    System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString() + " by user: " + userString);
 	    throw new Error("error.url.tampering");
 	}
     }
