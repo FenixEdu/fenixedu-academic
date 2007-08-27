@@ -63,7 +63,7 @@ public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAc
 	try {
 	    executeService("MoveCurriculumLines", moveCurriculumLinesBean);
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, ex.getFalseRuleResults());
+	    addRuleResultMessagesToActionMessages(request, ex.getFalseResult());
 
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
 
@@ -83,7 +83,7 @@ public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAc
 
     }
 
-    private void addRuleResultMessagesToActionMessages(HttpServletRequest request, List<RuleResult> falseRuleResults) {
+    private void addRuleResultMessagesToActionMessages(HttpServletRequest request, RuleResult... falseRuleResults) {
 	for (final RuleResult ruleResult : falseRuleResults) {
 	    for (final RuleResultMessage message : ruleResult.getMessages()) {
 		if (message.isToTranslate()) {

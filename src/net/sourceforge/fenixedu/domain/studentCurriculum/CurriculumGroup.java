@@ -323,7 +323,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return true;
 	}
 	for (final CurriculumModule module : getCurriculumModulesSet()) {
-	    if (module.hasCurriculumModule(module)) {
+	    if (module.hasCurriculumModule(curriculumModule)) {
 		return true;
 	    }
 	}

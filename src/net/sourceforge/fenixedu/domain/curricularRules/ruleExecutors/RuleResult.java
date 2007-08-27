@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -10,7 +10,7 @@ public class RuleResult {
 
     private RuleResultType result;
 
-    private List<RuleResultMessage> messages;
+    private Set<RuleResultMessage> messages;
 
     private EnrolmentResultType enrolmentResultType;
 
@@ -22,11 +22,11 @@ public class RuleResult {
 
 	this.result = result;
 	this.enrolmentResultType = enrolmentResultType;
-	this.messages = new ArrayList<RuleResultMessage>();
+	this.messages = new HashSet<RuleResultMessage>();
     }
 
     private RuleResult(final RuleResultType result, final EnrolmentResultType enrolmentResultType,
-	    final List<RuleResultMessage> messages) {
+	    final Set<RuleResultMessage> messages) {
 	this(result, enrolmentResultType);
 	this.messages.addAll(messages);
     }
@@ -35,36 +35,23 @@ public class RuleResult {
 	return this.result;
     }
 
-    public List<RuleResultMessage> getMessages() {
+    public Set<RuleResultMessage> getMessages() {
 	return messages;
     }
 
     public RuleResult and(final RuleResult ruleResult) {
-	return and(ruleResult, true);
-    }
-
-    public RuleResult and(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType andResult = this.getResult().and(ruleResult.getResult());
-	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>(getMessages());
-	if (copyMessages && andResult.isToCopyMessages()) {
-	    messages.addAll(ruleResult.getMessages());
-	}
+	final Set<RuleResultMessage> messages = new HashSet<RuleResultMessage>(getMessages());
+	messages.addAll(ruleResult.getMessages());
+
 	return new RuleResult(andResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
 
     public RuleResult or(final RuleResult ruleResult) {
-	return or(ruleResult, true);
-    }
-
-    public RuleResult or(final RuleResult ruleResult, final boolean copyMessages) {
 	final RuleResultType orResult = this.getResult().or(ruleResult.getResult());
-	final List<RuleResultMessage> messages = new ArrayList<RuleResultMessage>();
-	if (orResult.isToCopyMessages()) {
-	    messages.addAll(getMessages());
-	    if (copyMessages) {
-		messages.addAll(ruleResult.getMessages());
-	    }
-	}
+	final Set<RuleResultMessage> messages = new HashSet<RuleResultMessage>(getMessages());
+	messages.addAll(ruleResult.getMessages());
+
 	return new RuleResult(orResult, getEnrolmentResultType().and(ruleResult.getEnrolmentResultType()), messages);
     }
 
@@ -91,6 +78,10 @@ public class RuleResult {
     public boolean isTemporaryEnrolmentResultType() {
 	return enrolmentResultType == EnrolmentResultType.TEMPORARY;
     }
+    
+    public boolean isNullEnrolmentResultType(){
+	return enrolmentResultType == EnrolmentResultType.NULL;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -112,7 +103,7 @@ public class RuleResult {
     }
 
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final String message, final String... args) {
-	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message,
+	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, Collections.singleton(new RuleResultMessage(message,
 		true, args)));
     }
 
@@ -130,25 +121,25 @@ public class RuleResult {
 
     static public RuleResult createFalse(final EnrolmentResultType enrolmentResultType, final String message,
 	    final String... args) {
-	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections.singletonList(new RuleResultMessage(message,
+	return new RuleResult(RuleResultType.FALSE, enrolmentResultType, Collections.singleton(new RuleResultMessage(message,
 		args)));
     }
 
     static public RuleResult createFalseWithLiteralMessage(final String message) {
-	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.VALIDATED, Collections
-		.singletonList(new RuleResultMessage(message, false)));
+	return new RuleResult(RuleResultType.FALSE, EnrolmentResultType.VALIDATED, Collections.singleton(new RuleResultMessage(
+		message, false)));
     }
 
     static public RuleResult createNA() {
 	return new RuleResult(RuleResultType.NA, EnrolmentResultType.NULL);
     }
 
-    static public RuleResult createWarning(final List<RuleResultMessage> ruleResultMessages) {
+    static public RuleResult createWarning(final Set<RuleResultMessage> ruleResultMessages) {
 	return new RuleResult(RuleResultType.WARNING, EnrolmentResultType.VALIDATED, ruleResultMessages);
     }
 
     static public RuleResult createWarning(final String message, final String... args) {
-	return createWarning(Collections.singletonList(new RuleResultMessage(message, args)));
+	return createWarning(Collections.singleton(new RuleResultMessage(message, args)));
 
     }
 

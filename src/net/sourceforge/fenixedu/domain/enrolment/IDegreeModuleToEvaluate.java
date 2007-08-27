@@ -25,6 +25,8 @@ public interface IDegreeModuleToEvaluate {
     public boolean isOptional();
 
     public boolean isEnroled();
+        
+    public boolean isEnroling();
 
     public boolean canCollectRules();
     

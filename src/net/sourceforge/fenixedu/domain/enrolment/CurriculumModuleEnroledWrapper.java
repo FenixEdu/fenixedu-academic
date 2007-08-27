@@ -15,11 +15,13 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
 
 public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModuleToEvaluate {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8730987603988026373L;
 
     private DomainReference<CurriculumModule> curriculumModule;
 
@@ -162,5 +164,10 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 		this.getCurriculumModule().getIdInternal()).append(",").append(this.getExecutionPeriod().getClass().getName())
 		.append(":").append(this.getExecutionPeriod().getIdInternal());
 	return stringBuilder.toString();
+    }
+
+
+    public boolean isEnroling() {
+	return false;
     }
 }

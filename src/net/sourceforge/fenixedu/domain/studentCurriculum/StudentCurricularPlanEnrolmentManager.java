@@ -61,7 +61,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getDegreeModuleToEvaluate()) {
+		.getDegreeModulesToEvaluate()) {
 
 	    if (degreeModuleToEvaluate.canCollectRules()) {
 

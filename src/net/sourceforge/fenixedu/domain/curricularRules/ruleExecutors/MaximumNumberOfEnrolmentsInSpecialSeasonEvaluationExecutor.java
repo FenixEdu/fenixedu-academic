@@ -30,7 +30,7 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends 
 	}
 
 	final Integer maxEnrolments = specialSeasonCode.getMaxEnrolments();
-	final int sum = enrolmentContext.getDegreeModuleToEvaluate().size();
+	final int sum = enrolmentContext.getDegreeModulesToEvaluate().size();
 	
 	if (maxEnrolments < sum) {
 	    return RuleResult.createFalse("curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments", specialSeasonCode.getSituation(), maxEnrolments.toString());

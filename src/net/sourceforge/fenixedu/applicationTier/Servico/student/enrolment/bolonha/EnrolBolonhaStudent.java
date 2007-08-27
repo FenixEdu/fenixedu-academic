@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnrolBolonhaStudent extends Service {
 
-    public List<RuleResult> run(final Person person, final StudentCurricularPlan studentCurricularPlan,
+    public RuleResult run(final Person person, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionPeriod executionPeriod, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {

@@ -2144,7 +2144,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Checked("StudentCurricularPlanPredicates.enrol")
-    final public List<RuleResult> enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
+    final public RuleResult enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 

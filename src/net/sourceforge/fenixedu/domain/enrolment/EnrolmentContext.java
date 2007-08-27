@@ -52,12 +52,12 @@ public class EnrolmentContext {
 	this.curricularRuleLevel = curricularRuleLevel;
     }
 
-    public Set<IDegreeModuleToEvaluate> getDegreeModuleToEvaluate() {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate() {
 	return degreeModulesToEvaluate;
     }
 
     public void addDegreeModuleToEvaluate(final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-	getDegreeModuleToEvaluate().add(degreeModuleToEvaluate);
+	getDegreeModulesToEvaluate().add(degreeModuleToEvaluate);
     }
 
     public ExecutionPeriod getExecutionPeriod() {

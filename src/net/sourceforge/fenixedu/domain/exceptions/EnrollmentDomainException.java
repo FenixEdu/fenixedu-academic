@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.exceptions;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
 
 public class EnrollmentDomainException extends DomainException {
@@ -12,7 +9,7 @@ public class EnrollmentDomainException extends DomainException {
      */
     private static final long serialVersionUID = 1L;
     
-    private List<RuleResult> falseRuleResults;
+    private RuleResult falseResult;
 
     public EnrollmentDomainException(String key, String... args) {
 	super(key, args);
@@ -22,13 +19,13 @@ public class EnrollmentDomainException extends DomainException {
 	super(key, cause, args);
     }
 
-    public EnrollmentDomainException(final List<RuleResult> falseRuleResults) {
+    public EnrollmentDomainException(final RuleResult falseRuleResult) {
 	super();
-	this.falseRuleResults = falseRuleResults;
+	this.falseResult = falseRuleResult;
     }
 
-    public List<RuleResult> getFalseRuleResults() {
-	return Collections.unmodifiableList(falseRuleResults);
+    public RuleResult getFalseResult() {
+	return this.falseResult;
     }
 
 }

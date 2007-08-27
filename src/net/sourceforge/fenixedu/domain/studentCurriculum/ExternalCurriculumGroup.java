@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -56,7 +60,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     public Integer getChildOrder() {
 	return Integer.MAX_VALUE - 3;
     }
-    
+
     @Override
     public Integer getChildOrder(ExecutionPeriod executionPeriod) {
 	return getChildOrder();
@@ -79,6 +83,12 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 	return multiLanguageString;
     }
 
+    @Override
+    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+	final Set<ICurricularRule> result = super.getCurricularRules(executionPeriod);
+	result.add(new CreditsLimitInExternalCycle(this));
 
+	return result;
+    }
 
 }

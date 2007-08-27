@@ -56,11 +56,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
-	    final List<RuleResult> ruleResults = (List<RuleResult>) executeService("EnrolBolonhaStudent",
-		    getLoggedPerson(request), bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(), bolonhaStudentEnrollmentBean
-			    .getCurricularRuleLevel());
+	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", getLoggedPerson(request),
+		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+		    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(), bolonhaStudentEnrollmentBean
+			    .getCurriculumModulesToRemove(), bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -70,7 +69,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    addRuleResultMessagesToActionMessages("warning", request, ruleResults);
 
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseRuleResults());
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 
 	    return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
 
@@ -87,7 +86,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     private void addRuleResultMessagesToActionMessages(final String propertyName, final HttpServletRequest request,
-	    final List<RuleResult> ruleResults) {
+	    final RuleResult... ruleResults) {
 
 	for (final RuleResult ruleResult : ruleResults) {
 	    for (final RuleResultMessage message : ruleResult.getMessages()) {
@@ -120,16 +119,15 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
-	    final List<RuleResult> ruleResults = (List<RuleResult>) executeService("EnrolBolonhaStudent",
-		    getLoggedPerson(request), optionalStudentEnrollmentBean.getStudentCurricularPlan(),
-		    optionalStudentEnrollmentBean.getExecutionPeriod(),
+	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", getLoggedPerson(request),
+		    optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod(),
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
 		    getCurricularRuleLevel(form));
 
 	    addRuleResultMessagesToActionMessages("warning", request, ruleResults);
 
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseRuleResults());
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 	    request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
 
 	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");

@@ -15,7 +15,7 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
 	double accumulated = 0d;
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModuleToEvaluate()) {
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionPeriod);
 	}
 	

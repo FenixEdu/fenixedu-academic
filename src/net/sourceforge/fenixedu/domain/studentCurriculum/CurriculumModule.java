@@ -25,8 +25,6 @@ import org.joda.time.YearMonthDay;
 
 public abstract class CurriculumModule extends CurriculumModule_Base {
 
-
-
     static final public Comparator<CurriculumModule> COMPARATOR_BY_NAME_AND_ID = new Comparator<CurriculumModule>() {
 	public int compare(CurriculumModule o1, CurriculumModule o2) {
 	    int result = o1.getName().compareTo(o2.getName());
@@ -118,13 +116,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
-	Set<ICurricularRule> result = null;
-	if (this.getCurriculumGroup() != null) {
-	    result = this.getCurriculumGroup().getCurricularRules(executionPeriod);
-	} else {
-	    result = new HashSet<ICurricularRule>();
-	}
-	result.addAll(this.getDegreeModule().getCurricularRules(executionPeriod));
+	final Set<ICurricularRule> result = hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionPeriod)
+		: new HashSet<ICurricularRule>();
+	result.addAll(getDegreeModule().getCurricularRules(executionPeriod));
+	
 	return result;
     }
 

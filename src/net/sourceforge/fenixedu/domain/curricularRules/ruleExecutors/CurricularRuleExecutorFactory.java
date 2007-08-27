@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
@@ -41,6 +42,7 @@ public class CurricularRuleExecutorFactory {
 	executors.put(ImprovementOfApprovedEnrolment.class,				new ImprovementOfApprovedEnrolmentExecutor());
 	executors.put(EnrolmentInSpecialSeasonEvaluation.class,				new EnrolmentInSpecialSeasonEvaluationExecutor());
 	executors.put(MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation.class,		new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor());
+	executors.put(CreditsLimitInExternalCycle.class,			new CreditsLimitInExternalCycleExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {
