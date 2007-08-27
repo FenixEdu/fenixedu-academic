@@ -55,4 +55,9 @@ public class CreditsDismissal extends CreditsDismissal_Base {
         getNoEnrolCurricularCourses().clear();
         super.delete();
     }
+    
+    @Override
+    public boolean isCreditsDismissal() {
+        return true;
+    }
 }

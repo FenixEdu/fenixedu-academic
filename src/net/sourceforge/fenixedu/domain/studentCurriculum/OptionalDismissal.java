@@ -16,10 +16,9 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     
     protected void init(Credits credits, CurriculumGroup curriculumGroup, OptionalCurricularCourse optionalCurricularCourse, Double ectsCredits) {
 	init(credits, curriculumGroup, optionalCurricularCourse);
-	
 	setEctsCredits(ectsCredits);
     }
-    
+
     @Override
     public void setDegreeModule(final DegreeModule degreeModule) {
 	if (degreeModule != null && !(degreeModule instanceof OptionalCurricularCourse)) {
