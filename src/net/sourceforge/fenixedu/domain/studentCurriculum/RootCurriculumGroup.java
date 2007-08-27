@@ -160,4 +160,9 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	removeParentStudentCurricularPlan();
 	super.delete();
     }
+    
+    @Override
+    public RootCourseGroup getDegreeModule() {
+        return (RootCourseGroup) super.getDegreeModule();
+    }
 }

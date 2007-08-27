@@ -624,12 +624,33 @@ public class CourseGroup extends CourseGroup_Base {
 	return contexts;
     }
 
-    public List<DegreeModule> getChildDegreeModules() {
-	final List<DegreeModule> result = new ArrayList<DegreeModule>();
+    public Set<DegreeModule> getChildDegreeModules() {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getChildContexts()) {
 	    result.add(context.getChildDegreeModule());
 	}
 	return result;
+    }
+
+    public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionPeriod executionPeriod) {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
+	for (final Context context : getValidChildContexts(executionPeriod)) {
+	    result.add(context.getChildDegreeModule());
+	}
+
+	return result;
+    }
+
+    public List<Context> getChildContextsForCurricularCourses(final ExecutionPeriod executionPeriod) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : getChildContexts(CurricularCourse.class)) {
+	    if (context.isValid(executionPeriod)) {
+		result.add(context);
+	    }
+	}
+
+	return result;
+
     }
 
     public boolean hasDegreeModuleOnChilds(final DegreeModule degreeModuleToSearch) {
@@ -640,9 +661,9 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	return false;
     }
-    
+
     @Override
     public boolean isCourseGroup() {
-        return true;
+	return true;
     }
 }

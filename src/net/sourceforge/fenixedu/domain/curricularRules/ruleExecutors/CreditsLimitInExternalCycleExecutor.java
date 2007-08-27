@@ -63,9 +63,7 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 	    return RuleResult.createNA();
 	}
 
-	final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup)
-		+ externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
-			.getPreviousExecutionPeriod());
+	final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
 	if (creditsLimitInExternalCycle.creditsExceedMaximum(totalCredits)) {
 	    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
 		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);

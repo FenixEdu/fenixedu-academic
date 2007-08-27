@@ -214,9 +214,5 @@ public class Dismissal extends Dismissal_Base {
 	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
 	return result;
     }
-    
-    public boolean isCreditsDismissal() {
-	return false;
-    }
 
 }

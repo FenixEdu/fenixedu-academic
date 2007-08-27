@@ -6,43 +6,48 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 
-public class PreviousYearsEnrolmentCurricularRule extends PreviousYearsEnrolmentCurricularRule_Base {
-    
+public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersistent {
+
+    private RootCurriculumGroup rootCurriculumGroup;
+
     private PreviousYearsEnrolmentCurricularRule() {
-        super();
+	super();
     }
-    
-    public PreviousYearsEnrolmentCurricularRule(final CourseGroup toApplyRule,
-            final ExecutionPeriod begin, final ExecutionPeriod end) {
+
+    public PreviousYearsEnrolmentCurricularRule(final RootCurriculumGroup rootCurriculumGroup) {
 	this();
-	checkDegreeModule(toApplyRule);
-	init(toApplyRule, null, begin, end, CurricularRuleType.PREVIOUS_YEARS_ENROLMENT);
-    }
-    
-    public PreviousYearsEnrolmentCurricularRule(final CourseGroup toApplyRule, final ExecutionPeriod begin) {
-	this(toApplyRule, begin, null);
+	this.rootCurriculumGroup = rootCurriculumGroup;
     }
 
-    private void checkDegreeModule(final CourseGroup courseGroup) {
-	if (!courseGroup.isRoot()) {
-	    throw new DomainException("error.curricularRules.PreviousYearsEnrolmentCurricularRule.should.be.applied.to.root.CourseGroup");
-	}
+    public ExecutionPeriod getBegin() {
+	return ExecutionPeriod.readActualExecutionPeriod();
     }
-    
-    @Override
+
+    public CourseGroup getContextCourseGroup() {
+	return null;
+    }
+
+    public CompositeRule getParentCompositeRule() {
+	return null;
+    }
+
+    public CurricularRuleType getCurricularRuleType() {
+	return CurricularRuleType.PREVIOUS_YEARS_ENROLMENT;
+    }
+
+    public RootCourseGroup getDegreeModuleToApplyRule() {
+	return this.rootCurriculumGroup.getDegreeModule();
+    }
+
+    public ExecutionPeriod getEnd() {
+	return null;
+    }
+
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
+	return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
     }
 
-    @Override
-    protected void removeOwnParameters() {
-	// No additional parameters
-    }
-    
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
 }

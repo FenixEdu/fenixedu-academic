@@ -2099,8 +2099,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
 				}
 
-			class net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCurricularRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
-			}
 
 	class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	}

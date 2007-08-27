@@ -61,7 +61,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	if (studentCurricularPlan.getRoot().hasCourseGroup(courseGroup)) {
 	    throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup", courseGroup.getName());
 	}
-	
+
     }
 
     final protected void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
@@ -142,7 +142,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    final public CourseGroup getDegreeModule() {
+    public CourseGroup getDegreeModule() {
 	return (CourseGroup) super.getDegreeModule();
     }
 
@@ -181,7 +181,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
     }
 
-    final public List<Dismissal> getChildDismissals() {
+    public List<Dismissal> getChildDismissals() {
 	final List<Dismissal> result = new ArrayList<Dismissal>();
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule.isDismissal()) {
@@ -191,7 +191,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    final public List<Enrolment> getChildEnrolments() {
+    public double getChildCreditsDismissalEcts() {
+	double total = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isCreditsDismissal()) {
+		total += curriculumModule.getEctsCredits();
+	    }
+	}
+
+	return total;
+    }
+
+    public List<Enrolment> getChildEnrolments() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule.isEnrolment()) {

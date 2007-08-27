@@ -73,6 +73,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return false;
     }
 
+    public boolean isCreditsDismissal() {
+	return false;
+    }
+
     abstract public StringBuilder print(String tabs);
 
     abstract public List<Enrolment> getEnrolments();
