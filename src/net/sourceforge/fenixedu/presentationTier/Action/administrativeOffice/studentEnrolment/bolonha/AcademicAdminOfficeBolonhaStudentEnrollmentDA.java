@@ -59,7 +59,7 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 
     @Override
     protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form) {
-	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT
+	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES
 		: CurricularRuleLevel.ENROLMENT_NO_RULES;
     }
 
