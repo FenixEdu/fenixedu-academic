@@ -2134,7 +2134,7 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/manager/bolonha/curricularPlans/deleteCurricularRule.jsp</from-view-id>
+		<from-view-id>/manager/bolonha/curricularRules/deleteCurricularRule.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>setCurricularRules</from-outcome>
 			<to-view-id>/manager/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
