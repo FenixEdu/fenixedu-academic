@@ -29,7 +29,8 @@
 		<fc:degreeCurricularPlanRender 
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 			onlyStructure="true"
-			executionYear="#{CurricularCourseManagement.executionYear}" />
+			executionYear="#{CurricularCourseManagement.executionYear}"
+			module="/manager/bolonha"/>
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 

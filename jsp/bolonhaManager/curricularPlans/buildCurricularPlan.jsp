@@ -73,7 +73,8 @@
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		toEdit="true" 
-		organizeBy="<%=request.getParameter("organizeBy")%>"/>
+		organizeBy="<%=request.getParameter("organizeBy")%>"
+		module="/bolonhaManager"/>
 
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>

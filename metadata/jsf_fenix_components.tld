@@ -1420,6 +1420,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<description>Indicates if course group reports links are to be available. Type: java.lang.Boolean. Default: false</description>
 		</attribute>
+		<attribute>
+			<name>module</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Indicates the submodule of the jsp that is using this component.</description>
+		</attribute>
 	</tag>
   <tag>
 		<name>breadCrumbs</name>

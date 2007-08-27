@@ -7,7 +7,6 @@
 <logic:present role="STUDENT">
     <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
     
-    <%--
 	<logic:notEmpty name="sourceRegistrationsForTransition">
 		<p class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsInTransition" bundle="STUDENT_RESOURCES"/></strong></p>
 		<table class="tstyle2">
@@ -33,7 +32,6 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
-    --%>
     
     <p class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></p>
     <logic:empty name="registrationsToEnrol">

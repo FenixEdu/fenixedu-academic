@@ -126,7 +126,8 @@
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		showRules="<%=request.getParameter("showRules")%>"
-		hideCourses="<%=request.getParameter("hideCourses")%>"/>
+		hideCourses="<%=request.getParameter("hideCourses")%>"
+		module="/bolonhaManager"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

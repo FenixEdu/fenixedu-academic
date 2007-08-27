@@ -28,6 +28,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     private boolean toEdit;
     private boolean showRules;
     private ExecutionYear executionYear;
+    private String module;
 
     private FacesContext facesContext;
     private ResponseWriter writer;
@@ -45,6 +46,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         if (!isRendered()) {
             return;
         }
+
+        module = facesContext.getExternalContext().getRequestContextPath() + (String) this.getAttributes().get("module");
 
         final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get("dcp");
         if (dcp.isBoxStructure()) {
@@ -70,7 +73,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 //System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, reportsAvailable, executionYear).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, reportsAvailable, executionYear, module).encodeBegin(facesContext);
             }
             
             if (dcp.hasDegreeStructure() && dcp.getDegreeStructure().hasAnyChilds() && !onlyStructure) {
@@ -197,7 +200,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 curricularCourse.getAutonomousWorkHours(curricularPeriod);
                 curricularCourse.getTotalLoad(curricularPeriod);
                 curricularCourse.getEctsCredits(curricularPeriod);
-                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear).encodeBegin(facesContext);
+                new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear, this.module).encodeBegin(facesContext);
                 
                 if (curricularCourse.isAnual()) {
                     remindToEncodeInNextPeriod(curricularPeriod, context);
@@ -209,7 +212,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             anyCurricularCourseEncoded = true;
             
             for (Context check : toRepeat.get(curricularPeriod)) {
-                new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear).encodeInNextPeriod(facesContext);
+                new UICurricularCourse(check.getChildDegreeModule(), check, this.toEdit, this.showRules, this.executionYear, this.module).encodeInNextPeriod(facesContext);
             }
         }
         

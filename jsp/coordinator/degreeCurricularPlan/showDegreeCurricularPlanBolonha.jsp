@@ -120,7 +120,8 @@
 					organizeBy="<%=request.getParameter("organizeBy")%>"
 					showRules="<%=request.getParameter("showRules")%>"
 					hideCourses="<%=request.getParameter("hideCourses")%>"
-					executionYear="#{CurricularCourseManagement.executionYear}"/>
+					executionYear="#{CurricularCourseManagement.executionYear}"
+					module="/coordinator"/>
 			</h:panelGroup>
 	
 		</h:panelGroup>

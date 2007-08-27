@@ -162,7 +162,8 @@
 					organizeBy="<%=request.getParameter("organizeBy")%>"
 					showRules="<%=request.getParameter("showRules")%>"
 					hideCourses="<%=request.getParameter("hideCourses")%>"
-					executionYear="#{CurricularCourseManagement.executionYear}"/>
+					executionYear="#{CurricularCourseManagement.executionYear}"
+					module="/publico"/>
 			</h:panelGroup>
 	
 		</h:panelGroup>

@@ -30,14 +30,14 @@ public class UICurricularCourse extends UIDegreeModule {
         this.byYears = false;
     }
 
-    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear) {
-        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs, executionYear);
+    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear, String module) {
+        super(curricularCourse, previousContext, toEdit, showRules, depth, tabs, executionYear, module);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = false;
     }
 
-    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, ExecutionYear executionYear) {
-        super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear);
+    public UICurricularCourse(DegreeModule curricularCourse, Context previousContext, Boolean toEdit, Boolean showRules, ExecutionYear executionYear, String module) {
+        super(curricularCourse, previousContext, toEdit, showRules, 0, null, executionYear, module);
         this.curricularCourse = (CurricularCourse) super.degreeModule;
         this.byYears = true;
         
@@ -302,7 +302,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
-        encodeLink("../curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
+        encodeLink(module + "/curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
         writer.endElement("td");
     }
 

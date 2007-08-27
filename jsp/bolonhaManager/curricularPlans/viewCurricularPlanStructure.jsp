@@ -16,7 +16,8 @@
 
 	<fc:degreeCurricularPlanRender 
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
-		onlyStructure="true"/>
+		onlyStructure="true"
+		module="/bolonhaManager"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>

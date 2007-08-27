@@ -126,7 +126,8 @@
 		organizeBy="<%=request.getParameter("organizeBy")%>"
 		showRules="<%=request.getParameter("showRules")%>"
 		hideCourses="<%=request.getParameter("hideCourses")%>"
-		reportsAvailable="true"/>
+		reportsAvailable="true"
+		module="/scientificCouncil"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

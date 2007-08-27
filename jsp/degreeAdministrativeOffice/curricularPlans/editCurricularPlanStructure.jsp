@@ -63,7 +63,8 @@
 			onlyStructure="true" 
 			toEdit="true" 
 			toOrder="#{CurricularCourseManagement.toOrder}"
-			executionYear="#{CurricularCourseManagement.executionYear}" />
+			executionYear="#{CurricularCourseManagement.executionYear}"
+			module="/degreeAdministrativeOffice"/>
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 

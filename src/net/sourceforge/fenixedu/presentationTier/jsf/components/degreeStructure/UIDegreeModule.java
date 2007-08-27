@@ -29,6 +29,7 @@ public class UIDegreeModule extends UIInput {
     protected Boolean showRules = Boolean.FALSE;
     protected int depth;
     protected String tabs;
+    protected String module;
 
     protected FacesContext facesContext;
     protected ResponseWriter writer;
@@ -40,7 +41,7 @@ public class UIDegreeModule extends UIInput {
         this.setRendererType(null);
     }
 
-    public UIDegreeModule(DegreeModule degreeModule, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear) {
+    public UIDegreeModule(DegreeModule degreeModule, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, ExecutionYear executionYear, String module) {
         this();
         this.degreeModule = degreeModule;
         this.previousContext = previousContext;
@@ -49,6 +50,7 @@ public class UIDegreeModule extends UIInput {
         this.depth = depth;
         this.tabs = tabs;
         this.executionYear = executionYear;
+        this.module = module;
     }
 
     public String getFamily() {
@@ -63,9 +65,9 @@ public class UIDegreeModule extends UIInput {
         setFromAttributes();
         
         if (this.degreeModule.isLeaf()) {
-            new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, this.executionYear).encodeBegin(facesContext);
+            new UICurricularCourse(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, this.executionYear, this.module).encodeBegin(facesContext);
         } else if (!this.degreeModule.isLeaf()) {
-            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, null, this.toEdit, this.showRules, this.depth, this.tabs, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, null, this.module).encodeBegin(facesContext);
         }
     }
     
@@ -186,9 +188,9 @@ public class UIDegreeModule extends UIInput {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
         if (this.executionYear != null) {
-            encodeLink("../curricularRules/editCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
+            encodeLink(module + "/curricularRules/editCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
         } 
-        encodeLink("../curricularRules/deleteCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
+        encodeLink(module + "/curricularRules/deleteCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
         
         writer.endElement("td");
     }

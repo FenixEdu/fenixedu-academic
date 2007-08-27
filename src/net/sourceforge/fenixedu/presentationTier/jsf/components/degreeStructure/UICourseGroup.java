@@ -27,8 +27,8 @@ public class UICourseGroup extends UIDegreeModule {
         this.courseGroup = (CourseGroup) super.degreeModule;
     }
 
-    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, Boolean reportsAvailable, ExecutionYear executionYear) throws IOException {
-        super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear);
+    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure, Boolean toOrder, Boolean hideCourses, Boolean reportsAvailable, ExecutionYear executionYear, String module) throws IOException {
+        super(courseGroup, previousContext, toEdit, showRules, depth, tabs, executionYear, module);
         
         if (toOrder && (!onlyStructure || !toEdit)) {
             throw new IOException("incorrect.component.usage");
@@ -79,7 +79,7 @@ public class UICourseGroup extends UIDegreeModule {
         if (reportsAvailable) {
             writer.startElement("p", this);
             writer.startElement("a", this);
-            this.encodeLinkHref("../../bolonhaManager/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
+            this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
             writer.write("Relatórios de Plano Curricular");
             writer.endElement("a");
             writer.endElement("p");
@@ -158,7 +158,7 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : this.courseGroup.getSortedOpenChildContextsWithCourseGroups(this.executionYear)) {
-            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear).encodeBegin(facesContext);
+            new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable, this.executionYear, this.module).encodeBegin(facesContext);
         }
     }
 
@@ -238,7 +238,7 @@ public class UICourseGroup extends UIDegreeModule {
         }
         if (linkable) {
             writer.startElement("a", this);
-            this.encodeLinkHref("../../bolonhaManager/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
+            this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), true);
             writer.append(name);
             writer.endElement("a");
         } else {
@@ -305,7 +305,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (this.showRules) {
-            encodeLink("../curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
+            encodeLink(module + "/curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
         } else {
             encodeLink("createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), false, "create.curricular.course");
             writer.append(" , ");
@@ -322,7 +322,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
         for (Context context : this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear)) {
-            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t", this.executionYear).encodeBegin(facesContext);
+            new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t", this.executionYear, this.module).encodeBegin(facesContext);
         }
         
         writer.endElement("table");

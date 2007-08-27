@@ -16,7 +16,8 @@
 
 	<fc:degreeCurricularPlanRender 
 		dcp="#{DegreeCurricularPlanManagement.dcp}" 
-		onlyStructure="true"/>
+		onlyStructure="true"
+		module="/scientificCouncil"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>

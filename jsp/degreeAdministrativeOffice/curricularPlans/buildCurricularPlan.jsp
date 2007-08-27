@@ -93,7 +93,8 @@
 			dcp="#{CurricularCourseManagement.degreeCurricularPlan}"
 			toEdit="true"
 			organizeBy="#{CurricularCourseManagement.organizeBy}"
-			executionYear="#{CurricularCourseManagement.executionYear}" />
+			executionYear="#{CurricularCourseManagement.executionYear}"
+			module="/degreeAdministrativeOffice"/>
 
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>

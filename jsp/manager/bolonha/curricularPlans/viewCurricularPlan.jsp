@@ -136,7 +136,8 @@
 			organizeBy="#{CurricularCourseManagement.organizeBy}"
 			showRules="#{CurricularCourseManagement.showRules}"
 			hideCourses="#{CurricularCourseManagement.hideCourses}" 
-			executionYear="#{CurricularCourseManagement.executionYear}"/>
+			executionYear="#{CurricularCourseManagement.executionYear}"
+			module="/manager/bolonha"/>
 	
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>

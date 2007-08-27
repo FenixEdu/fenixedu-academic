@@ -48,7 +48,8 @@
 		dcp="#{CurricularCourseManagement.degreeCurricularPlan}" 
 		onlyStructure="true" 
 		toEdit="true"
-		toOrder="<%=request.getParameter("toOrder")%>"/>
+		toOrder="<%=request.getParameter("toOrder")%>"
+		module="/bolonhaManager"/>
 	
 	<h:outputText value="<br/><p>" escape="false"/>
 	<h:form>
