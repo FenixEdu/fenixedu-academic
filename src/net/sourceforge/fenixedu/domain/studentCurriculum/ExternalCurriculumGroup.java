@@ -24,6 +24,11 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     public ExternalCurriculumGroup() {
 	super();
     }
+    
+    public ExternalCurriculumGroup(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup) {
+	this();
+	init(rootCurriculumGroup, cycleCourseGroup);
+    }
 
     public ExternalCurriculumGroup(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup,
 	    final ExecutionPeriod executionPeriod) {
