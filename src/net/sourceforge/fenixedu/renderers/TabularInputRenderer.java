@@ -73,6 +73,10 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.getCaption();
     }
 
+    public String getSummary() {
+        return collectionRenderer.getSummary();
+    }
+
     public String getHeaderClasses() {
         return this.collectionRenderer.getHeaderClasses();
     }
@@ -166,10 +170,21 @@ public class TabularInputRenderer extends InputRenderer {
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @property
      */
     public void setCaption(String caption) {
         this.collectionRenderer.setCaption(caption);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @property
+     */
+    public void setSummary(String summary) {
+        collectionRenderer.setSummary(summary);
     }
 
     /**

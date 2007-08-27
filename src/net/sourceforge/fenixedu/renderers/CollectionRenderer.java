@@ -99,7 +99,9 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class CollectionRenderer extends OutputRenderer {
     private String caption;
-
+    
+    private String summary;
+    
     private String rowClasses;
 
     private String columnClasses;
@@ -157,6 +159,19 @@ public class CollectionRenderer extends OutputRenderer {
      */
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    /**
+     * Sets the summary attribute of the generated table.
+     * 
+     * @property
+     */
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getColumnClasses() {

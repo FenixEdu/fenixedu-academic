@@ -13,11 +13,9 @@ public abstract class TabularLayout extends Layout {
     private static Logger logger = Logger.getLogger(TabularLayout.class);
 
     private String caption;
-
+    private String summary;
     private String rowClasses;
-
     private String columnClasses;
-
     private String headerClasses;
 
     private HtmlTable table;
@@ -28,6 +26,14 @@ public abstract class TabularLayout extends Layout {
 
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getColumnClasses() {
@@ -64,7 +70,7 @@ public abstract class TabularLayout extends Layout {
 
     @Override
     public String[] getPropertyNames() {
-        return mergePropertyNames(super.getPropertyNames(), new String[] { "caption", "rowClasses",
+        return mergePropertyNames(super.getPropertyNames(), new String[] { "caption", "summary", "rowClasses",
                 "columnClasses", "headerClasses" });
     }
 
@@ -188,7 +194,8 @@ public abstract class TabularLayout extends Layout {
 
         HtmlTable table = (HtmlTable) component;
        
-        table.setCaption(this.caption);
+        table.setCaption(getCaption());
+        table.setSummary(getSummary());
 
         // header
         if (getHeaderClasses() != null) {
