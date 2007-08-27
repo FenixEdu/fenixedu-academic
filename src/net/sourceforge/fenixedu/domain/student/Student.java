@@ -672,6 +672,11 @@ public class Student extends Student_Base {
 	return Collections.unmodifiableCollection(super.getRegistrations());
     }
 
+    /**
+     * -> Temporary overrides due migrations - Filter 'InTransition'
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
+     */
     @Override
     public Set<Registration> getRegistrationsSet() {
 	final Set<Registration> result = new HashSet<Registration>();
