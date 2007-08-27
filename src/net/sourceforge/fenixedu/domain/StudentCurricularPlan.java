@@ -2336,11 +2336,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return degreeModules;
     }
 
-    final public boolean hasDegreeModule(final DegreeModule degreeModule) {
+    public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return isBoxStructure() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
+    
+    public boolean hasCurriculumModule(final CurriculumModule curriculumModule) {
+	return isBoxStructure() ? getRoot().hasCurriculumModule(curriculumModule) : false;
+    }
 
-    final public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
+    public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
 	return isBoxStructure() ? getRoot().findCurriculumGroupFor(courseGroup) : null;
     }
 
@@ -2491,11 +2495,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
-    public CurriculumGroup getCycle(final CycleType cycleType) {
+    public CycleCurriculumGroup getCycle(final CycleType cycleType) {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
 }
     public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
 	return getCycle(cycleType) != null;
+    }
+    
+    public CycleCurriculumGroup getFirstCycle() {
+	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE) : null;
+    }
+    
+    public CycleCurriculumGroup getSecondCycle() {
+	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
 
 }
