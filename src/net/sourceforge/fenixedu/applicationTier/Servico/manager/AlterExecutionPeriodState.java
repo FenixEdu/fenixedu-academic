@@ -20,22 +20,31 @@ public class AlterExecutionPeriodState extends Service {
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
             final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+            final ExecutionYear currentExecutionYear = currentExecutionPeriod.getExecutionYear();
             if (currentExecutionPeriod != null) {
             	currentExecutionPeriod.setState(PeriodState.OPEN);
-            	currentExecutionPeriod.getExecutionYear().setState(PeriodState.OPEN);
+            	currentExecutionYear.setState(PeriodState.OPEN);
+            }
+            executionPeriod.setState(periodState);
+            executionPeriod.getExecutionYear().setState(periodState);
+        } else {
+            executionPeriod.setState(periodState);
+            PeriodState currentPeriodState = periodState;
+            for (final ExecutionPeriod otherExecutionPeriod : executionYear.getExecutionPeriodsSet()) {
+                if (!otherExecutionPeriod.getState().getStateCode().equals(currentPeriodState.getStateCode())) {
+                    currentPeriodState = null;
+                }
+            }
+            if (currentPeriodState != null) {
+                executionYear.setState(currentPeriodState);
             }
         }
-
-        executionPeriod.setState(periodState);
-        executionPeriod.getExecutionYear().setState(periodState);
     }
 
     public class InvalidExecutionPeriod extends FenixServiceException {
-
         InvalidExecutionPeriod() {
             super();
         }
-
     }
 
 }
