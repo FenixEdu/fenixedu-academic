@@ -121,10 +121,6 @@ public class RelationList<E1,E2> extends AbstractList<E2> implements VersionedSu
 	return elementSet().size();
     }
 
-    public boolean isEmpty() {
-        return elementSet().iterator().hasNext();
-    }
-
     public E2 get(int index) {
         return elementSet().get(index);
     }
