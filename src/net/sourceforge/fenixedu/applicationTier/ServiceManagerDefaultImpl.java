@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
@@ -114,11 +115,15 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
                         break;
                     } catch (jvstm.CommitException ce) {
                         //                    ce.printStackTrace();
-                        System.out.println("Restarting TX because of CommitException");
+                        if (LogLevel.INFO) {
+                            System.out.println("Restarting TX because of CommitException");
+                        }
                         // repeat service
                     } catch (DomainObject.UnableToDetermineIdException ce) {
                         //                    ce.printStackTrace();
-                        System.out.println("Restarting TX because of UnableToDetermineIdException");
+                        if (LogLevel.INFO) {
+                            System.out.println("Restarting TX because of UnableToDetermineIdException");
+                        }
                         // repeat service
                     } catch (IllegalWriteException iwe) {
                         KNOWN_WRITE_SERVICES.put(service, service);
@@ -128,8 +133,10 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
                 }
             } finally {
                 Transaction.setDefaultReadOnly(false);
-                if (tries > 1) {
-                    System.out.println("Service " + service + " took " + tries + " tries.");
+                if (LogLevel.INFO) {
+                    if (tries > 1) {
+                        System.out.println("Service " + service + " took " + tries + " tries.");
+                    }
                 }
             }
 

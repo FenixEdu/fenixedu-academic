@@ -38,7 +38,7 @@ public class StartupServlet extends HttpServlet {
      * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
      */
     public void init(ServletConfig config) throws ServletException {
-        Custodian.registerPID();
+//        Custodian.registerPID();
 
         super.init(config);
 

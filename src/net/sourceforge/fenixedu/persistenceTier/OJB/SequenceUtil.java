@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
@@ -47,7 +49,9 @@ public class SequenceUtil {
                     }
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println("Skipping: " + classDescriptor.getClassNameOfObject() + " due to exception.");
+                    if (LogLevel.WARN) {
+                        System.out.println("Skipping: " + classDescriptor.getClassNameOfObject() + " due to exception.");
+                    }
                 }
             }
         }

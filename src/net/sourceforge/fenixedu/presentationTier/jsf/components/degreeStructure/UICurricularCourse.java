@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -74,15 +75,17 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     private void log(boolean on) {
-        if (on) {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append(tabs);
-            buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
-            buffer.append("[CC ").append(this.curricularCourse.getIdInternal()).append("][");
-            buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
-            buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
-            buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
-            System.out.println(buffer.toString());
+        if (LogLevel.INFO) {
+            if (on) {
+                StringBuilder buffer = new StringBuilder();
+                buffer.append(tabs);
+                buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
+                buffer.append("[CC ").append(this.curricularCourse.getIdInternal()).append("][");
+                buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
+                buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
+                buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
+                System.out.println(buffer.toString());
+            }
         }
     }
 

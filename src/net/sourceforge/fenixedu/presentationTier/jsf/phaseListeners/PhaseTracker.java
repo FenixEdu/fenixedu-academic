@@ -21,11 +21,8 @@ public class PhaseTracker implements PhaseListener {
     }
 
     public void afterPhase(PhaseEvent phaseEvent) {
-        System.out.println("AFTER : " + phaseEvent.getPhaseId());
-
     }
 
     public void beforePhase(PhaseEvent phaseEvent) {
-        System.out.println("BEFORE : " + phaseEvent.getPhaseId());
     }
 }

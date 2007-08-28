@@ -16,6 +16,7 @@ import java.util.Collections;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.MetadataManager;
 
 public class DomainClassInfo {
@@ -64,7 +65,9 @@ public class DomainClassInfo {
                             DomainClassInfo classInfo = new DomainClassInfo(javaClass, ++maxId);
                             addNewInfo(map, array, classInfo);
 
-                            System.out.println("INFO: Registering new domain class '" + javaClass.getName() + "' with id " + classInfo.classId);
+                            if (LogLevel.INFO) {
+                                System.out.println("INFO: Registering new domain class '" + javaClass.getName() + "' with id " + classInfo.classId);
+                            }
                             stmt.executeUpdate("INSERT INTO DOMAIN_CLASS_INFO VALUES ('" 
                                                + javaClass.getName()
                                                + "', "

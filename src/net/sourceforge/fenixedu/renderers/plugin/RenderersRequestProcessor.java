@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
@@ -210,7 +211,9 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
 
                 return super.processActionPerform(request, response, action, form, mapping);
             } catch (Exception e) {
-                System.out.println(SimpleDateFormat.getInstance().format(new Date()));
+                if (LogLevel.WARN) {
+                    System.out.println(SimpleDateFormat.getInstance().format(new Date()));
+                }
                 e.printStackTrace();
                 
                 if (action instanceof ExceptionHandler) {

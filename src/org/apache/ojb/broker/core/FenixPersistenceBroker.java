@@ -17,6 +17,7 @@ import org.apache.ojb.broker.query.QueryBySQL;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.util.ClassHelper;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -113,7 +114,9 @@ public class FenixPersistenceBroker extends PersistenceBrokerImpl {
             ClassDescriptor cld = getQueryObject().getClassDescriptor();
             
             if (cld.getFactoryClass() != DomainAllocator.class) {
-                System.out.println("INFO: FenixRsIterator loading a non-DomainObject delegating to the superclass");
+                if (LogLevel.INFO) {
+                    System.out.println("INFO: FenixRsIterator loading a non-DomainObject delegating to the superclass");
+                }
                 return super.getObjectFromResultSet();
             } else {
                 try {

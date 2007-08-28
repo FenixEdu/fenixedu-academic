@@ -84,15 +84,6 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
 		previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate);
 
-	System.out.println(curricularCoursesToEnrolByYear.size());
-
-	for (final Entry<Integer, Set<CurricularCourse>> each : curricularCoursesToEnrolByYear.entrySet()) {
-	    System.out.println("Year " + each.getKey().toString());
-	    for (final CurricularCourse curricularCourse : each.getValue()) {
-		System.out.println(curricularCourse.getName());
-	    }
-	}
-
 	final RuleResult result = hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
 		sourceDegreeModuleToEvaluate);
 	if (result.isFalse()) {

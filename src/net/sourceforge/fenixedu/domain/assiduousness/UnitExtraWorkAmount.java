@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -88,7 +89,6 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()), 2000);
 	}
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
-	System.out.println(spreadsheet.getMaxiumColumnNumber());
 	spreadsheet.getSheet().addMergedRegion(
 		new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
     }

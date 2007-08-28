@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -42,8 +43,10 @@ public class CheckPathByRoleFilter implements Filter {
 	final String uri = request.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
 	if (RequestUtils.isPrivateURI(request) && !isJavascript(uri) && !isDomainBrowser(uri) && !isLayout(uri) && userView != null) {
 	    if (!validUserView(userView) || !hasRoleForSubApplication(uri, userView)) {
-		System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador()
-			+ " to uri: " + uri);
+	        if (LogLevel.WARN) {
+	            System.out.println("error.not.authorized.access.attempt: " + userView.getUtilizador()
+	                    + " to uri: " + uri);
+	        }
 		throw new NotAuthorizedAccessException(
 			"error.not.authorized.access.attempt.has.been.logged");
 	    }

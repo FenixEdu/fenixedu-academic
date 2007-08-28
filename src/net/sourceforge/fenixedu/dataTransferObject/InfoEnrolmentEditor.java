@@ -222,7 +222,6 @@ public class InfoEnrolmentEditor extends InfoObject {
     }
 
     public void setChangeDegreeOperation(String changeDegreeOperation) {
-	System.out.println("Setting enrolement operation.");
 	this.changeDegreeOperation = changeDegreeOperation;
     }
 

@@ -154,6 +154,7 @@ public class ManageCacheDA extends FenixDispatchAction {
 
     public ActionForward dumpThreadTrace(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Custodian.registerPID();
         Custodian.dumpThreadTrace();
         return prepare(mapping, form, request, response);
     }

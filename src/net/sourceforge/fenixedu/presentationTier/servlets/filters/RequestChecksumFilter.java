@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -502,7 +503,9 @@ public class RequestChecksumFilter implements Filter {
 	if (!isValidChecksum(httpServletRequest, checksum)) {
 	    final IUserView userView = SessionUtils.getUserView(httpServletRequest);
 	    final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
-	    System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString() + " by user: " + userString);
+	    if (LogLevel.ERROR) {
+	        System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString() + " by user: " + userString);
+	    }
 	    throw new Error("error.url.tampering");
 	}
     }

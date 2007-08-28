@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
@@ -119,10 +120,12 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                         totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
                                 shortYear, paymentEndDate);
                     } else {
-                        System.out.println("Registration " + registration.getNumber()
-                                + " does not have a gratuity situation for year "
-                                + executionDegree.getExecutionYear().getYear() + " Degree "
-                                + executionDegree.getDegreeCurricularPlan().getName());
+                        if (LogLevel.INFO) {
+                            System.out.println("Registration " + registration.getNumber()
+                                    + " does not have a gratuity situation for year "
+                                    + executionDegree.getExecutionYear().getYear() + " Degree "
+                                    + executionDegree.getDegreeCurricularPlan().getName());
+                        }
                     }
                 }
 

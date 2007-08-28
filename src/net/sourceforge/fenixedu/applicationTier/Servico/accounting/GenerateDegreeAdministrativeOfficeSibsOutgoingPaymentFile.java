@@ -19,7 +19,7 @@ public class GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile extends
     public SibsOutgoingPaymentFile run(final ExecutionYear executionYear) {
 	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile = new SibsOutgoingPaymentFile(
 		SOURCE_INSTITUTION_ID, DESTINATION_INSTITUTION_ID, ENTITY_CODE);
-	int totalProcessed = 0;
+
 	for (final Entry<Person, List<Event>> entry : getNotPayedEventsGroupedByPerson(executionYear)
 		.entrySet()) {
 	    for (final Event event : entry.getValue()) {
@@ -29,11 +29,6 @@ public class GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile extends
 			    paymentCode.getEndDate());
 		}
 
-		totalProcessed++;
-
-		if (totalProcessed % 500 == 0) {
-		    System.out.println("Processed : " + totalProcessed);
-		}
 	    }
 	}
 

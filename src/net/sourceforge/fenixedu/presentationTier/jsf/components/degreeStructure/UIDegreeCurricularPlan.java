@@ -69,10 +69,6 @@ public class UIDegreeCurricularPlan extends UIInput {
             if (organizeBy.equalsIgnoreCase("years")) {
                 encodeByYears(facesContext, dcp);
             } else {
-                StringBuilder dcpBuffer = new StringBuilder();
-                dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
-                //System.out.println(dcpBuffer);
-
                 new UICourseGroup(dcp.getRoot(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure, toOrder, hideCourses, reportsAvailable, executionYear, module).encodeBegin(facesContext);
             }
             
@@ -175,9 +171,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
-            System.out.println("request context path: " + facesContext.getExternalContext().getRequestContextPath());
-            System.out.println("request path info: " + facesContext.getExternalContext().getRequestPathInfo());
-            System.out.println("request servlet path: " + facesContext.getExternalContext().getRequestServletPath());
             encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "create.curricular.course");
             writer.append(" , ");
             encodeLink("associateCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "associate.curricular.course");

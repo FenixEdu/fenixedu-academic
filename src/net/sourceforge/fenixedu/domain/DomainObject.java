@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.lang.reflect.Field;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -113,8 +114,10 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 		Integer id = (Integer)broker.serviceSequenceManager().getUniqueValue(cld.getFieldDescriptorByName("idInternal"));
 		setIdInternal(id);
 	    } catch (Exception e) {
-            System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
-            throw new UnableToDetermineIdException(e);
+	        if (LogLevel.WARN) {
+	            System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
+	        }
+                throw new UnableToDetermineIdException(e);
 	    }
 	}
     }
@@ -166,7 +169,9 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 	    }
 	}
         
-        System.out.println("!!! WARNING !!!: addNewVersion couldn't find the appropriate slot");
+	if (LogLevel.WARN) {
+            System.out.println("!!! WARNING !!!: addNewVersion couldn't find the appropriate slot");
+	}
         return null;
     }
 

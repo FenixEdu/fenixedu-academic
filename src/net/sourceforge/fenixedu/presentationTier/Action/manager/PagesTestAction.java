@@ -30,7 +30,6 @@ public class PagesTestAction extends FenixDispatchAction {
     public ActionForward doSomething(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
-	System.out.println(pageContainerBean.getSelected());
 	pageContainerBean.setSelected(null);
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);

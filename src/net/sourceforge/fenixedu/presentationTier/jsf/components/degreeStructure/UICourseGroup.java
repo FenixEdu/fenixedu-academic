@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -54,12 +55,14 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void log(boolean on) {
-        if (on) {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append(tabs);
-            buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
-            buffer.append("[CG ").append(this.courseGroup.getIdInternal()).append("] ").append(this.courseGroup.getName());
-            System.out.println(buffer);
+        if (LogLevel.INFO) {
+            if (on) {
+                StringBuilder buffer = new StringBuilder();
+                buffer.append(tabs);
+                buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
+                buffer.append("[CG ").append(this.courseGroup.getIdInternal()).append("] ").append(this.courseGroup.getName());
+                System.out.println(buffer);
+            }
         }
     }
 
@@ -280,10 +283,6 @@ public class UICourseGroup extends UIDegreeModule {
         writer.append("(");
         String createAssociateAditionalParameters = "&parentCourseGroupID=" + this.courseGroup.getIdInternal() + "&toOrder=false";
         String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
-
-        System.out.println("request context path: " + facesContext.getExternalContext().getRequestContextPath());
-        System.out.println("request path info: " + facesContext.getExternalContext().getRequestPathInfo());
-        System.out.println("request servlet path: " + facesContext.getExternalContext().getRequestServletPath());
 
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
         writer.append(" , ");

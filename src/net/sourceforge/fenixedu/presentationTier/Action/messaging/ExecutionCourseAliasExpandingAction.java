@@ -33,13 +33,9 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         String result = "400 Error: Email alias expanding service did not run";
 
-//        System.out.println("Got a request from " + request.getRemoteAddr());
-
         if (HostAccessControl.isAllowed(this, request)) {
 
             String address = request.getParameter("address");
-
-//            System.out.println("Requesting address:" + address);
 
             try {
                 ExpandExecutionCourseMailAlias.ForwardMailsReport report = (ExpandExecutionCourseMailAlias.ForwardMailsReport) ServiceUtils
@@ -97,7 +93,6 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
             throw new FenixActionException(e);
         }
 
-//        System.out.println("Over and out. Result: ------->" + result + "<-------");
         return null;
 
     }

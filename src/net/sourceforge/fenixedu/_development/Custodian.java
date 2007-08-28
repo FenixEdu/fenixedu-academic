@@ -26,6 +26,7 @@ public class Custodian {
                     final String command = psParts[k].trim();
                     if (command.startsWith("java") || command.endsWith("/java") || command.endsWith("\\java")) {
                         pids.add(Integer.valueOf(pid));
+                        
                         System.out.println("Adding pid: " + pid + " to custodians register.");
                     }
                 }

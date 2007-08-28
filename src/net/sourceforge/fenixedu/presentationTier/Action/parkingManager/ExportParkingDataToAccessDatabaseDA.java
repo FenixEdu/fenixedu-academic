@@ -225,7 +225,6 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
         if (openFileBean != null) {
             //if (openFileBean.getFileName().equalsIgnoreCase("Cartões_XML.mdb")) {
-            System.out.println("987654" + openFileBean.getFileName());
             try {
                 response.setContentType("text/plain");
                 response.setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");

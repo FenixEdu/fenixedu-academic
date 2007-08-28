@@ -92,11 +92,9 @@ public class CountryUnit extends CountryUnit_Base {
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
 		if ((!unit.equals(countryUnit)) && unit.isCountryUnit()) {
 		    if (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
-		        System.out.println(countryUnit.getAcronym());
 		        throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit.getAcronym());
 		    }
 		    if (countryUnit.getName().equalsIgnoreCase(unit.getName())) {
-		        System.out.println(countryUnit.getName() + countryUnit.getIdInternal() + " " + unit.getIdInternal());
 		        throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit.getName());
 		    }	
 		}

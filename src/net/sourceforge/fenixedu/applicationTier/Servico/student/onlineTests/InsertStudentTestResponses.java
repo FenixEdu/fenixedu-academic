@@ -189,8 +189,9 @@ public class InsertStudentTestResponses extends Service {
                 decimalFormatSymbols.setDecimalSeparator('.');
                 df.setDecimalFormatSymbols(decimalFormatSymbols);
                 String grade = df.format(Math.max(0, totalMark));
-                System.out.println("GRADE ----------------------> " + registration.getNumber() + " "
-                        + grade);
+                if (LogLevel.INFO) {
+                    System.out.println("GRADE ----------------------> " + registration.getNumber() + " " + grade);
+                }
                 mark.setMark(grade);
             }
 

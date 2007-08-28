@@ -506,7 +506,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ExecutionCourseSite site) {
-		System.out.println("\n\n\n\n\nEntrei na funao getInfoSite Exam!!!\n\n\n\n\n");
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
 		List<Exam> exams = new ArrayList<Exam>();

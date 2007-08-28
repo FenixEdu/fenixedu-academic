@@ -747,7 +747,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 	final Scheduleing scheduleing = executionDegree.getScheduling();
         request.setAttribute("executionDegreeOID", executionDegreeOID);
-        System.out.println("executionDegreeOIDString" + executionDegreeOID);
         String alteredField = (String) finalWorkForm.get("alteredField");
         String number = null;
 
