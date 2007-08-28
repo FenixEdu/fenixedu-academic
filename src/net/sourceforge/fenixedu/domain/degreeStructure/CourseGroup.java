@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.StringFormatter;
@@ -576,10 +577,16 @@ public class CourseGroup extends CourseGroup_Base {
 	return Double.valueOf(result);
     }
 
-    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
+    public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
 	final List<DegreeModulesSelectionLimit> result = (List<DegreeModulesSelectionLimit>) getCurricularRules(
 		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
 	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0);
+    }
+
+    public CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
+	final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0);
     }
 
     @Override
@@ -636,6 +643,18 @@ public class CourseGroup extends CourseGroup_Base {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getValidChildContexts(executionPeriod)) {
 	    result.add(context.getChildDegreeModule());
+	}
+
+	return result;
+    }
+
+    public Set<CurricularCourse> getChildCurricularCoursesValidOn(final ExecutionPeriod executionPeriod) {
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+
+	for (final Context context : getValidChildContexts(executionPeriod)) {
+	    if (context.getChildDegreeModule().isCurricularCourse()) {
+		result.add((CurricularCourse) context.getChildDegreeModule());
+	    }
 	}
 
 	return result;

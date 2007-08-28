@@ -6,20 +6,18 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 
 public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersistent {
 
-    private RootCurriculumGroup rootCurriculumGroup;
+    private CourseGroup courseGroup;
 
     private PreviousYearsEnrolmentCurricularRule() {
 	super();
     }
 
-    public PreviousYearsEnrolmentCurricularRule(final RootCurriculumGroup rootCurriculumGroup) {
+    public PreviousYearsEnrolmentCurricularRule(final CourseGroup courseGroup) {
 	this();
-	this.rootCurriculumGroup = rootCurriculumGroup;
+	this.courseGroup = courseGroup;
     }
 
     public ExecutionPeriod getBegin() {
@@ -38,8 +36,8 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
 	return CurricularRuleType.PREVIOUS_YEARS_ENROLMENT;
     }
 
-    public RootCourseGroup getDegreeModuleToApplyRule() {
-	return this.rootCurriculumGroup.getDegreeModule();
+    public CourseGroup getDegreeModuleToApplyRule() {
+	return this.courseGroup;
     }
 
     public ExecutionPeriod getEnd() {

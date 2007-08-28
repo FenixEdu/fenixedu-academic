@@ -248,6 +248,18 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
+    public List<Context> getParentContextsBy(final ExecutionPeriod executionPeriod, final CourseGroup parentCourseGroup) {
+	final List<Context> result = new ArrayList<Context>();
+	for (final Context context : getParentContextsSet()) {
+	    if (context.isValid(executionPeriod) && context.getParentCourseGroup() == parentCourseGroup) {
+		result.add(context);
+	    }
+	}
+
+	return result;
+
+    }
+
     public boolean hasAnyParentContexts(final ExecutionPeriod executionPeriod) {
 	for (final Context context : getParentContextsSet()) {
 	    if (executionPeriod == null || context.isValid(executionPeriod)) {
