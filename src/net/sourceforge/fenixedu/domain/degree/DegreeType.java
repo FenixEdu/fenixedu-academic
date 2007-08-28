@@ -10,11 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -22,6 +20,10 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
  * 
@@ -76,12 +78,12 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
-	    return Collections.singleton(CycleType.FIRST_CYCLE);
+	    return FIRST_CYCLE_TYPE_SET;
 	}
 
 	@Override
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
-	    return Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE });
+	    return FIRST_AND_SECOND_CYCLE_TYPE_LIST;
 	}
 
 	@Override
@@ -100,12 +102,12 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
-	    return Collections.singleton(CycleType.SECOND_CYCLE);
+	    return SECOND_CYCLE_TYPE_SET;
 	}
 
 	@Override
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
-	    return Collections.singletonList(CycleType.SECOND_CYCLE);
+	    return SECOND_CYCLE_TYPE_SET;
 	}
 	
     },
@@ -119,16 +121,12 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
-	    final Collection<CycleType> result = new HashSet<CycleType>();
-	    result.add(CycleType.FIRST_CYCLE);
-	    result.add(CycleType.SECOND_CYCLE);
-
-	    return result;
+	    return FIRST_AND_SECOND_CYCLE_TYPE_LIST;
 	}
 
 	@Override
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
-	    return Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE });
+	    return FIRST_AND_SECOND_CYCLE_TYPE_LIST;
 	}
 	
 	@Override
@@ -147,7 +145,7 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
-	    return Collections.singleton(CycleType.THIRD_CYCLE);
+	    return THIRD_CYCLE_TYPE_SET;
 	}
 
 	@Override
@@ -166,7 +164,7 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
-	    return Collections.singleton(CycleType.THIRD_CYCLE);
+	    return THIRD_CYCLE_TYPE_SET;
 	}
 
 	@Override
@@ -194,6 +192,14 @@ public enum DegreeType {
 	}
 
     };
+
+    private static final Set<CycleType> FIRST_CYCLE_TYPE_SET = Collections.singleton(CycleType.FIRST_CYCLE);
+
+    private static final Set<CycleType> SECOND_CYCLE_TYPE_SET = Collections.singleton(CycleType.SECOND_CYCLE);
+
+    private static final Set<CycleType> THIRD_CYCLE_TYPE_SET = Collections.singleton(CycleType.THIRD_CYCLE);
+
+    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE_LIST = Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE });
 
     private GradeScale gradeScale;
 
@@ -296,7 +302,7 @@ public enum DegreeType {
     }
 
     public String getQualifiedName() {
-	return DegreeType.class.getSimpleName() + "." + name();
+	return StringAppender.append(DegreeType.class.getSimpleName(), ".", name());
     }
 
     final public String getFilteredName() {
@@ -308,7 +314,7 @@ public enum DegreeType {
 	} else if (this == DegreeType.DEGREE) {
 	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
 		    .getLocale());
-	    toRemove = " (" + getYears() + " " + applicationResources.getString("years") + ")";
+	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", applicationResources.getString("years"), ")");
 	} else {
 	    toRemove = "";
 	}
@@ -363,16 +369,18 @@ public enum DegreeType {
 	return StringUtils.EMPTY;
     }
 
+    private static final List<DegreeType> BOLONHA_DEGREE_TYPES;
+    static {
+        final List<DegreeType> result = new ArrayList<DegreeType>();
+        for (final DegreeType degreeType : values()) {
+            if (degreeType.isBolonhaType()) {
+                result.add(degreeType);
+            }
+        }
+        BOLONHA_DEGREE_TYPES = Collections.unmodifiableList(result);
+    }
     public static List<DegreeType> getBolonhaDegreeTypes() {
-	final List<DegreeType> result = new ArrayList<DegreeType>();
-
-	for (final DegreeType degreeType : values()) {
-	    if (degreeType.isBolonhaType()) {
-		result.add(degreeType);
-	    }
-	}
-
-	return result;
+        return BOLONHA_DEGREE_TYPES;
     }
 
     public boolean isFirstCycle() {
@@ -417,19 +425,12 @@ public enum DegreeType {
 
     public CycleType getFirstCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
-	if (cycleTypes.isEmpty()) {
-	    return null;
-	}
-	return Collections.min(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+	return cycleTypes.isEmpty() ? null : Collections.min(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
     }
 
     public CycleType getLastCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
-	if (cycleTypes.isEmpty()) {
-	    return null;
-	}
-
-	return Collections.max(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+	return cycleTypes.isEmpty() ? null : Collections.max(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
     }
 
     public boolean canRemoveEnrolmentIn(final CycleType cycleType) {
