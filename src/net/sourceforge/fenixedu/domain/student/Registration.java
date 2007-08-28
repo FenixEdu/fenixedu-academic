@@ -2142,14 +2142,19 @@ public class Registration extends Registration_Base {
      * finished
      */
     public boolean hasConcluded() {
+	if (!isBolonha()) {
+	    return true;
+	}
+
 	boolean result = true;
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
 	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
 	    result &= cycle != null && cycle.getAprovedEctsCredits() >= cycleType.getDefaultEcts();
+	    
 	}
 
-	return result;
+	return result && !getDegreeType().getCycleTypes().isEmpty();
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
