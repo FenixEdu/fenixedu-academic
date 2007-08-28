@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Tunas Special Season Max Enrolments - Delete after run" updateTunasSpecialSeasonMaxEnrolments.sql
+
