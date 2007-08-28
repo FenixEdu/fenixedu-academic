@@ -7,14 +7,21 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 	
+	<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['label.courseStatistics.degreeStatistics']}</h2>" escape="false" />
 	<h:outputText value="<h3>#{courseStatistics.competenceCourse.name}</h3>" escape="false" />
 
 	<h:form>
 		<fc:viewState binding="#{courseStatistics.viewState}" />
 
-		<h:panelGrid columns="2" styleClass="search">
-			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
+		<h:outputText value="<ul><li>" escape="false" />
+		<fc:commandLink value="#{bundle['link.back']}" action="backToCompetenceCourses" />
+		<h:outputText value="</li></ul>" escape="false" />
+
+		<h:outputText value="<table class='tstyle5 mtop05 mbottom15'>" escape="false" />
+		<h:outputText value="<tr><td>" escape="false" />
+		<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
+		<h:outputText value="<td>" escape="false" />
 			<fc:selectOneMenu
 				value="#{courseStatistics.executionPeriodId}"
 				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForDegreeCourses}"
@@ -22,46 +29,42 @@
 				<f:selectItems value="#{courseStatistics.executionPeriods}" />
 			</fc:selectOneMenu>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-		</h:panelGrid>
-		
-		<h:outputText value="<br />" escape="false" />
-		
-		<fc:commandLink value="#{bundle['link.back']}" action="backToCompetenceCourses" />
+		<h:outputText value="</td>" escape="false" />
+		<h:outputText value="</td></tr>" escape="false" />
+		<h:outputText value="</table>" escape="false" />
 
-		<h:outputText value="<br /><br />" escape="false" />
-		
+
+
 		<f:verbatim>
-			<table class="vtsbc">
-				<thead>
+			<table class="tstyle1">
 				<tr>
 		</f:verbatim>
 		
-		<h:outputText value="<th class=\"listClasses-header\">&nbsp;</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\" colspan=\"3\">#{bundle['label.courseStatistics.firstCount']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\" colspan=\"3\">#{bundle['label.courseStatistics.restCount']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\" colspan=\"3\">#{bundle['label.courseStatistics.totalCount']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">&nbsp;</th>" escape="false" />
+		<h:outputText value="<th>&nbsp;</th>" escape="false" />
+		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.firstCount']}</th>" escape="false" />
+		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.restCount']}</th>" escape="false" />
+		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.totalCount']}</th>" escape="false" />
+		<h:outputText value="<th>&nbsp;</th>" escape="false" />
 		<h:outputText value="</tr><tr>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.degree']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th class=\"listClasses-header\">#{bundle['label.courseStatistics.approvedPercentage']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.degree']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
+		<h:outputText value="<th>#{bundle['label.courseStatistics.approvedPercentage']}</th>" escape="false" />
 
 		<f:verbatim>
 					</tr>
-				</thead>
 				<tbody>
 		</f:verbatim>
 		
 		<fc:dataRepeater value="#{courseStatistics.degreeCourses}" var="degreeCourse">
-			<h:outputText value="<tr><td class=\"courses\">" escape="false"/>
+			<h:outputText value="<tr><td>" escape="false"/>
 		
 				
 				<fc:commandLink value="#{degreeCourse.name}"	
@@ -77,19 +80,19 @@
 				</fc:commandLink>
 
 				<h:outputText value="</td>" escape="false" />
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.firstEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.firstApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.firstEnrolledCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.firstApprovedAverage.grade}</td>" escape="false"/>
 
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.restEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.restApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.restEnrolledCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.restApprovedAverage.grade}</td>" escape="false"/>
 
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.totalEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class=\"listClasses\">#{degreeCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.totalApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.totalEnrolledCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.totalApprovedAverage.grade}</td>" escape="false"/>
 				
-				<h:outputText value="<td class=\"listClasses\">" escape="false" />
+				<h:outputText value="<td class='aright'>" escape="false" />
 				<h:outputText value="#{(degreeCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (degreeCourse.totalApprovedCount / degreeCourse.totalEnrolledCount)}" escape="false">
 					<f:convertNumber maxFractionDigits="2" type="percent"/>
  		  		</h:outputText>
@@ -100,8 +103,6 @@
 				</tbody>
 			</table>
 		</f:verbatim>
-		
-			<fc:commandLink value="#{bundle['link.back']}" action="backToCompetenceCourses" />
 			
 	</h:form>
 

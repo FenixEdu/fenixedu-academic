@@ -13,48 +13,54 @@
 		var="bundle" />
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
-		
-	<h:outputText value="<i>#{bundle['label.teacherService.title']}</i><p /><p />" escape="false"/>
+
+	<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
+	<h:outputText value="<h2>#{bundle['label.teacherService.title']}</h2>" escape="false"/>
+	<h:outputText value="<h3>#{viewTeacherService.departmentName}</h3>" escape="false"/>
 	
-	<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
 	
 	<h:form>
-		<h:panelGrid columns="1" styleClass="search">
-			<h:panelGrid columns="3" styleClass="search">
-				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
-				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
-					onchange="this.form.submit();">
-					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
-				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
-				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
-					onchange="this.form.submit();">
-					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
-				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-			</h:panelGrid>
-			<h:panelGrid columns="2" styleClass="search" width="100%">
-				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewByTeacherOptions}" layout="pageDirection"
-					onchange="this.form.submit();">
-					<f:selectItems binding="#{viewTeacherService.viewByTeacherOptionsItems}"/>
-				</h:selectManyCheckbox>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-			</h:panelGrid>
-		</h:panelGrid>
+		<h:outputText value="<table class='tstyle5 mtop05 mbottom15'>" escape="false" />
+		<h:outputText value="<tr><td>" escape="false" />
+			<h:outputText value="#{bundle['label.common.executionYear']}:" escape="false" styleClass="aright" />
+		<h:outputText value="</td><td>" escape="false" />
+			<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
+				onchange="this.form.submit();">
+				<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
+			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		<h:outputText value="</td></tr><tr><td>" escape="false" />
+		 	<h:outputText value="#{bundle['label.common.courseSemester']}:" escape="false" styleClass="aright" />
+		 <h:outputText value="</td><td>" escape="false" />
+			<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
+				onchange="this.form.submit();">
+				<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
+			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+		<h:outputText value="</td></tr>" escape="false" />
+		<h:outputText value="</table>" escape="false" />
+
+		<h:selectManyCheckbox value="#{viewTeacherService.selectedViewByTeacherOptions}" layout="pageDirection"
+			onchange="this.form.submit();">
+			<f:selectItems binding="#{viewTeacherService.viewByTeacherOptionsItems}"/>
+		</h:selectManyCheckbox>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+
 	</h:form>	
 		
-	<h:outputText value="<br />" escape="false" />
 
-	<h:outputText value="<b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
+
+	<h:outputText value="<p class='mtop15'>Visualizar por: <b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
 	<h:outputText value="<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
-	<h:outputText value="</a> <br /> <p />" escape="false"/>
-		
-	<h:outputText value="<p /><b>#{bundle['label.teacherService.teacher.title']}</b><p />" escape="false"/>
+	<h:outputText value="</a></p>" escape="false"/>
 	
-	<h:outputText value="<table class='vtsbc'>" escape="false" />
+	<%--
+	<h:outputText value="<h3>#{bundle['label.teacherService.teacher.title']}</h3>" escape="false"/>
+	--%>
+	
+	<h:outputText value="<table class='tstyle4'>" escape="false" />
 		<h:outputText value="<tr class='acenter'>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.number']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.category']}</th>" escape="false" />
@@ -70,18 +76,18 @@
 				<h:outputText value="<tr id=#{teacher.teacherIdInternal}>" escape="false" />
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.number']}\">#{teacher.teacherNumber}</td>" escape="false" />					
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.category']}\">#{teacher.teacherCategory}</td>" escape="false" />	
-				<h:outputText value="<td class='courses' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />	
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.hours']}\">#{teacher.teacherRequiredHours}</td>" escape="false" />	
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.credits']}\">#{teacher.formattedTeacherSpentCredits}</td>" escape="false" />	
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.totalLecturedHours']}\">#{teacher.totalLecturedHours}</td>" escape="false" />	
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.availability']}\"> #{teacher.availability} </td>" escape="false" />
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.accumulatedCredits']}\"> #{teacher.formattedTeacherAccumulatedCredits} </td>" escape="false" />
+				<h:outputText value="<td class='highlight1' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />	
+				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.hours']}\">#{teacher.teacherRequiredHours}</td>" escape="false" />	
+				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.credits']}\">#{teacher.formattedTeacherSpentCredits}</td>" escape="false" />	
+				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.totalLecturedHours']}\">#{teacher.totalLecturedHours}</td>" escape="false" />	
+				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.availability']}\"> #{teacher.availability} </td>" escape="false" />
+				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.accumulatedCredits']}\"> #{teacher.formattedTeacherAccumulatedCredits} </td>" escape="false" />
 				<h:outputText value="</tr>" escape="false" />
 										
 				<h:panelGroup rendered="#{viewTeacherService.viewCreditsInformation == true}">
 					<h:outputText value="<tr>" escape="false" />
-					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff;'>" escape="false" />
-						<h:outputText value="<ul>" escape="false" />
+					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff; padding-bottom: 1em;'>" escape="false" />
+						<h:outputText value="<ul class='smalltxt mbottom2'>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
 								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseIdInternal}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	

@@ -13,6 +13,7 @@
 		
 	<h:form>
 	
+		<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
 		<h:outputText value="<h2>#{bundle['label.teacher.list.title']}</h2>" escape="false" />
 		<h:outputText value="<h3>#{viewDepartmentTeachers.department.realName}</h3>" escape="false" />
 
