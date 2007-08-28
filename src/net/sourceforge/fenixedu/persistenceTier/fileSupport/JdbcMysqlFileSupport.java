@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 
@@ -77,26 +78,36 @@ public class JdbcMysqlFileSupport {
             }
             connection.commit();
         } catch (ClassNotFoundException e) {
-            logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
+            if (LogLevel.FATAL) {
+                logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
+            }
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException e1) {
-                logger.fatal("Unable to roleback connection", e1);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to roleback connection", e1);
+                }
             }
             throw new Error(e);
         } catch (SQLException e) {
-            logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
+            if (LogLevel.FATAL) {
+                logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
+            }
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException e1) {
-                logger.fatal("Unable to roleback connection", e1);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to roleback connection", e1);
+                }
             }
             throw new Error(e);
         } finally {
             try {
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                logger.fatal("Unable to close connection", e);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to close connection", e);
+                }
             }
         }
         return resultSet;
@@ -179,26 +190,36 @@ public class JdbcMysqlFileSupport {
 
             connection.commit();
         } catch (ClassNotFoundException e) {
-            logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
+            if (LogLevel.FATAL) {
+                logger.fatal("Unable to get JdbcMysqlFileSupport - ClassNotFoundException", e);
+            }
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException e1) {
-                logger.fatal("Unable to roleback connection", e1);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to roleback connection", e1);
+                }
             }
             throw new Error(e);
         } catch (SQLException e) {
-            logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
+            if (LogLevel.FATAL) {
+                logger.fatal("Unable to get JdbcMysqlFileSupport - SQLException", e);
+            }
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException e1) {
-                logger.fatal("Unable to roleback connection", e1);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to roleback connection", e1);
+                }
             }
             throw new Error(e);
         } finally {
             try {
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                logger.fatal("Unable to close connection", e);
+                if (LogLevel.FATAL) {
+                    logger.fatal("Unable to close connection", e);
+                }
             }
         }
     }
@@ -241,15 +262,19 @@ public class JdbcMysqlFileSupport {
             }
         } catch (final SQLException ex) {
             final String errorString = "Uable to perform query for: " + directory;
-            logger.info(errorString, ex);
-            throw new Error(errorString);
+            if (LogLevel.INFO) {
+                logger.info(errorString, ex);
+            }
+            throw new Error(errorString, ex);
         } finally {
             try {
                 resultSet.close();
             } catch (final SQLException ex) {
                 final String errorString = "Uable to close result set." + directory;
-                logger.info(errorString, ex);
-                throw new Error(errorString);
+                if (LogLevel.INFO) {
+                    logger.info(errorString, ex);
+                }
+                throw new Error(errorString, ex);
             }
         }
         return fileSupportObjectsMap.values();
@@ -278,15 +303,19 @@ public class JdbcMysqlFileSupport {
             }
         } catch (final SQLException ex) {
             final String errorString = "Uable to perform query for: " + directory;
-            logger.info(errorString, ex);
-            throw new Error(errorString);
+            if (LogLevel.INFO) {
+                logger.info(errorString, ex);
+            }
+            throw new Error(errorString, ex);
         } finally {
             try {
                 propertyResultSet.close();
             } catch (final SQLException ex) {
                 final String errorString = "Uable to close result set." + directory;
-                logger.info(errorString, ex);
-                throw new Error(errorString);
+                if (LogLevel.INFO) {
+                    logger.info(errorString, ex);
+                }
+                throw new Error(errorString, ex);
             }
         }
 
@@ -299,15 +328,19 @@ public class JdbcMysqlFileSupport {
             }
         } catch (final SQLException ex) {
             final String errorString = "Uable to perform query for: " + directory;
-            logger.info(errorString, ex);
-            throw new Error(errorString);
+            if (LogLevel.INFO) {
+                logger.info(errorString, ex);
+            }
+            throw new Error(errorString, ex);
         } finally {
             try {
                 resultSet.close();
             } catch (final SQLException ex) {
                 final String errorString = "Uable to close result set." + directory;
-                logger.info(errorString, ex);
-                throw new Error(errorString);
+                if (LogLevel.INFO) {
+                    logger.info(errorString, ex);
+                }
+                throw new Error(errorString, ex);
             }
         }
 

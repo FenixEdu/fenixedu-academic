@@ -124,11 +124,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
                 "ReadAvailableShiftsForClass", args);
 
         /* Sort the list of shifts */
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
-        chainComparator.addComparator(new BeanComparator("tipo"));
-        chainComparator.addComparator(new BeanComparator("nome"));
-        Collections.sort(infoShifts, chainComparator);
+        Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
         /* Place list of shifts in request */
         request.setAttribute(SessionConstants.SHIFTS, infoShifts);

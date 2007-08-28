@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.log4j.Logger;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
@@ -36,7 +38,9 @@ public class FindMissingOJBMappings {
 		verifyOJBMappingFromDomainModel(ojbMetadata, domainModel);
 
 		logVerificationResults();
-		logger.info("\nVerification complete.");
+		if (LogLevel.INFO) {
+		    logger.info("\nVerification complete.");
+		}
 		System.exit(0);
 	}
 
@@ -53,7 +57,9 @@ public class FindMissingOJBMappings {
 					.getFullName());
 
 			if (classDescriptor == null) {
+			    if (LogLevel.WARN) {
 				logger.warn("MISSING " + domClass.getFullName() + " from OJB mappings");
+			    }
 			} else {
 				verify(classDescriptor, domClass);
 			}
@@ -124,7 +130,9 @@ public class FindMissingOJBMappings {
 		logCollectionOfStrings(stringBuilder, unmappedCollectionReferenceAttributes);
 		stringBuilder.append("\n");
 
-		logger.warn(stringBuilder.toString());
+		if (LogLevel.WARN) {
+		    logger.warn(stringBuilder.toString());
+		}
 	}
 
 	protected static void logCollectionOfStrings(final StringBuilder stringBuilder,

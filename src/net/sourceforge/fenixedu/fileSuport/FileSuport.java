@@ -24,6 +24,8 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.log4j.Logger;
 import org.apache.slide.authenticate.CredentialsToken;
 import org.apache.slide.authenticate.SecurityToken;
@@ -68,10 +70,12 @@ public class FileSuport implements IFileSuport {
                 initOK = true;
                 break;
             } catch (Exception e) {
-                logger.error(e);
-                try {
-                    Runtime.getRuntime().wait(500);
-                } catch (InterruptedException e1) {
+                if (LogLevel.ERROR) {
+                    logger.error(e);
+                    try {
+                        Runtime.getRuntime().wait(500);
+                    } catch (InterruptedException e1) {
+                    }
                 }
             }
         }
@@ -544,8 +548,10 @@ public class FileSuport implements IFileSuport {
         try {
             fileInDb = retrieveFile(file.getUri() + "/" + file.getFileName());
         } catch (SlideException e) {
-            logger.warn(e);
-            // file doesnt exist
+            //file doesnt exist
+            if (LogLevel.WARN) {
+                logger.warn(e);
+            }
         }
         if (fileInDb == null) {
             storeFile(file.getFileName(), file.getUri(), file.getContent(), file.getContentType(), file

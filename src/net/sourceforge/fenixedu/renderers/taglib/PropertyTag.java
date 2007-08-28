@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.log4j.Logger;
 
 public class PropertyTag extends BodyTagSupport {
@@ -62,8 +64,10 @@ public class PropertyTag extends BodyTagSupport {
             }
         }
         else {
-            logger.warn("property tag was using inside an invalid container");
-            logger.warn("could not set property: " + getName() + "=" + getValue());
+            if (LogLevel.WARN) {
+                logger.warn("property tag was using inside an invalid container");
+                logger.warn("could not set property: " + getName() + "=" + getValue());
+            }
         }
         
         return super.doEndTag();

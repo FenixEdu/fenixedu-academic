@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.ojb.broker.metadata.MetadataException;
@@ -257,27 +259,29 @@ public class FenixPersistentField extends PersistentFieldBase {
      */
     protected void logProblem(PropertyDescriptor pd, Object anObject, Object aValue, String msg)
     {
-        Logger logger = getLog();
-        logger.error("Error in [PersistentFieldPropertyImpl], " + msg);
-        logger.error("Declaring class [" + getDeclaringClass().getName() + "]");
-        logger.error("Property Name [" + getName() + "]");
-        logger.error("Property Type [" + pd.getPropertyType().getName() + "]");
+        if (LogLevel.ERROR) {
+            Logger logger = getLog();
+            logger.error("Error in [PersistentFieldPropertyImpl], " + msg);
+            logger.error("Declaring class [" + getDeclaringClass().getName() + "]");
+            logger.error("Property Name [" + getName() + "]");
+            logger.error("Property Type [" + pd.getPropertyType().getName() + "]");
 
-        if (anObject != null)
-        {
-            logger.error("anObject was class [" + anObject.getClass().getName() + "]");
-        }
-        else
-        {
-            logger.error("anObject was null");
-        }
-        if (aValue != null)
-        {
-            logger.error("aValue was class [" + aValue.getClass().getName() + "]");
-        }
-        else
-        {
-            logger.error("aValue was null");
+            if (anObject != null)
+            {
+                logger.error("anObject was class [" + anObject.getClass().getName() + "]");
+            }
+            else
+            {
+                logger.error("anObject was null");
+            }
+            if (aValue != null)
+            {
+                logger.error("aValue was class [" + aValue.getClass().getName() + "]");
+            }
+            else
+            {
+                logger.error("aValue was null");
+            }
         }
     }
 }

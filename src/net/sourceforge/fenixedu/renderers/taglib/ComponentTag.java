@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -21,7 +22,9 @@ public class ComponentTag extends TagSupport {
         HtmlComponent component = RenderUtils.getRegisteredComponent(id);
         
         if (component == null) {
-            logger.warn("no component with id='" + id + "' was registered");
+            if (LogLevel.WARN) {
+                logger.warn("no component with id='" + id + "' was registered");
+            }
         }
         
         try {

@@ -17,6 +17,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -75,7 +76,9 @@ public class Authenticate extends Service implements Serializable {
 		final Set rolesSet = new HashSet(roles.length);
 		for (int i = 0; i < roles.length; i++) {
 		    final RoleType roleType = RoleType.valueOf(roles[i].trim());
-		    logger.info("Host: " + hostname + " provides role: " + roleType.toString() + '.');
+		    if (LogLevel.INFO) {		        
+		        logger.info("Host: " + hostname + " provides role: " + roleType.toString() + '.');
+		    }
 		    rolesSet.add(roleType);
 		}
 		allowedRolesByHostname.put(hostname, rolesSet);

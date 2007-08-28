@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,8 +34,10 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
             throws ServletException {
 
         ex.printStackTrace();
-        if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
-            logger.error(ex);
+        if (LogLevel.ERROR) {
+            if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
+                logger.error(ex);
+            }
         }
         
         final IUserView userView = SessionUtils.getUserView(request);

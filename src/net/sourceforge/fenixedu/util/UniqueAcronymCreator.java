@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
@@ -60,9 +61,11 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         
         final String slotValue = (String) PropertyUtils.getProperty(object, slotName);
         final String slotValueWithNoAccents = noAccent(slotValue);
-        
-        logger.info("slotValue -> " + slotValue);
-        logger.info("slotValueWithNoAccents -> " + slotValueWithNoAccents);
+
+        if (LogLevel.INFO) {
+            logger.info("slotValue -> " + slotValue);
+            logger.info("slotValueWithNoAccents -> " + slotValueWithNoAccents);
+        }
 
         this.object = object;
         splitsName = slotValueWithNoAccents.split(" ");
@@ -97,17 +100,23 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private boolean canAccept(String acronym) {
         if (!existingAcronyms.containsKey(acronym)) {
-            logger.info("canAccept, true -> " + acronym);
+            if (LogLevel.INFO) {
+                logger.info("canAccept, true -> " + acronym);
+            }
             return true;
         } else {
 
             if (existingAcronyms.get(acronym).equals(object)) {
-                logger.info("canAccept, true -> " + acronym);
+                if (LogLevel.INFO) {
+                    logger.info("canAccept, true -> " + acronym);
+                }
                 return true;
             } else {
                 colisions.add(existingAcronyms.get(acronym));
-                
-                logger.info("canAccept, false -> " + acronym);
+
+                if (LogLevel.INFO) {
+                    logger.info("canAccept, false -> " + acronym);
+                }
                 return false;
             }
         }
@@ -123,7 +132,9 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                     // Ex: Xpto (And) --> X-And
                     String toAppend = splitsName[i].substring(0 + 1, splitsName[i].indexOf(")"));
                     acronym.append("-").append(toAppend);
-                    logger.info("constructBasicAcronym, found a '(...)', appendding " + toAppend);
+                    if (LogLevel.INFO) {
+                        logger.info("constructBasicAcronym, found a '(...)', appendding " + toAppend);
+                    }
                 } else {
                     // Ex: Xpto (And <anything> More) --> X-And<anything>More
                     
@@ -144,7 +155,9 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                     i = closingBracketsSplit + 1;
                     
                     acronym.append("-").append(toAppend);
-                    logger.info("constructBasicAcronym, found a '(... ...)', appendding " + toAppend);
+                    if (LogLevel.INFO) {
+                        logger.info("constructBasicAcronym, found a '(... ...)', appendding " + toAppend);
+                    }
                 }
             } else if (splitsName[i].indexOf("-") == 0) {
                 // Ex: Xpto - and --> X-AND
@@ -159,14 +172,20 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                         
                         if (toAppend.length() == 1) {
                             acronym.append(toAppend);
-                            logger.info("constructBasicAcronym, found a '- ...', appendding letter " + toAppend);
+                            if (LogLevel.INFO) {
+                                logger.info("constructBasicAcronym, found a '- ...', appendding letter " + toAppend);
+                            }
                         } else {
                             acronym.append("-").append(toAppend);
-                            logger.info("constructBasicAcronym, found a '- ...', appendding " + toAppend);
+                            if (LogLevel.INFO) {
+                                logger.info("constructBasicAcronym, found a '- ...', appendding " + toAppend);
+                            }
                         }
                     } else {
                         acronym.append("-");
-                        logger.info("constructBasicAcronym, found a '- ...', only appendding '-'");
+                        if (LogLevel.INFO) {
+                            logger.info("constructBasicAcronym, found a '- ...', only appendding '-'");
+                        }
                     }
                 } else {
                     if (!splitsName[i].equals("-")) {
@@ -174,51 +193,69 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                         toAppend = (toAppend.length() < 4) ? toAppend.toUpperCase() : String.valueOf(toAppend.charAt(0)).toUpperCase();
                         
                         acronym.append("-").append(toAppend);
-                        logger.info("constructBasicAcronym, found a '-...' at the end, appendding " + toAppend);
+                        if (LogLevel.INFO) {
+                            logger.info("constructBasicAcronym, found a '-...' at the end, appendding " + toAppend);
+                        }
                     }
                 }
             } else if (isValidNumeration(splitsName[i]) || hasNumber(splitsName[i])) {
                 // Ex: Xpto I --> X-I
                 
                 acronym.append("-").append(splitsName[i].toUpperCase());
-                logger.info("constructBasicAcronym, found a numeration, appendding " + splitsName[i].toUpperCase());
+                if (LogLevel.INFO) {
+                    logger.info("constructBasicAcronym, found a numeration, appendding " + splitsName[i].toUpperCase());
+                }
             } else if (!isValidRejection(splitsName[i]) && splitsName[i].length() >= 3) {
                 if (splitsName[i].contains("-")) {
                     // Ex: Xpto And-More --> XAM
                     
                     int index = splitsName[i].indexOf("-");
                     acronym.append(splitsName[i].charAt(0)).append(splitsName[i].charAt(index+1));
-                    logger.info("constructBasicAcronym, found a '-', appendding " + splitsName[i].charAt(0) + splitsName[i].charAt(index+1));
+                    if (LogLevel.INFO) {
+                        logger.info("constructBasicAcronym, found a '-', appendding " + splitsName[i].charAt(0) + splitsName[i].charAt(index+1));
+                    }
                 } else {
                     // Ex: Xpto And More --> XAM
                     
                     acronym.append(splitsName[i].charAt(0));
-                    logger.info("constructBasicAcronym, appendding " + splitsName[i].charAt(0));
+                    if (LogLevel.INFO) {
+                        logger.info("constructBasicAcronym, appendding " + splitsName[i].charAt(0));
+                    }
                 }
             }
         }
-        
-        logger.info("constructBasicAcronym, returning " + acronym.toString());
+
+        if (LogLevel.INFO) {
+            logger.info("constructBasicAcronym, returning " + acronym.toString());
+        }
         return acronym.toString();
     }
 
     private static boolean isValidRejection(String string) {
         if (rejectionSet.contains(StringUtils.lowerCase(string))) {
-            logger.info("isValidRejection, true -> " + string);
+            if (LogLevel.INFO) {
+                logger.info("isValidRejection, true -> " + string);
+            }
             return true;
         }
-        
-        logger.info("isValidRejection, false -> " + string);
+
+        if (LogLevel.INFO) {
+            logger.info("isValidRejection, false -> " + string);
+        }
         return false;
     }
 
     private static boolean isValidNumeration(String string) {
         if (numerationSet.contains(StringUtils.upperCase(string))) {
-            logger.info("isValidNumeration, true -> " + string);
+            if (LogLevel.INFO) {
+                logger.info("isValidNumeration, true -> " + string);
+            }
             return true;
         }
-        
-        logger.info("isValidNumeration, false -> " + string);
+
+        if (LogLevel.INFO) {
+            logger.info("isValidNumeration, false -> " + string);
+        }
         return false;
     }
 
@@ -227,34 +264,46 @@ public class UniqueAcronymCreator<T extends DomainObject> {
             char c = string.charAt(i);
 
             if (numberSet.contains(String.valueOf(c))) {
-                logger.info("hasNumber, true -> " + string);
+                if (LogLevel.INFO) {
+                    logger.info("hasNumber, true -> " + string);
+                }
                 return true;
             }
         }
-            
-        logger.info("hasNumber, false -> " + string);
+
+        if (LogLevel.INFO) {
+            logger.info("hasNumber, false -> " + string);
+        }
         return false;
     }
     
     private static void addAcception(String acronym) {
-        logger.info("addAcception, called with " + acronym);
+        if (LogLevel.INFO) {
+            logger.info("addAcception, called with " + acronym);
+        }
         
         StringBuilder temp = new StringBuilder(acronym);
         
         for (int i = 0; i < splitsName.length; i++) {
             if (isValidAcception(splitsName[i])) {
                 temp.append(splitsName[i]);
-                logger.info("addAcception, appending " + splitsName[i]);
+                if (LogLevel.INFO) {
+                    logger.info("addAcception, appending " + splitsName[i]);
+                }
             }
         }
     }
     
     private static boolean isValidAcception(String string) {
         if (acceptSet.contains(StringUtils.upperCase(string))) {
-            logger.info("isValidAcception, true -> " + string);
+            if (LogLevel.INFO) {
+                logger.info("isValidAcception, true -> " + string);
+            }
             return true;
         }
-        logger.info("isValidAcception, false -> " + string);
+        if (LogLevel.INFO) {
+            logger.info("isValidAcception, false -> " + string);
+        }
         return false;
     }
 
@@ -262,12 +311,16 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         StringBuilder extendedAcronym = new StringBuilder();
         
         int length = splitsName.length;
-        logger.info("constructExtendedAcronym, sliptsName length " + length);
+        if (LogLevel.INFO) {
+            logger.info("constructExtendedAcronym, sliptsName length " + length);
+        }
         if (length == 1) {
             extendedAcronym.append(splitsName[0].charAt(0));
             
             String toAppend = splitsName[0].substring(1, 3);
-            logger.info("constructExtendedAcronym, length 1, appending " + toAppend);
+            if (LogLevel.INFO) {
+                logger.info("constructExtendedAcronym, length 1, appending " + toAppend);
+            }
             extendedAcronym.append(((toLowerCase) ? toAppend.toLowerCase() : toAppend.toUpperCase()));
             
             return extendedAcronym.toString();
@@ -275,12 +328,16 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
         //constructBasicAcronym();
         appendLast(extendedAcronym.append(basicAcronym));
-        logger.info("constructExtendedAcronym, returning " + extendedAcronym.toString());
+        if (LogLevel.INFO) {
+            logger.info("constructExtendedAcronym, returning " + extendedAcronym.toString());
+        }
         return extendedAcronym.toString();
     }
 
     private static void appendLast(StringBuilder acronym) {
-        logger.info("appendLast, called with " + acronym);
+        if (LogLevel.INFO) {
+            logger.info("appendLast, called with " + acronym);
+        }
         
         for (int i = splitsName.length - 1; i > -1; i--) {
             if (!isValidAcception(splitsName[i]) && splitsName[i].length() >= 3 && !isValidNumeration(splitsName[i])) {
@@ -291,15 +348,21 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                     int hiffen = acronym.toString().indexOf("-");
                     if ((hiffen+1 < acronym.toString().length()) && (isValidNumeration(String.valueOf(acronym.charAt(hiffen + 1)))
                             || hasNumber(String.valueOf(acronym.charAt(hiffen + 1))))) {
-                        acronym.insert(hiffen, toAppend);    
-                        logger.info("appendLast, found a '-', appending before hiffen " + toAppend);
+                        acronym.insert(hiffen, toAppend);
+                        if (LogLevel.INFO) {
+                            logger.info("appendLast, found a '-', appending before hiffen " + toAppend);
+                        } 
                     } else {
                         acronym.append(toAppend);
-                        logger.info("appendLast, found a '-', appending in end " + toAppend);
+                        if (LogLevel.INFO) {
+                            logger.info("appendLast, found a '-', appending in end " + toAppend);
+                        }
                     }
                     
                 } else {
-                    logger.info("appendLast, appending " + toAppend);
+                    if (LogLevel.INFO) {
+                        logger.info("appendLast, appending " + toAppend);
+                    }
                     acronym.append(toAppend);
                 }
 
@@ -309,7 +372,9 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     }
 
     private static StringBuilder appendLastChar(int index, StringBuilder acronym) {
-        logger.info("appendLastChar, called with index " + index + " and " +  acronym);
+        if (LogLevel.INFO) {
+            logger.info("appendLastChar, called with index " + index + " and " +  acronym);
+        }
         
         for (int i = splitsName.length - 1; i > -1; i--) {
             if (!(isValidAcception(splitsName[i])) && splitsName[i].length() > index) {
@@ -320,14 +385,20 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                     int hiffen = acronym.toString().indexOf("-");
                     if (isValidNumeration(String.valueOf(acronym.charAt(hiffen + 1)))
                             || hasNumber(String.valueOf(acronym.charAt(hiffen + 1)))) {
-                        acronym.insert(hiffen, toAppend);    
-                        logger.info("appendLastChar, found a '-', appending before hiffen " + toAppend);
+                        acronym.insert(hiffen, toAppend);
+                        if (LogLevel.INFO) {
+                            logger.info("appendLastChar, found a '-', appending before hiffen " + toAppend);
+                        }
                     } else {
                         acronym.append(toAppend);
-                        logger.info("appendLastChar, found a '-', appending in end " + toAppend);
+                        if (LogLevel.INFO) {
+                            logger.info("appendLastChar, found a '-', appending in end " + toAppend);
+                        }
                     }
                 } else {
-                    logger.info("appendLastChar, appending " + toAppend);
+                    if (LogLevel.INFO) {
+                        logger.info("appendLastChar, appending " + toAppend);
+                    }
                     acronym.append(toAppend);
                 }
 

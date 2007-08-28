@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.log4j.Logger;
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
@@ -30,7 +32,9 @@ public class ReloadStrutsAction extends Action {
         ActionServlet servlet = getServlet();
         
         if (servlet == null) {
-            logger.warn("action servlet is null, could not reload configuration");
+            if (LogLevel.WARN) {
+                logger.warn("action servlet is null, could not reload configuration");
+            }
             return null;
         }
 
@@ -54,11 +58,15 @@ public class ReloadStrutsAction extends Action {
         try {
             servlet.init();
         } catch (ServletException e) {
-            logger.error("could not reload configuration, please redeploy the application");
+            if (LogLevel.ERROR) {
+                logger.error("could not reload configuration, please redeploy the application");
+            }
             e.printStackTrace();
         }
         
-        logger.info("reloaded configuration");
+        if (LogLevel.INFO) {
+            logger.info("reloaded configuration");
+        }
         return null;
     }
 }

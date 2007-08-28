@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.Message;
 import net.sourceforge.fenixedu.renderers.components.state.SlotMessage;
@@ -70,8 +71,10 @@ public class MessageTag extends TagSupport {
             return parent.getCurrentMessage();
         }
         else {
-            if (parent != null) {
-                logger.warn("parent 'messages' tag is beeing ignored since 'for' attribute was defined");
+            if (LogLevel.WARN) {
+                if (parent != null) {
+                    logger.warn("parent 'messages' tag is beeing ignored since 'for' attribute was defined");
+                }
             }
             
             IViewState viewState = HasMessagesTag.getViewStateWithId(this.pageContext, getFor());
@@ -102,7 +105,9 @@ public class MessageTag extends TagSupport {
                             pageContext.getOut().write(slotMessage.getSlot().getLabel());
                         }
                         else {
-                            logger.warn("asked to show " + getShow() + " but not " + getShow() + " was defined");
+                            if (LogLevel.WARN) {
+                                logger.warn("asked to show " + getShow() + " but not " + getShow() + " was defined");
+                            }
                         }
                     }
                 }
@@ -119,8 +124,10 @@ public class MessageTag extends TagSupport {
         MessagesTag parent = (MessagesTag) findAncestorWithClass(this, MessagesTag.class);
 
         if (getType() != null) {
-            if (parent != null && parent.getMessageType() != null) {
-                logger.warn("parent 'messages' tag is beeing ignored since the 'type' attribute was specified");
+            if (LogLevel.WARN) {
+                if (parent != null && parent.getMessageType() != null) {
+                    logger.warn("parent 'messages' tag is beeing ignored since the 'type' attribute was specified");
+                }
             }
             
             return Type.valueOf(String.valueOf(getType()).toUpperCase());

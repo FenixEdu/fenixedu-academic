@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObject_Base;
 
@@ -45,7 +46,9 @@ public class DomainDMLOJBVerifier {
         verifyDMLMappingFromOJBMetadata(ojbMetadata);
 
         logVerificationResults();
-        logger.info("\nVerification complete.");
+        if (LogLevel.INFO) {
+            logger.info("\nVerification complete.");
+        }
         System.exit(0);
     }
 
@@ -70,7 +73,9 @@ public class DomainDMLOJBVerifier {
                 }
             } else {
                 // These can be ignored, they are classes used by OJB.
-                logger.debug("Ignoreing non-domain class " + mappedClass.getName());
+                if (LogLevel.DEBUG) {
+                    logger.debug("Ignoreing non-domain class " + mappedClass.getName());
+                }
             }
         }
     }
@@ -181,7 +186,9 @@ public class DomainDMLOJBVerifier {
         logCollectionOfStrings(stringBuilder, unmappedCollectionReferenceAttributes);
         stringBuilder.append("\n");
 
-        logger.warn(stringBuilder.toString());
+        if (LogLevel.WARN) {
+            logger.warn(stringBuilder.toString());
+        }
     }
 
     protected static void logCollectionOfStrings(final StringBuilder stringBuilder, final Collection collection) {

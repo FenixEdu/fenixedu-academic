@@ -17,6 +17,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
@@ -53,7 +54,9 @@ public class RenderUtils {
         if (label != null) {
             return label;
         } else if (key != null) {
-            logger.warn("key specified for slot '" + slotName + "' does not exist: " + key);
+            if (LogLevel.WARN) {
+                logger.warn("key specified for slot '" + slotName + "' does not exist: " + key);
+            }
         }
     
         label = RenderUtils.getResourceString(bundle, RenderUtils.RESOURCE_LABEL_PREFIX + "." + objectType.getName() + "."
@@ -296,11 +299,15 @@ public class RenderUtils {
                     try {
                         PropertyUtils.setProperty(target, propertyName, properties.getProperty(propertyName));
                     } catch (Exception e) {
-                        logger.warn("The object " + target + " does not support property '" + propertyName + "': Not writeable!");
+                        if (LogLevel.WARN) {
+                            logger.warn("The object " + target + " does not support property '" + propertyName + "': Not writeable!");
+                        }
                     }
                 }
             } catch (Exception e) {
-                logger.warn("The object " + target + " does not support property '" + propertyName + "': " + e);
+                if (LogLevel.WARN) {
+                    logger.warn("The object " + target + " does not support property '" + propertyName + "': " + e);
+                }
             } // IllegalAccessException, InvocationTargetException, NoSuchMethodException
         }
     }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -116,9 +117,10 @@ public class AccessibleItem extends AccessibleItem_Base {
             return getAvailabilityPolicy().isAvailable(context);
         }
         catch (Exception e) {
-            logger.warn("an error occured while checking the availability of " + this);
-            e.printStackTrace();
-            
+            if (LogLevel.WARN) {
+                logger.warn("an error occured while checking the availability of " + this);
+            }
+            e.printStackTrace();            
             return false;
         }
     }

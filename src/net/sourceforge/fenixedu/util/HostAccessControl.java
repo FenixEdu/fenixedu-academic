@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter;
 
@@ -60,7 +61,9 @@ public class HostAccessControl {
                     }
                     
                     // just for a cleaner message
-                    logger.debug("access for '" + name + "' limited to " + this.configuration.get(name));
+                    if (LogLevel.DEBUG) {
+                        logger.debug("access for '" + name + "' limited to " + this.configuration.get(name));
+                    }
                 }
             }
         } catch (IOException e) {
@@ -84,7 +87,9 @@ public class HostAccessControl {
                 hostList.add(addresses[i]);
             }
         } catch (UnknownHostException e) {
-            logger.warn("could not find host '" + host + "', host ignored.");
+            if (LogLevel.WARN) {
+                logger.warn("could not find host '" + host + "', host ignored.");
+            }
         }
     }
     
@@ -106,21 +111,29 @@ public class HostAccessControl {
 
             List<InetAddress> hostList = this.configuration.get(name);
             if (hostList == null) {
-                logger.warn(name + " denied[" + remoteAddress + "]: allowed hosts not defined");
+                if (LogLevel.WARN) {
+                    logger.warn(name + " denied[" + remoteAddress + "]: allowed hosts not defined");
+                }
                 return false;
             }
 
             for (InetAddress allowedHost : hostList) {
                 if (remoteAddress.equals(allowedHost)) {
-                    logger.debug(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                    if (LogLevel.DEBUG) {
+                        logger.debug(name + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                    }
                     
                     return true;
                 }
             }
-            
-            logger.warn(name + " denied["+ remoteAddress + "]: is not member of " + hostList);
+
+            if (LogLevel.WARN) {
+                logger.warn(name + " denied["+ remoteAddress + "]: is not member of " + hostList);
+            }
         } catch (UnknownHostException e) {
-            logger.warn(name + " denied["+ address + "]: could not find host");
+            if (LogLevel.WARN) {
+                logger.warn(name + " denied["+ address + "]: could not find host");
+            }
         }
         
         return false;

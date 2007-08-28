@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.utils.ClassHierarchyTable;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,9 @@ public class DefaultValues {
     
     public void registerCreator(Class type, ValueCreator creator) {
         defaultValues.put(type, creator);
-        logger.info("adding default value for type: " + type.getName());
+        if (LogLevel.INFO) {
+            logger.info("adding default value for type: " + type.getName());
+        }
     }
 
     public Object createValue(Class type) {
@@ -113,7 +116,9 @@ public class DefaultValues {
             try {
                 return new Float(defaultValue != null ? defaultValue : "0.0");
             } catch (NumberFormatException e1) {
-                logger.warn("could not create number from default value '" + defaultValue + "': " + e1);
+                if (LogLevel.WARN) {
+                    logger.warn("could not create number from default value '" + defaultValue + "': " + e1);
+                }
                 e1.printStackTrace();
             }
         }
@@ -129,7 +134,9 @@ public class DefaultValues {
         try {
             return new Integer(defaultValue != null ? defaultValue : "0");
         } catch (NumberFormatException e) {
-            logger.warn("could not create integer from default value '" + defaultValue + "': " + e);
+            if (LogLevel.WARN) {
+                logger.warn("could not create integer from default value '" + defaultValue + "': " + e);
+            }
         }
         
         return new Integer(0);
@@ -143,7 +150,9 @@ public class DefaultValues {
         try {
             return new Float(defaultValue != null ? defaultValue : "0.0");
         } catch (NumberFormatException e) {
-            logger.warn("could not create float from default value '" + defaultValue + "': " + e);
+            if (LogLevel.WARN) {
+                logger.warn("could not create float from default value '" + defaultValue + "': " + e);
+            }
         }
         
         return new Float(0.0f);
@@ -166,7 +175,9 @@ public class DefaultValues {
             try {
                 return new SimpleDateFormat("dd/MM/yyyy").parse(defaultValue);
             } catch (ParseException e) {
-                logger.warn("could not create date from default value '" + defaultValue + "': " + e);
+                if (LogLevel.WARN) {
+                    logger.warn("could not create date from default value '" + defaultValue + "': " + e);
+                }
                 e.printStackTrace();
             }
         }

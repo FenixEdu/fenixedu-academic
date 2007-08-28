@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.lang.reflect.Method;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import org.apache.log4j.Logger;
@@ -30,7 +31,9 @@ public class PersistenceSupportFactory {
             throw new RuntimeException("Unable to determine/obtain a default persistence support", e);
         }
 
-        logger.info("Default PersistenceSupport is set to: " + defaultPersistenceSupportClassName);
+        if (LogLevel.INFO) {
+            logger.info("Default PersistenceSupport is set to: " + defaultPersistenceSupportClassName);
+        }
     }
 
     public static ISuportePersistente getDefaultPersistenceSupport() {

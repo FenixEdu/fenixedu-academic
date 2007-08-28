@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.log4j.Logger;
 
 public class EditLinkTag extends TagSupport {
@@ -68,7 +70,9 @@ public class EditLinkTag extends TagSupport {
         BaseRenderObjectTag tag = (BaseRenderObjectTag) findAncestorWithClass(this, BaseRenderObjectTag.class);
 
         if (tag == null) {
-            logger.warn("destination " + getName() + " specified but no parent tag supports destinations");
+            if (LogLevel.WARN) {
+                logger.warn("destination " + getName() + " specified but no parent tag supports destinations");
+            }
         }
         else {
             setDestination(tag, getPath(), getModule(), redirectToBoolean(getRedirect()));

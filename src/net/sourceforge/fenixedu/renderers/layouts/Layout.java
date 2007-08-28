@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.renderers.layouts;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -49,7 +50,9 @@ public abstract class Layout {
             String name = names[i];
             
             if (! PropertyUtils.isWriteable(this, name)) {
-                logger.warn("Layout " + this + " specified a non-writeable property: " + name);
+                if (LogLevel.WARN) {
+                    logger.warn("Layout " + this + " specified a non-writeable property: " + name);
+                }
             }
             else {
                 finalNames.add(name);

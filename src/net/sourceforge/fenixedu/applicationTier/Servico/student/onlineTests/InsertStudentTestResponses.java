@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -81,10 +82,12 @@ public class InsertStudentTestResponses extends Service {
             for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                 Response thisResponse = response[studentTestQuestion.getTestQuestionOrder().intValue() - 1];
 
-                if (logger.isDebugEnabled())
-                    logger.debug(StringAppender.append(logIdString,
-                            " infoStudentTestQuestion.getResonse()= ",
-                            getLogString(new Response[] { thisResponse })));
+                if (LogLevel.DEBUG) {
+                    if (logger.isDebugEnabled())
+                        logger.debug(StringAppender.append(logIdString,
+                                " infoStudentTestQuestion.getResonse()= ",
+                                getLogString(new Response[] { thisResponse })));
+                }
 
                 if (thisResponse.isResponsed()) {
                     responseNumber++;

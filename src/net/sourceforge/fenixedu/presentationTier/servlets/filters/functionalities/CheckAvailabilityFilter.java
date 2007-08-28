@@ -18,6 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -106,16 +107,20 @@ public class CheckAvailabilityFilter implements Filter {
 
         if (functionality == null || functionality.isAvailable(context)) {
             if (functionality != null) {
-                logger.debug(String.format("%s[%d]%s", functionality.getName().getContent(), functionality.getIdInternal(), functionality.getMatchPath()));
-                if (servletRequest.getQueryString() != null) {
-                    logger.debug("    " + servletRequest.getQueryString());
+                if (LogLevel.DEBUG) {
+                    logger.debug(String.format("%s[%d]%s", functionality.getName().getContent(), functionality.getIdInternal(), functionality.getMatchPath()));
+                    if (servletRequest.getQueryString() != null) {
+                        logger.debug("    " + servletRequest.getQueryString());
+                    }
                 }
-                
+
                 setupRequest(servletRequest, context);
             }
             else {
-                if (isExecutableResource(servletRequest.getServletPath())) {
-                    logger.debug("not mappped: " + servletRequest.getServletPath() + (servletRequest.getQueryString() != null ? "?" + servletRequest.getQueryString() : ""));
+                if (LogLevel.DEBUG) {
+                    if (isExecutableResource(servletRequest.getServletPath())) {
+                        logger.debug("not mappped: " + servletRequest.getServletPath() + (servletRequest.getQueryString() != null ? "?" + servletRequest.getQueryString() : ""));
+                    }
                 }
             }
 

@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
@@ -481,7 +482,9 @@ public class ComponentLifeCycle {
                 metaSlot.setObject(finalValue);
             } catch (Exception e) {
         	e.printStackTrace();
-                logger.warn("failed to do conversion for slot " + metaSlot.getName() + ": " + e);
+        	if (LogLevel.WARN) {
+                    logger.warn("failed to do conversion for slot " + metaSlot.getName() + ": " + e);
+        	}
                 addConvertError(viewState, metaSlot, e);
                 hasConvertError = true;
             }

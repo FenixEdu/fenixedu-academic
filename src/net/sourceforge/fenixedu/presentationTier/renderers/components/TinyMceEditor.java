@@ -7,6 +7,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
@@ -149,15 +150,19 @@ public class TinyMceEditor extends HtmlTextArea {
         try {
             ServletContext servletContext = context.getServletContext();
             InputStream stream = servletContext.getResourceAsStream(CONFIG_PATH + getConfig() + ".properties");
-            
+
             if (stream == null) {
-                logger.warn("could not read TinyMCE configuration named '" + getConfig() + "'");
+                if (LogLevel.WARN) {
+                    logger.warn("could not read TinyMCE configuration named '" + getConfig() + "'");
+                }
             }
             else {
                 properties.load(stream);
             }
         } catch (IOException e) {
-            logger.warn("exception thrown when reading TinyMCE configuration '" + getConfig() + "'" + e);
+            if (LogLevel.WARN) {
+                logger.warn("exception thrown when reading TinyMCE configuration '" + getConfig() + "'" + e);
+            }
             e.printStackTrace();
         }
     }

@@ -10,6 +10,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.Message;
 import net.sourceforge.fenixedu.renderers.components.state.Message.Type;
@@ -85,8 +86,10 @@ public class MessagesTag extends BodyTagSupport {
         HasMessagesTag parent = (HasMessagesTag) findAncestorWithClass(this, HasMessagesTag.class);
 
         if (getType() != null) {
-            if (parent != null && parent.getMessageType() != null) {
-                logger.warn("parent 'hasMessage' tag is beeing ignored since the 'type' attribute was specified");
+            if (LogLevel.WARN) {
+                if (parent != null && parent.getMessageType() != null) {
+                    logger.warn("parent 'hasMessage' tag is beeing ignored since the 'type' attribute was specified");
+                }
             }
             
             return Type.valueOf(getType().toUpperCase());
@@ -104,8 +107,10 @@ public class MessagesTag extends BodyTagSupport {
         HasMessagesTag parent = (HasMessagesTag) findAncestorWithClass(this, HasMessagesTag.class);
 
         if (getFor() != null) {
-            if (parent != null) {
-                logger.warn("parent 'hasMessages' tag is beeing ignore since 'for' attribute was specified");
+            if (LogLevel.WARN) {
+                if (parent != null) {
+                    logger.warn("parent 'hasMessages' tag is beeing ignore since 'for' attribute was specified");
+                }
             }
             
             return getFor();

@@ -18,6 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import org.apache.log4j.Logger;
@@ -77,7 +78,9 @@ public class PathAccessControlFilter implements Filter {
                     }
                     
                     // just for a cleaner message
-                    logger.debug("access for '" + path + "' limited to " + this.pathConfiguration.get(path));
+                    if (LogLevel.DEBUG) {
+                        logger.debug("access for '" + path + "' limited to " + this.pathConfiguration.get(path));
+                    }
                 }
             }
         } catch (IOException e) {
@@ -101,7 +104,9 @@ public class PathAccessControlFilter implements Filter {
                 hostList.add(addresses[i]);
             }
         } catch (UnknownHostException e) {
-            logger.warn("could not find host '" + host + "', host ignored.");
+            if (LogLevel.WARN) {
+                logger.warn("could not find host '" + host + "', host ignored.");
+            }
         }
     }
 
@@ -131,13 +136,17 @@ public class PathAccessControlFilter implements Filter {
             if (hostList != null) {           
                 for (InetAddress allowedHost : hostList) {
                     if (remoteAddress.equals(allowedHost)) {
-                        logger.info(servletPath + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                        if (LogLevel.INFO) {
+                            logger.info(servletPath + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                        }
                         
                         return true;
                     }
                 }
                 
-                logger.info(servletPath + " denied["+ remoteAddress + "]: is not member of " + hostList);
+                if (LogLevel.INFO) {
+                    logger.info(servletPath + " denied["+ remoteAddress + "]: is not member of " + hostList);
+                }
                 return false;
             }
             
@@ -148,22 +157,30 @@ public class PathAccessControlFilter implements Filter {
                         
                         for (InetAddress allowedHost : hostList) {
                             if (remoteAddress.equals(allowedHost)) {
-                                logger.info(servletPath + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                                if (LogLevel.INFO) {
+                                    logger.info(servletPath + " allowed[" + remoteAddress + "]: matches group " + hostList);
+                                }
                                 
                                 return true;
                             }
                         }
                         
-                        logger.info(requestURI + " denied["+ remoteAddress + "]: is not member of " + hostList);
+                        if (LogLevel.INFO) {
+                            logger.info(requestURI + " denied["+ remoteAddress + "]: is not member of " + hostList);
+                        }
                         return false;
                     }
                 }
             }
-            
-            logger.debug(servletPath + " allowed[" + remoteAddress + "]: no restriction defined");
+
+            if (LogLevel.DEBUG) {
+                logger.debug(servletPath + " allowed[" + remoteAddress + "]: no restriction defined");
+            }
             return true;
         } catch (UnknownHostException e) {
-            logger.warn(servletPath + " denied["+ address + "]: could not find host");
+            if (LogLevel.WARN) {
+                logger.warn(servletPath + " denied["+ address + "]: could not find host");
+            }
             return false;
         }        
     }

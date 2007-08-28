@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.exceptions.InvalidStructureException;
 import net.sourceforge.fenixedu.domain.Language;
@@ -160,9 +161,10 @@ public class ImportFunctionalities extends Service {
     }
 
     private void logNewFunctionality(Functionality functionality) {
-        String path = getNamePath(functionality);
-        
-        logger.info(String.format("%s[%s]", path, functionality.getUuid()));
+        if (LogLevel.INFO) {
+            String path = getNamePath(functionality);
+            logger.info(String.format("%s[%s]", path, functionality.getUuid()));
+        }
     }
     
     private String getNamePath(Functionality functionality) {

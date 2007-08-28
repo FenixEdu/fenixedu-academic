@@ -176,10 +176,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private void sortStudentShifts(List<Shift> studentShifts) {
-	final ComparatorChain chain = new ComparatorChain();
-	chain.addComparator(new BeanComparator("disciplinaExecucao.nome"));
-	chain.addComparator(new BeanComparator("tipo"));
-	Collections.sort(studentShifts, chain);
+	Collections.sort(studentShifts, Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
     }
 
     private List<ShiftToEnrol> getShiftsToEnrolByEnroledState(final List<ShiftToEnrol> shiftsToEnrol,

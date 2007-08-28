@@ -14,6 +14,7 @@ import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.accesslayer.JdbcAccessImpl;
 import org.apache.ojb.broker.util.ClassHelper;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.stm.Transaction;
 
@@ -40,7 +41,9 @@ public class FenixJdbcAccessImpl extends JdbcAccessImpl {
             stmt = broker.serviceStatementManager().getSelectByPKStatement(cld);
             if (stmt == null)
             {
-                logger.error("getSelectByPKStatement returned a null statement");
+                if (LogLevel.ERROR) {
+                    logger.error("getSelectByPKStatement returned a null statement");
+                }
                 throw new PersistenceBrokerException("getSelectByPKStatement returned a null statement");
             }
             broker.serviceStatementManager().bindSelect(stmt, oid, cld);
@@ -72,20 +75,24 @@ public class FenixJdbcAccessImpl extends JdbcAccessImpl {
         }
         catch (PersistenceBrokerException e)
         {
-            logger.error(
-                "PersistenceBrokerException during the execution of materializeObject: "
-                    + e.getMessage(),
-                e);
+            if (LogLevel.ERROR) {
+                logger.error(
+                        "PersistenceBrokerException during the execution of materializeObject: "
+                        + e.getMessage(),
+                        e);
+            }
             throw e;
         }
         catch (SQLException e)
         {
-            logger.error(
-                "SQLException during the execution of materializeObject (for a "
-                    + cld.getClassOfObject().getName()
-                    + "): "
-                    + e.getMessage(),
-                e);
+            if (LogLevel.ERROR) {
+                logger.error(
+                        "SQLException during the execution of materializeObject (for a "
+                        + cld.getClassOfObject().getName()
+                        + "): "
+                        + e.getMessage(),
+                        e);
+            }
             throw new PersistenceBrokerSQLException(e);
         }
         finally

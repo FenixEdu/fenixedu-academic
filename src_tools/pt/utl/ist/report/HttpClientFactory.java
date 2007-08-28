@@ -1,5 +1,7 @@
 package pt.utl.ist.report;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+
 import org.apache.commons.httpclient.DefaultMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
@@ -34,7 +36,9 @@ public class HttpClientFactory {
 		client.setConnectionTimeout(CONNECTION_TIMEOUT);
 		client.setStrictMode(false);
 
-		logger.debug("Created new HttpClient to: http://" + host + ":" + port);
+		if (LogLevel.DEBUG) {
+		    logger.debug("Created new HttpClient to: http://" + host + ":" + port);
+		}
 
 		return client;
 	}

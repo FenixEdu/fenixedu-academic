@@ -78,12 +78,12 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         return new StringBuilder("");
     }
 
-    public StringBuilder lastRender(LessonSlot lessonSlot) {
+    public StringBuilder lastRender(LessonSlot lessonSlot, String context) {
         StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-            strBuffer.append(getURL(lesson));
+            strBuffer.append(getURL(lesson, context));
             strBuffer.append("<img src=\"").append(getApplication()).append(
                     "/images/").append(getImage()).append("/>").append("</a>");
             return strBuffer;
@@ -108,13 +108,13 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
      * @param lesson
      * @return
      */
-    private StringBuilder getURL(InfoLesson lesson) {
+    private StringBuilder getURL(InfoLesson lesson, String context) {
         StringBuilder strBuffer = new StringBuilder();
         if (getAction().equalsIgnoreCase("add")) {
-            strBuffer.append("<a href=\"enrollStudentInShifts.do?registrationOID=");
+            strBuffer.append("<a href=\"" + context + "/student/enrollStudentInShifts.do?registrationOID=");
         } else if (getAction().equalsIgnoreCase("remove")) {
             strBuffer
-                    .append("<a href=\"studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
+                    .append("<a href=\"" + context + "/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
         }
         strBuffer.append(getStudentID()).append("&shiftId=").append(
                 lesson.getInfoShift().getIdInternal());

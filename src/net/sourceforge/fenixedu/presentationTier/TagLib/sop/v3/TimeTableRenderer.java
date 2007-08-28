@@ -140,6 +140,7 @@ public class TimeTableRenderer {
                         }
                         strBuffer.append(">");
 
+                        String contextPath = ((HttpServletRequest) pageContext.getRequest()).getContextPath();
                         if ((infoLessonWrapper != null) && (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex)) {
                             final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
                             final String uri = httpServletRequest.getRequestURI();
@@ -148,7 +149,7 @@ public class TimeTableRenderer {
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
                                 if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase("period-single-slot")) {
                                     LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift) this.lessonSlotContentRenderer;
-                                    strBuffer.append(lessonSlotContentRendererShift.lastRender(infoLessonWrapper.getLessonSlot()));
+                                    strBuffer.append(lessonSlotContentRendererShift.lastRender(infoLessonWrapper.getLessonSlot(), contextPath));
                                 }
                                 slotLessons.put(slotIndex + "-" + dayIndex, infoLessonWrapper);
                             }
@@ -161,8 +162,7 @@ public class TimeTableRenderer {
                                 LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift) this.lessonSlotContentRenderer;
                                 InfoLessonWrapper infoLessonWrapperHashMap = (InfoLessonWrapper) slotLessons
                                         .get(slotIndex + "-" + dayIndex);
-                                strBuffer.append(lessonSlotContentRendererShift
-                                        .lastRender(infoLessonWrapperHashMap.getLessonSlot()));
+                                strBuffer.append(lessonSlotContentRendererShift.lastRender(infoLessonWrapperHashMap.getLessonSlot(), contextPath));
                             } else {
                                 if (infoLessonWrapper != null
                                         && this.lessonSlotContentRenderer instanceof ClassTimeTableWithoutLinksLessonContentRenderer) {

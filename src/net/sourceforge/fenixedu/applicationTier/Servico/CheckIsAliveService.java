@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 import java.io.IOException;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -39,8 +40,10 @@ public class CheckIsAliveService extends Service {
         	e.printStackTrace();
         }
 
-        logger.info("CheckIsAliveService - will check db: " + CHECK_DB);
-        logger.info("CheckIsAliveService - will check slide: " + CHECK_SLIDE);
+        if (LogLevel.INFO) {
+            logger.info("CheckIsAliveService - will check db: " + CHECK_DB);
+            logger.info("CheckIsAliveService - will check slide: " + CHECK_SLIDE);
+        }
     }
 
     public Boolean run() {
@@ -54,8 +57,10 @@ public class CheckIsAliveService extends Service {
 //            }
             return Boolean.TRUE;
         } catch (Throwable t) {
-        	t.printStackTrace();
-            logger.fatal("Got unexepected exception in check alive service. ", t);
+            t.printStackTrace();
+            if (LogLevel.FATAL) {
+                logger.fatal("Got unexepected exception in check alive service. ", t);
+            }
             throw new RuntimeException(t);
         }
     }
@@ -65,7 +70,9 @@ public class CheckIsAliveService extends Service {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
         if (executionYear == null || executionYear.getIdInternal() == null) {
-            logger.fatal("Got a null result checking fenix database.");
+            if (LogLevel.FATAL) {
+                logger.fatal("Got a null result checking fenix database.");
+            }
             throw new RuntimeException("Problems accesing fenix database! Got a null result.");
         }
     }
@@ -74,7 +81,9 @@ public class CheckIsAliveService extends Service {
         final FileSuportObject fileSuportObject = JdbcMysqlFileSupport.retrieveFile(SLIDE_CONTENT_DIR, SLIDE_CONTENT_FILENAME);
 
         if (fileSuportObject == null) {
-            logger.fatal("Got a null result checking slide database.");
+            if (LogLevel.FATAL) {
+                logger.fatal("Got a null result checking slide database.");
+            }
             throw new RuntimeException("Problems accesing slide database! Got a null result.");
         }
     }

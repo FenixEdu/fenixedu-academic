@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
@@ -84,7 +85,9 @@ public class GroupBuilderRegistry {
             throw new GroupBuilderNameTakenException(name);
         }
 
-        logger.debug("registering builder: " + name + " = " + builder);
+        if (LogLevel.DEBUG) {
+            logger.debug("registering builder: " + name + " = " + builder);
+        }
         instance.builders.put(name, new Pair<Class, GroupBuilder>(groupClass, builder));
     }
 

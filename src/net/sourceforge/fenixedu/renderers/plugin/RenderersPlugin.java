@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.renderers.plugin;
 
 import javax.servlet.ServletException;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.SchemaFactory;
 import net.sourceforge.fenixedu.renderers.model.UserIdentityFactory;
@@ -115,7 +116,9 @@ public class RenderersPlugin implements PlugIn {
                 RequestUtils.applicationClass(configProcessorClassname);
                 
         } catch (ClassNotFoundException ex) {
-            logger.fatal("Can't set RequestProcessor: bad class name '" + configProcessorClassname + "'.");
+            if (LogLevel.FATAL) {
+                logger.fatal("Can't set RequestProcessor: bad class name '" + configProcessorClassname + "'.");
+            }
             throw new ServletException(ex);
         }
 
@@ -129,7 +132,9 @@ public class RenderersPlugin implements PlugIn {
         // Check if specified request processor is compatible with ours.
         Class ourProcessorClass = RenderersRequestProcessor.class;
         if (!ourProcessorClass.isAssignableFrom(configProcessorClass)) {
-            logger.fatal("Specified processor is incopatible with " + RequestProcessor.class.getName());
+            if (LogLevel.FATAL) {
+                logger.fatal("Specified processor is incopatible with " + RequestProcessor.class.getName());
+            }
             throw new ServletException("invalid processor was specified");
         }
     }

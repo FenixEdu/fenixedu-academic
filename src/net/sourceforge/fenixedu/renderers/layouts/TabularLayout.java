@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.layouts;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
@@ -151,7 +152,9 @@ public abstract class TabularLayout extends Layout {
                     cell.setBody(getComponent(rowIndex, columnIndex));
                 }
             } catch (Exception e) {
-                logger.warn("while generating table row " + rowIndex + " catched exception " + e);
+                if (LogLevel.WARN) {
+                    logger.warn("while generating table row " + rowIndex + " catched exception " + e);
+                }
                 e.printStackTrace();
                 table.removeRow(row);
             }
