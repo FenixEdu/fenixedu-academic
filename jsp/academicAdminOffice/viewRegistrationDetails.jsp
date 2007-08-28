@@ -111,12 +111,12 @@
 	</logic:equal>
 <%--
 	<logic:equal name="registration" property="concluded" value="false">
-		<span class="pleft1">	
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>	
+	<span class="pleft1">	
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>	
 	</logic:equal>
 --%>
 </p>
@@ -127,7 +127,7 @@
 
 <h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<fr:view name="registration" property="studentCurricularPlans" schema="student.studentCurricularPlans" >
+<fr:view name="registration" property="sortedStudentCurricularPlans" schema="student.studentCurricularPlans" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		<fr:property name="groupLinks" value="false"/>
