@@ -34,6 +34,13 @@
 	<slot name="ingression" />
 </schema>
 
+<schema name="EditExecutionYearDomainObject" type="net.sourceforge.fenixedu.domain.ExecutionYear" bundle="MANAGER_RESOURCES">
+	<slot name="beginDateYearMonthDay" />
+	<slot name="endDateYearMonthDay" />
+	<slot name="state" />
+	<slot name="year" />
+</schema>
+
 <schema name="InsertMandatoryInvitedPersonDetails" type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
 	<slot name="name">
 		<property name="size" value="50"/>
