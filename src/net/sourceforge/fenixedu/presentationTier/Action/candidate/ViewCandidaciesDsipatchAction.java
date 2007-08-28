@@ -73,10 +73,18 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
 		.getViewState("candidacyDocuments").getMetaObject().getObject();
 
+	for(CandidacyDocumentUploadBean bean : beans) {
+	    bean.createTemporaryFile();
+	}
+	
 	Object[] args = { beans };
 	ServiceUtils.executeService(SessionUtils.getUserView(request), "SaveCandidacyDocumentFiles",
 		args);
 
+	for(CandidacyDocumentUploadBean bean : beans) {
+	    bean.deleteTemporaryFile();
+	}
+	
 	fillRequest(request, getCandidacy(beans));
 
 	return mapping.findForward("uploadDocuments");

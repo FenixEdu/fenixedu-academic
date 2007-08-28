@@ -36,7 +36,7 @@ public class SaveCandidacyDocumentFiles extends Service {
         Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
 
         for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
-            if (candidacyDocumentUploadBean.getFileInputStream() != null) {
+            if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
 
                 String filename = candidacyDocumentUploadBean.getFilename();
                 CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
@@ -45,7 +45,7 @@ public class SaveCandidacyDocumentFiles extends Service {
               
                 final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
                 		getVirtualPath(candidacy), filename, true, person.getName(), filename,
-                        candidacyDocumentUploadBean.getFileInputStream());
+                        candidacyDocumentUploadBean.getTemporaryFile());
                 
                 if(candidacyDocument.getFile() != null){
                     candidacyDocument.getFile().delete();

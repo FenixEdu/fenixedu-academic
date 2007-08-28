@@ -3,8 +3,12 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
@@ -19,6 +23,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
 
     private transient InputStream inputStream;
 
+    private File temporaryFile;
+    
     private String filename;
 
     private String documentDescription;
@@ -70,4 +76,20 @@ public class CandidacyDocumentUploadBean implements Serializable {
         return actualFile != null;
     }
 
+    public void createTemporaryFile() {
+	try {
+	    temporaryFile = inputStream != null ? FileUtils.copyToTemporaryFile(inputStream) : null;
+	}catch(IOException exception) {
+	    temporaryFile = null;
+	}
+	
+    }
+    
+    public File getTemporaryFile() {
+	return temporaryFile;
+    }
+    
+    public void deleteTemporaryFile() {
+	temporaryFile.delete();
+    }
 }
