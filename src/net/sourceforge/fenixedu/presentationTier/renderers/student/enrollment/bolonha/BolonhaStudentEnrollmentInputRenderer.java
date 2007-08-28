@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.b
 import java.util.List;
 import java.util.ResourceBundle;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumGroupBean;
@@ -424,9 +426,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();
 	    yearCell.setClasses(enrolmentYearClasses);
 
-	    final StringBuilder year = new StringBuilder();
-	    year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
-	    yearCell.setBody(new HtmlText(year.toString()));
+	    final String year = enrolment.getExecutionPeriod().getExecutionYear().getYear();
+	    yearCell.setBody(new HtmlText(year));
 
 	    // Semester
 	    final HtmlTableCell semesterCell = htmlTableRow.createCell();
@@ -507,8 +508,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    cell.setClasses("aright");
 
 	    HtmlCheckBox checkBox = new HtmlCheckBox(false);
-	    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":"
-		    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+	    final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext().getIdInternal().toString(),
+	            ":", degreeModuleToEnrol.getCurriculumGroup().getIdInternal().toString());
+	    checkBox.setName(name);
 	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
 	    degreeModulesToEvaluateController.addCheckBox(checkBox);
 	    cell.setBody(checkBox);
