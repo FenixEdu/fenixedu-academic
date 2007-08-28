@@ -45,7 +45,7 @@
      		<logic:iterate id="enrolment" name="studentList" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 	        		<tr>
 			        	<td class="listClasses">
-				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber()%>">	
+				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + "&amp;enrolmentId=" + enrolment.getIdInternal()%>">	
 				      			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
 				    		</html:link>
 			            </td>

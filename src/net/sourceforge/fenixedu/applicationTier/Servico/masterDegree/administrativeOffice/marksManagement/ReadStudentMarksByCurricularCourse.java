@@ -32,15 +32,64 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadStudentMarksByCurricularCourse extends Service {
 
-    public List run(Integer curricularCourseID, Integer studentNumber, String executionYear)
+    public List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
 	    throws FenixServiceException {
 
 	List enrolmentEvaluations = null;
 	InfoTeacher infoTeacher = null;
 	List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
+	Enrolment enrolment = enrolmentId != null ? (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentId)
+		: getEnrolment(curricularCourseID, studentNumber, executionYear);
+
+	if (enrolment != null) {
+
+	    EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
+	    enrolmentEvaluations = enrolment
+		    .getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
+
+	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+		Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
+			.getPersonResponsibleForGrade();
+		if (person != null) {
+		    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+		    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+		}
+	    }
+
+	    List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
+	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+		ListIterator iter = enrolmentEvaluations.listIterator();
+		while (iter.hasNext()) {
+		    EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
+		    InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
+			    .newInfoFromDomain(enrolmentEvaluation);
+		    InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+
+		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson
+				.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
+
+		    }
+		    infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
+		}
+
+	    }
+	    InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
+	    infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
+	    infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+	    infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
+
+	}
+
+	return infoSiteEnrolmentEvaluations;
+    }
+
+    private Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear) throws ExistingServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
 		.readDegreeModuleByOID(curricularCourseID);
+		
 
 	final CurricularCourse curricularCourseTemp = curricularCourse;
 
@@ -49,8 +98,12 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	// not in active state
 
 	List<StudentCurricularPlan> studentCurricularPlans = null;
-	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
-		DegreeType.MASTER_DEGREE);
+	Registration registration = Registration.readByNumberAndDegreeCurricularPlan(studentNumber, curricularCourse
+		.getDegreeCurricularPlan());
+	if (registration == null) {
+	    registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+	}
+	
 	if (registration == null) {
 	    throw new ExistingServiceException();
 	}
@@ -102,48 +155,6 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 	    }
 	    enrolment = (Enrolment) enrollments.get(0);
 	}
-
-	if (enrolment != null) {
-
-	    EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
-	    enrolmentEvaluations = enrolment
-		    .getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
-
-	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-		Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
-			.getPersonResponsibleForGrade();
-		if (person != null) {
-		    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-		    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-		}
-	    }
-
-	    List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
-	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-		ListIterator iter = enrolmentEvaluations.listIterator();
-		while (iter.hasNext()) {
-		    EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
-		    InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
-			    .newInfoFromDomain(enrolmentEvaluation);
-		    InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
-		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
-
-		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {
-			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson
-				.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
-
-		    }
-		    infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-		}
-
-	    }
-	    InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-	    infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-	    infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-	    infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-
-	}
-
-	return infoSiteEnrolmentEvaluations;
+	return enrolment;
     }
 }

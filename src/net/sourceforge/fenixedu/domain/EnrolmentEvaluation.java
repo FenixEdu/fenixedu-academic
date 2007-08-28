@@ -302,6 +302,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setPersonResponsibleForGrade(responsibleFor);
 
         if (examDate != null) {
+            if (!getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight()).isActive()) {
+        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState");
+	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
         } else if (grade == null) {
             setExamDateYearMonthDay(null);

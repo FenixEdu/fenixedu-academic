@@ -754,6 +754,19 @@ public class Registration extends Registration_Base {
 	return nonActiveRegistration;
     }
 
+    final public static Registration readByNumberAndDegreeCurricularPlan(Integer number, DegreeCurricularPlan degreeCurricularPlan) {
+	Registration nonActiveRegistration = null;
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.getNumber().equals(number) && registration.getDegreeCurricularPlans().contains(degreeCurricularPlan)) {
+		if (registration.isActive()) {
+		    return registration;
+		}
+		nonActiveRegistration = registration;
+	    }
+	}
+	return nonActiveRegistration;
+    }
+
     final public static Registration readRegisteredRegistrationByNumberAndDegreeType(Integer number, DegreeType degreeType) {
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    if (registration.getNumber().equals(number) && registration.getDegreeType().equals(degreeType)
@@ -2151,7 +2164,6 @@ public class Registration extends Registration_Base {
 	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
 	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
 	    result &= cycle != null && cycle.getAprovedEctsCredits() >= cycleType.getDefaultEcts();
-	    
 	}
 
 	return result && !getDegreeType().getCycleTypes().isEmpty();

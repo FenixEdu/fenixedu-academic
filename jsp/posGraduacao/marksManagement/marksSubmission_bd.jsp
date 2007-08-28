@@ -74,7 +74,6 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sizeList" property="sizeList" value="<%= size.toString() %>" />							
 					    			    		
 	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >
-	    <% if (((InfoEnrolmentEvaluation) enrolmentEvaluation).getInfoEnrolment().getInfoStudentCurricularPlan().getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) { %> 		
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
 	    		<bean:define id="idInternal" name="enrolmentEvaluation" property="idInternal" />
@@ -99,7 +98,6 @@
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="enrolmentEvaluation" property="idInternal" value="<%= idInternal.toString() %>" indexed="true" />
 					</td>
 				</tr>
-				<% } %>
 	    	</logic:iterate>
 	    </table>
 		<br /><br />	

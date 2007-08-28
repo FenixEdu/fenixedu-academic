@@ -106,7 +106,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         List infoSiteEnrolmentEvaluations = null;
         IUserView userView = SessionUtils.getUserView(request);
         try {
-            Object args[] = { Integer.valueOf(curricularCourseId), studentNumber, null };
+            Object args[] = { Integer.valueOf(curricularCourseId), studentNumber, null, getIntegerFromRequest(request, "enrolmentId") };
             infoSiteEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentMarksByCurricularCourse", args);
         } catch (ExistingServiceException e) {
