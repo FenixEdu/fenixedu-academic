@@ -141,33 +141,38 @@ public class RequestChecksumFilter implements Filter {
 			final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
 			final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			if (indexOfHrefBodyEnd >= 0) {
-			    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
-			    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
-			    if (hasCardinal) {
-				response.append(source, iOffset, indexOfCardinal);
-			    } else {
-				response.append(source, iOffset, indexOfHrefBodyEnd);
-			    }
 
-			    final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
-			    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
-			    if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
-				response.append('?');
-			    } else {
-				response.append("&amp;");
-			    }
-			    response.append(CHECKSUM_ATTRIBUTE_NAME);
-			    response.append("=");
-			    response.append(checksum);
+			    final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
+			    if (indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) {
 
-			    if (hasCardinal) {
-				response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
-			    }
+			        final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
+			        boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
+			        if (hasCardinal) {
+			            response.append(source, iOffset, indexOfCardinal);
+			        } else {
+			            response.append(source, iOffset, indexOfHrefBodyEnd);
+			        }
 
-			    final int nextChar = indexOfAclose + 1;
-			    response.append(source, indexOfHrefBodyEnd, nextChar);
-			    rewrite(response, source, nextChar);
-			    return;
+			        final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
+			        final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+			        if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
+			            response.append('?');
+			        } else {
+			            response.append("&amp;");
+			        }
+			        response.append(CHECKSUM_ATTRIBUTE_NAME);
+			        response.append("=");
+			        response.append(checksum);
+
+			        if (hasCardinal) {
+			            response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
+			        }
+
+			        final int nextChar = indexOfAclose + 1;
+			        response.append(source, indexOfHrefBodyEnd, nextChar);
+			        rewrite(response, source, nextChar);
+			        return;
+			    }
 			}
 		    }
 		}

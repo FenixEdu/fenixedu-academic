@@ -37,7 +37,7 @@ function addEmployee(){
 	
 	<ul>
 		<li>
-			<html:link href="#" onclick="javascript:addEmployee();"><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link>
+			<html:link href="javascript:addEmployee();" onclick=""><bean:message key="link.addEmployee" bundle="ASSIDUOUSNESS_RESOURCES"/></html:link>
 		</li>
 	</ul>
 	
