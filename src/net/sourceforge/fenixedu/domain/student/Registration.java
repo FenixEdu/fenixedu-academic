@@ -222,11 +222,12 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlan() {
+        final Set<StudentCurricularPlan> studentCurricularPlans = getStudentCurricularPlansSet();
 
-	if (getStudentCurricularPlans().size() == 0) {
+        if (studentCurricularPlans.isEmpty()) {
 	    return null;
 	}
-	return (StudentCurricularPlan) Collections.max(getStudentCurricularPlans(),
+	return (StudentCurricularPlan) Collections.max(studentCurricularPlans,
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
     }
 
@@ -2155,18 +2156,14 @@ public class Registration extends Registration_Base {
      * finished
      */
     public boolean hasConcluded() {
-	if (!isBolonha()) {
-	    return true;
-	}
-
-	boolean result = true;
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
 	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
-	    result &= cycle != null && cycle.getAprovedEctsCredits() >= cycleType.getDefaultEcts();
+	    if (cycle == null || cycle.getAprovedEctsCredits() < cycleType.getDefaultEcts()) {
+	        return false;
+	    }
 	}
-
-	return result && !getDegreeType().getCycleTypes().isEmpty();
+	return true;
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
