@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -10,6 +11,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
+
+    public static final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD = new Comparator<CompetenceCourseInformation>() {
+        public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
+            return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+        }
+    };
 
     protected CompetenceCourseInformation() {
         super();

@@ -262,23 +262,25 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     private TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
 	TreeSet<CompetenceCourseInformation> informations = new TreeSet<CompetenceCourseInformation>(
-		new Comparator<CompetenceCourseInformation>() {
-
-		    public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
-			return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
-		    }
-		});
-
+	        CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
 	informations.addAll(getCompetenceCourseInformationsSet());
 	return informations;
     }
 
     private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
-	return hasAnyCompetenceCourseInformations() ? getOrderedCompetenceCourseInformations().last() : null;
+        final Set<CompetenceCourseInformation> competenceCourseInformations = getCompetenceCourseInformationsSet();
+        if (competenceCourseInformations.isEmpty()) {
+            return null;
+        }
+        return Collections.max(competenceCourseInformations, CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
     }
 
     private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
-	return hasAnyCompetenceCourseInformations() ? getOrderedCompetenceCourseInformations().first() : null;
+        final Set<CompetenceCourseInformation> competenceCourseInformations = getCompetenceCourseInformationsSet();
+        if (competenceCourseInformations.isEmpty()) {
+            return null;
+        }
+        return Collections.min(competenceCourseInformations, CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
     }
 
     public boolean isCompetenceCourseInformationDefinedAtExecutionPeriod(
