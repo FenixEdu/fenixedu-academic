@@ -7,17 +7,20 @@
 <head>
 	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link rel="shortcut icon" href="<%= request.getContextPath() %>/images/favicon.ico" type="image/ico"/>
-	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
-	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/color.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/print.css" media="print" />
-<!-- specific: to tiles -->	<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
-<!-- specific: to tiles -->	<link href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
-<!-- specific: to tiles -->	<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
-	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
-	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/check.js"></script>
-	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
+	<%
+		final String contextPath = request.getContextPath();
+	%>
+	<link rel="shortcut icon" href="<%= contextPath %>/images/favicon.ico" type="image/ico"/>
+	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/layout.css"  media="screen"  />
+	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/general.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/color.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
+<!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
+<!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
+	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/hideButtons.js"></script>
+	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/check.js"></script>
+	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/checkall.js"></script>
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
@@ -44,12 +47,8 @@
 <!-- Header -->
 <div id="top">
 	<h1 id="logo">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= contextPath %>"/>"/>
 	</h1>
-
-	<%--
-	<tiles:getAsString name="serviceName" />
-	--%>
 
 	<tiles:insert page="/commons/headerButtons.jsp" />
 	<p id="user">
