@@ -130,6 +130,11 @@
 	
 	<logic:notEmpty name="unstructureds">
 		<p id='unstructureds' class="mtop3 mbottom0"/><strong><span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
+		
+		<p class="color888">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds.description"/>
+		</p>
+		
 		<bean:define id="results" name="unstructureds" toScope="request"/>
 		<ul>
 			<logic:iterate id="result" name="results" scope="request">

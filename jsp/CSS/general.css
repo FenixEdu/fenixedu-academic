@@ -1055,6 +1055,9 @@ div.announcement {
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }
+div.announcement div.ann_body span {
+color: #000 !important;
+}
 div.announcement div.ann_body div, div.announcement div.ann_body p {
 margin: 0;
 padding: 0;
@@ -1062,6 +1065,7 @@ padding: 0;
 div.announcement div.ann_body br {
 margin: -4px 0;
 padding: 0;
+/*display: none;*/
 }
 
 div.announcement h3 a { text-decoration: none; }
