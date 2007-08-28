@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -44,6 +45,12 @@ public class ConcludedState extends ConcludedState_Base {
 	}
     }
 
+    @Override
+    public void delete() {
+        getRegistration().setFinalAverage(null);
+        super.delete();
+    }
+    
     public void checkConditionsToForward() {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
