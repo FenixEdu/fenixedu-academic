@@ -333,6 +333,9 @@
 	<slot name="studiesStartDate" layout="null-as-label" key="label.studiesStartDate" >
         <property name="label" value="-"/>	
 	</slot>		
+	<slot name="conclusionDate" layout="null-as-label" key="label.conclusionDate" >
+        <property name="label" value="-"/>	
+	</slot>		
 </schema>
 
 
