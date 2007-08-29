@@ -504,7 +504,11 @@
 	<slot name="stateDate" key="label.editDate" />
 	<slot name="stateType" key="label.state" />
 	<slot name="remarks" />
-	<slot name="executionYear.year" key="label.since" />
+	<slot name="executionYear" key="label.since" layout="null-as-label" >
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="executionYear.year"/>
+	</slot>
 	<slot name="responsiblePerson" layout="null-as-label" key="label.responsible">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
@@ -514,6 +518,10 @@
 
 <schema name="responsiblePerson.name" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name"/>
+</schema>
+
+<schema name="executionYear.year" type="net.sourceforge.fenixedu.domain.ExecutionYear">
+	<slot name="year" />
 </schema>
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"
