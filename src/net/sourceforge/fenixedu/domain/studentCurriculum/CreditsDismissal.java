@@ -49,6 +49,11 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT")).getString("label.group.credits"));
 	return multiLanguageString;
     }
+    
+    @Override
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+        return hasNoEnrolCurricularCourses(curricularCourse) ? this : null;
+    }
 
     @Override
     public void delete() {
