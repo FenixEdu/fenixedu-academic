@@ -1441,7 +1441,7 @@ public class Person extends Person_Base {
     public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
 	List<Person> result = new ArrayList<Person>();
 	for (Person person : persons) {
-	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+	    if (person.getDateOfBirthYearMonthDay() == null || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
 		result.add(person);
 	    }
 	}
