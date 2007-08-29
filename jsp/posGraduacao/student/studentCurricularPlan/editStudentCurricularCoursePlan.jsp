@@ -112,7 +112,7 @@
 			
 			<logic:present name="studentCurricularPlan" property="infoEnrolments">
 				<bean:size id="sizeEnrolments" name="studentCurricularPlan" property="infoEnrolments" />
-
+	
 				<logic:lessEqual name="sizeEnrolments" value="0">
 					<p><h2><bean:message key="message.no.enrolments" /></h2></p>
 				</logic:lessEqual>
@@ -144,8 +144,7 @@
 									<bean:message name="infoEnrolment" property="enrollmentTypeResourceKey" bundle="ENUMERATION_RESOURCES"/>
 								</td>
 								<td>
-									<bean:define id="state" name="infoEnrolment" property="enrollmentState" />
-									<bean:message key="<%= pageContext.findAttribute("state").toString() %>"/>
+									<bean:message name="infoEnrolment" property="enrollmentState.name"/>
 								</td>
 								<td>
 									<bean:write name="infoEnrolment" property="infoExecutionPeriod.infoExecutionYear.year" />&nbsp;
@@ -155,6 +154,14 @@
 									<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal"/>
 									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.extraCurricularCourses" property="extraCurricularCourses"><bean:write name="infoEnrolment" property="idInternal"/> </html:multibox >&nbsp;
 								</td>
+								<td>
+									<logic:equal name="infoEnrolment" property="enrollmentState.name" value="ANNULED">
+										<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal" />
+										<html:link page="<%= "/editStudentCurricularPlan.do?method=enrol&amp;enrolmentID=" + idEnrolment.toString() %>">
+											<bean:message key="label.enrol" bundle="APPLICATION_RESOURCES"/>
+										</html:link>										
+									</logic:equal>
+								</td>								
 							</tr>		
 						</logic:iterate>
 					</table>

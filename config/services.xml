@@ -12292,5 +12292,14 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains />
+    </service>
+    <service>
+    <name>SetEnrolmentState</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.SetEnrolmentState</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
     </service>    
 </serviceDefinitions>

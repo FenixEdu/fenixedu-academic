@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -132,11 +134,23 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
         return mapping.findForward("ShowStudentCurricularCoursePlan");
     }
+    
+    public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+	
+	Enrolment enrolment = (Enrolment) rootDomainObject
+		.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
+	executeService("SetEnrolmentState", enrolment, EnrollmentState.ENROLLED);
+
+	request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
+
+	return prepare(mapping, form, request, response);	
+    }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterString = request.getParameter(parameter);
         if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
+            parameterString = request.getAttribute(parameter).toString();
         }
         return parameterString;
     }
