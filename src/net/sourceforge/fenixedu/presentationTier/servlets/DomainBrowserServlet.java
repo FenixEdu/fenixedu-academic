@@ -172,7 +172,7 @@ public class DomainBrowserServlet extends HttpServlet {
                         }
                     }
                         
-                    out.println("<A HREF=\"listRole?OID=");
+                    out.println("<a href=\"listRole?OID=");
                     out.println(domObj.getOID());
                     out.println("&role=");
                     out.println(role.getName());
@@ -180,7 +180,7 @@ public class DomainBrowserServlet extends HttpServlet {
                     out.println(role.getType().getFullName());
                     out.println("[");
                     out.println(colSize == -1 ? "?" : colSize);
-                    out.println("]</A>");
+                    out.println("]</a>");
                 }
             }
                 
@@ -255,9 +255,9 @@ public class DomainBrowserServlet extends HttpServlet {
         if (last < total) {
             params.start = last + 1;
 
-            out.println("<P><A HREF=\"");
+            out.println("<P><a href=\"");
             out.println(params.buildURL());
-            out.println("\">Show next</A></P>");
+            out.println("\">Show next</a></P>");
 
             params.start = first;
         }
@@ -281,11 +281,11 @@ public class DomainBrowserServlet extends HttpServlet {
     }
 
     protected void renderObjectId(PrintWriter out, DomainObject domObj) throws IOException {
-        out.println("<A HREF=\"showObj?OID=");
+        out.println("<a href=\"showObj?OID=");
         out.println(domObj.getOID());
         out.println("\">");
         out.println(getObjectDescription(domObj));
-        out.println("</A>");
+        out.println("</a>");
     }
 
     protected String getObjectDescription(DomainObject domObj) {
@@ -339,14 +339,14 @@ public class DomainBrowserServlet extends HttpServlet {
         if (domainModel != null) {
             out.println("<UL>\n");
             for (DomainClass domClass : getAllDomainClasses()) {
-                out.println("<LI><A HREF=\"/uml/");
+                out.println("<LI><a href=\"/uml/");
                 out.println(domClass.getFullName());
-                out.println(".html\">UML</A> <A HREF=\"");
+                out.println(".html\">UML</a> <a href=\"");
                 out.println("listAll?domainClass=");
                 out.println(domClass.getFullName());
                 out.println("\">");
                 out.println(domClass.getName());
-                out.println("</A></LI>\n");
+                out.println("</a></LI>\n");
             }
             out.println("</UL>\n");
         } else {
