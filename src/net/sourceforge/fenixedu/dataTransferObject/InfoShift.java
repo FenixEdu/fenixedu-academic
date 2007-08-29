@@ -93,7 +93,7 @@ public class InfoShift extends InfoObject {
     public String toString() {
         return getShift().toString();
     }
-
+  
     public String getLessons() {
         final StringBuilder stringBuilder = new StringBuilder();
 

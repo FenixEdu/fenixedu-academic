@@ -87,7 +87,17 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     public boolean containsIdentification() {	
 	return !StringUtils.isEmpty(getIdentification());
     }   
-           
+    
+    public String getCompleteIdentification() {
+	StringBuilder builder = new StringBuilder();
+	if(containsIdentification()) {
+	    Building building = getSpaceBuilding();	
+	    builder.append(getIdentification()).append(" - ");
+	    builder.append(building != null ? building.getNameWithCampus() : "");
+	}
+	return builder.toString();
+    }
+    
     public static List<AllocatableSpace> readAllAllocatableSpacesByName(String name){
 	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();	
 	String[] identificationWords = getIdentificationWords(name);

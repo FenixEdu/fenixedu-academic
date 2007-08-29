@@ -26,8 +26,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRoom"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<logic:present name="action">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action"
-					 value="<%= pageContext.findAttribute("action").toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%= pageContext.findAttribute("action").toString() %>"/>
 	</logic:present>
 	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
@@ -76,11 +75,26 @@
 	        <th><bean:message key="property.lesson.new.begin.date"/>:</th>
     	    <td>
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="8" maxlength="10"/>        	 	
-        	 	<b><bean:message key="label.until"/></b>
+        	 	<b><bean:message key="label.until"/></b>        	 	
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDate" size="8" maxlength="10"/>
         	 	<bean:message key="property.lesson.new.begin.date.format"/>        	 	        	 
     	    </td> 
 	 	</tr>
+	 	<logic:present name="action">
+		 	<logic:equal name="action" value="edit">			 	 	
+			 	<tr>
+			 		<th><bean:message key="property.lesson.create.previous.instances"/>:</th>
+		    	    <td>		    	    	
+						<b><bean:write name="lesson_" property="nextPossibleLessonInstanceDate" /></b> <bean:message key="label.until"/> <b><bean:message key="label.new.specified.beginDate"/></b>					
+						<p class="mtop05">
+							<bean:message key="option.manager.true"/> <html:radio property="createLessonInstances" value="<%= Boolean.TRUE.toString() %>" disabled="true" />
+							<bean:message key="option.manager.false"/> <html:radio property="createLessonInstances" value="<%= Boolean.FALSE.toString() %>" disabled="true"/>						
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="createLessonInstances"/>								
+						</p>										    	    	    	    	
+		    	    </td>
+			 	</tr>		 
+		 	</logic:equal>
+	 	</logic:present>
 	 	<tr>
 	        <th><bean:message key="property.lesson.period.dates"/>:</th>
     	    <td>

@@ -6989,13 +6989,6 @@ relation JustificationMotiveJustification {
 	}
 }
 
-relation LessonExecutionPeriod {
-	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
-}
-
 relation LessonLessonSpaceOccupation {
 	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
 	net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation playsRole lessonSpaceOccupation;

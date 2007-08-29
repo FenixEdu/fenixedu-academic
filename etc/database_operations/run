@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove TimeStamps" removeTimeStamps.sql

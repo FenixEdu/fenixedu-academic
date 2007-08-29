@@ -22,12 +22,7 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
 	    throw new DomainException("error.allocation.no.space");
 	}	
 	super.setResource(resource);
-    }
-    
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasResource(); 	
-    }    
+    }        
     
     public boolean isSpaceOccupation() {
 	return false;

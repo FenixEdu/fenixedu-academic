@@ -23,11 +23,6 @@ public abstract class Identification extends Identification_Base {
         removeRootDomainObject();
         super.deleteDomainObject();
     }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasUser(); 	
-    }
     
     public boolean isLogin() {
         return false;

@@ -33,13 +33,19 @@ public class Shift extends Shift_Base {
     }
 
     public Shift(final ExecutionCourse executionCourse, List<ShiftType> types, final Integer lotacao) {
+	
 	super();
+	
 	setRootDomainObject(RootDomainObject.getInstance());	
 	shiftTypeManagement(types, executionCourse);
 	setLotacao(lotacao);	
 	Integer availabilityFinal = Integer.valueOf(Double.valueOf(Math.ceil(1.10 * lotacao.doubleValue())).intValue());
 	setAvailabilityFinal(availabilityFinal);
 	executionCourse.setShiftNames();
+	
+	if(!hasAnyCourseLoads()) {
+	    throw new DomainException("error.Shift.empty.courseLoads");
+	}
     }
 
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {	
@@ -65,6 +71,10 @@ public class Shift extends Shift_Base {
 	if(!beforeExecutionCourse.equals(newExecutionCourse)) {
 	    newExecutionCourse.setShiftNames();   
 	}	
+	
+	if(!hasAnyCourseLoads()) {
+	    throw new DomainException("error.Shift.empty.courseLoads");
+	}
     }
 
     public void delete() {
@@ -89,7 +99,7 @@ public class Shift extends Shift_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getAvailabilityFinal() != null && getLotacao() != null && !StringUtils.isEmpty(getNome()) && hasAnyCourseLoads();		 
+	return getAvailabilityFinal() != null && getLotacao() != null && !StringUtils.isEmpty(getNome());		 
     }
 
     @Deprecated

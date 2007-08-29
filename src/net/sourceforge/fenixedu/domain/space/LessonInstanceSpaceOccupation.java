@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -19,12 +20,26 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         
 	super();
         
-	if(allocatableSpace != null && !allocatableSpace.isFree(this)) {
-	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free");
+	ResourceAllocation allocation = allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+	if(allocation != null) {
+	    throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
 	}
 	
 	setResource(allocatableSpace);		
     }
+    
+    public void edit(LessonInstance lessonInstance) {
+	
+	removeLessonInstances(lessonInstance);
+	
+	AllocatableSpace space = (AllocatableSpace) getResource();
+	if(!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
+		lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free");
+	}
+	
+	addLessonInstances(lessonInstance);
+    } 
     
     public void delete() {
 	if(canBeDeleted()) {
@@ -99,5 +114,5 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public Group getAccessGroup() {
 	return null;
-    }              
+    }                
 }

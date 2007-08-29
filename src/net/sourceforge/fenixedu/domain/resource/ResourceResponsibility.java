@@ -49,11 +49,6 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
     }
     
     @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasResource() && hasParty(); 	
-    }
-    
-    @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBegin();
 	final YearMonthDay end = getEnd();	

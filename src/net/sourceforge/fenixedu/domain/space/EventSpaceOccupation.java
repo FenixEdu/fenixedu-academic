@@ -103,7 +103,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	    return true;
 	}
 	
-	if (intersects(occupation.getBeginDate(), occupation.getEndDate())) {                       	   	    	    			   	    
+	if (occupation.isLessonInstanceSpaceOccupation() || occupation.isWrittenEvaluationSpaceOccupation()
+		|| intersects(occupation.getBeginDate(), occupation.getEndDate())) {                       	   	    	    			   	    
 	  
 	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals();
 	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals();			    			    	 

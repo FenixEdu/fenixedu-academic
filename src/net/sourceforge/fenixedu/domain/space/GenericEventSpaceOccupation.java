@@ -31,12 +31,7 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
 	super.setGenericEvent(null);
 	super.delete();
     }
-             
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasGenericEvent();	
-    } 
-    
+                   
     @Override
     public void setGenericEvent(GenericEvent genericEvent) {
 	if(genericEvent == null) {

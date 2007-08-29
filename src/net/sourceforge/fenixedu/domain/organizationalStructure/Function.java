@@ -124,7 +124,7 @@ public class Function extends Function_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasUnit() && !getTypeName().isEmpty(); 	
+	return !getTypeName().isEmpty(); 	
     }
 
     public static Function createVirtualFunction(Unit unit, MultiLanguageString name) {

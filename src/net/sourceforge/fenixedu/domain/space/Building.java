@@ -58,11 +58,8 @@ public class Building extends Building_Base {
     
     public String getNameWithCampus() {
 	Campus campus = getSpaceCampus();
-	if(campus == null) {
-	    return getSpaceInformation().getName();
-	} else {
-	    return getSpaceInformation().getName() + " - (" + getSpaceCampus().getSpaceInformation().getName() + ")";
-	}
+	BuildingInformation spaceInformation = getSpaceInformation();
+	return campus == null ? spaceInformation.getName() : spaceInformation.getName() + " (" + campus.getSpaceInformation().getName() + ")";	
     }
          
     public static List<Building> getActiveBuildingsByNames(List<String> names){

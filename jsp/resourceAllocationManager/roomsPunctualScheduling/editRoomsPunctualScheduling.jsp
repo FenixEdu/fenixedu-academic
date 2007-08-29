@@ -120,7 +120,6 @@
 				</table>
 			</fr:form>
 					
-
 			<logic:notEmpty name="roomsPunctualSchedulingBean" property="rooms">
 				<p class="mbottom025"><b><bean:message key="label.choosed.rooms" bundle="SOP_RESOURCES"/></b></p>
 				<fr:form action="/roomsPunctualScheduling.do?method=removeRoomToEdit">

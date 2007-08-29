@@ -23,7 +23,7 @@ public class EditLesson extends Service {
 
     public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency, 
 	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, 
-	    YearMonthDay newEndDate) throws FenixServiceException {
+	    YearMonthDay newEndDate, Boolean createLessonInstances) throws FenixServiceException {
 
 	InfoLessonServiceResult result = null;
 	Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
@@ -43,7 +43,7 @@ public class EditLesson extends Service {
 
 	    if (result.isSUCESS()) {
 		        
-		aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency);                                            
+		aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances);                                            
 		LessonSpaceOccupation lessonSpaceOccupation = aula.getLessonSpaceOccupation();
 		
 		if(salaNova != null) {

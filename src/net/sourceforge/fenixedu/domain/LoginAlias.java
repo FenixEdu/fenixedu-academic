@@ -91,7 +91,7 @@ public class LoginAlias extends LoginAlias_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasLogin() && getType() != null && !StringUtils.isEmpty(getAlias()); 	
+	return getType() != null && !StringUtils.isEmpty(getAlias()); 	
     }  
 
     @Override

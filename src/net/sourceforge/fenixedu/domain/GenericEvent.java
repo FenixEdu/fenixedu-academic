@@ -301,7 +301,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getTitle() != null && !getTitle().isEmpty() && hasAnyGenericEventSpaceOccupations()
+	return getTitle() != null && !getTitle().isEmpty()
 		&& (getFrequency() == null || !getFrequency().equals(FrequencyType.DAILY) || 
 			(getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSunday() != null));	
     }

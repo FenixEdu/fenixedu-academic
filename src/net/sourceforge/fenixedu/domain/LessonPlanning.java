@@ -36,7 +36,7 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getLessonType() != null && hasExecutionCourse() && getPlanning() != null && !getPlanning().isEmpty()
+	return getLessonType() != null && getPlanning() != null && !getPlanning().isEmpty()
 		&& getTitle() != null && !getTitle().isEmpty() && getOrderOfPlanning() != null;		 
     }
     
@@ -70,6 +70,14 @@ public class LessonPlanning extends LessonPlanning_Base {
 	    throw new DomainException("error.LessonPlanning.no.title");
 	}
 	super.setTitle(title);
+    }
+
+    @Override
+    public void setOrderOfPlanning(Integer orderOfPlanning) {
+	if(orderOfPlanning == null) {
+	    throw new DomainException("error.LessonPlanning.empty.order");
+	}
+	super.setOrderOfPlanning(orderOfPlanning);
     }
     
     public void moveTo(Integer order) {

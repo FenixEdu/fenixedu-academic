@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -101,6 +100,11 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     
     public int compareTo(InfoLesson arg0) {
         return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
+    }
+    
+    public String getNextPossibleLessonInstanceDate() {
+	YearMonthDay day = getLesson().getNextPossibleLessonInstanceDate();
+	return day != null ? day.toString("dd/MM/yyyy") : "-";	
     }
     
     public boolean equals(Object obj) {

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson.InterceptingLessonException;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -84,7 +83,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    request.setAttribute("executionDegreeLessonsEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
 	    manageLessonForm.set("newBeginDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
 	    manageLessonForm.set("newEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
-	
+	    manageLessonForm.set("createLessonInstances", Boolean.TRUE);
+	    
 	} else {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error.executionDegree.empty.lessonsPeriod", new ActionError("error.executionDegree.empty.lessonsPeriod"));
@@ -122,7 +122,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	if(infoLesson.getLessonEnd() != null) {	    
 	    manageLessonForm.set("newEndDate", infoLesson.getLessonEnd().toString("dd/MM/yyyy"));
 	}
-		
+	
+	manageLessonForm.set("createLessonInstances", Boolean.TRUE);
+	
 	Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
 	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();	
 	if(maxLessonsPeriod != null) {
@@ -253,84 +255,6 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
     }
 
-    public ActionForward createLesson(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	DynaActionForm manageLessonForm = (DynaActionForm) form;
-	request.setAttribute("manageLessonForm", manageLessonForm);
-
-	ContextUtils.setExecutionPeriodContext(request);
-	DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) manageLessonForm.get("diaSemana"))));
-
-	Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
-	if (quinzenal == null) {
-	    quinzenal = new Boolean(false);
-	}
-
-	Calendar inicio = Calendar.getInstance();
-	inicio.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaInicio")));
-	inicio.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosInicio")));
-	inicio.set(Calendar.SECOND, 0);
-	
-	Calendar fim = Calendar.getInstance();
-	fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) manageLessonForm.get("horaFim")));
-	fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
-	fim.set(Calendar.SECOND, 0);
-
-	InfoRoom infoSala = null;	
-	if (!StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-	    infoSala = new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
-	} 
-	
-	ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
-
-	if (actionErrors.isEmpty()) {
-
-	    InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
-
-	    InfoRoomOccupationEditor infoRoomOccupation = null;
-	    if (infoSala != null) {
-		infoRoomOccupation = new InfoRoomOccupationEditor();
-		infoRoomOccupation.setDayOfWeek(weekDay);
-		infoRoomOccupation.setEndTime(fim);
-		infoRoomOccupation.setStartTime(inicio);
-		infoRoomOccupation.setInfoRoom(infoSala);
-	    }
-
-	    FrequencyType frequency = null;
-	    Integer weekOfQuinzenalStart = null;
-	  
-	    if (quinzenal.booleanValue()) {		
-		frequency = FrequencyType.BIWEEKLY;				
-	    } else {
-		frequency = FrequencyType.WEEKLY;
-	    }
-	   	  
-	    try {
-		final Object args[] = { weekDay, inicio, fim, frequency, weekOfQuinzenalStart, infoRoomOccupation, infoShift };
-		ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", args);
-
-	    } catch (CreateLesson.InvalidLoadException ex) {
-		if (ex.getMessage().endsWith("REACHED")) {
-		    actionErrors.add("errors.shift.hours.limit.reached", new ActionError("errors.shift.hours.limit.reached"));
-		} else {
-		    actionErrors.add("errors.shift.hours.limit.exceeded", new ActionError("errors.shift.hours.limit.exceeded"));
-		}
-		saveErrors(request, actionErrors);
-		return mapping.getInputForward();
-
-	    } catch (InterceptingLessonException ex) {
-		actionErrors.add("error.intercepting.lesson", new ActionError("error.intercepting.lesson"));
-		saveErrors(request, actionErrors);
-		return mapping.getInputForward();
-	    }
-	    return mapping.findForward("EditShift");
-	}
-	saveErrors(request, actionErrors);
-	return mapping.getInputForward();
-
-    }
-
     public ActionForward createEditLesson(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -341,8 +265,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	
 	DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) manageLessonForm.get("diaSemana"))));	
 	YearMonthDay newBeginDate = getDateFromForm(manageLessonForm, "newBeginDate");
-	YearMonthDay newEndDate = getDateFromForm(manageLessonForm, "newEndDate");
-             	
+	YearMonthDay newEndDate = getDateFromForm(manageLessonForm, "newEndDate");        	             	     
+	
 	Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
 	if (quinzenal == null) {
 	    quinzenal = new Boolean(false);
@@ -381,8 +305,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		infoRoomOccupation.setInfoRoom(infoSala);
 	    }
 
-	    final FrequencyType frequency;
-	    	    
+	    final FrequencyType frequency;	    	   
 	    if (quinzenal.booleanValue()) {		
 		frequency = FrequencyType.BIWEEKLY;					
 	    } else {
@@ -395,13 +318,15 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    
 	    String action = request.getParameter("action");
 	    if (action != null && action.equals("edit")) {
-
+		
 		InfoLesson infoLessonOld = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
-
+		Boolean createLessonInstances = (Boolean) manageLessonForm.get("createLessonInstances");
+		
 		try {
 		    
-		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, 
-			    newBeginDate, newEndDate };		    
+		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, 
+			    infoShift, newBeginDate, newEndDate, createLessonInstances };
+		    
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);
 		    
 		} catch (EditLesson.InvalidLoadException ex) {
@@ -424,6 +349,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		} catch (InvalidTimeIntervalServiceException ex) {
 		    actionErrors.add("error.invalid.time.service", new ActionError("error.invalid.time.service"));
 		    throw new InvalidTimeIntervalActionException(ex);
+		
+		} catch (DomainException domainException) {
+		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+		    saveErrors(request, actionErrors);   
 		}
 
 	    } else {				
@@ -439,6 +368,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		    }
 		    saveErrors(request, actionErrors);
 		    return mapping.getInputForward();
+		
+		}  catch (DomainException domainException) {
+		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
+		    saveErrors(request, actionErrors);   
 		}
 	    }
 

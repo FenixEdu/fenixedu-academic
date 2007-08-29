@@ -331,7 +331,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		if (!rooms.contains(room)) {
 		    roomOccupationsToDelete.add(roomOccupation);		    		    
 		} else {                        	    
-		    roomOccupation.edit();        	    
+		    roomOccupation.edit(this);        	    
 		}
 	    }
 	}                
@@ -371,11 +371,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		WrittenEvaluationSpaceOccupation occupation =
 		    (WrittenEvaluationSpaceOccupation) room.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
 		
-		if(occupation == null) {
-		    occupation = new WrittenEvaluationSpaceOccupation(room);		    
-		} 
+		occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
+		occupation.edit(this);
 		
-		occupation.addWrittenEvaluations(this);
 		newInsertedOccupations.add(occupation);
 	    }
 	}

@@ -42,16 +42,11 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         setIdentification(getNextRequestIdentification());        
     }       
     
-    private void checkIfRequestAlreadyExists(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
-	Set<PunctualRoomsOccupationRequest> requests = requestor.getPunctualRoomsOccupationRequestsSet();
-	for (PunctualRoomsOccupationRequest request : requests) {
-	    PunctualRoomsOccupationComment firstComment = request.getFirstComment();
-	    if(firstComment.getSubject().compareTo(subject) == 0 && firstComment.getDescription().compareTo(description) == 0) {
-		throw new DomainException("error.PunctualRoomsOccupationRequest.request.already.exists");
-	    }
-	}
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getInstant() != null && getIdentification() != null;		
     }
-
+    
     public Integer getNumberOfNewComments(Person person) {		
 	if(person.equals(getOwner())) {
 	    return getCommentsCount() - getEmployeeReadComments();	    
@@ -272,5 +267,15 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    }
 	}
 	return result;
+    }
+    
+    private void checkIfRequestAlreadyExists(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+	Set<PunctualRoomsOccupationRequest> requests = requestor.getPunctualRoomsOccupationRequestsSet();
+	for (PunctualRoomsOccupationRequest request : requests) {
+	    PunctualRoomsOccupationComment firstComment = request.getFirstComment();
+	    if(firstComment.getSubject().compareTo(subject) == 0 && firstComment.getDescription().compareTo(description) == 0) {
+		throw new DomainException("error.PunctualRoomsOccupationRequest.request.already.exists");
+	    }
+	}
     }
 }

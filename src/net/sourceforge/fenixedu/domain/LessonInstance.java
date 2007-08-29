@@ -41,7 +41,9 @@ public class LessonInstance extends LessonInstance_Base {
 	if(lessonInstance != null) {
 	    throw new DomainException("error.lessonInstance.already.exist");
 	}
-			
+	
+	AllocatableSpace room = lesson.getSala();
+	
 	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
 	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();	    
 	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(), beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
@@ -51,18 +53,12 @@ public class LessonInstance extends LessonInstance_Base {
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
 	setLesson(lesson);      
-	editSummaryAndCourseLoad(summary, lesson);
 	
-	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
+	editSummaryAndCourseLoad(summary, lesson);	
+	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));	
+	lessonInstanceSpaceOccupationManagement(room);
 	
-	AllocatableSpace room = lesson.getSala();
-	if(room != null) {	 
-	    lessonInstanceSpaceOccupationManagement(room);
-	}	
-		
-	if(getCourseLoad() != null && getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
-	    throw new DomainException("error.LessonInstance.shift.load.unit.quantity.exceeded");		
-	}
+	checkCourseLoad();
     }
 
     public LessonInstance(Lesson lesson, YearMonthDay day) {
@@ -81,7 +77,9 @@ public class LessonInstance extends LessonInstance_Base {
 	if(lessonInstance != null) {
 	    throw new DomainException("error.lessonInstance.already.exist");
 	}
-			
+	
+	AllocatableSpace room = lesson.getSala();
+	
 	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
 	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();	    
 	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(), beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
@@ -90,12 +88,9 @@ public class LessonInstance extends LessonInstance_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBeginDateTime(beginDateTime);
 	setEndDateTime(endDateTime);
-	setLesson(lesson); 	
-		
-	AllocatableSpace room = lesson.getSala();
-	if(room != null) {
-	    lessonInstanceSpaceOccupationManagement(room);
-	}	
+	setLesson(lesson);
+				
+	lessonInstanceSpaceOccupationManagement(room);	
     }    
 
     public void delete() {	
@@ -125,6 +120,15 @@ public class LessonInstance extends LessonInstance_Base {
 	setCourseLoad(courseLoad);		
     } 
     
+    private void checkCourseLoad() {
+	if(!hasCourseLoad()) {
+	    throw new DomainException("error.LessonInstance.empty.courseLoad");
+	}
+	if(getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
+	    throw new DomainException("error.LessonInstance.shift.load.unit.quantity.exceeded");		
+	}	
+    }
+    
     private int getUnitMinutes() {	
 	return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
     }
@@ -143,21 +147,15 @@ public class LessonInstance extends LessonInstance_Base {
 	final DateTime end = getEndDateTime();
 	return start != null && end != null && start.isBefore(end);
     }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasLesson() && (!hasSummary() || hasCourseLoad());	
-    }
     
-    private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
-	LessonInstanceSpaceOccupation instanceSpaceOccupation = 
-	    (LessonInstanceSpaceOccupation) space.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
-	
-	if(instanceSpaceOccupation == null) {		
-	    instanceSpaceOccupation = new LessonInstanceSpaceOccupation(space);
+    private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {	
+	if(space != null) {
+	    LessonInstanceSpaceOccupation instanceSpaceOccupation = 
+		(LessonInstanceSpaceOccupation) space.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+
+	    instanceSpaceOccupation = instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space) : instanceSpaceOccupation;	
+	    instanceSpaceOccupation.edit(this);
 	}
-	
-	instanceSpaceOccupation.addLessonInstances(this);
     }
                   
     @Override

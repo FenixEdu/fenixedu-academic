@@ -85,9 +85,10 @@
         	 	<bean:message key="label.until"/>
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.new.end.date" property="newEndDate" size="8" disabled="true"/>
         	 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="newEndDate"/>
+        	 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="createLessonInstances"/>
     	    </td> 
-	 	</tr>		 	 
-	    <tr>
+	 	</tr>	   
+	 	<tr>
     		<th><bean:message key="property.aula.sala"/>: </th> 
        		<td>
      			<html:select bundle="HTMLALT_RESOURCES" altKey="select.nomeSala" property="nomeSala" size="1" >

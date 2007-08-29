@@ -33,6 +33,12 @@
 	</p>
 </logic:messagesPresent>
 
+<fr:hasMessages for="courseLoadBeanID" type="conversion">
+	<p><span class="error0">			
+		<fr:message for="courseLoadBeanID" show="message"/>
+	</span></p>
+</fr:hasMessages>	
+	
 <logic:notEmpty name="courseLoadBean">
 	<logic:notEmpty name="courseLoadBean" property="executionCourse">
 	
@@ -59,7 +65,7 @@
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 vamiddle thright thlight mtop05" />				
 				</fr:layout>				
-				<fr:destination name="invalid" path="/manageExecutionCourse.do?method=preparePostBack"/>
+				<fr:destination name="invalid" path="/manageExecutionCourse.do?method=showCourseLoad"/>
 			</fr:edit>
 			<html:submit><bean:message key="label.submit"/></html:submit>
 		</fr:form>

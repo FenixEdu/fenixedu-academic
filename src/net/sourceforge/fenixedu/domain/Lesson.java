@@ -33,6 +33,8 @@ import org.joda.time.YearMonthDay;
 public class Lesson extends Lesson_Base {
 
     public static int NUMBER_OF_MINUTES_IN_HOUR = 60;
+    public static int NUMBER_OF_DAYS_IN_WEEK = 7;
+
     public static final Comparator<Lesson> LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
     static {
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("diaSemana.diaSemana"));
@@ -41,8 +43,9 @@ public class Lesson extends Lesson_Base {
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency, ExecutionPeriod executionPeriod) {
+
 	super();
-	
+
 	OccupationPeriod period = null;
 	if(shift != null) {
 	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
@@ -57,19 +60,19 @@ public class Lesson extends Lesson_Base {
 	setInicio(inicio);
 	setFim(fim);	
 	setShift(shift);
-	setFrequency(frequency);	
-	setExecutionPeriod(executionPeriod);
+	setFrequency(frequency);		
 	setPeriod(period);
 
 	checkShiftLoad(shift);	
     }
 
-    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, FrequencyType frequency) {			
+    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
+	    FrequencyType frequency, Boolean createLessonInstances) {			
 
 	if(wasFinished()) {
 	    throw new DomainException("error.Lesson.already.finished");
 	}
-	
+
 	if(newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
 	    throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
 	}
@@ -82,7 +85,11 @@ public class Lesson extends Lesson_Base {
 	    throw new DomainException("error.invalid.new.end.date");
 	}
 
-	refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate);
+	refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances, maxLessonsPeriod);
+
+	if(wasFinished() && (hasLessonSpaceOccupation() || !hasAnyLessonInstances())) {
+	    throw new DomainException("error.Lesson.empty.period");
+	}	
 
 	setDiaSemana(diaSemana);
 	setInicio(inicio);
@@ -120,24 +127,38 @@ public class Lesson extends Lesson_Base {
 	    getLessonInstances().get(0).delete();
 	}
 
-	removeExecutionPeriod();	
-	removeShift();	
+	super.setShift(null);	
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
-    public boolean wasFinished() {
-	return !hasPeriod();
+    @Override
+    public void setShift(Shift shift) {
+	if (shift == null) {
+	    throw new DomainException("error.Lesson.empty.shift");
+	}
+	super.setShift(shift);
     }
-    
-    public ExecutionCourse getExecutionCourse() {
-	return getShift().getExecutionCourse();
+
+    @Override
+    public void setFrequency(FrequencyType frequency) {
+	if (frequency == null) {
+	    throw new DomainException("error.Lesson.empty.type");
+	}
+	super.setFrequency(frequency);
+    }
+
+    @Override
+    public void setPeriod(OccupationPeriod period) {
+	if (period == null) {
+	    throw new DomainException("error.Lesson.empty.period");
+	}
+	super.setPeriod(period);
     }
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return (!hasLessonSpaceOccupation() && hasAnyLessonInstances() || hasPeriod())
-		&& getFrequency() != null && getDiaSemana() != null && hasExecutionPeriod() && hasShift();		 
+	return getFrequency() != null && getDiaSemana() != null;		 
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -147,10 +168,22 @@ public class Lesson extends Lesson_Base {
 	return start != null && end != null && start.isBefore(end);
     }
 
+    public boolean wasFinished() {
+	return !hasPeriod();
+    }
+
+    public ExecutionCourse getExecutionCourse() {
+	return getShift().getExecutionCourse();
+    }
+
+    public ExecutionPeriod getExecutionPeriod() {
+	return getShift().getExecutionPeriod();
+    }
+
     public AllocatableSpace getSala() {	
-	if(hasLessonSpaceOccupation()) {
+	if(hasLessonSpaceOccupation()) {	    
 	    return getLessonSpaceOccupation().getRoom();
-	} else if(hasAnyLessonInstances() && wasFinished()){
+	} else if(hasAnyLessonInstances() && wasFinished()){	    
 	    return getLastLessonInstance().getRoom();
 	}		
 	return null;
@@ -161,44 +194,47 @@ public class Lesson extends Lesson_Base {
     }
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
-	if(hasPeriod()) {	    
-	    OccupationPeriod currentPeriod = getPeriod();	    		    
-	    if(newBeginDate != null && newBeginDate.isAfter(currentPeriod.getStartYearMonthDay())) {						
-		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
-		refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(), currentPeriod);	    				
-	    }
+	if(!wasFinished() && newBeginDate != null && newBeginDate.isAfter(getPeriod().getStartYearMonthDay())) {						
+	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);
+	    refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    		
+	    createAllLessonInstances(instanceDates);
+	}
+    }
+   
+    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate, 
+	    Boolean createLessonInstances, GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod) {
+				
+	if(!wasFinished()) {
+	    removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	    
+	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
+	    refreshPeriod(newBeginDate, newEndDate);
+	    createAllLessonInstances(instanceDates);
 	}
     }
 
-    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate) {
-	if(hasPeriod()) {	    
-	    OccupationPeriod currentPeriod = getPeriod();	    		    
-	    if(newBeginDate != null && newEndDate != null && newBeginDate.isBefore(newEndDate)) {					
-		removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);				
-		createAllLessonInstancesUntil(newBeginDate.minusDays(1));
-		refreshPeriod(newBeginDate, newEndDate, currentPeriod);	    				
-	    }
-	}
+    private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates) {
+	for (YearMonthDay day : instanceDates) {
+	    new LessonInstance(this, day);
+	}	
     }
-
-    private void createAllLessonInstancesUntil(YearMonthDay day) {	
-	if(day != null) {
-	    
-	    SortedSet<YearMonthDay> allLessonDatesBeforeRefreshPeriod = getAllLessonDatesUntil(day);	    	    
-	
-	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(day);	    
-	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
-		allLessonDatesBeforeRefreshPeriod.remove(lessonInstance.getDay());
-	    }	    	   
-	    
-	    for (YearMonthDay dateToCreate : allLessonDatesBeforeRefreshPeriod) {		
-		new LessonInstance(this, dateToCreate);		
-	    }	    	   
-	}
-    }  
     
+    private SortedSet<YearMonthDay> getAllLessonInstancesDatesToCreate(YearMonthDay startDate, YearMonthDay endDate, Boolean createLessonInstances) {	
+	
+	if(startDate != null && endDate != null && !startDate.isAfter(endDate) && createLessonInstances) {	    	    
+	    
+	    SortedSet<YearMonthDay> possibleLessonDates = getAllValidLessonDatesWithoutInstancesDates(startDate, endDate);	    	    
+	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(endDate);	    
+	    
+	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
+		possibleLessonDates.remove(lessonInstance.getDay());
+	    }	    
+	    return possibleLessonDates;
+	}	
+	return new TreeSet<YearMonthDay>();
+    }  
+
     private void removeExistentInstancesWithoutSummaryAfterOrEqual(YearMonthDay newBeginDate) {				   
-	Map<Boolean, List<LessonInstance>> instances = getLessonInstancesWithOrWithoutSummaryAfterOrEqual(newBeginDate);
+	Map<Boolean, List<LessonInstance>> instances = getLessonInstancesAfterOrEqual(newBeginDate);	
 	if(instances.get(Boolean.TRUE).isEmpty()) {
 	    List<LessonInstance> instancesWithoutSummary = instances.get(Boolean.FALSE);
 	    for (Iterator<LessonInstance> iter = instancesWithoutSummary.iterator(); iter.hasNext();) {
@@ -207,78 +243,90 @@ public class Lesson extends Lesson_Base {
 		instance.delete();
 	    }	    
 	} else {
-	    throw new DomainException("error.invalid.new.begin.date");
+	    throw new DomainException("error.Lesson.invalid.new.begin.date");
 	}	
     }
 
-    private Map<Boolean, List<LessonInstance>> getLessonInstancesWithOrWithoutSummaryAfterOrEqual(YearMonthDay afterDate){
+    private Map<Boolean, List<LessonInstance>> getLessonInstancesAfterOrEqual(YearMonthDay day){
 
 	Map<Boolean, List<LessonInstance>> result = new HashMap<Boolean, List<LessonInstance>>();
 	result.put(Boolean.TRUE, new ArrayList<LessonInstance>());
 	result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
 
-	List<LessonInstance> lessonInstances = getLessonInstances();
-	for (LessonInstance lessonInstance : lessonInstances) {
-	    if(lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(afterDate)) {
-		List<LessonInstance> list = result.get(Boolean.TRUE);
-		list.add(lessonInstance);
-	    } else if(!lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(afterDate)) {
-		List<LessonInstance> list = result.get(Boolean.FALSE);
-		list.add(lessonInstance);
-	    }
-	}	
+	if(day != null) {	
+	    List<LessonInstance> lessonInstances = getLessonInstances();
+	    for (LessonInstance lessonInstance : lessonInstances) {
+		if(lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
+		    List<LessonInstance> list = result.get(Boolean.TRUE);
+		    list.add(lessonInstance);
+		} else if(!lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
+		    List<LessonInstance> list = result.get(Boolean.FALSE);
+		    list.add(lessonInstance);
+		}
+	    }	
+	}
+	
 	return result;
     }
 
-    private void refreshPeriod(YearMonthDay newBeginDate, YearMonthDay newEndDate, OccupationPeriod currentPeriod) {	
+    private void refreshPeriod(YearMonthDay newBeginDate, YearMonthDay newEndDate) {	
 
-	if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {								
-	    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));			
+	if(!wasFinished() && newBeginDate != null && newEndDate != null && !newBeginDate.isAfter(newEndDate)) {
 
-	} else if (currentPeriod.hasNextPeriod()){				
+	    OccupationPeriod currentPeriod = getPeriod();
+	    
+	    if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {								
+		setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));			
 
-	    OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();		
+	    } else if (currentPeriod.hasNextPeriod()){				
 
-	    if(!currentNextPeriod.getStartYearMonthDay().isAfter(newEndDate)) {
-		
-		if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
-		    setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay(), newEndDate));		    		
+		OccupationPeriod currentNextPeriod = currentPeriod.getNextPeriod();			
+		if(!currentNextPeriod.getStartYearMonthDay().isAfter(newEndDate)) {
 		    
-		} else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
-		    setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate, newEndDate));    
+		    if(!currentNextPeriod.getStartYearMonthDay().isBefore(newBeginDate)) {		
+			setPeriod(getNewNestedPeriods(currentNextPeriod, currentNextPeriod.getStartYearMonthDay(), newEndDate));		    		
+
+		    } else if(!currentNextPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {
+			setPeriod(getNewNestedPeriods(currentNextPeriod, newBeginDate, newEndDate));    
+		    }
+
+		} else {
+		    removeLessonSpaceOccupationAndPeriod();
 		}
-		
-	    } else {
+	    } else {		
 		removeLessonSpaceOccupationAndPeriod();
-	    }
-	} else {		
-	    removeLessonSpaceOccupationAndPeriod();
-	}	
-	currentPeriod.delete();
+	    }		    
+	    currentPeriod.delete();
+	}
     }
 
     private void removeLessonSpaceOccupationAndPeriod() {
 	if(hasLessonSpaceOccupation()) {
 	    getLessonSpaceOccupation().delete();
 	}
-	setPeriod(null);
+	super.setPeriod(null);
     } 
 
     private OccupationPeriod getNewNestedPeriods(OccupationPeriod currentPeriod, YearMonthDay newBeginDate, YearMonthDay newEndDate) {	
+	
 	if(!currentPeriod.getEndYearMonthDay().isBefore(newEndDate)) {
 	    return new OccupationPeriod(newBeginDate, newEndDate); 
+	
 	} else {	    
 	    OccupationPeriod newPeriod = new OccupationPeriod(newBeginDate, currentPeriod.getEndYearMonthDay());
 	    OccupationPeriod newPeriodPointer = newPeriod;	    
+	  
 	    while(currentPeriod.hasNextPeriod()) {			
+		
 		if(currentPeriod.getNextPeriod().getStartYearMonthDay().isAfter(newEndDate)) {
 		    break;
 		}		
+		
 		if(!currentPeriod.getNextPeriod().getEndYearMonthDay().isBefore(newEndDate)) {		    
 		    OccupationPeriod newNextPeriod = new OccupationPeriod(currentPeriod.getNextPeriod().getStartYearMonthDay(), newEndDate);
 		    newPeriodPointer.setNextPeriod(newNextPeriod);
 		    break;		    
-		
+
 		} else {
 		    OccupationPeriod newNextPeriod = new OccupationPeriod(
 			    currentPeriod.getNextPeriod().getStartYearMonthDay(), 
@@ -290,40 +338,6 @@ public class Lesson extends Lesson_Base {
 	    }
 	    return newPeriod;
 	}		
-    }
-
-    public Calendar getInicio() {
-	if (this.getBegin() != null) {
-	    Calendar result = Calendar.getInstance();
-	    result.setTime(this.getBegin());
-	    return result;
-	}
-	return null;
-    }
-
-    public void setInicio(Calendar inicio) {
-	if (inicio != null) {
-	    this.setBegin(inicio.getTime());
-	} else {
-	    this.setBegin(null);
-	}
-    }
-
-    public Calendar getFim() {
-	if (this.getEnd() != null) {
-	    Calendar result = Calendar.getInstance();
-	    result.setTime(this.getEnd());
-	    return result;
-	}
-	return null;
-    }
-
-    public void setFim(Calendar fim) {
-	if (fim != null) {
-	    this.setEnd(fim.getTime());
-	} else {
-	    this.setEnd(null);
-	}
     }
 
     public LessonSpaceOccupation getRoomOccupation() {
@@ -349,13 +363,13 @@ public class Lesson extends Lesson_Base {
     public double hoursAfter(int hour) {
 
 	HourMinuteSecond afterHour = new HourMinuteSecond(hour, 0, 0);
-	
+
 	if(!getBeginHourMinuteSecond().isBefore(afterHour)) {
 	    return getUnitHours().doubleValue();
 
 	} else if(getEndHourMinuteSecond().isAfter(afterHour)) {
 	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes()).
-	    	divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR)).doubleValue();	    
+	    divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR)).doubleValue();	    
 	}
 
 	return 0.0;
@@ -396,18 +410,14 @@ public class Lesson extends Lesson_Base {
     public boolean isTimeValidToInsertSummary(HourMinuteSecond timeToInsert, YearMonthDay summaryDate) {	
 
 	YearMonthDay currentDate = new YearMonthDay();	
-	if(summaryDate == null || summaryDate.isAfter(currentDate)) {
+	if(timeToInsert == null || summaryDate == null || summaryDate.isAfter(currentDate)) {
 	    return false;
 	}
 
 	if(currentDate.isEqual(summaryDate)) {	    	    
 	    HourMinuteSecond lessonEndTime = null;
 	    LessonInstance lessonInstance = getLessonInstanceFor(summaryDate);	
-	    if(lessonInstance != null) {
-		lessonEndTime = lessonInstance.getEndTime();
-	    } else {
-		lessonEndTime = getEndHourMinuteSecond();	    
-	    }
+	    lessonEndTime = lessonInstance != null ? lessonInstance.getEndTime() : getEndHourMinuteSecond();	    	    
 	    return !lessonEndTime.isAfter(timeToInsert);
 	}
 
@@ -421,33 +431,39 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay getLessonStartDay() {	
-	if(hasPeriod()) {	    
-	    YearMonthDay periodBegin = getPeriod().getStartYearMonthDay();
-	    YearMonthDay lessonBegin = periodBegin.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana()
-		    .getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
-	    if(lessonBegin.isBefore(periodBegin)) {
-		lessonBegin = lessonBegin.plusDays(7);
-	    }     
-	    return lessonBegin;
+	if(!wasFinished()) {	    
+	    YearMonthDay periodBegin = getPeriod().getStartYearMonthDay();	    
+	    return getValidBeginDate(periodBegin);	    
 	}	
 	return null;	
     }
 
     private YearMonthDay getLessonEndDay() {	
-	if(hasPeriod()) {
+	if(!wasFinished()) {
 	    YearMonthDay periodEnd = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();
-	    YearMonthDay lessonEnd = periodEnd.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().
-		    getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
-	    if(lessonEnd.isAfter(periodEnd)) {
-		lessonEnd = lessonEnd.minusDays(7);
-	    } 
-	    return lessonEnd;
+	    return getValidEndDate(periodEnd);
 	} 
 	return null;	
     }
 
-    private Campus getLessonCampus() {	
-	if(hasPeriod()) {
+    private YearMonthDay getValidBeginDate(YearMonthDay startDate) {
+	YearMonthDay lessonBegin = startDate.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	if(lessonBegin.isBefore(startDate)) {
+	    lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
+	}
+	return lessonBegin;
+    }
+
+    private YearMonthDay getValidEndDate(YearMonthDay endDate) {
+	YearMonthDay lessonEnd = endDate.toDateTimeAtMidnight().withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	if(lessonEnd.isAfter(endDate)) {
+	    lessonEnd = lessonEnd.minusDays(NUMBER_OF_DAYS_IN_WEEK);
+	}
+	return lessonEnd;
+    }
+
+    public Campus getLessonCampus() {	
+	if(!wasFinished()) {
 	    return hasSala() ? getSala().getSpaceCampus() : null;
 	} else {
 	    LessonInstance lastLessonInstance = getLastLessonInstance();
@@ -459,35 +475,23 @@ public class Lesson extends Lesson_Base {
     public YearMonthDay getNextPossibleSummaryDate() {
 
 	YearMonthDay currentDate = new YearMonthDay();
+	HourMinuteSecond now = new HourMinuteSecond();
 	Summary lastSummary = getLastSummary();
 
 	if (lastSummary != null) {
-
-	    boolean foundDate = false;
-	    HourMinuteSecond now = new HourMinuteSecond();	    
-	    YearMonthDay lastSummaryDate = lastSummary.getSummaryDateYearMonthDay();	    	
-	    SortedSet<YearMonthDay> datesEvenToday = getAllLessonDatesUntil(currentDate);
-
-	    for (YearMonthDay lessonDate : datesEvenToday) {
-		if(foundDate) {
-		    if(isTimeValidToInsertSummary(now, lessonDate)) {
-			return lessonDate;
-		    } 
-		    break;
-		}
-		if(lessonDate.isEqual(lastSummaryDate)) {
-		    foundDate = true;
-		}
+	    
+	    SortedSet<YearMonthDay> datesEvenToday = getAllLessonDatesUntil(currentDate);    	   	    
+	    SortedSet<YearMonthDay> possibleDates = datesEvenToday.tailSet(lastSummary.getSummaryDateYearMonthDay());
+	    
+	    possibleDates.remove(lastSummary.getSummaryDateYearMonthDay());
+	    if(!possibleDates.isEmpty()) {		
+		YearMonthDay nextPossibleDate = possibleDates.first();
+		return isTimeValidToInsertSummary(now, nextPossibleDate) ? nextPossibleDate : null;
 	    }
-
+	    
 	} else {	
-	    YearMonthDay nextPossibleDate = null;
-	    if(hasAnyLessonInstances()) {
-		nextPossibleDate = getFirstLessonInstance().getDay();
-	    } else {
-		nextPossibleDate = getLessonStartDay();
-	    }	    
-	    return (nextPossibleDate.isAfter(currentDate)) ? null : nextPossibleDate;
+	    YearMonthDay nextPossibleDate = hasAnyLessonInstances() ? getFirstLessonInstance().getDay() : getLessonStartDay();	   	 
+	    return isTimeValidToInsertSummary(now, nextPossibleDate) ? nextPossibleDate : null;
 	}
 
 	return null;
@@ -516,42 +520,43 @@ public class Lesson extends Lesson_Base {
 
     public SortedSet<YearMonthDay> getAllLessonDatesWithoutInstanceDates() {
 	SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();	
-	if(hasPeriod()) {	   	    
+	if(!wasFinished()) {	 
+	    YearMonthDay startDateToSearch = getLessonStartDay();
 	    YearMonthDay endDateToSearch = getLessonEndDay();
-	    dates.addAll(getAllValidLessonDatesUntil(endDateToSearch));
+	    dates.addAll(getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch));
 	}	
 	return dates;
     }
 
     public SortedSet<YearMonthDay> getAllLessonDates() {
 	SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();	
-	if(hasPeriod()) {	   	    
+	if(!wasFinished()) {	   	    
+	    YearMonthDay startDateToSearch = getLessonStartDay();
 	    YearMonthDay endDateToSearch = getLessonEndDay();
-	    dates.addAll(getAllValidLessonDatesUntil(endDateToSearch));
+	    dates.addAll(getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch));
 	}	
 	return dates;
     }
 
     public int getFinalNumberOfLessonInstances() {
 	int count = getLessonInstancesCount();
-	if(hasPeriod()) {	   	    
+	if(!wasFinished()) {	   	    
+	    YearMonthDay startDateToSearch = getLessonStartDay();
 	    YearMonthDay endDateToSearch = getLessonEndDay();	    	   
-	    count += getAllValidLessonDatesUntil(endDateToSearch).size();
+	    count += getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch).size();
 	}		
 	return count;
     }
 
     private SortedSet<YearMonthDay> getAllLessonDatesUntil(YearMonthDay day) {			
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();				
-
 	if(day != null) {	  	    
-
 	    result.addAll(getAllLessonInstanceDatesUntil(day));
-
-	    if(hasPeriod() && !getLessonStartDay().isAfter(day)) {
+	    if(!wasFinished()) {
+		YearMonthDay startDateToSearch = getLessonStartDay();
 		YearMonthDay lessonEndDay = getLessonEndDay();	
 		YearMonthDay endDateToSearch = (lessonEndDay.isAfter(day)) ? day : lessonEndDay;		    
-		result.addAll(getAllValidLessonDatesUntil(endDateToSearch));
+		result.addAll(getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch));
 	    }	    	   	    
 	}
 	return result;
@@ -590,17 +595,16 @@ public class Lesson extends Lesson_Base {
 	return result;
     }  
 
-    private SortedSet<YearMonthDay> getAllValidLessonDatesUntil(YearMonthDay endDateToSearch) {			
-
+    private SortedSet<YearMonthDay> getAllValidLessonDatesWithoutInstancesDates(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {			
+	
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();	
-	YearMonthDay startDateToSearch = getLessonStartDay();
-
-	if (hasPeriod() && !startDateToSearch.isAfter(endDateToSearch)) {	    		    	    
-
-	    Campus lessonCampus = getLessonCampus();	    
+	startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
+	
+	if (!wasFinished() && startDateToSearch != null && endDateToSearch != null && !startDateToSearch.isAfter(endDateToSearch)) {
+	  
+	    Campus lessonCampus = getLessonCampus();
 	    while (true) {
-		if (!Holiday.isHoliday(startDateToSearch, lessonCampus) 
-			&& getPeriod().nestedOccupationPeriodsContainsDay(startDateToSearch)) {
+		if (isDayValid(startDateToSearch, lessonCampus)) {
 		    result.add(startDateToSearch);
 		}		
 		startDateToSearch = startDateToSearch.plusDays(getNumberOfDaysToSumBetweenTwoLessons());
@@ -611,7 +615,26 @@ public class Lesson extends Lesson_Base {
 	}	
 	return result;
     }
+    
+    private boolean isDayValid(YearMonthDay day, Campus lessonCampus) {	
+	return !Holiday.isHoliday(day, lessonCampus) && getPeriod().nestedOccupationPeriodsContainsDay(day);
+    }
 
+    public YearMonthDay getNextPossibleLessonInstanceDate() {
+		
+	SortedSet<YearMonthDay> allLessonDates = getAllLessonDates();
+	LessonInstance lastLessonInstance = getLastLessonInstance();
+	
+	if(lastLessonInstance != null) {
+	    YearMonthDay day = lastLessonInstance.getDay();
+	    SortedSet<YearMonthDay> nextLessonDates = allLessonDates.tailSet(day);
+	    nextLessonDates.remove(day);
+	    return nextLessonDates.isEmpty() ? null : nextLessonDates.first();
+	}		
+	
+	return allLessonDates.isEmpty() ? null : allLessonDates.first();
+    }
+    
     public LessonInstance getLastLessonInstance() {
 	SortedSet<LessonInstance> result = new TreeSet<LessonInstance>(LessonInstance.COMPARATOR_BY_BEGIN_DATE_TIME);	
 	result.addAll(getLessonInstances());
@@ -695,31 +718,33 @@ public class Lesson extends Lesson_Base {
     private void checkShiftLoad(Shift shift) {
 
 	if(shift != null) { 
-	   
+
 	    List<CourseLoad> courseLoads = shift.getCourseLoads();
 
 	    if(courseLoads.size() == 1) {
 
 		CourseLoad courseLoad = courseLoads.get(0);
-		if(getUnitHours().compareTo(courseLoad.getUnitQuantity()) != 0) {
-		    throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded");
-		}		
 		
-		BigDecimal totalHours = shift.getTotalHours();
-		if(totalHours.compareTo(courseLoad.getTotalQuantity()) == 1) {
-		    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded");
+		if(getUnitHours().compareTo(courseLoad.getUnitQuantity()) != 0) {		    		   
+		    throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded", 
+			    getUnitHours().toString(), courseLoad.getUnitQuantity().toString());
+		}		
+
+		if(shift.getTotalHours().compareTo(courseLoad.getTotalQuantity()) == 1) {
+		    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded",
+			    shift.getTotalHours().toString(), courseLoad.getTotalQuantity().toString());
 		}
 
 	    } else if(courseLoads.size() > 1){
-		
+
 		boolean unitValid = false, totalValid = false;
 		BigDecimal lessonHours = getUnitHours();
 		BigDecimal totalHours = shift.getTotalHours();
-		
+
 		for (CourseLoad courseLoad : courseLoads) {		    
 		    unitValid = false;
 		    totalValid = false;		    
-		    		   
+
 		    if(lessonHours.compareTo(courseLoad.getUnitQuantity()) == 0) {
 			unitValid = true;			
 		    }		    		    		    
@@ -730,11 +755,45 @@ public class Lesson extends Lesson_Base {
 			}
 		    }
 		}
-		
+
 		if(!totalValid || !unitValid) {
 		    throw new DomainException("error.Lesson.shift.load.exceeded");
 		}
 	    }
+	}
+    }
+
+    public Calendar getInicio() {
+	if (this.getBegin() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getBegin());
+	    return result;
+	}
+	return null;
+    }
+
+    public void setInicio(Calendar inicio) {
+	if (inicio != null) {
+	    this.setBegin(inicio.getTime());
+	} else {
+	    this.setBegin(null);
+	}
+    }
+
+    public Calendar getFim() {
+	if (this.getEnd() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getEnd());
+	    return result;
+	}
+	return null;
+    }
+
+    public void setFim(Calendar fim) {
+	if (fim != null) {
+	    this.setEnd(fim.getTime());
+	} else {
+	    this.setEnd(null);
 	}
     }
 }

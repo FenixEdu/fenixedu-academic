@@ -26,22 +26,9 @@ public class Invitation extends Invitation_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(new BeanComparator("beginDate")));
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-
-    public static AccountabilityType getInvitationAccountabilityType() {
-	return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
-    }
-
-    public static int nextUserIDForInvitedPerson() {
-	final UsernameCounter usernameCounter = RootDomainObject.getInstance().getUsernameCounter();
-	final int nextUserID = usernameCounter.getInvitationCounter().intValue();
-	usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
-	if (nextUserID > MAX_USER_UID) {
-	    throw new DomainException("error.invitation.uid.pool.exhausted");
-	}
-	return nextUserID;
-    }
-
+    
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
+	
 	super();
 	
 	AccountabilityType accountabilityType = getInvitationAccountabilityType();
@@ -67,12 +54,7 @@ public class Invitation extends Invitation_Base {
 	super.setBeginDate(beginDate);
 	super.setEndDate(endDate);
     }
-    
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return hasResponsible(); 	
-    }
-    
+        
     @Override
     public void setChildParty(Party childParty) {
         if(!childParty.isPerson()) {
@@ -171,5 +153,19 @@ public class Invitation extends Invitation_Base {
 	} else {
 	    new LoginPeriod(newBeginDate, newEndDate, getInvitedPerson().getLoginIdentification());
 	}
+    }
+    
+    public static AccountabilityType getInvitationAccountabilityType() {
+	return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
+    }
+
+    public static int nextUserIDForInvitedPerson() {
+	final UsernameCounter usernameCounter = RootDomainObject.getInstance().getUsernameCounter();
+	final int nextUserID = usernameCounter.getInvitationCounter().intValue();
+	usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
+	if (nextUserID > MAX_USER_UID) {
+	    throw new DomainException("error.invitation.uid.pool.exhausted");
+	}
+	return nextUserID;
     }
 }

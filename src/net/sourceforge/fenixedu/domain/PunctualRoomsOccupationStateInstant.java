@@ -24,6 +24,11 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
         setInstant(instant);
     }
 
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getRequestState() != null && getInstant() != null;
+    }
+    
     @Override
     public void setRequest(PunctualRoomsOccupationRequest request) {
 	if(request == null) {

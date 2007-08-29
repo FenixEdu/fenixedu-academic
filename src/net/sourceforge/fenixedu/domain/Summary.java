@@ -68,8 +68,8 @@ public class Summary extends Summary_Base {
 	setSummaryText(summaryText);	
 	setIsExtraLesson(isExtraLesson);
 
-	checkSpecialParameters(isExtraLesson, professorship, teacherName, teacher, lesson, hour);	
-	checkIfInternalTeacherHasProfessorhipInExecutionCourse(teacher, shift.getDisciplinaExecucao());
+	checkSpecialParameters(isExtraLesson, professorship, teacherName, teacher, lesson, hour, type);	
+	checkIfInternalTeacherHasProfessorhipInExecutionCourse(teacher, shift.getExecutionCourse());
 	checkIfSummaryDateIsValid(day, shift.getExecutionPeriod(), lesson, isExtraLesson);
 
 	setStudentsNumber(studentsNumber);	
@@ -88,7 +88,10 @@ public class Summary extends Summary_Base {
 	    setRoom(lesson.getSala());
 	    setSummaryHourHourMinuteSecond(lesson.getBeginHourMinuteSecond());
 	    lessonInstanceManagement(lesson, day, lesson.getSala());
-	}
+	    if(!hasLessonInstance()) {
+		throw new DomainException("error.Summary.empty.LessonInstances");
+	    }
+	}				
     }
 
     public void delete() {
@@ -104,10 +107,9 @@ public class Summary extends Summary_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return hasShift() && hasExecutionCourse() && (hasTeacher() || hasProfessorship() || !StringUtils.isEmpty(getTeacherName()))
-	&& !getTitle().isEmpty() && !getSummaryText().isEmpty() && getSummaryDateYearMonthDay() != null
-	&& getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null 
-	&& (getIsExtraLesson() || (hasLessonInstance() && getSummaryType() != null));	
+	return getTitle() != null && !getTitle().isEmpty() && getSummaryText() != null 
+	&& !getSummaryText().isEmpty() && getSummaryDateYearMonthDay() != null
+	&& getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null;	
     }
 
     private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {		
@@ -211,7 +213,7 @@ public class Summary extends Summary_Base {
     }
 
     private void checkSpecialParameters(Boolean isExtraLesson, Professorship professorship, String teacherName, 
-	    Teacher teacher, Lesson lesson, Partial hour) {
+	    Teacher teacher, Lesson lesson, Partial hour, ShiftType type) {
 
 	if (professorship == null && StringUtils.isEmpty(teacherName) && teacher == null) {
 	    throw new DomainException("error.summary.no.teacher");
@@ -223,6 +225,9 @@ public class Summary extends Summary_Base {
 	} else {
 	    if (lesson == null) {
 		throw new DomainException("error.summary.no.lesson");
+	    }
+	    if (type == null) {
+		throw new DomainException("error.summary.no.shifType");
 	    }
 	}
     }
@@ -264,7 +269,7 @@ public class Summary extends Summary_Base {
 	    setProfessorship(professorship);
 	}
     }
-    
+
     public ShiftType getShiftType() {
 	return getLessonInstance().getCourseLoad().getType();
     }

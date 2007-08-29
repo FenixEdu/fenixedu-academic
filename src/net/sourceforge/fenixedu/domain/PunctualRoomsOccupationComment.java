@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -21,6 +22,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 	    MultiLanguageString description, Person owner, DateTime instant) {
         
 	super();
+	checkIfCommentAlreadyExists(owner, subject, description);
         setRootDomainObject(RootDomainObject.getInstance());
         setRequest(request);
         setOwner(owner);                    
@@ -28,6 +30,12 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         setDescription(description);
         setInstant(instant);               
     }  
+       
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getInstant() != null && getSubject() != null && !getSubject().isEmpty()
+		&& getDescription() != null && !getDescription().isEmpty();
+    }
     
     public void edit(MultiLanguageString subject, MultiLanguageString description) {
 	if(!getRequest().getCurrentState().equals(RequestState.NEW)) {
@@ -83,5 +91,14 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 	    throw new DomainException("error.PunctualRoomsOccupationComment.empty.owner");
 	}
 	super.setOwner(owner);
-    }      
+    }
+    
+    private void checkIfCommentAlreadyExists(Person owner, MultiLanguageString subject, MultiLanguageString description) {
+	List<PunctualRoomsOccupationComment> comments = owner.getPunctualRoomsOccupationComments();
+	for (PunctualRoomsOccupationComment comment : comments) {	    
+	    if(comment.getDescription().compareTo(description) == 0) {
+		throw new DomainException("error.PunctualRoomsOccupationComment.comment.already.exists");
+	    }
+	}
+    }
 }

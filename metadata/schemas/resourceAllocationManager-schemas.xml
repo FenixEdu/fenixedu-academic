@@ -56,14 +56,7 @@
 <schema name="AddNewRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
 	<slot name="selectedRoom" key="label.room" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FreeRoomsToPunctualSchedulingProvider"/>		
-		<property name="format"	value="${name}" />	
-	</slot>	
-</schema>
-
-<schema name="RemoveRoomsToPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
-	<slot name="selectedRoom" key="label.room" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FreeRoomsToPunctualSchedulingProvider"/>		
-		<property name="format"	value="${name}" />	
+		<property name="format"	value="${completeIdentification}" />	
 	</slot>	
 </schema>
 

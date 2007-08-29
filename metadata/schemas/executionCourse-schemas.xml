@@ -420,7 +420,7 @@
 	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
 	<slot name="summaryRoom" layout="menu-select" key="label.room" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${completeIdentification}" />
 	</slot>	
 	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="50"/>	
