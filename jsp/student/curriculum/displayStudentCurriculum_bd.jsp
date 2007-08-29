@@ -1,10 +1,10 @@
-<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
