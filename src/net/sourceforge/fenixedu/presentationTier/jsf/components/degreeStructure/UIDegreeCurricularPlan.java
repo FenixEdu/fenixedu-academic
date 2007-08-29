@@ -189,10 +189,10 @@ public class UIDegreeCurricularPlan extends UIInput {
                 
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
                 
-                curricularCourse.getContactLoad(curricularPeriod);
-                curricularCourse.getAutonomousWorkHours(curricularPeriod);
-                curricularCourse.getTotalLoad(curricularPeriod);
-                curricularCourse.getEctsCredits(curricularPeriod);
+                curricularCourse.getContactLoad(curricularPeriod, executionYear);
+                curricularCourse.getAutonomousWorkHours(curricularPeriod, executionYear);
+                curricularCourse.getTotalLoad(curricularPeriod, executionYear);
+                curricularCourse.getEctsCredits(curricularPeriod, executionYear);
                 new UICurricularCourse(curricularCourse, context, this.toEdit, this.showRules, this.executionYear, this.module).encodeBegin(facesContext);
                 
                 if (curricularCourse.isAnual()) {

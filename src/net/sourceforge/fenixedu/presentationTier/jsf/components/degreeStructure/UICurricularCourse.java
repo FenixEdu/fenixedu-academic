@@ -189,26 +189,26 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getContactLoad(curricularPeriod).toString()).append(" ");
+            writer.append(this.curricularCourse.getContactLoad(curricularPeriod, executionYear).toString()).append(" ");
 
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getAutonomousWorkHours(curricularPeriod).toString()).append(" ");
+            writer.append(this.curricularCourse.getAutonomousWorkHours(curricularPeriod, executionYear).toString()).append(" ");
             
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "totalLoadAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getTotalLoad(curricularPeriod).toString());
+            writer.append(this.curricularCourse.getTotalLoad(curricularPeriod, executionYear).toString());
             writer.endElement("td");
 
             writer.startElement("td", this);
             writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("align", "right", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
-            writer.append(this.curricularCourse.getEctsCredits(curricularPeriod).toString());
+            writer.append(this.curricularCourse.getEctsCredits(curricularPeriod, executionYear).toString());
         } else {
             writer.append("&nbsp;");
             writer.endElement("td");
@@ -255,26 +255,26 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getCompetenceCourse().getContactLoad(previousContext.getCurricularPeriod().getChildOrder() + 1).toString()).append(" ");
+            writer.append(this.curricularCourse.getCompetenceCourse().getContactLoad(previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear).toString()).append(" ");
 
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getCompetenceCourse().getAutonomousWorkHours(previousContext.getCurricularPeriod().getChildOrder() + 1).toString()).append(" ");
+            writer.append(this.curricularCourse.getCompetenceCourse().getAutonomousWorkHours(previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear).toString()).append(" ");
             
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "totalLoadAcronym")).append("-");
             writer.endElement("span");
-            writer.append(this.curricularCourse.getCompetenceCourse().getTotalLoad(previousContext.getCurricularPeriod().getChildOrder() + 1).toString());
+            writer.append(this.curricularCourse.getCompetenceCourse().getTotalLoad(previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear).toString());
             writer.endElement("td");
 
             writer.startElement("td", this);
             writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("align", "right", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
-            writer.append(String.valueOf(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getChildOrder() + 1)));
+            writer.append(String.valueOf(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getChildOrder() + 1, executionYear)));
         } else {
             writer.append("&nbsp;");
             writer.endElement("td");

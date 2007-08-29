@@ -107,8 +107,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getBibliographicReferences(null);
     }
 
-    public BibliographicReferences getBibliographicReferences(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public BibliographicReferences getBibliographicReferences(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getBibliographicReferences() : null;
     }
     
@@ -116,7 +116,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getMainBibliographicReferences(null);
     }
 
-    public List<BibliographicReferences.BibliographicReference> getMainBibliographicReferences(ExecutionPeriod period) {
+    public List<BibliographicReferences.BibliographicReference> getMainBibliographicReferences(final ExecutionPeriod period) {
 	return this.getBibliographicReferences(period).getMainBibliographicReferences();
     }
     
@@ -124,7 +124,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getSecondaryBibliographicReferences(null);
     }
     
-    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(ExecutionPeriod period) {
+    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(final ExecutionPeriod period) {
 	return this.getBibliographicReferences(period).getSecondaryBibliographicReferences();
     }
 
@@ -285,7 +285,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean isCompetenceCourseInformationDefinedAtExecutionPeriod(
 	    final ExecutionPeriod executionPeriod) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
 	return information != null && information.getExecutionPeriod().equals(executionPeriod);
     }
 
@@ -316,8 +316,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return minCompetenceCourseInformation;
     }
 
-    public String getName(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getName(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	if ((super.getName() == null || super.getName().length() == 0) && information != null) {
 	    return information.getName();
 	}
@@ -329,8 +329,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getName(null);
     }
 
-    public String getNameEn(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getNameEn(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getNameEn() : null;
     }
 
@@ -338,8 +338,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getNameEn(null);
     }
 
-    public String getAcronym(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getAcronym(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getAcronym() : null;
     }
 
@@ -351,8 +351,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	getRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
-    public boolean isBasic(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public boolean isBasic(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getBasic() : null;
     }
 
@@ -360,8 +360,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return isBasic(null);
     }
 
-    public RegimeType getRegime(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public RegimeType getRegime(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getRegime() : null;
     }
 
@@ -373,8 +373,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	getRecentCompetenceCourseInformation().setRegime(regimeType);
     }
 
-    public CompetenceCourseLevel getCompetenceCourseLevel(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getCompetenceCourseLevel() : null;
     }
 
@@ -382,8 +382,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getCompetenceCourseLevel(null);
     }
 
-    public List<CompetenceCourseLoad> getCompetenceCourseLoads(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public List<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getCompetenceCourseLoads() : null;
     }
 
@@ -391,8 +391,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getCompetenceCourseLoads(null);
     }
 
-    public int getCompetenceCourseLoadsCount(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public int getCompetenceCourseLoadsCount(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getCompetenceCourseLoadsCount() : 0;
     }
 
@@ -400,8 +400,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getCompetenceCourseLoadsCount(null);
     }
 
-    public String getObjectives(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getObjectives(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getObjectives() : null;
     }
 
@@ -409,8 +409,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getObjectives(null);
     }
 
-    public String getProgram(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getProgram(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getProgram() : null;
     }
 
@@ -418,8 +418,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getProgram(null);
     }
 
-    public String getEvaluationMethod(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getEvaluationMethod(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getEvaluationMethod() : null;
     }
 
@@ -427,8 +427,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getEvaluationMethod(null);
     }
 
-    public String getObjectivesEn(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getObjectivesEn(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getObjectivesEn() : null;
     }
     
@@ -436,8 +436,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getObjectivesEn(null);
     }
 
-    public String getProgramEn(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getProgramEn(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getProgramEn() : null;
     }
     
@@ -445,8 +445,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getProgramEn(null);
     }
 
-    public String getEvaluationMethodEn(ExecutionPeriod period) {
-	CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+    public String getEvaluationMethodEn(final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getEvaluationMethodEn() : null;
     }
     
@@ -455,172 +455,184 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public double getTheoreticalHours() {
-	return getTheoreticalHours(null,null);
+	return getTheoreticalHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getTheoreticalHours(Integer order) {
-	return getTheoreticalHours(order, null);
+    public Double getTheoreticalHours(final Integer order) {
+	return getTheoreticalHours(order, (ExecutionPeriod) null);
     }
     
-    public double getTheoreticalHours(ExecutionPeriod period) {
+    public double getTheoreticalHours(final ExecutionPeriod period) {
 	return getTheoreticalHours(null,period);
     }
     
     public double getTheoreticalHours(Integer order,ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getTheoreticalHours(order) : 0.0;
     }
 
     public double getProblemsHours() {
-	return getProblemsHours(null,null);
+	return getProblemsHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getProblemsHours(Integer order) {
-	return getProblemsHours(order, null);
+    public Double getProblemsHours(final Integer order) {
+	return getProblemsHours(order, (ExecutionPeriod) null);
     }
     
-    public double getProblemsHours(ExecutionPeriod period) {
+    public double getProblemsHours(final ExecutionPeriod period) {
 	return getProblemsHours(null,period);
     }
     
-    public double getProblemsHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    public double getProblemsHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getProblemsHours(order) : 0.0;
     }
 
     public double getLaboratorialHours() {
-	return getLaboratorialHours(null,null);
+	return getLaboratorialHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getLaboratorialHours(Integer order) {
-	return getLaboratorialHours(order, null);
+    public Double getLaboratorialHours(final Integer order) {
+	return getLaboratorialHours(order, (ExecutionPeriod) null);
     }
     
-    public double getLaboratorialHours(ExecutionPeriod period) {
+    public double getLaboratorialHours(final ExecutionPeriod period) {
 	return getLaboratorialHours(null,period);
     }
     
     public double getLaboratorialHours(Integer order,ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getLaboratorialHours(order) : 0.0;
     }
 
     public double getSeminaryHours() {
-	return getSeminaryHours(null,null);
+	return getSeminaryHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public double getSeminaryHours(ExecutionPeriod period) {
+    public double getSeminaryHours(final ExecutionPeriod period) {
 	return getSeminaryHours(null,period);
     }
     
-    public Double getSeminaryHours(Integer order) {
-	return getSeminaryHours(order, null);
+    public Double getSeminaryHours(final Integer order) {
+	return getSeminaryHours(order, (ExecutionPeriod) null);
     }
     
-    public double getSeminaryHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    public double getSeminaryHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getSeminaryHours(order) : 0.0;
     }
 
     public double getFieldWorkHours() {
-	return getFieldWorkHours(null,null);
+	return getFieldWorkHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public double getFieldWorkHours(ExecutionPeriod period) {
+    public double getFieldWorkHours(final ExecutionPeriod period) {
 	return getFieldWorkHours(null,period);
     }
     
-    public Double getFieldWorkHours(Integer order) {
-	return getFieldWorkHours(order, null);
+    public Double getFieldWorkHours(final Integer order) {
+	return getFieldWorkHours(order, (ExecutionPeriod) null);
     }
     
-    public double getFieldWorkHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    public double getFieldWorkHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getFieldWorkHours(order) : 0.0;
     }
 
     public double getTrainingPeriodHours() {
-	return getTrainingPeriodHours(null,null);
+	return getTrainingPeriodHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public double getTrainingPeriodHours(ExecutionPeriod period) {
+    public double getTrainingPeriodHours(final ExecutionPeriod period) {
 	return getTrainingPeriodHours(null,period);
     }
     
-    public Double getTrainingPeriodHours(Integer order) {
-	return getTrainingPeriodHours(order, null);
+    public Double getTrainingPeriodHours(final Integer order) {
+	return getTrainingPeriodHours(order, (ExecutionPeriod) null);
     }
     
-    public double getTrainingPeriodHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    public double getTrainingPeriodHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getTrainingPeriodHours(order) : 0.0;
     }
 
     public double getTutorialOrientationHours() {
-	return getTutorialOrientationHours(null,null);
+	return getTutorialOrientationHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getTutorialOrientationHours(Integer order) {
-	return getTutorialOrientationHours(order, null);
+    public Double getTutorialOrientationHours(final Integer order) {
+	return getTutorialOrientationHours(order, (ExecutionPeriod) null);
     }
     
-    public double getTutorialOrientationHours(ExecutionPeriod period) {
+    public double getTutorialOrientationHours(final ExecutionPeriod period) {
 	return getTutorialOrientationHours(null,period);
     }
     
-    public double getTutorialOrientationHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    public double getTutorialOrientationHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getTutorialOrientationHours(order) : 0.0;
     }
 
     public double getAutonomousWorkHours() {
-	return getAutonomousWorkHours(null,null);
+	return getAutonomousWorkHours((Integer) null, (ExecutionPeriod) null);
     }
 
-    public double getAutonomousWorkHours(ExecutionPeriod period) {
-	return getAutonomousWorkHours(null, period);
+    public double getAutonomousWorkHours(final ExecutionPeriod period) {
+	return getAutonomousWorkHours((Integer) null, period);
     }
     
-    public Double getAutonomousWorkHours(Integer order) {
-	return getAutonomousWorkHours(order, null);
+    public Double getAutonomousWorkHours(final Integer order) {
+	return getAutonomousWorkHours(order, (ExecutionPeriod) null);
     }
     
-    public Double getAutonomousWorkHours(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    final public Double getAutonomousWorkHours(final Integer order, final ExecutionYear executionYear) {
+	return getAutonomousWorkHours(order, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+    }
+    
+    public Double getAutonomousWorkHours(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getAutonomousWorkHours(order) : 0.0;
     }
 
     public double getContactLoad() {
-	return getContactLoad(null, null);
+	return getContactLoad((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getContactLoad(ExecutionPeriod period) {
+    public Double getContactLoad(final ExecutionPeriod period) {
 	return getContactLoad(null,period);
     }
     
-    public Double getContactLoad(Integer order) {
-	return getContactLoad(order, null);
+    public Double getContactLoad(final Integer order) {
+	return getContactLoad(order, (ExecutionPeriod) null);
     }
     
-    public Double getContactLoad(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    final public Double getContactLoad(final Integer order, final ExecutionYear executionYear) {
+	return getContactLoad(order, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+    }
+    
+    public Double getContactLoad(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getContactLoad(order) : 0.0;
     }
 
     public double getTotalLoad() {
-	return getTotalLoad(null, null);
+	return getTotalLoad((Integer) null, (ExecutionPeriod) null);
     }
 
-    public Double getTotalLoad(Integer order) {
-	return getTotalLoad(order, null);
+    public Double getTotalLoad(final Integer order) {
+	return getTotalLoad(order, (ExecutionPeriod) null);
     }
     
-    public double getTotalLoad(ExecutionPeriod period) {
-	return getTotalLoad(null, period);
+    public double getTotalLoad(final ExecutionPeriod period) {
+	return getTotalLoad((Integer) null, period);
     }
     
-    public Double getTotalLoad(Integer order, ExecutionPeriod period) {
-	CompetenceCourseInformation information = (period != null) ? findCompetenceCourseInformationForExecutionPeriod(period) : getRecentCompetenceCourseInformation();
+    final public Double getTotalLoad(final Integer order, final ExecutionYear executionYear) {
+	return getTotalLoad(order, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+    }
+    
+    public Double getTotalLoad(final Integer order, final ExecutionPeriod period) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return (information != null) ? information.getTotalLoad(order) : 0.0;
     }
 
@@ -636,15 +648,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getEctsCredits((Integer) null, executionPeriod);
     }
 
+    final public Double getEctsCredits(final Integer order, final ExecutionYear executionYear) {
+	return getEctsCredits(order, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+    }
+    
     public Double getEctsCredits(final Integer order, final ExecutionPeriod executionPeriod) {
-	final CompetenceCourseInformation competenceCourseInformation = executionPeriod == null ? getRecentCompetenceCourseInformation()
-		: findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
-
-	if (competenceCourseInformation != null) {
-	    return competenceCourseInformation.getEctsCredits(order);
-	}
-
-	return 0.0d;
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+	return (information != null) ? information.getEctsCredits(order) : 0.0;
     }
 
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
@@ -753,7 +763,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return this.getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
-    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(ExecutionPeriod period) {
+    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(final ExecutionPeriod period) {
 	final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>(
 		getCompetenceCourseLoadsCount(period));
 	result.addAll(getCompetenceCourseLoads(period));
@@ -974,7 +984,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return count;
     }
     
-    public CompetenceCourseInformationChangeRequest getCompetenceCourseInformationChangeRequests(ExecutionPeriod period) { 
+    public CompetenceCourseInformationChangeRequest getCompetenceCourseInformationChangeRequests(final ExecutionPeriod period) { 
 	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests()) {
 	    if (request.getExecutionPeriod() == period) {
 		return request;
