@@ -1579,11 +1579,7 @@ public class Registration extends Registration_Base {
     }
 
     final public YearMonthDay getConclusionDate() {
-	if (isConcluded()) {
-	    return getActiveState().getStateDate().toYearMonthDay();
-	}
-
-	throw new DomainException("Registration.is.not.concluded");
+	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : null; 
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
