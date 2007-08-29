@@ -2170,12 +2170,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final CurricularRuleLevel level) {
+	
 	final Registration registration = this.getRegistration();
 	if (!registration.isActive()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
-	if (registration.getStudent().isAnyTuitionInDebt()) {
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && registration.getStudent().isAnyTuitionInDebt()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
 	}
 
