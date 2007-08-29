@@ -102,10 +102,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     @Override
     public int hashCode() {
-	final StringBuilder builder = new StringBuilder();
-	builder.append("@").append(getContext().hashCode()).append("@");
-	builder.append("@").append(getCurriculumGroup().hashCode()).append("@");
-	return builder.hashCode();
+        return getContext().hashCode() + getCurriculumGroup().hashCode();
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod) {

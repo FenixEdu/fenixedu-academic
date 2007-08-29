@@ -118,9 +118,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     @Override
     public int hashCode() {
-	final StringBuilder builder = new StringBuilder();
-	builder.append("|").append(getCurriculumModule().hashCode()).append("|");
-	return builder.hashCode();
+        return getCurriculumModule().hashCode();
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
