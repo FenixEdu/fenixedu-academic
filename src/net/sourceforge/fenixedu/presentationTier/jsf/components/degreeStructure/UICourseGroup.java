@@ -285,8 +285,8 @@ public class UICourseGroup extends UIDegreeModule {
         String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
 
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
-        writer.append(" , ");
-        encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
+        //writer.append(" , ");
+        //encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
         if (!this.courseGroup.isRoot()) {
             writer.append(" , ");
             encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
