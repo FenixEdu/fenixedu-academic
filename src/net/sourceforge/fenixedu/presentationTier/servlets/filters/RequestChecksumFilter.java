@@ -471,9 +471,12 @@ public class RequestChecksumFilter implements Filter {
 
     private boolean shoudFilterReques(final HttpServletRequest httpServletRequest) {
 	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
-	if (uri.indexOf("javaScript/") >= 0) {
+	if (uri.indexOf("domainbrowser/") >= 0) {
 	    return false;
 	}
+        if (uri.indexOf("javaScript/") >= 0) {
+            return false;
+        }
 	if (uri.indexOf("script/") >= 0) {
 	    return false;
 	}
