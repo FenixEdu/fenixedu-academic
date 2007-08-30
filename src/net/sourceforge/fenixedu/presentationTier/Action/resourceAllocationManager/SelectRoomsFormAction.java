@@ -34,15 +34,19 @@ public class SelectRoomsFormAction extends FenixAction {
         HttpSession sessao = request.getSession(true);
         if (sessao != null) {
 
-            Object argsSelectRooms[] = { new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(
-                    roomForm, "building"), readIntegerFormValue(roomForm, "floor"),
-                    readTypeRoomFormValue(roomForm, "type"), readIntegerFormValue(roomForm,
-                            "capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")), };
+            Object argsSelectRooms[] = { 
+        	    new InfoRoomEditor(
+        		    readFormValue(roomForm, "name"), 
+        		    readFormValue(roomForm, "building"), 
+        		    readIntegerFormValue(roomForm, "floor"),
+        		    readTypeRoomFormValue(roomForm, "type"),
+        		    readIntegerFormValue(roomForm, "capacityNormal"),
+        		    readIntegerFormValue(roomForm, "capacityExame")), };
+            
             Integer executionPeriodId = (Integer) roomForm.get("executionPeriodId");
             List infoRooms;
             try {
-                infoRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms",
-                        argsSelectRooms);
+                infoRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms", argsSelectRooms);
             } catch (FenixServiceException e) {
                 throw new FenixActionException("Problemas a seleccionar salas", e);
             }

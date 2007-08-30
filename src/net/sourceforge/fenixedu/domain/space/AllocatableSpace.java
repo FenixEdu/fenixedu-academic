@@ -278,24 +278,32 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	
 	for (AllocatableSpace room : activeRoomsForEducation) {
 	    
-	    if (nome != null && !room.getName().equalsIgnoreCase(nome)) {
-		continue;
-	    }	    
+	    if(nome != null) {
+		String[] identificationWords = getIdentificationWords(nome);
+		if (!room.verifyNameEquality(identificationWords)) {
+		    continue;
+		}	
+	    }	       
+	  
 	    Building spaceBuilding = room.getSpaceBuilding();
 	    if (edificio != null && (spaceBuilding == null || !spaceBuilding.getName().equalsIgnoreCase(edificio))) {
 		continue;
 	    }	    
+	    
 	    Integer spaceFloor = room.getPiso();
 	    if (piso != null && (spaceFloor == null || !spaceFloor.equals(piso))) {
 		continue;
 	    }
+	    
 	    RoomClassification roomClassification = room.getRoomClassification();
 	    if (tipo != null && (roomClassification == null || !roomClassification.equals(tipo))) {
 		continue;
 	    }
+	    
 	    if (capacidadeNormal != null && (room.getNormalCapacity() == null || room.getNormalCapacity().intValue() < capacidadeNormal.intValue())) {
 		continue;
 	    }
+	    
 	    if (capacidadeExame != null  && (room.getExamCapacity() == null || room.getExamCapacity().intValue() < capacidadeExame.intValue())) {
 		continue;
 	    }

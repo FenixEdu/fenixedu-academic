@@ -742,6 +742,7 @@ public class Lesson extends Lesson_Base {
 		BigDecimal totalHours = shift.getTotalHours();
 
 		for (CourseLoad courseLoad : courseLoads) {		    
+		    
 		    unitValid = false;
 		    totalValid = false;		    
 
@@ -756,9 +757,12 @@ public class Lesson extends Lesson_Base {
 		    }
 		}
 
-		if(!totalValid || !unitValid) {
-		    throw new DomainException("error.Lesson.shift.load.exceeded");
+		if(!totalValid) {
+		    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded.2", shift.getTotalHours().toString());
 		}
+		if(!unitValid) {
+		    throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded.2", getUnitHours().toString());
+		}		
 	    }
 	}
     }
