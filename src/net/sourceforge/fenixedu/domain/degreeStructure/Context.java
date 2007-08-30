@@ -123,6 +123,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 	removeBeginExecutionPeriod();
 	removeEndExecutionPeriod();
 	removeRootDomainObject();
+	getAssociatedWrittenEvaluations().clear();
 	super.deleteDomainObject();
     }
 

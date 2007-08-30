@@ -291,7 +291,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.append(" , ");
             encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
         }
-        if (!this.courseGroup.isRoot() && this.executionYear == null) {
+        if (!this.courseGroup.isRoot() /*&& this.executionYear == null*/) {
             writer.append(" , ");
             encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
         }

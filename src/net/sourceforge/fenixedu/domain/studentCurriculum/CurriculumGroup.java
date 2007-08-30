@@ -471,7 +471,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
-	return getParentCurriculumGroup().searchChildOrderForChild(this, executionPeriod);
+	final Integer childOrder = getParentCurriculumGroup().searchChildOrderForChild(this, executionPeriod);
+	return childOrder != null ? childOrder : Integer.MAX_VALUE;
     }
 
     private CurriculumGroup getParentCurriculumGroup() {
