@@ -104,13 +104,13 @@
 				<fr:edit id="roomsPunctualSchedulingWithNewRoom" name="roomsPunctualSchedulingBean" schema="AddNewRoomsToPunctualScheduling">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop025 mbottom0" />
-						<fr:property name="columnClasses" value="width5em,width20em,tdclear tderror1" />
+						<fr:property name="columnClasses" value="width5em,width40em,tdclear tderror1" />
 					</fr:layout>				
 				</fr:edit>
 				<table class="tstyle5 thlight thright mtop0">
 					<tr>
 						<td class="width5em"></td>
-						<td class="width20em">
+						<td class="width40em">
 							<html:submit><bean:message key="label.add.new.room" bundle="SOP_RESOURCES"/></html:submit>
 							<logic:empty name="roomsPunctualSchedulingBean" property="rooms">
 								<html:cancel onclick="this.form.method.value='prepare';this.form.submit();"><bean:message key="label.cancel" bundle="SOP_RESOURCES"/></html:cancel>			
