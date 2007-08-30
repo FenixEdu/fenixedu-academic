@@ -93,6 +93,7 @@ public class SQLUpdateGenerator {
 			    throw stringIndexOutOfBoundsException;
 			}
 			uniqyeKeys.add(uniqueKey);
+			indexes.add(uniqueKey);
 		    } else if (tablePart.startsWith("KEY ")) {
 			final TreeSet<String> index = new TreeSet<String>();
 			getSet(index, tablePart);
