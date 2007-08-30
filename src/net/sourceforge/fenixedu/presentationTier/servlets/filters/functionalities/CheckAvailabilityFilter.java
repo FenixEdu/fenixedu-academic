@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities;
 
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
@@ -146,34 +149,34 @@ public class CheckAvailabilityFilter implements Filter {
         if (! isExecutableResource(requestedPath)) {
             return null;
         }
-        
+
         if (hasTestingPrefix(servletRequest)) {
             requestedPath = requestedPath.substring(getTestingPrefix().length());
         }
-        
+
         // HACK: dotIstPortal.do is a redirection and does not map directly to a functionality
         if (requestedPath.matches("/dotIstPortal.do")) {
             requestedPath = servletRequest.getParameter("prefix") + servletRequest.getParameter("page");
         }
 
-        Collection<Functionality> nonRelativeFunctionalities = new ArrayList<Functionality>();
-        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
-            if (! functionality.isRelative()) {
-                nonRelativeFunctionalities.add(functionality);
+        return findFunctionality(requestedPath);
+    }
+
+    private Functionality findFunctionality(final String requestedPath) {
+        for (final Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            if (!functionality.isRelative()) {
+                if (functionality.matchesFunctionality(requestedPath)) {
+                    return functionality;
+                }
             }
         }
-        
-        Functionality matching = getMatchingFunctionality(requestedPath, nonRelativeFunctionalities);
+
+        Functionality matching = Functionality.getMatchingTopLevelFunctionality(requestedPath);
         if (matching != null) {
             return matching;
         }
-        
-        matching = getMatchingFunctionality(requestedPath, Functionality.getTopLevelFunctionalities());
-        if (matching != null) {
-            return matching;
-        }
-        
-        matching = getMatchingSubFunctionality(requestedPath, Module.getTopLevelModules());
+
+        matching = getMatchingSubFunctionality(requestedPath);
         if (matching != null) {
             return matching;
         }
@@ -181,23 +184,9 @@ public class CheckAvailabilityFilter implements Filter {
         return null;
     }
 
-    private boolean matchesFunctionality(String path, Functionality functionality) {
-        if (! functionality.isPrincipal()) {
-            return false;
-        }
-        
-        String matchPath = functionality.getMatchPath();
-        
-        if (matchPath != null && matchPath.equals(path)) {
-            return true;
-        }
-        
-        return false;
-    }
-    
     private Functionality getMatchingFunctionality(String path, Collection<Functionality> functionalities) {
         for (Functionality functionality : functionalities) {
-            if (matchesFunctionality(path, functionality)) {
+            if (functionality.matchesFunctionality(path)) {
                 return functionality;
             }
         }
@@ -205,28 +194,54 @@ public class CheckAvailabilityFilter implements Filter {
         return null;
     }
     
+    private Functionality getMatchingSubFunctionality(String path) {
+        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            if (functionality instanceof Module) {
+                Module module = (Module) functionality;
+
+                if (module.getParent() == null) {
+                    String prefix = module.getPublicPrefix();
+            
+                    if (! path.startsWith(prefix)) {
+                        continue;
+                    }
+            
+                    Functionality matching = getMatchingFunctionality(path, module.getFunctionalities());
+                    if (matching != null) {
+                        return matching;
+                    }
+            
+                    matching = getMatchingSubFunctionality(path, module.getModules());
+                    if (matching != null) {
+                        return matching;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private Functionality getMatchingSubFunctionality(String path, Collection<Module> modules) {
         for (Module module : modules) {
             String prefix = module.getPublicPrefix();
-            
+
             if (! path.startsWith(prefix)) {
                 continue;
             }
-            
+
             Functionality matching = getMatchingFunctionality(path, module.getFunctionalities());
             if (matching != null) {
                 return matching;
             }
-            
+
             matching = getMatchingSubFunctionality(path, module.getModules());
             if (matching != null) {
                 return matching;
             }
         }
-        
         return null;
     }
-    
+
     /**
      * Verifies if the requested path is an executable resource and not a simple resource like 
      * and image or a stylesheet.

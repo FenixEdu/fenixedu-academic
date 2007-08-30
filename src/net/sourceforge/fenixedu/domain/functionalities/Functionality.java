@@ -706,4 +706,22 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     private static Map<UUID, WeakReference<Functionality>> UUID_TABLE = new WeakHashMap<UUID, WeakReference<Functionality>>();
+
+    public static Functionality getMatchingTopLevelFunctionality(String path) {
+        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+            if (functionality.getModule() == null && functionality.matchesFunctionality(path)) {
+                return functionality;
+            }
+        }
+        return null;
+    }
+
+    public boolean matchesFunctionality(String path) {
+        if (!isPrincipal()) {
+            return false;
+        }
+        String matchPath = getMatchPath();
+        return matchPath != null && matchPath.equals(path);
+    }
+
 }
