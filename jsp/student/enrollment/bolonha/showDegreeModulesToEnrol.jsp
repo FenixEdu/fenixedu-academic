@@ -15,7 +15,6 @@
 	<bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />
 
 
-
 	<p class="mtop15 mbottom025">
 		<strong><bean:message bundle="STUDENT_RESOURCES"  key="label.executionPeriod"/>:</strong> <bean:message bundle="STUDENT_RESOURCES"  key="label.periodDescription" arg0="<%=periodSemester.toString()%>" arg1="<%=executionYearName.toString()%>" />
 	</p>
@@ -25,7 +24,7 @@
 
 	
 	
-	<ul class="mbottom2">
+	<ul class="mbottom15">
 		<li>
 			<html:link action="/bolonhaStudentEnrollment.do?method=showEnrollmentInstructions" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewInstructions"/></html:link>
 		</li>
@@ -44,22 +43,28 @@
 		</li>
 	</ul>
 
+<div class="infoop2 mtop05 mbottom15">
+	<p><span><bean:message bundle="APPLICATION_RESOURCES" key="label.warning.coursesAndGroupsSimultaneousEnrolment"/></span></p>
+</div>
+
 	<logic:messagesPresent message="true" property="success">
-		<div class="success0" style="padding: 0.5em;">
-		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-			<span><bean:write name="messages" /></span>
-		</html:messages>
-		</div>
+		<p>
+		<span class="success0" style="padding: 0.25em;">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<span><bean:write name="messages" /></span>
+			</html:messages>
+		</span>
+		</p>
 	</logic:messagesPresent>
 
-	<logic:messagesPresent message="true" property="error" >
-		<div class="error0" style="padding: 0.5em;">
-		<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
-		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
-				<li><span><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
+	<logic:messagesPresent message="true" property="error">
+		<div class="error0 mvert1" style="padding: 0.5em;">
+			<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.enrollment.errors.in.enrolment" />:</strong></p>
+			<ul class="mvert05">
+				<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+					<li><span><bean:write name="messages" /></span></li>
+				</html:messages>
+			</ul>
 		</div>
 	</logic:messagesPresent>
 	

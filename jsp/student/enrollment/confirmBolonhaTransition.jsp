@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="STUDENT">
-
-<h2><bean:message  key="label.enrollment.courses.confirmBolonhaTransition" bundle="STUDENT_RESOURCES"/></h2>
+<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
+<h2><bean:message key="label.enrollment.courses.confirmBolonhaTransition" bundle="STUDENT_RESOURCES"/></h2>
 
 <div class="warning0 mbottom1" style="padding: 0.5em;">
 	<strong><bean:message  key="label.attention.nonCaps" bundle="STUDENT_RESOURCES"/>:</strong><br/>

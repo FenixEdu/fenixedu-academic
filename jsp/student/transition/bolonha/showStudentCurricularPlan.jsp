@@ -7,9 +7,9 @@
 <html:xhtml />
 
 <logic:present role="STUDENT">
-	<h2><bean:message key="label.curricularPlan"
-		bundle="APPLICATION_RESOURCES" /> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h2>
-
+	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
+	<h2><bean:message key="label.transition.bolonha" bundle="STUDENT_RESOURCES"/></h2>
+	<h3><bean:message key="label.curricularPlan" bundle="APPLICATION_RESOURCES" />: <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h3>	
 	
 	<logic:notEmpty name="registration" property="lastStudentCurricularPlan">
 		<div class="infoop2 mbottom15">
@@ -23,8 +23,9 @@
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
+	
 	<logic:empty name="registration" property="lastStudentCurricularPlan">
-		<i><bean:message  key="label.transition.bolonha.noEquivalences" bundle="STUDENT_RESOURCES"/></i>
+		<p><em><bean:message  key="label.transition.bolonha.noEquivalences" bundle="STUDENT_RESOURCES"/></em></p>
 	</logic:empty>
 		
 
