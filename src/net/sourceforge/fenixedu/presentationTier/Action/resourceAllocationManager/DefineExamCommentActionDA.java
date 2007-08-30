@@ -96,7 +96,7 @@ public class DefineExamCommentActionDA extends
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);

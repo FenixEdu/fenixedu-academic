@@ -30,7 +30,6 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
         // super.execute(mapping, form, request, response);
 
-        //  HttpSession session = request.getSession(false);
         //  if (session != null) {
         Object argsReadExecutionPeriods[] = {};
         List executionPeriods;

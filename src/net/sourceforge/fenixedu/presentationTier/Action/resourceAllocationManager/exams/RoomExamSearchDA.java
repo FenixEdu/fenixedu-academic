@@ -129,7 +129,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);

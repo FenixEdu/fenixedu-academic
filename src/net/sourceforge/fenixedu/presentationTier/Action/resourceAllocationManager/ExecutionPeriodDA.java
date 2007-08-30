@@ -47,7 +47,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         IUserView userView = getUserView(request);
 
@@ -109,7 +108,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     public ActionForward chooseForViewRoom(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
+
         DynaActionForm indexForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);

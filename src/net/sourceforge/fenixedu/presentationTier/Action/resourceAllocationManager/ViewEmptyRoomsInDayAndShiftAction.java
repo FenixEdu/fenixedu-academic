@@ -25,8 +25,6 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = SessionUtils.getUserView(request);
 
             Calendar dateAndTime = (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
@@ -62,8 +60,5 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
             }
 
             return mapping.findForward("View");
-        }
-        throw new Exception();
-
     }
 }

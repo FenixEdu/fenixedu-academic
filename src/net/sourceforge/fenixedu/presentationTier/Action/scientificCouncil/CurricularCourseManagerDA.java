@@ -43,21 +43,15 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward prepareSelectDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
             ISiteComponent component = new InfoSiteSCDegrees();
             readSiteView(request, userView, null, null, null, component);
             return mapping.findForward("selectDegree");
-        }
-        throw new FenixActionException();
 
     }
 
     public ActionForward showDegreeCurricularPlans(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String degreeIdString = request.getParameter("index");
@@ -66,15 +60,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             ISiteComponent component = new InfoSiteDegreeCurricularPlans();
             readSiteView(request, userView, degreeId, null, null, component);
             return mapping.findForward("showDegreeCurricularPlans");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward showCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String degreeCurricularPlanIdString = request.getParameter("index");
@@ -83,15 +72,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             ISiteComponent component = new InfoSiteCurricularCourses();
             readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
             return mapping.findForward("showCurricularCourses");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward showBasicCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String degreeCurricularPlanIdString = request.getParameter("index");
@@ -118,15 +102,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
             coursesForm.set("basicCurricularCourses", formValues);
             return mapping.findForward("showCurricularCourses");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward setBasicCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             DynaActionForm basicCoursesList = (DynaActionForm) form;
@@ -147,15 +126,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             }
 
             return mapping.findForward("firstPage");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward viewCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String curricularCourseIdString = request.getParameter("index");
@@ -170,15 +144,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("viewCurriculum");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String curriculumIdString = request.getParameter("index");
@@ -193,15 +162,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("editCurriculum");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String program = request.getParameter("program");
@@ -227,16 +191,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
                 return showCurricularCourses(mapping, form, request, response);
             }
             return null;
-
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward prepareInsertCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String curricularCourseIdString = request.getParameter("index");
@@ -251,15 +209,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             }
             request.setAttribute("siteView", siteView);
             return mapping.findForward("insertCurriculum");
-        }
-        throw new FenixActionException();
-
     }
 
     public ActionForward insertCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             String program = request.getParameter("program");
@@ -285,10 +238,6 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
                 return showCurricularCourses(mapping, form, request, response);
             }
             return null;
-
-        }
-        throw new FenixActionException();
-
     }
 
     private SiteView readSiteView(HttpServletRequest request, IUserView userView, Integer degreeId,

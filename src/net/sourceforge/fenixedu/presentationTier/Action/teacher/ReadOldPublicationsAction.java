@@ -36,13 +36,12 @@ public class ReadOldPublicationsAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         String string = request.getParameter("oldPublicationType");
         OldPublicationType oldPublicationType = null;
         IUserView userView = SessionUtils.getUserView(request);
 
-        if ((session != null) && (string != null)) {
+        if ((string != null)) {
             oldPublicationType = OldPublicationType.getEnum(string);
 
             Object[] args = { oldPublicationType, userView.getUtilizador() };

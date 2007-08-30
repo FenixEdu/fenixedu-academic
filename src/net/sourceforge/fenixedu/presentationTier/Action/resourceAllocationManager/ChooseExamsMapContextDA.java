@@ -40,8 +40,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
+
             IUserView userView = SessionUtils.getUserView(request);
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
@@ -96,9 +95,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             request.setAttribute(SessionConstants.DEGREES, licenciaturas);
 
             return mapping.findForward("chooseExamsMapContext");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -204,7 +200,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
      */
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
-        //HttpSession session = request.getSession(false);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {

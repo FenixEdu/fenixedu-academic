@@ -83,7 +83,6 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
 
         String studentNumber = getStudent(request);

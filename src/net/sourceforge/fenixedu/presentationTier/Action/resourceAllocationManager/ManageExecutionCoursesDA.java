@@ -51,7 +51,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         // and
         // of the curricular year.
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
 
         InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -112,7 +112,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
 
         DynaActionForm searchExecutionCourse = (DynaActionForm) form;
         // Mandatory Selection
@@ -217,7 +217,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
@@ -347,7 +347,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 

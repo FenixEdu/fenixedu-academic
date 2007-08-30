@@ -278,7 +278,6 @@ public abstract class RequestUtils {
     public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 	    throws FenixActionException, FenixFilterException {
 
-	//HttpSession session = request.getSession(false);
 	IUserView userView = SessionUtils.getUserView(request);
 
 	// Read executionPeriod from request

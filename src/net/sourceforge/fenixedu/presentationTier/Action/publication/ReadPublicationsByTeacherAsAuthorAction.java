@@ -37,14 +37,11 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
     public ActionForward readPublicationsAuthor(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
         String typePublication = request.getParameter("typePublication");
 
         ActionForward actionForward = mapping.findForward("show-cientific-author-form");
-
-        if (session != null) {
 
             Object[] argsToReadPublicationsOfTeacher = { userView.getUtilizador() };
             SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
@@ -52,7 +49,7 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
 
             InfoSitePublications infoSitePublications = (InfoSitePublications) siteView.getComponent();
             request.setAttribute("infoSitePublications", infoSitePublications);
-        }
+
         if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
             actionForward = mapping.findForward("show-didatic-author-form");
         }
@@ -62,7 +59,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
     public ActionForward insertPublicationTeacher(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
         String typePublication = request.getParameter("typePublication");
@@ -77,16 +73,12 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
             actionForward = mapping.findForward("show-didatic-Teacher-form");
         }
         try {
-            if (session != null) {
-
                 Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId,
                         typePublication };
                 SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
                         "AddPublicationToTeacherInformationSheet", argsToInsertPublicationInTeacherSList);
 
                 request.setAttribute("siteView", siteView);
-            }
-
         } catch (ExistingServiceException e) {
             sendErrors(request, "existing", "message.publication.alreadyInserted");
             return actionForward;
@@ -97,7 +89,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
     public ActionForward deletePublicationTeacher(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
         String typePublication = request.getParameter("typePublication");
@@ -113,15 +104,11 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
             actionForward = mapping.findForward("show-didatic-Teacher-form");
         }
         try {
-            if (session != null) {
-
                 Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId };
                 SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
                         "RemovePublicationFromTeacherInformationSheet", argsToInsertPublicationInTeacherSList);
 
                 request.setAttribute("siteView", siteView);
-            }
-
         } catch (NotExistingServiceException e) {
 
             if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {

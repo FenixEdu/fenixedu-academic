@@ -43,7 +43,6 @@ public class WriteMarksAction extends FenixDispatchAction {
     public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         ActionErrors actionErrors = new ActionErrors();
         HashMap hashMarks = new HashMap();
 
@@ -59,7 +58,7 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         FormFile formFile = (FormFile) marksForm.get("theFile");
         if (!(formFile.getContentType().equals("text/plain"))) {
-            prepareInputForward(request, session, objectCode, evaluationCode);
+            prepareInputForward(request, objectCode, evaluationCode);
             actionErrors.add("FileNotExist", new ActionError("error.ficheiro.impossivelLer"));
 
             saveErrors(request, actionErrors);
@@ -82,7 +81,7 @@ public class WriteMarksAction extends FenixDispatchAction {
                     try {
                         studentNumber = stringTokenizer.nextToken().trim();
                     } catch (NoSuchElementException e2) {
-                        prepareInputForward(request, session, objectCode, evaluationCode);
+                        prepareInputForward(request, objectCode, evaluationCode);
                         actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
 
                         saveErrors(request, actionErrors);
@@ -94,7 +93,7 @@ public class WriteMarksAction extends FenixDispatchAction {
                         mark = stringTokenizer.nextToken().trim();
 
                     } catch (NoSuchElementException e1) {
-                        prepareInputForward(request, session, objectCode, evaluationCode);
+                        prepareInputForward(request, objectCode, evaluationCode);
                         actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
 
                         saveErrors(request, actionErrors);
@@ -106,7 +105,7 @@ public class WriteMarksAction extends FenixDispatchAction {
 
             }
         } catch (IOException e) {
-            prepareInputForward(request, session, objectCode, evaluationCode);
+            prepareInputForward(request, objectCode, evaluationCode);
             actionErrors.add("FileNotExist", new ActionError("error.ficheiro.impossivelLer"));
 
             saveErrors(request, actionErrors);
@@ -114,7 +113,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         }
 
         if (n == 0) {
-            prepareInputForward(request, session, objectCode, evaluationCode);
+            prepareInputForward(request, objectCode, evaluationCode);
             actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
             saveErrors(request, actionErrors);
             return mapping.findForward("viewMarksOptions");
@@ -169,7 +168,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         return mapping.findForward("viewMarksOptions");
     }
 
-    private void prepareInputForward(HttpServletRequest request, HttpSession session,
+    private void prepareInputForward(HttpServletRequest request, 
             Integer objectCode, Integer evaluationCode) throws FenixActionException, FenixFilterException {
         IUserView userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
@@ -191,7 +190,6 @@ public class WriteMarksAction extends FenixDispatchAction {
     public ActionForward writeMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         ActionErrors actionErrors = new ActionErrors();
 
         DynaActionForm marksForm = (DynaActionForm) form;

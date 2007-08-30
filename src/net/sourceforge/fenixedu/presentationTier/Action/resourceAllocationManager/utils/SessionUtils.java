@@ -52,7 +52,6 @@ public final class SessionUtils {
 
     public static List getExecutionCourses(HttpServletRequest request) throws Exception {
 
-        //HttpSession session = request.getSession(false);
         List infoCourseList = new ArrayList();
 
         // Nao verifica se ja existem em sessao porque podem
@@ -80,7 +79,6 @@ public final class SessionUtils {
     public static List getExecutionCoursesForAssociateToExam(HttpServletRequest request, ActionForm form)
             throws Exception {
 
-        //HttpSession session = request.getSession(false);
         List infoCourseList = new ArrayList();
 
         // Nao verifica se ja existem em sessao porque podem

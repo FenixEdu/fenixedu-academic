@@ -28,7 +28,6 @@ public class ReadPublicationAttributesAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-        HttpSession session = request.getSession(false);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
         Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
@@ -41,8 +40,6 @@ public class ReadPublicationAttributesAction extends FenixAction {
         authorsIds.addAll(newList);
 
         IUserView userView = SessionUtils.getUserView(request);
-
-        if (session != null) {
 
             Object[] args = { publicationTypeId };
             
@@ -76,7 +73,6 @@ public class ReadPublicationAttributesAction extends FenixAction {
             dynaForm.set("typePublication", typePublication);
             dynaForm.set("teacherId", idTeacher);
 
-        }
         ActionForward actionForward = null;
 
         if (typePublication.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {

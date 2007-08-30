@@ -36,9 +36,6 @@ import org.apache.struts.action.ActionMapping;
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-        final HttpSession session = request.getSession(true);
-
-        if (session != null) {
             // inEnglish
             Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
             request.setAttribute("inEnglish", inEnglish);
@@ -91,14 +88,13 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
             // SessionConstants.INFO_EXAMS_MAP
             request.removeAttribute(SessionConstants.INFO_EXAMS_MAP);
             try {
-                final IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+                final IUserView userView = getUserView(request);
                 final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
                 final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap", args);
                 request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
             } catch (NonExistingServiceException e) {
                 return mapping.findForward("viewExamsMap");
             }
-        }
 
         return mapping.findForward("viewExamsMap");
     }

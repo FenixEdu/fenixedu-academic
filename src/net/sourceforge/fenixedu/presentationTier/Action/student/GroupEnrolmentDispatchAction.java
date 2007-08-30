@@ -53,7 +53,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         HttpServletResponse response)
         throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -151,7 +150,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
     public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
         throws FenixActionException, FenixFilterException, FenixServiceException {
 
-        HttpSession session = request.getSession(false);
         DynaActionForm enrolmentForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);

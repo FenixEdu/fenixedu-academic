@@ -34,8 +34,6 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = SessionUtils.getUserView(request);
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
@@ -91,9 +89,6 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
             request.setAttribute("licenciaturas", licenciaturas);
 
             return mapping.findForward("Sucesso");
-        }
-        throw new Exception();
-
     }
 
     /**
@@ -124,7 +119,6 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
      */
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
-        //HttpSession session = request.getSession(false);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {

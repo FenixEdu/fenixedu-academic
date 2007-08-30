@@ -24,8 +24,6 @@ public class PrepareConsultRoomsFormAction extends FenixContextAction {
             HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
 
-        HttpSession session = request.getSession(true);
-        if (session != null) {
             //TODO: No futuro, os edificios devem ser lidos da BD
             List buildings = Util.readExistingBuldings("*", null);
             request.setAttribute("publico.buildings", buildings);
@@ -35,7 +33,5 @@ public class PrepareConsultRoomsFormAction extends FenixContextAction {
             request.setAttribute("publico.types", types);
 
             return mapping.findForward("Sucess");
-        }
-        throw new Exception();
     }
 }

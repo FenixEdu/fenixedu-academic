@@ -56,8 +56,6 @@ public class ClassManagerDispatchAction extends
         //ContextUtils.setExecutionDegreeContext(request);
         //ContextUtils.setCurricularYearContext(request);
 
-        //HttpSession session = request.getSession(false);
-
         request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
         //request.removeAttribute(SessionConstants.CLASS_VIEW);
         request.removeAttribute(SessionConstants.LESSON_LIST_ATT);
@@ -113,7 +111,6 @@ public class ClassManagerDispatchAction extends
 
         String className = getClassName(form);
 
-        //HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
         boolean change = request.getParameter("change") != null;
 
@@ -185,17 +182,10 @@ public class ClassManagerDispatchAction extends
     public ActionForward deleteClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        //DynaValidatorForm classForm = (DynaValidatorForm) form;
-        //HttpSession session = request.getSession(false);
-
-        //String className = getClassName(classForm);
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        //InfoClass infoClass = getInfoTurma(userView, className, request);
-
-        //		ClassKey keyClass = new ClassKey(className);
         Object argsApagarTurma[] = { infoClass };
         ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
 

@@ -64,8 +64,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
      */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
 
             String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
             String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
@@ -137,11 +135,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
             // TODO : throw a proper exception
             throw new Exception("SomeOne is messing around with the links");
-        }
-
-        throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
-
     }
 
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form,

@@ -26,7 +26,6 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpSession session = request.getSession(false);
 
 	DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
@@ -49,8 +48,6 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 	InfoPublicationType publicationType = (InfoPublicationType) ServiceUtils.executeService(
 		userView, "ReadPublicationType", args);
 
-	if (session != null) {
-
 	    List infoAuthors = readInfoAuthors(authorsIds, userView);
 
 	    request.setAttribute("infoAuthorsList", infoAuthors);
@@ -62,7 +59,6 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 		actionForward = mapping.findForward("show-attributes");
 	    else
 		actionForward = mapping.findForward("show-search-author-form");
-	}
 
 	return actionForward;
     }

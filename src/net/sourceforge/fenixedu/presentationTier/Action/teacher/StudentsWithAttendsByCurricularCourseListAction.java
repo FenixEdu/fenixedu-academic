@@ -40,7 +40,6 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 	DynaActionForm formBean = (DynaActionForm) form;
-	HttpSession session = request.getSession(false);
 	Integer executionCourseID = null;
 	List coursesIDs = null;
 	List enrollmentTypeList = null;
@@ -150,7 +149,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	HttpSession session = request.getSession(false);
+
 	Integer executionCourseID = null;
 	try {
 	    executionCourseID = new Integer(request.getParameter("objectCode"));

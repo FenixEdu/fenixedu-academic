@@ -51,7 +51,6 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         throws FenixActionException, FenixFilterException
     {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -187,9 +186,6 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         HttpServletResponse response)
         throws FenixActionException, FenixFilterException
     {
-
-        HttpSession session = request.getSession(false);
-
         DynaActionForm editStudentGroupForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);

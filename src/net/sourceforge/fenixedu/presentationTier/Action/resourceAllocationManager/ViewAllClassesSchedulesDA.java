@@ -32,8 +32,6 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             //GestorServicos gestor = GestorServicos.manager();
             IUserView userView = getUserView(request);
 
@@ -53,16 +51,11 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
             request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST, executionDegreeList);
 
             return mapping.findForward("choose");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
             DynaActionForm chooseViewAllClassesSchedulesContextForm = (DynaActionForm) form;
 
@@ -107,8 +100,5 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
             }
 
             return mapping.findForward("list");
-        }
-        throw new Exception();
-
     }
 }

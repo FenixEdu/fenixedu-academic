@@ -784,8 +784,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(
-                SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
         request.setAttribute("objectCode", executionCourseId);
@@ -812,8 +811,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(
-                SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         final Integer variationCode = getCodeFromRequest(request, "variationCode");

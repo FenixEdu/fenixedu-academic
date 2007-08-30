@@ -31,9 +31,6 @@ public class SelectRoomsFormAction extends FenixAction {
 
         DynaActionForm roomForm = (DynaActionForm) form;
 
-        HttpSession sessao = request.getSession(true);
-        if (sessao != null) {
-
             Object argsSelectRooms[] = { 
         	    new InfoRoomEditor(
         		    readFormValue(roomForm, "name"), 
@@ -81,10 +78,6 @@ public class SelectRoomsFormAction extends FenixAction {
             }
 
             return mapping.findForward("Sucess");
-        }
-
-        throw new FenixActionException();
-
     }
 
     private String readFormValue(DynaActionForm roomForm, String name) {

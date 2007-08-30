@@ -23,8 +23,6 @@ public class ConsultRoomsForExamDA extends FenixDispatchAction {
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        //HttpSession sessao = getSession(request);
-
         List edificios = Util.readExistingBuldings("*", null);
         List tipos = Util.readTypesOfRooms("*", null);
 

@@ -258,7 +258,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    throw e1;
 	}
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 
 	// Filter if the cteacher is responsibles for the execution course
@@ -303,7 +302,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward editObjectives(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
+
 	Integer objectCode = getObjectCode(request);
 	String curricularCourseCodeString = request.getParameter("curricularCourseCode");
 	Integer curricularCourseCode = new Integer(curricularCourseCodeString);
@@ -357,7 +356,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    throw e1;
 	}
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 
 	// Filter if the cteacher is responsibles for the execution course
@@ -394,7 +392,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer objectCode = getObjectCode(request);
 	String curricularCourseCodeString = request.getParameter("curricularCourseCode");
 	Integer curricularCourseCode = new Integer(curricularCourseCodeString);
@@ -457,7 +454,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 
 	Integer objectCode = getObjectCode(request);
 	Integer evaluationMethodCode = getParameter(request, "evaluationMethodCode");
@@ -525,7 +521,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
 	String title = (String) insertBibliographicReferenceForm.get("title");
@@ -563,7 +558,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
 	if (bibliographicReferenceCodeString == null) {
 	    bibliographicReferenceCodeString = (String) request
@@ -591,7 +585,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
 	if (bibliographicReferenceCodeString == null) {
 	    bibliographicReferenceCodeString = (String) request
@@ -747,7 +740,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteSection(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer superiorSectionCode = getSuperiorSectionCode(request);
 	Integer sectionCode = getSectionCode(request);
 	Integer objectCode = getObjectCode(request);
@@ -838,7 +830,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer itemCode = getItemCode(request);
 	Integer objectCode = getObjectCode(request);
 	IUserView userView = getUserView(request);
@@ -971,7 +962,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewExecutionCourseProjects(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	Object[] args = { objectCode };
@@ -1050,8 +1040,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
-
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -1084,8 +1072,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward acceptNewProjectProposal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-
-	HttpSession session = request.getSession(false);
 
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
@@ -1126,7 +1112,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewShiftsAndGroups(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -1178,7 +1163,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewStudentGroupInformation(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -1261,7 +1245,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward createGroupProperties(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
 	IUserView userView = getUserView(request);
 	String name = (String) insertGroupPropertiesForm.get("name");
@@ -1448,7 +1431,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
 	String groupPropertiesString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
@@ -1629,8 +1611,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	ActionErrors actionErrors = new ActionErrors();
 
-	HttpSession session = request.getSession(false);
-
 	IUserView userView = getUserView(request);
 
 	Integer objectCode = getObjectCode(request);
@@ -1686,7 +1666,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareImportGroupProperties(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1738,8 +1717,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteStudentGroup(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-
-	HttpSession session = request.getSession(false);
 
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
@@ -1809,7 +1786,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 
@@ -1873,7 +1849,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewStudentsAndGroupsByShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
+
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 
@@ -1917,7 +1893,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewStudentsAndGroupsWithoutShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	String groupPropertiesString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
@@ -1945,7 +1920,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewAllStudentsAndGroups(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
+
 	IUserView userView = getUserView(request);
 	String groupPropertiesString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
@@ -2036,7 +2011,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward editStudentGroupShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm editStudentGroupForm = (DynaActionForm) form;
 	IUserView userView = getUserView(request);
@@ -2167,7 +2141,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward enrollStudentGroupShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
+
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
 	IUserView userView = getUserView(request);
@@ -2231,7 +2205,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	Integer objectCode = getObjectCode(request);
 	IUserView userView = getUserView(request);
 	String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2273,8 +2246,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareEditStudentGroupMembers(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-
-	HttpSession session = request.getSession(false);
 
 	IUserView userView = getUserView(request);
 
@@ -2341,7 +2312,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward editStudentGroupsShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2408,7 +2378,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2457,7 +2426,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2534,8 +2502,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
-
 	IUserView userView = getUserView(request);
 
 	String groupingIDString = request.getParameter("groupPropertiesCode");
@@ -2575,7 +2541,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2613,8 +2578,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
-
 	IUserView userView = getUserView(request);
 
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2641,7 +2604,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -2676,7 +2638,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm deleteAttendsSetForm = (DynaActionForm) form;
@@ -2710,7 +2671,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteAttendsSetMembersByExecutionCourse(ActionMapping mapping,
 	    ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupingOIDString = request.getParameter("groupingOID");
@@ -2743,7 +2703,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteAllAttendsSetMembers(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
 	String groupingOIDString = request.getParameter("groupingOID");
@@ -2768,8 +2727,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteProjectProposal(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-
-	HttpSession session = request.getSession(false);
 
 	IUserView userView = getUserView(request);
 	Integer objectCode = getObjectCode(request);
@@ -2802,7 +2759,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	Integer objectCode = getObjectCode(request);
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);

@@ -39,12 +39,10 @@ public class ReadPublicationTypesAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
-        if ((session != null)) {
             Object[] args = { userView.getUtilizador() };
             Integer keyTeacher = new Integer(request.getParameter("infoTeacher#idInternal"));
             String typePublication = request.getParameter("typePublication");
@@ -63,7 +61,7 @@ public class ReadPublicationTypesAction extends FenixAction {
             request.setAttribute("publicationTypesList", infoPublicationTypes);
             dynaForm.set("teacherId", keyTeacher);
             dynaForm.set("typePublication", typePublication);
-        }
+
         ActionForward actionForward = null;
 
         actionForward = mapping.findForward("show-publication-types-form");

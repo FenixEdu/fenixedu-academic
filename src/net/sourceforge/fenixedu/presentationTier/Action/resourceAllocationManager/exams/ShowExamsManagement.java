@@ -43,14 +43,9 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-        HttpSession session = request.getSession(false);
 
-        if (session != null) {
             InfoExamsMap infoExamsMap = getExamsMap(request);
             request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-        } else {
-            throw new FenixActionException();
-        }
 
         request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, ContextUtils
                 .createCurricularYearList());
@@ -60,7 +55,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
@@ -123,7 +118,6 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         ContextUtils.setCurricularYearContext(request);
@@ -142,7 +136,6 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         ActionErrors actionErrors = new ActionErrors();
 
         IUserView userView = getUserView(request);

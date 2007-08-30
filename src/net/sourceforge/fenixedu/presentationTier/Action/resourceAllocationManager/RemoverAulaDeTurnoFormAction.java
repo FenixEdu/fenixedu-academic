@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,13 +33,10 @@ public class RemoverAulaDeTurnoFormAction extends
 
         super.execute(mapping, form, request, response);
 
-        HttpSession sessao = request.getSession(false);
-        if (sessao != null) {
-
             DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request
                     .getAttribute("editarAulasDeTurnoForm");
 
-            IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = SessionUtils.getUserView(request);
 
             Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
             Object args[] = { shiftOID };
@@ -61,8 +59,5 @@ public class RemoverAulaDeTurnoFormAction extends
             ServiceManagerServiceFactory.executeService(userView, "RemoverAula", argsRemoverAula);
 
             return mapping.findForward("Sucesso");
-        }
-        throw new Exception();
-
     }
 }

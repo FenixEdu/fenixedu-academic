@@ -1476,8 +1476,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward simulateTest(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        final IUserView userView = (IUserView) request.getSession(false).getAttribute(
-                SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final Integer distributedTestId = getCodeFromRequest(request, "distributedTestCode");
 

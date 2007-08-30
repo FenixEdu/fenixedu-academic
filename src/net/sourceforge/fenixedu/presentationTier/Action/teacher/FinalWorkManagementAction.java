@@ -668,9 +668,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession();
-
-	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	IUserView userView = getUserView(request);
 
 	String studentCurricularPlanID = request.getParameter("studentCPID");
 	if (studentCurricularPlanID == null) {
@@ -710,8 +708,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession();
-	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	IUserView userView = getUserView(request);
 
 	String studentNumber = getStudent(request);
 	List infoStudents = null;

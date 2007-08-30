@@ -30,9 +30,6 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-        HttpSession session = request.getSession();
-
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet
@@ -51,8 +48,5 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
             request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
             return mapping.findForward("Sucess");
-        }
-        throw new FenixActionException();
-
     }
 }

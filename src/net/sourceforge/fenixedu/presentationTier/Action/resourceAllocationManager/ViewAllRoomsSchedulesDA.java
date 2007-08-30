@@ -28,8 +28,6 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             /* Criar o bean de pavilhoes */
             List<String> pavillionsNamesList = new ArrayList<String>();            
             List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
@@ -40,16 +38,11 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
             request.setAttribute(SessionConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
 
             return mapping.findForward("choose");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             IUserView userView = getUserView(request);
             DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
 
@@ -86,9 +79,6 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
             }
 
             return mapping.findForward("list");
-        }
-        throw new Exception();
-
     }
 
 }

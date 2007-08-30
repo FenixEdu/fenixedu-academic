@@ -36,11 +36,8 @@ public class ReadPublicationsAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
         String string = request.getParameter("typePublication");
-
-        if ((session != null)) {
 
             Object[] args = { userView.getUtilizador(), string };
 
@@ -48,7 +45,7 @@ public class ReadPublicationsAction extends FenixAction {
                     args);
 
             request.setAttribute("siteView", siteView);
-        }
+
         ActionForward actionForward = null;
 
         if (string.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {

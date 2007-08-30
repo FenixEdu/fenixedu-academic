@@ -199,7 +199,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     public ActionForward viewDegreeEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);

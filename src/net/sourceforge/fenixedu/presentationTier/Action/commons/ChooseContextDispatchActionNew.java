@@ -48,9 +48,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
     protected static final String CURRICULAR_YEAR_PARAMETER = "curricularYear";
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final HttpSession session = request.getSession(false);
 
-        if (session != null) {
             String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
             if (inputPage != null) {
                 request.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
@@ -78,10 +76,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             }
 
             return mapping.findForward("prepare");
-
-        } else {
-            throw new Exception();    
-        }
     }
 
     // TODO When session is removed from SOP, use method with same name from RequestUtils

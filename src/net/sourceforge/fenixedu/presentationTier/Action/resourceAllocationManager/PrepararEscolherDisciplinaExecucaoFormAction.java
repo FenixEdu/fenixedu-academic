@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndI
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -27,9 +28,7 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession sessao = request.getSession(false);
-        if (sessao != null) {
-            IUserView userView = (IUserView) sessao.getAttribute("UserView");
+            IUserView userView = SessionUtils.getUserView(request);
 
             // Ler Disciplinas em Execucao
             InfoExecutionDegree iLE = (InfoExecutionDegree) request
@@ -57,7 +56,5 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
             request.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);
 
             return mapping.findForward("Sucesso");
-        }
-        throw new Exception();
     }
 }

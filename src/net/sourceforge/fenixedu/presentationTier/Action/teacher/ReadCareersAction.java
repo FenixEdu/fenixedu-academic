@@ -36,13 +36,12 @@ public class ReadCareersAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         String string = request.getParameter("careerType");
         CareerType careerType = null;
         IUserView userView = SessionUtils.getUserView(request);
 
-        if ((session != null) && (string != null)) {
+        if ((string != null)) {
             careerType = CareerType.valueOf(string);
 
             Object[] args = { careerType, userView.getUtilizador() };

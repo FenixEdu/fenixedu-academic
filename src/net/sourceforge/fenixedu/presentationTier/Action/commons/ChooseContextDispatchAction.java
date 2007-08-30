@@ -59,8 +59,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
      */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
 
             String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
             String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
@@ -132,11 +130,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
             // TODO : throw a proper exception
             throw new Exception("SomeOne is messing around with the links");
-        }
-
-        throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
-
     }
 
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form,
@@ -207,7 +200,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
     public ActionForward nextPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
+
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
@@ -220,7 +213,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
         }
 
-        if (session != null) {
             Integer semestre = ((InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD)).getSemester();
             Integer anoCurricular = (Integer) escolherContextoForm.get("curricularYear");
@@ -267,11 +259,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
             // TODO : throw a proper exception
             throw new Exception("SomeOne is messing around with the links");
-        }
-
-        throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
-
     }
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,

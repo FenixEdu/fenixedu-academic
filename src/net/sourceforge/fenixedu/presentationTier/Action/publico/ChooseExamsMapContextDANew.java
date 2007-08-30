@@ -45,9 +45,7 @@ import org.apache.struts.util.LabelValueBean;
 public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final HttpSession session = request.getSession(true);
 
-        if (session != null) {
             Integer degreeId = getFromRequest("degreeID", request);
             request.setAttribute("degreeID", degreeId);
             request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
@@ -74,16 +72,12 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
 
             return mapping.findForward("prepare");
-        } else {
-            throw new Exception();    
-        }
     }
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         final HttpSession session = request.getSession(false);
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
-        if (session != null) {
             final ActionErrors errors = new ActionErrors();
             final DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
             
@@ -186,9 +180,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             }
 
             return mapping.findForward("showExamsMap");
-        } else {
-            throw new Exception();
-        }
     }
 
     private List<Integer> buildCurricularYearList(Boolean allCurricularYears, Degree degree, DynaActionForm chooseExamContextoForm) {

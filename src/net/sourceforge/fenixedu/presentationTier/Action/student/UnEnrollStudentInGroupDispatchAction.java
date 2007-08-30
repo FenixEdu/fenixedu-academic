@@ -40,7 +40,6 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException, FenixFilterException {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = getUserView(request);
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -118,7 +117,6 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 	public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException, FenixFilterException {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = getUserView(request);
 		String userName = userView.getUtilizador();
 

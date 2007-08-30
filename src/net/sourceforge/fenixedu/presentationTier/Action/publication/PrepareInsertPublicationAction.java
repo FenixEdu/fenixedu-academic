@@ -37,12 +37,9 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
      */
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
-
-        if ((session != null)) {
 
             Integer keyTeacher = new Integer(request.getParameter("infoTeacher#idInternal"));
             dynaForm.set("authorIdInternal",keyTeacher);
@@ -53,7 +50,6 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
     		request.setAttribute("siteAttributes",siteAttributes);
 
             request.setAttribute("publicationManagementForm",dynaForm);
-        }
 
         return mapping.findForward("insert-publication");
 

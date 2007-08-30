@@ -35,17 +35,14 @@ public class ReadExternalActivitiesAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         IUserView userView = getUserView(request);
 
-        if (session != null) {
             Object[] args = { userView.getUtilizador() };
             SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
                     "ReadExternalActivities", args);
 
             request.setAttribute("siteView", siteView);
-        }
 
         return mapping.findForward("show-form");
     }
