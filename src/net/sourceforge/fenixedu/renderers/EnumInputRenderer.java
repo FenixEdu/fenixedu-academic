@@ -126,6 +126,10 @@ public class EnumInputRenderer extends InputRenderer {
             public HtmlComponent createComponent(Object targetObject, Class type) {
                 Enum enumerate = (Enum) targetObject;
                 
+                if (!type.isEnum() && Enum.class.isAssignableFrom(type)) {
+                    type = type.getEnclosingClass();
+                }
+                
                 Collection<Object> constants = getIncludedEnumValues(type);
                 Collection<Object> excludedValues = getExcludedEnumValues(type);
                 List<Pair<Enum,String>> pairList = new ArrayList<Pair<Enum,String>>();

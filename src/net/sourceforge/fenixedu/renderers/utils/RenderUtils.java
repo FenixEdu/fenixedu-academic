@@ -105,11 +105,18 @@ public class RenderUtils {
             bundle = "ENUMERATION_RESOURCES";
         }
         
-        String fullPrefix = e.getClass().getName();
+        Class enumClass = e.getClass();
+        
+        if (!enumClass.isEnum() && Enum.class.isAssignableFrom(enumClass)) {
+            enumClass = enumClass.getEnclosingClass();
+        }
+        
+        String fullPrefix = enumClass.getName();
+        
         description = RenderUtils.getResourceString(bundle, fullPrefix + "." + e.name());
         
         if (description == null) {
-            String simplePrefix = e.getClass().getSimpleName();
+            String simplePrefix = enumClass.getSimpleName();
             description = RenderUtils.getResourceString(bundle, simplePrefix + "." + e.name());
         }
 
