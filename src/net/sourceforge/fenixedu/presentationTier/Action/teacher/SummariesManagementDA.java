@@ -494,7 +494,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    summaryBean.setLesson(bean.getLesson());
 	    summaryBean.setSummaryDate(bean.getDate());
 	    summaryBean.setStudentsNumber(bean.getStudentsNumber());
-	    summaryBean.setLessonType(bean.getLessonType());
+	    //summaryBean.setLessonType(bean.getLessonType());
 
 	    final Object args[] = { summaryBean };
 	    try {
