@@ -540,9 +540,9 @@
 	<slot name="monthString" key="label.month"/>
 	<slot name="date.year" key="labe.summary.year"/>
 	<slot name="lessonInstancePrettyPrint" key="label.lesson" />		
-	<slot name="lesson.shift.shiftTypesPrettyPrint" key="label.type"/>
-	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>
-	<slot name="lesson.shift.classesPrettyPrint" key="label.classes"/>			
+	<slot name="shiftTypesPrettyPrint" key="label.type"/>
+	<slot name="shift" key="label.shift" layout="shift-plain"/>
+	<slot name="shift.classesPrettyPrint" key="label.classes"/>			
 	<slot name="writtenSummary" key="label.summary"/>
 </schema>
 <schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem">

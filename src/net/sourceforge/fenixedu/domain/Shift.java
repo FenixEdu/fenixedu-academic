@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -317,6 +318,17 @@ public class Shift extends Shift_Base {
 	    }
 	}
 	return builder.toString();
+    }
+    
+    public List<Summary> getExtraSummaries(){
+	List<Summary> result = new ArrayList<Summary>();
+	Set<Summary> summaries = getAssociatedSummariesSet();
+	for (Summary summary : summaries) {
+	    if(summary.getIsExtraLesson()) {
+		result.add(summary);
+	    }
+	} 
+	return result;
     }
     
     private static class ShiftStudentListener extends dml.runtime.RelationAdapter<Registration, Shift> {

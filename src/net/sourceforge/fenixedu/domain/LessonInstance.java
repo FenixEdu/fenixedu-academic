@@ -209,7 +209,7 @@ public class LessonInstance extends LessonInstance_Base {
 	result.append(getDayOfweek().getDiaSemanaString()).append(" (");	
 	result.append(getStartTime().toString("HH:mm")).append(" - ");
 	result.append(getEndDateTime().toString("HH:mm")).append(") ");
-	result.append(getRoom() != null ? getRoom().getName() : "");
+	result.append(getRoom() != null ? getRoom().getIdentification() : "");
 	return result.toString();
     }
 }
