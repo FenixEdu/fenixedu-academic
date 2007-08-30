@@ -619,7 +619,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private String getUsername(HttpServletRequest request) throws InvalidSessionActionException {
-	HttpSession session = getSession(request);
 	IUserView userView = getUserView(request);
 	String username = userView.getUtilizador();
 	return username;
@@ -637,7 +636,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = getSession(request);
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
 	Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
@@ -658,7 +656,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
-	HttpSession session = getSession(request);
 	String teacherCodeString = request.getParameter("teacherCode");
 	if (teacherCodeString == null) {
 	    teacherCodeString = (String) request.getAttribute("teacherCode");
@@ -937,8 +934,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
 	    Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException,
 	    FenixFilterException {
-
-	HttpSession session = getSession(request);
 
 	IUserView userView = getUserView(request);
 

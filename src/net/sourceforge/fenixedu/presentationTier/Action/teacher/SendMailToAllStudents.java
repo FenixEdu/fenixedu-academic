@@ -54,7 +54,6 @@ import org.apache.struts.action.DynaActionForm;
 public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
@@ -95,7 +94,6 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward prepareCandidaciesSend(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         TeacherAdministrationSiteView siteView = null;
         Object argsReadPerson[] = { userView.getUtilizador() };
@@ -189,7 +187,6 @@ public class SendMailToAllStudents extends FenixDispatchAction {
 
     public ActionForward sendMailCandidacies(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         //
         String from = request.getParameter("from");
@@ -264,7 +261,6 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward send(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         Integer objectCode = null;
         Integer shiftID = null;
