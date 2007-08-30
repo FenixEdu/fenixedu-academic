@@ -81,7 +81,7 @@
 			<h:outputText value="</p>" escape="false"/>	
 		</h:panelGroup>
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-		<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{CurricularCourseManagement.editCurricularCourse}"/>
+		<fc:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{CurricularCourseManagement.editCurricularCourse}"/>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
@@ -134,10 +134,10 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-			<h:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
+			<fc:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
 				action="" actionListener="#{CurricularCourseManagement.addContext}"/>
 			<h:outputText value=" " escape="false"/>							
-			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
+			<fc:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
 				action="#{CurricularCourseManagement.cancel}"/>
 			<h:outputText value="</p></fieldset>" escape="false"/>
 			<h:outputText value="<br/>" escape="false"/>
@@ -167,6 +167,11 @@
 						<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
 						<f:param name="action" value="#{CurricularCourseManagement.hideCourses}"/>
 					</h:outputLink>
+					<h:outputText value=", " escape="false"/>
+					<fc:commandLink value="#{bolonhaBundle['delete']}" action="#{CurricularCourseManagement.editCurricularCourseReturnPath}"
+							actionListener="#{CurricularCourseManagement.tryDeleteContext}">
+						<f:param name="contextIDToDelete" value="#{context.idInternal}"/>
+					</fc:commandLink>
 					<h:outputText value="</p></fieldset>" escape="false"/>
 				</h:panelGroup>
 				
@@ -205,10 +210,10 @@
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'/>"/>
-					<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"
+					<fc:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"
 							action="#{CurricularCourseManagement.editContext}"/>
 					<h:outputText value=" " escape="false"/>							
-					<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
+					<fc:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
 							action="#{CurricularCourseManagement.cancel}"/>
 					<h:outputText value="</p></fieldset>" escape="false"/>
 				</h:panelGroup>
@@ -216,7 +221,7 @@
 		</h:dataTable>
 		<h:outputText value="</div>" escape="false"/>
 
-		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
+		<fc:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>
 	</h:form>
 </ft:tilesView>
