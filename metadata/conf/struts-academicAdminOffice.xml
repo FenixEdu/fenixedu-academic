@@ -679,6 +679,60 @@
 			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
 	  </action>
 	  
+  	 <action path="/studentSubstitutions"
+				scope="request"		
+		        parameter="method"
+		        name="studentDismissalForm"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentSubstitutionsDA">
+			
+			<forward name="manage" path="studentDismissal.management"/>
+			<forward name="chooseEquivalents" path="studentSubstitution.chooseEquivalents"/>
+			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
+			<forward name="chooseDismissalEnrolments" path="studentSubstitution.chooseDismissalEnrolments"/>
+			<forward name="confirmCreateDismissals" path="studentSubstitution.confirmCreateDismissals"/>
+
+			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
+			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
+			
+			<forward name="chooseNotNeedToEnrol" path="studentSubstitution.chooseNotNeedToEnrol"/>
+	  </action>
+
+  	 <action path="/studentEquivalences"
+				scope="request"		
+		        parameter="method"
+		        name="studentDismissalForm"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentEquivalencesDA">
+			
+			<forward name="manage" path="studentDismissal.management"/>
+			<forward name="chooseEquivalents" path="studentEquivalence.chooseEquivalents"/>
+			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
+			<forward name="chooseDismissalEnrolments" path="studentEquivalence.chooseDismissalEnrolments"/>
+			<forward name="confirmCreateDismissals" path="studentEquivalence.confirmCreateDismissals"/>
+
+			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
+			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
+			
+			<forward name="chooseNotNeedToEnrol" path="studentEquivalence.chooseNotNeedToEnrol"/>
+	  </action>
+
+  	 <action path="/studentCredits"
+				scope="request"		
+		        parameter="method"
+		        name="studentDismissalForm"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentCreditsDA">
+			
+			<forward name="manage" path="studentDismissal.management"/>
+			<forward name="chooseEquivalents" path="studentCredit.chooseEquivalents"/>
+			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
+			<forward name="chooseDismissalEnrolments" path="studentCredit.chooseDismissalEnrolments"/>
+			<forward name="confirmCreateDismissals" path="studentCredit.confirmCreateDismissals"/>
+
+			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
+			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
+			
+			<forward name="chooseNotNeedToEnrol" path="studentCredit.chooseNotNeedToEnrol"/>
+	  </action>	  
+	  
 	  <action path="/studentDismissalsExternalEnrolments"
 				scope="request"		
 		        parameter="method"

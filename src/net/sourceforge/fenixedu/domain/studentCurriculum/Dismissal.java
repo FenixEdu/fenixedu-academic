@@ -58,8 +58,8 @@ public class Dismissal extends Dismissal_Base {
     }
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
-	    final CourseGroup courseGroup) {
-	return new CreditsDismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup));
+	    final CourseGroup courseGroup, final Collection<CurricularCourse> noEnrolCurricularCourses) {
+	return new CreditsDismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup), noEnrolCurricularCourses);
     }
 
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan,
@@ -80,9 +80,8 @@ public class Dismissal extends Dismissal_Base {
     }
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
-	    final CurricularCourse curricularCourse) {
-	return new Dismissal(credits, findCurriculumGroupForCurricularCourse(studentCurricularPlan, curricularCourse),
-		curricularCourse);
+	    CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
+	return new Dismissal(credits, curriculumGroup, curricularCourse);
     }
 
     static protected OptionalDismissal createNewOptionalDismissal(final Credits credits,

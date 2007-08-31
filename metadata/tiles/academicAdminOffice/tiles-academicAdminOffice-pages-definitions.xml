@@ -317,18 +317,57 @@
 	<definition name="studentDismissal.chooseEquivalents" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalents.jsp"/>
 	</definition>
+	<definition name="studentSubstitution.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceEquivalents.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditEquivalents.jsp"/>
+	</definition>	
 	<definition name="studentDismissal.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"/>
 	</definition>
+	<definition name="studentSubstitution.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEnrolments.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceEnrolments.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditEnrolments.jsp"/>
+	</definition>	
+	
 	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
 	</definition>
 	<definition name="studentDismissal.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"/>
 	</definition>
+	<definition name="studentSubstitution.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateSubstitution.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateEquivalence.jsp"/>
+	</definition>
+	<definition name="studentCredit.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateCredit.jsp"/>
+	</definition>
+	
 	<definition name="studentDismissal.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/createExternalEnrolment.jsp"/>
 	</definition>
+	<definition name="studentSubstitution.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditNotNeedToEnrol.jsp"/>
+	</definition>
+	
 
 	<!-- ===================== MarkSheet Management ====================== -->
 	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">

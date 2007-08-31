@@ -2277,13 +2277,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Credits createNewCreditsDismissal(CourseGroup courseGroup, Collection<SelectedCurricularCourse> dismissals,
 	    Collection<IEnrolment> enrolments, Double givenCredits, ExecutionPeriod executionPeriod) {
-	if ((courseGroup == null && (dismissals == null || dismissals.isEmpty()))
-		|| (courseGroup != null && dismissals != null && !dismissals.isEmpty())) {
-	    throw new DomainException("error.credits.dismissal.wrong.arguments");
-	}
-
 	if (courseGroup != null) {
-	    return new Credits(this, courseGroup, enrolments, givenCredits, executionPeriod);
+	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
+	    if(dismissals != null) {
+		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
+		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
+		}
+	    }
+	    return new Credits(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionPeriod);
 	} else {
 	    return new Credits(this, dismissals, enrolments, executionPeriod);
 	}
@@ -2314,17 +2315,35 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    Grade givenGrade, ExecutionPeriod executionPeriod) {
-	if ((courseGroup == null && (dismissals == null || dismissals.isEmpty()))
-		|| (courseGroup != null && dismissals != null && !dismissals.isEmpty())) {
-	    throw new DomainException("error.equivalence.wrong.arguments");
-	}
-
 	if (courseGroup != null) {
-	    return new Equivalence(this, courseGroup, enrolments, givenCredits, givenGrade, executionPeriod);
+	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
+	    if(dismissals != null) {
+		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
+		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
+		}
+	    }
+	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade, executionPeriod);
 	} else {
 	    return new Equivalence(this, dismissals, enrolments, givenGrade, executionPeriod);
 	}
     }
+    
+    final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup,
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
+	    ExecutionPeriod executionPeriod) {
+	if (courseGroup != null) {
+	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
+	    if(dismissals != null) {
+		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
+		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
+		}
+	    }
+	    return new Substitution(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionPeriod);
+	} else {
+	    return new Substitution(this, dismissals, enrolments, executionPeriod);
+	}
+    }
+
 
     final public Substitution createSubstitution(final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
@@ -2506,6 +2525,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getCycle(cycleType) != null;
     }
     
+    public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
+	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
+    }
+    
     public CycleCurriculumGroup getFirstCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE) : null;
     }
@@ -2513,5 +2536,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CycleCurriculumGroup getSecondCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
+    
 
 }

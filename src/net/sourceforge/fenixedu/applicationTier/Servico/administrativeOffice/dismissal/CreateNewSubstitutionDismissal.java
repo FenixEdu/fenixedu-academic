@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.di
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
 
-public class CreateNewCreditsDismissal extends Service {
+public class CreateNewSubstitutionDismissal extends Service {
     
     public void run(DismissalBean dismissalBean) {
-	dismissalBean.getStudentCurricularPlan().createNewCreditsDismissal(dismissalBean.getCourseGroup(),
+	dismissalBean.getStudentCurricularPlan().createNewSubstitutionDismissal(dismissalBean.getCourseGroup(),
 		dismissalBean.getDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
-		dismissalBean.getExecutionPeriod());
+		dismissalBean.getExecutionPeriod());	
     }
     
 }

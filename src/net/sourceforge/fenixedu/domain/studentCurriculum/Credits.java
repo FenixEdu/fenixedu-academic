@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -29,10 +30,10 @@ public class Credits extends Credits_Base {
 	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
     }
 
-    public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
+    public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionPeriod executionPeriod) {
 	this();
-	init(studentCurricularPlan, courseGroup, enrolments, credits, executionPeriod);
+	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
     }
 
     final protected void initExecutionPeriod(ExecutionPeriod executionPeriod) {
@@ -42,8 +43,8 @@ public class Credits extends Credits_Base {
 	setExecutionPeriod(executionPeriod);
     }
 
-    final protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
+    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionPeriod executionPeriod) {
 	if (studentCurricularPlan == null || courseGroup == null || credits == null) {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
@@ -55,7 +56,7 @@ public class Credits extends Credits_Base {
 	setGivenCredits(credits);
 	addEnrolments(enrolments);
 
-	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup);
+	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup, noEnrolCurricularCourses);
     }
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan,
@@ -101,8 +102,8 @@ public class Credits extends Credits_Base {
 	addEnrolments(enrolments);
 
 	for (final SelectedCurricularCourse selectedCurricularCourse : dismissals) {
-	    Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse
-		    .getCurricularCourse());
+	    Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse.getCurriculumGroup(), 
+		    selectedCurricularCourse.getCurricularCourse());
 	}
     }
 

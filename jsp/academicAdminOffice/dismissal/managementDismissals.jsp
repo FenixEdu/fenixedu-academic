@@ -27,10 +27,23 @@
 
 
 <ul>
-	<li>
+	<!--  <li>
 		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.studentDismissal.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+	</li> -->
+	<li>
+		<bean:define id="url2">/studentSubstitutions.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<html:link action='<%= url2 %>'><bean:message key="label.studentSubstitution.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
+	<li>
+		<bean:define id="url2">/studentEquivalences.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<html:link action='<%= url2 %>'><bean:message key="label.studentEquivalence.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+	</li>
+	<li>
+		<bean:define id="url3">/studentCredits.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<html:link action='<%= url3 %>'><bean:message key="label.studentCredits.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+	</li>
+	
 
 </ul>
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />

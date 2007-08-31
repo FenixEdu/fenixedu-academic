@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -23,16 +24,16 @@ public class Equivalence extends Equivalence_Base {
 	init(studentCurricularPlan, dismissals, enrolments, grade, executionPeriod);
     }
 
-    public Equivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
+    public Equivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
 	this();
-	init(studentCurricularPlan, courseGroup, enrolments, credits, grade, executionPeriod);
+	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, grade, executionPeriod);
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
-	    Collection<IEnrolment> enrolments, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
+    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
 	initGrade(enrolments, grade);
-	super.init(studentCurricularPlan, courseGroup, enrolments, credits, executionPeriod);
+	super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan,
@@ -42,7 +43,7 @@ public class Equivalence extends Equivalence_Base {
     }
 
     private void initGrade(Collection<IEnrolment> enrolments, Grade grade) {
-	if ((enrolments == null || enrolments.isEmpty()) && grade.isEmpty()) {
+	if (grade.isEmpty()) {
 	    throw new DomainException("error.equivalence.must.define.enrolments.and.grade");
 	}
 	setGrade(grade);

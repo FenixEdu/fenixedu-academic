@@ -12,13 +12,14 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class DismissalBean implements Serializable {
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
     private DomainReference<ExecutionPeriod> executionPeriod;
-    private Collection<SelectedCurricularCourse> dismissals;
+    private Collection<SelectedCurricularCourse> dismissals;    
     private DomainReference<CourseGroup> courseGroup;
     private Collection<SelectedEnrolment> enrolments;
     private Collection<SelectedExternalEnrolment> externalEnrolments;
@@ -134,9 +135,12 @@ public class DismissalBean implements Serializable {
     public static class SelectedCurricularCourse implements Serializable {
 	private Boolean selected = Boolean.FALSE;
 	private DomainReference<CurricularCourse> curricularCourse;
+	private DomainReference<CurriculumGroup> curriculumGroup;
+	private DomainReference<StudentCurricularPlan> studentCurricularPlan;
 	
-	public SelectedCurricularCourse(CurricularCourse curricularCourse) {
+	public SelectedCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
 	    setCurricularCourse(curricularCourse);
+	    setStudentCurricularPlan(studentCurricularPlan);
 	}
 
 	public CurricularCourse getCurricularCourse() {
@@ -151,6 +155,41 @@ public class DismissalBean implements Serializable {
 	}
 	public void setSelected(Boolean selected) {
 	    this.selected = selected;
+	}
+
+	public CurriculumGroup getCurriculumGroup() {
+	    return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	}
+
+	public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
+	    this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	}
+
+	public StudentCurricularPlan getStudentCurricularPlan() {
+	    return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	}
+
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+	    this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null;
+	}
+	
+	public String getKey() {
+	    StringBuilder stringBuilder = new StringBuilder();
+	    if(this.getCurricularCourse() != null) {
+		stringBuilder.append(this.getCurricularCourse().getClass().getName()).append(":").append(
+			this.getCurricularCourse().getIdInternal());
+	    }
+	    stringBuilder.append(",");
+	    if(this.getCurriculumGroup() != null) {
+		stringBuilder.append(this.getCurriculumGroup().getClass().getName()) 
+		    .append(":").append(this.getCurriculumGroup().getIdInternal());
+	    }
+	    stringBuilder.append(",");
+	    if(this.getStudentCurricularPlan() != null) {
+		stringBuilder.append(this.getStudentCurricularPlan().getClass().getName())
+		    .append(":").append(this.getStudentCurricularPlan().getIdInternal());
+	    }
+	    return stringBuilder.toString();
 	}
     }
     

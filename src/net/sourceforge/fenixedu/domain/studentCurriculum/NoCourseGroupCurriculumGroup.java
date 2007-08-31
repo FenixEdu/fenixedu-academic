@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -143,4 +144,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
    
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
+    
+    @Override
+    public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
+	return Collections.singleton(this);
+    }
 }

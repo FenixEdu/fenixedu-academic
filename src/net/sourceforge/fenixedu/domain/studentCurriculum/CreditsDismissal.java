@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -15,8 +16,11 @@ public class CreditsDismissal extends CreditsDismissal_Base {
         super();
     }
     
-    public CreditsDismissal(Credits credits, CurriculumGroup curriculumGroup) {
+    public CreditsDismissal(Credits credits, CurriculumGroup curriculumGroup, Collection<CurricularCourse> noEnrolCurricularCourses) {
 	init(credits, curriculumGroup);
+	if(noEnrolCurricularCourses != null) {
+	    getNoEnrolCurricularCourses().addAll(noEnrolCurricularCourses);
+	}
     }
     
     @Override

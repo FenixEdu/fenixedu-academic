@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -26,6 +28,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
@@ -48,6 +51,8 @@ public class StudentDismissalRenderer extends InputRenderer {
     private String groupCellClasses = "smalltxt, aright";
     
     private String curricularCourseCellClasses = "smalltxt, aright";
+    
+    private String dismissalType;
     
     
     public Integer getInitialWidth() {
@@ -121,6 +126,16 @@ public class StudentDismissalRenderer extends InputRenderer {
     public String getCurricularCourseCheckBoxClasses() {
 	return getCurricularCourseCellClasses()[1];
     }
+    
+    public String getDismissalType() {
+        return dismissalType;
+    }
+
+    public void setDismissalType(String dismissalType) {
+        this.dismissalType = dismissalType;
+    }
+
+
 
     public StudentDismissalRenderer() {
 	super();
@@ -146,7 +161,9 @@ public class StudentDismissalRenderer extends InputRenderer {
 		return new HtmlText();
 	    }
 	    
-	    if(dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
+	    DismissalType dismissalTypeValue = getDismissalType() == null ? dismissalBean.getDismissalType() : DismissalType.valueOf(getDismissalType());  
+	    
+	    if(dismissalTypeValue == DismissalType.CURRICULUM_GROUP_CREDITS) {
 		radioButtonGroup = new HtmlRadioButtonGroup();
 		radioButtonGroup.bind(getInputContext().getMetaObject(), "courseGroup"); // slot refered by name
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
@@ -187,7 +204,7 @@ public class StudentDismissalRenderer extends InputRenderer {
     	    	
     	    	final HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean.containsDismissal(curricularCourse));
     	    	checkBox.setName("curricularCourseCheckBox" + curricularCourse.getIdInternal());
-    	    	checkBox.setUserValue(MetaObjectFactory.createObject(curricularCourse, new Schema(CurricularCourse.class)).getKey().toString());
+    	    	checkBox.setUserValue(new DismissalBean.SelectedCurricularCourse(curricularCourse, studentCurricularPlan).getKey());
     	    	checkBoxCell.setBody(checkBox);
     	    	curricularCoursesController.addCheckBox(checkBox);
 	    }
@@ -254,9 +271,22 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 	    final String[] values = (String[]) value;
 	    for (int i = 0; i < values.length; i++) {
-		result.add(new SelectedCurricularCourse((CurricularCourse) converter.convert(type, values[i])));
+		String key = values[i];
+
+		String[] parts = key.split(",");
+		if (parts.length < 3) {
+		    throw new ConversionException("invalid key format: " + key);
+		}
+
+		final CurricularCourse curricularCourse = (CurricularCourse) converter.convert(type, parts[0]);
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
+		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) converter.convert(type, parts[2]);
+		
+		SelectedCurricularCourse selectedCurricularCourse = new SelectedCurricularCourse(curricularCourse, studentCurricularPlan);
+		selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
+		result.add(selectedCurricularCourse);
 	    }
 	    return result;
 	}
-    }    
+    }
 }

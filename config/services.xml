@@ -11304,6 +11304,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>CreateNewSubstitutionDismissal</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewSubstitutionDismissal</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    <service>
     	<name>DeleteCredits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.DeleteCredits</implementationClass>
         <description></description>
