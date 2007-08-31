@@ -24,9 +24,9 @@
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
 	<!-- &amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + " -->
 		<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.name" />
-	</html:link>
+	</html:link>	
 	&nbsp;&gt;&nbsp;
-	<html:link page="<%= "/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
+	<html:link page="<%= "/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&organizeBy=groups&showRules=false&hideCourses=false"%>">
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curriculum"/>
 	</html:link>
 	&nbsp;&gt;&nbsp;<bean:write name="infoCurricularCourse" property="name" />	
