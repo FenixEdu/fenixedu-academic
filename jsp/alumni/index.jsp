@@ -7,3 +7,7 @@
 <h2>
 	<bean:message bundle="ALUMNI" key="portal.alumni"/>
 </h2>
+
+<p>
+	<bean:message bundle="ALUMNI" key="label.portal.alumni.welcome"/>
+</p>
