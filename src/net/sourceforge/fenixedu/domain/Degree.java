@@ -789,6 +789,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return false;
     }
     
+    /**
+     * Verifies if the given person was a coordinator for this degree regardless
+     * of the execution year.
+     * 
+     * @param person
+     *            the person to check
+     * @return <code>true</code> if the person was a coordinator for a certain
+     *         execution degree
+     */
+    final public boolean isCoordinatorInSomeExecutionYear(final Person person) {
+        for (Coordinator coordinator : person.getCoordinators()) {
+            if (coordinator.getExecutionDegree().getDegree() == this) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     final private Collection<Coordinator> getCoordinators(final ExecutionYear executionYear, final boolean responsible) {
 	final Collection<Coordinator> result = new HashSet<Coordinator>();
         
