@@ -225,6 +225,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	// TODO: check this
 	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
