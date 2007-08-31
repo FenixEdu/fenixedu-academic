@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table DegreeCurricularPlan" ChangeTableDegreeCurricularPlan.sql
+execute "Deactivate Previous Years Rule For LEEC" DeactivatePreviousYearsRuleForLEEC.sql
