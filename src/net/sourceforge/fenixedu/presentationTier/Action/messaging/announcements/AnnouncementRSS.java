@@ -40,7 +40,9 @@ public class AnnouncementRSS extends RSSAction {
         String titlePrefix = resources.getMessage(this.getLocale(request),
                 "messaging.announcements.channelTitlePrefix");
         StringBuffer buffer = new StringBuffer();
-        buffer.append(titlePrefix).append(" ").append(board.getName());
+        if (board != null) {
+            buffer.append(titlePrefix).append(" ").append(board.getName());
+        }
         return buffer.toString();
     }
 
@@ -55,28 +57,30 @@ public class AnnouncementRSS extends RSSAction {
         final List<SyndEntryFenixImpl> entries = new ArrayList<SyndEntryFenixImpl>();
 
         final AnnouncementBoard board = this.getSelectedBoard(request);
-        if (board.getReaders() != null) {
-            throw new FenixActionException("board.does.not.have.rss");
-        }
+        if (board != null) {
+            if (board.getReaders() != null) {
+                throw new FenixActionException("board.does.not.have.rss");
+            }
         
-        final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
-        Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
+            final List<Announcement> activeAnnouncements = board.getActiveAnnouncements();
+            Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
 
-	for (final Announcement announcement : activeAnnouncements) {
+            for (final Announcement announcement : activeAnnouncements) {
 	    
-            SyndContent description = new SyndContentImpl();
-            description.setType("text/plain");
-            description.setValue(announcement.getBody().getContent());
+                SyndContent description = new SyndContentImpl();
+                description.setType("text/plain");
+                description.setValue(announcement.getBody().getContent());
 
-            SyndEntryFenixImpl entry = new SyndEntryFenixImpl(announcement);
-            entry.setAuthor(this.getAuthor(announcement));
-            entry.setTitle(announcement.getSubject().getContent());
-            entry.setPublishedDate(announcement.getCreationDate().toDate());
-            entry.setUpdatedDate(announcement.getLastModification().toDate());
-            entry.setLink(this.getEntryLink(request, announcement));
-            entry.setDescription(description);
-            entry.setUri(constructURI(request, announcement));
-            entries.add(entry);
+                SyndEntryFenixImpl entry = new SyndEntryFenixImpl(announcement);
+                entry.setAuthor(this.getAuthor(announcement));
+                entry.setTitle(announcement.getSubject().getContent());
+                entry.setPublishedDate(announcement.getCreationDate().toDate());
+                entry.setUpdatedDate(announcement.getLastModification().toDate());
+                entry.setLink(this.getEntryLink(request, announcement));
+                entry.setDescription(description);
+                entry.setUri(constructURI(request, announcement));
+                entries.add(entry);
+            }
         }
 
         return entries;
@@ -169,7 +173,9 @@ public class AnnouncementRSS extends RSSAction {
         StringBuffer buffer = new StringBuffer();
         AnnouncementBoard board = this.getSelectedBoard(request);
         buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
-        buffer.append("announcementBoardId=").append(board.getIdInternal());
+        if (board != null) {
+            buffer.append("announcementBoardId=").append(board.getIdInternal());
+        }
         return buffer.toString();
     }
 
