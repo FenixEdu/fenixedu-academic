@@ -30,25 +30,15 @@ public class Function extends Function_Base {
         }        
     };
 	
-    public Function(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
-	super();
-	edit(functionName, beginDate, endDate, type);
-	setUnit(unit);
-	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
-    }
-
     public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
 	super();
-	setTypeName(functionName);
-	setFunctionType(type);
-	setBeginDateYearMonthDay(beginDate);
-	setEndDateYearMonthDay(endDate);
+	edit(functionName, beginDate, endDate, type);	
 	setUnit(unit);
 	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
         
-    public void edit(String functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
-	setName(functionName);
+    public void edit(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
+	setTypeName(functionName);
 	setFunctionType(type);
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);

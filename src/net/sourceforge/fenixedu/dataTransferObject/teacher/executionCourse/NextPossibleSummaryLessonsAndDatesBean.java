@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -26,6 +27,8 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("shift.idInternal"));
     }
 
+    private ShiftType lessonType;
+    
     private DomainReference<Lesson> lessonReference;
 
     private DomainReference<Shift> shiftReference;
@@ -180,5 +183,13 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
     public void setShift(Shift shift) {
 	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+    }
+
+    public ShiftType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(ShiftType lessonType) {
+        this.lessonType = lessonType;
     }
 }

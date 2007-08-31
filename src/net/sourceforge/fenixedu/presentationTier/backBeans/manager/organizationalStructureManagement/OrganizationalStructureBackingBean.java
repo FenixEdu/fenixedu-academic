@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -39,6 +40,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -52,6 +54,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String listingTypeValueToUnits, listingTypeValueToFunctions, departmentID, degreeID, unitClassificationName, campusID;
 
+    private String functionNameEn;
+    
     private Integer principalFunctionID;
 
     private Integer accountabilityID;
@@ -667,31 +671,36 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String createFunction() throws FenixFilterException, FenixServiceException {
 
-	PrepareDatesResult datesResult = prepareDates(this.getFunctionBeginDate(), this
-		.getFunctionEndDate());
+	PrepareDatesResult datesResult = prepareDates(this.getFunctionBeginDate(), this.getFunctionEndDate());
 	if (datesResult.isTest()) {
 	    return "";
 	}
 
 	FunctionType type = getFunctionType();
-	final Object[] argsToRead = { this.getFunctionName(), datesResult.getBeginDate(),
-		datesResult.getEndDate(), type, this.getUnit().getIdInternal() };
-
+	
+	MultiLanguageString functionName = new MultiLanguageString();
+	functionName.setContent(Language.pt, this.getFunctionName());
+	functionName.setContent(Language.en, this.getFunctionNameEn());
+	
+	final Object[] argsToRead = { functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit().getIdInternal() };
 	return executeFunctionsManagementService(argsToRead, "CreateFunction");
     }
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
 
-	PrepareDatesResult datesResult = prepareDates(this.getFunctionBeginDate(), this
-		.getFunctionEndDate());
+	PrepareDatesResult datesResult = prepareDates(this.getFunctionBeginDate(), this.getFunctionEndDate());
 
 	if (datesResult.isTest()) {
 	    return "";
 	}
 
 	FunctionType type = getFunctionType();
-	final Object[] argsToRead = { this.getFunction().getIdInternal(), this.getFunctionName(),
-		datesResult.getBeginDate(), datesResult.getEndDate(), type };
+	
+	MultiLanguageString functionName = new MultiLanguageString();
+	functionName.setContent(Language.pt, this.getFunctionName());
+	functionName.setContent(Language.en, this.getFunctionNameEn());
+	
+	final Object[] argsToRead = { this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type };
 
 	return executeFunctionsManagementService(argsToRead, "EditFunction");
     }
@@ -1048,7 +1057,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionName() throws FenixFilterException, FenixServiceException {
 	if (this.functionName == null && this.getFunction() != null) {
-	    this.functionName = this.getFunction().getName();
+	    this.functionName = this.getFunction().getTypeName().getContent(Language.pt);
 	}
 	return functionName;
     }
@@ -1413,5 +1422,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 	return result.toString();
     }
-  
+
+    public String getFunctionNameEn() throws FenixFilterException, FenixServiceException {
+	if (this.functionNameEn == null && this.getFunction() != null) {
+	    this.functionNameEn = this.getFunction().getTypeName().getContent(Language.en);
+	}
+	return functionNameEn;
+    }
+
+    public void setFunctionNameEn(String functionNameEn) {
+        this.functionNameEn = functionNameEn;
+    } 
 }

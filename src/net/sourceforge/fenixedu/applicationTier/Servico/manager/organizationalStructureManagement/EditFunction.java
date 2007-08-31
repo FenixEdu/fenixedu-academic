@@ -6,12 +6,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
 public class EditFunction extends Service {
 
-    public void run(Integer functionID, String functionName, YearMonthDay begin, YearMonthDay end,
+    public void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end,
             FunctionType type) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
         Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);

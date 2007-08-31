@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 public class LessonTypesToSummariesManagementProvider implements DataProvider{
 
     public Object provide(Object source, Object currentValue) {
+	
 	SummariesManagementBean bean = (SummariesManagementBean) source;
 	Lesson lesson = bean.getLesson();
 	Summary summary = bean.getSummary();

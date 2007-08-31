@@ -32,6 +32,12 @@
 				<h:message for="name" styleClass="error"/>
 			</h:panelGroup>
 			
+			<h:outputText value="<b>#{bundle['title.FunctionName.en']}:</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="nameEn" required="false" size="30" value="#{organizationalStructureBackingBean.functionNameEn}"/>
+				<h:message for="nameEn" styleClass="error"/>
+			</h:panelGroup>
+			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.functionBeginDate']}" maxlength="10" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}">
