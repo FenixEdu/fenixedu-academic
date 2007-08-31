@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.ServiceExecutionLog;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
@@ -182,9 +183,9 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
         } catch (ServiceManagerException e) {
             throw new ExceptionWrapper(e);
         } catch (Throwable t) {
-//            if (t.getMessage() != null && t.getMessage().indexOf("JVSTM:") >= 0) {
+            if (LogLevel.WARN) {
         	t.printStackTrace();
-//            }
+            }
             throw new ExceptionWrapper(t);
         }
     }

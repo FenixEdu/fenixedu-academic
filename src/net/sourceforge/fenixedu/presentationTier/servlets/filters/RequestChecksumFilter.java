@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.TreeSet;
 
 import javax.servlet.Filter;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.FileUpload;
@@ -430,8 +430,14 @@ public class RequestChecksumFilter implements Filter {
 
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
             throws IOException, ServletException {
-	if (APPLY_FILTER) {	    
-	    applyFilter(servletRequest, servletResponse, filterChain);
+	if (APPLY_FILTER) {
+	    try {
+	        applyFilter(servletRequest, servletResponse, filterChain);
+	    } catch (UrlTamperingException ex) {
+	        final HttpServletRequest request = (HttpServletRequest) servletRequest;
+	        final HttpServletResponse response = (HttpServletResponse) servletResponse;
+	        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
+	    }
 	} else {
 	    filterChain.doFilter(servletRequest, servletResponse);
 	}
@@ -498,6 +504,12 @@ public class RequestChecksumFilter implements Filter {
 	return RequestUtils.isPrivateURI(httpServletRequest);
     }
 
+    public static class UrlTamperingException extends Error {
+        public UrlTamperingException() {
+            super("error.url.tampering");
+        }
+    }
+
     private void verifyRequestChecksum(final HttpServletRequest httpServletRequest) {
 	String checksum = httpServletRequest.getParameter(CHECKSUM_ATTRIBUTE_NAME);
 	if (checksum == null || checksum.length() == 0) {
@@ -509,7 +521,7 @@ public class RequestChecksumFilter implements Filter {
 	    if (LogLevel.ERROR) {
 	        System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString() + " by user: " + userString);
 	    }
-	    throw new Error("error.url.tampering");
+	    throw new UrlTamperingException();
 	}
     }
 
