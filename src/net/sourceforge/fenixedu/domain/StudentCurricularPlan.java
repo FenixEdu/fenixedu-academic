@@ -2482,7 +2482,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    curriculumLine.setCurriculumGroup(curriculumGroup);
 	}
 
-	if (runRules) {
+	if (runRules && !responsiblePerson.hasRole(RoleType.MANAGER)) {
 	    checkEnrolmentRules(responsiblePerson);
 	}
 
