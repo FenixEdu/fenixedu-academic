@@ -131,8 +131,6 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSecondChooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-
         DynaActionForm chooseSecondMasterDegreeForm = (DynaActionForm) form;
 
         String executionYear = getFromRequest("executionYear", request);

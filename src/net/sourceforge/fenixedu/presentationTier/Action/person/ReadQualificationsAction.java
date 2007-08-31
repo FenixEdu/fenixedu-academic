@@ -33,19 +33,17 @@ public class ReadQualificationsAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        if (session != null) {
             Object[] args = { userView.getUtilizador() };
 
             InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils
                     .executeService(userView, "ReadQualifications", args);
 
             request.setAttribute("infoSiteQualifications", infoSiteQualifications);
-        }
-        return mapping.findForward("show-form");
+
+            return mapping.findForward("show-form");
     }
 
 }

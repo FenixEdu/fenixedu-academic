@@ -66,10 +66,6 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
     public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
@@ -93,36 +89,11 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
             return mapping.findForward("MasterDegreeReady");
-        }
-        throw new Exception();
     }
 
     public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        //	HttpSession session = request.getSession(false);
-
-        // Get Execution Year List
-        /*
-         * MessageResources messages = getResources(request); IUserView userView =
-         * getUserView(request); ArrayList
-         * executionYearList = null; try { executionYearList = (ArrayList)
-         * ServiceManagerServiceFactory.executeService( userView,
-         * "ReadNotClosedExecutionYears", null); } catch
-         * (ExistingServiceException e) { throw new ExistingActionException(e); }
-         * 
-         * if (request.getParameter("jspTitle") != null) {
-         * request.setAttribute("jspTitle",
-         * messages.getMessage(request.getParameter("jspTitle"))); }
-         * 
-         * List executionYearsLabels = transformIntoLabels(executionYearList);
-         * 
-         * request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST,
-         * executionYearsLabels);
-         */
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
@@ -143,9 +114,6 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, curricularPlanID);
 
             return mapping.findForward("PrepareSuccess");
-        }
-        throw new Exception();
-
     }
 
     private List transformIntoLabels(List executionYearList) {

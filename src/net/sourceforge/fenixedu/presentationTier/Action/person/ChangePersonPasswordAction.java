@@ -31,9 +31,6 @@ public class ChangePersonPasswordAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             DynaActionForm changePasswordForm = (DynaActionForm) form;
             IUserView userView = getUserView(request);
             String oldPassword = (String) changePasswordForm.get("oldPassword");
@@ -54,8 +51,6 @@ public class ChangePersonPasswordAction extends FenixAction {
             	return mapping.getInputForward();
             }
             return mapping.findForward("Success");
-        }
-        throw new Exception();
     }
 
 }

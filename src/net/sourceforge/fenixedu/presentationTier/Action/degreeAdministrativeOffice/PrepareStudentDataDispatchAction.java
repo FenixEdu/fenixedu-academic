@@ -28,7 +28,6 @@ public class PrepareStudentDataDispatchAction extends FenixDispatchAction {
         boolean result = false;
 
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
-        HttpSession session = request.getSession();
 
         IUserView userView = getUserView(request);
 

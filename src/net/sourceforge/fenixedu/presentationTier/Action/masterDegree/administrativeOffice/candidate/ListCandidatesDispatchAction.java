@@ -217,10 +217,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
-
 	    IUserView userView = getUserView(request);
 	    Integer personID = Integer.valueOf(request.getParameter("personID"));
 	    request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
@@ -240,17 +236,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 
 	    return mapping.findForward("ActionReady");
-
-	}
-	throw new Exception();
     }
 
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
 
 	    IUserView userView = getUserView(request);
 	    Integer candidateID = (Integer) request.getAttribute("candidateID");
@@ -278,17 +267,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
 	    return mapping.findForward("VisualizeCandidate");
-
-	}
-	throw new Exception();
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
 
@@ -344,17 +326,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
 	    return mapping.findForward("PrepareReady");
-
-	}
-	throw new Exception();
     }
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
 
@@ -499,9 +474,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE,
 		    infoMasterDegreeCandidateChanged);
 	    return mapping.findForward("ChangeSuccess");
-
-	}
-	throw new Exception();
     }
 
     public ActionForward changePassword(ActionMapping mapping, ActionForm form,
@@ -702,7 +674,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
     public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpSession session = request.getSession(false);
 	IUserView userView = getUserView(request);
 
 	String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);

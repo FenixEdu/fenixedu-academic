@@ -229,7 +229,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward next(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         DynaActionForm approvalForm = (DynaActionForm) form;
@@ -393,8 +392,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         DynaActionForm resultForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
@@ -494,8 +491,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
     public ActionForward aprove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
 
         DynaActionForm substituteForm = (DynaActionForm) form;
 

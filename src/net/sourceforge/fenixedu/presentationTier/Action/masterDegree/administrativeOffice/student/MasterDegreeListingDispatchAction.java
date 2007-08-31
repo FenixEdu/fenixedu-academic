@@ -68,10 +68,6 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
     public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
@@ -95,8 +91,6 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
             return mapping.findForward("MasterDegreeReady");
-        }
-        throw new Exception();
     }
 
     public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -115,8 +109,6 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
      */
     public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
 
         IUserView userView = getUserView(request);
 

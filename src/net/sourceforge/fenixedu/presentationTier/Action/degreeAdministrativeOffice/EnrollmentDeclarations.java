@@ -42,8 +42,6 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
     public ActionForward generate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         IUserView userView = getUserView(request);
 
         DynaActionForm studentsNumberForm = (DynaActionForm) form;

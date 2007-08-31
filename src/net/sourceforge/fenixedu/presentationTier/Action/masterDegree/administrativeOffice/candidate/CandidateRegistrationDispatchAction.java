@@ -53,8 +53,6 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
     public ActionForward getCandidateList(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
         String executionYearString = request.getParameter("executionYear");
@@ -111,8 +109,6 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
     public ActionForward prepareCandidateRegistration(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
@@ -147,8 +143,6 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
     public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
@@ -222,8 +216,6 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
     public ActionForward preparePrint(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 

@@ -36,9 +36,6 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
     public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
@@ -60,8 +57,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
             return mapping.findForward("ViewList");
-        }
-        throw new Exception();
+
     }
 
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
@@ -95,7 +91,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
+
         IUserView userView = getUserView(request);
 
         String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);

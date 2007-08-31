@@ -33,10 +33,6 @@ public class StudentListDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             IUserView userView = getUserView(request);
 
             Integer degreeCurricularPlanID = null;
@@ -70,14 +66,11 @@ public class StudentListDispatchAction extends FenixDispatchAction {
             }
 
             return mapping.findForward("PrepareSuccess");
-        }
-        throw new Exception();
     }
 
     public ActionForward getCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = null;

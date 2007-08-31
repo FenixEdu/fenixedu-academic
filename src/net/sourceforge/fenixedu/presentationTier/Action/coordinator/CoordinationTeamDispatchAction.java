@@ -61,7 +61,6 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = null;
@@ -106,7 +105,6 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request
@@ -135,7 +133,6 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
@@ -166,7 +163,6 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");

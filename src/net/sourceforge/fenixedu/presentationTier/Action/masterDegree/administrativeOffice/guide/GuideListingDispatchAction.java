@@ -43,26 +43,16 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChooseYear(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             DynaActionForm chooseYearForm = (DynaActionForm) form;
 
             chooseYearForm.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
             return mapping.findForward("PrepareReady");
-        }
-        throw new Exception();
 
     }
 
     public ActionForward chooseYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
 
             DynaActionForm chooseGuideForm = (DynaActionForm) form;
 
@@ -84,16 +74,11 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
 
             return mapping.findForward("ShowGuideList");
-        }
-        throw new Exception();
+
     }
 
     public ActionForward chooseGuide(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
 
             IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
@@ -119,32 +104,16 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 
             return mapping.findForward("ShowVersionList");
-        }
-        throw new Exception();
+
     }
 
     public ActionForward prepareChoosePerson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            // Create the type of Identification Document
-            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST,
-                    TipoDocumentoIdentificacao.toArrayList());*/
-
             return mapping.findForward("PrepareSuccess");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward getPersonGuideList(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
 
             IUserView userView = getUserView(request);
             DynaActionForm choosePersonForm = (DynaActionForm) form;
@@ -201,17 +170,10 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
 
             return mapping.findForward("ShowGuideList");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward chooseGuideByPerson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
 
             IUserView userView = getUserView(request);
 
@@ -235,8 +197,6 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
 
             return mapping.findForward("ShowGuideList");
-        }
-        throw new Exception();
 
     }
 

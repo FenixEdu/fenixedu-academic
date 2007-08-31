@@ -33,9 +33,6 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             DynaActionForm createContributorForm = (DynaActionForm) form;
 
             createContributorForm.set("contributorNumber", null);
@@ -49,16 +46,10 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
             createContributorForm.set("districtOfResidence", null);
 
             return mapping.findForward("PrepareReady");
-        }
-        throw new Exception();
-
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             DynaActionForm createContributorForm = (DynaActionForm) form;
             IUserView userView = getUserView(request);
 
@@ -110,8 +101,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
             }
 
             return mapping.findForward("CreateSuccess");
-        }
-        throw new Exception();
+
     }
 
 }

@@ -151,9 +151,8 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
     public ActionForward readExemptionGratuity(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
-	HttpSession session = request.getSession();
 
-	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	IUserView userView = getUserView(request);
 
 	request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
 	request.setAttribute("exemptionGratuityList", ExemptionGratuityType.values());

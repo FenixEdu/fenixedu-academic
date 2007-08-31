@@ -354,7 +354,6 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 

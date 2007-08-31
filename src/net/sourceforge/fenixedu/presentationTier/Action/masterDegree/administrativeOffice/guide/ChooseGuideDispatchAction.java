@@ -64,10 +64,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             DynaActionForm chooseGuide = (DynaActionForm) form;
 
             IUserView userView = getUserView(request);
@@ -96,9 +92,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 
             return mapping.findForward("ShowVersionList");
-        }
-
-        throw new Exception();
     }
 
     public ActionForward chooseVersion(ActionMapping mapping, ActionForm form,

@@ -150,7 +150,6 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 			reqExportToExcel = true;
 		else reqExportToExcel = false;
 
-		HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         try {

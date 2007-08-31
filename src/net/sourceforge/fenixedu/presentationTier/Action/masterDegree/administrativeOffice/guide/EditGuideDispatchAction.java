@@ -222,9 +222,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
     public ActionForward editGuideInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
 
             IUserView userView = getUserView(request);
@@ -326,9 +323,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
             request.setAttribute(SessionConstants.GUIDE, result);
             return mapping.findForward("EditInformationSuccess");
-
-        }
-        throw new Exception();
     }
 
 }

@@ -132,7 +132,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws 
             FenixServiceException, FenixFilterException {
-        HttpSession session = request.getSession(false);
+
         IUserView userView = getUserView(request);
         DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
         Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm

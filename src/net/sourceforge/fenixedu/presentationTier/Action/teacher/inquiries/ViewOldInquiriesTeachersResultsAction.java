@@ -120,7 +120,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer oldInquiryTeacherId = getIntegerFromRequest("oldInquiryTeacherId", request);
         Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
         Integer degreeId = getIntegerFromRequest("degreeId", request);

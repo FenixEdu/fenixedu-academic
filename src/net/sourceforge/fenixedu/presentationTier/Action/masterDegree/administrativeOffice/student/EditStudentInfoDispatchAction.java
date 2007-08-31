@@ -43,8 +43,6 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
             DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
             IUserView userView = getUserView(request);
 
@@ -173,9 +171,6 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
             populateForm(changeApplicationInfoForm, newInfoPerson);
 
             return mapping.findForward("Success");
-        }
-
-        throw new Exception();
     }
 
     public static void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson) {

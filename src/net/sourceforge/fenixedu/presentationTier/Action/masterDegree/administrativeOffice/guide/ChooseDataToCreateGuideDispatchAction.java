@@ -61,10 +61,6 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
     public ActionForward chooseMasterDegreeCurricularPlanFromList(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-
             IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
@@ -90,17 +86,11 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
             }
 
             return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
-        }
-
-        throw new Exception();
     }
 
     public ActionForward chooseExecutionDegreeFromList(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
             IUserView userView = getUserView(request);
 
             //Get execution degrees for given degree curricular plan
@@ -120,9 +110,6 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
             }
 
             return mapping.findForward("DisplayExecutionDegreeList");
-        }
-
-        throw new Exception();
 
     }
 

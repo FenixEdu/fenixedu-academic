@@ -46,8 +46,6 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        HttpSession session = request.getSession(false);
-
         IUserView userView = getUserView(request);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);

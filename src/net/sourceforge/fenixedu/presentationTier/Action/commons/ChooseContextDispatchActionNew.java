@@ -171,7 +171,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     public ActionForward nextPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
@@ -181,7 +180,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
         }
 
-        if (session != null) {
             Integer semestre = ((InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD)).getSemester();
             Integer anoCurricular = (Integer) escolherContextoForm.get("curricularYear");
@@ -223,10 +221,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
             // TODO : throw a proper exception
             throw new Exception("SomeOne is messing around with the links");
-        }
-
-        throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
     }
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -33,10 +33,8 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
-        if (session != null) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
@@ -70,8 +68,5 @@ public class EscolherContextoFormAction extends FenixContextAction {
                 return mapping.findForward("Licenciatura execucao inexistente");
             }
             return mapping.findForward("Sucesso");
-        }
-        throw new Exception();
-
     }
 }

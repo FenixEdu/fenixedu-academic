@@ -69,10 +69,9 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute("UserView");
+        IUserView userView = getUserView(request);
 
         Object argsReadExecutionPeriods[] = {};
         List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService(userView,

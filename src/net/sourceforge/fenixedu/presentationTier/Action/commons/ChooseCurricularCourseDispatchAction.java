@@ -68,7 +68,6 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCurricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         String executionYear = getFromRequest("executionYear", request);
         Integer courseID = Integer.valueOf(getFromRequest("courseID", request));
         request.setAttribute("courseID", getFromRequest("courseID", request));
@@ -108,7 +107,6 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCurricularCourseByID(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
         if(request.getParameter("degreeCurricularPlanID") != null){
             Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);

@@ -83,7 +83,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
     
     public ActionForward prepareChoiceForCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
         
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){
@@ -195,7 +195,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
     public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = getUserView(request);
         
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){

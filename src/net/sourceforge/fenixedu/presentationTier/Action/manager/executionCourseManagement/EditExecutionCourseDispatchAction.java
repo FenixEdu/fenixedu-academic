@@ -243,7 +243,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward updateExecutionCourse(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         getAndSetStringToRequest(request, "executionCourseId");
         separateLabel(actionForm, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
