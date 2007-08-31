@@ -76,7 +76,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
             result = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadCandidateForRegistration", args);
         } catch (NonExistingServiceException e) {
-            session.removeAttribute(SessionConstants.DEGREE_LIST);
+            request.getSession(false).removeAttribute(SessionConstants.DEGREE_LIST);
             ActionErrors errors = new ActionErrors();
             errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
             saveErrors(request, errors);

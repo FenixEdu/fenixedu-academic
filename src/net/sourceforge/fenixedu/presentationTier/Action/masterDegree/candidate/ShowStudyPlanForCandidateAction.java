@@ -28,7 +28,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         // transport candidate ID
         request.setAttribute("candidateID", request.getParameter("candidateID"));
         
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, session);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request.getSession(false));
 
         if (infoMasterDegreeCandidate != null) {
             candidateStudyPlan = getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate
