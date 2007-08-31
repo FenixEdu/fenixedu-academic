@@ -18,6 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -436,6 +437,10 @@ public class RequestChecksumFilter implements Filter {
 	    } catch (UrlTamperingException ex) {
 	        final HttpServletRequest request = (HttpServletRequest) servletRequest;
 	        final HttpServletResponse response = (HttpServletResponse) servletResponse;
+	        final HttpSession httpSession = request.getSession(false);
+	        if (httpSession != null) {
+	            httpSession.invalidate();
+	        }
 	        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
 	    }
 	} else {
