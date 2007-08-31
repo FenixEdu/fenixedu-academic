@@ -5,7 +5,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -41,7 +43,11 @@ public interface ICurricularRule {
     public boolean isValid(ExecutionYear executionYear);
 
     public boolean isVisible();
-    
+
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
 
+    public RuleResult verify(final VerifyRuleLevel verifyRuleLevel, final EnrolmentContext enrolmentContext,
+	    final DegreeModule degreeModuleToVerify, final CourseGroup parentCourseGroup);
+
+    public VerifyRuleExecutor createVerifyRuleExecutor();
 }

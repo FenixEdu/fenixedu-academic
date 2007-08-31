@@ -1,8 +1,9 @@
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
@@ -18,22 +19,26 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionPeriod);
 	}
-	
-	if(accumulated > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS));
+
+	if (accumulated > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
+	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String
+			    .valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS));
 	}
-	
-	return RuleResult.createTrue();
+
+	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
     @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createFalse();
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.Bo
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResultMessage;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;

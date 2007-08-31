@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -921,7 +921,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean isApproved(final CurricularCourse curricularCourse) {
-	return isBoxStructure() ? getRoot().isAproved(curricularCourse) : isCurricularCourseApproved(curricularCourse);
+	return isBoxStructure() ? getRoot().isApproved(curricularCourse) : isCurricularCourseApproved(curricularCourse);
     }
 
     public int getNumberOfApprovedCurricularCourses() {
@@ -2268,7 +2268,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
-	    if (!getRoot().isAproved(curricularCourse)) {
+	    if (!getRoot().isApproved(curricularCourse)) {
 		result.add(curricularCourse);
 	    }
 	}

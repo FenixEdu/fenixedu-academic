@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,11 +6,13 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 abstract public class CurricularRuleExecutor {
@@ -18,7 +20,8 @@ abstract public class CurricularRuleExecutor {
     protected CurricularRuleExecutor() {
     }
 
-    public RuleResult execute(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    public RuleResult execute(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    final EnrolmentContext enrolmentContext) {
 	switch (enrolmentContext.getCurricularRuleLevel()) {
 	case ENROLMENT_WITH_RULES:
 	    return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
@@ -38,7 +41,8 @@ abstract public class CurricularRuleExecutor {
 	}
     }
 
-    protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
+    protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext,
+	    final DegreeModule degreeModule) {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.getDegreeModule() == degreeModule) {
 		return degreeModuleToEvaluate;
@@ -47,11 +51,13 @@ abstract public class CurricularRuleExecutor {
 	return null;
     }
 
-    protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext, final ICurricularRule curricularRule) {
+    protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext,
+	    final ICurricularRule curricularRule) {
 	return searchDegreeModuleToEvaluate(enrolmentContext, curricularRule.getDegreeModuleToApplyRule());
     }
 
-    protected Collection<IDegreeModuleToEvaluate> collectDegreeModuleToEnrolFromCourseGroup(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
+    protected Collection<IDegreeModuleToEvaluate> collectDegreeModuleToEnrolFromCourseGroup(
+	    final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
 	final Collection<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (!degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.getContext().getParentCourseGroup() == courseGroup) {
@@ -70,7 +76,8 @@ abstract public class CurricularRuleExecutor {
 
     protected CurriculumModule searchCurriculumModule(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
 	if (degreeModule.isLeaf()) {
-	    return enrolmentContext.getStudentCurricularPlan().findEnrolmentFor((CurricularCourse) degreeModule, enrolmentContext.getExecutionPeriod());
+	    return enrolmentContext.getStudentCurricularPlan().findEnrolmentFor((CurricularCourse) degreeModule,
+		    enrolmentContext.getExecutionPeriod());
 	} else {
 	    return enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor((CourseGroup) degreeModule);
 	}
@@ -84,13 +91,15 @@ abstract public class CurricularRuleExecutor {
     protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
 	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse);
     }
-    
-    protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+
+    protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
-	return degreeModule.isLeaf() ? isEnroled(enrolmentContext, (CurricularCourse) degreeModule) : isEnroled(enrolmentContext, (CourseGroup) degreeModule);
+	return degreeModule.isLeaf() ? isEnroled(enrolmentContext, (CurricularCourse) degreeModule) : isEnroled(enrolmentContext,
+		(CourseGroup) degreeModule);
     }
 
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
@@ -102,12 +111,15 @@ abstract public class CurricularRuleExecutor {
 	return enrolmentContext.getStudentCurricularPlan().hasDegreeModule(courseGroup);
     }
 
-    protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
 	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
     }
 
-    protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState( curricularCourse, executionPeriod);
+    protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
+	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
+		executionPeriod);
     }
 
     protected boolean isEnrolling(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
@@ -115,18 +127,37 @@ abstract public class CurricularRuleExecutor {
 	return degreeModuleToEvaluate != null && !degreeModuleToEvaluate.isEnroled();
     }
 
-    
-    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-	if (ruleResult.isFalse() || (ruleResult.isTrue() && ruleResult.isTemporaryEnrolmentResultType())) {
-	    return RuleResult.createWarning(ruleResult.getMessages());
+    protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
+	    final CourseGroup parentCourseGroup) {
+	final CurriculumGroup curriculumGroup = enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor(
+		parentCourseGroup);
+	return curriculumGroup != null ? curriculumGroup.isApproved(curricularCourse) : false;
+    }
+
+    protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	final RuleResult ruleResult = executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule,
+		sourceDegreeModuleToEvaluate, enrolmentContext);
+	if (ruleResult.isFalse() || (ruleResult.isTrue() && isTemporaryOrImpossible(sourceDegreeModuleToEvaluate, ruleResult))) {
+	    return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(), ruleResult.getMessages());
 	} else {
 	    return ruleResult;
 	}
     }
 
-    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
-    abstract protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
-    
+    private boolean isTemporaryOrImpossible(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    final RuleResult ruleResult) {
+	return ruleResult.isTemporaryEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule())
+		|| ruleResult.isImpossibleEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+
+    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+
+    abstract protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+
 }

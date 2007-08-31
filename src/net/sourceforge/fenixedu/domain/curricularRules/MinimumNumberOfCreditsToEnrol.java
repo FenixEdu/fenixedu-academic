@@ -5,62 +5,67 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol_Base {
-    
+
     private MinimumNumberOfCreditsToEnrol(final Double minimumNumberOfCredits) {
-        super();
-        checkCredits(minimumNumberOfCredits);
-        setMinimumCredits(minimumNumberOfCredits);
-        setCurricularRuleType(CurricularRuleType.MINIMUM_NUMBER_OF_CREDITS_TO_ENROL);
+	super();
+	checkCredits(minimumNumberOfCredits);
+	setMinimumCredits(minimumNumberOfCredits);
+	setCurricularRuleType(CurricularRuleType.MINIMUM_NUMBER_OF_CREDITS_TO_ENROL);
     }
 
     private void checkCredits(final Double minimumNumberOfCredits) throws DomainException {
-        if (minimumNumberOfCredits == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
+	if (minimumNumberOfCredits == null) {
+	    throw new DomainException("curricular.rule.invalid.parameters");
+	}
     }
-    
+
     protected MinimumNumberOfCreditsToEnrol(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-            final ExecutionPeriod begin, final ExecutionPeriod end, final Double minimumNumberOfCredits) {
-        
-        this(minimumNumberOfCredits);
-        init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
+	    final ExecutionPeriod begin, final ExecutionPeriod end, final Double minimumNumberOfCredits) {
+
+	this(minimumNumberOfCredits);
+	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
     }
-    
+
     protected void edit(final CourseGroup contextCourseGroup, final Double minimumNumberOfCredits) {
-        checkCredits(minimumNumberOfCredits);
-        setContextCourseGroup(contextCourseGroup);
-        setMinimumCredits(minimumNumberOfCredits);
+	checkCredits(minimumNumberOfCredits);
+	setContextCourseGroup(contextCourseGroup);
+	setMinimumCredits(minimumNumberOfCredits);
     }
 
     @Override
     protected void removeOwnParameters() {
-        // no domain parameters
+	// no domain parameters
     }
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
-        List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+	List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
-        labelList.add(new GenericPair<Object, Boolean>("label.minimumNumberOfCreditsToEnrol", true));
-        labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
-        
-        if (getContextCourseGroup() != null) {
-            labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));            
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
-        }
+	labelList.add(new GenericPair<Object, Boolean>("label.minimumNumberOfCreditsToEnrol", true));
+	labelList.add(new GenericPair<Object, Boolean>(": ", false));
+	labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
 
-        return labelList;
+	if (getContextCourseGroup() != null) {
+	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
+	    labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
+	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
+	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+	}
+
+	return labelList;
     }
-    
+
     public boolean allowCredits(final Double credits) {
-	return credits.doubleValue() >= getMinimumCredits().doubleValue() ;
+	return credits.doubleValue() >= getMinimumCredits().doubleValue();
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 }

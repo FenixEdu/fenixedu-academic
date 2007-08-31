@@ -103,7 +103,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return multiLanguageString;
     }
 
-    public boolean isAproved(final CurricularCourse curricularCourse) {
+    public boolean isApproved(final CurricularCourse curricularCourse) {
 	return isApproved(curricularCourse, null);
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 
 public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersistent {
@@ -46,6 +47,10 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
 
     public List<GenericPair<Object, Boolean>> getLabel() {
 	return Collections.singletonList(new GenericPair<Object, Boolean>("label.previousYearsEnrolment", true));
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
 }

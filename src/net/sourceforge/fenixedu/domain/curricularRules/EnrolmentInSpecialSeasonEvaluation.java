@@ -6,14 +6,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersistent {
-    
+
     private Enrolment toApply;
-    
+
     public EnrolmentInSpecialSeasonEvaluation(final Enrolment enrolment) {
 	if (enrolment == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
@@ -21,9 +22,9 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
 	    this.toApply = enrolment;
 	}
     }
-    
+
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.enrolmentInSpecialSeasonEvaluation", true));
+	return Collections.singletonList(new GenericPair<Object, Boolean>("label.enrolmentInSpecialSeasonEvaluation", true));
     }
 
     public Enrolment getEnrolment() {
@@ -58,11 +59,15 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
     public boolean equals(Object obj) {
 	if (obj instanceof EnrolmentInSpecialSeasonEvaluation) {
 	    EnrolmentInSpecialSeasonEvaluation enrolmentInSpecialSeasonEvaluation = (EnrolmentInSpecialSeasonEvaluation) obj;
-	    
+
 	    return toApply == enrolmentInSpecialSeasonEvaluation.getEnrolment();
 	}
-	
+
 	return false;
     }
-    
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+    }
+
 }

@@ -24,7 +24,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     public ExternalCurriculumGroup() {
 	super();
     }
-    
+
     public ExternalCurriculumGroup(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup) {
 	this();
 	init(rootCurriculumGroup, cycleCourseGroup);
@@ -94,6 +94,11 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 	result.add(new CreditsLimitInExternalCycle(this));
 
 	return result;
+    }
+
+    @Override
+    public boolean isExternal() {
+	return true;
     }
 
 }

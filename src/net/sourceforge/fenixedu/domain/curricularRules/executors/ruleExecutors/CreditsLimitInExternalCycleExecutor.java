@@ -1,8 +1,9 @@
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -15,7 +16,7 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-	return RuleResult.createNA();
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     @Override
@@ -25,15 +26,16 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 	final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
 
 	if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
-	    return RuleResult.createNA();
+	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
 	final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
 	if (creditsLimitInExternalCycle.creditsExceedMaximum(totalCredits)) {
 	    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.limit.exceeded",
+	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.limit.exceeded",
 		    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), creditsLimitInExternalCycle
 			    .getMaxCredits().toString());
 	}
@@ -42,14 +44,14 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 		+ externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
 			.getPreviousExecutionPeriod());
 	if (creditsLimitInExternalCycle.creditsExceedMaximum(totalEctsWithEnroledEctsCreditsFromPreviousPeriod)) {
-	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY,
+	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule(),
 		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.limit.exceeded",
 		    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), creditsLimitInExternalCycle
 			    .getMaxCredits().toString());
 
 	}
 
-	return RuleResult.createTrue();
+	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     @Override
@@ -60,20 +62,21 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 	final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
 
 	if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
-	    return RuleResult.createNA();
+	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
 	final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
 	if (creditsLimitInExternalCycle.creditsExceedMaximum(totalCredits)) {
 	    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE);
+		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
-	    return RuleResult.createFalse("curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.limit.exceeded",
+	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.limit.exceeded",
 		    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), creditsLimitInExternalCycle
 			    .getMaxCredits().toString());
 	}
 
-	return RuleResult.createTrue();
+	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 
     }
 

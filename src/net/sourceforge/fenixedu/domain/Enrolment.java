@@ -1276,7 +1276,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse) {
-	return isAproved(curricularCourse) ? this : null;
+	return isApproved(curricularCourse) ? this : null;
     }
 
     @Override

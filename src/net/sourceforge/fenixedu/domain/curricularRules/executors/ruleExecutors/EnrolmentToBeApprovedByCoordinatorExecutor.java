@@ -1,7 +1,8 @@
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -15,12 +16,14 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
 	if (responsiblePerson.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || responsiblePerson.hasRole(RoleType.MANAGER)) {
 	    return RuleResult
 		    .createWarning(
+			    sourceDegreeModuleToEvaluate.getDegreeModule(),
 			    "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
 			    sourceDegreeModuleToEvaluate.getName());
 	}
 
 	return RuleResult
 		.createFalse(
+			sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
 			sourceDegreeModuleToEvaluate.getName());
     }
@@ -34,7 +37,7 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA();
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }

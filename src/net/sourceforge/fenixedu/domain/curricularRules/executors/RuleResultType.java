@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors;
 
 public enum RuleResultType {
     FALSE(0), TRUE(1), NA(2), WARNING(3);

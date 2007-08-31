@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,9 +20,8 @@ public class CreditsLimit extends CreditsLimit_Base {
 	setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
 
-    protected CreditsLimit(final DegreeModule degreeModuleToApplyRule,
-	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin,
-	    final ExecutionPeriod end, final Double minimum, final Double maximum) {
+    protected CreditsLimit(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+	    final ExecutionPeriod begin, final ExecutionPeriod end, final Double minimum, final Double maximum) {
 
 	this(minimum, maximum);
 	checkParameters(degreeModuleToApplyRule);
@@ -70,8 +70,7 @@ public class CreditsLimit extends CreditsLimit_Base {
 	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
 	    labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(),
-		    false));
+	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
 	}
 
 	return labelList;
@@ -88,5 +87,9 @@ public class CreditsLimit extends CreditsLimit_Base {
 
     public boolean creditsExceedMaximum(final Double numberOfCredits) {
 	return numberOfCredits.compareTo(getMaximumCredits()) > 0;
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 }

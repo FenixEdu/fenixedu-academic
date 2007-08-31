@@ -21,8 +21,11 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -322,6 +325,16 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
+    public boolean hasAnyCurricularRules(final CurricularRuleType ruleType, final ExecutionPeriod executionPeriod) {
+	for (final ICurricularRule curricularRule : getCurricularRules(executionPeriod)) {
+	    if (curricularRule.getCurricularRuleType() == ruleType) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
 	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
 	for (final ICurricularRule curricularRule : getCurricularRules(executionYear)) {
@@ -372,6 +385,22 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	final String year = PropertiesManager.getProperty("start.year.for.bolonha.degrees");
 	final Integer semester = Integer.valueOf(PropertiesManager.getProperty("start.semester.for.bolonha.degrees"));
 	return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
+    }
+
+    public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
+	final List<DegreeModulesSelectionLimit> result = (List<DegreeModulesSelectionLimit>) getCurricularRules(
+		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionPeriod);
+	return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0);
+    }
+
+    public CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
+	final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+
+	return result.isEmpty() ? null : (CreditsLimit) result.get(0);
+    }
+
+    public List<Exclusiveness> getExclusivenessRules(final ExecutionPeriod executionPeriod) {
+	return (List<Exclusiveness>) getCurricularRules(CurricularRuleType.EXCLUSIVENESS, executionPeriod);
     }
 
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();

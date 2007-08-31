@@ -6,14 +6,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRuleNotPersistent {
-    
+
     private CurricularCourse toApply;
-    
+
     public AssertUniqueApprovalInCurricularCourseContexts(final CurricularCourse toApply) {
 	if (toApply == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
@@ -21,9 +22,10 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
 	    this.toApply = toApply;
 	}
     }
-    
+
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts", true));
+	return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts",
+		true));
     }
 
     public DegreeModule getDegreeModuleToApplyRule() {
@@ -48,6 +50,11 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
 
     public ExecutionPeriod getEnd() {
 	return null;
+    }
+
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
 }

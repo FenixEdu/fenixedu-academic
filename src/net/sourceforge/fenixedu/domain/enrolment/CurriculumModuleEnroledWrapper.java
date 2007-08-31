@@ -118,7 +118,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     @Override
     public int hashCode() {
-        return getCurriculumModule().hashCode();
+	return getCurriculumModule().hashCode();
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
@@ -163,7 +163,6 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 		.append(":").append(this.getExecutionPeriod().getIdInternal());
 	return stringBuilder.toString();
     }
-
 
     public boolean isEnroling() {
 	return false;

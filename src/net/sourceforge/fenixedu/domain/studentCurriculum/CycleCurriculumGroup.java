@@ -125,4 +125,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     }
 
+    public boolean isExternal() {
+	return false;
+    }
+
 }

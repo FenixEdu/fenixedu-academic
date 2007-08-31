@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.exceptions;
 
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 
 public class EnrollmentDomainException extends DomainException {
 

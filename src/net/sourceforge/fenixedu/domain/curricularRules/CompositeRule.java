@@ -6,9 +6,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -109,14 +112,15 @@ public abstract class CompositeRule extends CompositeRule_Base {
 	switch (getCompositeRuleType()) {
 
 	case AND:
-	    RuleResult result = RuleResult.createTrue();
+	    RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    for (final CurricularRule curricularRule : getCurricularRules()) {
 		result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
 	    }
 	    return result;
 
 	case OR:
-	    RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL);
+	    RuleResult resultOR = RuleResult
+		    .createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
 	    for (final CurricularRule curricularRule : getCurricularRules()) {
 		resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
 		if (resultOR.isTrue()) {
@@ -128,6 +132,40 @@ public abstract class CompositeRule extends CompositeRule_Base {
 	default:
 	    throw new DomainException("unsupported.composite.rule");
 	}
+    }
+
+    @Override
+    public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
+	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+	switch (getCompositeRuleType()) {
+
+	case AND:
+	    RuleResult result = RuleResult.createTrue(degreeModuleToVerify);
+	    for (final CurricularRule curricularRule : getCurricularRules()) {
+		result = result.and(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
+			parentCourseGroup));
+	    }
+	    return result;
+
+	case OR:
+	    RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, degreeModuleToVerify);
+	    for (final CurricularRule curricularRule : getCurricularRules()) {
+		resultOR = resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
+			parentCourseGroup));
+		if (resultOR.isTrue()) {
+		    return resultOR;
+		}
+	    }
+	    return resultOR;
+
+	default:
+	    throw new DomainException("unsupported.composite.rule");
+	}
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.curricularRules.CompositeRule.does.not.support.createVerifyRuleExecutor");
     }
 
     @Override

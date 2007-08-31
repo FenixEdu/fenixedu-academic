@@ -5,13 +5,15 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends CurricularRuleNotPersistent {
-    
+
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.maximumNumberOfEnrolmentsInSpecialSeasonEvaluation", true));
+	return Collections.singletonList(new GenericPair<Object, Boolean>(
+		"label.maximumNumberOfEnrolmentsInSpecialSeasonEvaluation", true));
     }
 
     public DegreeModule getDegreeModuleToApplyRule() {
@@ -41,6 +43,10 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
     @Override
     public boolean equals(Object obj) {
 	return obj instanceof MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
 }

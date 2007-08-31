@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -18,9 +19,8 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 	setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
 
-    protected DegreeModulesSelectionLimit(final CourseGroup degreeModuleToApplyRule,
-	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin,
-	    final ExecutionPeriod end, final Integer minimum, final Integer maximum) {
+    protected DegreeModulesSelectionLimit(final CourseGroup degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+	    final ExecutionPeriod begin, final ExecutionPeriod end, final Integer minimum, final Integer maximum) {
 
 	this(minimum, maximum);
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
@@ -78,8 +78,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
 	    labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(),
-		    false));
+	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
 	}
 	return labelList;
     }
@@ -95,5 +94,9 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 
     public boolean numberOfDegreeModulesExceedMaximum(final Integer numberOfDegreeModules) {
 	return numberOfDegreeModules.compareTo(getMaximumLimit()) > 0;
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 }

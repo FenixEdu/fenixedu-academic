@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -12,7 +13,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 
 public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 
-    private static final double MAX_CREDITS = 40;
+    private static final double MAX_CREDITS = 80;
 
     private ExternalCurriculumGroup externalCurriculumGroup;
 
@@ -62,6 +63,10 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 
     public Double getMaxCredits() {
 	return MAX_CREDITS;
+    }
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
 }

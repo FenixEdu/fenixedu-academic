@@ -10,18 +10,17 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 
 public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
-    
-    protected  OptionalCurricularCourse() {
-        super();
+
+    protected OptionalCurricularCourse() {
+	super();
     }
-    
+
     /**
-     * - This constructor is used to create a 'special' curricular course
-     * that will represent any curricular course accordding to a rule
+     * - This constructor is used to create a 'special' curricular course that
+     * will represent any curricular course accordding to a rule
      */
-    public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
-	    CurricularStage curricularStage, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn, CurricularStage curricularStage,
+	    CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
 	this();
 	setName(name);
@@ -30,10 +29,10 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 	setType(CurricularCourseType.OPTIONAL_COURSE);
 	new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
-    
+
     @Override
     public boolean isOptionalCurricularCourse() {
-        return true;
+	return true;
     }
 
     @Override
@@ -44,11 +43,11 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 	}
 	final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionPeriod);
 	if (anyCurricularCourseRule != null) {
-	    return anyCurricularCourseRule.getCredits();
+	    return anyCurricularCourseRule.hasCredits() ? anyCurricularCourseRule.getCredits() : 0;
 	}
-        return Double.valueOf(0d);
+	return Double.valueOf(0d);
     }
-    
+
     @Override
     public Double getMinEctsCredits(ExecutionPeriod executionPeriod) {
 	final CreditsLimit creditsLimitRule = getCreditsLimitRule(executionPeriod);
@@ -57,29 +56,26 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 	}
 	final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionPeriod);
 	if (anyCurricularCourseRule != null) {
-	    return anyCurricularCourseRule.getCredits();
+	    return anyCurricularCourseRule.hasCredits() ? anyCurricularCourseRule.getCredits() : 0;
 	}
-        return Double.valueOf(0d);
+	return Double.valueOf(0d);
     }
-    
-    private CreditsLimit getCreditsLimitRule(final ExecutionPeriod executionPeriod) {
-	final List<CreditsLimit> result = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionPeriod);
-	return result.isEmpty() ? null : (CreditsLimit) result.get(0); 
-    }
-    
+
     private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionPeriod executionPeriod) {
-	final List<AnyCurricularCourse> result = (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
-	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0); // must have only one
+	final List<AnyCurricularCourse> result = (List<AnyCurricularCourse>) getCurricularRules(
+		CurricularRuleType.ANY_CURRICULAR_COURSE, executionPeriod);
+	// must have only one
+	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0);
     }
 
     @Override
     protected Double countAllMaxEctsCredits(ExecutionPeriod executionPeriod) {
-        return getMaxEctsCredits(executionPeriod);
+	return getMaxEctsCredits(executionPeriod);
     }
-    
+
     @Override
     protected Double countAllMinEctsCredits(ExecutionPeriod executionPeriod) {
-        return getMinEctsCredits(executionPeriod);
+	return getMinEctsCredits(executionPeriod);
     }
 
 }

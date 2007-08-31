@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.EnrolmentResultType;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -72,13 +72,19 @@ abstract public class StudentCurricularPlanEnrolment {
 
     private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
-	RuleResult finalResult = RuleResult.createTrue();
-	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : getRulesToEvaluate().entrySet()) {
+	RuleResult finalResult = RuleResult.createInitialTrue();
+	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> rulesToEvaluate = getRulesToEvaluate();
+	for (final Entry<IDegreeModuleToEvaluate, Set<ICurricularRule>> entry : rulesToEvaluate.entrySet()) {
 	    RuleResult result = evaluateRules(entry.getKey(), entry.getValue());
 	    finalResult = finalResult.and(result);
+	}
 
-	    if (!finalResult.isFalse()) {
-		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, result.getEnrolmentResultType(), entry.getKey());
+	finalResult = evaluateExtraRules(finalResult);
+
+	if (!finalResult.isFalse()) {
+	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : rulesToEvaluate.keySet()) {
+		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, finalResult
+			.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
 	    }
 
 	}
@@ -90,11 +96,17 @@ abstract public class StudentCurricularPlanEnrolment {
 	return finalResult;
     }
 
+    protected RuleResult evaluateExtraRules(final RuleResult actualResult) {
+	// no extra rules to be executed
+	return actualResult;
+
+    }
+
     abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
 
     private RuleResult evaluateRules(final IDegreeModuleToEvaluate degreeModuleToEvaluate,
 	    final Set<ICurricularRule> curricularRules) {
-	RuleResult ruleResult = RuleResult.createTrue();
+	RuleResult ruleResult = RuleResult.createTrue(degreeModuleToEvaluate.getDegreeModule());
 
 	for (final ICurricularRule rule : curricularRules) {
 	    ruleResult = ruleResult.and(rule.evaluate(degreeModuleToEvaluate, enrolmentContext));

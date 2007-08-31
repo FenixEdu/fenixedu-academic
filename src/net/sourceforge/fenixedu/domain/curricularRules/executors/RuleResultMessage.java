@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors;
+package net.sourceforge.fenixedu.domain.curricularRules.executors;
 
 import org.apache.commons.lang.ArrayUtils;
 

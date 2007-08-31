@@ -6,8 +6,9 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.CurricularRuleExecutorFactory;
-import net.sourceforge.fenixedu.domain.curricularRules.ruleExecutors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleExecutorFactory;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -23,9 +24,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(final DegreeModule degreeModuleToApplyRule,
-	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin,
-	    final ExecutionPeriod end, final CurricularRuleType type) {
+    protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+	    final ExecutionPeriod begin, final ExecutionPeriod end, final CurricularRuleType type) {
 
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
 	checkCurricularRuleType(type);
@@ -38,8 +38,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	}
     }
 
-    protected void init(final DegreeModule degreeModuleToApplyRule,
-	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin, final ExecutionPeriod end) {
+    protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+	    final ExecutionPeriod begin, final ExecutionPeriod end) {
 
 	checkParameters(degreeModuleToApplyRule, begin);
 	checkExecutionPeriods(begin, end);
@@ -111,13 +111,11 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public CourseGroup getContextCourseGroup() {
-	return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super
-		.getContextCourseGroup();
+	return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
     }
 
     public boolean isValid(ExecutionPeriod executionPeriod) {
-	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd()
-		.isAfterOrEquals(executionPeriod)));
+	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
@@ -129,20 +127,25 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	return false;
     }
 
-    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod,
-	    ExecutionPeriod endExecutionPeriod) {
+    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 	if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
 	    throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
 	}
     }
-    
+
     public boolean isVisible() {
-        return true;
+	return true;
     }
 
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
+
+    public RuleResult verify(final VerifyRuleLevel level, final EnrolmentContext enrolmentContext,
+	    final DegreeModule degreeModuleToVerify, final CourseGroup parentCourseGroup) {
+	return createVerifyRuleExecutor().verify(this, level, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
+    }
+
 
     abstract protected void removeOwnParameters();
 
@@ -150,8 +153,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     abstract public List<GenericPair<Object, Boolean>> getLabel();
 
-    static public CurricularRule createCurricularRule(final LogicOperator logicOperator,
-	    final CurricularRule... curricularRules) {
+    static public CurricularRule createCurricularRule(final LogicOperator logicOperator, final CurricularRule... curricularRules) {
 	switch (logicOperator) {
 	case AND:
 	    return new AndRule(curricularRules);

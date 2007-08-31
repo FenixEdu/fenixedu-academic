@@ -6,14 +6,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent {
-    
+
     private Enrolment toApply;
-    
+
     public ImprovementOfApprovedEnrolment(final Enrolment enrolment) {
 	if (enrolment == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
@@ -21,9 +22,9 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
 	    this.toApply = enrolment;
 	}
     }
-    
+
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.improvementOfApprovedEnrolment", true));
+	return Collections.singletonList(new GenericPair<Object, Boolean>("label.improvementOfApprovedEnrolment", true));
     }
 
     public Enrolment getEnrolment() {
@@ -58,11 +59,15 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
     public boolean equals(Object obj) {
 	if (obj instanceof ImprovementOfApprovedEnrolment) {
 	    ImprovementOfApprovedEnrolment improvementOfApprovedEnrolment = (ImprovementOfApprovedEnrolment) obj;
-	    
+
 	    return toApply == improvementOfApprovedEnrolment.getEnrolment();
 	}
-	
+
 	return false;
     }
-    
+
+    public VerifyRuleExecutor createVerifyRuleExecutor() {
+	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+    }
+
 }

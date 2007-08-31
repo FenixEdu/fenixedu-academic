@@ -389,6 +389,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double neededCredits;
 		Integer numerusClausus;
 		DegreeCurricularPlanState state;
+		Boolean applyPreviousYearsEnrolmentRule;
 	}
 
 		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
