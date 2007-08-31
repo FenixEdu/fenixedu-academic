@@ -13,6 +13,7 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -98,8 +99,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public Department getPersonDepartment() {
-        final Employee employee = getUserView().getPerson().getEmployee();
-        return (employee != null) ? employee.getCurrentDepartmentWorkingPlace() : null;
+        final IUserView userView = getUserView();
+        final Person person = userView == null ? null : userView.getPerson();
+        final Employee employee = person == null ? null : person.getEmployee();
+        return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
     }
     
     public DepartmentUnit getSelectedDepartmentUnit() {
