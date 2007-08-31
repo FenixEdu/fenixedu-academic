@@ -18,12 +18,14 @@ public class ExecutionPeriodsNotClosedPublicProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
 
-	final String executionPeriodIDString = PropertiesManager.getProperty("object.id.execution.period.for.from.mark.sheet.managment");
+	final String yearString = PropertiesManager.getProperty("year.for.from.mark.sheet.managment");
+	final String semesterString = PropertiesManager.getProperty("semester.for.from.mark.sheet.managment");
+	
 	final ExecutionPeriod fromExecutionPeriod;
-	if (executionPeriodIDString == null || executionPeriodIDString.length() == 0) {
+	if (yearString == null || yearString.length() == 0 || semesterString == null || semesterString.length() == 0) {
 	    fromExecutionPeriod = null;
 	} else {
-	    fromExecutionPeriod = RootDomainObject.getInstance().readExecutionPeriodByOID(Integer.valueOf(executionPeriodIDString));
+	    fromExecutionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(Integer.valueOf(semesterString), yearString);
 	}
 
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {

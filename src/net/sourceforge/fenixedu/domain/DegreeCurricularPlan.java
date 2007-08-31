@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -71,7 +72,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("presentationName"));
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(COMPARATOR_BY_ID);
     }
-
+    
     /**
      * This might look a strange comparator, but the idea is to show a list of
      * degree curricular plans according to, in the following order: 1. It's
@@ -1738,5 +1739,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isToApplyPreviousYearsEnrolmentRule() {
 	return getApplyPreviousYearsEnrolmentRule();
     }
-
+    
+    public ExecutionPeriod getFirstExecutionPeriodEnrolments() {
+	return ExecutionPeriod.readBySemesterAndExecutionYear(Integer.valueOf(PropertiesManager
+		.getProperty("semester.for.from.enrolments")), PropertiesManager.getProperty("year.for.from.enrolments"));
+    }    
 }

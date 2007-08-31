@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEECBolonhaEnrolmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
@@ -83,6 +84,12 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
 
     public List getSecundaryAreas() {
         return getSpecializationAreas();
+    }
+
+    @Override
+    public ExecutionPeriod getFirstExecutionPeriodEnrolments() {
+	return ExecutionPeriod.readBySemesterAndExecutionYear(Integer.valueOf(PropertiesManager
+		.getProperty("semester.for.from.enrolments.leec")), PropertiesManager.getProperty("year.for.from.enrolments.leec"));
     }
 
 }

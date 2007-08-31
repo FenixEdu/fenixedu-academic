@@ -3,7 +3,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -22,8 +24,17 @@ public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataPro
     public Object provide(Object source, Object currentValue) {
 	final StudentCurricularPlan studentCurricularPlan = ((StudentEnrolmentBean) source)
 		.getStudentCurricularPlan();
-	return ExecutionPeriod.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(),
-		Calendar.getInstance().getTime());
+	List<ExecutionPeriod> executionPeriodsInTimePeriod = ExecutionPeriod.readExecutionPeriodsInTimePeriod(
+		studentCurricularPlan.getStartDate(), Calendar.getInstance().getTime());
+	
+	ExecutionPeriod firstExecutionPeriodEnrolments = studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
+	List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+	for (ExecutionPeriod executionPeriod : executionPeriodsInTimePeriod) {
+	    if(firstExecutionPeriodEnrolments.isBeforeOrEquals(executionPeriod)) {
+		result.add(executionPeriod);
+	    }
+	}
+	return result;
     }
 
     public Converter getConverter() {

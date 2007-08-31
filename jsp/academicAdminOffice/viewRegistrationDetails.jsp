@@ -135,7 +135,6 @@
 		<fr:property name="linkFormat(enrol)" value="/studentEnrolments.do?method=prepare&amp;scpID=${idInternal}" />
 		<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 		<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(enrol)" value="enrolable"/>
 		<fr:property name="contextRelative(enrol)" value="true"/>      
 		<fr:property name="order(enrol)" value="1"/>      					
 

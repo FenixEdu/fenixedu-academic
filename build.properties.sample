@@ -554,13 +554,20 @@ error.if.changing.deleted.object=false
 # Configuration properties for data dependend propetires
 #------------------------------------------------------------------------------
 #
-#   object.id.execution.period.for.from.mark.sheet.managment:
-#       identifies the execution period after which (not including) mark 
+#   year.for.from.mark.sheet.managment and semester.for.from.mark.sheet.managment:
+#       identifies the execution period after which mark 
 #       sheet are to be managed in the fenix system.
 #
 #------------------------------------------------------------------------------
 
-object.id.execution.period.for.from.mark.sheet.managment=84
+year.for.from.mark.sheet.managment=2005/2006
+semester.for.from.mark.sheet.managment=2
+
+year.for.from.enrolments=2004/2005
+semester.for.from.enrolments=1
+
+year.for.from.enrolments.leec=2003/2004
+semester.for.from.enrolments.leec=2
 
 
 #----------------------------------------------------------------
