@@ -312,7 +312,11 @@
 		<put name="body" value="/student/administrativeOfficeServices/prices/viewPrices.jsp"/>
 	</definition>
 	<!-- End: Prices -->
-	
+
+
+	<definition name="enrolment.welcome" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/welcome.jsp"/>
+	</definition>	
 	
 	<definition name="enrolment.chooseRegistration" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/chooseRegistration.jsp"/>
@@ -324,6 +328,7 @@
 	<definition name="enrolment.confirmBolonhaTransition" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/confirmBolonhaTransition.jsp"/>
 	</definition>
+	
 	
 	
 	<!-- Begin: Bolonha Student Enrolment -->

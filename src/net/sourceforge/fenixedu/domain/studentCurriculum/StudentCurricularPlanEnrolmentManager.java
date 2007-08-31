@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
@@ -95,7 +95,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
 		if (degreeModuleToEvaluate.isEnroled()) {
 
-		    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+		    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
@@ -149,7 +149,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	if (!this.studentCurricularPlan.getRoot().hasExternalCycles()) {
 	    final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule = new PreviousYearsEnrolmentCurricularRule(
 		    this.studentCurricularPlan.getRoot().getDegreeModule());
-	    finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new CurriculumModuleEnroledWrapper(
+	    finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(
 		    this.studentCurricularPlan.getRoot(), this.enrolmentContext.getExecutionPeriod()), this.enrolmentContext));
 
 	} else {
@@ -157,7 +157,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		    .getCycleCurriculumGroups()) {
 		final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule = new PreviousYearsEnrolmentCurricularRule(
 			cycleCurriculumGroup.getDegreeModule());
-		finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new CurriculumModuleEnroledWrapper(
+		finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(
 			cycleCurriculumGroup, this.enrolmentContext.getExecutionPeriod()), this.enrolmentContext));
 	    }
 	}

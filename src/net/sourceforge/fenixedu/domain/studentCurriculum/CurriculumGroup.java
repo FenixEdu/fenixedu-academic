@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -609,7 +609,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
-	result.add(new CurriculumModuleEnroledWrapper(this, executionPeriod));
+	result.add(new EnroledCurriculumModuleWrapper(this, executionPeriod));
 
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    result.addAll(curriculumModule.getDegreeModulesToEvaluate(executionPeriod));

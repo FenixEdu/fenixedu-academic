@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
@@ -36,7 +36,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
 	    if (degreeModuleToEvaluate.isEnroled()) {
 
-		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 
 		final Double ectsCredits = curriculumModule.getAprovedEctsCredits()
@@ -62,9 +62,13 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
     private RuleResult evaluateIfCanEnrolToOptionalDegreeModule(final EnrolmentContext enrolmentContext, final CreditsLimit rule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
-	final OptionalDegreeModuleToEnrol optionalToEnrol = (OptionalDegreeModuleToEnrol) searchDegreeModuleToEvaluate(
-		enrolmentContext, rule);
-	final CurricularCourse curricularCourse = optionalToEnrol.getCurricularCourse();
+	final CurricularCourse curricularCourse;
+	if (sourceDegreeModuleToEvaluate.isEnroled()) {
+	    curricularCourse = (CurricularCourse) sourceDegreeModuleToEvaluate.getDegreeModule();
+	} else {
+	    curricularCourse = ((OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate).getCurricularCourse();
+	}
+
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	return rule.allowCredits(curricularCourse.getEctsCredits(executionPeriod)) ? RuleResult
 		.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule()) : createFalseRuleResult(rule,
@@ -117,7 +121,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
 	    if (degreeModuleToEvaluate.isEnroled()) {
 
-		final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 		final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 

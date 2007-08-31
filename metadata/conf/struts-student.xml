@@ -890,6 +890,7 @@
 				name="studentEnrollmentManagmentForm"
 				scope="request">
 		
+			<forward name="welcome" path="enrolment.welcome"/>
 			<forward name="chooseRegistration" path="enrolment.chooseRegistration" />
 			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.choosePersonalDataAuthorizationChoice"/>
 			<forward name="proceedToEnrolment" path="/bolonhaStudentEnrollment.do?method=prepare" />

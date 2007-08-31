@@ -20,6 +20,12 @@ import org.apache.struts.action.ActionMapping;
 
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
+    public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	return mapping.findForward("welcome");
+    }
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final Student student = getLoggedStudent(request);

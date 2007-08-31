@@ -8,7 +8,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -46,7 +46,7 @@ public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGrou
 	    if(curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
 		if(enrolment.canBeImproved() && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
-		    result.add(new CurriculumModuleEnroledWrapper(enrolment, enrolment.getExecutionPeriod()));
+		    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
 		}
 	    }
 	}

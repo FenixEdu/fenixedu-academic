@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -100,7 +100,7 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 
     private boolean isEnroledIn(IDegreeModuleToEvaluate degreeModuleToEvaluate, ExecutionPeriod executionPeriod) {
 	if (degreeModuleToEvaluate.isLeaf()) {
-	    final CurriculumModuleEnroledWrapper curriculumModuleEnroledWrapper = (CurriculumModuleEnroledWrapper) degreeModuleToEvaluate;
+	    final EnroledCurriculumModuleWrapper curriculumModuleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 	    final CurriculumLine curriculumLine = (CurriculumLine) (curriculumModuleEnroledWrapper).getCurriculumModule();
 
 	    if (curriculumLine.isEnrolment()) {

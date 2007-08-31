@@ -1827,6 +1827,7 @@ select.degrees {
 
 .infoop2 p { margin: 0.25em 0; }
 
+
 .infoop3 {
 	background-color: #fafade;
 	padding: 2px 4px;
@@ -1845,6 +1846,13 @@ select.degrees {
 	}
 
 .infoop5 p { margin: 0.25em 0; }
+	
+.infoop6 { /* equal to infoop2 but without forced margins on paragraphs */
+	background-color: #faf5de; /*faf5de,f2e5a6 or f5fade,e5f2a6 */
+	vertical-align: middle;
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid #f2e5a6;
+	}
 	
 .infoop-blue {
 	background-color: #9CF;

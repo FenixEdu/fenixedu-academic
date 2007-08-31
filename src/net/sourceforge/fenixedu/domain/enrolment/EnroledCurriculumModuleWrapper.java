@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
-public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModuleToEvaluate {
+public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModuleToEvaluate {
 
     /**
      * 
@@ -29,7 +29,7 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     private DomainReference<ExecutionPeriod> executionPeriod;
 
-    public CurriculumModuleEnroledWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
+    public EnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
 	setCurriculumModule(curriculumModule);
 	setExecutionPeriod(executionPeriod);
     }
@@ -109,8 +109,8 @@ public class CurriculumModuleEnroledWrapper implements Serializable, IDegreeModu
 
     @Override
     public boolean equals(Object obj) {
-	if (obj instanceof CurriculumModuleEnroledWrapper) {
-	    final CurriculumModuleEnroledWrapper moduleEnroledWrapper = (CurriculumModuleEnroledWrapper) obj;
+	if (obj instanceof EnroledCurriculumModuleWrapper) {
+	    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) obj;
 	    return getCurriculumModule() == moduleEnroledWrapper.getCurriculumModule();
 	}
 	return false;

@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleEnroledWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -63,7 +63,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	
 	List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (Enrolment enrolment : enrolmentsMap.values()) {
-	    result.add(new CurriculumModuleEnroledWrapper(enrolment, enrolment.getExecutionPeriod()));
+	    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
 	}
 	
 	return result;
