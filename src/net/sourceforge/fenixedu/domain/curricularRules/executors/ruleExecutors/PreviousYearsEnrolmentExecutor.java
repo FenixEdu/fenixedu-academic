@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -347,9 +348,15 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 		iterator.remove();
 	    } else if (!isCurricularRulesSatisfied(enrolmentContext, curricularCourse, sourceDegreeModuleToEvaluate)) {
 		iterator.remove();
-	    } else if (collectContext.hasCreditsToSpent(curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod()))) {
-		collectContext.useCredits(curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod()));
-		iterator.remove();
+	    } else {
+		final double creditsRequiredToApprove = curricularCourse.isOptionalCurricularCourse() ? ((OptionalCurricularCourse) curricularCourse)
+			.getMinEctsCredits(enrolmentContext.getExecutionPeriod())
+			: curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod());
+		if (collectContext.hasCreditsToSpent(creditsRequiredToApprove)) {
+		    collectContext.useCredits(creditsRequiredToApprove);
+		    iterator.remove();
+
+		}
 	    }
 	}
 
