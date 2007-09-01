@@ -55,8 +55,8 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	return result;
     }
 
-    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse) {
-	return curricularCourse.getEctsCredits() * ACCUMULATED_FACTOR;
+    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	return curricularCourse.getEctsCredits(executionPeriod.getSemester(), executionPeriod) * ACCUMULATED_FACTOR;
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {

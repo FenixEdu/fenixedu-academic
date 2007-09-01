@@ -1309,7 +1309,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonhaDegree()) {
 	    return isAccumulated(executionPeriod, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-		    .getAccumulatedEctsCredits(curricularCourse) : curricularCourse.getEctsCredits();
+		    .getAccumulatedEctsCredits(curricularCourse, executionPeriod) : curricularCourse.getEctsCredits(
+		    executionPeriod.getSemester(), executionPeriod);
 	} else {
 	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionPeriod);
 	}
@@ -1868,10 +1869,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 		if (curricularYearInteger == null || curricularYear.getYear().intValue() <= curricularYearInteger.intValue()) {
 		    if (!isCurricularCourseApproved(curricularCourse)) {
-		        if (LogLevel.INFO) {
-		            System.out.println("curricular course failed: " + curricularCourse.getName() + " "
-		                    + curricularCourse.getCode());
-		        }
+			if (LogLevel.INFO) {
+			    System.out.println("curricular course failed: " + curricularCourse.getName() + " "
+				    + curricularCourse.getCode());
+			}
 			return false;
 		    }
 		}
@@ -2170,7 +2171,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final CurricularRuleLevel level) {
-	
+
 	final Registration registration = this.getRegistration();
 	if (!registration.isActive()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
@@ -2196,8 +2197,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
 
-	    }
 	}
+    }
 
     final public String getName() {
 	return getDegreeCurricularPlan().getName();
@@ -2279,7 +2280,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    Collection<IEnrolment> enrolments, Double givenCredits, ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
-	    if(dismissals != null) {
+	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
 		}
@@ -2317,23 +2318,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    Grade givenGrade, ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
-	    if(dismissals != null) {
+	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
 		}
 	    }
-	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade, executionPeriod);
+	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade,
+		    executionPeriod);
 	} else {
 	    return new Equivalence(this, dismissals, enrolments, givenGrade, executionPeriod);
 	}
     }
-    
+
     final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
-	    if(dismissals != null) {
+	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
 		}
@@ -2343,7 +2345,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return new Substitution(this, dismissals, enrolments, executionPeriod);
 	}
     }
-
 
     final public Substitution createSubstitution(final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
@@ -2362,7 +2363,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return isBoxStructure() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
-    
+
     public boolean hasCurriculumModule(final CurriculumModule curriculumModule) {
 	return isBoxStructure() ? getRoot().hasCurriculumModule(curriculumModule) : false;
     }
@@ -2520,22 +2521,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CycleCurriculumGroup getCycle(final CycleType cycleType) {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
-}
+    }
+
     public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
 	return getCycle(cycleType) != null;
     }
-    
+
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
     }
-    
+
     public CycleCurriculumGroup getFirstCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE) : null;
     }
-    
+
     public CycleCurriculumGroup getSecondCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
-    
 
 }
