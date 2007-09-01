@@ -116,10 +116,11 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
     private Double calculateApprovedAndEnrollingTotalCredits(final EnrolmentContext enrolmentContext,
 	    final ExternalCurriculumGroup externalCurriculumGroup) {
 	double result = 0;
+	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isLeaf()
 		    && externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
-		result += degreeModuleToEvaluate.getEctsCredits();
+		result += degreeModuleToEvaluate.getEctsCredits(executionPeriod);
 	    }
 	}
 

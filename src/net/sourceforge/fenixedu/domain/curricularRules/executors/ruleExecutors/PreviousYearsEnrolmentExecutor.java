@@ -347,8 +347,8 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 		iterator.remove();
 	    } else if (!isCurricularRulesSatisfied(enrolmentContext, curricularCourse, sourceDegreeModuleToEvaluate)) {
 		iterator.remove();
-	    } else if (collectContext.hasCreditsToSpent(curricularCourse.getEctsCredits())) {
-		collectContext.useCredits(curricularCourse.getEctsCredits());
+	    } else if (collectContext.hasCreditsToSpent(curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod()))) {
+		collectContext.useCredits(curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod()));
 		iterator.remove();
 	    }
 	}
