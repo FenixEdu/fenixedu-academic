@@ -7,10 +7,9 @@
 <logic:present role="STUDENT">
     <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
    
-	<%--
 	<logic:notEmpty name="sourceRegistrationsForTransition">
-		<p class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsInTransition" bundle="STUDENT_RESOURCES"/></strong></p>
-		<table class="tstyle2">
+		<h3 class="mtop2 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsInTransition" bundle="STUDENT_RESOURCES"/></strong></h3>
+		<table class="tstyle2 indent1">
 			<tr>
 				<td><strong><bean:message  key="label.enrollment.courses.preBolonhaRegistration" bundle="STUDENT_RESOURCES"/>:</strong></td>
 				<td><strong><bean:message  key="label.enrollment.courses.bolonhaRegistrations" bundle="STUDENT_RESOURCES"/>:</strong></td>
@@ -33,18 +32,19 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
- 	--%>
  	
-    <p class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></p>
+    <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></h3>
     <logic:empty name="registrationsToEnrol">
-    	<span class="error0">
+	<p class="indent1">    
+    	<em class="warning0">
 	    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
-    	</span>
+    	</em>
+    </p>
     </logic:empty>
 	<logic:notEmpty name="registrationsToEnrol">
 		<fr:view name="registrationsToEnrol" schema="student.registrationsToList" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
+				<fr:property name="classes" value="tstyle4 thlight mtop025 indent1"/>
 				<fr:property name="linkFormat(enrol)" value="/studentEnrollmentManagement.do?method=chooseRegistration&registrationId=${idInternal}" />
 				<fr:property name="key(enrol)" value="label.enroll"/>
 				<fr:property name="bundle(enrol)" value="STUDENT_RESOURCES"/>
