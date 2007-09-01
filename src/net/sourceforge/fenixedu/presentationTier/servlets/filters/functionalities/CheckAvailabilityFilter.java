@@ -130,7 +130,11 @@ public class CheckAvailabilityFilter implements Filter {
             if (hasTestingPrefix(servletRequest)) {
                 removeTestingPrefix(servletRequest, servletResponse);
             } else {
-                chain.doFilter(request, response);
+                try {
+                    chain.doFilter(request, response);
+                } catch (StackOverflowError stackOverflowError) {
+                    System.out.println(stackOverflowError.getMessage() + " for url: " + servletRequest.getRequestURI() + " --- " + servletRequest.getRequestURL());
+                }
             }
         } else {
             showUnavailablePage(userView, servletRequest, servletResponse);
