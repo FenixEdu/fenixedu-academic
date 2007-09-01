@@ -29,4 +29,10 @@ public class CronScriptInvocation extends CronScriptInvocation_Base {
 		return !getStartTime().plus(invocationPeriod).isAfterNow();
 	}
 
+    public void delete() {
+        removeRootDomainObject();
+        removeCronScriptState();
+        deleteDomainObject();
+    }
+
 }
