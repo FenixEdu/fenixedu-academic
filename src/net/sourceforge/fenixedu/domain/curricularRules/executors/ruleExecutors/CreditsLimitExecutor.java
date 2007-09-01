@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
@@ -41,7 +40,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 		final Double ectsCredits = curriculumModule.getAprovedEctsCredits()
 			+ curriculumModule.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod())
-			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, rule);
+			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, curriculumModule);
 
 		if (rule.creditsExceedMaximum(ectsCredits)) {
 		    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
@@ -76,17 +75,17 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
     }
 
     private Double calculateEctsCreditsFromToEnrolCurricularCourses(final EnrolmentContext enrolmentContext,
-	    final CreditsLimit rule) {
-	final CourseGroup courseGroup = (CourseGroup) rule.getDegreeModuleToApplyRule();
+	    final CurriculumModule parentCurriculumModule) {
 	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
 	BigDecimal result = BigDecimal.ZERO;
-	for (final DegreeModule degreeModule : courseGroup.collectAllChildDegreeModules(CurricularCourse.class, executionPeriod)) {
-	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, degreeModule);
-	    if (degreeModuleToEvaluate != null && !degreeModuleToEvaluate.isEnroled()) {
-		result = result.add(new BigDecimal(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
+	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+	    if (degreeModuleToEvaluate.isEnroling()
+		    && parentCurriculumModule.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
+		result = result.add(BigDecimal.valueOf(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
 	    }
 	}
+
 	return Double.valueOf(result.doubleValue());
     }
 
@@ -120,14 +119,13 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 	    final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
 	    if (degreeModuleToEvaluate.isEnroled()) {
-
 		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
 		final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 
 		Double ectsCredits = curriculumModule.getAprovedEctsCredits()
 			+ curriculumModule.getEnroledEctsCredits(executionPeriod)
-			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, rule);
+			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, curriculumModule);
 
 		if (rule.creditsExceedMaximum(ectsCredits)) {
 		    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {

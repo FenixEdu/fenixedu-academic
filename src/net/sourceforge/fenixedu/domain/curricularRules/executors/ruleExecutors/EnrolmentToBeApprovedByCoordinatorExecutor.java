@@ -15,7 +15,8 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
 	final Person responsiblePerson = enrolmentContext.getResponsiblePerson();
 	if (responsiblePerson.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || responsiblePerson.hasRole(RoleType.MANAGER)) {
 	    return RuleResult
-		    .createWarning(
+		    .createTrue(
+			    EnrolmentResultType.VALIDATED,
 			    sourceDegreeModuleToEvaluate.getDegreeModule(),
 			    "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
 			    sourceDegreeModuleToEvaluate.getName());
