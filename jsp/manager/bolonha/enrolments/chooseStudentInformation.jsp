@@ -45,13 +45,11 @@
 				<fr:property name="linkFormat(enrol)" value="<%="/bolonhaStudentEnrolment.do?method=prepareShowDegreeModulesToEnrol&amp;scpId=${idInternal}"%>"/>
 				<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 				<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="visibleIf(enrol)" value="enrolable"/>
 				<fr:property name="order(enrol)" value="2"/>
 
 				<fr:property name="linkFormat(moveCurriculumLines)" value="<%="/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=${idInternal}"%>"/>
 				<fr:property name="key(moveCurriculumLines)" value="label.course.moveEnrolments"/>
 				<fr:property name="bundle(moveCurriculumLines)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="visibleIf(moveCurriculumLines)" value="enrolable"/>
 				<fr:property name="order(moveCurriculumLines)" value="3"/>
 			</fr:layout>
 		</fr:view>
