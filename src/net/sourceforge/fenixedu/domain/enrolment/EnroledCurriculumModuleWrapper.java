@@ -25,7 +25,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 
     private DomainReference<CurriculumModule> curriculumModule;
 
-    private DomainReference<Context> context;
+    protected DomainReference<Context> context;
 
     private DomainReference<ExecutionPeriod> executionPeriod;
 

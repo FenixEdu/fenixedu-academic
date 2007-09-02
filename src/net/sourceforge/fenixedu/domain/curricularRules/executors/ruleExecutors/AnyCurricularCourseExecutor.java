@@ -45,7 +45,8 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	    }
 
 	} else if (sourceDegreeModuleToEvaluate.isEnroled()) {
-	    curricularCourseToEnrol = ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate).getOptionalCurricularCourse();
+	    curricularCourseToEnrol = (CurricularCourse) ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate)
+		    .getCurriculumModule().getDegreeModule();
 	} else {
 	    throw new DomainException(
 		    "error.curricularRules.executors.ruleExecutors.AnyCurricularCourseExecutor.unexpected.degree.module.to.evaluate");

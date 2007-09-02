@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -87,8 +88,22 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
 		previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
 
+	// printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
+
 	return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
 		sourceDegreeModuleToEvaluate);
+
+    }
+
+    private void printCurricularCoursesToEnrol(Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear) {
+	for (final Entry<Integer, Set<CurricularCourse>> entry : curricularCoursesToEnrolByYear.entrySet()) {
+	    System.out.println("Year " + entry.getKey());
+	    for (final CurricularCourse curricularCourse : entry.getValue()) {
+		System.out.println(curricularCourse.getName());
+	    }
+
+	    System.out.println("-------------");
+	}
 
     }
 
@@ -206,7 +221,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     private boolean isToCollectCurricularCourses(CourseGroup courseGroup, EnrolmentContext enrolmentContext,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, boolean withTemporaryEnrolments) {
 	return !isConcluded(courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments)
-		|| !isExclusiveWithExisting(courseGroup, enrolmentContext);
+		&& !isExclusiveWithExisting(courseGroup, enrolmentContext);
     }
 
     private boolean isExclusiveWithExisting(CourseGroup courseGroup, EnrolmentContext enrolmentContext) {

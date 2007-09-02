@@ -71,8 +71,22 @@ public class RuleResult {
 	final Set<RuleResultMessage> messages = new HashSet<RuleResultMessage>(getMessages());
 	messages.addAll(ruleResult.getMessages());
 
-	return new RuleResult(andResult, merge(this.enrolmentResultTypeByDegreeModule,
+	return new RuleResult(andResult, andMerge(this.enrolmentResultTypeByDegreeModule,
 		ruleResult.enrolmentResultTypeByDegreeModule), messages);
+    }
+
+    private Map<DegreeModule, EnrolmentResultType> andMerge(final Map<DegreeModule, EnrolmentResultType> left,
+	    final Map<DegreeModule, EnrolmentResultType> right) {
+
+	for (final Entry<DegreeModule, EnrolmentResultType> each : right.entrySet()) {
+	    if (left.containsKey(each.getKey())) {
+		left.put(each.getKey(), left.get(each.getKey()).and(each.getValue()));
+	    } else {
+		left.put(each.getKey(), each.getValue());
+	    }
+	}
+
+	return left;
     }
 
     public RuleResult or(final RuleResult ruleResult) {
@@ -80,16 +94,16 @@ public class RuleResult {
 	final Set<RuleResultMessage> messages = new HashSet<RuleResultMessage>(getMessages());
 	messages.addAll(ruleResult.getMessages());
 
-	return new RuleResult(orResult, merge(this.enrolmentResultTypeByDegreeModule,
+	return new RuleResult(orResult, orMerge(this.enrolmentResultTypeByDegreeModule,
 		ruleResult.enrolmentResultTypeByDegreeModule), messages);
     }
 
-    private Map<DegreeModule, EnrolmentResultType> merge(final Map<DegreeModule, EnrolmentResultType> left,
+    private Map<DegreeModule, EnrolmentResultType> orMerge(final Map<DegreeModule, EnrolmentResultType> left,
 	    final Map<DegreeModule, EnrolmentResultType> right) {
 
 	for (final Entry<DegreeModule, EnrolmentResultType> each : right.entrySet()) {
 	    if (left.containsKey(each.getKey())) {
-		left.put(each.getKey(), left.get(each.getKey()).and(each.getValue()));
+		left.put(each.getKey(), left.get(each.getKey()).or(each.getValue()));
 	    } else {
 		left.put(each.getKey(), each.getValue());
 	    }
@@ -122,9 +136,14 @@ public class RuleResult {
     public boolean isTemporaryEnrolmentResultType(final DegreeModule degreeModule) {
 	return getEnrolmentResultTypeFor(degreeModule) == EnrolmentResultType.TEMPORARY;
     }
-    
+
     public boolean isImpossibleEnrolmentResultType(final DegreeModule degreeModule) {
 	return getEnrolmentResultTypeFor(degreeModule) == EnrolmentResultType.IMPOSSIBLE;
+    }
+
+    public boolean isValidated(final DegreeModule degreeModule) {
+	return getEnrolmentResultTypeFor(degreeModule) == EnrolmentResultType.VALIDATED;
+
     }
 
     @Override

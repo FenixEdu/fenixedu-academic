@@ -9,20 +9,28 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 
 public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 
-    private static final double MAX_CREDITS = 80;
+    private static final double MIN_CREDITS_IN_PREVIOUS_CYCLE = 150;
+
+    private static final double MAX_CREDITS_IN_EXTERNAL_CYCLE = 80;
 
     private ExternalCurriculumGroup externalCurriculumGroup;
 
-    public CreditsLimitInExternalCycle(final ExternalCurriculumGroup toApply) {
-	if (toApply == null) {
+    private CycleCurriculumGroup previousCycleCurriculumGroup;
+
+    public CreditsLimitInExternalCycle(final CycleCurriculumGroup previousCycleCurriculumGroup,
+	    final ExternalCurriculumGroup toApply) {
+	if (toApply == null || previousCycleCurriculumGroup == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
-	} else {
-	    this.externalCurriculumGroup = toApply;
 	}
+
+	this.previousCycleCurriculumGroup = previousCycleCurriculumGroup;
+	this.externalCurriculumGroup = toApply;
+
     }
 
     public List<GenericPair<Object, Boolean>> getLabel() {
@@ -41,8 +49,13 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return null;
     }
 
-    public boolean creditsExceedMaximum(final Double numberOfCredits) {
-	return numberOfCredits.compareTo(MAX_CREDITS) > 0;
+    public boolean creditsExceedMaximumInExternalCycle(final Double numberOfCredits) {
+	return numberOfCredits.compareTo(MAX_CREDITS_IN_EXTERNAL_CYCLE) > 0;
+    }
+
+    public boolean creditsInPreviousCycleSufficient(final Double previousCycleCredits) {
+	return previousCycleCredits.compareTo(MIN_CREDITS_IN_PREVIOUS_CYCLE) >= 0;
+
     }
 
     public CurricularRuleType getCurricularRuleType() {
@@ -61,8 +74,16 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return externalCurriculumGroup;
     }
 
-    public Double getMaxCredits() {
-	return MAX_CREDITS;
+    public CycleCurriculumGroup getPreviousCycleCurriculumGroup() {
+	return previousCycleCurriculumGroup;
+    }
+
+    public Double getMaxCreditsInExternalCycle() {
+	return MAX_CREDITS_IN_EXTERNAL_CYCLE;
+    }
+
+    public Double getMinCreditsInPreviousCycle() {
+	return MIN_CREDITS_IN_PREVIOUS_CYCLE;
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {

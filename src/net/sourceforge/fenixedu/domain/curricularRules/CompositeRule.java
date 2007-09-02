@@ -123,7 +123,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 		    .createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
 	    for (final CurricularRule curricularRule : getCurricularRules()) {
 		resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
-		if (resultOR.isTrue()) {
+		if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
 		    return resultOR;
 		}
 	    }
@@ -152,7 +152,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 	    for (final CurricularRule curricularRule : getCurricularRules()) {
 		resultOR = resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
 			parentCourseGroup));
-		if (resultOR.isTrue()) {
+		if (resultOR.isTrue() && resultOR.isValidated(degreeModuleToVerify)) {
 		    return resultOR;
 		}
 	    }

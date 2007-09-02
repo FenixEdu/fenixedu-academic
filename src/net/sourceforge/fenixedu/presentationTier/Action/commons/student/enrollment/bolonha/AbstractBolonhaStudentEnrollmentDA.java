@@ -66,7 +66,9 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		addActionMessage("success", request, "label.save.success");
 	    }
 
-	    addRuleResultMessagesToActionMessages("warning", request, ruleResults);
+	    if (ruleResults.isWarning()) {
+		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
+	    }
 
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
@@ -124,7 +126,9 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
 		    getCurricularRuleLevel(form));
 
-	    addRuleResultMessagesToActionMessages("warning", request, ruleResults);
+	    if (ruleResults.isWarning()) {
+		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
+	    }
 
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());

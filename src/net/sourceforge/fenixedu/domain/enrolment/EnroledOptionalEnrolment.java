@@ -7,7 +7,9 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
@@ -41,6 +43,23 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
 
 	return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
 		executionPeriod);
+    }
+
+    public Context getContext() {
+	if (this.context == null) {
+	    if (!getCurriculumModule().isRoot()) {
+		final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
+		for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
+		    if (context.getChildDegreeModule() == getOptionalCurricularCourse()) {
+			setContext(context);
+			break;
+		    }
+		}
+	    }
+
+	}
+
+	return (context != null) ? context.getObject() : null;
     }
 
 }
