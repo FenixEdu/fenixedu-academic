@@ -88,7 +88,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
 		previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
 
-	// printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
+	//printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
 
 	return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
 		sourceDegreeModuleToEvaluate);
@@ -261,8 +261,9 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
 	for (final DegreeModule degreeModule : getSelectedChildDegreeModules(courseGroup, enrolmentContext)) {
 	    if (degreeModule.isCourseGroup()) {
-		collectCurricularCoursesToEnrol(result, (CourseGroup) degreeModule, new CollectContext(collectContext),
-			enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+		collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) degreeModule,
+			new CollectContext(collectContext), enrolmentContext, sourceDegreeModuleToEvaluate,
+			withTemporaryEnrolments);
 	    }
 	}
 
@@ -324,7 +325,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
 	final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionPeriod);
 	if (creditsLimit != null) {
-	    final SortedSet<DegreeModule> sortedChilds = new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMaxEcts(
+	    final SortedSet<DegreeModule> sortedChilds = new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(
 		    executionPeriod));
 	    sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionPeriod));
 	    int counter = 0;

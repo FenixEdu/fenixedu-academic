@@ -66,23 +66,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     }
 
-    public static class ComparatorByMaxEcts implements Comparator<DegreeModule> {
-
-	private ExecutionPeriod executionPeriod;
-
-	public ComparatorByMaxEcts(final ExecutionPeriod executionPeriod) {
-	    this.executionPeriod = executionPeriod;
-
-	}
-
-	public int compare(DegreeModule leftDegreeModule, DegreeModule rightDegreeModule) {
-	    int comparationResult = leftDegreeModule.getMaxEctsCredits(this.executionPeriod).compareTo(
-		    rightDegreeModule.getMaxEctsCredits(this.executionPeriod));
-	    return (comparationResult == 0) ? leftDegreeModule.getIdInternal().compareTo(rightDegreeModule.getIdInternal())
-		    : comparationResult;
-	}
-    };
-
     public DegreeModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
