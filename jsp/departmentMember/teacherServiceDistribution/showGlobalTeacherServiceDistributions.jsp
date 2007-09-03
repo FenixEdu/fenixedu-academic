@@ -11,32 +11,42 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionVisualization"/>
-</h3>
+<em>
+	<bean:message key="link.teacherServiceDistribution"/>
+</em>
 
+<h2><bean:message key="link.teacherServiceDistribution.teacherServiceDistributionVisualization"/></h2>
+
+<ul>
+	<li>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+</ul>
 
 <html:form action="/globalTeacherServiceDistributionValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareForGlobalTeacherServiceDistributionValuation"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
-<table class='vtsbc'>
+<table class='tstyle5 thlight thright thmiddle'>
 <tr>
+	<th>
+		<bean:message key="label.teacherServiceDistribution.executionYear"/>:
+	</th>
 	<td>
-		<b><bean:message key="label.teacherServiceDistribution.executionYear"/>:</b>
-		&nbsp;&nbsp;
 		<html:select property="executionYear" onchange="this.form.submit();">
 			<html:option value="-1">&nbsp;</html:option>
 			<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
 		</html:select>
 	</td>
+</tr>
+<tr>
+	<th>
+		<bean:message key="label.teacherServiceDistribution.semester"/>:
+	</th>
 	<td>
-		<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
-		&nbsp;&nbsp;
+
 		<html:select property="executionPeriod" onchange="this.form.submit();">
 			<html:option value="-1">&nbsp;</html:option>
 			<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
@@ -45,17 +55,21 @@
 </tr>
 </table>
 
-<br/>
-<br/>
 
 <logic:empty name="teacherServiceDistributionList">
-<span class="error">
-	<bean:message key="label.teacherServiceDistribution.noPublishedTeacherServiceDistributionsForExecutionPeriod"/>
-</span>
+	<p>
+		<em>
+			<bean:message key="label.teacherServiceDistribution.noPublishedTeacherServiceDistributionsForExecutionPeriod"/>
+		</em>
+	</p>
 </logic:empty>
 <logic:notEmpty name="teacherServiceDistributionList">
-<b><bean:message key="label.teacherServiceDistribution.availableTeacherServiceDistributions"/>:</b>
-<br/>
+
+<p>
+	<b><bean:message key="label.teacherServiceDistribution.availableTeacherServiceDistributions"/>:</b>
+</p>
+
+
 
 <table class='vtsbc'>
 	<tr>
@@ -105,10 +119,6 @@
 </html:button>
 
 </logic:notEmpty>
-	
-<br/>
-<br/>
-<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionCreation">
-	<bean:message key="link.back"/>
-</html:link>	
+
+
 </html:form>

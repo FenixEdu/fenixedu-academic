@@ -7,42 +7,40 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 
-<h3><bean:message key="link.teacherServiceDistribution"/></h3>
-<em><bean:write name="teacherServiceDistribution" property="name"/></em>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:write name="teacherServiceDistribution" property="name"/></h2>
 
 
-<h4>
-	<table class='vtsbc'>
-		<tr>
-			<td class="courses">
-				<bean:message key="label.teacherServiceDistribution.executionYear"/>
-			</td>
-			<td align="center">
-				<bean:write name="teacherServiceDistribution" property="executionYear.year" />
-			</td>
-		</tr>
-		<tr>
-			<td class="courses">
-				<bean:message key="label.teacherServiceDistribution.semesters"/>
-			</td>
-			<td align="center">
-				<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-					<bean:write name="executionPeriod" property="semester"/>&nbsp;
-					<bean:message key="label.teacherServiceDistribution.semester"/>&nbsp;&nbsp;
-				</logic:iterate>
-			</td>
-		</tr>
-		<tr>
-			<td class="courses">
-				<bean:message key="label.teacherServiceDistribution.currentPhase"/>
-				&nbsp;&nbsp;&nbsp;
-			</td>
-			<td align="center">
-				<bean:write name="teacherServiceDistribution" property="currentValuationPhase.name"/>
-			</td>
-		</tr>
-	</table>
-</h4>
+<table class='tstyle1 thlight thright'>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.executionYear"/>:
+		</th>
+		<td>
+			<bean:write name="teacherServiceDistribution" property="executionYear.year" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.semesters"/>:
+		</th>
+		<td>
+			<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
+				<bean:write name="executionPeriod" property="semester"/>&nbsp;
+				<bean:message key="label.teacherServiceDistribution.semester"/>&nbsp;&nbsp;
+			</logic:iterate>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.currentPhase"/>:
+		</th>
+		<td>
+			<bean:write name="teacherServiceDistribution" property="currentValuationPhase.name"/>
+		</td>
+	</tr>
+</table>
+
 
 <ul>
 <logic:equal name="permissionsGrantPermission" value="true">		

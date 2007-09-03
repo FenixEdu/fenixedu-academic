@@ -6,29 +6,34 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>�<bean:message key="label.common.courseSemester"/>--%>
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.createAutomaticCourseValuations"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.professorshipValuationService"/></h2>
+
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+		<%--	(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>�<bean:message key="label.common.courseSemester"/>--%>
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.createAutomaticCourseValuations"/>
+	</em>
+</p>
 
 <logic:equal name="valuationPhasesManagementForm" property="dataManagementOption" value="2">
-	<br/>
-	<h4>
-		<img src="<%= request.getContextPath() %>/images/success01.gif"/>
-		&nbsp;<b><bean:message key="label.teacherService.successfulValuation"/></b>
-	</h4>
-	<html:link page='<%= "/teacherServiceDistributionValuation.do?method=prepareForTeacherServiceDistributionValuation&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:message key="link.teacherServiceDistribution.goToteacherServiceDistributionVisualization"/>
-	</html:link>
+	<p>
+		<span class="success0"><bean:message key="label.teacherService.successfulValuation"/></span>
+	</p>
+	<p>
+		<html:link page='<%= "/teacherServiceDistributionValuation.do?method=prepareForTeacherServiceDistributionValuation&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:message key="link.teacherServiceDistribution.goToteacherServiceDistributionVisualization"/>
+		</html:link>
+	</p>
 </logic:equal>
 
 <logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="2">
@@ -36,18 +41,18 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareToChooseValuationPhase"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-	
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="0" onclick="this.form.method.value='showValuationPhaseDataManagementOptions'; this.form.submit();"> 
-		<bean:message key="label.teacherServiceDistribution.copyLastYearRealData"/> <%= "(" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getPreviousExecutionYear().getYear() + ")" %>
-	</html:radio>
-	<br/>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();"> <bean:message key="label.teacherServiceDistribution.copyPreviousValuationPhaseData"/> </html:radio>
-	<br/>
-	<br/>
-	<br/>
+
+	<p>	
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="0" onclick="this.form.method.value='showValuationPhaseDataManagementOptions'; this.form.submit();"> 
+			<bean:message key="label.teacherServiceDistribution.copyLastYearRealData"/> <%= "(" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getPreviousExecutionYear().getYear() + ")" %>
+		</html:radio>
+	</p>
+	<p>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();"> <bean:message key="label.teacherServiceDistribution.copyPreviousValuationPhaseData"/> </html:radio>
+	</p>
 	
 	<logic:equal name="valuationPhasesManagementForm" property="dataManagementOption" value="1">
-		<table class='vtsbc'>
+		<table class='tstyle5 thlight'>
 		<tr>
 			<th colspan="2" align="center">
 				<bean:write name="teacherServiceDistribution" property="department.realName"/>
@@ -55,16 +60,14 @@
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="label.teacherServiceDistribution.executionYear"/>:</b>
-				&nbsp;&nbsp;
+				<bean:message key="label.teacherServiceDistribution.executionYear"/>:
 				<html:select property="executionYear" onchange="this.form.method.value='resetSelectedTeacherServiceDistribution'; this.form.submit();">
 					<html:option value="-1">&nbsp;</html:option>
 					<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
 				</html:select>
 			</td>
 			<td>
-				<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
-				&nbsp;&nbsp;
+				<bean:message key="label.teacherServiceDistribution.semester"/>:
 				<html:select property="executionPeriod" onchange="this.form.method.value='resetSelectedTeacherServiceDistribution'; this.form.submit();">
 					<html:option value="-1">&nbsp;</html:option>
 					<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
@@ -72,21 +75,25 @@
 			</td>
 		</tr>
 		</table>
-		<br/>
-		<br/>
 		
 		<logic:empty name="teacherServiceDistributionList">
-			<span class="error">
-				<b><bean:message key="label.teacherServiceDistribution.nonAvailableTeacherServiceDistributions"/></b>
-			</span>
+			<p>
+				<span class="error0">
+					<bean:message key="label.teacherServiceDistribution.nonAvailableTeacherServiceDistributions"/>
+				</span>
+			</p>
 		</logic:empty>
+		
 		<logic:notEmpty name="teacherServiceDistributionList">
-			<b><bean:message key="label.teacherServiceDistribution.availableTeacherServiceDistributions"/>:</b>
-			<br/>
+
+			<p class="mbottom05">
+				<b><bean:message key="label.teacherServiceDistribution.availableTeacherServiceDistributions"/>:</b>
+			</p>
 					
-			<table class='vtsbc'>
+			<table class='tstyle4 mtop05'>
 				<tr>
-					<th/>
+					<th>
+					</th>
 					<th>
 						<bean:message key="label.teacherServiceDistribution.name"/>
 					</th>
@@ -103,13 +110,13 @@
 						<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal" />
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTeacherServiceDistribution" property="selectedTeacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>" onchange="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();" />
 					</td>
-					<td class="courses" align="left" width="200">
+					<td>
 						<bean:write name="teacherServiceDistribution" property="name"/>
 					</td>
-					<td class="courses" align="center">
+					<td>
 						<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
 					</td>
-					<td class="courses" align="center">
+					<td>
 						<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
 							<bean:write name="executionPeriod" property="semester"/>�&nbsp;
 						</logic:iterate>
@@ -168,18 +175,19 @@
 	</logic:equal>
 	
 	<logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="1">
-		<br/><br/>
-		<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.page.value=0; this.form.submit();">
-			<bean:message key="label.teacherServiceDistribution.valuate"/>
-		</html:button>
-		<br/><br/>
+		<p>
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.page.value=0; this.form.submit();">
+				<bean:message key="label.teacherServiceDistribution.valuate"/>
+			</html:button>
+		</p>
 	</logic:notEqual>
 	</html:form>
 </logic:notEqual>
 
-<br/><br/>
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
+<p>
+	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+		<bean:message key="link.back"/>
+	</html:link>
+</p>
 
 

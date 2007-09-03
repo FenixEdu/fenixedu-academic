@@ -11,18 +11,23 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.courseValuationService"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.courseValuationService"/></h2>
+
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.courseValuationService"/>
+	</em>
+</p>
 
 <html:form action="/courseValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
@@ -31,68 +36,85 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseValuationViewLink" property="courseValuationViewLink"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
-<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGrouping'; this.form.submit();">
-	<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
-</html:select>
 
-<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
-<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
-	<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
-</html:select>
-<br/>
-<br/>
+<table class="tstyle5 thlight thright mbottom0">
+<tr>
+	<th style="width: 100px;">
+		<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
+	</th>
+	<td style="width: 600px;">
+		<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGrouping'; this.form.submit();">
+			<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
+		</html:select>
+	</td>
+</tr>
+
+<tr>
+	<th>
+		<bean:message key="label.teacherServiceDistribution.semester"/>:
+	</th>
+	<td>
+		<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
+			<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+		</html:select>
+	</td>
+</tr>
+</table>
 
 <logic:notPresent name="notAvailableValuationCompetenceCourses">
-<b><bean:message key="label.teacherServiceDistribution.competenceCourse"/>:</b>
-<br/>
-<html:select property="valuationCompetenceCourse" onchange="this.form.method.value='loadValuationCompetenceCourse'; this.form.submit();">
-	<html:options collection="valuationCompetenceCourseList" property="idInternal" labelProperty="name"/>
-</html:select>							
-<br/>
-<br/>
-
-<b><bean:message key="label.teacherServiceDistribution.valuate"/>:</b>
-<br/>
-<table class='vtsbc'>
-	<tr class='acenter'>
+<table class="tstyle5 thlight thright gluetop mtop0">
+	<tr>
+		<th style="width: 100px;"><bean:message key="label.teacherServiceDistribution.competenceCourse"/>:</th>
+		<td style="width: 600px;">
+			<html:select property="valuationCompetenceCourse" onchange="this.form.method.value='loadValuationCompetenceCourse'; this.form.submit();">
+				<html:options collection="valuationCompetenceCourseList" property="idInternal" labelProperty="name"/>
+			</html:select>							
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.valuate"/>:
+		</th>
 		<td>
 			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.courseValuationType" property="courseValuationType" value="<%= CourseValuationType.COMPETENCE_COURSE_VALUATION.toString() %>" onclick="this.form.method.value='setCourseValuationType'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.competenceCourseValuationType"/></html:radio>
-		</td>
-		<td>
 			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.courseValuationType" property="courseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION.toString() %>" onclick="this.form.method.value='setCourseValuationType'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.curricularCourseValuationType"/></html:radio>
-		</td>
-		<td>
 			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.courseValuationType" property="courseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>" onclick="this.form.method.value='setCourseValuationType'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.curricularCourseValuationGroupType"/></html:radio>
 		</td>
 	</tr>
 </table>
-<br/>
+
+
+
 
 <logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION.toString() %>">
-<b><bean:message key="label.teacherServiceDistribution.curricularCourse"/>:</b>
-<br/>
-<html:select property="valuationCurricularCourse" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();">
-	<html:options collection="valuationCurricularCourseList" property="idInternal" labelProperty="degreeCurricularPlan.degree.name"/>
-</html:select>							
-<br/>
-<br/>
+<p><bean:message key="label.teacherServiceDistribution.curricularCourse"/>:</p>
+<p>
+	<html:select property="valuationCurricularCourse" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();">
+		<html:options collection="valuationCurricularCourseList" property="idInternal" labelProperty="degreeCurricularPlan.degree.name"/>
+	</html:select>
+</p>
 </logic:equal>
 
 <logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>">
+
 <logic:notEmpty name="curricularCourseValuationGroupList">
-	<b><bean:message key="label.teacherServiceDistribution.curricularCourseValuationGroup"/>:</b>
-	<br/>
-	<html:select property="curricularCourseValuationGroup" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();">
-		<html:options collection="curricularCourseValuationGroupList" property="idInternal" labelProperty="groupName"/>
-	</html:select>
-	<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='deleteCurricularCourseValuationGroup'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.deleteCurricularCourseValuationGroup"/></html:button>
+	<p><bean:message key="label.teacherServiceDistribution.curricularCourseValuationGroup"/>:</p>
+	<p>
+		<html:select property="curricularCourseValuationGroup" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();">
+			<html:options collection="curricularCourseValuationGroupList" property="idInternal" labelProperty="groupName"/>
+		</html:select>
+	</p>
+	<p>
+		<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='deleteCurricularCourseValuationGroup'; this.form.submit();"><bean:message key="label.teacherServiceDistribution.deleteCurricularCourseValuationGroup"/></html:button>
+	</p>
 </logic:notEmpty>
-<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick='<%= "this.form.method.value='prepareForCurricularCourseValuationGroupCreation'; this.form.submit();" %>'>
-	<bean:message key="label.teacherServiceDistribution.createCourseValuationGroup"/>
-</html:button>
-<br/>
-<br/>
+
+<p>
+	<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick='<%= "this.form.method.value='prepareForCurricularCourseValuationGroupCreation'; this.form.submit();" %>'>
+		<bean:message key="label.teacherServiceDistribution.createCourseValuationGroup"/>
+	</html:button>
+</p>
+
 </logic:equal>
 
 
@@ -104,12 +126,14 @@
 <logic:notEqual name="selectedCourseValuationType" value="<%= CourseValuationType.NOT_DETERMINED.toString() %>">
 <logic:notPresent name="courseValuationNotSelected">
 
-<bean:message key="label.teacherServiceDistribution.supressRedundantHoursTypes"/>:
-<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.suppressRedundantHoursTypes" property="suppressRedundantHoursTypes" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();"/>
-<br/>
+<p>
+	<bean:message key="label.teacherServiceDistribution.supressRedundantHoursTypes"/>:
+	<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.suppressRedundantHoursTypes" property="suppressRedundantHoursTypes" onchange="this.form.method.value='loadCourseValuations'; this.form.submit();"/>
+</p>
 
-<table class='vtsbc'>
-	<tr class='acenter'>
+
+<table class='tstyle4'>
+	<tr>
 		<th>
 		</th>
 		<th>
@@ -129,8 +153,8 @@
 		</th>
 	</tr>
 
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.firstTimeEnrolledStudents"/>
 		</td>
 		<td>
@@ -156,8 +180,8 @@
 	</tr>
 
 	
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.secondTimeEnrolledStudents"/>
 		</td>
 		<td>
@@ -183,8 +207,8 @@
 	</tr>
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.studentsPerTheoreticalShift"/>
 		</td>
 		<td>
@@ -214,14 +238,15 @@
 		</td>
 	</tr>
 </c:if>
+
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift <= 0.0 && courseValuationForm.map.suppressRedundantHoursTypes}">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerTheoreticalShiftType" property="studentsPerTheoreticalShiftType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerTheoreticalShiftManual" property="studentsPerTheoreticalShiftManual" value="0"/>	
 </c:if>
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">		
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.studentsPerPraticalShift"/>
 		</td>
 		<td>
@@ -251,14 +276,15 @@
 		</td>
 	</tr>
 </c:if>
+
 <c:if test="${selectedCourseValuation.praticalHoursPerShift <= 0.0 && courseValuationForm.map.suppressRedundantHoursTypes}">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerPraticalShiftType" property="studentsPerPraticalShiftType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerPraticalShiftManual" property="studentsPerPraticalShiftManual" value="0"/>	
 </c:if>
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.studentsPerTheoPratShift"/>
 		</td>
 		<td>
@@ -287,15 +313,16 @@
 			</html:radio>
 		</td>
 	</tr>
-</c:if>	
+</c:if>
+
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift <= 0.0 && courseValuationForm.map.suppressRedundantHoursTypes}">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerTheoPratShiftType" property="studentsPerTheoPratShiftType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerTheoPratShiftManual" property="studentsPerTheoPratShiftManual" value="0"/>	
 </c:if>
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">				
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.studentsPerLaboratorialShift"/>
 		</td>
 		<td>
@@ -324,6 +351,7 @@
 		</td>
 	</tr>
 </c:if>
+
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift <= 0.0 && courseValuationForm.map.suppressRedundantHoursTypes}">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerLaboratorialShiftType" property="studentsPerLaboratorialShiftType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsPerLaboratorialShiftManual" property="studentsPerLaboratorialShiftManual" value="0"/>	
@@ -331,8 +359,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">	
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTheoShift"/>
 		</td>
 		<td>
@@ -355,6 +383,7 @@
 		</td>
 	</tr>
 </c:if>
+
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift <= 0.0 && courseValuationForm.map.suppressRedundantHoursTypes}">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.weightFirstTimeEnrolledStudentsPerTheoShiftType" property="weightFirstTimeEnrolledStudentsPerTheoShiftType" value="<%= ValuationValueType.MANUAL_VALUE.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.weightFirstTimeEnrolledStudentsPerTheoShiftManual" property="weightFirstTimeEnrolledStudentsPerTheoShiftManual" value="0.0"/>	
@@ -362,8 +391,8 @@
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">			
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerPratShift"/>
 		</td>
 		<td>
@@ -393,8 +422,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">					
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTheoPratShift"/>
 		</td>
 		<td>
@@ -424,8 +453,8 @@
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerLabShift"/>
 		</td>
 		<td>
@@ -455,8 +484,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">			
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTheoShift"/>
 		</td>
 		<td>
@@ -486,8 +515,8 @@
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">						
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerPratShift"/>
 		</td>
 		<td>
@@ -517,8 +546,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTheoPratShift"/>
 		</td>
 		<td>
@@ -548,8 +577,8 @@
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">									
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerLabShift"/>
 		</td>
 		<td>
@@ -579,8 +608,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoreticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">							
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.theoreticalHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="theoreticalHoursPerShift"/>h
 			<bean:message key="label.teacherServiceDistribution.byShift"/>)
@@ -617,8 +646,8 @@
 
 
 <c:if test="${selectedCourseValuation.praticalHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">									
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.praticalHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="praticalHoursPerShift"/>h
 			<bean:message key="label.teacherServiceDistribution.byShift"/>)
@@ -654,8 +683,8 @@
 
 
 <c:if test="${selectedCourseValuation.theoPratHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">				
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.theoPratHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="theoPratHoursPerShift"/>h
 			<bean:message key="label.teacherServiceDistribution.byShift"/>)
@@ -691,8 +720,8 @@
 
 
 <c:if test="${selectedCourseValuation.laboratorialHoursPerShift > 0.0 || !courseValuationForm.map.suppressRedundantHoursTypes}">	
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.laboratorialHours"/>
 			&nbsp;(<bean:write name="selectedCourseValuation" property="laboratorialHoursPerShift"/>h
 			<bean:message key="label.teacherServiceDistribution.byShift"/>)
@@ -727,8 +756,8 @@
 </c:if>
 
 <logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>">
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.usingCurricularCourseValuations"/>
 		</td>
 		<td colspan=4>
@@ -738,8 +767,8 @@
 		</td>
 	</tr>
 	
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.associatedCurricularCourse"/>
 		</td>
 		<td colspan=5>
@@ -759,8 +788,8 @@
 		</td>					
 	</tr>
 	<logic:notEmpty name="availableCurricularCourseValuationsToGroup">
-	<tr class='tdleft'>
-		<td class='courses'>
+	<tr>
+		<td>
 			<bean:message key="label.teacherServiceDistribution.availableCurricularCoursesToAssociate"/>
 		</td>
 		<td colspan=5>

@@ -8,20 +8,25 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.manageRootGrouping"/></h2>
 
-<br/>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
+	</em>
+</p>
+
+
 
 <html:form action="/valuationTeachersGroup">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
@@ -51,17 +56,18 @@
 		</html:link>
 	</li>
 </ul>
-<br/>
-<br/>
 
-<b><bean:message key="label.teacherServiceDistribution.availableTeachersAndCourses"/>:</b>
-<br/>
+
+<p class="mtop15 mbottom05">
+	<b><bean:message key="label.teacherServiceDistribution.availableTeachersAndCourses"/>:</b>
+</p>
+
 
 <table style="width: 60em;">
 <tr valign="top">
 <td width="50%">
 
-<table class='vtsbc' width="100%">
+<table class='tstyle4 mtop05' width="100%">
 	<tr>
 		<th colspan="4">
 			<bean:message key="label.teacherServiceDistribution.valuationTeacher"/>
@@ -93,7 +99,7 @@
 
 </td>
 <td width="50%">
-<table class='vtsbc' width="100%">
+<table class='tstyle4 mtop05' width="100%">
 	<tr>
 		<th colspan="3">
 			<b><bean:message key="label.teacherServiceDistribution.competenceCourse"/></b>
@@ -122,6 +128,3 @@
 </table>
 </html:form>
 
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>

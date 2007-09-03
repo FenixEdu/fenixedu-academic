@@ -26,32 +26,33 @@ table = document.getElementById(t);
 }
 </script>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/></h2>
 
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/>
-</h3>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/>
+	</em>
+</p>
 
 <html:form action="/valuationGroupingSupport">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-<br/>
-<br/>
-
-<table class="search">
+<table class="tstyle5 thlight mtop05">
 	<tr>
 		<td>
-			&nbsp;<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
+			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
 		</td>
 		<td>
 			<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGroupings'; this.form.page.value=0; this.form.submit();">
@@ -73,27 +74,26 @@ table = document.getElementById(t);
 </table>
 
 <logic:present name="parentGroupingName">
-<br/>
-<br/>
 
-	<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b><bean:write name="parentGroupingName"/></b>
+	<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b class="highlight1"><bean:write name="parentGroupingName"/></b>
 
-	<table class="search">
+	<table class="tstyle5 thlight">
 		<tr>
 			<td>
-				<b><bean:message key="label.teacherServiceDistribution.valuationTeacher"/></b>
+				<bean:message key="label.teacherServiceDistribution.valuationTeacher"/>:
 			</td>
 			<logic:empty name="valuationTeacherList">
 			<td align="center">
 				<bean:message key="label.teacherServiceDistribution.groupingTeachersAlreadyIncluded"/>
+			</td>
 			</logic:empty>
 			<logic:notEmpty name="valuationTeacherList">
 			<td>
 				<html:select property="valuationTeacher">
 					<html:options collection="valuationTeacherList" property="idInternal" labelProperty="name"/>
 				</html:select>
-			</logic:notEmpty>
 			</td>
+			</logic:notEmpty>
 			<td>
 				<logic:notEmpty name="valuationTeacherList">
 					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateValuationTeacher'; this.form.submit()">
@@ -111,7 +111,7 @@ table = document.getElementById(t);
 		</tr>
 		<tr>
 			<td>
-				<b><bean:message key="label.teacherServiceDistribution.competenceCourse"/></b>
+				<bean:message key="label.teacherServiceDistribution.competenceCourse"/>:
 			</td>
 			<logic:empty name="valuationCompetenceCourseList">
 			<td align="center">
@@ -143,18 +143,16 @@ table = document.getElementById(t);
 </logic:present>
 
 
-<br>
-<br>
 
 <img src="<%= request.getContextPath() %>/images/toggle_plus10.gif" id="signalImg" onclick="changeSignal('signalImg','optionsTable'); return false;" /> 
 &nbsp;<b><bean:message key="label.teacherServiceDistribution.operations"/></b>
 <br>
 
 
-<table class="search" id="optionsTable" style="display: none;">
+<table class="tstyle5 thlight" id="optionsTable" style="display: none;">
 	<tr>
 		<td>		
-			&nbsp;<b><bean:message key="label.teacherServiceDistribution.changeName"/></b>
+			<bean:message key="label.teacherServiceDistribution.changeName"/>:
 		</td>
 
 </html:form>
@@ -177,8 +175,8 @@ table = document.getElementById(t);
 				<bean:message key="link.change"/>
 			</html:button>
 		</td>
-		<td>
-			<span class="error">
+		<td class="tdclear tderror1">
+			<span>
 				<fr:message for="name-validated"/>
 				<fr:hasMessages for="name-validated">
 					<script language="JavaScript" type="text/javascript">
@@ -200,7 +198,7 @@ table = document.getElementById(t);
 	</tr>
 	<tr>
 		<td>		
-			&nbsp;<b><bean:message key="label.teacherServiceDistribution.createNewGrouping"/></b>
+			<bean:message key="label.teacherServiceDistribution.createNewGrouping"/>:
 		</td>
 		<td>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" maxlength="240" size="44"/>
@@ -215,7 +213,7 @@ table = document.getElementById(t);
 		<logic:notEmpty name="mergeGroupingOptionEntryList">
 		<tr>
 			<td>
-				&nbsp;<b><bean:message key="label.teacherServiceDistribution.mergeValuationGroupings"/></b>
+				<bean:message key="label.teacherServiceDistribution.mergeValuationGroupings"/>
 			</td>
 			<td>
 				<html:select property="otherGrouping">
@@ -232,26 +230,27 @@ table = document.getElementById(t);
 	</logic:present>
 </table>
 
-<br/>
-<span class="error">
-	<html:errors property="name"/>
-	<logic:messagesPresent property="name">
-		<script language="JavaScript" type="text/javascript">
-			changeSignal('signalImg','optionsTable');
-		</script>
-	</logic:messagesPresent>
-</span>
-<br/>
-<br/>
+
+<p>
+	<span class="error0">
+		<html:errors property="name"/>
+		<logic:messagesPresent property="name">
+			<script language="JavaScript" type="text/javascript">
+				changeSignal('signalImg','optionsTable');
+			</script>
+		</logic:messagesPresent>
+	</span>
+</p>
+
 
 <table style="width: 60em;">
 <tr valign="top">
 <td width="50%">
 
-<table class='vtsbc' width="100%">
+<table class='tstyle4' width="100%">
 	<tr>
 		<th>
-			<b><bean:message key="label.teacherServiceDistribution.associatedValuationTeacher"/></b>
+			<bean:message key="label.teacherServiceDistribution.associatedValuationTeacher"/>
 		</th>
 		<logic:present name="parentGroupingName">
 		<th>
@@ -260,9 +259,10 @@ table = document.getElementById(t);
 	</tr>
 <logic:empty name="valuationTeacherListBelongToGrouping">
 	<tr>
-		<td colspan="2">
-			<bean:message key="label.teacherServiceDistribution.notExistsValuationTeachers"/>
+		<td>
+			<em><bean:message key="label.teacherServiceDistribution.notExistsValuationTeachers"/></em>
 		</td>
+		<td></td>
 	</tr>	
 </logic:empty>		
 <logic:iterate name="valuationTeacherListBelongToGrouping" id="valuationTeacher">
@@ -272,8 +272,8 @@ table = document.getElementById(t);
 			<bean:write name="valuationTeacher" property="name"/>
 		</td>
 		<logic:present name="parentGroupingName">
-			<td>
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" styleClass="btn" 
+			<td class="acenter">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"  
 				onclick='<%= "this.form.valuationTeacherDissociation.value=" + valuationTeacherId + ";this.form.method.value='dissociateValuationTeacher'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
@@ -287,10 +287,11 @@ table = document.getElementById(t);
 </td>
 
 <td width="50%">
-<table class='vtsbc' width="100%">
+
+<table class='tstyle4' width="100%">
 	<tr>
 		<th>
-			<b><bean:message key="label.teacherServiceDistribution.associatedCompetenceCourse"/></b>
+			<bean:message key="label.teacherServiceDistribution.associatedCompetenceCourse"/>
 		</th>
 		<logic:present name="parentGroupingName">
 		<th>
@@ -299,9 +300,10 @@ table = document.getElementById(t);
 	</tr>
 <logic:empty name="valuationCompetenceCourseListBelongToGrouping">
 	<tr>
-		<td colspan="2">
-			<bean:message key="label.teacherServiceDistribution.notExistsCompetenceCourses"/>
+		<td>
+			<em><bean:message key="label.teacherServiceDistribution.notExistsCompetenceCourses"/></em>
 		</td>
+		<td></td>
 	</tr>	
 </logic:empty>
 <logic:iterate name="valuationCompetenceCourseListBelongToGrouping" id="valuationCompetenceCourse">
@@ -311,8 +313,8 @@ table = document.getElementById(t);
 			<bean:write name="valuationCompetenceCourse" property="name"/>
 		</td>
 		<logic:present name="parentGroupingName">
-			<td>
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" styleClass="btn" onclick='<%= "this.form.valuationCompetenceCourseDissociation.value=" + valuationCompetenceCourseId + ";this.form.method.value='dissociateValuationCompetenceCourse'; this.form.submit()" %>'>
+			<td class="acenter">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick='<%= "this.form.valuationCompetenceCourseDissociation.value=" + valuationCompetenceCourseId + ";this.form.method.value='dissociateValuationCompetenceCourse'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
 			</td>

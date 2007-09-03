@@ -6,44 +6,50 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-		<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
-	</html:link>
-	>
-	<bean:message key="label.teacherServiceDistribution.addTeacher"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="label.teacherServiceDistribution.addTeacher"/></h2>
 
-<br/>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
+		</html:link>
+		>
+		<bean:message key="label.teacherServiceDistribution.addTeacher"/>
+	</em>
+</p>
+
 
 <html:form action="/valuationTeachersGroup">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDepartmentTeachers"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacher" property="teacher"/>
 
+<p>
 	<b><bean:message key="label.teacherServiceDistribution.department"/>:</b>
 	<html:select property="department" title="Departamento" onchange="this.form.submit();">
 		<html:options collection="departmentList" property="idInternal" labelProperty="realName"/>
 	</html:select>
+</p>
 
-<br/>
-<br/>
-<br/>
 
 <logic:present name="teachersList">
-	<b><bean:message key="label.teacherServiceDistribution.availableTeachers"/>:</b>
-	<br/>
 	
-	<table class='vtsbc'>
+<p class="mtop2 mbottom05">
+	<b><bean:message key="label.teacherServiceDistribution.availableTeachers"/>:</b>
+</p>
+
+	
+<table class='tstyle4 mtop05'>
 	<tr>
 		<th>
 			<b><bean:message key="label.teacherService.teacher.name"/></b>
@@ -69,16 +75,26 @@
     		</td>
     	</tr>
 	</logic:iterate>
-	</table>
+</table>
+
 </logic:present>
+
+
 <logic:notPresent name="teachersList">
-	<span class="error">
-		<bean:message key="label.teacherServiceDistribution.teachersAlreadyIncluded"/>
-	</span>
+	<p>
+		<em>
+			<bean:message key="label.teacherServiceDistribution.teachersAlreadyIncluded"/>
+		</em>
+	</p>
 </logic:notPresent>
+
+
 </html:form>
 
-<br/>
-<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
+<ul>
+	<li>
+		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+</ul>

@@ -7,48 +7,45 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
 
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.permissionSupportService"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.permissionSupportService"/></h2>
 
-<ul>
-<li>
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
-</li>
-</ul>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.permissionSupportService"/>
+	</em>
+</p>
+
 
 <html:form action="/valuationGroupingSupport">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
-<br/>
 
 
-<b> <bean:message key="label.teacherService.viewByValuationGrouping"/> </b> | 
-<html:link href="javascript:document.forms[0].viewType.value=1; document.forms[0].method.value='loadValuationGroupingsForPermissionServices'; document.forms[0].submit();">
-	<bean:message key="label.teacherService.viewByPerson"/>
-</html:link> 
-<br/>
-<br/>
-<br/>
+<p>
+	<b><bean:message key="label.teacherService.viewByValuationGrouping"/> </b> | 
+	<html:link href="javascript:document.forms[0].viewType.value=1; document.forms[0].method.value='loadValuationGroupingsForPermissionServices'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.viewByPerson"/>
+	</html:link> 
+</p>
 
-<table class="search">
+
+<table class="tstyle5 thlight thmiddle">
 	<tr>
-		<td>
-			<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/></b>
-		</td>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>
+		</th>
 		<td>
 			<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGroupingsForPermissionServices'; this.form.submit();">
 				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
@@ -56,58 +53,68 @@
 		</td>
 	</tr>
 </table>
-<br/>
-<br/>
+
 
 <logic:present name="parentGroupingName">
-	<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b><bean:write name="parentGroupingName"/></b>
+	<p>
+		<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b><bean:write name="parentGroupingName"/></b>
+	</p>
 </logic:present>
-<table class="search">
+
+<table class="tstyle5 thlight thmiddle">
 	<tr>
-		<td>
-			<b><bean:message key="label.teacherServiceDistribution.person"/>:</b>
-		</td>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.person"/>:
+		</th>
 		<td>
 			<html:select property="person" onchange="this.form.method.value='loadValuationGroupingsForPermissionServices'; this.form.submit();">
 				<html:options collection="departmentPersonList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
+	</tr>
+</table>
+
+
+<p><b></b></p>
+
+<table class="tstyle5 thlight thmiddle">
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.permissions"/>:
+		</th>
 		<td>
-			
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersValuationPermission" property="coursesAndTeachersValuationPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/><br/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersManagementPermission" property="coursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/>
 		</td>
 	</tr>
 </table>
-<br/>
 
-<b> <bean:message key="label.teacherServiceDistribution.permissions"/>:</b>
-<ul>
-	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersValuationPermission" property="coursesAndTeachersValuationPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/> </li>
-	<li> <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersManagementPermission" property="coursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/> </li>
-</ul>
-<br/>
-<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='addCoursesAndTeachersValuationPermissionToPerson'; this.form.submit()"><bean:message key="button.update"/></html:button>
 
-<br/>
-<br/>
-<br/>
+
+<p>
+	<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='addCoursesAndTeachersValuationPermissionToPerson'; this.form.submit()"><bean:message key="button.update"/></html:button>
+</p>
+
 
 <logic:empty name="personPermissionsDTOEntryListForValuationGrouping">
-	<span class="error">
-		<b><bean:message key="label.teacherServiceDistribution.noPersonsWithValidPermissionsInGrouping"/></b>
-	</span>
+	<p class="mtop15">
+		<em>
+			<bean:message key="label.teacherServiceDistribution.noPersonsWithValidPermissionsInGrouping"/>
+		</em>
+	</p>
 </logic:empty>
 
 <logic:notEmpty name="personPermissionsDTOEntryListForValuationGrouping">
-	<table class='vtsbc'>
+	<table class='tstyle4'>
 		<tr>
 			<th>
-				<b><bean:message key="label.teacherServiceDistribution.person"/></b>
+				<bean:message key="label.teacherServiceDistribution.person"/>
 			</th>
 			<th>
-				<b><bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/></b>
+				<bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/>
 			</th>
 			<th>
-				<b><bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/></b>
+				<bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/>
 			</th>
 		</tr>
 	<logic:notPresent name="notCoursesAndTeachersValuationManagers">
@@ -116,20 +123,20 @@
 			<td class="courses">
 				<bean:write name="personPermissionsDTOEntry" property="person.name"/>
 			</td>
-			<td>
+			<td class="acenter">
 				<logic:equal name="personPermissionsDTOEntry" property="coursesAndTeachersValuationPermission" value="true">
 					<bean:message key="label.yes"/>
 				</logic:equal>
 				<logic:notEqual name="personPermissionsDTOEntry" property="coursesAndTeachersValuationPermission" value="true">
-					<bean:message key="label.no"/>
+					<bean:message key="label.empty"/>
 				</logic:notEqual>
 			</td>			
-			<td>
+			<td class="acenter">
 				<logic:equal name="personPermissionsDTOEntry" property="coursesAndTeachersManagementPermission" value="true">
 					<bean:message key="label.yes"/>
 				</logic:equal>
 				<logic:notEqual name="personPermissionsDTOEntry" property="coursesAndTeachersManagementPermission" value="true">
-					<bean:message key="label.no"/>
+					<bean:message key="label.empty"/>
 				</logic:notEqual>
 			</td>			
 		</tr>
@@ -139,6 +146,4 @@
 </logic:notEmpty>
 </html:form>
 
-<br/>
-<br/>
 

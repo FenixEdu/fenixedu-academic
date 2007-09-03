@@ -5,13 +5,19 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/>
-</h3>
+<em>
+	<bean:message key="link.teacherServiceDistribution"/>
+</em>
+
+<h2><bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/></h2>
+
+<ul>
+	<li>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+</ul>
 
 <ul>
 	<li>
@@ -25,8 +31,4 @@
 	  	</html:link>
 	</li>
 </ul>
-<br/>
-<br/>
-<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-	<bean:message key="link.back"/>
-</html:link>
+

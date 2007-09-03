@@ -8,26 +8,37 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-		<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
-	</html:link>
-	>
-	<bean:message key="label.teacherServiceDistribution.createCourse"/>
-</h3>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="label.teacherServiceDistribution.createCourse"/></h2>
+
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
+		</html:link>
+		>
+		<bean:message key="label.teacherServiceDistribution.createCourse"/>
+	</em>
+</p>
+
+<ul class="mtop05 mbottom15">
+	<li>
+		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+</ul>
 
 
-<br/>
-<br/>
 <html:form action="/valuationCoursesGroup">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createValuationCompetenceCourse"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
@@ -35,19 +46,16 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
 
-<table class="vtsbc">
+<p class="mbottom05"><b><bean:message key="label.teacherServiceDistribution.createNewCourse"/>:</b></p>
+
+<table class="tstyle5 thlight thright thmiddle mtop05">
 	<tr>
-		<th colspan="2">
-			<b><bean:message key="label.teacherServiceDistribution.createNewCourse"/></b>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.name"/>:
 		</th>
-	</tr>
-	<tr>
-		<td align="left">
-			<b><bean:message key="label.teacherServiceDistribution.name"/>:</b> 
-		</td>
 		<td>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="24" maxlength="240"/> 
-			&nbsp;&nbsp;&nbsp;
+			&nbsp;
 			<html:submit>
 				<bean:message key="label.teacherServiceDistribution.create"/>
 			</html:submit>
@@ -63,16 +71,14 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCurricularCourse" property="valuationCurricularCourse"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-<br/>
-<span class="error"><html:errors property="name"/></span>
-<br/>
+<em><html:errors property="name"/></em>
 
 
-<table class="search">
+<table class="tstyle5 thlight thright thmiddle mtop05">
 	<tr>
-		<td>
-			<b><bean:message key="label.teacherServiceDistribution.editCourse"/>:</b>
-		</td>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.editCourse"/>:
+		</th>
 		<td>
 			<html:select property="valuationCourse">
 				<html:option value="0">&nbsp;</html:option>
@@ -82,10 +88,9 @@
 			<bean:message key="button.submit"/>
 			</html:submit>
 		</td>
-		<td>
-		</td>
 	<tr>
 </table>
+
 </html:form>
 
  
@@ -97,42 +102,42 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCurricularCourse" property="valuationCurricularCourse"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="3"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
-<br/>
-<br/>
-<br/>
-<br/>
 	
 	<bean:define id="valuationCourse" name="valuationTeachersGroupForm" property="valuationCourse"/>
 	
 	<logic:notEqual name="valuationTeachersGroupForm" property="valuationCourse" value="0">		
-		<b><bean:message key="label.teacherServiceDistribution.associatedCurricularPlans"/>:</b>
-		<br/>
+
+		<p class="mtop1">
+			<b><bean:message key="label.teacherServiceDistribution.associatedCurricularPlans"/>:</b>
+		</p>
+
+
 		<logic:present name="curricularCoursesList">
-			<table class="tstyle1">
+			<table class="tstyle1 thlight tdcenter mvert05">
 				<tr>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.acronym"/></b>
+						<bean:message key="label.teacherServiceDistribution.acronym"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.curricularPlan"/></b>
+						<bean:message key="label.teacherServiceDistribution.curricularPlan"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.executionPEriod"/></b>
+						<bean:message key="label.teacherServiceDistribution.executionPEriod"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.curricularYears"/></b>
+						<bean:message key="label.teacherServiceDistribution.curricularYears"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.theoreticalHoursShort"/></b>
+						<bean:message key="label.teacherServiceDistribution.theoreticalHoursShort"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.praticalHoursShort"/></b>
+						<bean:message key="label.teacherServiceDistribution.praticalHoursShort"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.theoPratHoursShort"/></b>
+						<bean:message key="label.teacherServiceDistribution.theoPratHoursShort"/>
 					</th>
 					<th>
-						<b><bean:message key="label.teacherServiceDistribution.laboratorialHoursShort"/></b>
+						<bean:message key="label.teacherServiceDistribution.laboratorialHoursShort"/>
 					</th>
 					<th>
 					</th>
@@ -177,37 +182,38 @@
 				</logic:iterate>
 			</table>
 		</logic:present>
+		
 		<logic:notPresent name="curricularCoursesList">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<span class="error">
-				<bean:message key="label.teacherServiceDistribution.notAvailableCurricularPlans"/>
-			</span>
+			<p>
+				<em>
+					<bean:message key="label.teacherServiceDistribution.notAvailableCurricularPlans"/>
+				</em>
+			</p>
 		</logic:notPresent>
 		
-		<br/>
-		<br/>
-		<br/>
-		<br/>
 		
-		<b><bean:message key="label.teacherServiceDistribution.addCurricularPlan"/>:</b>
-		<br/>
+		<p class="mtop15"><b><bean:message key="label.teacherServiceDistribution.addCurricularPlan"/>:</b></p>
+
+		<div>
+			<html:errors />
+		</div>
 	
-		<table class="vtsbc">
+		<table class="tstyle4 thlight">
 			<tr>
 				<th>
-					<b><bean:message key="label.teacherServiceDistribution.acronym"/></b>
+					<bean:message key="label.teacherServiceDistribution.acronym"/>
 				</th>
 				<th>
-					<b><bean:message key="label.teacherServiceDistribution.curricularPlan"/></b>
+					<bean:message key="label.teacherServiceDistribution.curricularPlan"/>
 				</th>
 				<th>
-					<b><bean:message key="label.teacherServiceDistribution.executionPEriod"/></b>
+					<bean:message key="label.teacherServiceDistribution.executionPEriod"/>
 				</th>
 				<th>
-					<b><bean:message key="label.teacherServiceDistribution.curricularYears"/></b>
+					<bean:message key="label.teacherServiceDistribution.curricularYears"/>
 				</th>
 				<th>
-					<b><bean:message key="label.teacherServiceDistribution.hours"/></b>
+					<bean:message key="label.teacherServiceDistribution.hours"/>
 				</th>
 			</tr>
 			<tr>
@@ -230,76 +236,47 @@
 						<html:options collection="executionPeriodsList" property="idInternal" labelProperty="name"/>
 					</html:select> 
 				</td>
-				<td align="center">
-					<table border="0">			
-						<logic:iterate name="curricularYearsList" id="curricularYear">
-							<tr>
-								<td>
-									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularYearsArray" property="curricularYearsArray">
-										<bean:write name="curricularYear" property="idInternal"/>
-									</html:multibox>
-									<b><bean:write name="curricularYear" property="year"/></b>
-								</td>
-							</tr>
-						</logic:iterate>
-					</table>
-				</td>
+				<td class="acenter">
+					<logic:iterate name="curricularYearsList" id="curricularYear">
+						<p class="mvert05">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularYearsArray" property="curricularYearsArray">
+								<bean:write name="curricularYear" property="idInternal"/>
+							</html:multibox>
+							<bean:write name="curricularYear" property="year"/>
+						</p>
+					</logic:iterate>
 				<td>
-					<table border="0">
-						<tr>
-							<td>
-								<b><bean:message key="label.teacherServiceDistribution.theoretical"/></b>
-							</td>
-							<td>
-								<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" property="theoreticalHours" size="2" maxlength="4" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<b><bean:message key="label.teacherServiceDistribution.pratical"/></b>
-							</td>
-							<td>
-								<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" property="praticalHours" size="2" maxlength="4" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<b><bean:message key="label.teacherServiceDistribution.theoPrat"/></b>
-							</td>
-							<td>
-								<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" property="theoPratHours" size="2" maxlength="4" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<b><bean:message key="label.teacherServiceDistribution.laboratorial"/></b>
-							</td>
-							<td>
-								<html:text bundle="HTMLALT_RESOURCES" altKey="text.laboratorialHours" property="laboratorialHours" size="2" maxlength="4" />
-							</td>
-						</tr>
-					</table>
+					<p class="aright">
+						<bean:message key="label.teacherServiceDistribution.theoretical"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" property="theoreticalHours" size="2" maxlength="4" />
+					</p>
+					<p class="aright">
+						<bean:message key="label.teacherServiceDistribution.pratical"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" property="praticalHours" size="2" maxlength="4" />
+					</p>
+					<p class="aright">
+						<bean:message key="label.teacherServiceDistribution.theoPrat"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" property="theoPratHours" size="2" maxlength="4" />
+					</p>
+					<p class="aright">
+						<bean:message key="label.teacherServiceDistribution.laboratorial"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.laboratorialHours" property="laboratorialHours" size="2" maxlength="4" />
+					</p>
 				</td>
 			</tr>
 		</table>
 		
 		<%-- <html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='addValuationCurricularCourse'; this.form.page.value=3; this.form.submit();">
 		--%>
-		<html:submit>
-			<bean:message key="button.add"/>
-		</html:submit>
 		
-		<span class="error"><html:errors /></span>
+		<p>
+			<html:submit>
+				<bean:message key="button.add"/>
+			</html:submit>
+		</p>
 		
 	</logic:notEqual>
 	
 
 </html:form> 
-
-<br/>
-<br/>
-
-<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-	<bean:message key="link.back"/>
-</html:link>
 

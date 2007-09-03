@@ -9,101 +9,114 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.teacherServiceDistributionValuation"/></h2>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal"/>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionValuation"/>
-</h3>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal"/>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionValuation"/>
+	</em>
+</p>
 
 <html:form action="/teacherServiceDistributionValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
-<table class='search'>
-	<tr class='tdleft'>
-		<td>
-			<b><bean:message key="label.teacherServiceDistribution.valuationPhase"/>:</b>
-		</td>
+<table class='tstyle5 thlight thright mtop05'>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.valuationPhase"/>:
+		</th>
 		<td>
 			<html:select property="valuationPhase" onchange="this.form.method.value='loadValuationPhase'; this.form.submit();">
 				<html:options collection="valuationPhaseList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
+	</tr>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.semester"/>:
+		</th>
 		<td>
-			<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
-			&nbsp;
 			<html:select property="executionPeriod" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
 				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>
-	<tr class='tdleft'>
+	<tr>
 		<td>
-			<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
+			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
 		</td>
-		<td colspan="2">
+		<td>
 			<html:select property="valuationGrouping" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
 				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>	
 </table>
-<br/>
 
+<ul>
 <logic:present name="nonValuatedCompetenceCourses">
-	<b>&bull;</b>&nbsp;
-	<html:link href="#noValuationCourses">
-		<bean:message key="label.teacherServiceDistribution.coursesWithoutValuations"/>
-	</html:link>
-	<br/>
+	<li>
+		<html:link href="#noValuationCourses">
+			<bean:message key="label.teacherServiceDistribution.coursesWithoutValuations"/>
+		</html:link>
+	</li>
 </logic:present>
 <logic:notEmpty name="courseValuationDTOEntryList">
-	<b>&bull;</b>&nbsp;
-	<html:link href="javascript:document.forms[0].method.value='exportTeacherServiceDistributionValuationToExcel'; document.forms[0].submit();">
-		<bean:message key="label.teacherService.exportToExcel"/>
-	</html:link>
+	<li>
+		<html:link href="javascript:document.forms[0].method.value='exportTeacherServiceDistributionValuationToExcel'; document.forms[0].submit();">
+			<bean:message key="label.teacherService.exportToExcel"/>
+		</html:link>
+	</li>
 </logic:notEmpty>
-<br/>
-<br/>
-<br/>
+</ul>
 
-<bean:message key="label.teacherService.navigateBy"/>:
-<html:link href="javascript:document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
-	<bean:message key="label.teacherService.navigateByCourse"/>
-</html:link> | 
-<html:link href="javascript:document.forms[0].method.value='changeToViewTeachers'; document.forms[0].submit();">
-	<bean:message key="label.teacherService.navigateByTeacher"/>
-</html:link> | 
-<html:link href="javascript:document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
-	<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
-</html:link> |
-<b> <bean:message key="label.teacherServiceDistribution.viewByCharts"/> </b>
-<br/>
-<br/>
-<b>&bull;</b>&nbsp;<a href="#hoursByGrouping"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></a>
-<br/>
-<b>&bull;</b>&nbsp;<a href="#numberStudentsByGrouping"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/></a>
-<br/>
-<b>&bull;</b>&nbsp;<a href="#hoursByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/> %</a>
-<br/>
-<b>&bull;</b>&nbsp;<a href="#numberStudentsByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/> %</a>
-<br/>
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
-	<bean:message key="link.back"/>
-</html:link>
-<br/>
-<br/>
+<p>
+	<bean:message key="label.teacherService.navigateBy"/>:
+	<html:link href="javascript:document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.navigateByCourse"/>
+	</html:link> | 
+	<html:link href="javascript:document.forms[0].method.value='changeToViewTeachers'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.navigateByTeacher"/>
+	</html:link> | 
+	<html:link href="javascript:document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
+	</html:link> |
+	<b> <bean:message key="label.teacherServiceDistribution.viewByCharts"/> </b>
+</p>
+
+<ul class="mvert15">
+	<li>
+		<a href="#hoursByGrouping"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></a>
+	</li>
+	<li>
+		<a href="#numberStudentsByGrouping"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/></a>
+	</li>
+	<li>
+		<a href="#hoursByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/> %</a>
+	</li>
+	<li>
+		<a href="#numberStudentsByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/> %</a>
+	</li>
+	<li>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
+			<bean:message key="link.back"/>
+		</html:link>
+	</li>
+</ul>
 
 <bean:define id="valuationGroupingId" name="teacherServiceDistributionValuationForm" property="valuationGrouping"/>
 <bean:define id="executionPeriodId" name="teacherServiceDistributionValuationForm" property="executionPeriod"/>

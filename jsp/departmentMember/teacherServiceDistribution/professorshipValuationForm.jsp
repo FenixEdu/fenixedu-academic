@@ -13,19 +13,23 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.professorshipValuationService"/></h2>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.professorshipValuationService"/>
-</h3>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
+			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		</html:link>
+		>
+		<bean:message key="link.teacherServiceDistribution.professorshipValuationService"/>
+	</em>
+</p>
 
 <html:form action="/professorshipValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
@@ -35,65 +39,83 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributionViewAnchor" property="distributionViewAnchor"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-<b> <bean:message key="label.teacherService.navigateByCourse"/> </b> |
+<p>
+<b><bean:message key="label.teacherService.navigateByCourse"/> </b> |
 <html:link href="javascript:document.forms[0].method.value='loadProfessorshipValuations'; document.forms[0].viewType.value=0; document.forms[0].submit()">
 	<bean:message key="label.teacherService.navigateByTeacher"/> 
 </html:link>
-<br/>
-<br/>
+</p>
 
-<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
-<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGrouping'; this.form.submit();">
-	<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
-</html:select>
-
-<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
-<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
-	<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
-</html:select>
-<br/>
-<br/>
-
-<logic:notPresent name="notAvailableCompetenceCourses">
-<table border=0>
-	<tr valign="top">
+<table class="tstyle5 thlight thright thmiddle">
+	<tr>
+		<th style="width: 100px;">
+			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
+		</th>
 		<td>
-			<b><bean:message key="label.teacherServiceDistribution.competenceCourse"/>:</b>
-			<br/>
-			<html:select property="valuationCompetenceCourse" onchange="this.form.method.value='loadValuationCompetenceCourse'; this.form.submit();">
-				<html:options collection="valuationCompetenceCourseList" property="idInternal" labelProperty="name"/>
+			<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGrouping'; this.form.submit();">
+				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
+	</tr>
+	<tr>
+		<th>
+			<bean:message key="label.teacherServiceDistribution.semester"/>:
+		</th>
 		<td>
-			&nbsp;
-		</td>
-		<td>
-			<logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION.toString() %>">
-			<b><bean:message key="label.teacherServiceDistribution.curricularCourse"/>:</b>
-			<br/>
-			<html:select property="valuationCurricularCourse" onchange="this.form.method.value='loadProfessorshipValuations'; this.form.submit();">
-				<html:options collection="valuationCurricularCourseList" property="idInternal" labelProperty="degreeCurricularPlan.degree.name"/>
-			</html:select>							
-			</logic:equal>
-			
-			<logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>">
-			<b><bean:message key="label.teacherServiceDistribution.curricularCourseValuationGroup"/>:</b>
-			<br/>
-			<html:select property="curricularCourseValuationGroup" onchange="this.form.method.value='loadProfessorshipValuations'; this.form.submit();">
-				<html:options collection="curricularCourseValuationGroupList" property="idInternal" labelProperty="groupName"/>
-			</html:select>							
-			</logic:equal>
+			<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
+				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+			</html:select>
 		</td>
 	</tr>
 </table>
 
-<br/>
+<logic:notPresent name="notAvailableCompetenceCourses">
+<table class="tstyle5 thlight thright thmiddle">
+	<tr>
+		<th style="width: 100px;">
+			<bean:message key="label.teacherServiceDistribution.competenceCourse"/>:
+		</th>
+		<td>
+			<html:select property="valuationCompetenceCourse" onchange="this.form.method.value='loadValuationCompetenceCourse'; this.form.submit();">
+				<html:options collection="valuationCompetenceCourseList" property="idInternal" labelProperty="name"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		<logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION.toString() %>">
+			<th>
+				<bean:message key="label.teacherServiceDistribution.curricularCourse"/>:
+			</th>
+			<td>
+				<html:select property="valuationCurricularCourse" onchange="this.form.method.value='loadProfessorshipValuations'; this.form.submit();">
+					<html:options collection="valuationCurricularCourseList" property="idInternal" labelProperty="degreeCurricularPlan.degree.name"/>
+				</html:select>							
+			</td>
+		</logic:equal>
+	</tr>
+	<tr>			
+		<logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.CURRICULAR_COURSE_VALUATION_GROUP.toString() %>">
+			<th>
+				<bean:message key="label.teacherServiceDistribution.curricularCourseValuationGroup"/>:</th>
+			</th>
+			<td>
+				<html:select property="curricularCourseValuationGroup" onchange="this.form.method.value='loadProfessorshipValuations'; this.form.submit();">
+					<html:options collection="curricularCourseValuationGroupList" property="idInternal" labelProperty="groupName"/>
+				</html:select>							
+			</td>
+		</logic:equal>
+	</tr>
+</table>
+
+
 
 <logic:notEqual name="selectedCourseValuationType" value="<%= CourseValuationType.NOT_DETERMINED.toString() %>">
 <logic:notPresent name="courseValuationNotSelected">
 
-<b><bean:message key="label.teacherServiceDistribution.associatedTeachers"/>:</b>
-<br/>
+<p>
+	<b><bean:message key="label.teacherServiceDistribution.associatedTeachers"/>:</b>
+</p>
+
 <table class='vtsbc'>
 	<tr class='center'>
 		<th>
@@ -285,11 +307,13 @@
 		</td>	
 	</tr>	
 </table>
-<br/>
+
 <logic:notPresent name="notAvailableValuationTeachers">
 
-<b><bean:message key="label.teacherServiceDistribution.valuationTeacher"/>:</b>
-<br/>
+<p>
+	<b><bean:message key="label.teacherServiceDistribution.valuationTeacher"/>:</b>
+</p>
+
 <html:select property="valuationTeacher" onchange="this.form.method.value='loadProfessorshipValuations'; this.form.submit();">
 	<html:options collection="valuationTeacherList" property="idInternal" labelProperty="name"/>
 </html:select>
@@ -311,11 +335,12 @@
 	</b>
 </span>
 <bean:message key="label.teacherService.hours"/>
-<br/>
-<br/>
 
-<b><bean:message key="label.teacherServiceDistribution.associateTeacherToCourse"/>:</b>
-<br/>
+<p>
+	<b><bean:message key="label.teacherServiceDistribution.associateTeacherToCourse"/>:</b>
+</p>
+
+
 <table class='vtsbc'>
 	<tr class='center'>
 		<th>
@@ -456,43 +481,48 @@
 </logic:lessEqual>
 </table>
 
-<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='setProfessorshipValuation'; this.form.page.value='1'; this.form.submit();">
-	<bean:message key="label.teacherServiceDistribution.assign"/>
-</html:button>
-<br/>
-<br/>
+<p>
+	<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='setProfessorshipValuation'; this.form.page.value='1'; this.form.submit();">
+		<bean:message key="label.teacherServiceDistribution.assign"/>
+	</html:button>
+</p>
 
-<span class="error">
-	<html:errors/>
-</span>
-<br/>
-
+<p>
+	<span class="error0">
+		<html:errors/>
+	</span>
+</p>
 
 </logic:notPresent>
 
+
 <logic:present name="notAvailableValuationTeachers">
-	<span class="error">
-		<bean:message key="label.teacherServiceDistribution.notExistsValuationTeachers"/>
-	</span>
-	<br/><br/>
+	<p>
+		<span class="error0">
+			<bean:message key="label.teacherServiceDistribution.notExistsValuationTeachers"/>
+		</span>
+	</p>
 </logic:present>
+
 
 </logic:notPresent>
 </logic:notEqual>
 <logic:equal name="selectedCourseValuationType" value="<%= CourseValuationType.NOT_DETERMINED.toString() %>">
-	<span class="error">
-		<b><bean:message key="label.teacherServiceDistribution.nonValuatedCourse"/></b>
-	</span>
-	<br/><br/>
+	<p>
+		<span class="error0">
+			<bean:message key="label.teacherServiceDistribution.nonValuatedCourse"/>
+		</span>
+	</p>
 </logic:equal>
 </logic:notPresent>
-<br/>
+
 
 <logic:present name="notAvailableCompetenceCourses">
-	<span class="error">
-		<bean:message key="label.teacherServiceDistribution.noCompetenceCoursesForExecutionPeriod"/>
-	</span>
-	<br/><br/>
+	<p>
+		<span class="error0">
+			<bean:message key="label.teacherServiceDistribution.noCompetenceCoursesForExecutionPeriod"/>
+		</span>
+	</p>
 </logic:present>
 
 
@@ -503,10 +533,15 @@
 		<bean:message key="link.teacherServiceDistribution.backToteacherServiceDistributionVisualization"/>
 	</html:link>
 </logic:notEqual>
+
 <logic:equal name="professorshipValuationForm" property="distributionViewAnchor" value="0">
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:message key="link.back"/>
-	</html:link>
+	<ul class="mtop15">
+		<li>
+			<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+				<bean:message key="link.back"/>
+			</html:link>
+		</li>
+	</ul>
 </logic:equal>
 
 
