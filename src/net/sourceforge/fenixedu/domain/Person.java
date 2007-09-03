@@ -118,11 +118,6 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public MultiLanguageString getPartyName() {
-	throw new UnsupportedOperationException();
-    }
-    
-    @Override
     public void setPartyName(MultiLanguageString partyName) {
         throw new UnsupportedOperationException();
     }
