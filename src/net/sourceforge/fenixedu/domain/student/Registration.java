@@ -2143,7 +2143,38 @@ public class Registration extends Registration_Base {
 	    }
 
 	    registration.setRegistrationAgreement(getRegistrationAgreement());
+
+	    transferCurrentExecutionPeriodAttends(registration);
 	}
+
+	transferAnyRemainingCurrentExecutionPeriodAttends();
+    }
+
+    private void transferAnyRemainingCurrentExecutionPeriodAttends() {
+        final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
+        for (final Attends attends : getAssociatedAttendsSet()) {
+            final ExecutionCourse executionCourse = attends.getExecutionCourse();
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+                System.out.println("Did not find Target registration for attends!!! Transfering to any.");
+                attends.setAluno(newRegistration);
+            }
+        }
+    }
+
+    private void transferCurrentExecutionPeriodAttends(final Registration newRegistration) {
+        for (final Attends attends : getAssociatedAttendsSet()) {
+            final ExecutionCourse executionCourse = attends.getExecutionCourse();
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+                for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                    if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
+                        attends.setAluno(newRegistration);
+                    }
+                }
+            }
+        }
     }
 
     /**
