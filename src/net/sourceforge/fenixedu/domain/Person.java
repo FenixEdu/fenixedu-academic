@@ -85,7 +85,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -201,7 +200,7 @@ public class Person extends Person_Base {
     final public String getValidatedName() {
 	return StringFormatter.personNameValidator(getName(), LanguageUtils.getLanguage());
     }
-    
+
     public Person() {
 	super();
 	setMaritalStatus(MaritalStatus.UNKNOWN);
@@ -1041,6 +1040,10 @@ public class Person extends Person_Base {
 	removeNationality();
 	removeCountryOfBirth();
 
+	if (hasStudent()) {
+	    getStudent().delete();
+	}
+	
 	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants()
 	.iterator().next().delete())
 	    ;
@@ -1051,7 +1054,7 @@ public class Person extends Person_Base {
 
 	super.delete();
     }
-
+    
     private boolean canBeDeleted() {	    	 
 	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
 	&& !hasAnySentSms() && !hasAnyExportGroupingReceivers() 				
@@ -1065,8 +1068,7 @@ public class Person extends Person_Base {
 	&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
 	&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
 	&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-	&& !hasAnyPersonFunctions() && !hasAnyStudents()
-	&& (!hasHomepage() || getHomepage().canBeDeleted());
+	&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().canBeDeleted());
     }
 
     private boolean hasParking() {
