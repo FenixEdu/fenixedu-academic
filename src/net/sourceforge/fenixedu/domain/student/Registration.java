@@ -2157,7 +2157,7 @@ public class Registration extends Registration_Base {
             final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
                 System.out.println("Did not find Target registration for attends!!! Transfering to any.");
-                attends.setAluno(newRegistration);
+                transferAttends(attends, newRegistration);
             }
         }
     }
@@ -2170,9 +2170,19 @@ public class Registration extends Registration_Base {
                 for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                     final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                     if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
-                        attends.setAluno(newRegistration);
+                        transferAttends(attends, newRegistration);
                     }
                 }
+            }
+        }
+    }
+
+    private void transferAttends(final Attends attends, final Registration newRegistration) {
+        attends.setAluno(newRegistration);
+        for (final Shift shift : getShiftsSet()) {
+            if (shift.getExecutionCourse() == attends.getExecutionCourse()) {
+                removeShifts(shift);
+                newRegistration.addShifts(shift);
             }
         }
     }
