@@ -347,5 +347,13 @@ public class Attends extends Attends_Base {
 	}
 	return true;
     }
+    
+    public void removeShifts() {
+	for (Shift shift : getRegistration().getShiftsSet()) {
+	    if(shift.getExecutionCourse() == getExecutionCourse()) {
+		getRegistration().removeShifts(shift);
+	    }
+	}
+    }
 
 }
