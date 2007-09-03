@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table Party" alterTableParty.sql
+execute "Alter Table CURRICULAR_RULE" alterTableCurricularRuleAddEven.sql
