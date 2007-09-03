@@ -1869,10 +1869,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 		if (curricularYearInteger == null || curricularYear.getYear().intValue() <= curricularYearInteger.intValue()) {
 		    if (!isCurricularCourseApproved(curricularCourse)) {
-			if (LogLevel.INFO) {
-			    System.out.println("curricular course failed: " + curricularCourse.getName() + " "
-				    + curricularCourse.getCode());
-			}
+		        if (LogLevel.INFO) {
+		            System.out.println("curricular course failed: " + curricularCourse.getName() + " "
+		                    + curricularCourse.getCode());
+		        }
 			return false;
 		    }
 		}
@@ -2171,7 +2171,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void assertEnrolmentPreConditions(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
 	    final CurricularRuleLevel level) {
-
+	
 	final Registration registration = this.getRegistration();
 	if (!registration.isActive()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
@@ -2197,8 +2197,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
 
+	    }
 	}
-    }
 
     final public String getName() {
 	return getDegreeCurricularPlan().getName();
@@ -2283,7 +2283,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-		}
+	}
 	    }
 	    return new Credits(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionPeriod);
 	} else {
@@ -2321,7 +2321,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-		}
+	}
 	    }
 	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade,
 		    executionPeriod);
@@ -2363,7 +2363,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
 	return isBoxStructure() ? getRoot().hasDegreeModule(degreeModule) : false;
     }
-
+    
     public boolean hasCurriculumModule(final CurriculumModule curriculumModule) {
 	return isBoxStructure() ? getRoot().hasCurriculumModule(curriculumModule) : false;
     }
@@ -2521,12 +2521,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CycleCurriculumGroup getCycle(final CycleType cycleType) {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
-    }
-
+}
     public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
 	return getCycle(cycleType) != null;
     }
-
+    
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
     }
@@ -2534,9 +2533,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CycleCurriculumGroup getFirstCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE) : null;
     }
-
+    
     public CycleCurriculumGroup getSecondCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
 
+    public boolean isEmpty() {
+        if (hasAnyEnrolments()) return false;
+        if (hasAnyTutorships()) return false;
+//        if (hasRoot()) return false;
+        if (hasEquivalencePlan()) return false;
+        if (hasAnyGratuityEvents()) return false;
+        if (hasAnyNotNeedToEnrollCurricularCourses()) return false;
+        if (hasAnyCreditsInAnySecundaryAreas()) return false;
+        if (hasAnyGratuitySituations()) return false;
+        if (hasMasterDegreeThesis()) return false;
+        if (hasAnyCreditsInScientificAreas()) return false;
+        if (hasAnyCredits()) return false;
+        return true;
+    }
+    
 }
