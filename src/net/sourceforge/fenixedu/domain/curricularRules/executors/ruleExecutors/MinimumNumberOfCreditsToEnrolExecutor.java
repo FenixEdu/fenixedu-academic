@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final MinimumNumberOfCreditsToEnrol rule = (MinimumNumberOfCreditsToEnrol) curricularRule;
@@ -27,7 +27,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	}
 
 	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+	    return createImpossibleRuleResult(rule, totalEctsCredits, sourceDegreeModuleToEvaluate);
 	} else {
 	    return createFalseRuleResult(rule, totalEctsCredits, sourceDegreeModuleToEvaluate);
 	}
@@ -36,6 +36,13 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
     private RuleResult createFalseRuleResult(final MinimumNumberOfCreditsToEnrol rule, final Double ectsCredits,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
 	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		"curricularRules.ruleExecutors.MinimumNumberOfCreditsToEnrolExecutor.student.has.not.minimum.number.of.credits",
+		ectsCredits.toString(), rule.getMinimumCredits().toString(), rule.getDegreeModuleToApplyRule().getName());
+    }
+
+    private RuleResult createImpossibleRuleResult(final MinimumNumberOfCreditsToEnrol rule, final Double ectsCredits,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
 		"curricularRules.ruleExecutors.MinimumNumberOfCreditsToEnrolExecutor.student.has.not.minimum.number.of.credits",
 		ectsCredits.toString(), rule.getMinimumCredits().toString(), rule.getDegreeModuleToApplyRule().getName());
     }
@@ -65,7 +72,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	}
 
 	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+	    return createImpossibleRuleResult(rule, totalEctsCredits, sourceDegreeModuleToEvaluate);
 	} else {
 	    return createFalseRuleResult(rule, totalEctsCredits, sourceDegreeModuleToEvaluate);
 	}

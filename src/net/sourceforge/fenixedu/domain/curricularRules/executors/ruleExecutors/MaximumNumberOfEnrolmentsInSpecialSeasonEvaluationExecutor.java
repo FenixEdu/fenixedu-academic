@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }

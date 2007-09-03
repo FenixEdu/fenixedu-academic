@@ -77,7 +77,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	if (isEnrollingInCourseGroupsOnly(enrolmentContext, sourceDegreeModuleToEvaluate)) {
@@ -137,18 +137,28 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 			    .getContext().getCurricularYear())) {
 
 		if (degreeModuleToEvaluate.isEnroled()) {
-		    result = result.and(RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, degreeModuleToEvaluate
-			    .getDegreeModule()));
-
+		    result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
 		} else {
-		    result = result.and(RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			    "curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate
-				    .getName(), degreeModuleToEvaluate.getContext().getCurricularYear().toString()));
+		    result = result.and(createFalseRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
 		}
 	    }
 	}
 
 	return result;
+    }
+
+    private RuleResult createFalseRuleResult(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate.getName(),
+		degreeModuleToEvaluate.getContext().getCurricularYear().toString());
+    }
+
+    private RuleResult createImpossibleRuleResult(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+	return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate.getName(),
+		degreeModuleToEvaluate.getContext().getCurricularYear().toString());
     }
 
     private boolean isEnrollingInCourseGroupsOnly(final EnrolmentContext enrolmentContext,
@@ -533,13 +543,10 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 			degreeModuleToEvaluate.getContext().getCurricularYear())) {
 
 		    if (degreeModuleToEvaluate.isEnroled()) {
-			result = result.and(RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, degreeModuleToEvaluate
-				.getDegreeModule()));
+			result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
 
 		    } else {
-			result = result.and(RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-				"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate
-					.getName(), degreeModuleToEvaluate.getContext().getCurricularYear().toString()));
+			result = result.and(createFalseRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
 		    }
 
 		} else {

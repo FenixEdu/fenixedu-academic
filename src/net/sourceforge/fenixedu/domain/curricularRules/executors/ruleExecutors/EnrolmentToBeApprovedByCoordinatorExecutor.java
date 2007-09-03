@@ -10,14 +10,32 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+
 	final Person responsiblePerson = enrolmentContext.getResponsiblePerson();
 	if (responsiblePerson.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || responsiblePerson.hasRole(RoleType.MANAGER)) {
 	    return RuleResult
-		    .createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    .createWarning(
+			    sourceDegreeModuleToEvaluate.getDegreeModule(),
 			    "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
 			    sourceDegreeModuleToEvaluate.getName());
+	}
+
+	if (sourceDegreeModuleToEvaluate.isEnroled()) {
+	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
 	return RuleResult
@@ -25,18 +43,6 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
 			sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
 			sourceDegreeModuleToEvaluate.getName());
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }

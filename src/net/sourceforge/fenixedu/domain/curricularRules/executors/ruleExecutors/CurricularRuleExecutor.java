@@ -26,6 +26,9 @@ abstract public class CurricularRuleExecutor {
 	case ENROLMENT_WITH_RULES:
 	    return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
+	case ENROLMENT_VERIFICATION_WITH_RULES:
+	    return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+
 	case ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT:
 	    return executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
@@ -39,6 +42,17 @@ abstract public class CurricularRuleExecutor {
 	default:
 	    throw new DomainException("error.curricularRules.RuleExecutor.unimplemented.rule.level");
 	}
+    }
+
+    private RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	final RuleResult result = executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate,
+		enrolmentContext);
+	if (result.hasAnyImpossibleEnrolment()) {
+	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule()).and(result);
+	}
+
+	return result;
     }
 
     protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext,
@@ -151,13 +165,13 @@ abstract public class CurricularRuleExecutor {
 		|| ruleResult.isImpossibleEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
-    abstract protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
-
     abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
 
     abstract protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+
+    abstract protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
 
 }

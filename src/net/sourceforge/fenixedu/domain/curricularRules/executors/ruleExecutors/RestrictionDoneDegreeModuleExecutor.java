@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
@@ -80,7 +80,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	 * Enrolment must be impossible
 	 */
 	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionPeriod)) {
-	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+	    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 	}
 
 	return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
@@ -90,6 +90,15 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
 	return RuleResult
 		.createFalse(
+			sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+    }
+
+    private RuleResult createImpossibleRuleResult(final RestrictionDoneDegreeModule rule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	return RuleResult
+		.createImpossible(
 			sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule",
 			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());

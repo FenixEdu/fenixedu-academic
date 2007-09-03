@@ -11,12 +11,6 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
-    @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -42,6 +36,12 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
 	}
 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }

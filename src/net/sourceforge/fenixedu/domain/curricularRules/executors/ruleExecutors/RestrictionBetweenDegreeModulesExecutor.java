@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionBetweenDegreeModules rule = (RestrictionBetweenDegreeModules) curricularRule;
@@ -34,7 +34,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    } else {
 		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		    return createImpossibleRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate);
 		} else {
 		    return createFalseRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate);
 		}
@@ -83,7 +83,7 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 
 	    } else {
 		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		    return createImpossibleRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate);
 		} else {
 		    return createFalseRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate);
 		}
@@ -99,6 +99,16 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
 	return RuleResult
 		.createFalse(
+			sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.invalid.ects.credits.in.precedence.degreeModule",
+			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName(), rule
+				.getMinimumCredits().toString());
+    }
+
+    private RuleResult createImpossibleRuleResultWithInvalidEcts(final RestrictionBetweenDegreeModules rule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	return RuleResult
+		.createImpossible(
 			sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.RestrictionBetweenDegreeModulesExecutor.invalid.ects.credits.in.precedence.degreeModule",
 			rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName(), rule

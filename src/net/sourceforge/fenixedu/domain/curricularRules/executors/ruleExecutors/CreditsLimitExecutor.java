@@ -17,9 +17,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-
+    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 	final CreditsLimit rule = (CreditsLimit) curricularRule;
 
 	if (!canApplyRule(enrolmentContext, rule)) {
@@ -44,8 +43,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 		if (rule.creditsExceedMaximum(ectsCredits)) {
 		    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-			return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate
-				.getDegreeModule());
+			return createImpossibleResult(rule, sourceDegreeModuleToEvaluate);
 		    } else {
 			return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 		    }
@@ -57,6 +55,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
 	}
+
     }
 
     private RuleResult evaluateIfCanEnrolToOptionalDegreeModule(final EnrolmentContext enrolmentContext, final CreditsLimit rule,
@@ -129,8 +128,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
 		if (rule.creditsExceedMaximum(ectsCredits)) {
 		    if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-			return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate
-				.getDegreeModule());
+			return createImpossibleResult(rule, sourceDegreeModuleToEvaluate);
 		    } else {
 			return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 		    }
@@ -150,6 +148,18 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    } else { // is enrolling now
 		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
+	}
+    }
+
+    private RuleResult createImpossibleResult(final CreditsLimit rule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	if (rule.getMinimumCredits().equals(rule.getMaximumCredits())) {
+	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.CreditsLimitExecutor.limit.not.fulfilled", rule.getDegreeModuleToApplyRule()
+			    .getName(), rule.getMinimumCredits().toString());
+	} else {
+	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.CreditsLimitExecutor.limits.not.fulfilled", rule.getDegreeModuleToApplyRule()
+			    .getName(), rule.getMinimumCredits().toString(), rule.getMaximumCredits().toString());
 	}
     }
 

@@ -157,6 +157,10 @@ public class RuleResult {
 	return false;
     }
 
+    public boolean hasAnyImpossibleEnrolment() {
+	return this.enrolmentResultTypeByDegreeModule.values().contains(EnrolmentResultType.IMPOSSIBLE);
+    }
+
     @SuppressWarnings("unchecked")
     static public RuleResult createInitialTrue() {
 	return new RuleResult(RuleResultType.TRUE, new HashMap<DegreeModule, EnrolmentResultType>(), Collections.EMPTY_SET);
@@ -168,6 +172,15 @@ public class RuleResult {
 
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final DegreeModule degreeModule) {
 	return new RuleResult(RuleResultType.TRUE, enrolmentResultType, degreeModule);
+    }
+
+    static public RuleResult createImpossible(final DegreeModule degreeModule, String message, String... args) {
+	return createTrue(EnrolmentResultType.IMPOSSIBLE, degreeModule, message, args);
+    }
+
+    static public RuleResult createImpossibleWithLiteralMessage(final DegreeModule degreeModule, String message) {
+	return new RuleResult(RuleResultType.TRUE, EnrolmentResultType.IMPOSSIBLE, degreeModule, Collections
+		.singleton(new RuleResultMessage(message, false)));
     }
 
     static public RuleResult createTrue(final EnrolmentResultType enrolmentResultType, final DegreeModule degreeModule,

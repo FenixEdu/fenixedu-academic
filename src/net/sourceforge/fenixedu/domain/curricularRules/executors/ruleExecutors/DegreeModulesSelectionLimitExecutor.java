@@ -13,39 +13,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor {
 
-    @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-
-	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
-
-	if (!canApplyRule(enrolmentContext, rule)) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-	}
-
-	final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
-
-	if (degreeModuleToEvaluate.isEnroled()) {
-
-	    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-	    final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
-	    final CurriculumGroup curriculumGroup = (CurriculumGroup) moduleEnroledWrapper.getCurriculumModule();
-
-	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
-	    if (rule.numberOfDegreeModulesExceedMaximum(total)) {
-		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
-		} else {
-		    return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
-		}
-	    } else {
-		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-	    }
-
-	} // is enrolling now
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
     private int countTotalDegreeModules(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup,
 	    final CurriculumGroup curriculumGroup) {
 
@@ -65,6 +32,20 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 			    .getDegreeModuleToApplyRule().getName(), rule.getMinimumLimit().toString());
 	} else {
 	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.DegreeModulesSelectionLimitExecutor.limits.exceded", rule
+			    .getDegreeModuleToApplyRule().getName(), rule.getMinimumLimit().toString(), rule.getMaximumLimit()
+			    .toString());
+	}
+    }
+
+    private RuleResult createImpossibleRuleResult(final DegreeModulesSelectionLimit rule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	if (rule.getMinimumLimit().equals(rule.getMaximumLimit())) {
+	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.DegreeModulesSelectionLimitExecutor.limit.exceded", rule
+			    .getDegreeModuleToApplyRule().getName(), rule.getMinimumLimit().toString());
+	} else {
+	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
 		    "curricularRules.ruleExecutors.DegreeModulesSelectionLimitExecutor.limits.exceded", rule
 			    .getDegreeModuleToApplyRule().getName(), rule.getMinimumLimit().toString(), rule.getMaximumLimit()
 			    .toString());
@@ -103,7 +84,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 
 	    if (rule.numberOfDegreeModulesExceedMaximum(total)) {
 		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 		} else {
 		    return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 		}
@@ -123,6 +104,38 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+	final DegreeModulesSelectionLimit rule = (DegreeModulesSelectionLimit) curricularRule;
+
+	if (!canApplyRule(enrolmentContext, rule)) {
+	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+	}
+
+	final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, rule);
+
+	if (degreeModuleToEvaluate.isEnroled()) {
+
+	    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
+	    final CourseGroup courseGroup = rule.getDegreeModuleToApplyRule();
+	    final CurriculumGroup curriculumGroup = (CurriculumGroup) moduleEnroledWrapper.getCurriculumModule();
+
+	    int total = countTotalDegreeModules(enrolmentContext, courseGroup, curriculumGroup);
+	    if (rule.numberOfDegreeModulesExceedMaximum(total)) {
+		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+		    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
+		} else {
+		    return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
+		}
+	    } else {
+		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+	    }
+
+	} // is enrolling now
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 

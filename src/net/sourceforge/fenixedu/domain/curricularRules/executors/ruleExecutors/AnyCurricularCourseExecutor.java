@@ -15,6 +15,18 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
+    @Override
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
     /**
      * -> if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
      * from IST ? getBolonhaDegreeType() != null ? any degree with same
@@ -22,7 +34,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
      * CurricularCourse from CompetenceCourse that belong to that Department
      */
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final AnyCurricularCourse rule = (AnyCurricularCourse) curricularRule;
@@ -69,25 +81,14 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	} else {
 	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
-		return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		return RuleResult.createImpossibleWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+			CurricularRuleLabelFormatter.getLabel(rule));
 	    } else {
 		return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
 			CurricularRuleLabelFormatter.getLabel(rule));
 	    }
 	}
 
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }

@@ -2,14 +2,16 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 public enum CurricularRuleLevel {
 
-    ENROLMENT_WITH_RULES, 
-    
-    ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT, 
-    
+    ENROLMENT_WITH_RULES,
+
+    ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT,
+
     ENROLMENT_NO_RULES,
-    
+
+    ENROLMENT_VERIFICATION_WITH_RULES,
+
     IMPROVEMENT_ENROLMENT,
-    
+
     SPECIAL_SEASON_ENROLMENT;
 
     public String getName() {

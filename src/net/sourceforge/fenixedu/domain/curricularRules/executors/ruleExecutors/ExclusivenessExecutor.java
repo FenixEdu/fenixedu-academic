@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(final ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final Exclusiveness rule = (Exclusiveness) curricularRule;
@@ -32,7 +32,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
 		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(), enrolmentContext
 			.getExecutionPeriod())) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 		}
 		return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 	    }
@@ -47,6 +47,13 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
     private RuleResult createFalseRuleResult(final Exclusiveness rule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
 	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		"curricularRules.ruleExecutors.ExclusivenessExecutor.exclusive.degreeModule", rule.getDegreeModuleToApplyRule()
+			.getName(), rule.getExclusiveDegreeModule().getName());
+    }
+
+    private RuleResult createImpossibleRuleResult(final Exclusiveness rule,
+	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+	return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
 		"curricularRules.ruleExecutors.ExclusivenessExecutor.exclusive.degreeModule", rule.getDegreeModuleToApplyRule()
 			.getName(), rule.getExclusiveDegreeModule().getName());
     }
@@ -68,7 +75,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 	    if (isApproved(enrolmentContext, curricularCourse)) {
 		if (isEnroled(enrolmentContext, (CurricularCourse) rule.getDegreeModuleToApplyRule(), enrolmentContext
 			.getExecutionPeriod())) {
-		    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+		    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 		}
 		return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 	    }
