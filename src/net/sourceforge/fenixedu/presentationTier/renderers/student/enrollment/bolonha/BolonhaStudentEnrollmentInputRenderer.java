@@ -3,13 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.b
 import java.util.List;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumGroupBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -37,6 +36,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
@@ -420,7 +420,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
 	    cellName.setClasses(enrolmentNameClasses);
-	    cellName.setBody(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
+	    cellName.setBody(new HtmlText(getPresentationNameFor(enrolment)));
 
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -458,6 +458,17 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
 	    cellCheckBox.setClasses(enrolmentCheckBoxClasses);
 	    cellCheckBox.setBody(checkBox);
+	}
+
+	private String getPresentationNameFor(final Enrolment enrolment) {
+	    if (enrolment.isOptional()) {
+		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
+
+		return optionalEnrolment.getOptionalCurricularCourse().getName() + " ("
+			+ optionalEnrolment.getCurricularCourse().getName() + ")";
+	    } else {
+		return enrolment.getName().getContent(LanguageUtils.getLanguage());
+	    }
 	}
 
 	private void generateGroups(HtmlBlockContainer blockContainer, StudentCurriculumGroupBean studentCurriculumGroupBean,
@@ -508,8 +519,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    cell.setClasses("aright");
 
 	    HtmlCheckBox checkBox = new HtmlCheckBox(false);
-	    final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext().getIdInternal().toString(),
-	            ":", degreeModuleToEnrol.getCurriculumGroup().getIdInternal().toString());
+	    final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext()
+		    .getIdInternal().toString(), ":", degreeModuleToEnrol.getCurriculumGroup().getIdInternal().toString());
 	    checkBox.setName(name);
 	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
 	    degreeModulesToEvaluateController.addCheckBox(checkBox);

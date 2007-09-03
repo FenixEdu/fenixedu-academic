@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -530,7 +531,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private void generateDismissalLabelCell(final HtmlTable mainTable, HtmlTableRow dismissalRow, Dismissal dismissal,
 		int level) {
-	    //TODO: temporary solution: hasRole
+	    // TODO: temporary solution: hasRole
 	    if (dismissal.hasCurricularCourse() || loggedPersonIsManager()) {
 		final HtmlTableCell cell = dismissalRow.createCell();
 		cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
@@ -549,7 +550,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		if (curricularCourse != null) {
 		    final HtmlText text = new HtmlText(studentResources.getString("label.dismissal") + ": ");
 		    container.addChild(text);
-		    
+
 		    String codeAndName = "";
 		    if (!StringUtils.isEmpty(curricularCourse.getCode())) {
 			codeAndName += curricularCourse.getCode() + " - ";
@@ -808,16 +809,27 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		inlineContainer.addChild(checkBox);
 	    }
 
-	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
-		    .getCode()
-		    + " - " : "";
-	    final String codeAndName = code + enrolment.getName().getContent();
-	    inlineContainer.addChild(createCurricularCourseLink(codeAndName, enrolment.getCurricularCourse()));
+	    inlineContainer.addChild(createCurricularCourseLink(getPresentationNameFor(enrolment), enrolment
+		    .getCurricularCourse()));
 
 	    final HtmlTableCell cell = enrolmentRow.createCell();
 	    cell.setClasses(getLabelCellClass());
 	    cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
 	    cell.setBody(inlineContainer);
+	}
+
+	private String getPresentationNameFor(final Enrolment enrolment) {
+	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
+		    .getCode()
+		    + " - " : "";
+	    if (enrolment.isOptional()) {
+		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
+
+		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
+			+ optionalEnrolment.getCurricularCourse().getName() + ")";
+	    } else {
+		return code + enrolment.getName().getContent();
+	    }
 	}
 
 	private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
