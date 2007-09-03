@@ -2151,13 +2151,15 @@ public class Registration extends Registration_Base {
     }
 
     private void transferAnyRemainingCurrentExecutionPeriodAttends() {
-        final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            final ExecutionCourse executionCourse = attends.getExecutionCourse();
-            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                System.out.println("Did not find Target registration for attends!!! Transfering to any.");
-                transferAttends(attends, newRegistration);
+        if (!getTargetTransitionRegistrations().isEmpty()) {
+            final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
+            for (final Attends attends : getAssociatedAttendsSet()) {
+                final ExecutionCourse executionCourse = attends.getExecutionCourse();
+                final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+                    System.out.println("Did not find Target registration for attends!!! Transfering to any.");
+                    transferAttends(attends, newRegistration);
+                }
             }
         }
     }
@@ -2217,8 +2219,9 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {
-	return isActive() && getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
-		&& !isSecondCycleInternalCandidacyIngression();
+//	return isActive() && getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
+//		&& !isSecondCycleInternalCandidacyIngression();
+        return isActive() && !isSecondCycleInternalCandidacyIngression();
     }
 
     private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {

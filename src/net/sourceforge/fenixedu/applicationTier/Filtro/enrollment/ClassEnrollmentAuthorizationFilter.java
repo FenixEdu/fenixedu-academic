@@ -10,6 +10,8 @@ import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -49,7 +51,23 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
     }
 
     private Exception verify(StudentCurricularPlan studentCurricularPlan) {
-        final EnrolmentPeriodInClasses enrolmentPeriodInClasses = studentCurricularPlan.getDegreeCurricularPlan().getCurrentClassesEnrollmentPeriod();
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        Exception result = verify(degreeCurricularPlan);
+        if (result == null) {
+            return null;
+        }
+        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlansSet()) {
+            final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
+            result = verify(otherDegreeCurricularPlan);
+            if (result == null) {
+                return null;
+            }
+        }
+        return result;
+    }
+
+    private Exception verify(DegreeCurricularPlan degreeCurricularPlan) {
+        final EnrolmentPeriodInClasses enrolmentPeriodInClasses = degreeCurricularPlan.getCurrentClassesEnrollmentPeriod();
         if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateDateTime() == null
                 || enrolmentPeriodInClasses.getEndDateDateTime() == null) {
             return new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();

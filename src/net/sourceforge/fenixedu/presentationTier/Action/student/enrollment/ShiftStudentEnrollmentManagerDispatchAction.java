@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -107,12 +107,10 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
-	final List<ExecutionDegree> executionDegrees = executionPeriod.getExecutionYear()
-		.getExecutionDegreesFor(DegreeType.DEGREE);
-	executionDegrees.addAll(executionPeriod.getExecutionYear()
-		.getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
-	executionDegrees.addAll(executionPeriod.getExecutionYear()
-		.getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	final List<ExecutionDegree> executionDegrees = executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.DEGREE);
+	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
+	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_MASTER_DEGREE));
 
 	if (executionDegrees.isEmpty()) {
 	    addActionMessage(request, "errors.impossible.operation");
@@ -226,6 +224,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		}
 	    }
 	}
+        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : studentCurricularPlan.getDegreeCurricularPlan().getTargetEquivalencePlansSet()) {
+            final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
+            for (final ExecutionDegree executionDegree : otherDegreeCurricularPlan.getExecutionDegreesSet()) {
+                if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
+                    return executionDegree;
+                }
+            }
+        }
 	return null;
     }
 
