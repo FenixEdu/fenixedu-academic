@@ -24,7 +24,7 @@ public class RestrictionEnroledDegreeModuleVerifier extends VerifyRuleExecutor {
 		.getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
 
 	    if (degreeModuleToEvaluate.isLeaf()
-		    && degreeModuleToEvaluate.getDegreeModule() == restrictionEnroledDegreeModule.getPrecedenceDegreeModule()) {
+		    && degreeModuleToEvaluate.isFor(restrictionEnroledDegreeModule.getPrecedenceDegreeModule())) {
 		return RuleResult.createTrue(degreeModuleToVerify);
 	    }
 	}

@@ -58,7 +58,7 @@ abstract public class CurricularRuleExecutor {
     protected IDegreeModuleToEvaluate searchDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext,
 	    final DegreeModule degreeModule) {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (degreeModuleToEvaluate.getDegreeModule() == degreeModule) {
+	    if (degreeModuleToEvaluate.isFor(degreeModule)) {
 		return degreeModuleToEvaluate;
 	    }
 	}

@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
@@ -60,6 +61,11 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     @Override
     public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
 	return getCurricularCourse().getEctsCredits(executionPeriod);
+    }
+
+    @Override
+    public boolean isFor(DegreeModule degreeModule) {
+	return getDegreeModule() == degreeModule || getCurricularCourse() == degreeModule;
     }
 
 }

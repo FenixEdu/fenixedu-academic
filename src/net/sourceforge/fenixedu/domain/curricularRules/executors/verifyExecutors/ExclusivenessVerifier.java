@@ -65,7 +65,7 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
 		.getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
 
-	    if (degreeModuleToEvaluate.getDegreeModule() == degreeModule) {
+	    if (degreeModuleToEvaluate.isFor(degreeModule)) {
 		return degreeModuleToEvaluate;
 	    }
 

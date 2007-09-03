@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -60,6 +61,11 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
 	}
 
 	return (context != null) ? context.getObject() : null;
+    }
+
+    @Override
+    public boolean isFor(DegreeModule degreeModule) {
+	return getDegreeModule() == degreeModule || getOptionalCurricularCourse() == degreeModule;
     }
 
 }

@@ -49,7 +49,8 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	    curricularCourseToEnrol = optionalDegreeModuleToEnrol.getCurricularCourse();
 
 	    if (isApproved(enrolmentContext, curricularCourseToEnrol) || isEnroled(enrolmentContext, curricularCourseToEnrol)
-		    || isEnrolling(enrolmentContext, curricularCourseToEnrol)) {
+		    || isApproved(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())
+		    || isEnroled(enrolmentContext, optionalDegreeModuleToEnrol.getCurricularCourse())) {
 
 		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.AnyCurricularCourseExecutor.already.approved.or.enroled",

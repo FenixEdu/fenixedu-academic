@@ -18,6 +18,8 @@ public interface IDegreeModuleToEvaluate {
 
     public DegreeModule getDegreeModule();
     
+    public boolean isFor(final DegreeModule degreeModule);
+    
     public ExecutionPeriod getExecutionPeriod();
 
     public boolean isLeaf();
@@ -47,5 +49,5 @@ public interface IDegreeModuleToEvaluate {
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod);
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionPeriod executionPeriod);
-    
+        
 }

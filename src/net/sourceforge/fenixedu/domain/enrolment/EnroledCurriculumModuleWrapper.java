@@ -167,4 +167,8 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
     public boolean isEnroling() {
 	return false;
     }
+
+    public boolean isFor(DegreeModule degreeModule) {
+	return getDegreeModule() == degreeModule;
+    }
 }

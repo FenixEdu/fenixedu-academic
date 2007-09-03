@@ -102,7 +102,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     @Override
     public int hashCode() {
-        return getContext().hashCode() + getCurriculumGroup().hashCode();
+	return getContext().hashCode() + getCurriculumGroup().hashCode();
     }
 
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod) {
@@ -144,6 +144,10 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     public boolean isEnroling() {
 	return true;
+    }
+
+    public boolean isFor(DegreeModule degreeModule) {
+	return getDegreeModule() == degreeModule;
     }
 
 }
