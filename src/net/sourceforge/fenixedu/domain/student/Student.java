@@ -340,13 +340,12 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-	if (getRegistrationsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
-
 	if (getStudentDataByExecutionYearCount() > 0) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
+
+	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete())
+	    ;	
 
 	removePerson();
 	removeRootDomainObject();
