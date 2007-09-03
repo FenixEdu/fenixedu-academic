@@ -16,9 +16,10 @@ public class AccountabilityType extends AccountabilityType_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {
+    public AccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum, MultiLanguageString name) {
         this();
         setType(accountabilityTypeEnum);
+        setTypeName(name);
     }
 
     @Override

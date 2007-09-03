@@ -221,7 +221,7 @@ public class DataInitializer {
 
     private static void createAccountabilityTypeEnums() {
 	for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-	    new AccountabilityType(accountabilityTypeEnum);
+	    new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(accountabilityTypeEnum.getName()));
 	}
     }
 
