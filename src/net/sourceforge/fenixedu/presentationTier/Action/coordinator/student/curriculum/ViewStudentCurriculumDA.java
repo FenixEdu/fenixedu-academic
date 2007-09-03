@@ -51,7 +51,6 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
 	final ActionForward actionForward = new ActionForward();
-	actionForward.setRedirect(true);
 	actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId="
 		+ student.getIdInternal());
 
@@ -61,7 +60,6 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
 	final ActionForward actionForward = new ActionForward();
-	actionForward.setRedirect(true);
 	actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber="
 		+ student.getNumber() + "&executionDegreeId=" + getExecutionDegreeId(actionForm)
 		+ "&degreeCurricularPlanID=" + getDegreeCurricularPlanId(actionForm));

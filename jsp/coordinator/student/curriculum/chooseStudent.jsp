@@ -14,9 +14,9 @@
 		</html:messages>
 	</ul>
 
-	<html:form action="/viewStudentCurriculum?method=showStudentCurriculum"
-		focus="studentNumber">
+	<html:form focus="studentNumber" method="post" action="/viewStudentCurriculum.do">
 
+		<html:hidden property="method" value="showStudentCurriculum"/>
 		<html:hidden property="executionDegreeId" />
 		<html:hidden property="degreeCurricularPlanId" />
 
