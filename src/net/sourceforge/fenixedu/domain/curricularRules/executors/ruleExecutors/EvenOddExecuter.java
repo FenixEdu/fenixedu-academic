@@ -16,7 +16,7 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
     }
 
     @Override
-    protected RuleResult executeEnrolmentWithRules(ICurricularRule curricularRule,
+    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 	final EvenOddRule evenOddRule = (EvenOddRule) curricularRule;
 	if(!canApplyRule(enrolmentContext, evenOddRule)) {
@@ -34,7 +34,7 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
     @Override
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+	return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
     private RuleResult createFalseRuleResult(final EvenOddRule rule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
