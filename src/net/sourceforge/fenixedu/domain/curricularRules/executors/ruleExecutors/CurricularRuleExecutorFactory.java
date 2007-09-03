@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCyc
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator;
+import net.sourceforge.fenixedu.domain.curricularRules.EvenOddRule;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
@@ -43,6 +44,7 @@ public class CurricularRuleExecutorFactory {
 	executors.put(EnrolmentInSpecialSeasonEvaluation.class,				new EnrolmentInSpecialSeasonEvaluationExecutor());
 	executors.put(MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation.class,		new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor());
 	executors.put(CreditsLimitInExternalCycle.class,			new CreditsLimitInExternalCycleExecutor());
+	executors.put(EvenOddRule.class,			new EvenOddExecuter());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {

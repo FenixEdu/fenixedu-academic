@@ -92,6 +92,20 @@
 				<h:inputText alt="#{htmlAltBundle['inputText.minimumCredits']}" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
 				<h:outputText value="</p>" escape="false"/>
 			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'EVEN_ODD'}">
+				<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
+					<f:selectItem itemLabel="1" itemValue="1"/>
+					<f:selectItem itemLabel="2" itemValue="2"/>
+				</fc:selectOneMenu>
+				<h:outputText value="<p><label>#{bolonhaBundle['student.with.number']} :</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedEven}">
+					<f:selectItem itemLabel="#{bolonhaBundle['label.even']}" itemValue="true"/>
+					<f:selectItem itemLabel="#{bolonhaBundle['label.odd']}" itemValue="false"/>
+				</fc:selectOneMenu>					
+				<h:outputText value="</p>" escape="false"/>
+			</h:panelGroup>			
 	 
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>

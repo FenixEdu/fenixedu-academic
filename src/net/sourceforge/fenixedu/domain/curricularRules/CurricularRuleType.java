@@ -36,7 +36,9 @@ public enum CurricularRuleType {
     
     MAXIMUM_NUMBER_OF_ENROLMENTS_IN_SPECIAL_SEASON_EVALUATION,
     
-    CREDITS_LIMIT_IN_EXTERNAL_CYCLE;
+    CREDITS_LIMIT_IN_EXTERNAL_CYCLE,
+    
+    EVEN_ODD;
 
     public String getName() {
         return name();

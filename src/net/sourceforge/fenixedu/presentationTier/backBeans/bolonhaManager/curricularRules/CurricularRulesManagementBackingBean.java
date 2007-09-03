@@ -171,6 +171,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     }
                 }
                 break;
+
+            case EVEN_ODD:
+                if (getDegreeModule().isLeaf()) {
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
+                	    .getString(curricularRuleType.getName())));                    
+                }
+                break;
                 
             case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
                 result.add(new SelectItem(curricularRuleType.getName(), enumerationResources
@@ -181,6 +188,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 break;
             }
         }
+        
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(NO_SELECTION_STRING, bolonhaResources.getString("choose")));
         return result;
@@ -326,10 +334,19 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             }
         }
         return (String) getViewState().getAttribute("selectedSemester");
-    }
+    }    
 
     public void setSelectedSemester(String selectedSemester) {
         getViewState().setAttribute("selectedSemester", selectedSemester);
+    }
+    
+    public void setSelectedEven(String selectedSemester) {
+        getViewState().setAttribute("even", selectedSemester);
+    }
+
+    
+    public String getSelectedEven() {
+	return (String) getViewState().getAttribute("even");
     }
     
     public Integer getCurricularRuleID() {
@@ -751,6 +768,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));
+        parametersDTO.setEven(Boolean.valueOf(getSelectedEven()));
         return parametersDTO;
     }
 }

@@ -22,6 +22,7 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Integer maximumYear;
     private Double credits;
     private DegreeType degreeType;
+    private Boolean even;
     
     public CurricularRuleParametersDTO() {
     }
@@ -102,5 +103,11 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     }
     public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
-    }   
+    }
+    public Boolean getEven() {
+	return even;
+    }
+    public void setEven(Boolean even) {
+	this.even = even;
+    }
 }

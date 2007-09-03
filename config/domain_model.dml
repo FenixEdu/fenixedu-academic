@@ -2077,6 +2077,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
 			}
+			
+			class net.sourceforge.fenixedu.domain.curricularRules.EvenOddRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+				Integer curricularPeriodOrder;
+				CurricularPeriodType curricularPeriodType;
+				Boolean even;
+			}
 
 			class net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
 			}

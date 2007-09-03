@@ -49,6 +49,9 @@ public class CurricularRulesManager {
 	case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
 	    return createMinimumNumberOfCreditsToEnrol(toApplyRule, begin, end, parametersDTO);
 
+	case EVEN_ODD:
+	    return createEvenOdd(toApplyRule, begin, end, parametersDTO);
+	    
 	default:
 	    break;
 	}
@@ -74,6 +77,17 @@ public class CurricularRulesManager {
 
 	return new MinimumNumberOfCreditsToEnrol(toApplyRule, contextCourseGroup, begin, end,
 		parametersDTO.getMinimumCredits());
+    }
+    
+    private static CurricularRule createEvenOdd(DegreeModule toApplyRule,
+	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+
+	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
+		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+
+	return new EvenOddRule(toApplyRule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
+		parametersDTO.getCurricularPeriodInfoDTO().getPeriodType(), parametersDTO.getEven(), begin, end);
+	
     }
 
     private static CurricularRule createAnyCurricularCourse(DegreeModule toApplyRule,
