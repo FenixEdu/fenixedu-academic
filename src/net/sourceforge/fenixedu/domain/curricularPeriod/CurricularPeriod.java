@@ -254,6 +254,17 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         }
         return null;
     }
+    
+    public boolean hasCurricularPeriod(CurricularPeriodType periodType, Integer order) {
+        if (this.getPeriodType().equals(periodType) && this.getChildOrder().equals(order)) {
+            return true;
+        }
+        if(getParent() != null) {
+            return getParent().hasCurricularPeriod(periodType, order);
+        } else {
+            return false;
+        }
+    }
 
     @Deprecated
     public Integer getOrder() {
