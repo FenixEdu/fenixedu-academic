@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
@@ -15,7 +16,7 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
         super.setType(PartyTypeEnum.ADMINISTRATIVE_OFFICE_UNIT);        
     }
     
-    public static AdministrativeOfficeUnit createNewAdministrativeOfficeUnit(String unitName, Integer costCenterCode, String acronym,
+    public static AdministrativeOfficeUnit createNewAdministrativeOfficeUnit(MultiLanguageString unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType, 
 	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, 
 	    Campus campus) {
@@ -29,7 +30,7 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
     }
     
     @Override
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice,
             Boolean canBeResponsibleOfSpaces, Campus campus) {

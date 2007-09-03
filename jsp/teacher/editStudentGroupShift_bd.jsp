@@ -15,7 +15,7 @@
 </div>
 
 <div class="dinline forminline"> 
-<html:form action="/editStudentGroupShift" method="get">
+<html:form action="/editStudentGroupShift" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <p class="mvert15">
@@ -57,7 +57,7 @@
 </html:form>
 
 
-	<html:form action="/viewStudentGroupInformation" method="get">
+	<html:form action="/viewStudentGroupInformation" >
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewStudentGroupInformation"/>

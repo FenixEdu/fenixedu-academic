@@ -12,7 +12,7 @@
 		</td>
 	</tr>
 </table>
-	<html:form action="sendMailToAllStudents.do" method="get">
+	<html:form action="sendMailToAllStudents.do" >
 
 	<table>
 		<tr>

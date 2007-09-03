@@ -54,7 +54,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String listingTypeValueToUnits, listingTypeValueToFunctions, departmentID, degreeID, unitClassificationName, campusID;
 
-    private String functionNameEn;
+    private String functionNameEn, unitNameEn;
     
     private Integer principalFunctionID;
 
@@ -553,7 +553,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
-	final Object[] argsToRead = { null, this.getUnitName(), this.getUnitCostCenter(),
+	MultiLanguageString unitName = new MultiLanguageString();
+	unitName.setContent(Language.pt, this.getUnitName());
+	unitName.setContent(Language.en, this.getUnitNameEn());
+	
+	final Object[] argsToRead = { null, unitName, this.getUnitCostCenter(),
 		this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), getUnitType(),
 		parameters.getDepartmentID(), parameters.getDegreeID(), parameters.getAdministrativeOfficeID(),
 		null, this.getUnitWebAddress(), this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(),
@@ -580,7 +584,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
-	final Object[] argsToRead = { this.getUnit(), this.getUnitName(),
+	MultiLanguageString unitName = new MultiLanguageString();
+	unitName.setContent(Language.pt, this.getUnitName());
+	unitName.setContent(Language.en, this.getUnitNameEn());
+	
+	final Object[] argsToRead = { this.getUnit(), unitName,
 		this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
 		datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(), parameters.getDegreeID(),
 		parameters.getAdministrativeOfficeID(), accountabilityType, this.getUnitWebAddress(),
@@ -598,7 +606,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	
 	CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
-	final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), this.getUnitName(),
+	MultiLanguageString unitName = new MultiLanguageString();
+	unitName.setContent(Language.pt, this.getUnitName());
+	unitName.setContent(Language.en, this.getUnitNameEn());
+	
+	final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), unitName,
 		this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
 		datesResult.getEndDate(), parameters.getDepartmentID(), parameters.getDegreeID(),
 		parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(), 
@@ -648,8 +660,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String executeUnitsManagementService(final Object[] argsToRead, String defaultReturn,
 	    String serviceName) throws FenixFilterException {
+	
 	try {
 	    ServiceUtils.executeService(getUserView(), serviceName, argsToRead);
+	
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -754,8 +768,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String deleteSubUnit() throws FenixFilterException {
-	final Object[] argsToRead = { Integer
-		.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
+	final Object[] argsToRead = { Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
 	try {
 	    ServiceUtils.executeService(getUserView(), "DeleteUnit", argsToRead);
 
@@ -769,8 +782,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String deleteUnit() throws FenixFilterException {
-	final Object[] argsToRead = { Integer
-		.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
+	final Object[] argsToRead = { Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
 	try {
 	    ServiceUtils.executeService(getUserView(), "DeleteUnit", argsToRead);
 
@@ -1432,5 +1444,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setFunctionNameEn(String functionNameEn) {
         this.functionNameEn = functionNameEn;
+    }
+
+    public String getUnitNameEn() throws FenixFilterException, FenixServiceException {
+	if (this.unitNameEn == null && this.getChooseUnit() != null) {
+	    this.unitNameEn = this.getChooseUnit().getPartyName().getContent(Language.en);
+	}
+	return unitNameEn;	
+    }
+
+    public void setUnitNameEn(String unitNameEn) {
+        this.unitNameEn = unitNameEn;
     } 
 }

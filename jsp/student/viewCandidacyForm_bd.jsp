@@ -9,7 +9,7 @@
 <h2><bean:message key="label.candidacyFormTitle"/></h2>
 
 
-<html:form action="submitCandidacyFirstInfo.do" method="get">
+<html:form action="submitCandidacyFirstInfo.do" >
 <table width="90%" align="center">
 	<tr>
 		<td width="0%" valign="top">

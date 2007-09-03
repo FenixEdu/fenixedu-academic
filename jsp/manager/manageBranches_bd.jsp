@@ -17,7 +17,7 @@
 
 <logic:present name="infoBranchesList">
 
-	<html:form action="/manageBranches" method="get">
+	<html:form action="/manageBranches" >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="delete"/>

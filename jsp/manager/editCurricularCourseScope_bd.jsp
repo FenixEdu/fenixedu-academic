@@ -7,7 +7,7 @@
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <table>
-<html:form action="/editCurricularCourseScope" method="get">
+<html:form action="/editCurricularCourseScope" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>

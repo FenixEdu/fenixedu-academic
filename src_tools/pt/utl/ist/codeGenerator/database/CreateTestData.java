@@ -143,6 +143,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -344,25 +345,25 @@ public class CreateTestData {
         }
 
         private UniversityUnit createUniversityUnit(final CountryUnit countryUnit) {
-            return UniversityUnit.createNewUniversityUnit("Universidade de Barcelos", null, "UB", new YearMonthDay(),
+            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Universidade de Barcelos"), null, "UB", new YearMonthDay(),
                     null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-            return AggregateUnit.createNewAggregateUnit(unitName, null, null, new YearMonthDay(),
+            return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), unitName), null, null, new YearMonthDay(),
                     null, parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE),
                     null, null, Boolean.FALSE, null);
         }
 
         private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName, final String universityAcronym) {
-            return SchoolUnit.createNewSchoolUnit(universityName, null, universityAcronym, new YearMonthDay(),
+            return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), universityName), null, universityAcronym, new YearMonthDay(),
                     null, universityUnit, null, null, Boolean.FALSE, null);
         }
 
         private void createServiceUnits(final AggregateUnit serviceUnits) {
             final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
             final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-                    "Office", null, null, new YearMonthDay(), null, serviceUnits,
+                   new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Office"), null, null, new YearMonthDay(), null, serviceUnits,
                     AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE),
                     null, null, administrativeOffice, Boolean.FALSE, null);
         }
@@ -391,17 +392,20 @@ public class CreateTestData {
 
         private int areaCounter = 0;
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
-            final ScientificAreaUnit scientificAreaUnit = ScientificAreaUnit.createNewInternalScientificArea("Scientific Area",
+            final ScientificAreaUnit scientificAreaUnit = ScientificAreaUnit.createNewInternalScientificArea(new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Scientific Area"),
                     null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
                     null, null, Boolean.FALSE, null);
-            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit("Competence Courses", null, null,
-                    new YearMonthDay(), null, scientificAreaUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
+            
+            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Competence Courses"),
+        	    null, null, new YearMonthDay(), null, scientificAreaUnit,
+        	    AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
                     null, null, Boolean.FALSE, null);
         }
 
         private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber, final Department department) {
             return DepartmentUnit.createNewInternalDepartmentUnit(
-                    "Department Name " + someNumber, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
+        	    new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Department Name " + someNumber), 
+        	    Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay().minusMonths(1), null,
                     departmentUnits, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
                     null, department, null, Boolean.FALSE, null);
         }
@@ -447,7 +451,8 @@ public class CreateTestData {
                         final DegreeSite degreeSite = degree.getSite();
                         degreeSite.setTemplate(siteTemplate);
 
-                        DegreeUnit.createNewInternalDegreeUnit(degree.getName(), null, degree.getSigla(), new YearMonthDay(), null, unit,
+                        DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), degree.getName()),
+                        	null, degree.getSigla(), new YearMonthDay(), null, unit,
                                 AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE),
                                 null, degree, null, Boolean.FALSE, null);
                     }

@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -30,7 +32,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	super.setType(PartyTypeEnum.DEPARTMENT);
     }
 
-    public static DepartmentUnit createNewInternalDepartmentUnit(String departmentName, Integer costCenterCode, String departmentAcronym,
+    public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode, String departmentAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, Department department, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
@@ -47,7 +49,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName, final String departmentAcronym, final Unit parentUnit) {							
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
+	departmentUnit.init(new MultiLanguageString(LanguageUtils.getSystemLanguage(), departmentName), null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
 	if(parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
@@ -59,13 +61,13 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     @Override
-    public void edit(String name, String acronym) {
+    public void edit(MultiLanguageString name, String acronym) {
 	super.edit(name, acronym);
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
     }
 
     @Override
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, 
 	    Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 

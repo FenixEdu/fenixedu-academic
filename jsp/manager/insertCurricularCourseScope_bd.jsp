@@ -4,7 +4,7 @@
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourseScope" /></h2>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<html:form action="/insertCurricularCourseScope" method="get">
+<html:form action="/insertCurricularCourseScope" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insert"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>

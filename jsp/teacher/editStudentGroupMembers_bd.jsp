@@ -46,7 +46,7 @@
 </logic:empty> 	
 
 <logic:notEmpty name="component" property="infoSiteStudentInformationList">
-<html:form action="/deleteStudentGroupMembers" method="get">
+<html:form action="/deleteStudentGroupMembers" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <p class="mbottom05">
@@ -116,7 +116,7 @@
 
 <logic:present name="infoStudentList"> 
 		
-<html:form action="/insertStudentGroupMembers" method="get">
+<html:form action="/insertStudentGroupMembers" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <logic:empty name="infoStudentList"> 

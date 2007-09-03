@@ -19,7 +19,7 @@
 
 <div class="dinline forminline">
 
-	<html:form action="/removeGroupEnrolment" method="get" style="margin: 0; padding: 0;">
+	<html:form action="/removeGroupEnrolment"  style="margin: 0; padding: 0;">
 	
 	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.RemoveEnrolment"/></h2>
@@ -78,7 +78,7 @@
 	</html:form>
 
 
-				<html:form action="/viewStudentGroupInformation" method="get" style="margin: 0; padding: 0;">
+				<html:form action="/viewStudentGroupInformation"  style="margin: 0; padding: 0;">
 	
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 					</html:cancel>

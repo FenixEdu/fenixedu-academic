@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -20,7 +21,7 @@ public class CountryUnit extends CountryUnit_Base {
         super.setType(PartyTypeEnum.COUNTRY);
     }
     
-    public static CountryUnit createNewCountryUnit(String countryName, Integer costCenterCode, String countryAcronym,
+    public static CountryUnit createNewCountryUnit(MultiLanguageString countryName, Integer costCenterCode, String countryAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {	
 		
@@ -34,13 +35,13 @@ public class CountryUnit extends CountryUnit_Base {
     }
     
     @Override
-    public void edit(String name, String acronym) {
+    public void edit(MultiLanguageString name, String acronym) {
         super.edit(name, acronym);
         checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
     }
     
     @Override
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Campus campus) {

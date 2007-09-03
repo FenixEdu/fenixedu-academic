@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.apache.commons.lang.StringUtils;
 
 public class AccountabilityType extends AccountabilityType_Base {
     
@@ -47,19 +49,23 @@ public class AccountabilityType extends AccountabilityType_Base {
     
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getType() != null; 	
+	return getType() != null && getTypeName() != null && !getTypeName().isEmpty(); 	
     }
     
     public String getName() {
-	return getTypeName().getContent(Language.pt);
+	return getTypeName().getPreferedContent();
     }
     
     public void setName(String name) {	
-	MultiLanguageString typeName = getTypeName();
-	if(typeName == null) {
-	    typeName = new MultiLanguageString();
+	
+	if(name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.accountabilityType.empty.name");
 	}
-	typeName.setContent(Language.pt, name);
+	
+	MultiLanguageString typeName = getTypeName();
+	typeName = typeName == null ? new MultiLanguageString() : typeName;
+	typeName.setContent(LanguageUtils.getSystemLanguage(), name);
+	
 	setTypeName(typeName);
     }
 }   

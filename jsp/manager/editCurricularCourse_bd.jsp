@@ -10,7 +10,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <table>
-<html:form action="/editCurricularCourse" method="get">
+<html:form action="/editCurricularCourse" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>

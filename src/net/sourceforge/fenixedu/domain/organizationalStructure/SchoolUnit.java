@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -20,7 +21,7 @@ public class SchoolUnit extends SchoolUnit_Base {
         super.setType(PartyTypeEnum.SCHOOL);
     }
     
-    public static SchoolUnit createNewSchoolUnit(String schoolName, Integer costCenterCode, String schoolAcronym,
+    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, Integer costCenterCode, String schoolAcronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, 
 	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {	
 	
@@ -39,13 +40,13 @@ public class SchoolUnit extends SchoolUnit_Base {
     }
     
     @Override
-    public void edit(String name, String acronym) {
+    public void edit(MultiLanguageString name, String acronym) {
         super.edit(name, acronym);
         checkIfAlreadyExistsOneSchoolWithSameAcronymAndName(this);
     }
     
     @Override
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
             Campus campus) {

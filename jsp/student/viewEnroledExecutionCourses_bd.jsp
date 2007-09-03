@@ -6,7 +6,7 @@
 
 
 <logic:present name="executionCourses"> 
-<html:form action="/viewExecutionCourseProjects" method="get">
+<html:form action="/viewExecutionCourseProjects">
 
 
 	<logic:empty name="executionCourses">

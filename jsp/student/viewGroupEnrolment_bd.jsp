@@ -29,7 +29,7 @@
 --%>
 
 
-	<html:form action="/groupEnrolment" method="get" style="margin: 0; padding: 0;">
+	<html:form action="/groupEnrolment"  style="margin: 0; padding: 0;">
 
 	<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>		 
 
@@ -123,7 +123,7 @@
 	</td>
 	
 	<td>
-		<html:form action="/viewShiftsAndGroups" method="get" style="margin: 0; padding: 0;">
+		<html:form action="/viewShiftsAndGroups"  style="margin: 0; padding: 0;">
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>

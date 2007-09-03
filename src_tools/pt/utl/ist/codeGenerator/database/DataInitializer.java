@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class DataInitializer {
 
@@ -225,7 +227,7 @@ public class DataInitializer {
 
     private static void createOrganizationalStructure() {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit("Earth", null, "E", new YearMonthDay(), null, null, null, null, false, null);
+        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
         rootDomainObject.setEarthUnit(planetUnit);
 
         createCountryUnits(rootDomainObject, planetUnit);
@@ -233,7 +235,7 @@ public class DataInitializer {
 
     private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
         for (final Country country : rootDomainObject.getCountrysSet()) {
-            CountryUnit.createNewCountryUnit(country.getName(), null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+            CountryUnit.createNewCountryUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), country.getName()), null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
         }
     }
 

@@ -9,7 +9,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /><p><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.branches.warning"/></p></span>
 
-	<html:form action="/manageBranches" method="get">
+	<html:form action="/manageBranches" >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="forceDelete"/>

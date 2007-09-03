@@ -15,7 +15,7 @@
 
 <logic:present name="degreesList" scope="request">
 <logic:notEmpty name="degreesList" >
-<html:form action="/deleteDegrees" method="get">
+<html:form action="/deleteDegrees" >
 
  <bean:define id="onclick">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.degrees"/>')

@@ -19,7 +19,7 @@
 
 <div class="dinline forminline">
 
-<html:form action="/editStudentGroupShift" method="get" style="margin: 0; padding: 0;" >
+<html:form action="/editStudentGroupShift"  style="margin: 0; padding: 0;" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <p class="mtop15">
@@ -53,7 +53,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 </html:form>
 
-<html:form action="/viewStudentGroupInformation" method="get" style="margin: 0; padding: 0; ">
+<html:form action="/viewStudentGroupInformation"  style="margin: 0; padding: 0; ">
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>

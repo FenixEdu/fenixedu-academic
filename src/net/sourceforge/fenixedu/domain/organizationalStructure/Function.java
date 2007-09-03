@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
@@ -43,7 +42,7 @@ public class Function extends Function_Base {
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
     }
-      
+             
     @Override
     public void setUnit(Unit unit) {
 	if (unit == null) {
@@ -51,22 +50,14 @@ public class Function extends Function_Base {
 	}
 	super.setUnit(unit);
     }
-
-    @Override
-    public void setName(String name) {
-	if (name == null || StringUtils.isEmpty(name.trim())) {
-	    throw new DomainException("error.no.function.name");
-	}
-	super.setName(name);
-    }
-
+    
     public boolean isActive(YearMonthDay currentDate) {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) 
-		&& (getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(beginDate)));
+		&& (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay().isBefore(beginDate)));
     }
 
     public void delete() {
@@ -110,11 +101,6 @@ public class Function extends Function_Base {
 	final YearMonthDay start = getBeginDateYearMonthDay();
 	final YearMonthDay end = getEndDateYearMonthDay();	
 	return start != null && (end == null || !start.isAfter(end));
-    }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return !getTypeName().isEmpty(); 	
     }
 
     public static Function createVirtualFunction(Unit unit, MultiLanguageString name) {

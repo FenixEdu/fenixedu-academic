@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
@@ -12,7 +13,7 @@ public class AggregateUnit extends AggregateUnit_Base {
 	super.setType(PartyTypeEnum.AGGREGATE_UNIT);
     }
 
-    public static AggregateUnit createNewAggregateUnit(String name, Integer costCenterCode, String acronym,
+    public static AggregateUnit createNewAggregateUnit(MultiLanguageString name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {

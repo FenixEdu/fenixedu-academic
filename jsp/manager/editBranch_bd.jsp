@@ -6,7 +6,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<html:form action="/manageBranches" method="get">
+<html:form action="/manageBranches" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.branchId" property="branchId" value="<%= request.getParameter("branchId") %>"/>

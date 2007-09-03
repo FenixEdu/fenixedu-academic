@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.InstitutionSite;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -47,6 +46,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -69,11 +69,11 @@ public class Unit extends Unit_Base {
 	super();
     }
 
-    protected void init(String name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
+    protected void init(MultiLanguageString name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification,
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
-	setName(name);
+	setPartyName(name);
 	setAcronym(acronym);
 	if(getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
 	    setCostCenterCode(costCenterCode);
@@ -85,23 +85,40 @@ public class Unit extends Unit_Base {
 	setCampus(campus);
 	updateDefaultWebAddress(webAddress);
     }
-
+    
     @Override
+    public void setPartyName(MultiLanguageString partyName) {               
+	super.setPartyName(partyName);
+	setName(partyName.getPreferedContent());
+    }
+    
+    public String getName() {
+	return getPartyName().getPreferedContent();
+    }
+    
     public void setName(String name) {
-	super.setName(name);
-	UnitName unitName = getUnitName();
-	if (unitName == null) {
-	    unitName = new UnitName(this);
+	
+	if(name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.person.empty.name");
 	}
+	
+	MultiLanguageString partyName = getPartyName();
+	partyName = partyName == null ? new MultiLanguageString() : partyName;
+	partyName.setContent(LanguageUtils.getSystemLanguage(), name);
+	
+	super.setPartyName(partyName);
+	
+	UnitName unitName = getUnitName();
+	unitName = unitName == null ? new UnitName(this) : unitName;	
 	unitName.setName(name);
     }
 
-    public void edit(String name, String acronym) {
-	setName(name);
+    public void edit(MultiLanguageString name, String acronym) {
+	setPartyName(name);
 	setAcronym(acronym);
     }
 
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
 	    YearMonthDay endDate, String webAddress, UnitClassification classification,
 	    Department department, Degree degree, AdministrativeOffice administrativeOffice,
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
@@ -754,7 +771,7 @@ public class Unit extends Unit_Base {
 		Unit.class);
     }
 
-    public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
+    public static Unit createNewUnit(MultiLanguageString unitName, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
@@ -774,7 +791,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
-	noOfficialExternalInstitutionUnit.init(unitName, null, null, new YearMonthDay(), null, null, null, null, null);
+	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(LanguageUtils.getSystemLanguage(), unitName), null, null, new YearMonthDay(), null, null, null, null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
@@ -851,9 +868,9 @@ public class Unit extends Unit_Base {
     }
 
     public String getNameWithAcronym() {
-	String name = super.getName().trim();
-	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
-		+ getAcronym().trim() + ")";
+	String name = getName().trim();
+	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name :
+	    name + " ("	+ getAcronym().trim() + ")";
     }
 
     public String getPresentationName() {
@@ -1094,16 +1111,7 @@ public class Unit extends Unit_Base {
     }
 
     public MultiLanguageString getNameI18n() {
-	String name = getName();
-	String nameEn = getNameEn();
-
-	MultiLanguageString mls = new MultiLanguageString(name);
-
-	if (nameEn != null) {
-	    mls.setContent(Language.en, nameEn);
-	}
-
-	return mls;
+	return getPartyName(); 
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(int year, Month month, int hoursDoneInYear,

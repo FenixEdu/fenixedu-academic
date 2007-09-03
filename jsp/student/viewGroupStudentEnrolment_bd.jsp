@@ -71,7 +71,7 @@
 	<table>
 		<tr>
 			  <td>
-			  <html:form action="/groupStudentEnrolment" method="get" style="margin: 0; padding: 0;">
+			  <html:form action="/groupStudentEnrolment"  style="margin: 0; padding: 0;">
 				  <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>
 				  </html:submit>
 				  
@@ -87,7 +87,7 @@
 			  </td>
 				
 			<td>
-			<html:form action="/viewStudentGroupInformation" method="get" style="margin: 0; padding: 0;">
+			<html:form action="/viewStudentGroupInformation"  style="margin: 0; padding: 0;">
 	
 				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 				</html:cancel>

@@ -34,7 +34,7 @@
 <logic:present name="curricularPlansList" scope="request">
 <logic:notEmpty name="curricularPlansList">
 	
-<html:form action="/deleteDegreeCurricularPlans" method="get">
+<html:form action="/deleteDegreeCurricularPlans" >
 
  <bean:define id="onclick">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.confirm.delete.degree.curricular.plans"/>')

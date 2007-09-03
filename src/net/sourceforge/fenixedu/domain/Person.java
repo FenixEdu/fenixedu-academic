@@ -85,6 +85,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -116,6 +117,38 @@ public class Person extends Person_Base {
 	return documentIterator.hasNext() ? documentIterator.next() : null;
     }
 
+    @Override
+    public MultiLanguageString getPartyName() {
+	throw new UnsupportedOperationException();
+    }
+    
+    @Override
+    public void setPartyName(MultiLanguageString partyName) {
+        throw new UnsupportedOperationException();
+    }
+       
+    public String getName() {
+	return super.getPartyName().getPreferedContent();
+    }
+    
+    @Override
+    public void setName(String name) {
+	
+	if(name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.person.empty.name");
+	}
+	    
+	MultiLanguageString partyName = super.getPartyName();
+	partyName = partyName == null ? new MultiLanguageString() : partyName;
+	partyName.setContent(LanguageUtils.getSystemLanguage(), name);
+	
+	super.setPartyName(partyName);
+	
+	PersonName personName = getPersonName();
+	personName = personName == null ? new PersonName(this) : personName;	
+	personName.setName(name);
+    }
+    
     @Override
     public void setDocumentIdNumber(String documentIdNumber) {
 	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
@@ -166,19 +199,9 @@ public class Person extends Person_Base {
     }
 
     final public String getValidatedName() {
-	return StringFormatter.personNameValidator(super.getName(), LanguageUtils.getLanguage());
+	return StringFormatter.personNameValidator(getName(), LanguageUtils.getLanguage());
     }
-
-    @Override
-    final public void setName(final String name) {
-	super.setName(name);
-	PersonName personName = getPersonName();
-	if (personName == null) {
-	    personName = new PersonName(this);
-	}
-	personName.setName(name);
-    }
-
+    
     public Person() {
 	super();
 	setMaritalStatus(MaritalStatus.UNKNOWN);

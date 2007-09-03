@@ -27,7 +27,7 @@
 </html:messages>
 
 
-<html:form action="/insertProfessorShipNonAffiliatedTeacher" method="get"> 
+<html:form action="/insertProfessorShipNonAffiliatedTeacher" > 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertNonAffiliatedTeacher" /> 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	

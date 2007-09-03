@@ -20,7 +20,7 @@
 	</table>
 	<br/>
 		
-<html:form action="/enrollStudentGroupShift" method="get">
+<html:form action="/enrollStudentGroupShift" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -67,7 +67,7 @@
 </html:form>
 
 
-	<html:form action="/viewStudentGroupInformation" method="get">
+	<html:form action="/viewStudentGroupInformation" >
 	<td>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>

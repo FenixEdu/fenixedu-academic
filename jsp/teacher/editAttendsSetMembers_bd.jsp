@@ -41,7 +41,7 @@
 
 
 <logic:notEmpty name="infoGrouping" property="infoAttends">
-	<html:form action="/deleteAttendsSetMembers" method="get">
+	<html:form action="/deleteAttendsSetMembers" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 	<p class="mbottom05">
@@ -95,7 +95,7 @@
 
 <logic:present name="infoStudentList"> 
 		
-<html:form action="/insertAttendsSetMembers" method="get">
+<html:form action="/insertAttendsSetMembers" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <logic:empty name="infoStudentList"> 

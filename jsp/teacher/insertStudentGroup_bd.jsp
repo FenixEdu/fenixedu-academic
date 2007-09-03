@@ -8,7 +8,7 @@
 <h2><bean:message key="title.insertStudentGroup"/></h2>
 
 <div class="dinline forminline">
-<html:form action="/insertStudentGroup" method="get">
+<html:form action="/insertStudentGroup" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <div class="infoop2">
@@ -95,7 +95,7 @@
 
 	</html:form>
 
-	<html:form action="/viewShiftsAndGroups" method="get">
+	<html:form action="/viewShiftsAndGroups" >
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewShiftsAndGroups"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

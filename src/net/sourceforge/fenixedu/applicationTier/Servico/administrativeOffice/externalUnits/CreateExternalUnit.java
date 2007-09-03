@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.external
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
@@ -19,8 +21,9 @@ public class CreateExternalUnit extends Service {
 		    externalUnitBean.getUnitName(), externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
 	} else {
 	    return new CreateUnit().run(externalUnitBean.getParentUnit(),
-		    externalUnitBean.getUnitName(), null, externalUnitBean.getUnitCode(), 
-		    new YearMonthDay(), null, externalUnitBean.getUnitType(), null, null, null, null, null, null, null, null);
+		    new MultiLanguageString(LanguageUtils.getSystemLanguage(), externalUnitBean.getUnitName()),
+		    null, externalUnitBean.getUnitCode(), new YearMonthDay(), null, externalUnitBean.getUnitType(),
+		    null, null, null, null, null, null, null, null);
 	}
     }
 }

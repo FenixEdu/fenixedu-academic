@@ -34,7 +34,7 @@
 
 <logic:notEmpty name="infoExecutionCoursesList" scope="request">
 	<logic:present name="name" scope="request">
-		<html:form action="/associateExecutionCourseToCurricularCourse" method="get">
+		<html:form action="/associateExecutionCourseToCurricularCourse" >
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="associate"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
@@ -93,7 +93,7 @@
 		<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.courses"/></b>
 		<br/>
 		<br/>
-		<html:form action="/deleteExecutionCourses" method="get">
+		<html:form action="/deleteExecutionCourses" >
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 			<bean:define id="onclick">
 				return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.courses"/>')

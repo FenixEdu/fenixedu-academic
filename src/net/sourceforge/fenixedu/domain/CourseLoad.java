@@ -60,7 +60,7 @@ public class CourseLoad extends CourseLoad_Base {
     }
     
     public boolean isEmpty() {
-	return getTotalQuantity().compareTo(BigDecimal.ZERO) != 1; 
+	return getTotalQuantity().signum() == 0; 
     }
     
     private boolean canBeDeleted() {
@@ -73,10 +73,18 @@ public class CourseLoad extends CourseLoad_Base {
     
     @Override
     public void setTotalQuantity(BigDecimal totalQuantity) {
-	if(totalQuantity == null) {
+	if(totalQuantity == null || totalQuantity.signum() == -1) {
 	    throw new DomainException("error.CourseLoad.empty.totalQuantity");
 	}
 	super.setTotalQuantity(totalQuantity);
+    }
+    
+    @Override
+    public void setUnitQuantity(BigDecimal unitQuantity) {
+        if(unitQuantity != null && unitQuantity.signum() == -1) {
+            throw new DomainException("error.CourseLoad.empty.unitQuantity");
+        }
+	super.setUnitQuantity(unitQuantity);
     }
     
     @Override

@@ -161,7 +161,7 @@
 
 
 <logic:notEmpty name="component" property="infoSiteStudentsAndShiftByStudentGroupList">
-<html:form action="/executeEditStudentGroupsShift" method="get">
+<html:form action="/executeEditStudentGroupsShift" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <p class="mtop2 mbottom05">

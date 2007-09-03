@@ -13,7 +13,7 @@
 </html:messages>
 
 <table>
-<html:form action="/editDegreeCurricularPlan" method="get">
+<html:form action="/editDegreeCurricularPlan" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 <tr>

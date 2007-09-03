@@ -26,7 +26,7 @@
 
 <h3><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news"/></h3>
 
-<html:form action="/announcements/announcementsStartPageHandler.do" method="get">
+<html:form action="/announcements/announcementsStartPageHandler.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="news"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.recentBoardsTimeSpanSelection" property="recentBoardsTimeSpanSelection"/>
 	<table class="tstyle5 thright thlight thmiddle mvert05">
@@ -69,13 +69,13 @@
 
 <%-- 
 <h3 class="mtop2 mbottom05"><bean:message bundle="MESSAGING_RESOURCES" key="label.last.created.boards"/></h3>
-<html:form action="/announcements/announcementsStartPageHandler.do" method="get">
+<html:form action="/announcements/announcementsStartPageHandler.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="news"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.howManyAnnouncementsToShow" property="howManyAnnouncementsToShow"/>
 	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.presentationTier.Action.messaging.RecentBoardsTimeSpanSelection" /> 
 	<table class="tstyle5 mvert05">
 		<tr>
-			<td>Mostrar canais criados nos ï¿½ltimos:</td>
+			<td>Mostrar canais criados nos últimos:</td>
 			<td>
 			    <html:select property="recentBoardsTimeSpanSelection" onchange="this.form.submit();">
 	        		<html:options collection="values" property="value" labelProperty="label" />

@@ -50,7 +50,7 @@ function cleanSelect() {
 
 <logic:present name="infoStudentList"> 
 		
-<html:form action="/insertStudentsInAttendsSet" method="get">
+<html:form action="/insertStudentsInAttendsSet" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertStudentsInAttendsSet"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

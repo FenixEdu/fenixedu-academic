@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
@@ -23,7 +24,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         super.setType(PartyTypeEnum.COMPETENCE_COURSE_GROUP);
     }
     
-    public static Unit createNewInternalCompetenceCourseGroupUnit(String name, Integer costCenterCode, String acronym,
+    public static Unit createNewInternalCompetenceCourseGroupUnit(MultiLanguageString name, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification, 
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
@@ -38,7 +39,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     }
     
     @Override
-    public void edit(String unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
             YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, 
             Campus campus) {

@@ -24,6 +24,12 @@
 				<h:message for="name" styleClass="error"/>
 			</h:panelGroup>
 			
+			<h:outputText value="<b>#{bundle['message.name.en']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.unitName']}" id="nameEn" required="false" size="60" value="#{organizationalStructureBackingBean.unitNameEn}"/>
+				<h:message for="nameEn" styleClass="error"/>
+			</h:panelGroup>
+			
 			<h:outputText value="<b>#{bundle['message.costCenter']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.unitCostCenter']}" id="costCenter" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">

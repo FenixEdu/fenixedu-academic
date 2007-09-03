@@ -43,7 +43,7 @@
 </h2>
 
 
-<html:form action="/studentsByCurricularCourse.do" method="get">
+<html:form action="/studentsByCurricularCourse.do" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readStudents"/>
 <table>

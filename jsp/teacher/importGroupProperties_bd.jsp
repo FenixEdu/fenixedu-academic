@@ -203,7 +203,7 @@
 <table>
 <tr>
 
-	<html:form action="/acceptNewProjectProposal" method="get">
+	<html:form action="/acceptNewProjectProposal" >
 	<td>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.accept"/>                    		         	
 		</html:submit>
@@ -213,7 +213,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
-	<html:form action="/rejectNewProjectProposal" method="get">
+	<html:form action="/rejectNewProjectProposal" >
 	<td>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.reject"/>                    		         	
 		</html:submit>
@@ -223,7 +223,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
-	<html:form action="/viewNewProjectProposals" method="get">
+	<html:form action="/viewNewProjectProposals" >
 	<td>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>

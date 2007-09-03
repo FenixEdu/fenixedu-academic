@@ -11,12 +11,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
 public class EditUnit extends Service {
 
-    public void run(Integer unitID, String unitName, String unitCostCenter, String acronym,
+    public void run(Integer unitID, MultiLanguageString unitName, String unitCostCenter, String acronym,
 	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID)
     		throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {

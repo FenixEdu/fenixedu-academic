@@ -54,6 +54,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -81,23 +82,27 @@ public abstract class Party extends Party_Base {
 	}
     };
 
+    public abstract String getPartyPresentationName();
+
+    public abstract void setName(String name);
+    
+    public abstract String getName();
+    
     public Party() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-
+           
     @Override
-    public void setName(String name) {
-	if (StringUtils.isEmpty(name)) {
-	    throw new DomainException("error.party.empty.name");
+    public void setPartyName(MultiLanguageString partyName) {
+	if(partyName == null || partyName.isEmpty()) {
+	    throw new DomainException("error.Party.empty.partyName");
 	}
-	super.setName(name);
+	super.setPartyName(partyName);
     }
-
-    public abstract String getPartyPresentationName();
-
+    
     @Deprecated
     @Override
     final public Country getNationality() {
@@ -333,10 +338,8 @@ public abstract class Party extends Party_Base {
 	    throw new DomainException("error.party.cannot.be.deleted");
 	}
 
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
-	    ;
-	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules())
-	    ;
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
+	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
 
 	removePartyType();
 	removeRootDomainObject();

@@ -74,6 +74,10 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
         return contentsMap.get(language);
     }
 
+    public String getPreferedContent() {
+	return hasLanguage(LanguageUtils.getSystemLanguage()) ? getContent(LanguageUtils.getSystemLanguage()) : getContent();
+    }
+    
     public void setContent(Language language, String content) {
         if (language == null) {
             throw new IllegalArgumentException("language cannot be null");
@@ -130,7 +134,7 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 
         MultiLanguageString mls = new MultiLanguageString();
         String nullContent = StringUtils.EMPTY;
-
+               
         for (int i = 0; i < string.length();) {
 
             int length = 0;
@@ -149,7 +153,7 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 
             i = collonPosition + 1 + length;
         }
-
+              
         // HACK: MultiLanguageString should not allow null values as language
         if (mls.getAllContents().isEmpty()) {
             mls.setContent(Language.getApplicationLanguage(), nullContent);

@@ -177,52 +177,52 @@ public class Department extends Department_Base {
 	    }
 	}
     }
-    
+
     public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear,
 	    Class<? extends TeacherPersonalExpectationPeriod> clazz) {
-	
+
 	if(executionYear != null) {
-            for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
-                if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
-                    return period;
-                }
-            }
+	    for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
+		if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
+		    return period;
+		}
+	    }
 	}
 	return null;
     }
-    
+
     public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
 	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherAutoEvaluationDefinitionPeriod.class);
 	return period != null ? (TeacherAutoEvaluationDefinitionPeriod)period : null;
     }
-    
+
     public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
 	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherExpectationDefinitionPeriod.class);
 	return period != null ? (TeacherExpectationDefinitionPeriod)period : null;
     }
-    
+
     public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(ExecutionYear executionYear) {	
 	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsVisualizationPeriod.class);
 	return period != null ? (TeacherPersonalExpectationsVisualizationPeriod)period : null;
     }
-    
+
     public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(ExecutionYear executionYear) {	
 	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsEvaluationPeriod.class);
 	return period != null ? (TeacherPersonalExpectationsEvaluationPeriod)period : null;
     }
-    
+
     public List<Teacher> getPossibleTutors(){		
-    	List<Teacher> teachers = new ArrayList<Teacher>();
-    	
-    	for(Teacher teacher : this.getAllTeachers()) {
-    		if(teacher.canBeTutorOfDepartment(this)) {
-    			teachers.add(teacher);
-    		}
-    	}
-    	
-    	Collections.sort(teachers,Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-		return teachers;
-	
+	List<Teacher> teachers = new ArrayList<Teacher>();
+
+	for(Teacher teacher : this.getAllTeachers()) {
+	    if(teacher.canBeTutorOfDepartment(this)) {
+		teachers.add(teacher);
+	    }
+	}
+
+	Collections.sort(teachers,Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+	return teachers;
+
     }
 
     // -------------------------------------------------------------
@@ -269,48 +269,48 @@ public class Department extends Department_Base {
     }
 
     public void delete() {
-        removeDepartmentUnit();
-        removeRootDomainObject();
-        deleteDomainObject();
+	removeDepartmentUnit();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
-    
+
     /**
-	 * Joins the portuguese and english version of the department's name in a
-	 * MultiLanguageString for an easier handling of the name in a
-	 * internacionalized context.
-	 * 
-	 * @return a MultiLanguageString with the portuguese and english versions of
-	 *         the department's name
-	 */
+     * Joins the portuguese and english version of the department's name in a
+     * MultiLanguageString for an easier handling of the name in a
+     * internacionalized context.
+     * 
+     * @return a MultiLanguageString with the portuguese and english versions of
+     *         the department's name
+     */
     public MultiLanguageString getNameI18n() {
-    	return MultiLanguageString.i18n()
-    		.add("pt", getRealName())
-    		.add("en", getRealNameEn())
-    		.finish();
+	return MultiLanguageString.i18n()
+	.add("pt", getRealName())
+	.add("en", getRealNameEn())
+	.finish();
     }
-    
+
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
 	int count=0;
 	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
 	    count += course.getCompetenceCourseInformationChangeRequestsCount();
 	}
-	
+
 	return count;
     }
-    
+
     public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
 	int count=0;
 	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
 	    count += course.getDraftCompetenceCourseInformationChangeRequestsCount();
 	}
-	
+
 	return count;
     }
-    
+
     public boolean isUserMemberOfCompetenceCourseMembersGroup(Person person) {
 	return getCompetenceCourseMembersGroup().isMember(person);
     }
-    
+
     public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {
 	return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
     }

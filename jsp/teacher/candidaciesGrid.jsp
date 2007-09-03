@@ -12,7 +12,7 @@
 			<logic:present name="modalities">
 				<logic:present name="cases">
 						<h2><bean:message key="label.candicaciesGrid.Title"/></h2>
-						<html:form action="/showCandidacies.do" method="get">
+						<html:form action="/showCandidacies.do">
 							<table>
 								<tr>
 									<td colspan="2" class="infoop">
@@ -226,13 +226,13 @@
 										Detalhes
 									</th>
 									<th class="listClasses-header">
-										Nï¿½
+										Nº
 									</th>
 									<th class="listClasses-header">
 										Nome
 									</th>
 									<th class="listClasses-header">
-										Mï¿½dia
+										Média
 									</th>
 									<th class="listClasses-header">
 										Cadeiras Feitas
@@ -244,7 +244,7 @@
 										E-Mail
 									</th>
 									<th class="listClasses-header">
-										Seminï¿½rio
+										Seminário
 									</th>
 									<th class="listClasses-header">
 										Curso
@@ -259,7 +259,7 @@
 										Tema
 									</th>
 									<th class="listClasses-header">
-										Motivaï¿½ï¿½o
+										Motivação
 									</th>
 									<th class="listClasses-header">
 										Caso 1

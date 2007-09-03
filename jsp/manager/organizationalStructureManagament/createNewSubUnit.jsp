@@ -19,7 +19,7 @@
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>		
 			<h:outputText value="#{organizationalStructureBackingBean.unit.name}" escape="false"/>												
 		</h:panelGrid>	
-	
+		
 		<h:outputText value="<br/>" escape="false" />
 
 		<h:messages infoClass="success0" errorClass="error0" globalOnly="true" layout="table"/>
@@ -32,7 +32,13 @@
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.unitName']}" id="name" required="true" size="60" value="#{organizationalStructureBackingBean.unitName}"/>
-				<h:message for="name" styleClass="error"/>
+				<h:message for="name" styleClass="error"/>		
+			</h:panelGroup>
+			
+			<h:outputText value="<b>#{bundle['message.name.en']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.unitName']}" id="nameEn" required="false" size="60" value="#{organizationalStructureBackingBean.unitNameEn}"/>
+				<h:message for="nameEn" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="<b>#{bundle['message.costCenter']}</b>" escape="false"/>

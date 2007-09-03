@@ -31,7 +31,7 @@
 <p><span>(associada a <bean:write name="unit" property="name"/>)</span></p>
 --%>
 
-	<html:form action="/announcements/manageUnitAnnouncementBoard" method="get">
+	<html:form action="/announcements/manageUnitAnnouncementBoard" >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createBoard"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.keyUnit" property="keyUnit"/>
 		<table class="tstyle5 thlight thright">
