@@ -41,7 +41,7 @@
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="actualTutor" >
-	<p class="mtop2 mbottom2"><span class="error0"><b><bean:message key="label.student.tutorship.noActualTutor" bundle="APPLICATION_RESOURCES"/></b></span></p>
+	<p class="mvert2"><em><bean:message key="label.student.tutorship.noActualTutor" bundle="APPLICATION_RESOURCES"/>.</em></p>
 </logic:notPresent>
 
 

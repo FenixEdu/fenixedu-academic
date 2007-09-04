@@ -5,8 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="STUDENT">
-    <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
-   
+	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
+	<h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
+
+
 	<logic:notEmpty name="sourceRegistrationsForTransition">
 		<h3 class="mtop2 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsInTransition" bundle="STUDENT_RESOURCES"/></strong></h3>
 		<table class="tstyle2 indent1">
@@ -32,14 +34,15 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
- 	
+
+
     <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></h3>
     <logic:empty name="registrationsToEnrol">
-	<p class="indent1">    
-    	<em class="warning0">
-	    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
-    	</em>
-    </p>
+    	<p class="indent1">
+	    	<em class="warning0">
+		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
+	    	</em>
+    	</p>
     </logic:empty>
 	<logic:notEmpty name="registrationsToEnrol">
 		<fr:view name="registrationsToEnrol" schema="student.registrationsToList" >

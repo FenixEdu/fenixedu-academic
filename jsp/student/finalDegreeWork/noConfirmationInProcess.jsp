@@ -5,4 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<span class="error"><!-- Error messages go here --><bean:message key="error.message.NoConfirmationInProcessException"/></span>
+<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
+<h2><bean:message key="title.finalDegreeWork.attribution"/></h2>
+
+<p><em><!-- Error messages go here --><bean:message key="error.message.NoConfirmationInProcessException"/></em></p>

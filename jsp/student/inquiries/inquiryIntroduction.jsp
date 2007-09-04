@@ -5,25 +5,34 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="java.lang.StringBuilder" %>
 
-<noscript>
-	<span class="error"><!-- Error messages go here --><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
-</noscript>
-
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<logic:present name="inquiryMessageKey">
-	<p>
-		<span class="warning0"><bean:message name="inquiryMessageKey" bundle="INQUIRIES_RESOURCES"/></span>
-	</p>
-</logic:present>
+<noscript>
+	<em><bean:message key="title.student.portalTitle"/></em>
+	<h2><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h2>
+	<p><span class="warning0"><!-- Error messages go here --><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span></p>
+</noscript>
+
+
+<logic:notPresent name="executionPeriod">
+	<logic:present name="inquiryMessageKey">
+		<p>
+			<span class="warning0"><bean:message name="inquiryMessageKey" bundle="INQUIRIES_RESOURCES"/></span>
+		</p>
+	</logic:present>
+</logic:notPresent>
+
 
 <logic:present name="executionPeriod">
 	<logic:present name="executionPeriod" property="inquiryResponsePeriod">
-		<div class="infoop2 mtop1">
-			<bean:write name="executionPeriod" property="inquiryResponsePeriod.introduction" filter="false"/>
-		</div>
-		<br/>
+	
+		<logic:notEmpty name="executionPeriod" property="inquiryResponsePeriod.introduction">	
+			<div class="infoop2 mtop1">
+				<bean:write name="executionPeriod" property="inquiryResponsePeriod.introduction" filter="false"/>
+			</div>
+		</logic:notEmpty>
+
 		<logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 			<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 				<strong><bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/></strong>
@@ -40,6 +49,7 @@
 				</ul>
 			</logic:notEmpty>
 		</logic:present>
+		
 		<logic:present name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
 			<logic:notEmpty name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
 				<p><strong>
@@ -59,17 +69,19 @@
 		<logic:notPresent name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 			<logic:present name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>'>
 				<bean:define id="messageKey" name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>' />
-				<p><strong class="attention"><bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/></strong></p>
+				<p><em><bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/>.</em></p>
 			</logic:present>
 		</logic:notPresent>
 
 	</logic:present>
 
+
 	<logic:notPresent name="executionPeriod" property="inquiryResponsePeriod">
 		<p>
-			<bean:message key="message.inquiries.period.not.defined" bundle="INQUIRIES_RESOURCES"/>
+			<em><bean:message key="message.inquiries.period.not.defined" bundle="INQUIRIES_RESOURCES"/></em>
 		</p>
 	</logic:notPresent>
+
 
 </logic:present>
 

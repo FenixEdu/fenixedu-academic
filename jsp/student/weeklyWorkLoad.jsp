@@ -60,14 +60,12 @@
 			<th colspan="4">
 				<bean:message key="title.weekly.work.load.week"/>:
 			</th>
-			<th>
-			</th>
 		</tr>
 		<tr>
 			<th>
 				<bean:message key="title.execution.course"/>
 			</th>
-			<th" title="<%= contact_tooltip %>">
+			<th title="<%= contact_tooltip %>">
 				<bean:message key="title.weekly.work.load.contact"/>
 			</th>
 			<th title="<%= autonomousStudy_tooltip %>">
@@ -79,14 +77,14 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<bean:message key="no.previouse.response.period"/>
+				<em><bean:message key="no.previouse.response.period"/></em>
 			</td>
 		</tr>
 	</table>
 </logic:notPresent>
 
 <p class="mbottom0">
-	<span class="attention"><bean:message key="label.attention.nonCaps"/>:</span> <bean:message key="label.attention.text"/>
+	<em><bean:message key="label.attention.nonCaps"/>: <bean:message key="label.attention.text"/></em>
 </p>
 
 <logic:present name="firstAttends" property="responseWeek">

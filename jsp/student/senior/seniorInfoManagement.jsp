@@ -8,6 +8,7 @@
 
 <logic:present role="STUDENT">
 
+	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
 	
 	<logic:empty name="senior">

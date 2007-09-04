@@ -9,6 +9,7 @@
 
 	<h:form>
 		<fc:viewState binding="#{studentCalendar.viewState}"/>
+		<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
 		
 		<h:panelGrid styleClass="tstyle5" columns="2">
@@ -49,7 +50,7 @@
 		<h:outputText value="<br/>" escape="false"/>
 		
 		<h:panelGroup rendered="#{empty studentCalendar.calendarStartDate || empty studentCalendar.calendarEndDate}">
-			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="warning0" />
+			<h:outputText value="<em>#{bundle['error.noAttendsForStudent']}</em>" escape="false"/>
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{!empty studentCalendar.calendarStartDate && !empty studentCalendar.calendarEndDate}">		
