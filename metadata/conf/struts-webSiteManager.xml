@@ -45,7 +45,7 @@
       </action>
 
       <action path="/manageInstitutionSite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-        <forward name="Success" path="announcementsManagement.do?method=start" redirect="true"/>
+        <forward name="Success" path="/announcementsManagement.do?method=start" redirect="false"/>
       </action>
 
 	  <action path="/manageUnitSite" 
