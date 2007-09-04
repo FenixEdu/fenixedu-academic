@@ -88,7 +88,7 @@ function invertSelect(){
 					<bean:write name="student" property="student.person.email"/>
 				</td>
 				<td>
-					<bean:write name="student" property="activeOrConcludedStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
+					<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/>
 				</td>
 				<td>
 					<dt:format pattern="dd/MM/yyyy HH:mm:ss">
