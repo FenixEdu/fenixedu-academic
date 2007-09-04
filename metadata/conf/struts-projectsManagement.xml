@@ -47,8 +47,8 @@
   <global-forwards type="org.apache.struts.action.ActionForward">
     <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     <forward name="redirect" path="/redirect.do" contextRelative="true"/>
-    <forward name="index" path="/index.do" redirect="true"/>
-    <forward name="institucionalProjectIndex" path="/institucionalProjectIndex.do" redirect="true"/>
+    <forward name="index" path="/index.do" />
+    <forward name="institucionalProjectIndex" path="/institucionalProjectIndex.do" />
   </global-forwards>
 
   <!-- ========== Action Mapping Definitions ============================== -->
