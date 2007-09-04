@@ -54,13 +54,13 @@
 	</logic:empty>
 	
 	
-	<p class="mtop15"><strong><bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.internalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	
 	<logic:notEmpty name="dismissalBean" property="enrolments">
 		<fr:edit id="internalEnrolments" name="dismissalBean" property="enrolments" schema="student.Dismissal.choose.internal.enrolments">
 			<fr:layout name="tabular-editable">
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.startDate,enrolment.name"/>
-				<fr:property name="classes" value="tstyle4"/>
+				<fr:property name="classes" value="tstyle4 mtop05"/>
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
@@ -71,8 +71,8 @@
 		</p>
 	</logic:empty>
 	
-	<p class="mtop2">
-		<html:submit onclick="this.form.method.value='chooseEquivalents'; return true;"><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
+	<p>
+		<html:submit onclick="this.form.method.value='chooseEquivalents'; return true;"><bean:message key="button.continue" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>	
 		<html:submit onclick="this.form.method.value='manage'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</p>
 </fr:form>

@@ -52,30 +52,28 @@
 		<bean:define id="courseGroup" name="dismissalBean" property="courseGroup" />
 		<ul><li><bean:write name="courseGroup" property="name"/> (Max: <bean:write name="courseGroup" property="maxEctsCredits"/> <bean:message key="label.ects" bundle="ACADEMIC_OFFICE_RESOURCES"/>)</li></ul>
 	</logic:notEmpty>
-	
+
 	<logic:notEmpty name="dismissalBean" property="dismissals">
 		<fr:view name="dismissalBean" property="dismissals">
 			<fr:layout name="list">
-				<fr:property name="classes" value="tstyle4 thlight" />
+				<fr:property name="classes" value="tstyle4 thright thlight" />
 				<fr:property name="eachLayout" value="values" />
 				<fr:property name="eachSchema" value="DismissalBean.SelectedCurricularCourse" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
 	
-	<br/>
-	<br/>
 	<bean:define id="dismissalType" name="dismissalBean" property="dismissalType.name"/>
 	<fr:edit id="dismissalBean-information" name="dismissalBean" schema="<%= "DismissalBean.DismissalType." + dismissalType %>">
 		<fr:layout>
-			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="classes" value="tstyle4 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/studentDismissals.do?method=stepThree"/>
 	</fr:edit>
 
-	<p class="mtop15">
-		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	<p>
+		<html:submit><bean:message key="button.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		<html:cancel onclick="this.form.method.value='stepTwo'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 		<html:cancel onclick="this.form.method.value='manage'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 	</p>
