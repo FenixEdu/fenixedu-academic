@@ -62,6 +62,7 @@ padding: 5px 2px;
 .showinfo3 td {
 border-bottom: 1px solid #ddd;
 padding: 5px 2px;
+background: #fff;
 }
 
 .showpersonid {
@@ -631,6 +632,7 @@ a.color007b4d { color: #007b4d !important; }
 .highlight4 { background-color: #dfb ; } /* verde */
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
 .highlight6 { background-color: #ffc; }
+.highlight7 { background-color: #fffadd !important; } /* amarelo */
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fcfae4; }
 .bgcolor3 { background-color: #fafaf6; }
@@ -1262,10 +1264,10 @@ background-position: 1px 0;
 }
 
 
-.se_groups { background-color: #f3f3f3; color: #000; font-size: 1.0em; }
-.se_enrolled { background-color: #e5f7e3; color: #056300; }
-.se_temporary { background-color: #fbfbd9; color: #91915f; }
-.se_impossible { background-color: #ffe9e2; color: #be5a39; }
+table.showinfo3 tr.se_groups td { background-color: #f3f3f3 !important; color: #000; font-size: 1.0em; }
+table.showinfo3 tr.se_enrolled td { background-color: #e5f7e3 !important; color: #056300; }
+table.showinfo3 tr.se_temporary td { background-color: #fbfbd9 !important; color: #91915f; }
+table.showinfo3 tr.se_impossible td { background-color: #ffe9e2 !important; color: #be5a39; }
 
 
 
@@ -1826,7 +1828,6 @@ select.degrees {
 	}
 
 .infoop2 p { margin: 0.25em 0; }
-
 
 .infoop3 {
 	background-color: #fafade;
