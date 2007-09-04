@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
+
+<em><bean:message key="department" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 <logic:notEmpty name="protocolHistories">
@@ -16,7 +18,7 @@
 <logic:notEmpty name="UserView" property="person.protocols">
 	<fr:view name="UserView" property="person.protocols" schema="show.protocol.toList">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1"/>
+			<fr:property name="classes" value="tstyle1 thlight"/>
 			<fr:property name="link(view)" value="/protocols.do?method=viewProtocol" />
 			<fr:property name="key(view)" value="link.view" />
 			<fr:property name="param(view)" value="idInternal" />
