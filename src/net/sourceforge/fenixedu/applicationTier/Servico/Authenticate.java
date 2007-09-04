@@ -17,6 +17,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -30,6 +31,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
@@ -234,12 +236,37 @@ public class Authenticate extends Service implements Serializable {
 	}
     }
 
+    public static class RegisterUserLoginThread extends Thread implements TransactionalCommand {
+
+        private final Integer userID;
+        private final String remoteHost;
+
+        public RegisterUserLoginThread(final User user, final String remoteHost) {
+            userID = user.getIdInternal();
+            this.remoteHost = remoteHost;
+        }
+
+        public void run() {
+            Transaction.withTransaction(this);
+        }
+
+        public void doIt() {
+            final User user = rootDomainObject.readUserByOID(userID);
+            user.setLastLoginHost(user.getCurrentLoginHost());
+            user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
+            user.setCurrentLoginDateTimeDateTime(new DateTime());
+            user.setCurrentLoginHost(remoteHost);
+        }
+
+        protected static void runThread(final User user, final String remoteHost) {
+            final RegisterUserLoginThread registerUserLoginThread = new RegisterUserLoginThread(user, remoteHost);
+            registerUserLoginThread.start();
+        }
+    }
+
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
-	User user = person.getUser();
-	user.setLastLoginHost(user.getCurrentLoginHost());
-	user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
-	user.setCurrentLoginDateTimeDateTime(new DateTime());
-	user.setCurrentLoginHost(remoteHost);
+	final User user = person.getUser();
+	RegisterUserLoginThread.runThread(user, remoteHost);
     }
 
     public static CASReceipt getCASReceipt(final String casTicket, final String requestURL)

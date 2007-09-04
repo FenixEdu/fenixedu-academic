@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -7,10 +8,76 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpir
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
 public class AuthenticateKerberos extends Authenticate {
+
+    public static abstract class WorkerThread extends Thread implements TransactionalCommand {
+
+        private final Integer personID;
+
+        public WorkerThread(final Person person) {
+            personID = person.getIdInternal();
+        }
+
+        public void run() {
+            Transaction.withTransaction(this);
+        }
+
+        public void doIt() {
+            final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+            doIt(person);
+        }
+
+        protected abstract void doIt(final Person person);
+
+        protected static void runThread(final WorkerThread workerThread) {
+            workerThread.start();
+            try {
+                workerThread.join();
+            } catch (InterruptedException e) {
+                throw new Error(e);
+            }
+        }
+    }
+
+    public static class SetPasswordThread extends WorkerThread {
+
+        private final String password;
+
+        public SetPasswordThread(final Person person, final String password) {
+            super(person);
+            this.password = password;
+        }
+
+        @Override
+        public void doIt(final Person person) {
+            person.setPassword(PasswordEncryptor.encryptPassword(password));
+        }
+
+        public static void setPassword(final Person person, final String password) {
+            runThread(new SetPasswordThread(person, password));
+        }
+    }
+
+    public static class SetIsPassKerberos extends WorkerThread {
+
+        public SetIsPassKerberos(final Person person) {
+            super(person);
+        }
+
+        @Override
+        public void doIt(final Person person) {
+            person.setIsPassInKerberos(true);
+        }
+
+        public static void setIsPassKerberos(final Person person) {
+            runThread(new SetIsPassKerberos(person));
+        }
+    }
+
 
     public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
@@ -25,7 +92,7 @@ public class AuthenticateKerberos extends Authenticate {
                 try {
                     Script.verifyPass(person.getIstUsername(), password);
                     if (!PasswordEncryptor.areEquals(person.getPassword(), password)) {
-                        person.setPassword(PasswordEncryptor.encryptPassword(password));
+                        SetPasswordThread.setPassword(person, password);
                     }
                     return getUserView(person, requestURL);
                 } catch (KerberosException ke) {
@@ -45,7 +112,7 @@ public class AuthenticateKerberos extends Authenticate {
                 if (userView != null) {
                     try {
                         Script.createUser(person.getIstUsername(), password);
-                        person.setIsPassInKerberos(true);
+                        SetIsPassKerberos.setIsPassKerberos(person);
                     } catch (ExcepcaoPersistencia e) {
 
                     } catch (KerberosException ke) {

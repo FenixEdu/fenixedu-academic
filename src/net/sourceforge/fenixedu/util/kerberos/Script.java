@@ -23,9 +23,12 @@ public class Script {
 
     public static void runCommand(final String commandString, final String user, final String pass)
     		throws ExcepcaoPersistencia, KerberosException {
+        long time1 = System.currentTimeMillis();
 	final String command = createCommand(commandString, user);
-
+	long time2 = System.currentTimeMillis();
 	ScriptResult scriptResult = runCmd(command, pass);
+	long time3 = System.currentTimeMillis();
+	outputRunCommandTime(commandString, time1, time2, time3);
 
 	if (scriptResult.getExitCode() == -1) {
 	    throw new ExcepcaoPersistencia(scriptResult.getReturnCode());
@@ -36,6 +39,18 @@ public class Script {
 	}
     }
     
+    private static void outputRunCommandTime(final String commandString, final long time1, final long time2, final long time3) {
+        System.out.print("Command ");
+        System.out.print(commandString);
+        System.out.print(" took ");
+        System.out.print(time2 - time1);
+        System.out.print(" + ");
+        System.out.print(time3 - time2);
+        System.out.print(" = ");
+        System.out.print(time3 - time1);
+        System.out.print(" (ms)");
+    }
+
     public static DateTime returnExpirationDate(String user) throws ExcepcaoPersistencia, KerberosException {
 	final String command = createCommand("passExpirationScript", user);
 	final ScriptResult scriptResult = runCmd(command, "");

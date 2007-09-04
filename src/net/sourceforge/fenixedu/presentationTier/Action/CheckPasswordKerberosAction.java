@@ -54,12 +54,13 @@ public class CheckPasswordKerberosAction extends FenixAction {
 		result = e.getMessage();
 	    } catch (ExcepcaoAutenticacao e) {
 		result = KerberosException.WRONG_PASSWORD;
-	    } catch (Exception e) {
+	    } catch (Throwable e) {
 		result = UNEXPECTED_ERROR_MESSAGE;
 	    }
 
 	    response.setContentType("text/html");
 	    response.getOutputStream().write(result.getBytes());
+	    response.getOutputStream().close();
 	}
 
 	return null;
