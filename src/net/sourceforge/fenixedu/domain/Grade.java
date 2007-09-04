@@ -40,7 +40,7 @@ public class Grade implements Serializable {
     }
 
     private void setValue(String value) {
-        this.value = value.trim();
+        this.value = value.trim().toUpperCase();
     }
 
     public GradeScale getGradeScale() {
@@ -81,7 +81,7 @@ public class Grade implements Serializable {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(gradeScale);
 	stringBuilder.append(":");
-	stringBuilder.append(value.trim());
+	stringBuilder.append(value.trim().toUpperCase());
 	
 	return stringBuilder.toString();	
     }
