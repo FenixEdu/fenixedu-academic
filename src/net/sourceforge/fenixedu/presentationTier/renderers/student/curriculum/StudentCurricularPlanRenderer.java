@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
@@ -819,14 +820,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private String getPresentationNameFor(final Enrolment enrolment) {
-	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
-		    .getCode()
-		    + " - " : "";
-	    if (enrolment.isOptional()) {
+	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse().getCode() + " - " : "";
+		    
+	    if (enrolment instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
-
-		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
-			+ optionalEnrolment.getCurricularCourse().getName() + ")";
+		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code + optionalEnrolment.getCurricularCourse().getName() + ")";
 	    } else {
 		return code + enrolment.getName().getContent();
 	    }
