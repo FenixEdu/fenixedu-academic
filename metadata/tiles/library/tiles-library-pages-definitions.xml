@@ -27,5 +27,13 @@
 	<definition name="theses-export-confirm" extends="definition.library.master">
 		<put name="body" value="/library/theses/exportConfirm.jsp"/>
 	</definition>	
+	
+	<definition name="show-users" extends="definition.library.master">
+		<put name="body" value="/library/cards/showUsers.jsp"/>
+	</definition>
+	
+	<definition name="edit-card" extends="definition.library.master">
+		<put name="body" value="/library/cards/editCard.jsp"/>
+	</definition>
 
 </tiles-definitions>

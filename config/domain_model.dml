@@ -4433,6 +4433,14 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Empl
 	Double value;
 }
 
+class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforge.fenixedu.domain.DomainObject {
+	String userName;
+	String unitName;	
+	RoleType role;
+	Integer pin;
+	YearMonthDay validUntil;
+}
+
 /*
  * Relations definitions
  * 
@@ -12209,4 +12217,16 @@ relation EmployeeMonthlyBonusInstallmentRootDomainObject {
 	net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment playsRole employeeMonthlyBonusInstallments{
 		multiplicity *;
 	}
+}
+
+relation LibraryCardRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.library.LibraryCard playsRole libraryCards{
+		multiplicity *;
+	}
+}
+
+relation LibraryCardPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.library.LibraryCard playsRole libraryCard;
 }

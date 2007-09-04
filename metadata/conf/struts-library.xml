@@ -53,6 +53,13 @@
     	<action path="/theses/exportTheses" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.library.theses.ExportThesesDA">
     		<forward name="confirmation" path="theses-export-confirm"/>
     	</action>
+    	
+    	<action path="/cardManagement" 
+    			parameter="method"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryCardManagementDispatchAction">
+    		<forward name="show-users" path="show-users"/>
+    		<forward name="edit-card" path="edit-card"/>    		
+    	</action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

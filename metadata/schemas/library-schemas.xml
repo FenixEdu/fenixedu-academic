@@ -49,3 +49,38 @@
     <slot name="title" key="label.thesis.title" layout="short"/>
     <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
 </schema>
+
+<schema name="library.card.list" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
+    <slot name="roleType" key="label.card.category"/>
+    <slot name="number" key="label.card.number"/>
+    <slot name="userName" key="label.card.name"/>
+    <slot name="unitName" key="label.card.unitName"/>    
+    <slot name="phone" key="label.card.phone"/>
+    <slot name="mobile" key="label.card.mobile"/>
+</schema>
+
+<schema name="library.card.generate" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
+	<slot name="number" key="label.card.number" read-only="true"/>
+	<slot name="pin" key="label.card.pin" read-only="true"/>	
+	<slot name="userName" key="label.card.name">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>
+	</slot>
+	<slot name="unitName" key="label.card.unitName" read-only="true"/>
+	<slot name="roleType" key="label.card.category" read-only="true"/>
+</schema>
+
+<schema name="library.card.generate.unitNames" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
+	<slot name="number" key="label.card.number" read-only="true"/>
+	<slot name="pin" key="label.card.pin" read-only="true"/>	
+	<slot name="userName" key="label.card.name">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>
+	</slot>
+	<slot name="unitName" layout="menu-select" key="label.card.unitName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="java.lang.String" />
+		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitNamesProvider" />
+	</slot>
+	<slot name="roleType" key="label.card.category" read-only="true"/>
+</schema>
