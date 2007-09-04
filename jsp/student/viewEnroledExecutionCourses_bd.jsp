@@ -12,7 +12,7 @@
 	<logic:empty name="executionCourses">
 		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="label.student.groupEnrollment.title"/></h2>
-		<p class="mtop15"><span class="warning0"><bean:message key="message.executionCourses.not.available"/></span></p>
+		<p class="mtop15"><em><bean:message key="message.executionCourses.not.available"/></em></p>
 		<p>
 			<span class="error"><!-- Error messages go here --><html:errors /></span>
 		</p>
