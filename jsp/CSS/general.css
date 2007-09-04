@@ -62,7 +62,7 @@ padding: 5px 2px;
 .showinfo3 td {
 border-bottom: 1px solid #ddd;
 padding: 5px 2px;
-background: #fff;
+background-color: #fff;
 }
 
 .showpersonid {
@@ -1265,9 +1265,9 @@ background-position: 1px 0;
 
 
 table.showinfo3 tr.se_groups td { background-color: #f3f3f3 !important; color: #000; font-size: 1.0em; }
-table.showinfo3 tr.se_enrolled td { background-color: #e5f7e3 !important; color: #056300; }
-table.showinfo3 tr.se_temporary td { background-color: #fbfbd9 !important; color: #91915f; }
-table.showinfo3 tr.se_impossible td { background-color: #ffe9e2 !important; color: #be5a39; }
+table.showinfo3 tr td.se_enrolled { background-color: #e5f7e3 !important; color: #056300; }
+table.showinfo3 tr td.se_temporary { background-color: #fbfbd9 !important; color: #91915f; }
+table.showinfo3 tr td.se_impossible { background-color: #ffe9e2 !important; color: #be5a39; }
 
 
 
