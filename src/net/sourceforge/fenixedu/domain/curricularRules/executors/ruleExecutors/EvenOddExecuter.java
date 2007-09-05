@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class EvenOddExecuter extends CurricularRuleExecutor {
 
@@ -23,11 +24,11 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 	
-	if(evenOddRule.getEven() && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) == 0) || 
-		!evenOddRule.getEven() && ((enrolmentContext.getRegistration().getStudent().getNumber().intValue() & 1) != 0)) {
+	Integer studentNumber = enrolmentContext.getRegistration().getStudent().getNumber();
+	if(evenOddRule.getEven() && isEven(studentNumber) || 
+		!evenOddRule.getEven() && isOdd(studentNumber)) {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
-	
 	return createFalseRuleResult(evenOddRule, sourceDegreeModuleToEvaluate);
     }
 
@@ -42,6 +43,13 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
 		"curricularRules.ruleExecutors.EvenOddExecutor.invalid.number", rule.getEvenOddString(), rule.getDegreeModuleToApplyRule()
 			.getName());
     }
+    
+    private boolean isEven(int number) {
+	return (number & 1) == 0;
+    }
 
+    private boolean isOdd(int number) {
+	return (number & 1) != 0;
+    }
 
 }
