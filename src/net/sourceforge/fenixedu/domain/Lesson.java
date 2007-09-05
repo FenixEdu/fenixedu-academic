@@ -82,10 +82,6 @@ public class Lesson extends Lesson_Base {
     private void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
 	    FrequencyType frequency, Boolean createLessonInstances, YearMonthDay dayToNotCreateInstance) {			
 
-	if(wasFinished()) {
-	    throw new DomainException("error.Lesson.already.finished");
-	}
-
 	if(newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
 	    throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
 	}
@@ -237,12 +233,10 @@ public class Lesson extends Lesson_Base {
 	    Boolean createLessonInstances, GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod, 
 	    YearMonthDay dayToNotCreateInstance) {
 
-	if(!wasFinished()) {
-	    removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	    
-	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
-	    refreshPeriod(newBeginDate, newEndDate);
-	    createAllLessonInstances(instanceDates, dayToNotCreateInstance);
-	}
+	removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	    
+	SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
+	refreshPeriod(newBeginDate, newEndDate);
+	createAllLessonInstances(instanceDates, dayToNotCreateInstance);	
     }
 
     private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates, YearMonthDay dayToNotCreateInstance) {
@@ -307,38 +301,50 @@ public class Lesson extends Lesson_Base {
 
     private void refreshPeriod(YearMonthDay newBeginDate, YearMonthDay newEndDate) {	
 
-	if(!wasFinished() && newBeginDate != null && newEndDate != null && !newBeginDate.isAfter(newEndDate)) {
+	if(newBeginDate != null && newEndDate != null && !newBeginDate.isAfter(newEndDate)) {
 
+	    boolean newPeriod = false;
 	    OccupationPeriod currentPeriod = getPeriod();
-	    OccupationPeriod periodToDelete = currentPeriod;
+	    OccupationPeriod oldFirstPeriod = currentPeriod;
 
-	    if(!currentPeriod.hasNextPeriod()) {		
+	    if(currentPeriod == null || !currentPeriod.hasNextPeriod()) {		
 		setPeriod(new OccupationPeriod(newBeginDate, newEndDate));
-		periodToDelete.delete();
+		newPeriod = true;
 
 	    } else {
 
-		boolean newPeriod = false;
 		while(currentPeriod != null) {
-		    if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {			
-			if(!currentPeriod.getStartYearMonthDay().isAfter(newBeginDate)) {
-			    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));
-			    newPeriod = true;
-			    
-			} else if(!currentPeriod.getStartYearMonthDay().isAfter(newEndDate)){
-			    setPeriod(getNewNestedPeriods(currentPeriod, currentPeriod.getStartYearMonthDay(), newEndDate));
-			    newPeriod = true;
-			} 			
+
+		    if(currentPeriod.getStartYearMonthDay().isAfter(newEndDate)) {
 			break;
-		    }	
-		    currentPeriod = currentPeriod.getNextPeriod();
-		}
+		    }
 
-		if(!newPeriod) {
-		    removeLessonSpaceOccupationAndPeriod();		    
-		}		   
+		    if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {		
+			
+			if(!currentPeriod.getStartYearMonthDay().isAfter(newBeginDate)) {
+			    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));			   		
+			    
+			} else {
+			    if(currentPeriod.equals(oldFirstPeriod)) {
+				setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));
+			    } else {
+				setPeriod(getNewNestedPeriods(currentPeriod, currentPeriod.getStartYearMonthDay(), newEndDate));
+			    }    
+			}
 
-		periodToDelete.delete();
+			newPeriod = true;
+			break;
+		    }
+		    currentPeriod = currentPeriod.getNextPeriod();		    		   
+		}				  
+	    }	    
+	    
+	    if(!newPeriod) {
+		removeLessonSpaceOccupationAndPeriod();		    
+	    }
+	    
+	    if(oldFirstPeriod != null) {
+		oldFirstPeriod.delete();
 	    }
 	}
     }
@@ -365,14 +371,13 @@ public class Lesson extends Lesson_Base {
 		    break;		    
 
 		} else {
-		    OccupationPeriod newNextPeriod = new OccupationPeriod(
-			    currentPeriod.getNextPeriod().getStartYearMonthDay(), 
-			    currentPeriod.getNextPeriod().getEndYearMonthDay());
+		    OccupationPeriod newNextPeriod = new OccupationPeriod(currentPeriod.getNextPeriod().getStartYearMonthDay(), currentPeriod.getNextPeriod().getEndYearMonthDay());
 		    newPeriodPointer.setNextPeriod(newNextPeriod);
 		    newPeriodPointer = newNextPeriod;
 		    currentPeriod = currentPeriod.getNextPeriod();
 		}
 	    }
+
 	    return newPeriod;
 	}		
     }
