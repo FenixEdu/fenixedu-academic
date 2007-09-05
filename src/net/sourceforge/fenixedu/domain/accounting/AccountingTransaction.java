@@ -26,8 +26,7 @@ import org.joda.time.DateTime;
 public class AccountingTransaction extends AccountingTransaction_Base {
 
     public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<AccountingTransaction>() {
-	public int compare(AccountingTransaction leftAccountingTransaction,
-		AccountingTransaction rightAccountingTransaction) {
+	public int compare(AccountingTransaction leftAccountingTransaction, AccountingTransaction rightAccountingTransaction) {
 	    int comparationResult = leftAccountingTransaction.getWhenRegistered().compareTo(
 		    rightAccountingTransaction.getWhenRegistered());
 	    return (comparationResult == 0) ? leftAccountingTransaction.getIdInternal().compareTo(
@@ -46,11 +45,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	init(responsibleUser, event, debit, credit, transactionDetail);
     }
 
-    private AccountingTransaction(User responsibleUser, Entry debit, Entry credit,
-	    AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
+    private AccountingTransaction(User responsibleUser, Entry debit, Entry credit, AccountingTransactionDetail transactionDetail,
+	    AccountingTransaction transactionToAdjust) {
 	this();
-	init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, transactionDetail,
-		transactionToAdjust);
+	init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, transactionDetail, transactionToAdjust);
     }
 
     protected void init(User responsibleUser, Event event, Entry debit, Entry credit,
@@ -77,8 +75,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	    throw new DomainException("error.accounting.accountingTransaction.event.cannot.be.null");
 	}
 	if (responsibleUser == null) {
-	    throw new DomainException(
-		    "error.accounting.accountingTransaction.responsibleUser.cannot.be.null");
+	    throw new DomainException("error.accounting.accountingTransaction.responsibleUser.cannot.be.null");
 	}
 	if (debit == null) {
 	    throw new DomainException("error.accounting.accountingTransaction.debit.cannot.be.null");
@@ -126,14 +123,12 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     @Override
     public void setAdjustedTransaction(AccountingTransaction adjustedTransaction) {
-	throw new DomainException(
-		"error.accounting.accountingTransaction.cannot.modify.adjustedTransaction");
+	throw new DomainException("error.accounting.accountingTransaction.cannot.modify.adjustedTransaction");
     }
 
     @Override
     public void setTransactionDetail(AccountingTransactionDetail transactionDetail) {
-	throw new DomainException(
-		"error.accounting.AccountingTransaction.cannot.modify.transactionDetail");
+	throw new DomainException("error.accounting.AccountingTransaction.cannot.modify.transactionDetail");
     }
 
     @Override
@@ -195,25 +190,33 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	throw new DomainException("error.accounting.accountingTransaction.transaction.data.is.corrupted");
     }
 
-    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode,
-	    Money amountToReimburse) {
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, true);
+    }
 
-	if (!canApplyReimbursement(amountToReimburse)) {
-	    throw new DomainException(
-		    "error.accounting.AccountingTransaction.cannot.reimburse.events.that.may.open");
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, false);
+    }
+
+    private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+	    boolean checkRules) {
+
+	if (checkRules && !canApplyReimbursement(amountToReimburse)) {
+	    throw new DomainException("error.accounting.AccountingTransaction.cannot.reimburse.events.that.may.open");
 	}
 
 	if (!getToAccountEntry().canApplyReimbursement(amountToReimburse)) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.AccountingTransaction.amount.to.reimburse.exceeds.entry.amount",
-		    getToAccountEntry().getDescription());
+		    "error.accounting.AccountingTransaction.amount.to.reimburse.exceeds.entry.amount", getToAccountEntry()
+			    .getDescription());
 	}
 
-	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(
-		EntryType.ADJUSTMENT, amountToReimburse.negate(), getToAccount()), new Entry(
-		EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
-		new AccountingTransactionDetail(new DateTime(), paymentMode), this);
-
+	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(EntryType.ADJUSTMENT,
+		amountToReimburse.negate(), getToAccount()),
+		new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()), new AccountingTransactionDetail(
+			new DateTime(), paymentMode), this);
+	
 	getEvent().recalculateState(getWhenRegistered());
 
 	return transaction;

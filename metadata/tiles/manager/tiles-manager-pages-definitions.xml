@@ -970,5 +970,24 @@
         <put name="body" value="/manager/curriculum/curriculumLines/location/chooseNewLocation.jsp"></put>
     </definition>
     <!-- End: Manage Curriculum Line Location -->
+    
+    <!-- Start: Payments Management -->
+    <definition name="payments.events.chooseStudent" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/payments/events/chooseStudent.jsp"></put>
+    </definition>
+    <definition name="payments.events.showEvents" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/payments/events/showEvents.jsp"></put>
+    </definition>
+    <definition name="payments.events.editCancelEventJustification" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/payments/events/editCancelEventJustification.jsp"></put>
+    </definition>
+    <definition name="payments.events.showPaymentsForEvent" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/payments/events/showPaymentsForEvent.jsp"></put>
+    </definition>
+    <definition name="payments.events.chooseTargetEventForPaymentsTransfer" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"></put>
+    </definition>    
+    
+	<!-- End: Payments Management -->
 	
 </tiles-definitions>

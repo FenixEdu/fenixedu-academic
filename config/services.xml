@@ -12319,5 +12319,23 @@
 		<filterChains>
 			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
-    </service>    
+    </service>
+    <service>
+		<name>CancelEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelEvent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+	<name>TransferPaymentsToOtherEventAndCancel</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

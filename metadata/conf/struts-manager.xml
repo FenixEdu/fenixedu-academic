@@ -2395,6 +2395,23 @@
 			<forward name="backToChooseStudentCurricularPlan" path="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" />
 		</action>
 		<!-- End: Curriculum Lines Location Management -->
+		
+		
+		<!-- Begin: Payments Management -->
+        <action path="/payments"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsManagementDA">
+			    
+			<forward name="chooseStudent" path="payments.events.chooseStudent" />    
+			<forward name="showEvents" path="payments.events.showEvents" />    
+			<forward name="editCancelEventJustification" path="payments.events.editCancelEventJustification" />
+			<forward name="showPaymentsForEvent" path="payments.events.showPaymentsForEvent" />
+			<forward name="chooseTargetEventForPaymentsTransfer" path="payments.events.chooseTargetEventForPaymentsTransfer" />
+			
+			    
+		</action>
+		<!-- End: Payments Management -->
 
 	</action-mappings>
  

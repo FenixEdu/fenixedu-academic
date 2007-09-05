@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -107,14 +108,12 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public final Set<Entry> process(final User responsibleUser,
-	    final AccountingEventPaymentCode paymentCode, final Money amountToPay,
-	    final SibsTransactionDetailDTO transactionDetailDTO) {
+    public final Set<Entry> process(final User responsibleUser, final AccountingEventPaymentCode paymentCode,
+	    final Money amountToPay, final SibsTransactionDetailDTO transactionDetailDTO) {
 
 	checkConditionsToProcessEvent(transactionDetailDTO);
 
-	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay,
-		transactionDetailDTO);
+	final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
 
@@ -132,23 +131,20 @@ public abstract class Event extends Event_Base {
 	return transactionDetail instanceof SibsTransactionDetailDTO;
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
 
-	throw new UnsupportedOperationException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Event.operation.not.supported");
+	throw new UnsupportedOperationException("error.net.sourceforge.fenixedu.domain.accounting.Event.operation.not.supported");
     }
 
     protected void closeEvent() {
 	final AccountingTransaction accountingTransaction = getLastNonAdjustingAccountingTransaction();
-	changeState(EventState.CLOSED, accountingTransaction == null ? new DateTime()
-		: accountingTransaction.getWhenRegistered());
+	changeState(EventState.CLOSED, accountingTransaction == null ? new DateTime() : accountingTransaction.getWhenRegistered());
     }
 
     public AccountingTransaction getLastNonAdjustingAccountingTransaction() {
 	if (hasAnyNonAdjustingAccountingTransactions()) {
-	    return Collections.max(getNonAdjustingTransactions(),
-		    AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+	    return Collections.max(getNonAdjustingTransactions(), AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
 	}
 
 	return null;
@@ -281,8 +277,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    public boolean hasNonAdjustingAccountingTransactions(
-	    final AccountingTransaction accountingTransactions) {
+    public boolean hasNonAdjustingAccountingTransactions(final AccountingTransaction accountingTransactions) {
 	return getNonAdjustingTransactions().contains(accountingTransactions);
     }
 
@@ -300,8 +295,7 @@ public abstract class Event extends Event_Base {
 
     public Money getPayedAmount(final DateTime until) {
 	if (isCancelled()) {
-	    throw new DomainException(
-		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
 
 	Money payedAmount = Money.ZERO;
@@ -316,8 +310,7 @@ public abstract class Event extends Event_Base {
 
     private Money getPayedAmountUntil(final int civilYear) {
 	if (isCancelled()) {
-	    throw new DomainException(
-		    "error.accounting.Event.cannot.calculatePayedAmountUntil.on.invalid.events");
+	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmountUntil.on.invalid.events");
 	}
 
 	Money result = Money.ZERO;
@@ -332,15 +325,13 @@ public abstract class Event extends Event_Base {
 
     public Money getPayedAmountFor(final int civilYear) {
 	if (isCancelled()) {
-	    throw new DomainException(
-		    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
 	}
 
 	Money amountForCivilYear = Money.ZERO;
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
 	    if (accountingTransaction.isPayed(civilYear)) {
-		amountForCivilYear = amountForCivilYear.add(accountingTransaction.getToAccountEntry()
-			.getAmountWithAdjustment());
+		amountForCivilYear = amountForCivilYear.add(accountingTransaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
 
@@ -359,8 +350,7 @@ public abstract class Event extends Event_Base {
 	}
 
 	final Money maxAmountForCivilYear = calculateTotalAmountToPay(getEventStateDate()).subtract(
-		getPayedAmountUntil(civilYear - 1)).subtract(
-		calculatePayedAmountByOtherPartiesFor(civilYear));
+		getPayedAmountUntil(civilYear - 1)).subtract(calculatePayedAmountByOtherPartiesFor(civilYear));
 
 	if (maxAmountForCivilYear.isPositive()) {
 	    final Money payedAmoutForPersonOnCivilYear = calculatePayedAmountByPersonFor(civilYear);
@@ -469,7 +459,7 @@ public abstract class Event extends Event_Base {
     }
 
     public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
-	checkRulesToCancel();
+	checkRulesToCancel(responsibleEmployee);
 
 	changeState(EventState.CANCELLED, new DateTime());
 	super.setEmployeeResponsibleForCancel(responsibleEmployee);
@@ -477,22 +467,20 @@ public abstract class Event extends Event_Base {
 	closeNonProcessedCodes();
     }
 
-    private void checkRulesToCancel() {
-	if (!isOpen()) {
+    private void checkRulesToCancel(final Employee employee) {
+	if (!employee.getPerson().hasRole(RoleType.MANAGER) && !isOpen()) {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
 	}
 
 	if (getPayedAmount().isPositive()) {
-	    throw new DomainException(
-		    "error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
+	    throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
 	}
 
     }
 
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
 	    AccountingTransactionDetailDTO transactionDetail) {
-	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(),
-		getToAccount(), transactionDetail);
+	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
     }
 
     public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
@@ -545,8 +533,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.paymentCode");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.paymentCode");
     }
 
     @Override
@@ -568,8 +555,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void removePaymentCodes(AccountingEventPaymentCode paymentCode) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.paymentCode");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.paymentCode");
     }
 
     private static List<Event> readBy(final ExecutionYear executionYear, EventState eventState) {
@@ -601,8 +587,7 @@ public abstract class Event extends Event_Base {
     }
 
     public PaymentCodeState getPaymentCodeStateFor(final PaymentMode paymentMode) {
-	return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED
-		: PaymentCodeState.CANCELLED;
+	return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
     }
 
     public LabelFormatter getDescription() {
@@ -621,13 +606,11 @@ public abstract class Event extends Event_Base {
 	    return Money.ZERO;
 	}
 
-	final Money extraPayedAmount = getPayedAmount().subtract(
-		calculateTotalAmountToPay(getEventStateDate()));
+	final Money extraPayedAmount = getPayedAmount().subtract(calculateTotalAmountToPay(getEventStateDate()));
 
 	if (extraPayedAmount.isPositive()) {
 	    final Money amountPayedByPerson = calculatePayedAmountByPerson();
-	    return amountPayedByPerson.lessOrEqualThan(extraPayedAmount) ? amountPayedByPerson
-		    : extraPayedAmount;
+	    return amountPayedByPerson.lessOrEqualThan(extraPayedAmount) ? amountPayedByPerson : extraPayedAmount;
 	}
 
 	return Money.ZERO;
@@ -663,19 +646,17 @@ public abstract class Event extends Event_Base {
     public final void addOtherPartyAmount(User responsibleUser, Party party, Money amount,
 	    AccountingTransactionDetailDTO transactionDetailDTO) {
 
-	getPostingRule().addOtherPartyAmount(responsibleUser, this,
-		party.getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
+	getPostingRule().addOtherPartyAmount(responsibleUser, this, party.getAccountBy(AccountType.EXTERNAL), getToAccount(),
+		amount, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public final void depositAmount(User responsibleUser, Money amount,
-	    AccountingTransactionDetailDTO transactionDetailDTO) {
+    public final void depositAmount(User responsibleUser, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 
-	getPostingRule().depositAmount(responsibleUser, this,
-		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount,
-		transactionDetailDTO);
+	getPostingRule().depositAmount(responsibleUser, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(),
+		amount, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
@@ -781,8 +762,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void addExemptions(Exemption exemption) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.exemption");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.exemption");
     }
 
     @Override
@@ -802,8 +782,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void removeExemptions(Exemption exemption) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.exemption");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.exemption");
     }
 
     public boolean isExemptionAppliable() {
@@ -857,6 +836,47 @@ public abstract class Event extends Event_Base {
 
     public void markLetterSent() {
 	setWhenSentLetter(new YearMonthDay());
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void transferPaymentsAndCancel(Employee employee, Event targetEvent, String justification) {
+
+	if (isCancelled()) {
+	    throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
+	}
+
+	if (this == targetEvent) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+	}
+
+	for (final Entry entryToTransfer : getPositiveEntries()) {
+
+	    final AccountingTransactionDetailDTO transactionDetail = createAccountingTransactionDetailForTransfer(entryToTransfer
+		    .getAccountingTransaction());
+
+	    targetEvent.depositAmount(employee.getPerson().getUser(), entryToTransfer.getAmountWithAdjustment(),
+		    transactionDetail);
+
+	    entryToTransfer.getAccountingTransaction().reimburseWithoutRules(employee.getPerson().getUser(), PaymentMode.CASH,
+		    entryToTransfer.getAmountWithAdjustment());
+	}
+
+	cancel(employee, justification);
+
+    }
+
+    private AccountingTransactionDetailDTO createAccountingTransactionDetailForTransfer(final AccountingTransaction transaction) {
+	final String comments = transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getIdInternal() + ","
+		+ transaction.getClass().getName() + ":" + transaction.getIdInternal();
+
+	return new AccountingTransactionDetailDTO(transaction.getTransactionDetail().getWhenRegistered(), PaymentMode.CASH,
+		comments);
+
+    }
+
+    public boolean isNotCancelled() {
+	return !isCancelled();
     }
 
 }
