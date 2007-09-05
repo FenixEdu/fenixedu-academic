@@ -103,6 +103,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteLessonInstance</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessonInstance</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResourceAllocationManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>AddAnnouncementBoardBookmark</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark</implementationClass>
 		<description />

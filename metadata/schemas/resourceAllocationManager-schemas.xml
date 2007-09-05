@@ -190,3 +190,15 @@
 	</slot>			 
 	<slot name="weeklyHours" key="label.course.load.weeklyQuantity"/>	
 </schema>	
+
+<!-- Lesson Dates Management -->
+
+<schema name="LessonDatesList" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="SOP_RESOURCES">
+	<slot name="date.dayOfMonth" key="label.lesson.day"/>
+	<slot name="monthString" key="label.lesson.month"/>
+	<slot name="date.year" key="label.lesson.year"/>
+	<slot name="lessonInstancePrettyPrint" key="label.lesson" />		
+	<slot name="shiftTypesPrettyPrint" key="label.lesson.type"/>
+	<slot name="shift" key="label.shift" layout="shift-plain"/>			
+	<slot name="writtenSummary" key="label.lesson.summary"/>
+</schema>

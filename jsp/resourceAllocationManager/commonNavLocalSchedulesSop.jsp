@@ -17,9 +17,9 @@
 							<li><html:link page="<%= "/manageClasses.do?method=listClasses&amp;page=0&amp;"	+ SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") + "&amp;" + SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turmas</html:link></li>	
 							<li><html:link page="<%= "/manageShifts.do?method=listShifts&amp;page=0&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") + "&amp;"	+ SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;"	+ SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turnos</html:link></li>
 						</ul>
+					</logic:notEmpty>
 				</logic:notEmpty>
-			</li>	
-			</logic:notEmpty>	
+			</li>				
 			<li><html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;" + SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.listAllByClass"/></html:link></li>
 			<li><html:link page="<%= "/viewAllRoomsSchedulesDA.do?method=choose&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.listAllByRoom"/></html:link></li>
 		</ul>

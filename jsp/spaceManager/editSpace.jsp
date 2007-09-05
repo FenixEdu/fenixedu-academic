@@ -23,6 +23,10 @@
 		</p>
 	</logic:messagesPresent>
 	
+	<logic:greaterThan name="selectedSpaceInformation" property="space.resourceAllocationsCount" value="0">
+		<p class="mtop15 warning0"><bean:message key="label.space.contains.allocations" bundle="SPACE_RESOURCES"/></p>
+	</logic:greaterThan>
+	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/></strong></p>
 	
 	<bean:define id="invalidLink">/manageSpaces.do?method=prepareEditSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>

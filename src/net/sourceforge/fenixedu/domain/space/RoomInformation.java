@@ -102,16 +102,7 @@ public class RoomInformation extends RoomInformation_Base {
         }
 	super.setRoomClassification(roomClassification);
     }
-    
-    @Override
-    public void setBlueprintNumber(String blueprintNumber) {
-        // This check does not make sense... the space can be created before a blueprint is available.
-//	if (blueprintNumber == null || StringUtils.isEmpty(blueprintNumber.trim())) {
-//	    throw new DomainException("error.roomInformation.empty.blueprintNumber");
-//	}
-	super.setBlueprintNumber(blueprintNumber);
-    }
-    
+        
     @Override
     public void setSpace(final Space space) {
 	throw new DomainException("error.incompatible.space");

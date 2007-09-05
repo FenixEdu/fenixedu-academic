@@ -12,6 +12,16 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	<definition name="definition.sop.schedules" extends="df.layout.two-column">
+	  <put name="title" value="Gestão de Recursos" type="string" />
+	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />
+	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />	  
+	  <put name="navLocal" value="/resourceAllocationManager/commonNavLocalSchedulesSop.jsp" />
+	  <put name="body-context" value="/commons/blank.jsp"/>
+      <put name="body" value="/commons/blank.jsp" />
+      <put name="footer" value="/copyright.jsp" />
+      <put name="context" value="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+	</definition>	
 	<definition name="definition.sop.examsPage" extends="df.layout.two-column">
 	  <put name="title" value="Gestão de Recursos" type="string" />
 	  <put name="serviceName" value="Serviço de Organização Pedagógica" type="string" />

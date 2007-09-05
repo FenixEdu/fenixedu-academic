@@ -1,0 +1,7 @@
+drop table CONTRACT;
+
+alter table EXECUTION_COURSE drop column PROBLEMS_HOURS;
+alter table EXECUTION_COURSE drop column SEMINARY_HOURS;
+alter table EXECUTION_COURSE drop column FIELD_WORK_HOURS;
+alter table EXECUTION_COURSE drop column TRAINING_PERIOD_HOURS;
+alter table EXECUTION_COURSE drop column TUTORIAL_ORIENTATION_HOURS;

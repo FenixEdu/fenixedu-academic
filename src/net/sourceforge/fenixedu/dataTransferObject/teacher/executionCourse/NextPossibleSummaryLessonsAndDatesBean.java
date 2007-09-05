@@ -42,7 +42,10 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     private HourMinuteSecond time;
     
     private DomainReference<AllocatableSpace> roomReference;
-
+    
+    public NextPossibleSummaryLessonsAndDatesBean() {
+    }
+    
     public NextPossibleSummaryLessonsAndDatesBean(Lesson lesson, YearMonthDay date) {
 	setLesson(lesson);
 	setShift(lesson.getShift());
@@ -104,25 +107,29 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 	
 	return false;
     }
+    
+    public boolean getIsPossibleDeleteLessonInstance() {
+	return isExtraLesson() ? false : getLesson().getSummaryByDate(getDate()) == null;
+    }
 
     public String getCheckBoxValue() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(getDate().toString());
-	stringBuilder.append(":").append(getLesson().getIdInternal());
+	stringBuilder.append(getDate().toString("yyyyMMdd"));
+	stringBuilder.append(getLesson().getIdInternal());
 	return stringBuilder.toString();
     }
 
     public static NextPossibleSummaryLessonsAndDatesBean getNewInstance(String value) {
 
 	int year = Integer.parseInt(value.substring(0, 4));
-	int month = Integer.parseInt(value.substring(5, 7));
-	int day = Integer.parseInt(value.substring(8, 10));
+	int month = Integer.parseInt(value.substring(4, 6));
+	int day = Integer.parseInt(value.substring(6, 8));
 	if (year == 0 || month == 0 || day == 0) {
 	    return null;
 	}
 
 	YearMonthDay date = new YearMonthDay(year, month, day);
-	Integer lessonIdInternal = Integer.parseInt(value.substring(11));
+	Integer lessonIdInternal = Integer.parseInt(value.substring(8));
 	Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
 	NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 

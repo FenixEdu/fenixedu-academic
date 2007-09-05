@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
-import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,21 +10,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.UsernameCounter;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 public class Invitation extends Invitation_Base {
 
     private static final int MAX_USER_UID = 99999;
-    
-    public static final Comparator<Invitation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new ReverseComparator(new BeanComparator("beginDate")));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
-    
+        
     public Invitation(Person person, Unit unit, Party responsible, YearMonthDay begin, YearMonthDay end) {
 	
 	super();
@@ -54,23 +43,7 @@ public class Invitation extends Invitation_Base {
 	super.setBeginDate(beginDate);
 	super.setEndDate(endDate);
     }
-        
-    @Override
-    public void setChildParty(Party childParty) {
-        if(!childParty.isPerson()) {
-            throw new DomainException("error.invalid.child.party");
-        }
-	super.setChildParty(childParty);
-    }
-    
-    @Override
-    public void setParentParty(Party parentParty) {
-	if(!parentParty.isUnit()) {
-            throw new DomainException("error.invalid.parent.party");
-        }
-	super.setParentParty(parentParty);
-    }
-    
+            
     @Override
     public void setResponsible(Party responsible) {
 	if (responsible == null) {
@@ -90,11 +63,11 @@ public class Invitation extends Invitation_Base {
     }
     
     public Unit getHostUnit() {
-	return (Unit) getParentParty();
+	return getUnit();
     }
 
     public Person getInvitedPerson() {
-	return (Person) getChildParty();
+	return getPerson();	
     }
 
     public Person getResponsiblePerson() {

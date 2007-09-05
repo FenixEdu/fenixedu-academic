@@ -121,10 +121,10 @@ public class LessonInstance extends LessonInstance_Base {
     } 
     
     private void checkCourseLoad() {
-	if(!hasCourseLoad()) {
+	if (!hasCourseLoad()) {
 	    throw new DomainException("error.LessonInstance.empty.courseLoad");
 	}
-	if(getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
+	if (getCourseLoad().getUnitQuantity() != null && getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
 	    throw new DomainException("error.LessonInstance.shift.load.unit.quantity.exceeded");		
 	}	
     }

@@ -6,8 +6,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.YearMonthDay;
 
-public abstract class SpaceInformation extends SpaceInformation_Base implements
-	Comparable<SpaceInformation> {
+public abstract class SpaceInformation extends SpaceInformation_Base implements Comparable<SpaceInformation> {
 
     public abstract String getPresentationName();
 

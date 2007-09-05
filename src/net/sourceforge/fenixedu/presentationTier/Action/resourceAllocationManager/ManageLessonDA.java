@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -65,10 +69,43 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	if (action != null && action.equals("edit")) {
 	    return prepareEdit(mapping, form, request, response);
 	}
+	
 	return prepareCreate(mapping, form, request, response);
-
     }
-
+       
+    public ActionForward viewAllLessonDates(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+	InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
+	Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+	SortedSet<YearMonthDay> allLessonDates = lesson.getAllLessonDates();
+	Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
+	
+	for (YearMonthDay lessonDate : allLessonDates) {
+	    lessonDatesBean.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
+	}
+		
+	request.setAttribute("lessonDates", lessonDatesBean);	
+	return mapping.findForward("ViewAllLessonDates");
+    }
+    
+    public ActionForward deleteLessonInstance(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+	NextPossibleSummaryLessonsAndDatesBean bean = NextPossibleSummaryLessonsAndDatesBean.getNewInstance(request.getParameter("lessonDate"));
+	
+	try{
+	    executeService(request, "DeleteLessonInstance", new Object[] { bean.getLesson(), bean.getDate()});	
+	
+	} catch(DomainException domainException) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage()));
+	    saveErrors(request, actionErrors); 
+	}
+	
+	return viewAllLessonDates(mapping, form, request, response);		
+    }
+            
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -357,7 +394,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	    } else {				
 		try {
-		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift };		   
+		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate, newEndDate };		   
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", argsCreateLesson);
 		    
 		} catch (CreateLesson.InvalidLoadException ex) {

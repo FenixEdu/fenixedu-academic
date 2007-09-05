@@ -2842,17 +2842,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String className;
 		Integer keyClass;
 	}
-
-	class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
-	}
-
+	
 	class net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType extends net.sourceforge.fenixedu.domain.DomainObject {		
 		MultiLanguageString typeName;
 		AccountabilityTypeEnum type;
 	}
-
+	
 		class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
 			YearMonthDay beginDateYearMonthDay;
 			YearMonthDay endDateYearMonthDay;
@@ -2862,8 +2857,13 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
 			ResearchFunctionType researchFunctionType;
-		}
-
+		}		
+		
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
+		YearMonthDay beginDate;
+		YearMonthDay endDate;
+	}		
+			
 		class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		}
 
@@ -2876,10 +2876,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
 				Boolean externalContract;
 			}
-
-		class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
-		}
-
+			
+			class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+			}
+		
 		class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 			Double credits;
 		}

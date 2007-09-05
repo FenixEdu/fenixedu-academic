@@ -524,7 +524,9 @@ public class RequestChecksumFilter implements Filter {
 	    final IUserView userView = SessionUtils.getUserView(httpServletRequest);
 	    final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
 	    if (LogLevel.ERROR) {
-	        System.out.println("Detected url tampering for request: " + httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString() + " by user: " + userString);
+		final String url = httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString();
+	        System.out.println("Detected url tampering for request: " + url + " by user: " + userString);	        
+	        System.out.println(decodeURL(url));
 	    }
 	    throw new UrlTamperingException();
 	}

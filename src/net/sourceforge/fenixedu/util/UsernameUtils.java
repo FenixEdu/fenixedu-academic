@@ -31,7 +31,8 @@ public class UsernameUtils extends FenixUtil {
 	if (loginIdentification != null) {
 	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
 		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER)
-		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation() || person.hasExternalResearchContract();
+		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation()
+		    || person.hasExternalResearchContract();
 	}
 	return false;
     }

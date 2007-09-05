@@ -139,5 +139,10 @@
 	<definition name="see-vehicle-allocation" extends="definition.resourceAllocationManager.otherResourcesManagement" >
 		<put name="body" value="/resourceAllocationManager/vehicleManagement/seeVehicleAllocation.jsp" />
 	</definition>
-						
+
+	<!-- =================== Lesson Management  =================== -->
+	<definition name="view.all.lesson.dates" extends="definition.sop.schedules" >
+		<put name="body" value="/resourceAllocationManager/showAllLessonDates.jsp" />
+	</definition>
+							
 </tiles-definitions>

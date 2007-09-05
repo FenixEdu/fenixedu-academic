@@ -1387,7 +1387,7 @@ public class Person extends Person_Base {
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {
-	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.COMPARATOR_BY_BEGIN_DATE);
+	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations.addAll((Collection<Invitation>) getParentAccountabilities(
 		AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;

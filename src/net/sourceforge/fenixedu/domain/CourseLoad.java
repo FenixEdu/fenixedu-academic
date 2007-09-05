@@ -86,23 +86,7 @@ public class CourseLoad extends CourseLoad_Base {
         }
 	super.setUnitQuantity(unitQuantity);
     }
-    
-    @Override
-    public BigDecimal getUnitQuantity() {
-        if(super.getUnitQuantity() == null) {
-            return BigDecimal.ZERO;
-        }
-	return super.getUnitQuantity();
-    }
-    
-    @Override
-    public BigDecimal getTotalQuantity() {
-	if(super.getTotalQuantity() == null) {
-	    return BigDecimal.ZERO;
-	}
-	return super.getTotalQuantity();
-    }
-           
+                         
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return !isEmpty() && isTotalQuantityValid() && getType() != null;		 
@@ -115,6 +99,6 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     private boolean isTotalQuantityValid() {
-	return getTotalQuantity().compareTo(getUnitQuantity()) != -1;
+	return getUnitQuantity() == null || getTotalQuantity().compareTo(getUnitQuantity()) != -1;
     }
 }

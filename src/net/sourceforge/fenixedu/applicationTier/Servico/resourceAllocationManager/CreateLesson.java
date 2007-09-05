@@ -10,6 +10,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import java.util.Calendar;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -27,8 +29,9 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class CreateLesson extends Service {
 
-    public InfoLessonServiceResult run(DiaSemana weekDay, Calendar begin, Calendar end,
-	    FrequencyType frequency, InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift) throws FenixServiceException {
+    public InfoLessonServiceResult run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency, 
+	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift,
+	    YearMonthDay beginDate, YearMonthDay endDate) throws FenixServiceException {
 
 	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoShift
 		.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
@@ -42,7 +45,7 @@ public class CreateLesson extends Service {
 
 	if (result.isSUCESS()) {
 
-	    Lesson aula = new Lesson(weekDay, begin, end, shift, frequency, executionPeriod);
+	    Lesson aula = new Lesson(weekDay, begin, end, shift, frequency, executionPeriod, beginDate, endDate);
 
 	    if (infoRoomOccupation != null) {
 

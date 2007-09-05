@@ -1,14 +1,14 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<html:xhtml/>
 
 <p class="mtop2 mbottom05"><strong>Aulas já atribuidas ao turno:</strong></p>
 
-	<logic:present name="shift" property="infoLessons">
+<logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteLessons"/>
@@ -44,10 +44,9 @@
 				<th>
 		        	<bean:message key="property.capacity"/>
 		        </th>
-				<th>
-		        </th>
-				<th>
-		        </th>
+				<th> </th>
+				<th> </th>
+		        <th> </th>
 			</tr>
 			<bean:define id="deleteConfirm">
 				return confirm('<bean:message key="message.confirm.delete.lesson"/>')
@@ -138,6 +137,34 @@
   											+ pageContext.findAttribute("executionDegreeOID") %>"
   								onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 								<bean:message key="link.delete"/>
+						</html:link>					
+					</td>
+					<td>
+						<html:link page="<%= "/manageLesson.do?method=viewAllLessonDates&amp;page=0&amp;"
+    	           							+ SessionConstants.LESSON_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("lessonOID")
+               					   			+ "&amp;"
+    	           							+ SessionConstants.SHIFT_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("shiftOID")
+               					   			+ "&amp;"
+			  								+ SessionConstants.EXECUTION_COURSE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionCourseOID")
+               				   				+ "&amp;"
+			  								+ SessionConstants.EXECUTION_PERIOD_OID
+  											+ "="
+	  										+ pageContext.findAttribute("executionPeriodOID")
+  											+ "&amp;"
+  											+ SessionConstants.CURRICULAR_YEAR_OID
+				  							+ "="
+  											+ pageContext.findAttribute("curricularYearOID")
+  											+ "&amp;"
+			  								+ SessionConstants.EXECUTION_DEGREE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionDegreeOID") %>">
+								<bean:message key="link.show.all.lesson.dates"/>
 						</html:link>					
 					</td>
 				</tr>
