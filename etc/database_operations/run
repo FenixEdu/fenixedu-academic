@@ -27,7 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Added functionalities to Library portal" changes-20070905162158.sql
-execute "Added missing indexes to Library table" updateLibraryIndexes.sql
-execute "Adding Payments Managent Functionalities to Manager" changes-20070904170412.sql
 
