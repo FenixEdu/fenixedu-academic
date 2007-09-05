@@ -50,6 +50,7 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
 	Set<String> nextStates = new HashSet<String>();
 	nextStates.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
 	nextStates.add(CandidacySituationType.STAND_BY.toString());
+	nextStates.add(CandidacySituationType.CANCELLED.toString());
 	return nextStates;
     }
 
@@ -62,6 +63,9 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
 	    break;
 	case STAND_BY:
 	    new StandByCandidacySituation(getCandidacy());
+	    break;
+	case CANCELLED:
+	    new CancelledCandidacySituation(getCandidacy());
 	    break;
 	default:
 	    throw new DomainException("invalid.next.state");

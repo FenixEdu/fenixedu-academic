@@ -37,6 +37,7 @@ public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base 
 	nextStates.add(CandidacySituationType.ADMITTED.toString());
 	nextStates.add(CandidacySituationType.NOT_ADMITTED.toString());
 	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());
+	nextStates.add(CandidacySituationType.CANCELLED.toString());
 	return nextStates;
     }
 
@@ -59,6 +60,9 @@ public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base 
 	    break;
 	case SUBSTITUTE:
 	    new SubstituteCandidacySituation(this.getCandidacy());
+	    break;
+	case CANCELLED:
+	    new CancelledCandidacySituation(getCandidacy());
 	    break;
 	default:
 	    break;

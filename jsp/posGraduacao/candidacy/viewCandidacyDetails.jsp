@@ -4,6 +4,11 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<html:messages id="message" message="true" bundle="ADMIN_OFFICE_RESOURCES">
+	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+	<br/><br/>
+</html:messages>
+
 <h2><strong><bean:message key="label.candidate.data" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <fr:view name="candidacy" schema="candidacy.show.candidady">
 	<fr:layout name="tabular" >
@@ -69,14 +74,16 @@
 				<bean:message key="link.candidacy.viewValidateCandidateData" bundle="ADMIN_OFFICE_RESOURCES"/>				
 			</html:link>					
 		</td>
-	</tr>
-	<tr>
-		<td class="listClasses">
-			<html:link action="<%= "/dfaCandidacy.do?method=prepareAlterCandidacyData&candidacyNumber=" + candidacy_number.toString() %>">
-				<bean:message key="link.candidacy.alterCandidateData" bundle="ADMIN_OFFICE_RESOURCES"/>				
-			</html:link>					
-		</td>	
-	</tr>			
+	</tr>	
+	<logic:equal name="candidacy" property="concluded" value="false">
+		<tr>
+			<td class="listClasses">
+				<html:link action="<%= "/dfaCandidacy.do?method=prepareAlterCandidacyData&candidacyNumber=" + candidacy_number.toString() %>">
+					<bean:message key="link.candidacy.alterCandidateData" bundle="ADMIN_OFFICE_RESOURCES"/>				
+				</html:link>					
+			</td>	
+		</tr>			
+	</logic:equal>
 	<logic:equal name="candidacy" property="activeCandidacySituation.canGeneratePass" value="true">
 		<tr>
 			<td class="listClasses">
@@ -94,4 +101,17 @@
 			</html:link>
 		</td>	
 	</tr>
+	<logic:equal name="candidacy" property="concluded" value="false">
+		<tr>
+			<td class="listClasses">
+			
+				<bean:define id="deleteConfirm">
+					return confirm('<bean:message bundle="ADMIN_OFFICE_RESOURCES" key="message.confirm.cancel.Candidacy"/>')
+				</bean:define>		
+				<html:link action="<%= "/dfaCandidacy.do?method=cancelCandidacy&candidacyNumber=" + candidacy_number.toString() %>" onclick="<%= deleteConfirm %>">
+					<bean:message key="link.candidacy.cancelCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/>
+				</html:link>					
+			</td>
+		</tr>	
+	</logic:equal>
 </table>

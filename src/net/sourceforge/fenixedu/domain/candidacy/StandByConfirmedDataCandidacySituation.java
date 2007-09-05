@@ -47,7 +47,8 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 	Set<String> nextStates = new HashSet<String>();
 	nextStates.add(CandidacySituationType.ADMITTED.toString());
 	nextStates.add(CandidacySituationType.NOT_ADMITTED.toString());
-	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());	
+	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());
+	nextStates.add(CandidacySituationType.CANCELLED.toString());
 	return nextStates;
     }
 
@@ -63,6 +64,9 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 	    break;
 	case SUBSTITUTE:
 	    new SubstituteCandidacySituation(this.getCandidacy());
+	    break;
+	case CANCELLED:
+	    new CancelledCandidacySituation(getCandidacy());
 	    break;
 	default:
 	    break;

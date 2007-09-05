@@ -3,10 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
-import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -15,6 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.joda.time.YearMonthDay;
 
 public class CreateDFACandidacy extends Service {
+    
     public DFACandidacy run(ExecutionDegree executionDegree, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType,
 	    String contributorNumber, YearMonthDay startDate) {
@@ -29,15 +26,8 @@ public class CreateDFACandidacy extends Service {
 	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 
-	final DFACandidacy candidacy = new DFACandidacy(person, executionDegree, startDate);
+	return new DFACandidacy(person, executionDegree, startDate);
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	new DFACandidacyEvent(administrativeOffice, person, candidacy);
-
-	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
-		.getServiceAgreementTemplate());
-
-	return candidacy;
     }
+    
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -36,11 +37,22 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
     public Set<String> getValidNextStates() {
         Set<String> nextStates = new HashSet<String>();
         nextStates.add(CandidacySituationType.STAND_BY.toString());
+        nextStates.add(CandidacySituationType.CANCELLED.toString());
         return nextStates;
     }
 
     public void nextState(String nextState) {
-        nextState();
+	CandidacySituationType situationType = CandidacySituationType.valueOf(nextState);
+	switch (situationType) {
+	case STAND_BY:
+	    nextState();
+	    break;
+	case CANCELLED:
+	    new CancelledCandidacySituation(getCandidacy());
+	    break;
+	default:
+	    throw new DomainException("invalid next state");
+	}
     }
 
     @Override

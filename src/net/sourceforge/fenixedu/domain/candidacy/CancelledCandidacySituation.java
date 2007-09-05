@@ -12,11 +12,15 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
     public CancelledCandidacySituation(Candidacy candidacy, Person person) {
 	super();
 	super.init(candidacy, person);
+
+	if (getCandidacy() instanceof DFACandidacy) {
+	    ((DFACandidacy) getCandidacy()).cancelEvents();
+	}
+
     }
 
     public CancelledCandidacySituation(Candidacy candidacy) {
-	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getPerson()
-		: null);
+	this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getPerson() : null);
     }
 
     @Override
@@ -54,4 +58,9 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
 	return false;
     }
 
+    @Override
+    public boolean getCanGeneratePass() {
+        return false;
+    }
+    
 }

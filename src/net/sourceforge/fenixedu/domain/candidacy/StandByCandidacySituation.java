@@ -67,7 +67,9 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 
     @Override
     public void checkConditionsToForward(String nextState) {
-	checkConditionsToForward();
+	if (!nextState.equals(CandidacySituationType.CANCELLED.toString())) {
+	    checkConditionsToForward();
+	}
     }
 
     @Override
@@ -80,6 +82,7 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 	Set<String> nextStates = new HashSet<String>();
 	nextStates.add(CandidacySituationType.STAND_BY_FILLED_DATA.toString());
 	nextStates.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
+	nextStates.add(CandidacySituationType.CANCELLED.toString());
 	return nextStates;
     }
 
@@ -92,6 +95,9 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 	    break;
 	case STAND_BY_CONFIRMED_DATA:
 	    new StandByConfirmedDataCandidacySituation(getCandidacy());
+	    break;
+	case CANCELLED:
+	    new CancelledCandidacySituation(getCandidacy());
 	    break;
 	default:
 	    throw new DomainException("invalid next state");
