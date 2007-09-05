@@ -29,7 +29,7 @@ function check(e,v){
 	</logic:notEmpty>
 
 
-	<p class="mbottom05"><a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><bean:message key="link.home"/></a></p>
+	<p class="mbottom05"><span class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><a href="#"><bean:message key="link.home"/></a></span></p>
 	<div id="instructions" class="dblock">
 		<div class="infoop2 mtop025">
 			<ul class="mvert025">
