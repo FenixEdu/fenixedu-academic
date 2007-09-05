@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Added functionalities to Library portal" changes-20070905162158.sql
+execute "Added missing indexes to Library table" updateLibraryIndexes.sql
