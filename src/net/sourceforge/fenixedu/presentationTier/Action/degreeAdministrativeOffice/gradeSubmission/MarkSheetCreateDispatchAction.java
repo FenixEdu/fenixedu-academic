@@ -77,7 +77,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = createActionMessages();
         checkIfTeacherIsResponsibleOrCoordinator(createBean
                 .getCurricularCourse(), createBean.getExecutionPeriod(), createBean.getTeacherNumber(), teacher,
-                request, actionMessages);
+                request, createBean.getMarkSheetType(), actionMessages);
         if (!actionMessages.isEmpty()) {
             createBean.setTeacherNumber(null);
         }

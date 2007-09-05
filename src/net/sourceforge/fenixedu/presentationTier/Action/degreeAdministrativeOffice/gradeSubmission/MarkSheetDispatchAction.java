@@ -172,15 +172,25 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         }
     }
 
-    protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-            ExecutionPeriod executionPeriod, Integer teacherNumber, Teacher teacher,
-            HttpServletRequest request, ActionMessages actionMessages) {
-     
-        if (teacher == null) {
-            addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
-        } else if (!teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
-            addMessage(request, actionMessages, "error.teacherNotResponsibleOrNotCoordinator");
-        }
+    protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    Integer teacherNumber, Teacher teacher, HttpServletRequest request, MarkSheetType markSheetType,
+	    ActionMessages actionMessages) {
+
+	if (teacher == null) {
+	    addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
+	} else if (markSheetType == MarkSheetType.IMPROVEMENT
+		&& curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
+	    if (!teacher.getPerson()
+		    .isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod.getPreviousExecutionPeriod())
+		    && !teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
+			    executionPeriod.getPreviousExecutionPeriod().getPreviousExecutionPeriod())
+		    && !teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
+			    executionPeriod.getPreviousExecutionPeriod().getPreviousExecutionPeriod().getPreviousExecutionPeriod())) {
+		addMessage(request, actionMessages, "error.teacherNotResponsibleOrNotCoordinator");
+	    }
+	} else if (!teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
+	    addMessage(request, actionMessages, "error.teacherNotResponsibleOrNotCoordinator");
+	}
     }
 
     public ActionForward backSearchMarkSheet(ActionMapping mapping, ActionForm actionForm,

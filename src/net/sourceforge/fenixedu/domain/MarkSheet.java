@@ -72,17 +72,31 @@ public class MarkSheet extends MarkSheet_Base {
         if (evaluationBeans == null || evaluationBeans.size() == 0) {
             throw new DomainException("error.markSheet.create.with.invalid.enrolmentEvaluations.number");
         }
-        checkIfTeacherIsResponsibleOrCoordinator(curricularCourse, executionPeriod, responsibleTeacher);
+        checkIfTeacherIsResponsibleOrCoordinator(curricularCourse, executionPeriod, responsibleTeacher, markSheetType);
         checkIfEvaluationDateIsInExamsPeriod(getExecutionDegree(curricularCourse, executionPeriod),
                 executionPeriod, evaluationDate, markSheetType);
     }
 
-    private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-            ExecutionPeriod executionPeriod, Teacher responsibleTeacher) throws DomainException {
+    private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
 
-        if (! responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
-            throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
-        }
+	if (markSheetType == MarkSheetType.IMPROVEMENT
+		&& curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
+
+	    if (!responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
+		    executionPeriod.getPreviousExecutionPeriod())
+		    && !responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
+			    executionPeriod.getPreviousExecutionPeriod().getPreviousExecutionPeriod())
+		    && !responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(
+			    curricularCourse,
+			    executionPeriod.getPreviousExecutionPeriod().getPreviousExecutionPeriod()
+				    .getPreviousExecutionPeriod())) {
+		throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
+	    }
+	    
+	} else if (!responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
+	    throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
+	}
     }
     
     private void checkIfEvaluationDateIsInExamsPeriod(ExecutionDegree executionDegree,
@@ -214,7 +228,7 @@ public class MarkSheet extends MarkSheet_Base {
             throw new DomainException("error.markSheet.wrong.edit.method");
             
         } else {
-            checkIfTeacherIsResponsibleOrCoordinator(getCurricularCourse(), getExecutionPeriod(), responsibleTeacher);
+            checkIfTeacherIsResponsibleOrCoordinator(getCurricularCourse(), getExecutionPeriod(), responsibleTeacher, getMarkSheetType());
             checkIfEvaluationDateIsInExamsPeriod(getExecutionDegree(getCurricularCourse(),
                     getExecutionPeriod()), getExecutionPeriod(), newEvaluationDate, getMarkSheetType());
             
