@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -40,7 +41,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
@@ -49,30 +49,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 public class ReadStudentsWithAttendsByExecutionCourse extends Service {
-
-    // doesnt allow an empty list
-    private StudentCurricularPlan GetLastCurricularPlan(List cps) {
-	Iterator i = cps.iterator();
-	StudentCurricularPlan lastCP = (StudentCurricularPlan) cps.get(0);
-
-	while (i.hasNext()) {
-	    StudentCurricularPlan cp = (StudentCurricularPlan) i.next();
-	    if (cp.getStartDateYearMonthDay().isAfter(lastCP.getStartDateYearMonthDay()))
-		lastCP = cp;
-	}
-	return lastCP;
-    }
-
-    private StudentCurricularPlan GetActiveCurricularPlan(List cps) {
-	Iterator i = cps.iterator();
-
-	while (i.hasNext()) {
-	    StudentCurricularPlan cp = (StudentCurricularPlan) i.next();
-	    if (cp.isActive())
-		return cp;
-	}
-	return GetLastCurricularPlan(cps);
-    }
 
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
 	    List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
@@ -267,7 +243,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	infoDTO.setInfoAttends(infoCompositions);
 	infoDTO.setInfoExecutionCourse(infoExecutionCourse);
 
-	List tipoAulas = getClassTypesFromExecutionCourse(executionCourse);
+	Collection tipoAulas = getClassTypesFromExecutionCourse(executionCourse);
 	infoDTO.setClassTypes(tipoAulas);
 
 	infoDTO.setInfoShifts(getInfoShiftsFromList(allShifts));
@@ -326,26 +302,20 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
 		null, null);
 
-	TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
-		infoSiteStudents);
-	return siteView;
+	return new TeacherAdministrationSiteView(commonComponent, infoSiteStudents);
     }
 
     StudentCurricularPlan getStudentCurricularPlanFromAttends(Attends attendance) {
-	if (attendance.getEnrolment() == null)
-	    return GetActiveCurricularPlan(attendance.getRegistration().getStudentCurricularPlans());
-	return attendance.getEnrolment().getStudentCurricularPlan();
+        final Enrolment enrolment = attendance.getEnrolment();
+        return enrolment == null ? attendance.getRegistration().getLastStudentCurricularPlan()
+                : enrolment.getStudentCurricularPlan();
     }
 
-    List getDegreeCurricularPlansFromAttends(List attends) {
+    List getDegreeCurricularPlansFromAttends(List<Attends> attends) {
 	List degreeCurricularPlans = new ArrayList();
 
-	Iterator attendsIterator = attends.iterator();
-
-	while (attendsIterator.hasNext()) {
-	    Attends attendance = (Attends) attendsIterator.next();
-	    DegreeCurricularPlan dcp = getStudentCurricularPlanFromAttends(attendance)
-		    .getDegreeCurricularPlan();
+	for (final Attends attendance : attends) {
+	    DegreeCurricularPlan dcp = getStudentCurricularPlanFromAttends(attendance).getDegreeCurricularPlan();
 
 	    if (!degreeCurricularPlans.contains(dcp))
 		degreeCurricularPlans.add(dcp);
@@ -353,16 +323,14 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return degreeCurricularPlans;
     }
 
-    private Map getShiftsByAttends(final Set shifts, final Attends attend,
+    private Map getShiftsByAttends(final Set<Shift> shifts, final Attends attend,
 	    final Map<Integer, InfoShift> clonedShifts) throws ExcepcaoPersistencia {
 	final Map result = new HashMap();
 
-	for (final Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-	    final Shift shift = (Shift) iterator.next();
+	for (final Shift shift : shifts) {
 
 	    boolean studentInShift = false;
-	    List<Registration> students = shift.getStudents();
-	    for (Registration registration : students) {
+	    for (final Registration registration : shift.getStudents()) {
 		if (registration == attend.getRegistration()) {
 		    studentInShift = true;
 		    break;
@@ -382,100 +350,62 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return result;
     }
 
-    private List getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
-	
-	List classTypes = new ArrayList();	
-	Map<ShiftType, CourseLoad> courseLoadsMap = executionCourse.getCourseLoadsMap();	
-	
-	if (courseLoadsMap.containsKey(ShiftType.TEORICA) && !courseLoadsMap.get(ShiftType.TEORICA).isEmpty()) {
-	    classTypes.add(ShiftType.TEORICA);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.LABORATORIAL) && !courseLoadsMap.get(ShiftType.LABORATORIAL).isEmpty()) {
-	    classTypes.add(ShiftType.LABORATORIAL);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.PRATICA) && !courseLoadsMap.get(ShiftType.PRATICA).isEmpty()) {
-	    classTypes.add(ShiftType.PRATICA);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.TEORICO_PRATICA) && !courseLoadsMap.get(ShiftType.TEORICO_PRATICA).isEmpty()) {
-	    classTypes.add(ShiftType.TEORICO_PRATICA);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.SEMINARY) && !courseLoadsMap.get(ShiftType.SEMINARY).isEmpty()) {
-	    classTypes.add(ShiftType.SEMINARY);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.PROBLEMS) && !courseLoadsMap.get(ShiftType.PROBLEMS).isEmpty()) {
-	    classTypes.add(ShiftType.PROBLEMS);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.FIELD_WORK) && !courseLoadsMap.get(ShiftType.FIELD_WORK).isEmpty()) {
-	    classTypes.add(ShiftType.FIELD_WORK);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.TRAINING_PERIOD) && !courseLoadsMap.get(ShiftType.TRAINING_PERIOD).isEmpty()) {
-	    classTypes.add(ShiftType.TRAINING_PERIOD);
-	}
-	if (courseLoadsMap.containsKey(ShiftType.TUTORIAL_ORIENTATION) && !courseLoadsMap.get(ShiftType.TUTORIAL_ORIENTATION).isEmpty()) {
-	    classTypes.add(ShiftType.TUTORIAL_ORIENTATION);
-	}
-	
-	return classTypes;
+    private Set getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
+        final Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+        for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+            if (!courseLoad.isEmpty()) {
+                shiftTypes.add(courseLoad.getType());
+            }
+        }
+        return shiftTypes;
     }
 
-    private List getInfoShiftsFromList(Set allShifts) {
+    private List getInfoShiftsFromList(Set<Shift> allShifts) {
 	List result = new ArrayList();
 
-	for (Iterator shIterator = allShifts.iterator(); shIterator.hasNext();) {
-	    Shift sh = (Shift) shIterator.next();
-	    result.add(InfoShift.newInfoFromDomain(sh));
+	for (final Shift shift : allShifts) {
+	    result.add(InfoShift.newInfoFromDomain(shift));
 	}
 
 	return result;
     }
 
-    private List getInfoDegreeCurricularPlansFromList(List degreeCPs) {
+    private List getInfoDegreeCurricularPlansFromList(List<DegreeCurricularPlan> degreeCPs) {
 	List result = new ArrayList();
 
-	for (Iterator dcpIterator = degreeCPs.iterator(); dcpIterator.hasNext();) {
-	    DegreeCurricularPlan dcp = (DegreeCurricularPlan) dcpIterator.next();
-
-	    result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
+	for (final DegreeCurricularPlan degreeCurricularPlan : degreeCPs) {
+	    result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
 	}
 
 	return result;
     }
 
-    private List getInfoGroupPropertiesFromList(List groupProperties) {
+    private List getInfoGroupPropertiesFromList(List<Grouping> groupProperties) {
 	List result = new ArrayList();
 
-	for (Iterator gpIterator = groupProperties.iterator(); gpIterator.hasNext();) {
-	    Grouping gp = (Grouping) gpIterator.next();
-	    InfoGrouping infoGP = InfoGrouping.newInfoFromDomain(gp);
-	    result.add(infoGP);
+	for (final Grouping grouping : groupProperties) {
+	    result.add(InfoGrouping.newInfoFromDomain(grouping));
 	}
 
 	return result;
     }
 
-    private Map getStudentGroupsMapFromGroupPropertiesList(List groupPropertiesList)
+    private Map getStudentGroupsMapFromGroupPropertiesList(List<Grouping> groupPropertiesList)
 	    throws ExcepcaoPersistencia {
 
 	Map result = new HashMap();
-	List allStudentsGroups = new ArrayList();
 
-	Iterator gpIt = groupPropertiesList.iterator();
-	while (gpIt.hasNext()) {
-	    allStudentsGroups.addAll(((Grouping) gpIt.next()).getStudentGroups());
-	}
-
-	for (Iterator sgIterator = allStudentsGroups.iterator(); sgIterator.hasNext();) {
-	    StudentGroup sg = (StudentGroup) sgIterator.next();
-	    List groupAttends = sg.getAttends();
-	    List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
-
-		public Object transform(Object input) {
-		    Attends attendacy = (Attends) input;
-		    return attendacy;
-		}
-	    });
-
-	    result.put(sg, attendsList);
+	for (final Grouping grouping : groupPropertiesList) {
+	    for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
+	        List groupAttends = studentGroup.getAttends();
+	        List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
+	            public Object transform(Object input) {
+	                Attends attendacy = (Attends) input;
+	                return attendacy;
+	            }
+	        });
+	        result.put(studentGroup, attendsList);
+	    }
 	}
 
 	return result;
@@ -502,12 +432,11 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private boolean hasSpecialSeasonEnrolmentEvaluation(final List<EnrolmentEvaluation> evaluations) {
-	return CollectionUtils.exists(evaluations, new Predicate() {
-	    public boolean evaluate(Object arg0) {
-		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
-		return enrolmentEvaluation.getEnrolmentEvaluationType().equals(
-			EnrolmentEvaluationType.SPECIAL_SEASON);
-	    }
-	});
+        for (final EnrolmentEvaluation enrolmentEvaluation : evaluations) {
+            if (enrolmentEvaluation.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON) {
+                return true;
+            }
+        }
+        return false;
     }
 }

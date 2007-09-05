@@ -6,6 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class InfoForReadStudentsWithAttendsByExecutionCourse extends
         DataTranferObject implements ISiteComponent
 {    
     private List _infoAttends;
-    private List _classTypes;
+    private Collection _classTypes;
     private List _infoGroupProperties;
     private List _infoDegreeCurricularPlans;
     private List _infoShifts;
@@ -30,7 +31,7 @@ public class InfoForReadStudentsWithAttendsByExecutionCourse extends
         return _infoAttends;
     }
     
-    public List getClassTypes(){
+    public Collection getClassTypes(){
         return _classTypes;
     }
     
@@ -58,7 +59,7 @@ public class InfoForReadStudentsWithAttendsByExecutionCourse extends
         _infoAttends = infoAttends;
     }
     
-    public void setClassTypes(List classTypes){
+    public void setClassTypes(Collection classTypes){
         _classTypes=classTypes;
     }
     

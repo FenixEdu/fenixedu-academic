@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@page import="java.util.Collection"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -50,7 +51,7 @@ function cleanSelect(checkboxes) {
 
 <bean:define id="studentsComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse"/>
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
-<bean:define id="classTypes" type="java.util.List" name="studentsComponent" property="classTypes" />
+<bean:define id="classTypes" type="java.util.Collection" name="studentsComponent" property="classTypes" />
 <bean:define id="groupsProperties"	type="List" name="studentsComponent" property="infoGroupProperties"/>
 <bean:define id="executionCourse"	type="InfoExecutionCourse" name="studentsComponent" property="infoExecutionCourse"/>
 <bean:define id="attendsSummary"	type="InfoAttendsSummary" name="studentsComponent" property="infoAttendsSummary"/>
@@ -132,31 +133,34 @@ function cleanSelect(checkboxes) {
 				<bean:define id="shifts" name="studentsComponent" property="infoShifts" />
 				<logic:iterate type="net.sourceforge.fenixedu.dataTransferObject.InfoShift" name="shifts" id="shift">
 					<p>
-							<%
-								String text = new String();
-								text += shift.getNome();
-								text += "   (";
-								for (Iterator iterator= shift.getInfoLessons().iterator(); iterator.hasNext();)
-								{
-									InfoLesson lesson= (InfoLesson) iterator.next();
-									text += lesson.getDiaSemana().toString() + "  ";
-									text += lesson.getInicio().get(Calendar.HOUR_OF_DAY) + ":";
-									text += lesson.getInicio().get(Calendar.MINUTE) + "-";
-									text += lesson.getFim().get(Calendar.HOUR_OF_DAY) + ":";
-									text += lesson.getFim().get(Calendar.MINUTE) + " ";
-									if(lesson.getInfoSala() != null){
-										text += lesson.getInfoSala().getNome();
-									}
-									if (iterator.hasNext())
-										text += " ;";
-								}
-								text += ")"; 
-							%>
-
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIDs" property="shiftIDs" value="<%= shift.getIdInternal().toString() %>"
 								onclick="cleanSelect(document.forms[0].shiftIDs)"/>
 
-							<%= text %>
+						<%= shift.getNome() %> (
+						<%
+							for (Iterator iterator= shift.getInfoLessons().iterator(); iterator.hasNext();) {
+									InfoLesson lesson= (InfoLesson) iterator.next();
+						%>
+
+								<%= lesson.getDiaSemana().toString() %>
+								<%= lesson.getInicio().get(Calendar.HOUR_OF_DAY) %> :
+								<%= lesson.getInicio().get(Calendar.MINUTE) %> -
+								<%= lesson.getFim().get(Calendar.HOUR_OF_DAY) %> :
+								<%= lesson.getFim().get(Calendar.MINUTE) %>
+								<%
+									if (lesson.getInfoSala() != null) {
+								%>
+										<%= lesson.getInfoSala().getNome() %>
+								<%
+									}
+									if (iterator.hasNext()) {
+								%>
+										;
+								<%
+									}
+								}
+								%>
+						)
 					</p>
 				</logic:iterate>
 		</td>
@@ -239,7 +243,7 @@ function cleanSelect(checkboxes) {
 			<th rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.mail" />
 		   </th>
-		   <% int shiftColSpan=((List)classTypes).size(); %>
+		   <% int shiftColSpan=((Collection)classTypes).size(); %>
          <% Integer shiftColSpanInteger = new Integer(shiftColSpan); %>
          <% if (shiftColSpan>0) {%>
 		 <th colspan="<%= shiftColSpanInteger %>" >
