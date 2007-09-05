@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Added functionalities to Library portal" changes-20070905162158.sql
