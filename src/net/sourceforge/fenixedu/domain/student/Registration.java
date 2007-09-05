@@ -204,9 +204,6 @@ public class Registration extends Registration_Base {
 	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
 	    ;
 	
-	for(; !getEnrolmentLogs().isEmpty() ; getEnrolmentLogs().get(0).delete())
-	    ;
-
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
