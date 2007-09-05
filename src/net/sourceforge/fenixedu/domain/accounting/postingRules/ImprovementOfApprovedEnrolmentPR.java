@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -85,9 +86,10 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
 
     private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(Event event) {
 	final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = (ImprovementOfApprovedEnrolmentEvent) event;
-	final DegreeCurricularPlan degreeCurricularPlan = improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0).getDegreeCurricularPlan();
+	final EnrolmentEvaluation enrolmentEvaluation = improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0);
+	final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
 	
-	final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment = ExecutionPeriod.readActualExecutionPeriod().getEnrolmentPeriod(EnrolmentPeriodInImprovementOfApprovedEnrolment.class, degreeCurricularPlan);
+	final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment = enrolmentEvaluation.getExecutionPeriod().getEnrolmentPeriod(EnrolmentPeriodInImprovementOfApprovedEnrolment.class, degreeCurricularPlan);
 	if (enrolmentPeriodInImprovementOfApprovedEnrolment == null) {
 	    throw new DomainException("error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.enrolmentPeriodInImprovementOfApprovedEnrolment.must.not.be.null");
 	}
