@@ -57,6 +57,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         if (parkingRequestSearch == null) {
             parkingRequestSearch = new ParkingRequestSearch();
+            parkingRequestSearch.setParkingRequestState(ParkingRequestState.PENDING);
             String parkingRequestState = request.getParameter("parkingRequestState");
             if (!StringUtils.isEmpty(parkingRequestState)) {
                 parkingRequestSearch.setParkingRequestState(ParkingRequestState
