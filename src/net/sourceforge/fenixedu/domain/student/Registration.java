@@ -57,6 +57,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -202,12 +203,16 @@ public class Registration extends Registration_Base {
 
 	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
 	    ;
+	
+	for(; !getEnrolmentLogs().isEmpty() ; getEnrolmentLogs().get(0).delete())
+	    ;
 
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
 	removeRootDomainObject();
 	getShiftsSet().clear();
+	
 	super.deleteDomainObject();
     }
 
