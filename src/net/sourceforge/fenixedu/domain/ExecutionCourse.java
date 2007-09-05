@@ -455,8 +455,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public BigDecimal getWeeklyCourseLoadTotalQuantityByShitType(ShiftType type) {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
-	return courseLoad != null ? courseLoad.getTotalQuantity().
-		divide(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS)) : BigDecimal.ZERO;
+	return courseLoad != null ? courseLoad.getWeeklyHours() : BigDecimal.ZERO;
     }
     
     public Set<Shift> getAssociatedShifts() {

@@ -182,6 +182,7 @@
 	</slot>			 
 	<slot name="totalQuantity" key="label.course.load.totalQuantity"/>
 	<slot name="unitQuantity" key="label.course.load.unitQuantity"/>
+	<slot name="weeklyHours" key="label.course.load.weeklyQuantity"/>	
 </schema>	
 
 <schema name="ExecutionCourseWeeklyCourseLoadView" type="net.sourceforge.fenixedu.domain.CourseLoad" bundle="SOP_RESOURCES">
