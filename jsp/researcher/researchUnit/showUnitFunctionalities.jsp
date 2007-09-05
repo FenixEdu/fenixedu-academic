@@ -8,7 +8,7 @@
 <bean:define id="unitID" name="unit" property="idInternal"/>
 
 <h2><fr:view name="unit" property="name"/> (<fr:view name="unit" property="acronym"/>)</h2>
-<p><bean:message key="label.welcomeToIntranet" bundle="RESEARCHER_RESOURCES"/></p>
+
 <ul>
 	<li>
 		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitId=" + unitID %>">

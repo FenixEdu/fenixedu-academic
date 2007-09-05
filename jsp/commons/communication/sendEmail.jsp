@@ -12,11 +12,13 @@
 <bean:define id="action" name="actionPath"/>
 <bean:define id="unitID" name="unit" property="idInternal"/>
 
+<%--
 <ul>
 	<li>
 		<html:link page="<%= action + "?method=prepare&unitId=" + unitID %>"><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:link>
 	</li>
 </ul>
+--%>
 
 <logic:messagesPresent property="error" message="true">
 	<html:messages id="message" property="error" message="true" bundle="MESSAGING_RESOURCES">

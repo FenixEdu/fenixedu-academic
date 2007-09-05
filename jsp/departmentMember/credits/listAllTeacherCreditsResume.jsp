@@ -6,15 +6,21 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<em><bean:message key="label.teacherServiceDistribution.department"/></em>
+<h2><bean:message key="label.teacherService.credits"/></h2>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <html:messages id="message" message="true">
-	<span class="error"><!-- Error messages go here -->
-		<bean:write name="message"/>
-	</span>
+	<p>
+		<span class="error"><!-- Error messages go here -->
+			<bean:write name="message"/>
+		</span>
+	</p>
 </html:messages>
 
-<em><bean:message key="label.teacherService.credits"/></em>
-<h2><bean:message key="label.teacherService.credits.resume"/></h2>
 
 <div class="infoop2">
 	<bean:message key="label.teacherService.credits.explanation"/><br/>

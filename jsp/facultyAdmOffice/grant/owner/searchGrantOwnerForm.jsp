@@ -6,6 +6,9 @@
 
 <html:form action="/searchGrantOwner">
 
+	<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+	<h2><bean:message key="link.search.grant.owner"/></h2>
+	
 	<p><b><bean:message key="info.grant.searchform.name.and.id"/></b></p>
 
 	<table class="infoop">

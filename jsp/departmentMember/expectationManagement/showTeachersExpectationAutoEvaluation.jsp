@@ -12,21 +12,24 @@
 
 	<fr:form action="/teacherExpectationAutoAvaliation.do?method=show">
 		<div class="mtop2 mbottom1">
-		<bean:message key="label.common.executionYear"/>:
-		<fr:edit id="executionYear" name="bean" slot="executionYear"> 
-			<fr:layout name="menu-select-postback">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
-				<fr:property name="format" value="${year}"/>
-				<fr:destination name="postback" path="/teacherExpectationAutoAvaliation.do?method=show"/>
-			</fr:layout>
-		</fr:edit>
+			<bean:message key="label.common.executionYear"/>:
+			<fr:edit id="executionYear" name="bean" slot="executionYear"> 
+				<fr:layout name="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsToViewTeacherPersonalExpectationsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:destination name="postback" path="/teacherExpectationAutoAvaliation.do?method=show"/>
+				</fr:layout>
+			</fr:edit>
 		</div>
 	</fr:form>
+
 
 	<logic:notEmpty name="expectation">						
 
 			<logic:notEmpty name="expectation" property="autoEvaluation">				
-				<p><fr:view name="expectation" property="autoEvaluation" layout="html"/></p>
+				<div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em;">
+					<fr:view name="expectation" property="autoEvaluation" layout="html"/>
+				</div>
 			</logic:notEmpty> 
 
 		   	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
@@ -44,7 +47,7 @@
 					</ul>			   		
 				</logic:equal>	
 				<logic:notEqual name="expectation" property="allowedToEditAutoEvaluation" value="true">
-					<p class="mtop15"><em><bean:message key="label.undefined.auto.evaluation.period" /></em></p>				
+					<p><em><bean:message key="label.undefined.auto.evaluation.period" /></em></p>				
 				</logic:notEqual>		
 			</logic:empty>
 			
@@ -65,7 +68,7 @@
 	</logic:notEmpty>
 	
 	<logic:empty name="expectation">
-		<p class="mtop15"><em><bean:message key="label.personalExpectationsManagement.noExpectationsDefined" /></em></p>
+		<p><em><bean:message key="label.personalExpectationsManagement.noExpectationsDefined" /></em></p>
 	</logic:empty>
 	
 </logic:present>

@@ -9,7 +9,9 @@
 <bean:define id="hoursPattern" value="HH : mm"/>
 <bean:define id="datePattern" value="dd-MM-yyyy"/>
 
+<em><bean:message key="label.teacherServiceDistribution.departmentName"/></em>
 <h2><bean:message key="label.teacherService.credits"/></h2>
+
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
 
 <bean:define id="link">
@@ -20,7 +22,7 @@
 	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
-<div class="infoop">
+<div class="infoop2">
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
 	<logic:notEmpty name="teacherCategory">
@@ -48,7 +50,7 @@
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
-<h3 class="mtop2"><span class="underline1">1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
@@ -249,7 +251,7 @@
 <%-- ================================================================================== --%>
 
 <%-- ========================== MASTER DEGREE PROFESSORSHIPS =============================== --%>
-<h3 class="mtop2"><span class="underline1">2) <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>2) <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="masterDegreeServices">
 	<table class="tstyle4 mbottom05">
@@ -333,7 +335,7 @@
 <%-- ================================================================================== --%>
 
 <%-- ============================== ADVISES TFC ======================================= --%>
-<h3 class="mtop2"><span class="underline1">3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:notEmpty name="adviseServices">
@@ -384,7 +386,7 @@
 <%-- ======================================================================================== --%>
 <%-- ========================================= THESIS ======================================= --%>
 
-<h3 class="mtop2"><span class="underline1">4) <bean:message key="label.teacherCreditsSheet.thesis" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>4) <bean:message key="label.teacherCreditsSheet.thesis" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:present name="teacherThesisEvaluationParticipants">
 	<table class="tstyle4 mbottom05">
@@ -464,7 +466,7 @@
 </logic:equal>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="mtop2"><span class="underline1">5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
@@ -512,7 +514,7 @@
 </logic:equal>
 <%-- ================================================================================== --%>
 <%-- ========================== FUNCTIONS_ACCUMULATING ================================ --%>
-<h3 class="mtop2"><span class="underline1">6) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>6) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -559,7 +561,7 @@
 
 <%-- ================================================================================== --%>
 <%-- ========================== OTHER SERVICES CREDTIS ================================ --%>
-<h3 class="mtop2"><span class="underline1">7) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>7) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -615,7 +617,7 @@
 	</p>
 </logic:equal>
 <%-- ========================== Management Position Lines =============================== --%>
-<h3 class="mtop2"><span class="underline1">8) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>8) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
@@ -693,7 +695,7 @@
 </logic:equal>
 
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
-<h3 class="mtop2"><span class="underline1">9) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>9) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
