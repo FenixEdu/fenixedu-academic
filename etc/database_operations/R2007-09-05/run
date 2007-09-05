@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove Contract Table and ExecutionCourse Hours" removeContractTableAndExecutionCourseHours.sql
