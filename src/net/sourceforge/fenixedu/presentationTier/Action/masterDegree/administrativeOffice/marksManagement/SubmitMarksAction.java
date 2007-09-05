@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -164,7 +165,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
         Integer enrolmentCode = null;
         Integer evaluationId = null;
         String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
-        if (request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
+        if (!StringUtils.isEmpty(evaluation) && request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
             studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
                     + "].studentCode"));
 
