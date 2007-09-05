@@ -250,8 +250,8 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
         PersistenceBroker pb = getOJBBroker();
 
         int currentPriority = Thread.currentThread().getPriority();
-        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         try {
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
         long time1 = System.currentTimeMillis();
         long time2 = 0;
