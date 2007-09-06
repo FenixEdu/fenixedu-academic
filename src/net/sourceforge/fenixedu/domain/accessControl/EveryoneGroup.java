@@ -28,6 +28,7 @@ public class EveryoneGroup extends Group {
     
     @Override
     public Set<Person> getElements() {
+        if (true) throw new Error("the next line of code is just plain wrong!");
         return new HashSet<Person>(Person.readAllPersons());
     }
 
