@@ -183,14 +183,7 @@ public class Person extends Person_Base {
 
     private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
 	    final IDDocumentType documentType) {
-
-	for (final Person person : Person.readAllPersons()) {
-	    if (!person.equals(this) && person.getDocumentIdNumber().equals(documentIDNumber)
-		    && person.getIdDocumentType().equals(documentType)) {
-		return true;
-	    }
-	}
-	return false;
+        return readByDocumentIdNumberAndIdDocumentType(documentIDNumber, documentType) != null;
     }
 
     final public String getValidatedName() {
@@ -1430,10 +1423,8 @@ public class Person extends Person_Base {
 
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
 	Collection<Person> result = new ArrayList<Person>();
-	for (final Person person : Person.readAllPersons()) {
-	    if (person.getDocumentIdNumber().equalsIgnoreCase(documentIdNumber)) {
-		result.add(person);
-	    }
+	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
+	    result.add(idDocument.getPerson());
 	}
 	return result;
     }
@@ -1488,10 +1479,13 @@ public class Person extends Person_Base {
 	final List<Person> result = new ArrayList<Person>();
 	if (name != null) {
 	    final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
-	    for (final Person person : Person.readAllPersons()) {
-		if (person.getName().toLowerCase().matches(nameToMatch)) {
-		    result.add(person);
-		}
+	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+	        if (party.isPerson()) {
+	            final Person person = (Person) party;
+	            if (person.getName().toLowerCase().matches(nameToMatch)) {
+	                result.add(person);
+	            }
+	        }
 	    }
 	}
 	return result;

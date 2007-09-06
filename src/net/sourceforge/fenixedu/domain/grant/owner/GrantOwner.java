@@ -75,7 +75,8 @@ public class GrantOwner extends GrantOwner_Base {
     private static List<GrantOwner> readAllGrantOwnersByName(String name) {
         List<GrantOwner> grantOwners = new ArrayList();
         final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
-        for (final Person person : Person.readAllPersons()) {
+        for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwnersSet()) {
+            final Person person = grantOwner.getPerson();
             if (person.getName().toLowerCase().matches(nameToMatch) && person.hasGrantOwner()) {
                 grantOwners.add(person.getGrantOwner());
             }
