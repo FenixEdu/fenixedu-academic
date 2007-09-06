@@ -299,15 +299,11 @@
 		<property name="comment" value="label.showName.instructions"/>
 		<property name="commentClasses" value="smalltxt color555"/>
     </slot>
-    <slot name="permittedGroup" layout="input-with-comment" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="subLayout" value="radio-select"/>
-		<property name="subProperty(providerClass)" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider"/>
-		<property name="subProperty(eachSchema)" value="permittedGroup.class.text"/>
-		<property name="subProperty(eachLayout)" value="values"/>
-		<property name="subProperty(saveOptions)" value="true"/>
-		<property name="bundle" value="SITE_RESOURCES"/>
-		<property name="comment" value="label.permittedGroup.instructions"/>
-		<property name="commentClasses" value="smalltxt color555"/>
+    <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
     </slot>
     <setter signature="createItem()"/>
 </schema>
