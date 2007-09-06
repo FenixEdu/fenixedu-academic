@@ -841,6 +841,10 @@ public abstract class Event extends Event_Base {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void transferPaymentsAndCancel(Employee employee, Event targetEvent, String justification) {
 
+	if (getEventType() != targetEvent.getEventType()) {
+	    throw new DomainException("error.accounting.Event.events.must.be.compatible");
+	}
+
 	if (isCancelled()) {
 	    throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
 	}
