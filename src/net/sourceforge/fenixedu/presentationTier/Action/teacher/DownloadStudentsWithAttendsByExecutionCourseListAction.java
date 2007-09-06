@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -168,7 +169,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
         fileContents += EMAIL + SEPARATOR;
 
-        List classTypes = infoDTO.getClassTypes();
+        Collection classTypes = infoDTO.getClassTypes();
         if (classTypes != null && !classTypes.isEmpty()) {
             Iterator ctIterator = classTypes.iterator();
             while (ctIterator.hasNext()) {
