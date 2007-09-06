@@ -35,7 +35,7 @@
 			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
 			<bean:define id="personID" name="parkingParty" property="party.idInternal" />
 			
-			<h3 class="separator2 mtop15"><bean:message key="label.parkUserInfo"/></h3>
+			<h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>
 			<p>
 				<html:img src="<%= request.getContextPath() +"/parkingManager/parking.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
 				<logic:iterate id="occupation" name="parkingParty" property="occupations">
@@ -185,7 +185,7 @@
 			--%>
 
 					
-			<h3 class="separator2 mtop15"><bean:message key="label.requestList" /></h3>
+			<h3 class="separator2 mtop2"><bean:message key="label.requestList" /></h3>
 			<logic:notEmpty name="parkingRequests">		
 				<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
 					<fr:layout name="tabular">
@@ -213,8 +213,8 @@
 
 <logic:present name="partyList">
 	<logic:notEmpty name="partyList">
-	
-	<table class="tstyle1 thlight">
+
+	<table class="tstyle1 thlight smalltxt">
 		<tr>
 			<th scope="col"><bean:message key="label.name" bundle="MANAGER_RESOURCES"/></th>
 			<th class="width8em" scope="col"><bean:message key="label.identification" bundle="MANAGER_RESOURCES"/></th>

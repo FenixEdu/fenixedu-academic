@@ -254,7 +254,7 @@ table.noborder tr td { border: none; }
 table.noborder tr td { padding: 0; margin: 0; }
 
 /* txt */
-table.smalltxt tr td { font-size: 0.85em;}
+table.smalltxt tr td { font-size: 1em;}
 
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
