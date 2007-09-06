@@ -202,5 +202,23 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	public String getAnotation() {
 	    return curricularCourseScope.getAnotation();
 	}
+
+	@Override
+	public String getClassName() {
+	    return curricularCourseScope.getClass().getName();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if(!(obj instanceof DegreeModuleScopeCurricularCourseScope)) {
+		return false;
+	    }
+	    return curricularCourseScope.equals(((DegreeModuleScopeCurricularCourseScope)obj).getCurricularCourseScope());
+	}
+	
+	@Override
+	public int hashCode() {
+	    return curricularCourseScope.hashCode();	    
+	}
     }
 }

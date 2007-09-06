@@ -306,10 +306,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	checkValidHours(beginning, end);
 
-	setDayDate(day);
-	setBeginningDate(beginning);
-	setEndDate(end);
-	
 	// Associate ExecutionCourses and Context/Scopes
 	getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
 	for (DegreeModuleScope degreeModuleScope : curricularCourseScopesToAssociate) {
@@ -319,7 +315,11 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		addAssociatedContexts(((DegreeModuleScopeContext)degreeModuleScope).getContext());
 	    }
 	}        
-
+	
+	setDayDate(day);
+	setBeginningDate(beginning);
+	setEndDate(end);
+	
 	// Associate New Rooms
 	List<WrittenEvaluationSpaceOccupation> newOccupations = associateNewRooms(rooms);
 
@@ -339,10 +339,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	// Delete Rooms
 	for (Iterator<WrittenEvaluationSpaceOccupation> iter = roomOccupationsToDelete.iterator(); iter.hasNext();) {
 	    WrittenEvaluationSpaceOccupation occupation = iter.next();
-	    if(occupation.canBeDeleted()) {
-		iter.remove();
-		occupation.delete();
-	    }
+	    occupation.removeWrittenEvaluations(this);
+	    iter.remove();
+	    occupation.delete();	    
 	}        
     }
 

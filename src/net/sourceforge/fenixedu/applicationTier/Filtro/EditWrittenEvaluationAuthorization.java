@@ -14,6 +14,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
         final IUserView userView = getRemoteUser(request);
 
         if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+            
             final Object[] arguments = getServiceCallArguments(request);
             final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
 
@@ -29,7 +30,6 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
     }
 
     private Integer getWrittenEvaluationID(final Object[] arguments) {
-        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[8]);
+        return (Integer) ((arguments.length == 2) ? arguments[1] : arguments[7]);
     }
-
 }

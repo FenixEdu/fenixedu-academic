@@ -18,6 +18,7 @@ public abstract class DegreeModuleScope {
         }
     };
 
+    private static final String KEY_SEPARATOR = ":";
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new ComparatorChain();
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
@@ -29,6 +30,7 @@ public abstract class DegreeModuleScope {
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
     }
 
+    public abstract String getClassName();
     public abstract Integer getIdInternal();
     public abstract Integer getCurricularSemester();
     public abstract Integer getCurricularYear();    
@@ -36,7 +38,7 @@ public abstract class DegreeModuleScope {
     public abstract String getAnotation();
     public abstract CurricularCourse getCurricularCourse();
     public abstract boolean isActiveForExecutionPeriod(ExecutionPeriod executionPeriod);
-
+       
     public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
         return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScope(), writtenEvaluation.getAssociatedContexts());
     }
@@ -81,4 +83,34 @@ public abstract class DegreeModuleScope {
     	return (this.getCurricularSemester().intValue() == 2);
     }
 
+    public String getKey() {
+	return getIdInternal() + KEY_SEPARATOR + getClassName();
+    }
+    
+    public static String getKey(Integer idInternal, String className) {
+	return idInternal + KEY_SEPARATOR + className;
+    }
+    
+    public static DegreeModuleScope getDegreeModuleScopeByKey(String key) {	
+	String[] split = key.split(KEY_SEPARATOR);
+	if(split.length == 2) {
+	    String idInternal = split[0];
+	    String className = split[1];
+	    try {
+		Class clazz = Class.forName(className);
+		DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, Integer.valueOf(idInternal));			
+		if(domainObject != null && domainObject instanceof CurricularCourseScope) {
+		    return ((CurricularCourseScope)domainObject).getDegreeModuleScopeCurricularCourseScope();
+		} 		
+		if(domainObject != null && domainObject instanceof Context) {
+		    return ((Context)domainObject).getDegreeModuleScopeContext();
+		}		
+	    } catch (ClassNotFoundException e) {
+		return null;
+	    } catch (NumberFormatException exception) {
+		return null;
+	    }
+	}
+	return null;
+    }
 }

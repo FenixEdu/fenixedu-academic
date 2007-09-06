@@ -33,7 +33,9 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
     public void edit(WrittenEvaluation writtenEvaluation) {	
 
-	removeWrittenEvaluations(writtenEvaluation);
+	if(hasWrittenEvaluations(writtenEvaluation)) {
+	    removeWrittenEvaluations(writtenEvaluation);
+	}
 	
 	if(!getRoom().isFree(writtenEvaluation.getBeginningDateTime().toYearMonthDay(), writtenEvaluation.getEndDateTime().toYearMonthDay(),
 		writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond(),
@@ -51,7 +53,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	}
     }
 
-    public boolean canBeDeleted() {
+    private boolean canBeDeleted() {
 	return !hasAnyWrittenEvaluations();
     }
 

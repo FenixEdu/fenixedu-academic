@@ -362,14 +362,26 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public OccupationPeriod getLessonsPeriod() {
-	for (ExecutionDegree executionDegree : getExecutionYear().getExecutionDegreesByType(
-		DegreeType.DEGREE)) {
+	
+	Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
+	if(degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
+	}
+	if(degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	}
+	if(degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
+	}
+		
+	for (ExecutionDegree executionDegree : degrees) {
 	    if (getSemester() == 1) {
 		return executionDegree.getPeriodLessonsFirstSemester();
 	    } else {
 		return executionDegree.getPeriodLessonsSecondSemester();
 	    }
 	}
+	
 	return null;
     }
 

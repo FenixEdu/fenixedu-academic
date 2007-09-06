@@ -313,6 +313,23 @@ public class Context extends Context_Base implements Comparable<Context> {
 	    return null;
 	}
 
+	@Override
+	public String getClassName() {
+	    return context.getClass().getName();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if(!(obj instanceof DegreeModuleScopeContext)) {
+		return false;
+	    }
+	    return context.equals(((DegreeModuleScopeContext)obj).getContext());
+	}
+	
+	@Override
+	public int hashCode() {
+	    return context.hashCode();	    
+	}
     }
 
     public Integer getCurricularYear() {

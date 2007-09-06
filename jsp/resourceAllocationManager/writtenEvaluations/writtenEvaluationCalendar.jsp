@@ -212,7 +212,7 @@
 									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
-								<a href='<c:out value="${editEvaluationURL}"/>'>
+								<a href='<c:out escapeXml="false" value="${editEvaluationURL}"/>'>
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>

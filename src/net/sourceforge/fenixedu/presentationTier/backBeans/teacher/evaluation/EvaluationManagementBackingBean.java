@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodEx
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -589,25 +590,18 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String createWrittenTest() throws FenixFilterException, FenixServiceException {
         List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
-
-        List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        List<String> curricularCourseContextIDs = new ArrayList<String>();
         
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                if (curricularCourseScope.getCurricularSemester().getSemester().equals(
-                        executionCourse.getExecutionPeriod().getSemester())) {
-                    curricularCourseScopeIDs.add(curricularCourseScope.getIdInternal().toString());
-                }
-            }
-        }
+        
+        final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-                curricularCourseScopeIDs, curricularCourseContextIDs, null, season, this.getDescription() };
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
+        	this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, 
+        	null, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+            
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {
@@ -719,23 +713,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        final List<String> curricularCourseScopeIDs = new ArrayList<String>();
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
-
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                if (curricularCourseScope.getCurricularSemester().getSemester().equals(
-                        executionCourse.getExecutionPeriod().getSemester())) {
-                    curricularCourseScopeIDs.add(curricularCourseScope.getIdInternal().toString());
-                }
-            }
-        }
         
-        List<String> curricularCourseContextIDs = new ArrayList<String>();
-
+        final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);        
+        
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
+        
         final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), 
-                this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs, 
+                this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, 
                 null, this.evaluationID, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
@@ -774,6 +759,19 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         } else {
             return this.getEvaluation().getClass().getSimpleName();
         }
+    }
+
+    private List<String> getDegreeModuleScopeIDs(ExecutionCourse executionCourse) {
+	final List<String> degreeModuleScopesIDs = new ArrayList<String>();       
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {            
+            List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getDegreeModuleScopes();
+            for (DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+		if(degreeModuleScope.getCurricularSemester().equals(executionCourse.getExecutionPeriod().getSemester())) {
+		    degreeModuleScopesIDs.add(degreeModuleScope.getKey());
+		}        	
+	    }            
+        }
+	return degreeModuleScopesIDs;
     }
 
     protected String getApplicationContext() {

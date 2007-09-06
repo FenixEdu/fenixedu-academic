@@ -30,7 +30,9 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     
     public void edit(LessonInstance lessonInstance) {
 	
-	removeLessonInstances(lessonInstance);
+	if(hasLessonInstances(lessonInstance)) {
+	    removeLessonInstances(lessonInstance);
+	}
 	
 	AllocatableSpace space = (AllocatableSpace) getResource();
 	if(!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 

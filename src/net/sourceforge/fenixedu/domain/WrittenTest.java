@@ -36,18 +36,7 @@ public class WrittenTest extends WrittenTest_Base {
         this.setDescription(description);
         checkIntervalBetweenEvaluations();
     }
-
-    private void checkEvaluationDate(final Date writtenEvaluationDate,
-            final List<ExecutionCourse> executionCoursesToAssociate) {
-
-        for (final ExecutionCourse executionCourse : executionCoursesToAssociate) {
-            if (executionCourse.getExecutionPeriod().getBeginDate().after(writtenEvaluationDate)
-                    || executionCourse.getExecutionPeriod().getEndDate().before(writtenEvaluationDate)) {
-                throw new DomainException("error.invalidWrittenTestDate");
-            }
-        }
-    }
-
+   
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms,
@@ -57,8 +46,10 @@ public class WrittenTest extends WrittenTest_Base {
 
         this.getAssociatedExecutionCourses().clear();
         this.getAssociatedCurricularCourseScope().clear();
+        this.getAssociatedContexts().clear();
 
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
+        
         this.setDescription(description);
         checkIntervalBetweenEvaluations();
     }
@@ -74,6 +65,17 @@ public class WrittenTest extends WrittenTest_Base {
         }
     }
 
+    private void checkEvaluationDate(final Date writtenEvaluationDate,
+            final List<ExecutionCourse> executionCoursesToAssociate) {
+
+        for (final ExecutionCourse executionCourse : executionCoursesToAssociate) {
+            if (executionCourse.getExecutionPeriod().getBeginDate().after(writtenEvaluationDate)
+                    || executionCourse.getExecutionPeriod().getEndDate().before(writtenEvaluationDate)) {
+                throw new DomainException("error.invalidWrittenTestDate");
+            }
+        }
+    }
+    
     private boolean isTeacher(IUserView requestor) {
 	Person person = requestor.getPerson();	
 	Teacher teacher = person.getTeacher();
