@@ -85,7 +85,7 @@
 	<fr:form action="<%= pathToAddExternalUnit %>">	
 		<fr:edit id="externalUnit" name="searchExternalPartyBean" schema="search.external.party.autocomplete" >
 			<fr:layout name="tabular">      										  
-	   			<fr:property name="classes" value="tstyle1 thmiddle thlight mtop05 mbottom1"/>
+	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
 	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
      		</fr:layout>
 		</fr:edit>

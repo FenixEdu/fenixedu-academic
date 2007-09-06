@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="move.space.title" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present name="moveSpaceBean">
@@ -26,28 +27,28 @@
 		</li>
 	</ul>
 	
-	<b><bean:message key="label.space.move.up" bundle="SPACE_RESOURCES"/></b>
+	<p class="mtop15 mbottom05"><b><bean:message key="label.space.move.up" bundle="SPACE_RESOURCES"/></b></p>
 	<fr:form action="/manageSpaces.do?method=moveSpace">
 		<fr:edit id="moveSpaceBeanWithParentSpace" name="moveSpaceBean" schema="SpaceMoveUp">		
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+				<fr:property name="classes" value="tstyle5 vamiddle thlight mtop05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>					
 		</fr:edit>		
-		<html:submit><bean:message key="link.submit" bundle="SPACE_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="link.move" bundle="SPACE_RESOURCES"/></html:submit>
 	</fr:form>
 
-	<br/>
 	
-	<b><bean:message key="label.space.move.down" bundle="SPACE_RESOURCES"/></b>
+	
+	<p class="mtop2 mbottom05"><b><bean:message key="label.space.move.down" bundle="SPACE_RESOURCES"/></b></p>
 	<fr:form action="/manageSpaces.do?method=moveSpace">
 		<fr:edit id="moveSpaceBeanWithChildSpace" name="moveSpaceBean" schema="SpaceMoveDown">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 vamiddle thlight" />
+				<fr:property name="classes" value="tstyle5 vamiddle thlight mtop05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>			
 		</fr:edit>			
-		<html:submit><bean:message key="link.submit" bundle="SPACE_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="link.move" bundle="SPACE_RESOURCES"/></html:submit>
 	</fr:form>	
 	
 	</logic:notEmpty>

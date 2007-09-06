@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message bundle="SPACE_RESOURCES" key="space.list.changes.in.the.spaces.title"/></h2>
 
 <logic:messagesPresent message="true">
@@ -19,15 +20,16 @@
 </logic:messagesPresent>
 
 <logic:notEmpty name="domainObjectActionLogs">			
-
-	<bean:message key="label.page" bundle="SPACE_RESOURCES"/>:
-	<cp:collectionPages url="/SpaceManager/listChangesInTheSpaces.do?method=changesList" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
+	
+	<div class="mtop15">
+		<bean:message key="label.page" bundle="SPACE_RESOURCES"/>:
+		<cp:collectionPages url="/SpaceManager/listChangesInTheSpaces.do?method=changesList" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>	
+	</div>
 
 	<fr:view name="domainObjectActionLogs" schema="ListChangesInTheSpacesSchema">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4"/>
-			<fr:property name="columnClasses" value="nowrap,,nowrap,nowrap,aleft,aleft"/>
-			<fr:property name="rowClasses" value="listClasses"/>					
+			<fr:property name="columnClasses" value="nowrap smalltxt,smalltxt,nowrap smalltxt,nowrap smalltxt,aleft smalltxt,aleft smalltxt"/>
 		</fr:layout>
 	</fr:view>		
 	

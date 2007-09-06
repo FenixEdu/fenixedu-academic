@@ -6,6 +6,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.space.Space"%>
 <html:xhtml/>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message key="merge.space.title" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present role="SPACE_MANAGER">
@@ -30,12 +31,13 @@
 				</li>
 			</ul>	
 				
-			<p class="mtop2"><b><bean:message key="label.find.destination.rooms" bundle="SPACE_RESOURCES"/></b></p>
+			<p class="mtop2 mbottom05"><b><bean:message key="label.find.destination.rooms" bundle="SPACE_RESOURCES"/></b></p>
 			
 			<fr:form action="/manageSpaces.do?method=findDestinationRoomForProcessMerge">	
 				<fr:edit id="findMergeDestinationRoomBean" name="moveSpaceBean" schema="FindMergeDestinationRoom">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1"/>						
+						<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>										
 				</fr:edit>
 				<html:submit><bean:message key="link.submit" bundle="SPACE_RESOURCES"/></html:submit>
@@ -43,13 +45,13 @@
 			
 			<logic:notEmpty name="spaces">									
 			
-				<p class="mtop2"><b><bean:message key="label.found.rooms" bundle="SPACE_RESOURCES"/></b></p>				
+				<p class="mtop2 mbottom05"><b><bean:message key="label.found.rooms" bundle="SPACE_RESOURCES"/></b></p>				
 				<bean:define id="space" name="moveSpaceBean" property="space"/>
 								
 				<fr:view name="spaces" schema="ViewDestinationRoomInfo">					
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1"/>																
-																					
+						<fr:property name="classes" value="tstyle4"/>
+						<fr:property name="columnClasses" value=",acenter,acenter,acenter,acenter,acenter,,,"/>
 			   			<fr:property name="link(merge)" value="<%= "/manageSpaces.do?method=compareDestinationRoomWithFromRoom&fromRoomID=" + ((Space)space).getIdInternal().toString() %>"/>
 			            <fr:property name="param(merge)" value="idInternal/destinationRoomID"/>
 				        <fr:property name="key(merge)" value="label.choose"/>

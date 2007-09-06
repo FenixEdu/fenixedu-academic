@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 <h2><bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.title"/></h2>
 
 <bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
