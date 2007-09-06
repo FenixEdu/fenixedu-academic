@@ -9,7 +9,7 @@
 <bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 
 
-<table class="mtop2" width="98%" border="0" cellspacing="0" cellpadding="0">
+<table class="mtop15" width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
     </td>
