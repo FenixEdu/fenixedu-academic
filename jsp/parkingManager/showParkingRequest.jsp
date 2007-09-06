@@ -183,7 +183,7 @@ function hideCardValidPeriod(toShow){
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="reject"><bean:message key="button.reject"/></html:submit>
 			</p>	
 			
-			<p class="mtop15">
+			<p>
 				<html:link target="printFrame" href="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/>
 				</html:link>
@@ -191,5 +191,6 @@ function hideCardValidPeriod(toShow){
 		</html:form>
 	</logic:equal>
 </logic:present>
+
 <iframe style="display:none;" name="printFrame" src="" height="0" width="0" >	
 </iframe>

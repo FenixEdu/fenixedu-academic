@@ -19,9 +19,12 @@
 
 
 <bean:define id="url" type="java.lang.String">/externalPerson.do?method=search&amp;name=<bean:write name="searchPartyBean" property="partyName"/></bean:define>
-<p>
-	<html:link page="<%= url %>"><bean:message key="link.create.external.person" /></html:link>
-</p>
+
+<ul class="mtop15">
+	<li>
+		<html:link page="<%= url %>"><bean:message key="link.create.external.person" /></html:link>
+	</li>
+</ul>
 
 
 <logic:present name="searchPartyBean">
@@ -32,19 +35,19 @@
 			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
 			<bean:define id="personID" name="parkingParty" property="party.idInternal" />
 			
-			<h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>
+			<h3 class="separator2 mtop15"><bean:message key="label.parkUserInfo"/></h3>
 			<p>
 				<html:img src="<%= request.getContextPath() +"/parkingManager/parking.do?method=showPhoto&amp;personID="+personID.toString() %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></p>
 				<logic:iterate id="occupation" name="parkingParty" property="occupations">
 					<p><bean:write name="occupation" filter="false"/></p>
 				</logic:iterate>
-			<p>
+			</p>
+			<p class="mtop15 mbottom05">
 				<logic:empty name="parkingParty" property="vehicles">
 					<strong><bean:message key="label.newUser" bundle="PARKING_RESOURCES"/></strong>
 				</logic:empty>
 			</p>
-		
-			<p class="mtop15">
+			<p class="mtop05">
 				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;addVehicle=false&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
 					<bean:message key="title.editUser" bundle="PARKING_RESOURCES"/>
 				</html:link>
@@ -61,7 +64,7 @@
 			
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
+					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom05" />
 					<fr:property name="rowClasses" value=",,,,trhighlight2,,," />
 				</fr:layout>
 			</fr:view>
@@ -182,7 +185,7 @@
 			--%>
 
 					
-			<h3 class="separator2 mtop2"><bean:message key="label.requestList" /></h3>
+			<h3 class="separator2 mtop15"><bean:message key="label.requestList" /></h3>
 			<logic:notEmpty name="parkingRequests">		
 				<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
 					<fr:layout name="tabular">
