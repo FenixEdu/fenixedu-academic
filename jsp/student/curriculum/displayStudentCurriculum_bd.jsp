@@ -82,7 +82,7 @@
 
 	<logic:equal name="registration" property="concluded" value="false">
 
-		<logic:equal name="registration" property="degreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree" value="true">
+		<logic:equal name="registration" property="degree.bolonhaDegree" value="false">
 
 <%-- 
 			<p class="mtop1 mbottom1">
