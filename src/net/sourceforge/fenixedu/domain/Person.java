@@ -181,9 +181,9 @@ public class Person extends Person_Base {
 	setIdDocumentType(idDocumentType);
     }
 
-    private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
-	    final IDDocumentType documentType) {
-        return readByDocumentIdNumberAndIdDocumentType(documentIDNumber, documentType) != null;
+    private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber, final IDDocumentType documentType) {
+	Person person = readByDocumentIdNumberAndIdDocumentType(documentIDNumber, documentType);
+	return person != null && !person.equals(this);        
     }
 
     final public String getValidatedName() {
