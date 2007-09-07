@@ -140,7 +140,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
-	    actionForm.set("organizedBy", OrganizationType.EXECUTION_YEARS.name());
+	    actionForm.set("organizedBy", OrganizationType.GROUPS.name());
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("viewType"))) {
