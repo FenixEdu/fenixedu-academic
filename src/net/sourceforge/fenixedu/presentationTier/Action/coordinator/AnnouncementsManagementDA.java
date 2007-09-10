@@ -68,7 +68,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
                 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath() + String.format("&degreeCurricularPlanID=%s&announcementBoardId=%s", degreeCurricularPlan.getIdInternal(), board.getIdInternal()));
-                forward.setRedirect(true);
+                //forward.setRedirect(true);
                 
                 return forward;
             }
