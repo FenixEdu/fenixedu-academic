@@ -652,8 +652,7 @@ public class Person extends Person_Base {
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setName(infoPerson.getNome());
-	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
-		.getTipoDocumentoIdentificacao());
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 
 	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
@@ -665,14 +664,11 @@ public class Person extends Person_Base {
 	setWorkPhone(infoPerson.getWorkPhone());
 
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataValidadeDocumentoIdentificacao()));
+	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
 
-	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
-		.getMaritalStatus());
+	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -686,14 +682,11 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
-		    .generatePassword(this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
 	}
 
-	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
-		: Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
-		: Boolean.TRUE);
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()	: Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
     }
 

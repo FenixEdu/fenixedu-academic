@@ -37,8 +37,6 @@ public class CourseLoad extends CourseLoad_Base {
 	    throw new DomainException("error.CourseLoad.cannot.be.deleted");
 	}
 	super.setExecutionCourse(null);
-	getShifts().clear();
-	getLessonInstances().clear();
 	removeRootDomainObject();
 	deleteDomainObject();
     }

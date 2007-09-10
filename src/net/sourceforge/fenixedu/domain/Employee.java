@@ -29,7 +29,9 @@ import org.joda.time.YearMonthDay;
 public class Employee extends Employee_Base {
 
     public Employee(Person person, Integer employeeNumber, Boolean active) {
+
 	super();
+
 	setEmployeeNumber(employeeNumber);
 	setCreationDate(new DateTime());
 	setPerson(person);
@@ -37,6 +39,12 @@ public class Employee extends Employee_Base {
 	setWorkingHours(0);
 	setAssiduousness(null);
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    public void delete() {
+	super.setPerson(null);
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     @Override
@@ -52,6 +60,9 @@ public class Employee extends Employee_Base {
     public void setPerson(Person person) {
 	if (person == null) {
 	    throw new DomainException("error.employee.no.person");
+	}
+	if (person.hasEmployee()) {
+	    throw new DomainException("error.employee.person.already.has.employee");
 	}
 	super.setPerson(person);
     }
@@ -241,20 +252,14 @@ public class Employee extends Employee_Base {
 
     public Campus getCurrentCampus() {		
 	Unit currentWorkingPlace = getCurrentWorkingPlace();
-	
+
 	if(currentWorkingPlace != null) {
 	    return currentWorkingPlace.getCampus();
 	}	
-	
+
 	return null;
     }
-
-    public void delete() {
-	super.setPerson(null);
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-
+   
     public AdministrativeOffice getAdministrativeOffice() {
 	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
 	if (administrativeOffice == null) {

@@ -27,21 +27,21 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
 	super.delete();
     }
       
-    @Override
-    public void setWeeklyLessonHours(Integer weeklyLessonHours) {
-	if(weeklyLessonHours == null && !isEndSituation()) {
-	    throw new DomainException("error.TeacherProfessionalSituation.no.lesson.hours");
-	}
-	super.setWeeklyLessonHours(weeklyLessonHours);
-    }
-    
-    @Override
-    public void setWeeklyWorkingHours(Double weeklyWorkingHours) {
-	if(weeklyWorkingHours == null && !isEndSituation()) {
-	    throw new DomainException("error.TeacherProfessionalSituation.no.total.hours");
-	}
-        super.setWeeklyWorkingHours(weeklyWorkingHours);
-    }
+//    @Override
+//    public void setWeeklyLessonHours(Integer weeklyLessonHours) {
+//	if(weeklyLessonHours == null && !isEndSituation()) {
+//	    throw new DomainException("error.TeacherProfessionalSituation.no.lesson.hours");
+//	}
+//	super.setWeeklyLessonHours(weeklyLessonHours);
+//    }
+//    
+//    @Override
+//    public void setWeeklyWorkingHours(Double weeklyWorkingHours) {
+//	if(weeklyWorkingHours == null && !isEndSituation()) {
+//	    throw new DomainException("error.TeacherProfessionalSituation.no.total.hours");
+//	}
+//        super.setWeeklyWorkingHours(weeklyWorkingHours);
+//    }
     
     @Override
     public void setRegimeType(RegimeType regimeType) {
