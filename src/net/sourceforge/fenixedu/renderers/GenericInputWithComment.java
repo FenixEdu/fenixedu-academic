@@ -95,7 +95,6 @@ public class GenericInputWithComment extends InputRenderer {
 		
 		context.setLayout(getSubLayout());
 		context.setProperties(getProperties());
-		context.getMetaObject().setProperties(getProperties());
 		
 		HtmlComponent component = RenderKit.getInstance().render(context, object, type);
 		
