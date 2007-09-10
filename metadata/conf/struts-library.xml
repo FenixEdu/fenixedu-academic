@@ -58,7 +58,10 @@
     			parameter="method"
     			type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryCardManagementDispatchAction">
     		<forward name="show-users" path="show-users"/>
-    		<forward name="edit-card" path="edit-card"/>    		
+    		<forward name="edit-card" path="edit-card"/>
+    		<forward name="show-details" path="show-details"/>
+    		<forward name="no-cards-missing" path="no-cards-missing"/> 
+    		<forward name="no-letters-missing" path="no-letters-missing"/>     		    		
     	</action>
     </action-mappings>
 

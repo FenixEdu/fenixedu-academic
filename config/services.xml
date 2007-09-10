@@ -12338,4 +12338,49 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateLibraryCard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.CreateLibraryCard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>MarkLibraryCardAsEmited</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardAsEmited</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>MarkLibraryCardLetterAsEmited</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardLetterAsEmited</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>MarkLibraryCardListAsEmited</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListAsEmited</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>MarkLibraryCardListLettersAsEmited</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListLettersAsEmited</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

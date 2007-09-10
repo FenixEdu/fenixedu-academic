@@ -933,8 +933,8 @@ public class CreateTestData {
             final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
             final Room room = lessonRoomManager.getNextOldRoom();
             final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod);
-            new LessonSpaceOccupation(room, lesson);
+//            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod);
+//            new LessonSpaceOccupation(room, lesson);
         }
     }
 

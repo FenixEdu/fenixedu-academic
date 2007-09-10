@@ -4445,6 +4445,8 @@ class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforg
 	RoleType role;
 	Integer pin;
 	YearMonthDay validUntil;
+	Boolean isCardEmited;
+	Boolean isLetterGenerated;
 }
 
 /*

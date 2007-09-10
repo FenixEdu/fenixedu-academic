@@ -26,24 +26,30 @@
 
 <bean:define id="personID" name="libraryCard" property="person.idInternal"/>
 
-<logic:notPresent name="unitsNameList">
-	<fr:edit id="libraryCard" name="libraryCard" schema="library.card.generate" action="/cardManagement.do?method=generateCard">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5"/>
-			<fr:property name="columnClasses" value=",,tdclear error0"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString() %>"/>
-		<fr:destination name="cancel" path="/cardManagement.do?method=showUsers"/>
-	</fr:edit>
-</logic:notPresent>
+<fr:form action="/cardManagement.do?method=generateCard">
 
-<logic:present name="unitsNameList">
-	<fr:edit id="libraryCardNames" name="libraryCard" schema="library.card.generate.unitNames" action="/cardManagement.do?method=generateCard">
+	<fr:edit id="libraryCard" name="libraryCard" schema="library.card.generate">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5"/>
 			<fr:property name="columnClasses" value=",,tdclear error0"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()  %>"/>
-		<fr:destination name="cancel" path="/cardManagement.do?method=showUsers"/>
+		</fr:layout>			
+		<fr:destination name="changeDateVisibility" path="/cardManagement.do?method=changeDateVisibility"/>
+		<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()%>"/>
 	</fr:edit>
-</logic:present>
+
+	<logic:present name="presentDate">
+		<fr:edit id="validUntil" name="libraryCard" schema="library.card.generate.date">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5"/>
+				<fr:property name="columnClasses" value=",,tdclear error0"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/cardManagement.do?method=invalidDate"/>	
+			<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString() %>"/>
+		</fr:edit>
+	</logic:present>
+
+	<html:submit ><bean:message key="button.confirm" bundle="LIBRARY_RESOURCES"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
+		<bean:message key="button.back" bundle="LIBRARY_RESOURCES"/>
+	</html:cancel>
+</fr:form>

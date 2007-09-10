@@ -11,15 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
@@ -32,35 +35,24 @@ import org.apache.struts.action.ActionMessages;
 
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
+    private final static int maxUserNameLength = 47;
+
+    private final static int minimumPinNumber = 6910;
+    
+    private final static int maximumPinNumber = 100000;
+
     public ActionForward showUsers(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        List<LibraryCardDTO> libraryCardsList = new ArrayList<LibraryCardDTO>();
-        for (Employee employee : rootDomainObject.getEmployees()) {
-            if (employee.getPerson().hasRole(RoleType.RESEARCHER)
-                    && !employee.getPerson().hasRole(RoleType.TEACHER)) {
-                if (employee.getCurrentWorkingContract() != null) {
-                    libraryCardsList.add(new LibraryCardDTO(employee.getPerson(), RoleType.RESEARCHER,
-                            employee.getPerson().getNickname(), employee.getLastWorkingPlace(), employee
-                                    .getEmployeeNumber()));
-                }
-            } else if (employee.getPerson().hasRole(RoleType.TEACHER)) {
-                Teacher teacher = employee.getPerson().getTeacher();
-                if (!teacher.isInactive(ExecutionPeriod.readActualExecutionPeriod())) {
-                    libraryCardsList.add(new LibraryCardDTO(employee.getPerson(), RoleType.TEACHER,
-                            employee.getPerson().getNickname(), teacher.getLastWorkingUnit(), teacher
-                                    .getTeacherNumber()));
-                }
-            } else if (employee.getPerson().hasRole(RoleType.EMPLOYEE)) {
-                if (employee.getCurrentWorkingContract() != null) {
-                    libraryCardsList.add(new LibraryCardDTO(employee.getPerson(), RoleType.EMPLOYEE,
-                            employee.getPerson().getNickname(), employee.getLastWorkingPlace(), employee
-                                    .getEmployeeNumber()));
-                }
-            }
+        LibraryCardSearch libraryCardSearch = (LibraryCardSearch) getRenderedObject("libraryCardSearch");
+
+        if (libraryCardSearch == null) {
+            libraryCardSearch = new LibraryCardSearch();
+            libraryCardSearch.setCategory(RoleType.TEACHER);
         }
+
         //TODO o dto pode ter 1 lista de enum's quando os alunos entrarem ao barulho 
-        request.setAttribute("libraryCardsList", libraryCardsList);
+        request.setAttribute("libraryCardSearch", libraryCardSearch);
         return mapping.findForward("show-users");
     }
 
@@ -89,18 +81,19 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             }
         }
 
-        if (person.getName().length() > 42) {
-            addMessage(request, "message.card.userName.tooLong");
+        libraryCard.setUnlimitedCard(Boolean.TRUE);
+        if (person.getName().length() > maxUserNameLength) {
+            addMessage(request, "message.card.userName.tooLong",maxUserNameLength);
         }
-        if (libraryCard.getUnitName().length() > 35) {
-            addMessage(request, "message.card.unitName.tooLong");
-            request.setAttribute("unitsNameList", "unitsNameList");
-        }
+
         List<Integer> pinList = getExistingPins();
 
         Random random = new Random();
         while (true) {
-            Integer pin = random.nextInt(10000);
+            Integer pin = random.nextInt(maximumPinNumber);
+            if (pin < minimumPinNumber) {
+                continue;
+            }
             if (!pinList.contains(pin)) {
                 libraryCard.setPin(pin);
                 break;
@@ -112,28 +105,41 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generateCard(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+        
+        if (RenderUtils.getViewState().isCanceled()) {
+            return showUsers(mapping, actionForm, request, response);
+        }
 
-        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();        
-        boolean existErrors = Boolean.FALSE;
-        if (libraryCardDTO.getPerson().getName().length() > 42) {
+        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();
+
+        if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
             setError(request, "message.card.userName.tooLong");
-            existErrors = Boolean.TRUE;
-        }
-        if (libraryCardDTO.getUnitName().length() > 35) {
-            setError(request, "message.card.unitName.tooLong");
-            request.setAttribute("unitsNameList", "unitsNameList");
-            existErrors = Boolean.TRUE;
-        }
-
-        if(existErrors) {
             request.setAttribute("libraryCard", libraryCardDTO);
             return mapping.findForward("edit-card");
         }
-        
-//      ServiceUtils.executeService(userView, serviceName, serviceArgs)
 
-        
+        LibraryCard libraryCard = (LibraryCard) ServiceUtils.executeService(SessionUtils
+                .getUserView(request), "CreateLibraryCard", new Object[] { libraryCardDTO });
+        request.setAttribute("libraryCard", new LibraryCardDTO(libraryCard));
+
+        return mapping.findForward("show-details");
+    }
+
+    public ActionForward generatePdfCard(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+
+        if (request.getParameter("cancel") != null) {
+            return showUsers(mapping, actionForm, request, response);
+        }
+
+        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCard");
+
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
+                new Object[] { libraryCardDTO.getLibraryCard() });
+
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         cardList.add(libraryCardDTO);
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
@@ -152,6 +158,145 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward generateMissingCards(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+
+        List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+            if (!libraryCard.getIsCardEmited()) {
+                cardList.add(new LibraryCardDTO(libraryCard));
+            }
+        }
+
+        if (!cardList.isEmpty()) {
+            ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "MarkLibraryCardListAsEmited", new Object[] { cardList });
+
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
+                    LanguageUtils.getLocale());
+            byte[] data = ReportsUtils.exportToPdf(
+                    "net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename=cartoes.pdf");
+            response.setContentLength(data.length);
+            ServletOutputStream writer = response.getOutputStream();
+            writer.write(data);
+            writer.flush();
+            writer.close();
+            response.flushBuffer();
+
+            return null;
+        } else {
+            return mapping.findForward("no-cards-missing");
+        }
+    }
+
+    public ActionForward generatePdfLetter(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+
+        Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
+
+        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
+                new Object[] { libraryCard });
+
+        List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
+        cardList.add(new LibraryCardDTO(libraryCard));
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
+                LanguageUtils.getLocale());
+        byte[] data = ReportsUtils.exportToPdf(
+                "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter", null, bundle, cardList);
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=carta.pdf");
+        response.setContentLength(data.length);
+        ServletOutputStream writer = response.getOutputStream();
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        response.flushBuffer();
+
+        return null;
+    }
+
+    public ActionForward generateMissingLetters(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+
+        List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+            if (!libraryCard.getIsLetterGenerated()) {
+                cardList.add(new LibraryCardDTO(libraryCard));
+            }
+        }
+
+        if (!cardList.isEmpty()) {
+            ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "MarkLibraryCardListLettersAsEmited", new Object[] { cardList });
+
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
+                    LanguageUtils.getLocale());
+            byte[] data = ReportsUtils.exportToPdf(
+                    "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter", null, bundle,
+                    cardList);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename=cartas.pdf");
+            response.setContentLength(data.length);
+            ServletOutputStream writer = response.getOutputStream();
+            writer.write(data);
+            writer.flush();
+            writer.close();
+            response.flushBuffer();
+
+            return null;
+        } else {
+            return mapping.findForward("no-letters-missing");
+        }
+    }
+
+    public ActionForward showDetails(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
+
+        Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
+        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+        request.setAttribute("libraryCard", new LibraryCardDTO(libraryCard));
+
+        return mapping.findForward("show-details");
+    }
+
+    public ActionForward changeDateVisibility(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
+
+        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();
+        if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
+            addMessage(request, "message.card.userName.tooLong",maxUserNameLength);
+        }
+
+        if (!libraryCardDTO.getUnlimitedCard()) {
+            request.setAttribute("presentDate", "presentDate");
+        } else {
+            libraryCardDTO.setValidUntil(null);
+        }
+        request.setAttribute("libraryCard", libraryCardDTO);
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("edit-card");
+    }
+
+    public ActionForward invalidDate(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
+
+        if (request.getParameter("cancel") != null) {
+            return showUsers(mapping, actionForm, request, response);
+        }
+
+        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();
+        request.setAttribute("libraryCard", libraryCardDTO);
+        request.setAttribute("presentDate", "presentDate");
+        return mapping.findForward("edit-card");
+    }
+
     private List<Integer> getExistingPins() {
         List<Integer> pins = new ArrayList<Integer>();
         for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
@@ -162,9 +307,9 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return pins;
     }
 
-    private void addMessage(HttpServletRequest request, String msg) {
+    private void addMessage(HttpServletRequest request, String msg, int parameter) {
         ActionMessages actionMessages = getMessages(request);
-        actionMessages.add("message", new ActionMessage(msg));
+        actionMessages.add("message", new ActionMessage(msg,parameter));
         saveMessages(request, actionMessages);
     }
 

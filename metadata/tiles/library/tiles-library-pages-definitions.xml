@@ -36,4 +36,15 @@
 		<put name="body" value="/library/cards/editCard.jsp"/>
 	</definition>
 
+	<definition name="show-details" extends="definition.library.master">
+		<put name="body" value="/library/cards/showDetails.jsp"/>
+	</definition>
+	
+	<definition name="no-cards-missing" extends="definition.library.master">
+		<put name="body" value="/library/cards/noCardsMissing.jsp"/>
+	</definition>
+
+	<definition name="no-letters-missing" extends="definition.library.master">
+		<put name="body" value="/library/cards/noLettersMissing.jsp"/>
+	</definition>	
 </tiles-definitions>
