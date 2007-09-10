@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import net.sourceforge.fenixedu._development.Custodian;
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -40,15 +41,17 @@ public class Script {
     }
     
     private static void outputRunCommandTime(final String commandString, final long time1, final long time2, final long time3) {
-        System.out.print("Command ");
-        System.out.print(commandString);
-        System.out.print(" took ");
-        System.out.print(time2 - time1);
-        System.out.print(" + ");
-        System.out.print(time3 - time2);
-        System.out.print(" = ");
-        System.out.print(time3 - time1);
-        System.out.print(" (ms)");
+        if (LogLevel.INFO) {
+            System.out.print("Command ");
+            System.out.print(commandString);
+            System.out.print(" took ");
+            System.out.print(time2 - time1);
+            System.out.print(" + ");
+            System.out.print(time3 - time2);
+            System.out.print(" = ");
+            System.out.print(time3 - time1);
+            System.out.print(" (ms)");
+        }
     }
 
     public static DateTime returnExpirationDate(String user) throws ExcepcaoPersistencia, KerberosException {
