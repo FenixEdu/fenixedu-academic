@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Clean up degree info table." cleanupDegreeInfoTable.sql
+

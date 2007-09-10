@@ -444,31 +444,37 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		}
 
 	class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
-		MultiLanguageString accessRequisites;
-		MultiLanguageString additionalInfo;
-		MultiLanguageString candidacyDocuments;
-		MultiLanguageString candidacyPeriod;
-		MultiLanguageString classifications;
-		MultiLanguageString description;
-		MultiLanguageString designedFor;
 		Integer driftsFirst;
 		Integer driftsInitial;
 		Integer driftsSecond;
-		MultiLanguageString enrolmentPeriod;
-		MultiLanguageString gratuity;
-		MultiLanguageString history;
-		MultiLanguageString links;
 		Double markAverage;
 		Double markMax;
 		Double markMin;
-		MultiLanguageString objectives;
+		MultiLanguageString additionalInfo;
+		MultiLanguageString description;
+		MultiLanguageString gratuity;
+		MultiLanguageString history;
+		MultiLanguageString links;
 		MultiLanguageString operationalRegime;
+		MultiLanguageString schoolCalendar;
+	}
+
+	class net.sourceforge.fenixedu.domain.DegreeInfoCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+		MultiLanguageString accessRequisites;
+		MultiLanguageString candidacyDocuments;
+		MultiLanguageString candidacyPeriod;
+		MultiLanguageString enrolmentPeriod;
+		MultiLanguageString selectionResultDeadline;
+		MultiLanguageString testIngression;
+	}
+
+	class net.sourceforge.fenixedu.domain.DegreeInfoFuture extends net.sourceforge.fenixedu.domain.DomainObject {
+		MultiLanguageString classifications;
+		MultiLanguageString designedFor;
+		MultiLanguageString objectives;
 		MultiLanguageString professionalExits;
 		MultiLanguageString qualificationLevel;
 		MultiLanguageString recognitions;
-		MultiLanguageString schoolCalendar;
-		MultiLanguageString selectionResultDeadline;
-		MultiLanguageString testIngression;
 	}
 
 	class net.sourceforge.fenixedu.domain.DeleteFileLog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5477,6 +5483,16 @@ relation DegreeDegreeInfo {
 	}
 }
 
+relation DegreeInfoDegreeInfoCandidacy {
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfo;
+	net.sourceforge.fenixedu.domain.DegreeInfoCandidacy playsRole degreeInfoCandidacy;
+}
+
+relation DegreeInfoDegreeInfoFuture {
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfo;
+	net.sourceforge.fenixedu.domain.DegreeInfoFuture playsRole degreeInfoFuture;
+}
+
 relation DegreeHasSite {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 	net.sourceforge.fenixedu.domain.DegreeSite playsRole site;
@@ -8988,6 +9004,20 @@ relation RootDomainObjectDegreeCurricularPlan {
 relation RootDomainObjectDegreeInfo {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegreeInfoCandidacy {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DegreeInfoCandidacy playsRole degreeInfoCandidacys {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDegreeInfoFuture {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DegreeInfoFuture playsRole degreeInfoFutures {
 		multiplicity *;
 	}
 }

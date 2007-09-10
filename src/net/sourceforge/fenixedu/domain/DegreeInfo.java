@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 /**
  * @author Tania Pousao Created on 30/Out/2003
  */
@@ -8,9 +10,10 @@ public class DegreeInfo extends DegreeInfo_Base {
     protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-
 	setDegree(degree);
 	setExecutionYear(executionYear);
+	new DegreeInfoCandidacy(this);
+	new DegreeInfoFuture(this);
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
@@ -39,20 +42,6 @@ public class DegreeInfo extends DegreeInfo_Base {
 
 	setQualificationLevel(degreeInfo.getQualificationLevel());
 	setRecognitions(degreeInfo.getRecognitions());
-	/*
-	 * setDescriptionEn(degreeInfo.getDescriptionEn());
-	 * setHistoryEn(degreeInfo.getHistoryEn());
-	 * setObjectivesEn(degreeInfo.getObjectivesEn());
-	 * setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
-	 * setAdditionalInfoEn(degreeInfo.getAdditionalInfoEn());
-	 * setLinksEn(degreeInfo.getLinksEn());
-	 * 
-	 * setTestIngressionEn(degreeInfo.getTestIngressionEn());
-	 * setClassificationsEn(degreeInfo.getClassificationsEn());
-	 * 
-	 * setQualificationLevelEn(degreeInfo.getQualificationLevelEn());
-	 * setRecognitionsEn(degreeInfo.getRecognitionsEn());
-	 */
     }
 
     public void delete() {
@@ -61,4 +50,101 @@ public class DegreeInfo extends DegreeInfo_Base {
 	removeExecutionYear();
 	deleteDomainObject();
     }
+
+    public MultiLanguageString getAccessRequisites() {
+        return getDegreeInfoCandidacy().getAccessRequisites();
+    }
+
+    public MultiLanguageString getCandidacyDocuments() {
+        return getDegreeInfoCandidacy().getCandidacyDocuments();
+    }
+
+    public MultiLanguageString getCandidacyPeriod() {
+        return getDegreeInfoCandidacy().getCandidacyPeriod();
+    }
+
+    public MultiLanguageString getClassifications() {
+        return getDegreeInfoFuture().getClassifications();
+    }
+
+    public MultiLanguageString getDesignedFor() {
+        return getDegreeInfoFuture().getDesignedFor();
+    }
+
+    public MultiLanguageString getEnrolmentPeriod() {
+        return getDegreeInfoCandidacy().getEnrolmentPeriod();
+    }
+
+    public MultiLanguageString getObjectives() {
+        return getDegreeInfoFuture().getObjectives();
+    }
+
+    public MultiLanguageString getProfessionalExits() {
+        return getDegreeInfoFuture().getProfessionalExits();
+    }
+
+    public MultiLanguageString getQualificationLevel() {
+        return getDegreeInfoFuture().getQualificationLevel();
+    }
+
+    public MultiLanguageString getRecognitions() {
+        return getDegreeInfoFuture().getRecognitions();
+    }
+
+    public MultiLanguageString getSelectionResultDeadline() {
+        return getDegreeInfoCandidacy().getSelectionResultDeadline();
+    }
+
+    public MultiLanguageString getTestIngression() {
+        return getDegreeInfoCandidacy().getTestIngression();
+    }
+
+    public void setAccessRequisites(MultiLanguageString accessRequisites) {
+        getDegreeInfoCandidacy().setAccessRequisites(accessRequisites);
+    }
+
+    public void setCandidacyDocuments(MultiLanguageString candidacyDocuments) {
+        getDegreeInfoCandidacy().setCandidacyDocuments(candidacyDocuments);
+    }
+
+    public void setCandidacyPeriod(MultiLanguageString candidacyPeriod) {
+        getDegreeInfoCandidacy().setCandidacyPeriod(candidacyPeriod);
+    }
+
+    public void setClassifications(MultiLanguageString classifications) {
+        getDegreeInfoFuture().setClassifications(classifications);
+    }
+
+    public void setDesignedFor(MultiLanguageString designedFor) {
+        getDegreeInfoFuture().setDesignedFor(designedFor);
+    }
+
+    public void setEnrolmentPeriod(MultiLanguageString enrolmentPeriod) {
+        getDegreeInfoCandidacy().setEnrolmentPeriod(enrolmentPeriod);
+    }
+
+    public void setObjectives(MultiLanguageString objectives) {
+        getDegreeInfoFuture().setObjectives(objectives);
+    }
+
+    public void setProfessionalExits(MultiLanguageString professionalExits) {
+        getDegreeInfoFuture().setProfessionalExits(professionalExits);
+    }
+
+    public void setQualificationLevel(MultiLanguageString qualificationLevel) {
+        getDegreeInfoFuture().setQualificationLevel(qualificationLevel);
+    }
+
+    public void setRecognitions(MultiLanguageString recognitions) {
+        getDegreeInfoFuture().setRecognitions(recognitions);
+    }
+
+    public void setSelectionResultDeadline(MultiLanguageString selectionResultDeadline) {
+        getDegreeInfoCandidacy().setSelectionResultDeadline(selectionResultDeadline);
+    }
+
+    public void setTestIngression(MultiLanguageString testIngression) {
+        getDegreeInfoCandidacy().setTestIngression(testIngression);
+    }
+
 }
