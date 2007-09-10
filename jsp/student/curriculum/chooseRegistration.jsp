@@ -8,10 +8,10 @@
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="student" property="registrations" schema="student.registrationsWithStartData" >
+<fr:view name="student" property="registrations" schema="student.registrationsToList" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
-		<fr:property name="columnClasses" value="acenter smalltxt,acenter smalltxt,smalltxt,smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,"/>
+		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
 		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&registrationOID=${idInternal}" />
 		<fr:property name="key(view)" value="view.curricular.plans"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
