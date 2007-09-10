@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -127,4 +128,26 @@ public class PersonFunction extends PersonFunction_Base {
     public boolean hasCredits() {
 	return getCredits() > 0d;
     }
+	
+	public static void createYearDelegatePersonFunction(DegreeUnit unit, Person person, YearMonthDay startDate,
+			YearMonthDay endDate, Function function, CurricularYear curricularYear) {
+		if(function == null)
+    		throw new DomainException("error.delegates.noDelegateFunction");
+		PersonFunction personFunction = new PersonFunction(unit, person, function, startDate, endDate);
+		personFunction.setCurricularYear(curricularYear);
+}
+	public static void createDelegatePersonFunction(Unit unit, Person person, YearMonthDay startDate,
+			YearMonthDay endDate, Function function) {
+		if(function == null)
+    		throw new DomainException("error.delegates.noDelegateFunction");
+		new PersonFunction(unit, person, function, startDate, endDate);
+	}
+	
+	@Override
+	public void delete() {
+		if(hasCurricularYear()) {
+			removeCurricularYear();
+		}
+		super.delete();
+	}
 }

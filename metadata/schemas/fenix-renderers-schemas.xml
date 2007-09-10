@@ -42,6 +42,8 @@
     <!ENTITY inquirySchemas SYSTEM "inquiry-schemas.xml">
     <!ENTITY librarySchemas SYSTEM "library-schemas.xml">
     <!ENTITY bolonhaManagerSchemas SYSTEM "bolonhaManager-schemas.xml">
+    <!ENTITY pedagogicalCouncilSchemas SYSTEM "pedagogicalCouncil-schemas.xml">
+    <!ENTITY delegatesSchemas SYSTEM "delegates-schemas.xml">
 ]>
 
 <schemas>
@@ -720,5 +722,7 @@
     &librarySchemas;
     &resourceManager;
     &bolonhaManagerSchemas;
+    &pedagogicalCouncilSchemas;
+    &delegatesSchemas;
     
 </schemas>

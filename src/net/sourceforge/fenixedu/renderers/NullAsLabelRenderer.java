@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -39,10 +40,27 @@ public class NullAsLabelRenderer extends OutputRenderer {
     private String subSchema;
 
     private String label;
+    private String linkFormat;
+    private boolean moduleRelative;
+    private boolean contextRelative;
+    
     private boolean key;
     private String bundle;
 
-    public String getBundle() {
+    
+    /**
+     * LinkFormat used on the label that is displayed when the value is null
+     *@property 
+     */
+    public String getLinkFormat() {
+		return linkFormat;
+	}
+
+	public void setLinkFormat(String linkFormat) {
+		this.linkFormat = linkFormat;
+	}
+
+	public String getBundle() {
         return this.bundle;
     }
 
@@ -114,11 +132,18 @@ public class NullAsLabelRenderer extends OutputRenderer {
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
                 if (isEmpty(object)) {
-                    if (isKey()) {
-                        return new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()), false);
-                    } else {
-                        return new HtmlText(getLabel());
-                    }
+                     HtmlComponent component = isKey() ? new HtmlText(RenderUtils.getResourceString(getBundle(), getLabel()), false) : new HtmlText(getLabel());
+                        
+                	if(getLinkFormat() != null && getContext().getParentContext() != null) {
+                	    HtmlLink link = new HtmlLink();
+                	    link.setBody(component);
+                		link.setUrl(RenderUtils.getFormattedProperties(getLinkFormat(), getContext().getParentContext().getMetaObject().getObject()));
+                		link.setModuleRelative(isModuleRelative());
+                		link.setContextRelative(isContextRelative());
+                		component = link;
+                	}
+                	
+                	return component;
                 }
                 else {
                     Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
@@ -142,5 +167,21 @@ public class NullAsLabelRenderer extends OutputRenderer {
 
         };
     }
+
+	public boolean isContextRelative() {
+		return contextRelative;
+	}
+
+	public void setContextRelative(boolean contextRelative) {
+		this.contextRelative = contextRelative;
+	}
+
+	public boolean isModuleRelative() {
+		return moduleRelative;
+	}
+
+	public void setModuleRelative(boolean moduleRelative) {
+		this.moduleRelative = moduleRelative;
+	}
 
 }

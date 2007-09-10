@@ -3,15 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<h2><bean:message key="label.delegate.curricularCourses" /></h2>
+<h2><bean:message key="label.delegate.curricularCourses" bundle="DELEGATES_RESOURCES" /></h2>
 <logic:present name="infoCurricularCoursesAuthorizationToEdit">
 	<table width="90%"cellpadding="5" border="0">
 		<tr>
-			<th class="listClasses-header"><bean:message key="label.delegate.curricularCourse.code" />
+			<th class="listClasses-header"><bean:message key="label.delegate.curricularCourse.code" bundle="DELEGATES_RESOURCES"/>
 			</th>
-			<th class="listClasses-header" style="text-align:left"><bean:message key="label.delegate.curricularCourse.name" />
+			<th class="listClasses-header" style="text-align:left"><bean:message key="label.delegate.curricularCourse.name" bundle="DELEGATES_RESOURCES"/>
 			</th>
-			<th class="listClasses-header"><bean:message key="label.delegate.curricularCourse.YearSemBranch" />
+			<th class="listClasses-header"><bean:message key="label.delegate.curricularCourse.YearSemBranch" bundle="DELEGATES_RESOURCES"/>
 			</th>
 		</tr>
 		<logic:iterate id="infoCurricularCourseAuthorizationToEdit" name="infoCurricularCoursesAuthorizationToEdit">

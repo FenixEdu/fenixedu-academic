@@ -953,5 +953,10 @@ Documentation:
     </renderer>
 
 	<renderer type="java.util.Collection" layout="unit-sites-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSitesTreeRenderer"/>
+
+	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodLinkRenderer"/>
 	
+<!--	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="candidacy-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.CandidacyPeriodLinkRenderer"/>-->
+	
+	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
 </renderers-config>

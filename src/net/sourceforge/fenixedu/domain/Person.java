@@ -1137,9 +1137,6 @@ public class Person extends Person_Base {
 		break;
 
 	    case DELEGATE:
-		addRoleIfNotPresent(person, RoleType.STUDENT);
-		break;
-
 	    case OPERATOR:
 	    case RESEARCHER:
 	    case GEP:
@@ -1202,6 +1199,7 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.EMPLOYEE);
 		removeRoleIfPresent(person, RoleType.RESEARCHER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
+		removeRoleIfPresent(person, RoleType.DELEGATE);
 		break;
 
 	    case EMPLOYEE:
@@ -2605,6 +2603,25 @@ public class Person extends Person_Base {
     @Override
     public Homepage initializeSite() {
     	return (Homepage) super.initializeSite();
+    }
+    
+    public PersonFunction getActiveGGAEDelegatePersonFunction() {
+    	for(PersonFunction personFunction : getActivePersonFunctions()) {
+    		if(personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
+    			return personFunction;
+    		}
+    	}
+    	return null;
+    }
+    
+    public List<PersonFunction> getAllGGAEDelegatePersonFunctions() {
+    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+    	for(PersonFunction personFunction : getPersonFunctions()) {
+    		if(personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
+    			result.add(personFunction);
+    		}
+    	}
+    	return result;
     }
 
 }

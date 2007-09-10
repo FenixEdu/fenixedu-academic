@@ -47,4 +47,47 @@
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
 
+	<definition name="createEditCandidacyPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp"/>  
+    </definition>
+    
+    <definition name="createEditVotingPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/createEditVotingPeriods.jsp"/>  
+    </definition>
+
+	<definition name="showCandidacyPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showCandidacyPeriods.jsp"/>  
+    </definition>
+    
+    <definition name="showVotingPeriods" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showVotingPeriods.jsp"/>  
+    </definition>
+    
+    <definition name="showCandidates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showCandidates.jsp"/>  
+    </definition>
+    
+    <definition name="showVotingResults" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/showVotingResults.jsp"/>  
+    </definition>
+    
+    <definition name="createEditDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/createEditDelegates.jsp"/>  
+    </definition>
+    
+    <definition name="createEditGGAEDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/createEditGGAEDelegates.jsp"/>  
+    </definition>
+    
+    <definition name="showPossibleDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/delegates/showPossibleDelegates.jsp"/>  
+    </definition>
+
+	<definition name="searchDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/commons/delegates/searchDelegates.jsp"/>  
+    </definition>
+
+	<definition name="showDelegates" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/commons/delegates/showDelegates.jsp"/>  
+    </definition>
 </tiles-definitions>

@@ -576,6 +576,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width40em { width: 40em; }
 .width46em { width: 46em; }
 .width50em { width: 50em; }
+.width50px { width: 50px; }
 .width80px { width: 80px; }
 .width100px { width: 100px; }
 .width110px { width: 110px; }
@@ -586,6 +587,9 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width225px { width: 225px; }
 .width250px { width: 250px; }
 .width300px { width: 300px; }
+.width325px { width: 325px; }
+.width350px { width: 350px; }
+.width400px { width: 400px; }
 .width500px { width: 550px; }
 .width550px { width: 550px; }
 .width600px { width: 600px; }

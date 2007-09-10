@@ -31,3 +31,6 @@ function executeWithTempFile() {
 execute "Clean up degree info table." cleanupDegreeInfoTable.sql
 execute "Update LibraryCard Functionalities" updateLibraryCardFunctionalities.sql
 execute "Update LibraryCard Table" updateLibraryCardTable.sql
+
+execute "Create Election and Vote tables" createElectionAndVoteTables.sql
+execute "Alter accountability table, adding KEY_CURRICULAR_YEAR" alterAccountabilityTable.sql

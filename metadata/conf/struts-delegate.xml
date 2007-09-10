@@ -40,26 +40,55 @@
     </global-forwards>
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" forward="index" />
-        
-        <action path="/readCurricularCourses" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.student.delegate.ReadDelegateCurricularCoursesAction">
-            <forward name="show-curricular-courses" path="view-curricular-courses"/>
-        </action>
-        <action 
-			type="net.sourceforge.fenixedu.presentationTier.Action.student.delegate.StudentReportAction" 
-			path="/studentReport" name="studentReportForm" 
-			parameter="method" scope="request" validate="true" 
-			input="/studentReport.do?page=0&amp;method=prepareEdit">
-			<forward name="show-form" path="student-report-management"/>
-			<forward name="successfull-read" path="view-student-report"/>
-		</action>
+        <action path="/index"
+	        type="net.sourceforge.fenixedu.presentationTier.Action.delegate.ReadDelegateDegreeDispatchAction">
+	        <forward name="success" path="index"/>
+	    </action>
+		
+		<action path="/findDelegates"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction">
+			 <forward name="searchDelegates" path="searchDelegates"/>
+			 <forward name="showDelegates" path="showDelegates"/>
+		 </action>
+		 
+		 <action path="/viewStudents"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.ViewStudentsDispatchAction">
+			 <forward name="showStudents" path="showStudents"/>
+			 <forward name="selectCurricularCourses" path="selectCurricularCourses"/>
+		 </action>
+		 
+		 <action path="/sendEmailToDelegateStudents"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.SendEmailToDelegateStudents">
+			 <forward name="choose-receivers" path="choose-receivers" />
+			 <forward name="compose-mail" path="compose-mail-students" />
+			 <forward name="success" path="/sendEmailToDelegateStudents.do?method=prepare"/>
+             <forward name="problem" path="/sendEmailToDelegateStudents.do?method=prepare"/>
+		 </action>
+		 
+		 <action path="/sendEmailToDelegates"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.SendEmailToDelegates">
+			 <forward name="choose-receivers" path="choose-receivers" />
+			 <forward name="compose-mail" path="compose-mail-delegates" />
+			 <forward name="success" path="/sendEmailToDelegates.do?method=prepare"/>
+             <forward name="problem" path="/sendEmailToDelegates.do?method=prepare"/>
+		 </action>
+		 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="resources.DelegateResources" null="false"/>
+    <message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

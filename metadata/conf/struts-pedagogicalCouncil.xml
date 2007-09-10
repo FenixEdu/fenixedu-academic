@@ -68,6 +68,65 @@
 			 <forward name="editFile" path="pedagogical-edit-file"/>
 			 <forward name="editUploaders" path="pedagogical-edit-uploaders"/> 
 		 </action>
+		 
+		 <action path="/electionsPeriodsManagement"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.ElectionsPeriodsManagementDispatchAction">
+			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
+			 <forward name="editYearDelegateCandidacyPeriods" path="/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
+			 <forward name="createYearDelegateCandidacyPeriods" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
+			 <forward name="deleteYearDelegateCandidacyPeriods" path="/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
+  			 <forward name="editYearDelegateCandidacyPeriod" path="/editElectionsPeriods.do?method=prepareEditYearDelegateCandidacyPeriod&amp;forwardTo=createEditCandidacyPeriods"/>
+			 <forward name="createYearDelegateCandidacyPeriod" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;forwardTo=createEditCandidacyPeriods"/>			 
+			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
+			 <forward name="editYearDelegateVotingPeriods" path="/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
+			 <forward name="createYearDelegateVotingPeriods" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
+			 <forward name="deleteYearDelegateVotingPeriods" path="/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
+ 			 <forward name="editYearDelegateVotingPeriod" path="/editElectionsPeriods.do?method=prepareEditYearDelegateVotingPeriod&amp;forwardTo=createEditVotingPeriods"/>
+			 <forward name="createYearDelegateVotingPeriod" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateVotingPeriod&amp;forwardTo=createEditVotingPeriods"/>			 
+ 			 <forward name="showCandidacyPeriods" path="showCandidacyPeriods"/>
+ 			 <forward name="showCandidates" path="showCandidates"/>
+			 <forward name="showVotingPeriods" path="showVotingPeriods"/>
+			 <forward name="showVotingResults" path="showVotingResults"/>
+			 <forward name="showPossibleDelegates" path="showPossibleDelegates"/>
+		 </action>
+
+		 <action path="/createElectionsPeriods"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.CreateElectionsPeriodsDispatchAction">
+			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
+			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
+		 </action>
+		 
+		 <action path="/editElectionsPeriods"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.EditElectionsPeriodsDispatchAction">
+			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
+			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
+		 </action>
+		 
+		 <action path="/delegatesManagement"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.delegates.DelegatesManagementDispatchAction">
+			 <forward name="createEditDelegates" path="createEditDelegates"/>
+			 <forward name="createEditGGAEDelegates" path="createEditGGAEDelegates"/>			 
+			 <forward name="prepareViewDelegates" path="/delegatesManagement.do?method=prepareViewDelegates"/>
+			 <forward name="prepareViewGGAEDelegates" path="/delegatesManagement.do?method=prepareViewGGAEDelegates"/>
+			 <forward name="showGGAEDelegates" path="/findDelegates.do?method=searchByDelegateType"/>
+			 <forward name="showPossibleDelegates" path="/electionsPeriodsManagement.do?method=showVotingResults&amp;forwardTo=showPossibleDelegates"/>
+		 </action>
+		 
+		 <action path="/findDelegates"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction">
+			 <forward name="searchDelegates" path="searchDelegates"/>
+			 <forward name="showDelegates" path="showDelegates"/>
+		 </action>
 
     </action-mappings>
 
@@ -81,6 +140,7 @@
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
+	<message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

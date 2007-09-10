@@ -4,6 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum FunctionType {
     
     PRESIDENT,
@@ -30,9 +33,33 @@ public enum FunctionType {
     ASSIDUOUSNESS_RESPONSIBLE,
     PRINCIPAL,
     
+    DELEGATE_OF_YEAR, //Delegado de Ano
+    DELEGATE_OF_DEGREE, //Delegado de Licenciatura (escolhido entre delegado de ano do 1º, 2º ou 3º ano)
+    DELEGATE_OF_MASTER_DEGREE, //Delegado de Mestrado (delegado de ano do 1º ou 2º ano do Mestrado | delegado de ano do 4º ou 5º ano do Mestrado Integrado)
+    DELEGATE_OF_INTEGRATED_MASTER_DEGREE, //Delegado de Mestrado Integrado (delegado de ano do 4º ou 5º ano do Mestrado Integrado)
+    DELEGATE_OF_GGAE, //Delegado de um Grupo de Grandes Áreas de Estudo (delegado de Licenciatura, Mestrado ou Mestrado Integrado )
+    
     VIRTUAL /* for functions that can be created unofficially */;
              
     public String getName() {
         return name();
     }    
+    
+    public static List<FunctionType> getAllDelegateFunctionTypes() {
+    	List<FunctionType> result = new ArrayList<FunctionType>();
+    	result.add(FunctionType.DELEGATE_OF_YEAR);
+    	result.add(FunctionType.DELEGATE_OF_DEGREE);
+    	result.add(FunctionType.DELEGATE_OF_MASTER_DEGREE);
+    	result.add(FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+    	result.add(FunctionType.DELEGATE_OF_GGAE);
+    	
+    	return result;
+    }
+    
+    public static List<FunctionType> getAllDegreeDelegateFunctionTypes() {
+    	List<FunctionType> result = getAllDelegateFunctionTypes();
+    	result.remove(FunctionType.DELEGATE_OF_GGAE);
+    	
+    	return result;
+    }
 }

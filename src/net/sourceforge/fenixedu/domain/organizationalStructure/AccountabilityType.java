@@ -53,10 +53,14 @@ public class AccountabilityType extends AccountabilityType_Base {
 	return getType() != null && getTypeName() != null && !getTypeName().isEmpty(); 	
     }
     
-    public String getName() {
+    public boolean isFunction() {
+    	return false;
+    }
+
+	public String getName() {
 	return getTypeName().getPreferedContent();
     }
-    
+
     public void setName(String name) {	
 	
 	if(name == null || StringUtils.isEmpty(name.trim())) {

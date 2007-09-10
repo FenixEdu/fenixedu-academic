@@ -14,4 +14,22 @@
      <definition name="student-report-management" extends="definition.delegate.two-column">
         <put name="body" value="/delegate/studentCourseReportManagment.jsp"/>
     </definition>
+    <definition name="searchDelegates" extends="definition.delegate.two-column">
+       <put name="body" value="/commons/delegates/searchDelegates.jsp"/>  
+    </definition>
+	<definition name="showDelegates" extends="definition.delegate.two-column">
+       <put name="body" value="/commons/delegates/showDelegates.jsp"/>  
+    </definition>
+    <definition name="showStudents" extends="definition.delegate.two-column">
+       <put name="body" value="/delegate/showStudents.jsp"/>  
+    </definition>
+    <definition name="choose-receivers" extends="definition.delegate.two-column">
+       <put name="body" value="/delegate/chooseReceivers.jsp"/>  
+    </definition>
+    <definition name="compose-mail-students" extends="definition.delegate.two-column">
+       <put name="body" value="/delegate/composeMailToStudents.jsp"/>  
+    </definition>
+    <definition name="compose-mail-delegates" extends="definition.delegate.two-column">
+       <put name="body" value="/delegate/composeMailToDelegates.jsp"/>  
+    </definition>
 </tiles-definitions>

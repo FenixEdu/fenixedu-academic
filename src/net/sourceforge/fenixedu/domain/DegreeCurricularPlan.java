@@ -1649,6 +1649,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return studentsWithoutTutor;
     }
 
+	public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear executionYear, Integer curricularYear) {
+		Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+		
+		for (final CurricularCourse curricularCourse : getCurricularCoursesWithExecutionIn(executionYear)) {
+		    for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+		    	if (degreeModuleScope.getCurricularYear().equals(curricularYear)) {
+		    		result.add(curricularCourse);
+		    	}
+		    }
+		}
+		return result;
+	}
+	
+
     /**
      * This must be completely refactored. A pattern of some sort is desirable
      * in order to make this instance-dependent. Just did this due to time

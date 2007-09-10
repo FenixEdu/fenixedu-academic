@@ -1937,4 +1937,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return null;
     }
+    
+    public boolean hasAnyExecutionCourseIn(ExecutionPeriod executionPeriod) {
+    	for(ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+    		if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 }

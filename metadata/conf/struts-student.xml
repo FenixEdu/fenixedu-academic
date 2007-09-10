@@ -340,7 +340,7 @@
         
       </action>
       
-      <action path="/viewTutorInfo" scope="request" parameter="method"
+      	<action path="/viewTutorInfo" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.student.tutor.TutorInfoDispatchAction">
 			<forward name="ShowStudentTutorInfo"
 				path="df.page.showStudentTutorInfo" />
@@ -348,6 +348,25 @@
 		
 		<action path="/viewCurriculumGraph" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
+		</action>
+		
+		<!-- Delegates Info -->
+		<action path="/delegatesInfo" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.delegate.DelegatesInfoDispatchAction">
+			<forward name="showDegreeDelegates" path="showDegreeDelegates"/>
+		</action>
+		
+		<action path="/findDelegates"
+		  scope="request" 
+		  parameter="method"
+		  type="net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction">
+			 <forward name="showDelegates" path="showDelegates"/>
+		 </action>
+		
+		<!-- Year Delegate Elections -->
+		<action path="/yearDelegateManagement" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.elections.YearDelegateManagementDispatchAction">
+			<forward name="showYearDelegateManagement" path="df.page.elections.yearDelegateManagement" />
 		</action>
 
       <!-- Student Shift Enrolment Manager-->
@@ -961,6 +980,8 @@
     <message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>   
     <message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false"/>
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
+    
        
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

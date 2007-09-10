@@ -2,9 +2,13 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -84,6 +88,17 @@ public class Function extends Function_Base {
 	return personFunctions;
     }
 
+    public List<PersonFunction> getActivePersonFunctions() {
+    	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+    	YearMonthDay currentDate = new YearMonthDay();
+    	for (Accountability accountability : getAccountabilities()) {
+    		if (accountability.isPersonFunction() && accountability.isActive(currentDate)) {
+    			personFunctions.add((PersonFunction) accountability);
+    		}
+    	}
+    	return personFunctions;
+    }
+
     public boolean isInherentFunction() {
 	return (this.getParentInherentFunction() != null);
     }
@@ -110,5 +125,48 @@ public class Function extends Function_Base {
     public boolean isVirtual() {
 	FunctionType type = getFunctionType();
 	return type != null && type.equals(FunctionType.VIRTUAL);
+    }
+    
+	@Override
+	public boolean isFunction() {
+		return true;
+	}
+	
+	public static Set<Function> readAllActiveFunctionsByType(FunctionType functionType){
+		Set<Function> result = new HashSet<Function>();
+		YearMonthDay currentDate = new YearMonthDay();
+		List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+		for (AccountabilityType accountabilityType : accountabilityTypes) {
+			if(accountabilityType.isFunction() && ((Function)accountabilityType).getFunctionType() != null 
+					&& ((Function)accountabilityType).getFunctionType().equals(functionType)
+					&& ((Function)accountabilityType).isActive(currentDate)) {
+				result.add((Function) accountabilityType);
+			}
+		}
+		return result;
+	}
+	
+	public static Set<Function> readAllFunctionsByType(FunctionType functionType){
+		Set<Function> result = new HashSet<Function>();
+		List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
+		for (AccountabilityType accountabilityType : accountabilityTypes) {
+			if(accountabilityType.isFunction() && ((Function)accountabilityType).getFunctionType() != null 
+					&& ((Function)accountabilityType).getFunctionType().equals(functionType)) {
+				result.add((Function) accountabilityType);
+			}
+		}
+		return result;
+	}
+	
+	public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
+    	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+    	YearMonthDay currentDate = new YearMonthDay();
+    	for (Accountability accountability : getAccountabilities()) {
+    		if (accountability.isPersonFunction() && accountability.isActive(currentDate) &&
+    				accountability.getBeginDate().isAfter(executionYear.getBeginDateYearMonthDay())) {
+    			personFunctions.add((PersonFunction) accountability);
+    		}
+    	}
+    	return personFunctions;
     }
 }

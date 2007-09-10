@@ -149,7 +149,6 @@ valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                    
 valueType net.sourceforge.fenixedu.util.ByteArray                                                                    as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                                                  as ContentType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                                               as CurricularCourseExecutionScope;
-valueType net.sourceforge.fenixedu.util.DelegateYearType                                                             as DelegateYearType;
 valueType net.sourceforge.fenixedu.util.DiaSemana                                                                    as DiaSemana;
 valueType net.sourceforge.fenixedu.util.EnrolmentAction                                                              as EnrolmentAction;
 valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                                     as EnrolmentEvaluationState;
@@ -3659,11 +3658,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			String identification;
 		}
 
-	class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
-		Boolean type;
-		DelegateYearType yearType;
-	}
-
 	class net.sourceforge.fenixedu.domain.student.ExternalRegistrationData extends net.sourceforge.fenixedu.domain.DomainObject {
 		String coordinatorName;
 	}
@@ -4447,6 +4441,26 @@ class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforg
 	YearMonthDay validUntil;
 	Boolean isCardEmited;
 	Boolean isLetterGenerated;
+}
+
+class net.sourceforge.fenixedu.domain.elections.DelegateElection extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+class net.sourceforge.fenixedu.domain.elections.YearDelegateElection extends net.sourceforge.fenixedu.domain.elections.DelegateElection {
+}
+
+class net.sourceforge.fenixedu.domain.elections.DelegateElectionVote extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+class net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	YearMonthDay startDate;
+	YearMonthDay endDate;
+}
+
+class net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod extends net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod {
+}
+
+class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod extends net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod {
 }
 
 /*
@@ -5545,27 +5559,6 @@ relation DegreeTeachingServiceShift {
 relation DegreeUnit {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 	net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit playsRole unit;
-}
-
-relation DelegateDegree {
-	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Degree playsRole degree;
-}
-
-relation DelegateExecutionYear {
-	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-}
-
-relation DelegateStudent {
-	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation DeleteFileLogRootDomainObject {
@@ -9031,13 +9024,6 @@ relation RootDomainObjectDegreeModule {
 	}
 }
 
-relation RootDomainObjectDelegate {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegates {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectDepartment {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Department playsRole departments {
@@ -12261,4 +12247,111 @@ relation LibraryCardRootDomainObject {
 relation LibraryCardPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.library.LibraryCard playsRole libraryCard;
+}
+
+relation DelegateElectionDegree {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+relation DelegateElectionCandidatesStudent {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole electionsWithStudentCandidacies {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Student playsRole candidates {
+		multiplicity *;
+	}
+}
+
+relation DelegateElectionStudent {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Student playsRole students {
+		multiplicity *;
+	}
+}
+
+relation DelegateElectionVotingStudent {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole electionsWithVotingStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Student playsRole votingStudents {
+		multiplicity *;
+	}
+}
+
+relation DelegateElectionVote {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElection;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionVote playsRole votes {
+		multiplicity *;
+	}
+}
+
+relation DelegateElectionExecutionYear {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation YearDelegateElectionCurricularYear {
+	net.sourceforge.fenixedu.domain.elections.YearDelegateElection playsRole yearDelegateElections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYear;
+}
+
+relation StudentDelegateElectionVote {
+	net.sourceforge.fenixedu.domain.student.Student playsRole student;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionVote playsRole votes {
+		multiplicity *;
+	}
+}
+
+relation DelegateElectionDelegateElectionCandidacyPeriod {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElection;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod playsRole candidacyPeriod;
+}
+
+relation DelegateElectionDelegateElectionVotingPeriod {
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElection;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod playsRole votingPeriod;
+}
+
+relation StudentDelegateElection {
+	net.sourceforge.fenixedu.domain.student.Student playsRole electedStudent;
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole electedElections {
+		multiplicity *;
+	}
+}
+
+relation PersonFunctionCurricularYear {
+	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYear;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction playsRole personFunctions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDelegateElection {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.elections.DelegateElection playsRole delegateElections {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDelegateElectionVote {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionVote playsRole votes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectDelegateElectionPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
+		multiplicity *;
+	}
 }

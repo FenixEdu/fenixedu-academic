@@ -685,28 +685,7 @@
             net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>  
-	
-	<filter>
-        <name>EditStudentCourseReportAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.student.EditStudentCourseReportAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>
-    <filter>
-        <name>StudentCourseReportAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>
-    <filter>
-    	<name>DelegateAuthorization</name>
-    	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.DelegateAuthorizationFilter</implementationClass>
-    	<description/>
-    	<isTransactional>false</isTransactional>
-    </filter>           
+    </filter>            
     <filter>
         <name>AccessFinalDegreeWorkProposalAuthorizationFilter</name>
         <implementationClass>

@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByE
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DelegateCurricularCourseStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
@@ -199,7 +202,10 @@ public class GroupBuilderRegistry {
                 InstitutionSiteManagers.class,
                 TeachersAndInstitutionSiteManagersGroup.class,
                 PedagogicalCouncilMembersGroup.class,
-                ScientificCouncilMembersGroup.class
+                ScientificCouncilMembersGroup.class,
+                DelegatesGroup.class,
+                DelegateStudentsGroup.class,
+                DelegateCurricularCourseStudentsGroup.class
         };
         
         for (Class groupClass : groups) {

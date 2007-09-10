@@ -386,3 +386,64 @@
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
 	</slot>
 </schema>
+
+<schema name="student.yearDelegateElection.candidates" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number" key="label.studentNumber" />
+	<slot name="person.name" key="label.name" />
+</schema>
+
+<schema name="student.yearDelegateElection.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+	<slot name="student.number" read-only="true" key="label.studentNumber" />
+	<slot name="student.person.name" read-only="true" key="label.name" />
+	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />
+</schema>
+
+<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+<!--	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />-->
+	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />
+</schema>
+
+<schema name="student.elections.electionPeriod" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+	<slot name="candidacyPeriod" layout="delegate-election-period" key="label.delegateCandidacyPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="votingPeriod" layout="delegate-election-period" key="label.delegateVotingPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+</schema>
+
+<schema name="student.delegates.yearDelegate" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="person.name" key="label.name" />
+	<slot name="number" key="label.studentNumber"/>
+	<slot name="person.email" key="label.email" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="linkFormat" value="mailto:${person.email}"/>
+	</slot>
+</schema>
+
+<schema name="student.yearDelegateElection.showResults" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO">
+	<slot name="student.number" key="label.student.elections.results.studentNumber" />
+	<slot name="student.person.name" key="label.name" />
+	<slot name="votesNumber" key="label.student.elections.results.votes" />
+	<slot name="votesRelativePercentage" key="label.student.elections.results.votesRelativePercentage" />
+</schema>
+
+<schema name="student.electionPeriod.showResults.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
+	<slot name="degree.name" key="label.Degree" read-only="true" />
+	<slot name="executionYear.year" key="label.executionYear"	/>
+	<slot name="curricularYear.year" key="label.curricularYear"	/>
+	<slot name="candidacyPeriod" layout="delegate-election-period" key="label.student.elections.candidacyPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="votingPeriod" layout="delegate-election-period" key="label.student.elections.votingPeriod" read-only="true" >
+		<property name="dateHtmlSeparator" value=" - " />
+	</slot>
+	<slot name="electedStudent" key="label.student.elections.electedDelegate" layout="null-as-label">
+		<property name="label" value="-" /> 
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="student.person.name"/>
+	</slot>
+</schema

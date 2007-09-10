@@ -43,7 +43,6 @@ public class SQL2JavaConverters {
     public static FieldConversion JavaDocumentType2SqlDocumentTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion();
     public static FieldConversion AdviseType2SqlAdviseTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AdviseType2SqlAdviseTypeFieldConversion();
     public static FieldConversion JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion();    
-    public static FieldConversion DelegateYearTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.DelegateYearTypeFieldConversion();
     public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();    
     public static FieldConversion ResearchEventType2SqlResearchEventTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ResearchEventType2SqlResearchEventTypeConversion();
     public static FieldConversion JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion();

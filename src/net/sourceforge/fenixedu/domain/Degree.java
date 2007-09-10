@@ -17,19 +17,26 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
-import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -206,12 +213,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             ois.delete();
         }
 
-        Iterator<Delegate> delegatesIterator = getDelegateIterator();
-        while (delegatesIterator.hasNext()) {
-            Delegate delegate = delegatesIterator.next();
-            delegatesIterator.remove();          
-            delegate.delete();
-        }
+//        Iterator<Delegate> delegatesIterator = getDelegatesIterator();
+//        while (delegatesIterator.hasNext()) {
+//            Delegate delegate = delegatesIterator.next();
+//            delegatesIterator.remove();          
+//            delegate.delete();
+//        }
 
         Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
         while (degreeInfosIterator.hasNext()) {
@@ -222,6 +229,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 		for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
 				.get(0).delete())
+			;
+
+		for(; hasAnyDelegateElections(); getDelegateElections().get(0).delete())
 			;
 
         removeRootDomainObject();
@@ -977,4 +987,264 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 }
     	return false;
     }
+    
+    /* 
+     * DELEGATE ELECTIONS
+     */
+    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear){
+    	List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
+    	for(DelegateElection election : this.getDelegateElections()) {
+    		if(election instanceof YearDelegateElection && election.getExecutionYear().equals(executionYear)) {
+    			elections.add((YearDelegateElection)election);
+    		}
+    	}
+    	return elections;
+    }
+    
+    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear, 
+    		CurricularYear curricularYear){
+    	List<YearDelegateElection> elections = new ArrayList<YearDelegateElection>();
+    	for(DelegateElection election : this.getDelegateElections()) {
+    		YearDelegateElection yearDelegateElection = (YearDelegateElection) election;
+    		if(yearDelegateElection.getExecutionYear().equals(executionYear) && 
+    				yearDelegateElection.getCurricularYear().equals(curricularYear)) {
+    			elections.add(yearDelegateElection);
+    		}
+    	}
+    	return elections;
+    }
+    
+    public YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(ExecutionYear executionYear, 
+    		CurricularYear curricularYear){
+    	List<YearDelegateElection> elections = getYearDelegateElectionsGivenExecutionYearAndCurricularYear(executionYear, curricularYear);
+    	
+    	YearDelegateElection lastYearDelegateElection = null;
+    	if(!elections.isEmpty()) {
+	    	lastYearDelegateElection = (YearDelegateElection)Collections.max(elections, 
+	    			DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE);
+    	}
+    	return lastYearDelegateElection;
+    }
+    
+    public YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(ExecutionYear executionYear, CurricularYear curricularYear){
+    	List<YearDelegateElection> elections = getYearDelegateElectionsGivenExecutionYearAndCurricularYear(executionYear, curricularYear);
+    	
+    	YearDelegateElection lastYearDelegateElection = null;
+    	if(!elections.isEmpty()) {
+	    	lastYearDelegateElection = (YearDelegateElection)Collections.max(elections,
+	    			DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
+    	}
+    	return lastYearDelegateElection;
+    }
+    
+    /*
+     * ACTIVE DELEGATES
+     */
+    public List<Student> getAllActiveDelegates() {
+    	List<Student> result = new ArrayList<Student>();
+    	for(FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
+    		result.addAll(getAllActiveDelegatesByFunctionType(functionType));
+    	}
+    	return result;
+    }
+    
+    public List<Student> getAllActiveYearDelegates() {
+    	return getAllActiveDelegatesByFunctionType(FunctionType.DELEGATE_OF_YEAR);
+    }
+    
+    public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
+    	final PersonFunction delegateFunction = getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
+    	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
+    }
+    
+    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType) {
+    	List<Student> result = new ArrayList<Student>();
+    	final List<PersonFunction> delegateFunctions = getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType);
+    	for (PersonFunction delegateFunction : delegateFunctions) {
+    		result.add(delegateFunction.getPerson().getStudent());
+    	}
+    	return result;
+    }
+    
+    public boolean hasActiveDelegateFunctionForStudent(Student student, FunctionType delegateFunctionType) {
+    	List<Student> delegates = getAllActiveDelegatesByFunctionType(delegateFunctionType); 
+    	for(Student delegate : delegates) {
+    		if(delegate.equals(student)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public boolean hasAnyActiveDelegateFunctionForStudent(Student student) {
+    	List<Student> delegates = getAllActiveDelegates(); 
+    	for(Student delegate : delegates) {
+    		if(delegate.equals(student)) {
+    			return true;
+}
+    	}
+    	return false;
+    }
+    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, FunctionType functionType) {
+		for(PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType)) {
+			if(personFunction.getPerson().getStudent().equals(student)) {
+				return personFunction;
+			}
+		}
+    	return null;
+    }
+    
+    public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student) {
+		if(hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
+			return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+		}
+		else if (hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
+			return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_MASTER_DEGREE);
+		}
+		else if (hasActiveDelegateFunctionForStudent(student, FunctionType.DELEGATE_OF_DEGREE)) {
+			return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_DEGREE);
+		}	
+		else {
+			return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, FunctionType.DELEGATE_OF_YEAR);
+		}
+	}
+    
+    /*
+     * DELEGATES FROM GIVEN EXECUTION YEAR (PAST DELEGATES)
+     */
+    public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
+    	final PersonFunction delegateFunction = getUnit().getYearDelegatePersonFunctionByExecutionYearAndCurricularYear(executionYear, 
+    			curricularYear);
+    	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
+    }
+    
+    public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
+    	List<Student> result = new ArrayList<Student>();
+    	final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(executionYear,
+    			functionType);
+    	for (PersonFunction delegateFunction : delegateFunctions) {
+    		result.add(delegateFunction.getPerson().getStudent());
+    	}
+    	return result;
+    }
+    
+    public List<PersonFunction> getAllDelegatePersonFunctionsByStudentAndFunctionType(Student student, FunctionType functionType) {
+    	return getUnit().getAllDelegatePersonFunctionsByFunctionType(functionType);
+    }
+    
+    /*
+     * STUDENTS FROM DEGREE
+     */
+    public List<Student> getAllStudents() {
+    	List<Student> result = new ArrayList<Student>();
+	    for (Registration registration : getActiveRegistrations()){
+	  		result.add(registration.getStudent());
+	  	}
+	    return result;
+    }
+    
+    public List<Student> getStudentsFromGivenCurricularYear(int curricularYear, ExecutionYear executionYear) {
+    	List<Student> result = new ArrayList<Student>();
+	    for (Registration registration : getActiveRegistrations()){
+	  		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+	  		if(studentCurriculum.calculateCurricularYear(executionYear) == curricularYear) {
+	  			result.add(registration.getStudent());
+	  		}
+	  	}
+	    return result;
+    }
+    
+    /*
+     * This method is directed to Bolonha Integrated Master Degrees
+     */
+    public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
+    	List<Student> result = new ArrayList<Student>();
+    	if(getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+        	for (Registration registration : getActiveRegistrations()){
+	    		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+	    		final int studentCurricularYear = studentCurriculum.calculateCurricularYear(executionYear);
+	    		
+	    		if(studentCurricularYear >= 4 && studentCurricularYear <= 5) { //TODO: how to make this not hardcoded?
+	    			result.add(registration.getStudent());
+	    		}
+	    	}
+    	}
+	    return result;
+    }
+    
+    /*
+     * This method is directed to Bolonha Integrated Master Degrees
+     */
+    public List<Student> getFirstCycleStudents(ExecutionYear executionYear) {
+    	List<Student> result = new ArrayList<Student>();
+    	if(getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+        	for (Registration registration : getActiveRegistrations()){
+	    		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
+	    		final int studentCurricularYear = studentCurriculum.calculateCurricularYear(executionYear);
+	    		
+	    		if(studentCurricularYear >= 1 && studentCurricularYear <= 3) { //TODO: how to make this not hardcoded?
+	    			result.add(registration.getStudent());
+	    		}
+	    	}
+    	}
+	    return result;
+    }
+    
+    /*
+     * CURRICULAR COURSES FROM DEGREE
+     */
+    public Set<CurricularCourse> getAllCurricularCourses(ExecutionYear executionYear) {
+    	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+    	for(DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
+    		result.addAll(dcp.getCurricularCoursesWithExecutionIn(executionYear));
+      	}
+    	return result;
+    }
+    
+    public Set<CurricularCourse> getCurricularCoursesFromGivenCurricularYear(int curricularYear, ExecutionYear executionYear) {
+    	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+    	for(DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
+    		result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, curricularYear));
+      	}
+    	return result;
+    }
+    
+    /*
+     * This method is directed to Bolonha Integrated Master Degrees
+     */
+    public Set<CurricularCourse> getFirstCycleCurricularCourses(ExecutionYear executionYear) {
+    	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+    	for(DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
+    		for (int i = 1; i <= 3; i++) { //TODO: how to make this not hardcoded?
+    			result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
+    		}
+      	}
+    	return result;
+    }
+    
+    /*
+     * This method is directed to Bolonha Integrated Master Degrees
+     */
+    public Set<CurricularCourse> getSecondCycleCurricularCourses(ExecutionYear executionYear) {
+    	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+    	for(DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
+    		for (int i = 4; i <= 5; i++) { //TODO: how to make this not hardcoded?
+    			result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
+    		}
+      	}
+    	return result;
+    }
+    
+    public static List<IGroup> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
+    	List<IGroup> result = new ArrayList<IGroup>();
+    	
+		List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
+		for(Degree degree : degrees) {
+			result.add(new DelegatesGroup(degree));
+		}
+    	
+    	return result;
+    }
+    
+    
 }

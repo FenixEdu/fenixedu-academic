@@ -1,0 +1,244 @@
+<schema name="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateType" key="label.delegateType" />
+</schema>
+
+<schema name="delegates.selectedDelegateTypeAndYear" extends="delegates.selectedDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="curricularYear.year" key="label.curricularYear" />
+</schema>
+
+<schema name="delegates.selectedDelegate.name" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateName" key="label.name" />
+</schema>
+
+<schema name="delegates.selectedStudent.number" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="studentNumber" key="label.studentNumber" />
+</schema>
+
+<schema name="delegates.selectedStudent.studentInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegate.name" key="label.name" />
+	<slot name="delegate.student.lastActiveRegistration.degree.name" key="label.degree" />
+	<slot name="delegate.email" key="label.email" layout="link" >
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${delegate.email}"/>
+	</slot>
+	<slot name="delegate.mobilePhones" key="label.phone" layout="flowLayout">
+		<property name="htmlSeparator" value="," />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="delegate.mobilePhone.number" />
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByNumber.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateFunction.function.name" key="label.delegate.role" />
+	<slot name="delegateType" key="label.delegateType" />
+	<slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
+		<property name="label" value="-" />
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="delegates.curricularYear.year"/>
+	</slot>
+	<slot name="startDate" key="label.delegate.startDate" />
+	<slot name="endDate" key="label.delegate.endDate" layout="null-as-label">
+		<property name="label" value="-" />
+	</slot>
+</schema>
+
+<schema name="delegate.mobilePhone.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone">
+	<slot name="number"/>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegate.student.lastActiveRegistration.number" key="label.studentNumber" />
+	<slot name="delegate.name" key="label.name" />
+	<slot name="delegate.email" key="label.email" layout="link" >
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${delegate.email}"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByDegree.delegateResume" extends="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegate.mobilePhones" key="label.phone" layout="flowLayout">
+		<property name="htmlSeparator" value="," />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="delegate.mobilePhone.number" />
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.delegateResume" extends="delegates.searchDelegates.searchByDegree.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="degree.name" key="label.degree" />
+	<slot name="delegateType" key="label.delegateType" />
+	<slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
+		<property name="label" value="-" />
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="delegates.curricularYear.year"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByName.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegate.name" key="label.name" />
+	<slot name="delegate.username" key="label.username" />
+	<slot name="delegateType" key="label.delegateType" />
+	<slot name="delegateFunctionNameIfGgaeDelegate" key="label.delegate.role" />
+	<slot name="curricularYear" key="label.curricularYear" layout="null-as-label" >
+		<property name="label" value="-" />
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="delegates.curricularYear.year"/>
+	</slot>
+	<slot name="degreeName" key="label.degree">
+	</slot>
+	<slot name="startDate" key="label.delegate.startDate" />
+	<slot name="endDate" key="label.delegate.endDate" />
+	<slot name="delegate.email" key="label.email" layout="link" >
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${delegate.email}"/>
+	</slot>
+	<slot name="delegate.mobilePhones" key="label.phone"  layout="flowLayout">
+		<property name="htmlSeparator" value="," />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="delegate.mobilePhone.number" />
+	</slot>
+</schema>
+
+<schema name="delegates.curricularYear.year" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.CurricularYear" >
+	<slot name="year" />
+</schema>
+
+<schema name="delegates.searchDelegates.searchByDelegateType.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegate.name" key="label.name" />
+	<slot name="delegate.username" key="label.username" />
+	<slot name="degreeName" key="label.degree" />
+	<slot name="delegateFunctionNameIfGgaeDelegate" key="label.delegate.role" />
+	<slot name="startDate" key="label.delegate.startDate" />
+	<slot name="endDate" key="label.delegate.endDate" />
+	<slot name="delegate.email" key="label.email" layout="link" read-only="true">
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${delegate.email}"/>
+	</slot>
+	<slot name="delegate.mobilePhones" key="label.phone"  layout="flowLayout">
+		<property name="htmlSeparator" value="," />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="delegate.mobilePhone.number" />
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegatesForStudent.delegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateFunctionNameIfGgaeDelegate" key="label.delegate.role" />
+	<slot name="delegate.name" key="label.name" />
+	<slot name="delegate.username" key="label.username" />
+	<slot name="startDate" key="label.delegate.startDate" />
+	<slot name="endDate" key="label.delegate.endDate" />
+	<slot name="delegate.email" key="label.email" layout="link" read-only="true">
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${delegate.email}"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.selectDegreeTypeAndDegree" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
+		<property name="format" value="${localizedName}"/>
+		<property name="sortBy" value="curricularPeriodType"/>
+		<property name="saveOptions" value="true" />
+		<property name="nullOptionHidden" value="true" />
+		<property name="destination" value="post-back-degree-type"/>
+	</slot>
+	<slot name="degree" key="label.degree" layout="menu-select" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreesGivenDegreeTypeForDelegatesManagement"/> 
+		<property name="format" value="${name}"/>
+		<property name="saveOptions" value="true" />
+		<property name="nullOptionHidden" value="true" />
+	</slot>
+	<slot name="executionYear" key="label.executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByName" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateName" key="label.name"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="45" />
+	</slot>
+	<slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>	
+</schema>
+
+<schema name="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="executionYear.year" key="label.executionYear" />
+</schema>
+
+<schema name="delegates.selectedDegreeTypeAndDegree" extends="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="degree.name" key="label.degree" />
+	<slot name="degreeType.localizedName" key="label.degreeType" />
+</schema>
+
+<schema name="delegates.searchDelegates.searchByNumber" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="studentNumber" key="label.studentNumber"  validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<property name="size" value="10" />
+	</slot>
+	<slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.searchByDelegateType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateType" key="label.delegateType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.delegate.FunctionTypesForDelegates"/> 
+		<property name="eachLayout" value=""/>
+	</slot>
+	<slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="delegates.searchDelegates.selectDelegateYearType" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
+	<slot name="delegateType" key="label.delegateType" read-only="true"/>
+	<slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="curricularYear" key="label.curricularYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+</schema>
+
+<schema name="delegates.showStudents.studentInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number" key="label.studentNumber" />
+	<slot name="person.name" key="label.name" />
+	<slot name="person.email" key="label.email" layout="link" >
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="mailto:${person.email}"/>
+	</slot>
+</schema>
+
+<schema name="delegates.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+	<slot name="curricularCourse.name" key="label.curricularCourse" layout="link" >
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.idInternal}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.idInternal}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+	</slot>
+	<slot name="curricularYear" key="label.curricularYear" />
+	<slot name="curricularSemester" key="label.semester" />
+	<slot name="enrolledStudentsNumber" key="label.studentsNumber" />
+</schema>
+
+<schema name="delegates.showStudents.selectedCurricularCourse" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+	<slot name="curricularCourse.name" key="label.curricularCourse" />
+	<slot name="curricularYear" key="label.curricularYear" />
+	<slot name="curricularSemester" key="label.semester" />
+</schema>
+
+<schema name="delegates.sendMail.curricularCourse" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.domain.CurricularCourse">
+	<slot name="name" key="label.curricularCourse" />
+</schema>
+
+<schema name="delegates.sendEmail.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
+	<slot name="curricularCourse.name" key="label.curricularCourse" />
+	<slot name="curricularYear" key="label.curricularYear" />
+	<slot name="curricularSemester" key="label.semester" />
+	<slot name="enrolledStudentsNumber" key="label.studentsNumber" />
+</schema>

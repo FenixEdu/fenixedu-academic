@@ -53,5 +53,43 @@
 			</html:link>
 		</li>
 		
+		<li class="navheader">
+			<bean:message key="delegates.section" bundle="PEDAGOGICAL_COUNCIL"/>
+		</li>
+		<li>
+			<html:link page="/electionsPeriodsManagement.do?method=prepare&forwardTo=createEditCandidacyPeriods">
+				<bean:message key="link.createEditCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/electionsPeriodsManagement.do?method=prepare&forwardTo=createEditVotingPeriods">
+				<bean:message key="link.createEditVotingPeriods" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/electionsPeriodsManagement.do?method=prepare&forwardTo=showCandidacyPeriods">
+				<bean:message key="link.showCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/electionsPeriodsManagement.do?method=prepare&forwardTo=showVotingPeriods">
+				<bean:message key="link.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/delegatesManagement.do?method=prepare">
+				<bean:message key="link.delegatesManagement" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/delegatesManagement.do?method=prepareViewGGAEDelegates">
+				<bean:message key="link.delegatesManagement.GGAE" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/findDelegates.do?method=prepare&searchByName=true">
+				<bean:message key="link.findDelegates" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
 	</ul>
 </logic:present>

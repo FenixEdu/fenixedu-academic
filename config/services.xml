@@ -2253,16 +2253,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadCurricularCourseHistoric</name>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCurricularCourseHistoric</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentCourseReportAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ChangePassword</name>
 		<implementationClass>@changePassService@</implementationClass>
 		<description />
@@ -5850,46 +5840,6 @@
         </filterChains>
     </service>
     <service>
-		<name>EditStudentCourseReport</name>
-		<description>Edits or creates the student course report of a curricular course</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.student.delegate.EditStudentCourseReport</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EditStudentCourseReportAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadStudentCourseReport</name>
-		<description>Reads the student course report of a curricular course</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.student.delegate.ReadStudentCourseReport</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="StudentCourseReportAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadDelegateCurricularCourses</name>
-		<description>Reads all the curricular courses regarding the or degree of a delegate</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.student.delegate.ReadDelegateCurricularCourses</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="DelegateAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadDelegate</name>
-		<description>Reads the delegate corresponding to the user</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.student.delegate.ReadDelegate</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="DelegateAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadExecutionDegreesByDegreeCurricularPlanID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID</implementationClass>
@@ -12311,7 +12261,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains />
     </service>
-    <service>
+	<service>
     <name>SetEnrolmentState</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.SetEnrolmentState</implementationClass>
         <description></description>
@@ -12337,7 +12287,106 @@
 		<filterChains>
 			<chain name="ManagerAuthorization" />
 		</filterChains>
-	</service>
+	</service> 
+    <service>
+    	<name>CreateDelegateCandidacyPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateCandidacyPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditDelegateCandidacyPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.EditDelegateCandidacyPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteDelegateCandidacyPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.DeleteDelegateCandidacyPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>CreateDelegateVotingPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateVotingPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>EditDelegateVotingPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.EditDelegateVotingPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>DeleteDelegateVotingPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.DeleteDelegateVotingPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>AddCandidateYearDelegateElections</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.elections.AddCandidateYearDelegateElections</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>RemoveCandidateYearDelegateElections</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.elections.RemoveCandidateYearDelegateElections</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>VoteYearDelegateElections</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.elections.VoteYearDelegateElections</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    <service>
+    	<name>AddNewDelegate</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.AddNewDelegate</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
+    	<name>RemoveDelegate</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.RemoveDelegate</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="PedagogicalCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
 	<service>
 		<name>CreateLibraryCard</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.CreateLibraryCard</implementationClass>

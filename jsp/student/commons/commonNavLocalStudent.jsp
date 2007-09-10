@@ -13,11 +13,13 @@
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
 	<li><html:link page="/viewTutorInfo.do?method=prepare" titleKey="link.title.tutorInfo"><bean:message key="link.student.tutorInfo"/></html:link></li>
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>
+	<li><html:link page="/delegatesInfo.do?method=prepare" titleKey="link.title.delegatesInfo"><bean:message key="link.student.delegatesInfo"/></html:link></li>
 
 	<li class="navheader"><bean:message key="participate"/></li>
 	<li><html:link page="/viewExecutionCourseForuns.do?method=prepare" titleKey="link.viewExecutionCourseForuns"><bean:message key="link.viewExecutionCourseForuns"/></html:link></li>
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
 	<li><html:link page="/fillInquiries.do?method=prepareCourses&amp;page=0" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
+	<li><html:link page="/yearDelegateManagement.do?method=prepare" titleKey="link.title.yearDelegateElections"><bean:message key="link.student.yearDelegateElections"/></html:link></li>
 
 	<li class="navheader"><bean:message key="submit"/></li>
 	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" titleKey="link.testsSubmissions"><bean:message key="link.tests"/></html:link></li>

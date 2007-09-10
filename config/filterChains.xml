@@ -732,20 +732,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>EditStudentCourseReportAuthorization</name>
-        <expression>EditStudentCourseReportAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
-        <name>StudentCourseReportAuthorization</name>
-        <expression>StudentCourseReportAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>DelegateAuthorization</name>
         <expression>DelegateAuthorization</expression>
         <description/>
