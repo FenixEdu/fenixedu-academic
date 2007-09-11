@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.domain;
  * @author Manuel Pinto
  */
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -321,10 +322,10 @@ public class Lesson extends Lesson_Base {
 		    }
 
 		    if(!currentPeriod.getEndYearMonthDay().isBefore(newBeginDate)) {		
-			
+
 			if(!currentPeriod.getStartYearMonthDay().isAfter(newBeginDate)) {
 			    setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));			   		
-			    
+
 			} else {
 			    if(currentPeriod.equals(oldFirstPeriod)) {
 				setPeriod(getNewNestedPeriods(currentPeriod, newBeginDate, newEndDate));
@@ -339,11 +340,11 @@ public class Lesson extends Lesson_Base {
 		    currentPeriod = currentPeriod.getNextPeriod();		    		   
 		}				  
 	    }	    
-	    
+
 	    if(!newPeriod) {
 		removeLessonSpaceOccupationAndPeriod();		    
 	    }
-	    
+
 	    if(oldFirstPeriod != null) {
 		oldFirstPeriod.delete();
 	    }
@@ -402,8 +403,8 @@ public class Lesson extends Lesson_Base {
 	return getUnitHours().multiply(BigDecimal.valueOf(getFinalNumberOfLessonInstances()));
     }
 
-    public BigDecimal getUnitHours() {	
-	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR));
+    public BigDecimal getUnitHours() {
+	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP);
     }
 
     public String getInicioString() {
@@ -418,8 +419,8 @@ public class Lesson extends Lesson_Base {
 	    return getUnitHours().doubleValue();
 
 	} else if(getEndHourMinuteSecond().isAfter(afterHour)) {
-	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes()).
-	    divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR)).doubleValue();	    
+	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes())
+	    .divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP).doubleValue();	    
 	}
 
 	return 0.0;

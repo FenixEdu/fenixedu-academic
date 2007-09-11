@@ -66,7 +66,7 @@ public class CourseLoad extends CourseLoad_Base {
     }
 
     public BigDecimal getWeeklyHours() {
-	return getTotalQuantity().divide(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS), BigDecimal.ROUND_FLOOR);
+	return getTotalQuantity().divide(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS), 2, BigDecimal.ROUND_HALF_UP);
     }
     
     @Override

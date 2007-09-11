@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -649,7 +650,7 @@ public class GanttDiagramTagLib extends TagSupport {
     }
        
     private BigDecimal convertToEm(int value) {	
-	return BigDecimal.valueOf(value).divide(PX_TO_EM_CONVERSION_DIVISOR);
+	return BigDecimal.valueOf(value).divide(PX_TO_EM_CONVERSION_DIVISOR, 2, RoundingMode.HALF_UP);
     }
     
     private String getMessage(String key) throws JspException {

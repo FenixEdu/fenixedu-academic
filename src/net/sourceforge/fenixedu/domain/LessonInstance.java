@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -134,7 +135,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public BigDecimal getInstanceDurationInHours() {	
-	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR));
+	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP);
     }
           
     private boolean canBeDeleted() {
