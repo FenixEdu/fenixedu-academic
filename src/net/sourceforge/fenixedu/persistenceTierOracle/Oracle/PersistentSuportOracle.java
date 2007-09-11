@@ -133,7 +133,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	    connection.setAutoCommit(false);
 	    connectionsMap.put(Thread.currentThread(), connection);
 	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
+	    throw new ExcepcaoPersistencia("", e);
 	}
     }
 
