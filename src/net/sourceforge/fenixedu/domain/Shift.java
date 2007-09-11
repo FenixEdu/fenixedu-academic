@@ -11,6 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
@@ -85,7 +86,7 @@ public class Shift extends Shift_Base {
 
 	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
 	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
-	    
+
 	    getAssociatedClasses().clear();
 	    getCourseLoads().clear();	    
 	    removeRootDomainObject();
@@ -358,5 +359,22 @@ public class Shift extends Shift_Base {
 	    }
 	}
 	return null;
-    }   
+    }
+    
+    public int getCapacityBasedOnSmallestRoom() {
+	int capacity = 0;
+
+	for (final Lesson lesson : getAssociatedLessonsSet()) {
+	    if (lesson.hasSala()) {
+		if (capacity == 0) {
+		    capacity = ((AllocatableSpace)lesson.getSala()).getNormalCapacity();
+		} else {
+		    capacity = Math.min(capacity, ((AllocatableSpace)lesson.getSala()).getNormalCapacity());
+		}
+	    }
+	}
+
+	return capacity + (capacity / 10);
+    }
+
 }
