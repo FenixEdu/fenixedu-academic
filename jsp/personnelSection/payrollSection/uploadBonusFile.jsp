@@ -51,7 +51,7 @@
 <logic:present name="bonusInstallmentList">
 	<fr:view name="bonusInstallmentList" schema="show.employeeBonusInstallment">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
+			<fr:property name="classes" value="tstyle2 thlight thmiddle tdcenter"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>
