@@ -66,7 +66,7 @@
 	<bean:define id="dismissalType" name="dismissalBean" property="dismissalType.name"/>
 	<fr:edit id="dismissalBean-information" name="dismissalBean" schema="<%= "DismissalBean.DismissalType." + dismissalType %>">
 		<fr:layout>
-			<fr:property name="classes" value="tstyle4 thlight thright"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/studentDismissals.do?method=stepThree"/>
