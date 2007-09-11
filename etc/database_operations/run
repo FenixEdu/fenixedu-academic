@@ -34,3 +34,5 @@ execute "Update LibraryCard Table" updateLibraryCardTable.sql
 
 execute "Create Election and Vote tables" createElectionAndVoteTables.sql
 execute "Alter accountability table, adding KEY_CURRICULAR_YEAR" alterAccountabilityTable.sql
+
+execute "Updates to LibraryPortal" updatesToLibraryPortal.sql

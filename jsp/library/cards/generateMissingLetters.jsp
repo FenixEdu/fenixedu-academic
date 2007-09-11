@@ -9,7 +9,15 @@
 </h2>	
 
 
+<logic:notPresent name="nothingMissing">
+	<br/>
+	<p>
+		<html:link page="/cardManagement.do?method=generateMissingLetters">
+			<bean:message key="link.card.generateMissingLetters" bundle="LIBRARY_RESOURCES"/>
+		</html:link>
+	</p>
+</logic:notPresent>
 
-<logic:present name="nothingToBeDone">
+<logic:present name="nothingMissing">
 	<br/><p><em><bean:message key="message.card.noMissingLetters" bundle="LIBRARY_RESOURCES"/></em></p>
 </logic:present>

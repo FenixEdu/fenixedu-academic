@@ -26,7 +26,7 @@
 
 <bean:define id="personID" name="libraryCard" property="person.idInternal"/>
 
-<fr:form action="/cardManagement.do?method=generateCard">
+<fr:form action="/cardManagement.do?method=createCard">
 
 	<fr:edit id="libraryCard" name="libraryCard" schema="library.card.generate">
 		<fr:layout name="tabular">

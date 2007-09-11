@@ -76,6 +76,13 @@ public class LibraryCardDTO implements Serializable {
         setMobile(libraryCard.getPerson().getMobile());
     }
 
+    public String getMailCostCenterCode() {
+        if(getPerson().getEmployee().getCurrentMailingPlace() != null) {
+            return getPerson().getEmployee().getCurrentMailingPlace().getCostCenterCode().toString();
+        }
+        return "";
+    }
+    
     public Integer getLibraryCardID() {
         return getLibraryCard() != null ? getLibraryCard().getIdInternal() : 0;
     }

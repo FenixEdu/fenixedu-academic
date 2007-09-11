@@ -14,6 +14,8 @@ public class LibraryCard extends LibraryCard_Base {
         setValidUntil(libraryCardDTO.getValidUntil());
         setPerson(libraryCardDTO.getPerson());
         setRole(libraryCardDTO.getRoleType());
+        setIsCardEmited(Boolean.FALSE);
+        setIsLetterGenerated(Boolean.FALSE);
     }
     
 }

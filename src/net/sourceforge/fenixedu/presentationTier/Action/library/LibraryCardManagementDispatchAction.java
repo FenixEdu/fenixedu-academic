@@ -104,7 +104,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("edit-card");
     }
 
-    public ActionForward generateCard(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward createCard(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
         
@@ -158,13 +158,20 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward prepareGenerateMissingCards(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+        
+        return mapping.findForward("generate-missing-cards");
+    }
+    
     public ActionForward generateMissingCards(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
             FenixFilterException, FenixServiceException {
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
-            if (!libraryCard.getIsCardEmited()) {
+            if (!libraryCard.getIsLetterGenerated()) {
                 cardList.add(new LibraryCardDTO(libraryCard));
             }
         }
@@ -188,7 +195,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
             return null;
         } else {
-            return mapping.findForward("no-cards-missing");
+            request.setAttribute("nothingMissing", "nothingMissing");
+            return mapping.findForward("generate-missing-cards");
         }
     }
 
@@ -221,6 +229,13 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return null;
     }
 
+    public ActionForward prepareGenerateMissingLetters(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+        
+        return mapping.findForward("generate-missing-letters");
+    }
+    
     public ActionForward generateMissingLetters(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
             FenixFilterException, FenixServiceException {
@@ -252,7 +267,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
             return null;
         } else {
-            return mapping.findForward("no-letters-missing");
+            request.setAttribute("nothingMissing", "nothingMissing");
+            return mapping.findForward("generate-missing-letters");
         }
     }
 
