@@ -1568,7 +1568,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (enrolment.getExecutionPeriod() == executionPeriod
+		if (isInSamePeriod(enrolment, executionPeriod)
 			&& markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
 		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(markSheetType)) {
 			result.add(enrolment);
@@ -1581,6 +1581,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    }
 	}
 	return result;
+    }
+
+    private boolean isInSamePeriod(Enrolment enrolment, ExecutionPeriod executionPeriod) {
+        if (isAnual()) {
+            return enrolment.getExecutionYear() == executionPeriod.getExecutionYear();
+        }
+        else {
+            return enrolment.getExecutionPeriod() == executionPeriod;
+        }
     }
 
     private boolean hasEnrolmentsNotInAnyMarkSheet(ExecutionPeriod executionPeriod) {

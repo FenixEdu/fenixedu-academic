@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -99,7 +101,15 @@ public class ManageThesisDA extends FenixDispatchAction {
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
     	Integer id = getId(request.getParameter("executionYearId"));
     	if (id == null) {
-    	    return ExecutionYear.readCurrentExecutionYear();
+            TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
+            executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
+
+            if (executionYears.isEmpty()) {
+                return ExecutionYear.readCurrentExecutionYear();
+            }
+            else {
+                return executionYears.first();
+            }
     	} else {
     	    return RootDomainObject.getInstance().readExecutionYearByOID(id);
     	}
@@ -115,11 +125,14 @@ public class ManageThesisDA extends FenixDispatchAction {
     	else {
 			ExecutionYear executionYear = getExecutionYear(request);
 
-			if (executionYear == null) {
-				executionYear = ExecutionYear.readCurrentExecutionYear();
-			}
+            if (executionYear == null) {
+                executionYear = ExecutionYear.readCurrentExecutionYear();
+            }
 
-			return new ThesisContextBean(executionYear);
+            TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
+            executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
+            
+			return new ThesisContextBean(executionYears, executionYear);
 		}
     }
     
@@ -230,7 +243,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         ThesisContextBean bean = getContextBean(request);
 
         List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
             // TODO: thesis, allow to choose executionYear
             for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(bean.getExecutionYear())) {
                 StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();

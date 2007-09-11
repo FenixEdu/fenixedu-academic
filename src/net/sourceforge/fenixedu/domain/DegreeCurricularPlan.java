@@ -1536,16 +1536,35 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return getCycleCourseGroup(cycleType).getGraduateTitle();
     }
 
+    public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+
+        List<ExecutionYear> years = new ArrayList<ExecutionYear>();
+        
+        if (year == null) {
+            year = ExecutionYear.readCurrentExecutionYear();
+            while (year != null) {
+                years.add(year);
+                year = year.getPreviousExecutionYear();
+            }
+        }
+        else {
+            years.add(year);
+        }
+        
+        for (ExecutionYear y : years) {
+            for (CurricularCourse curricularCourse : getCurricularCourses(y)) {
+                if (curricularCourse.isDissertation()) {
+                    result.add(curricularCourse);
+                }
+            }
+        }
+
+        return result;
+    }
+
     public List<CurricularCourse> getDissertationCurricularCourses() {
-	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-
-	for (CurricularCourse curricularCourse : getCurricularCourses(ExecutionYear.readCurrentExecutionYear())) {
-	    if (curricularCourse.isDissertation()) {
-		result.add(curricularCourse);
-	    }
-	}
-
-	return result;
+        return getDissertationCurricularCourses(ExecutionYear.readCurrentExecutionYear());
     }
 
     // this slot is a hack to allow renderers to call the setter. Don't

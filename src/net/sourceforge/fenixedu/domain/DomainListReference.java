@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DomainListReference<T extends DomainObject> extends AbstractList<T> implements Serializable {
@@ -20,7 +21,7 @@ public class DomainListReference<T extends DomainObject> extends AbstractList<T>
         this.list = new ArrayList<DomainReference<T>>();
     }
 
-    public DomainListReference(List<T> list) {
+    public DomainListReference(Collection<T> list) {
         this();
         
         for (T object : list) {
