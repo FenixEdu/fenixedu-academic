@@ -446,4 +446,4 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="student.person.name"/>
 	</slot>
-</schema
+</schema>
