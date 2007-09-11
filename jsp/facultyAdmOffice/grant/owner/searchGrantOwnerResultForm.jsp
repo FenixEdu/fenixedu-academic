@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="link.search.grant.owner"/></h2>
+
+
 <%-- Present number of hits of search --%>
 <logic:present name="numberOfTotalElementsInSearch">
 	<bean:define id="resultSize" name="numberOfTotalElementsInSearch"/>
@@ -11,10 +15,10 @@
 
 
 <logic:equal name="justGrantOwner" value="on">
-<br/><strong><bean:message key="label.grant.owner.filter"/></strong>
+	<p><strong><bean:message key="label.grant.owner.filter"/></strong></p>
 </logic:equal>
 
-<table align="center">
+<table>
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
@@ -43,61 +47,62 @@
 	</logic:present>
 </tr>
 </table>
-<br/>
-<table border="0" cellspacing="1" cellpadding="1">
+
+
+<table class="tstyle4">
 	<%-- Table description rows --%>
 	<tr>
-		<th class="listClasses-header" colspan="3">
+		<th colspan="3">
 			<bean:message key="label.grant.owner.personalinformation"/>
 		</th>
-		<th class="listClasses-header" colspan="2">
+		<th colspan="2">
 			<bean:message key="label.grant.owner.documentidentification"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 			&nbsp;<%-- blank --%>
 		</th>				
 	</tr>
 	<tr>
-		<th class="listClasses-header">
+		<th>
 			<bean:message key="label.grant.owner.infoperson.name"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 			<bean:message key="label.grant.owner.number"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 			<bean:message key="label.grant.owner.infoperson.documentId"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 			<bean:message key="label.grant.owner.infoperson.documentIdType"/>
 		</th>
-		<th class="listClasses-header">
+		<th>
 		</th>				
 	</tr>
 	<%-- Table with result of search --%>
 	<logic:iterate id="infoGrantOwner" name="infoGrantOwnerList">
 		<tr>
-			<td class="listClasses">
+			<td>
 				<bean:write name="infoGrantOwner" property="personInfo.nome"/>
 			</td>
-			<td class="listClasses">&nbsp;
+			<td class="acenter">&nbsp;
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 					<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
 				</logic:present>
 			</td>
-			<td class="listClasses">&nbsp;
+			<td class="acenter">&nbsp;
 				<bean:write name="infoGrantOwner" property="personInfo.numContribuinte"/>
 			</td>
-			<td class="listClasses">&nbsp;
+			<td class="acenter">&nbsp;
 				<bean:write name="infoGrantOwner" property="personInfo.numeroDocumentoIdentificacao"/>
 			</td>
-			<td class="listClasses">&nbsp;
+			<td class="acenter">&nbsp;
 				<bean:define id="idType" name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
 				<bean:message key='<%=idType.toString()%>'/>
 			</td>
-			<td class="listClasses">&nbsp;
+			<td>&nbsp;
 				<%-- Person is a Grant Owner already --%>
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
 					<html:link page="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"
@@ -120,8 +125,9 @@
 		</tr>
 	</logic:iterate>
 </table>
-<br/>
-<table align="center">
+
+
+<table>
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
@@ -151,10 +157,11 @@
 </tr>
 </table>
 
-<br/><br/>
 
 <%-- Create a new person Grant Owner --%>
-<bean:message key="message.grant.owner.creation"/>:&nbsp;
-<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
-	<bean:message key="link.create.person.grant.owner"/>
-</html:link>
+<p>
+	<bean:message key="message.grant.owner.creation"/>:&nbsp;
+	<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
+		<bean:message key="link.create.person.grant.owner"/>
+	</html:link>
+</p>

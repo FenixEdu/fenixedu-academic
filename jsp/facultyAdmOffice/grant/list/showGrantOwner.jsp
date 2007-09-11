@@ -4,31 +4,30 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="label.grant.owner.visualize"/></h2>
+
 <%-- Presenting errors --%>
 <logic:messagesPresent>
-<span class="error"><!-- Error messages go here -->
 	<html:errors/>
-</span><br/>
 </logic:messagesPresent>
 
 <logic:messagesNotPresent>
 
 <%-- GRANT OWNER INFORMATION --%>
-<table>
+<h3 class="mtop15 separator2 mbottom05"><bean:message key="label.grant.owner.information"/></h3>
+<table class="tstyle2 mtop05">
 	<tr>
-		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
-	</tr>
-	<tr>
-		<td >
-			<bean:message key="label.grant.owner.number"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.number"/>:
 		</td>
 		<td>
 			<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
 		</td>
 	</tr>
   	<tr>
-		<td >
-			<bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.dateSendCGD"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="dateSendCGD">
@@ -40,7 +39,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;
+			<bean:message key="label.grant.owner.cardCopyNumber"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="cardCopyNumber">
@@ -50,13 +49,12 @@
 	</tr>
 </table>
 
-<br/>
 
-<table>
-	<tr><td colspan="2" ><b><bean:message key="label.grant.owner.infoperson.idinformation"/></td></tr>
+<h3 class="mtop15 separator2 mbottom05"><bean:message key="label.grant.owner.infoperson.idinformation"/></h3>
+<table class="tstyle2 mtop05">
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idNumber"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.idNumber"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.numeroDocumentoIdentificacao">
@@ -65,8 +63,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idType"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.idType"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao">
@@ -76,8 +74,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idLocation"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.idLocation"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.localEmissaoDocumentoIdentificacao">
@@ -86,8 +84,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.idDate"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.dataEmissaoDocumentoIdentificacao">
@@ -98,8 +96,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.dataValidadeDocumentoIdentificacao">
@@ -111,15 +109,11 @@
 	</tr> 
 </table>
 
-<br/>
-
-<table>
+<h3 class="mtop15 separator2 mbottom05"><bean:message key="label.grant.owner.personalinformation"/></h3>
+<table class="tstyle2 mtop05">
 	<tr>
-		<td colspan="2" ><b><bean:message key="label.grant.owner.personalinformation"/></td>
-	</tr>
-	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.name"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.name"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.nome">
@@ -128,8 +122,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.sex"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.sex"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.sexo">
@@ -138,8 +132,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.maritalStatus">
@@ -149,8 +143,8 @@
 		</td>
 	</tr> 
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.birthdate"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.nascimento">
@@ -161,8 +155,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.fatherName"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.fatherName"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.nomePai">
@@ -171,8 +165,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.motherName"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.motherName"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.nomeMae">
@@ -181,8 +175,8 @@
 		</td>
 	</tr>	
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.districtBirth"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.districtBirth"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.distritoNaturalidade">
@@ -191,8 +185,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.parishOfBirth"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.freguesiaNaturalidade">
@@ -201,8 +195,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.districtSubBirth"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.concelhoNaturalidade">
@@ -211,8 +205,8 @@
 		</td>			
 	</tr> 
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.nationality"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.nationality"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.nacionalidade">
@@ -221,8 +215,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.country"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.country"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.infoPais">
@@ -231,8 +225,8 @@
 		</td>
 	</tr> 
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.address"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.address"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.morada">
@@ -241,8 +235,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.area"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.area"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.localidade">
@@ -251,8 +245,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.areaCode"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.areaCode"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.codigoPostal">
@@ -261,8 +255,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.areaOfAreaCode"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.areaOfAreaCode"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.localidadeCodigoPostal">
@@ -271,8 +265,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressParish"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.addressParish"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.freguesiaMorada">
@@ -281,8 +275,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.addressDistrictSub"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.concelhoMorada">
@@ -291,8 +285,8 @@
 		</td>
 	</tr> 
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.addressDistrict"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.addressDistrict"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.distritoMorada">
@@ -301,8 +295,8 @@
 		</td>
 	</tr> 
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.phone"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.phone"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.telefone">
@@ -311,8 +305,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.cellPhone"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.cellPhone"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.telemovel">
@@ -321,8 +315,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.email"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.email"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.email">
@@ -331,8 +325,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.homepage"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.homepage"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.enderecoWeb">
@@ -341,8 +335,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.numContribuinte">
@@ -351,8 +345,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.profession"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.profession"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.profissao">
@@ -361,8 +355,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>:&nbsp;
+		<td>
+			<bean:message key="label.grant.owner.infoperson.fiscalCode"/>:
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.codigoFiscal">
@@ -371,18 +365,16 @@
 		</td>
 	</tr>
 </table> 
-<br/><br/>
-<hr/>
-<br/>
+
 <%-- QUALIFICATIONS INFORMATION --%>
 
-<b><bean:message key="label.grant.qualification.information"/></b>
+<h3 class="mtop15 separator2 mbottom05"><bean:message key="label.grant.qualification.information"/></h3>
 <logic:present name="infoQualificationList">
     <logic:iterate id="infoGrantQualification" name="infoQualificationList">
-    	<table>
+    	<table class="tstyle2 mtop05">
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.degree"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.degree"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="degree">
@@ -391,8 +383,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.title"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.title"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="title">
@@ -401,8 +393,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.school"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.school"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="school">
@@ -411,8 +403,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.mark"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.mark"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="mark">
@@ -421,8 +413,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.qualificationDate"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.qualificationDate"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="qualificationDate">
@@ -433,8 +425,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.branch"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.branch"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="branch">
@@ -443,8 +435,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.specializationArea"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.specializationArea"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="specializationArea">
@@ -453,8 +445,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.degreeRecognition"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.degreeRecognition"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="degreeRecognition">
@@ -463,8 +455,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.country"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.country"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="infoCountry">
@@ -473,8 +465,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.equivalenceSchool"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.equivalenceSchool"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="equivalenceSchool">
@@ -483,8 +475,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.qualification.equivalenceDate"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.qualification.equivalenceDate"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantQualification" property="equivalenceDate">
@@ -497,37 +489,41 @@
 	</table>
 </logic:iterate>
 </logic:present>
+
 <logic:notPresent name="infoQualificationList">
-	<br/><bean:message key="message.grant.qualification.nonExistentContracts"/>&nbsp;
+	<p>
+		<em><bean:message key="message.grant.qualification.nonExistentContracts"/></em>
+	</p>
 </logic:notPresent>
-<br/><br/>
-<hr/>
-<br/>
+
+
+
 
 <%-- CONTRACT INFORMATION --%>
 
-<b><bean:message key="label.grant.contract.information"/></b><br/>
+<h3 class="mtop15 separator2 mbottom05"><b><bean:message key="label.grant.contract.information"/></b></h3>
 <logic:present name="infoListGrantContractList">
     <logic:iterate id="infoListGrantContract" name="infoListGrantContractList">
-	<br/><br/>
+    
     <%-- Contract --%>
     <logic:present name="infoListGrantContract" property="infoGrantContract">
-	<table border="1">
-	<tr>
-		<td>
-	<br/><b><bean:message key="label.grant.contract.information"/>&nbsp;<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
-	<table>
+
+	<p class="mtop15 mbottom05">
+		<span class="highlight6"><b><bean:message key="label.grant.contract.information"/> <bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b></span>
+	</p>
+
+	<table class="tstyle2 mtop05">
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.number"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.number"/>:
 			</td>
 			<td>
 				<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-	            <bean:message key="label.grant.contract.state"/>:&nbsp;
+			<td>
+	            <bean:message key="label.grant.contract.state"/>:
 			</td>
 			<td>
 				<logic:equal name="infoListGrantContract" property="infoGrantContract.contractActive" value="true">
@@ -539,15 +535,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.type"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.type"/>:
 			<td>
 				<bean:write name="infoListGrantContract" property="infoGrantContract.grantTypeInfo.name"/>
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateAcceptTerm"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.dateAcceptTerm"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantContract" property="infoGrantContract.dateAcceptTerm">
@@ -558,8 +554,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.endMotive"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.endMotive"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantContract" property="infoGrantContract.endContractMotive">
@@ -568,34 +564,23 @@
 			</td>
 		</tr>	
 	</table>
-	<br/>
+
+
+<div style="padding-left: 4em;">
 
 	<%-- Contract Regime --%>
-	<table>
-		<tr>
-			<td rowspan="2" width=50>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message key="label.grant.contract.regime.list.information"/>&nbsp;
-				<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b><br/>
-			</td>
-		</tr>
-	</table>
+	<p class="mbottom05">
+		<b><bean:message key="label.grant.contract.regime.list.information"/>
+		<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
+	</p>
+
 		
 	<logic:iterate id="infoGrantContractRegime" name="infoListGrantContract" property="infoGrantContractRegimes">
 
-	<table>
+	<table class="tstyle2 mtop05">
 		<tr>
-			<td rowspan="9" width=50>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.state"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.state"/>:
 			</td>
 			<td>
 				<logic:equal name="infoGrantContractRegime" property="state" value="1">
@@ -607,8 +592,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.beginDate"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.beginDate"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateBeginContract">
@@ -619,8 +604,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.endDate"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.endDate"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateEndContract">
@@ -631,19 +616,19 @@
  			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.orientationTeacher"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="infoTeacher">
 				<bean:write name="infoGrantContractRegime" property="infoTeacher.infoPerson.nome"/>				
-				&nbsp;(n.<bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>)				
+				(n.<bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>)				
 				</logic:present>			
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateSendDispatchCC"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.dateSendDispatchCC"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateSendDispatchCC">
@@ -654,8 +639,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateDispatchCC"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.dateDispatchCC"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateDispatchCC">
@@ -666,8 +651,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateSendDispatchCD"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.dateSendDispatchCD"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateSendDispatchCD">
@@ -678,8 +663,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateDispatchCD"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.contract.regime.dateDispatchCD"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantContractRegime" property="dateDispatchCD">
@@ -690,36 +675,22 @@
 			</td>
 		</tr>
 	</table>
-	<br/><br/>
+
 	</logic:iterate>
-	<br/>
+
 
 	<%-- Subsidy --%>
-	<table>
-		<tr>
-			<td rowspan="2" width=50>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message key="label.list.grant.contract.subsidies"/>&nbsp;
-			   <bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
-			</td>
-		</tr>
-	</table>
+	<p class="mbottom05">
+		<b><bean:message key="label.list.grant.contract.subsidies"/>
+		<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
+	</p>
 	
 	<logic:iterate id="infoListGrantSubsidy" name="infoListGrantContract" property="infoListGrantSubsidys">
 
-	<table>
+	<table class="tstyle2 mtop05">
 		<tr>
-			<td rowspan="7" width=50>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.dateBeginSubsidy">
@@ -730,8 +701,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.dateEndSubsidy">
@@ -742,8 +713,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.state"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.state"/>:
 			</td>
 			<td>
 				<logic:equal name="infoListGrantSubsidy" property="infoGrantSubsidy.state" value="1">
@@ -755,8 +726,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.value"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.value"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.value">
@@ -765,8 +736,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.valueFullName"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.valueFullName"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.valueFullName">
@@ -775,8 +746,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.subsidy.totalCost"/>:
 			</td>
 			<td>
 				<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.totalCost">
@@ -785,31 +756,17 @@
 			</td>
 		</tr>			
 	</table>
-	<br/>
+
 
 	<%-- Parts --%>
-	<table>
-		<tr>
-			<td rowspan="2" width=100>
-				&nbsp;
-			</td>
-		</tr>
+	<p class="mbottom05"><b><bean:message key="label.grant.part.information"/></b></p>	
+	
+	<logic:iterate id="infoGrantPart" name="infoListGrantSubsidy" property="infoGrantParts">		
+
+	<table class="tstyle2 mtop05">
 		<tr>
 			<td>
-				<b><bean:message key="label.grant.part.information"/></b>
-			</td>
-		</tr>
-	</table>
-		<logic:iterate id="infoGrantPart" name="infoListGrantSubsidy" property="infoGrantParts">		
-	<table>
-		<tr>
-			<td rowspan="4" width=100>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.part.percentage"/>:&nbsp;
+				<bean:message key="label.grant.part.percentage"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantPart" property="percentage">
@@ -818,8 +775,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantPart" property="infoGrantPaymentEntity">
@@ -828,8 +785,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left">
-				<bean:message key="label.grant.part.responsibleTeacher.number"/>:&nbsp;
+			<td>
+				<bean:message key="label.grant.part.responsibleTeacher.number"/>:
 			</td>
 			<td>
 				<logic:present name="infoGrantPart" property="infoResponsibleTeacher">
@@ -837,17 +794,19 @@
 				</logic:present>								
 			</td>
 		</tr>
-	</table>	
+	</table>
+
 	</logic:iterate> <%-- Grant Part --%>
+
 	</logic:iterate> <%-- Grant Subsidy --%>
-	<br/><br/><br/>
-</td>
-</tr>
-</table>
+
+</div>
+
 </logic:present>
 
-  </logic:iterate> <%-- Grant Contract --%>
-</table>
+</logic:iterate> <%-- Grant Contract --%>
+
+
 
 </logic:present>
 

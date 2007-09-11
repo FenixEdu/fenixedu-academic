@@ -3,92 +3,76 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<table class="infoop">
-<tr>
-	<td rowspan=5><p class="emphasis-box">i</p></td>
-	<td><b><bean:message key="label.grant.owner.stats"/></b></td>		
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr>
-	<td><bean:message key="message.grant.stat.grantcontractbycriteria.resume"/></td>
-</tr>
-<tr>
-	<td><bean:message key="message.grant.stat.grantcontractbycriteria.options"/></td>
-</tr>
-<tr>
-	<td><bean:message key="message.grant.stat.grantcontractbycriteria.optionsselected"/></td>
-</tr>
-</table><br/>
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="label.grant.owner.stats.search"/></h2>
+
+<div class="infoop2"> 
+	<p><b><bean:message key="label.grant.owner.stats"/></b></p>
+	<p><bean:message key="message.grant.stat.grantcontractbycriteria.resume"/></p>
+	<p><bean:message key="message.grant.stat.grantcontractbycriteria.options"/></p>
+	<p><bean:message key="message.grant.stat.grantcontractbycriteria.optionsselected"/></p>
+</div>
 
 
 <html:form action="/grantOwnerStats" style="display:inline">
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
-<span class="error"><!-- Error messages go here -->
 	<html:errors/>
-</span><br/>
 </logic:messagesPresent>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doStat"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-<table>
+<table class="tstyle5 thlight thright">
 	<tr>
-		<td colspan="2">
-			<table>
-				<tr>
-					<td>
-						<bean:message key="label.stat.byCriteria.grant.owner.radio.all"/>:&nbsp;
-					</td>
-					<td>
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="1"/>
-					</td>
-	           </tr>
-			   <tr>
-			   		<td>
-						<bean:message key="label.stat.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
-					</td>
-					<td>
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="2"/>
-					</td>
-               </tr>
-			   <tr>
-			   		<td>
-						<bean:message key="label.stat.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
-					</td>
-					<td>
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="3"/>			
-		            </td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
+		<th>
+			<bean:message key="label.stat.byCriteria.grant.owner.radio.all"/>:&nbsp;
+		</th>
 		<td>
-			&nbsp;
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="1"/>
+		</td>
+	</tr>
+   <tr>
+		<th>
+			<bean:message key="label.stat.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
+		</th>
+		<td>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="2"/>
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
-			<bean:message key="label.stat.byCriteria.grant.owner.dateBegin"/>:&nbsp;
+		<th>
+			<bean:message key="label.stat.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
+		</th>
+		<td>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="grantOwnerStatsForm" property="filterType"  value="3"/>			
 		</td>
+	</tr>
+</table>
+
+
+<table class="tstyle5 thlight thright">
+	<tr>
+		<th>
+			<bean:message key="label.stat.byCriteria.grant.owner.dateBegin"/>:&nbsp;
+		</th>
 		<td colspan="2">
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginContract" property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
+		<th>
 			<bean:message key="label.stat.byCriteria.grant.owner.dateEnd"/>:&nbsp;
-		</td>
+		</th>
 		<td colspan="2">
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.endContract" property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 	</tr>
 	<tr>
-		<td align="left">
+		<th>
 			<bean:message key="label.stat.byCriteria.grant.contract.grantType"/>:&nbsp;
-		</td>
+		</th>
 		<td>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.grantType" property="grantType">
 				<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
@@ -96,15 +80,13 @@
 		</td>
 	</tr>
 </table>
-<br/>
-<table>
-	<tr>
-		<td>
-			<%-- Search button --%>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-				<bean:message key="button.stat"/>
-			</html:submit>
+
+
+<%-- Search button --%>
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="button.stat"/>
+	</html:submit>
+</p>
+
 </html:form>
-		</td>
-	</tr>
-</table>

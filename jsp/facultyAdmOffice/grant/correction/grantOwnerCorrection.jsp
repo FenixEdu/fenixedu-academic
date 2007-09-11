@@ -4,53 +4,48 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="link.grant.owner.correction"/></h2>
+
 
 <html:form action="/correctGrantOwner">
 
 	<%-- Presenting Errors --%>
 	<logic:messagesPresent>
-	<p align="center"><span class="error"><!-- Error messages go here -->
-	<html:errors/>
-	</span></p><br/>
+		<span class="error"><!-- Error messages go here -->
+			<html:errors/>
+		</span>
 	</logic:messagesPresent>    
 
-	<table class="infoop">
-	 <tr>
-		<td rowspan=4><p class="emphasis-box">i</p></td>
-		<td><bean:message key="info.grant.correct.grantowner.title"/></td>
-	 </tr>
-	 <tr>
-		<td><bean:message key="info.grant.correct.grantowner.grantownernumber"/></td>
-	 </tr>
-	 <tr>
-		<td><bean:message key="info.grant.correct.grantowner.grantpersondocument"/></td>
-	</tr>
-	 
-	 
-	</table><br/><br/>
+	<div class="infoop2">
+		<p><bean:message key="info.grant.correct.grantowner.title"/></p>
+		<p><bean:message key="info.grant.correct.grantowner.grantownernumber"/></p>
+		<p><bean:message key="info.grant.correct.grantowner.grantpersondocument"/></p>
+	</div>
+
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeAssociatedPerson"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	
 	<%-- Correct Grant Owner --%> 
-	<table>
+	<table class="tstyle5">
 		<tr>
-			<td align="left"><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.owner.number"/>:</td>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.grantOwnerNumber" property="grantOwnerNumber" size="5"/></td>
 		</tr>
+	</table>
+
+
+	<p><b><bean:message key="label.grant.owner.correction"/></b></p>
+
+	<table class="tstyle5">
 		<tr>
-			<td colspan="2">&nbsp;</td>
-		</tr>
-		<tr>
-			<td align="left" colspan="2"><b><bean:message key="label.grant.owner.correction"/></b></td>
-		</tr>
-		<tr>
-			<td align="left"><bean:message key="label.grant.owner.infoperson.idNumber"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.owner.infoperson.idNumber"/>:</td>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.documentIdNumber" property="documentIdNumber" size="15"/></td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.grant.owner.infoperson.idType"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.owner.infoperson.idType"/>:</td>
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.documentIdType" property="documentIdType">
@@ -61,12 +56,15 @@
 		</tr>
 	</table>
 	
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.correct"/>
-	</html:submit></p>
-	<br/>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="button.correct"/>
+		</html:submit>
+	</p>
+
+
 	<logic:present name="correctionNumber1">
-	    <p><strong><bean:message key="message.grant.correction.successfull"/></strong></p><br/>
+	    <p><strong><bean:message key="message.grant.correction.successfull"/></strong></p>
 	</logic:present>
 	
 	

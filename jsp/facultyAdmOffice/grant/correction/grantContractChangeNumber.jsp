@@ -3,30 +3,25 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="link.grant.contract.change.number.correction"/></h2>
+
 <html:form action="/correctGrantContract">
 
 	<%-- Presenting Errors --%>
 	<logic:messagesPresent>
-	<p align="center"><span class="error"><!-- Error messages go here -->
-	<html:errors/>
-	</span></p><br/>
+		<span class="error"><!-- Error messages go here -->
+			<html:errors/>
+		</span>
 	</logic:messagesPresent>    
 
-	<table class="infoop">
-	 <tr>
-		<td rowspan=4><p class="emphasis-box">i</p></td>
-	    <td><bean:message key="info.grant.correct.grantcontract.title"/></td>
-	 </tr>
-	 <tr>
-	 	<td><bean:message key="info.grant.correct.grantcontract.grantownernumber"/>(<bean:message key="label.grant.owner.number"/>)</td>
-	 </tr>
-	 <tr>
-	 	<td><bean:message key="info.grant.correct.grantcontract.contractnumber"/>(<bean:message key="label.grant.contract.number.correction"/>)</td>
-	 </tr>
-	 <tr>
-	 	<td><bean:message key="info.grant.correct.grantcontract.newcontractnumber"/>(<bean:message key="label.grant.new.contract.number.correction"/>)</td>
-	 </tr>
-	</table><br/><br/>
+
+<div class="infoop2">
+	<p><strong><bean:message key="info.grant.correct.grantcontract.title"/></strong></p>
+	<p><bean:message key="info.grant.correct.grantcontract.grantownernumber"/>(<bean:message key="label.grant.owner.number"/>)</p>
+	<p><bean:message key="info.grant.correct.grantcontract.contractnumber"/>(<bean:message key="label.grant.contract.number.correction"/>)</p>
+	<p><bean:message key="info.grant.correct.grantcontract.newcontractnumber"/>(<bean:message key="label.grant.new.contract.number.correction"/>)</p>
+</div>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeNumberContract"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="changeNumberContract"/>
@@ -34,17 +29,17 @@
 
 	
 	<%-- Change number of Grant Contract --%> 
-	<table>
+	<table class="tstyle5 thlight thright">
 		<tr>
-			<td align="left"><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.grantOwnerNumber" property="grantOwnerNumber" size="5"/></td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.grant.contract.number.correction"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.contract.number.correction"/>:&nbsp;</td>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractNumber" property="grantContractNumber" size="5"/></td>
 		</tr>
 		<tr>
-			<td align="left"><bean:message key="label.grant.new.contract.number.correction"/>:&nbsp;</td>
+			<td><bean:message key="label.grant.new.contract.number.correction"/>:&nbsp;</td>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.newGrantContractNumber" property="newGrantContractNumber" size="5"/></td>
 		</tr>
 	</table>

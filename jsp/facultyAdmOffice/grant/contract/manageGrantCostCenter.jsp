@@ -3,20 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p><b><bean:message key="label.grant.costcenter.information"/></b></p>
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="label.grant.costcenter.information"/></h2>
 
-	<table class="infoop">
-		<tr>
-			<td rowspan=4><p class="emphasis-box">i</p></td>
-		    <td><bean:message key="info.grant.manage.grantcostcenter.information"/></td>
-		</tr>
-		<tr>
-			<td><bean:message key="info.grant.manage.grantcostcenter.edit"/>"<bean:message key="link.edit"/>".</td>
-		</tr>
-		<tr>
-			<td><bean:message key="info.grant.manage.grantcostcenter.create"/>"<bean:message key="link.create.grant.costcenter"/>".</td>
-		</tr>
-	</table><br/><br/>
+<div class="infoop2">
+	<p><bean:message key="info.grant.manage.grantcostcenter.information"/></p>
+	<p><bean:message key="info.grant.manage.grantcostcenter.edit"/>"<bean:message key="link.edit"/>".</p>
+	<p><bean:message key="info.grant.manage.grantcostcenter.create"/>"<bean:message key="link.create.grant.costcenter"/>".</p>
+</div>
 
 <%-- Presenting errors --%>
 <logic:messagesPresent>
@@ -30,41 +24,43 @@
 
 <logic:present name="infoGrantCostCenterList">
 	<%-- Create a new Grant CostCenter --%>
-	<bean:message key="message.grant.costcenter.creation"/>:&nbsp;
-	<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
-		<bean:message key="link.create.grant.costcenter"/>
-	</html:link><br/><br/>
+	<p>
+		<bean:message key="message.grant.costcenter.creation"/>:
+		<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
+			<bean:message key="link.create.grant.costcenter"/>
+		</html:link>
+	</p>
 
 
-    <table border="0" cellspacing="1" cellpadding="1">
+    <table class="tstyle4">
     <%-- Table with grant type description rows --%>
     <tr>
-        <th class="listClasses-header">
+        <th>
             <bean:message key="label.grant.costcenter.number"/>
         </th>
-        <th class="listClasses-header">
+        <th>
             <bean:message key="label.grant.costcenter.designation"/>
         </th>
-        <th class="listClasses-header">
+        <th>
             <bean:message key="label.grant.costcenter.responsibleTeacher.number"/>
         </th>
-        <th class="listClasses-header">&nbsp;</th>
+        <th></th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantCostCenter" name="infoGrantCostCenterList">
         <tr>
-            <td class="listClasses">&nbsp;
+            <td>
 	            <bean:write name="infoGrantCostCenter" property="number"/>
             </td>
-            <td class="listClasses">&nbsp;
+            <td>
 	            <bean:write name="infoGrantCostCenter" property="designation"/>
             </td>
-            <td class="listClasses">&nbsp;
+            <td class="acenter">
                	<logic:present name="infoGrantCostCenter" property="infoResponsibleTeacher">
 		            <bean:write name="infoGrantCostCenter" property="infoResponsibleTeacher.teacherNumber"/>
 		        </logic:present>
             </td>
-            <td class="listClasses">
+            <td>
 		            <%-- Edit a Grant CostCenter --%>
                     <bean:define id="idGrantCostCenter" name="infoGrantCostCenter" property="idInternal"/>
                     <html:link page='<%= "/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm&amp;idGrantCostCenter=" + idGrantCostCenter.toString() %>' > 
@@ -78,15 +74,16 @@
     
 <%-- If there are no grant cost centers --%>
 <logic:notPresent name="infoGrantCostCenterList">
-    <p align="center"><bean:message key="message.grant.costcenter.nonExistentGrantTypes" /></p>
+    <p><bean:message key="message.grant.costcenter.nonExistentGrantTypes" /></p>
 </logic:notPresent>
     
-<br/><br/>
 
 <%-- Create a new Grant CostCenter --%>
-<bean:message key="message.grant.costcenter.creation"/>:&nbsp;
-<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
-	<bean:message key="link.create.grant.costcenter"/>
-</html:link>
+<p>
+	<bean:message key="message.grant.costcenter.creation"/>:
+	<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
+		<bean:message key="link.create.grant.costcenter"/>
+	</html:link>
+</p>
 
 </logic:messagesNotPresent>

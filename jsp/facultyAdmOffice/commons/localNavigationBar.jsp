@@ -61,7 +61,7 @@
 		    </html:link>
 		</li>
 
-		<li><bean:message key="link.grant.correction"/></li>
+		<li class="navheader"><bean:message key="link.grant.correction"/></li>
 		<li>
 			<html:link page="/correctGrantOwner.do?method=prepareForm">
 		    	<bean:message key="link.grant.owner.correction"/>

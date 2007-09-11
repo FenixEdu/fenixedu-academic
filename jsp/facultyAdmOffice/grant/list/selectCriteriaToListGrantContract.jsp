@@ -3,31 +3,23 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<table class="infoop">
-	<tr>
-		<td rowspan=5><p class="emphasis-box">i</p></td>
-		<td><strong><bean:message key="label.list.byCriteria"/></strong><br/></td>		
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td><bean:message key="message.grant.list.grantcontractbycriteria.resume"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="message.grant.list.grantcontractbycriteria.options"/></td>
-	</tr>
-	<tr>
-		<td><bean:message key="message.grant.list.grantcontractbycriteria.optionsselected"/></td>
-	</tr>
-</table><br/>
+<em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
+<h2><bean:message key="label.grant.owner.list.byCriteria"/></h2>
+
+<div class="infoop2">
+	<p><strong><bean:message key="label.list.byCriteria"/></strong></p>
+	<p><bean:message key="message.grant.list.grantcontractbycriteria.resume"/></p>
+	<p><bean:message key="message.grant.list.grantcontractbycriteria.options"/></p>
+	<p><bean:message key="message.grant.list.grantcontractbycriteria.optionsselected"/></p>
+</div>
+
 
 
 <html:form action="/listGrantContractByCriteria" style="display:inline">
 
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
-	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
-	</span><br/>
 	</logic:messagesPresent>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareListGrantContractByCriteria"/>
@@ -38,57 +30,72 @@
 	
 
 
-	<h3>Filtrar</h3>
+	<h3 class="mbottom05">Filtrar</h3>
 
 			
-				<table>
+				<table class="tstyle5 thlight thright mtop05">
 					<tr>
-						<td>
+						<th>
 							<bean:message key="label.list.byCriteria.grant.owner.radio.all"/>:&nbsp;
-						</td>
+						</th>
 						<td>
 							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="listGrantContractByCriteriaForm" property="filterType"  value="1"/>
 						</td>
 		           </tr>
 				   <tr>
-				   		<td>
+				   		<th>
 							<bean:message key="label.list.byCriteria.grant.owner.radio.justActive"/>:&nbsp;
-						</td>
+						</th>
 						<td>
 							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="listGrantContractByCriteriaForm" property="filterType"  value="2"/>
 						</td>
                    </tr>
 				   <tr>
-				   		<td>
+				   		<th>
 							<bean:message key="label.list.byCriteria.grant.owner.radio.justDesactive"/>:&nbsp;
-						</td>
+						</th>
 						<td>
 							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.filterType" name="listGrantContractByCriteriaForm" property="filterType"  value="3"/>			
 			            </td>
 					</tr>
 				</table>
 		
-				<table>
+				<table class="tstyle5 thlight thmiddle">
 					<tr>
-						<td align="left">
+						<th>
 							<bean:message key="label.list.byCriteria.grant.owner.grantType"/>:&nbsp;
-						</td>
+						</th>
 						<td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.grantTypeId" property="grantTypeId">
-							<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
-						</html:select>
+							<html:select bundle="HTMLALT_RESOURCES" altKey="select.grantTypeId" property="grantTypeId">
+								<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
+							</html:select>
 						</td>
 					</tr>
 				</table>
 	
-<div class="lfloat mtop2">
-	<p><b>Deve optar por:</b></p>
-	<p>a) Filtrar as listas por "Data Início/Fim"</p>
-	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginContract" property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
-	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.endContract" property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
-	<p class="mtop1">b) ou por "Activas ï¿½ data"</p>
-	<p><label><bean:message key="label.list.byCriteria.grant.owner.validToDate"/>:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.validToTheDate" property="validToTheDate" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
-</div>
+
+
+<p><b>Deve optar por:</b></p>
+<p class="mbottom05">a) Filtrar as listas por "Data Início/Fim"</p>
+<table class="tstyle5 thlight mtop05 thmiddle">
+	<tr>
+		<th><bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:</th>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginContract" property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></td>
+	</tr>
+	<tr>
+		<th><bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>:</th>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.endContract" property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></td>
+	</tr>
+</table>
+
+<p class="mtop1 mbottom05">b) ou por "Activas na data"</p>
+<table class="tstyle5 thlight mtop05 thmiddle">
+	<tr>
+		<th><bean:message key="label.list.byCriteria.grant.owner.validToDate"/>:</th>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.validToTheDate" property="validToTheDate" size="10"/>&nbsp;<bean:message key="label.dateformat"/></td>
+	</tr>
+</table>
+
 
 <p>
 		<%-- Search button --%>
