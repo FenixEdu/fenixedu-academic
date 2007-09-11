@@ -18,9 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
@@ -133,9 +132,6 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 
             row.setCell(Integer.toString(degreeOccurenceMap.size()));
 
-            boolean hasDegreeDegree = false;
-            boolean hasMasterDegree = false;
-
             final StringBuilder degreeStringBuilder = new StringBuilder();
             boolean isFirst = true;
             for (final Degree degree : degreeOccurenceMap.keySet()) {
@@ -143,12 +139,6 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
                     isFirst = false;
                 } else {
                     degreeStringBuilder.append("; ");
-                }
-
-                if (degree.getTipoCurso() == DegreeType.DEGREE) {
-                    hasDegreeDegree = true;
-                } else if (degree.getTipoCurso() == DegreeType.MASTER_DEGREE) {
-                    hasMasterDegree = true;
                 }
 
                 degreeStringBuilder.append(degree.getSigla());
@@ -181,14 +171,15 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
             row.setCell(degreeCurricularYearStringBuilder.toString());
 
             final StringBuilder degreeTypeStringBuilder = new StringBuilder();
-            if (hasDegreeDegree) {
-                degreeTypeStringBuilder.append(DegreeType.DEGREE);
+            final Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
+            for (final Degree degree : degreeOccurenceMap.keySet()) {
+                degreeTypes.add(degree.getDegreeType());
             }
-            if (hasDegreeDegree && hasMasterDegree) {
-                degreeTypeStringBuilder.append(", ");
-            }
-            if (hasMasterDegree) {
-                degreeTypeStringBuilder.append(DegreeType.MASTER_DEGREE);
+            for (final DegreeType degreeType : degreeTypes) {
+                if (degreeTypeStringBuilder.length() > 0) {
+                    degreeStringBuilder.append(", ");
+                }
+                degreeTypeStringBuilder.append(degreeType);
             }
             row.setCell(degreeTypeStringBuilder.toString());
 
@@ -199,10 +190,9 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
     private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse) {
         final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            final List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod);
-            for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+            final List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod);
+            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
                 final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-                final CurricularYear curricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
 
                 final Set<Integer> curricularYears;
                 if (degreeOccurenceMap.containsKey(degree)) {
@@ -212,7 +202,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
                     degreeOccurenceMap.put(degree, curricularYears);
                 }
 
-                curricularYears.add(curricularYear.getYear());
+                curricularYears.add(degreeModuleScope.getCurricularYear());
             }
         }
         return degreeOccurenceMap;
