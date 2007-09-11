@@ -55,14 +55,15 @@ public class GanttDiagramTagLib extends TagSupport {
         
     private static BigDecimal EMPTY_UNIT = BigDecimal.ZERO;
         
-    private static int NUMBER_OF_5_MINUTES = 288;  
+    private static int NUMBER_OF_DAY_5_MINUTES = 288;  
     
     private static int NUMBER_OF_DAY_HALF_HOURS = 48;
     
-    private static int NUMBER_OF_HOURS = 24;
+    private static int NUMBER_OF_DAY_HOURS = 24;
     
     
     public int doStartTag() throws JspException {
+	
 	String ganttDiagram = "";
 	Object object = pageContext.findAttribute(getGanttDiagram());
 	
@@ -76,9 +77,11 @@ public class GanttDiagramTagLib extends TagSupport {
 	
 	try {
 	    pageContext.getOut().print(ganttDiagram);
+	
 	} catch (IOException e) {
 	    e.printStackTrace(System.out);
 	}
+	
 	return SKIP_BODY;
     }    
     
@@ -93,13 +96,13 @@ public class GanttDiagramTagLib extends TagSupport {
 	    return generateGanttDiagramInTotalMode().toString();
 	    
 	case MONTHLY:
-	    return generateGanttDiagramInTimeMode(BigDecimal.valueOf(getGanttDiagramObject().getDays().size()).multiply(convertToEm(NUMBER_OF_HOURS))).toString();
+	    return generateGanttDiagramInTimeMode(BigDecimal.valueOf(getGanttDiagramObject().getDays().size()).multiply(convertToEm(NUMBER_OF_DAY_HOURS))).toString();
 	    
 	case WEEKLY:	    	    
 	    return generateGanttDiagramInTimeMode(BigDecimal.valueOf(7).multiply(convertToEm(NUMBER_OF_DAY_HALF_HOURS))).toString();
 	
 	case DAILY:
-	    return generateGanttDiagramInTimeMode(convertToEm(NUMBER_OF_5_MINUTES)).toString();
+	    return generateGanttDiagramInTimeMode(convertToEm(NUMBER_OF_DAY_5_MINUTES)).toString();
 	    
 	default:
 	    return "";
@@ -632,10 +635,10 @@ public class GanttDiagramTagLib extends TagSupport {
 	    return NUMBER_OF_DAY_HALF_HOURS;
 
 	case DAILY:
-	    return NUMBER_OF_5_MINUTES;
+	    return NUMBER_OF_DAY_5_MINUTES;
 
 	case MONTHLY:
-	    return NUMBER_OF_HOURS;
+	    return NUMBER_OF_DAY_HOURS;
 
 	default:
 	    break;	   

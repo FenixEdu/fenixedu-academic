@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -39,6 +40,7 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
@@ -56,7 +58,7 @@ public class Authenticate extends Service implements Serializable {
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
     protected static final Map allowedRolesByHostname = new HashMap();
-    
+
     protected static final boolean validateExpirationDate;
 
     private static String buildVersion = null;
@@ -79,7 +81,7 @@ public class Authenticate extends Service implements Serializable {
 		for (int i = 0; i < roles.length; i++) {
 		    final RoleType roleType = RoleType.valueOf(roles[i].trim());
 		    if (LogLevel.INFO) {		        
-		        logger.info("Host: " + hostname + " provides role: " + roleType.toString() + '.');
+			logger.info("Host: " + hostname + " provides role: " + roleType.toString() + '.');
 		    }
 		    rolesSet.add(roleType);
 		}
@@ -99,7 +101,7 @@ public class Authenticate extends Service implements Serializable {
 	final private DomainReference<Person> personRef;
 
 	final private Collection<RoleType> roleTypes;
-	
+
 	private DateTime expirationDate;
 
 	private transient Collection<Role> roles;
@@ -109,8 +111,7 @@ public class Authenticate extends Service implements Serializable {
 	private UserView(final Person person, final Set allowedRoles) {
 	    this.personRef = new DomainReference<Person>((Person) person);
 
-	    final Collection<Role> roles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
-		    allowedRoles);
+	    final Collection<Role> roles = getInfoRoles(person, allowedRoles);
 	    if (roles != null) {
 		final SortedSet<RoleType> rolesSet = new TreeSet<RoleType>();
 		for (final Role role : roles) {
@@ -121,7 +122,7 @@ public class Authenticate extends Service implements Serializable {
 		this.roleTypes = null;
 	    }
 	}
-	
+
 	private UserView(final Person person, final Set allowedRoles, final DateTime expirationDate) {
 	    this(person, allowedRoles);
 	    setExpirationDate(expirationDate);
@@ -146,44 +147,44 @@ public class Authenticate extends Service implements Serializable {
 	public String getFullName() {
 	    return getPerson().getName();
 	}
-	
+
 	private void setExpirationDate(DateTime expirationDate) {
 	    this.expirationDate = expirationDate;
 	}
-	
+
 	public DateTime getExpirationDate() {
 	    return expirationDate;
 	}
-	
+
 	public boolean isPublicRequester() {
 	    return false;
 	}
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (! (obj instanceof UserView)) {
-            return false;
-        }
-        
-        UserView other = (UserView) obj;
-        return this.personRef.equals(other.personRef)
-                    && this.roleTypes.equals(other.roleTypes);
-    }
-    
-    @Override
-    public int hashCode() {
-        return this.personRef.hashCode() + this.roleTypes.hashCode();
-    }
 
-    public String getPrivateConstantForDigestCalculation() {
-	if (privateConstantForDigestCalculation == null) {
-	    final Person person = getPerson();
-	    final User user = person.getUser();
-	    final Login login = user.readUserLoginIdentification();
-	    privateConstantForDigestCalculation = user.getUserUId() + login.getPassword() + buildVersion;
+	@Override
+	public boolean equals(Object obj) {
+	    if (! (obj instanceof UserView)) {
+		return false;
+	    }
+
+	    UserView other = (UserView) obj;
+	    return this.personRef.equals(other.personRef)
+	    && this.roleTypes.equals(other.roleTypes);
 	}
-	return privateConstantForDigestCalculation;
-    }
+
+	@Override
+	public int hashCode() {
+	    return this.personRef.hashCode() + this.roleTypes.hashCode();
+	}
+
+	public String getPrivateConstantForDigestCalculation() {
+	    if (privateConstantForDigestCalculation == null) {
+		final Person person = getPerson();
+		final User user = person.getUser();
+		final Login login = user.readUserLoginIdentification();
+		privateConstantForDigestCalculation = user.getUserUId() + login.getPassword() + buildVersion;
+	    }
+	    return privateConstantForDigestCalculation;
+	}
     }
 
     public static final boolean isValidUserView(IUserView userView) {
@@ -200,21 +201,21 @@ public class Authenticate extends Service implements Serializable {
 	}
 
 	setLoginHostNameAndDateTime(remoteHost, person);
-	
+
 	return getUserView(person, requestURL);
     }
 
     protected IUserView getUserView(final Person person, final String requestURL) {
 	return getUserView(person, requestURL, null);
     }
-    
+
     protected IUserView getUserView(final Person person, final String requestURL, final DateTime expirationDate) {
 	final Set allowedRoles = getAllowedRolesByHostname(requestURL);
 	return new UserView(person, allowedRoles, expirationDate);
     }
 
     public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
-	    throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+    throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
 	final String username = receipt.getUserName();
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -223,7 +224,7 @@ public class Authenticate extends Service implements Serializable {
 	}
 
 	setLoginHostNameAndDateTime(remoteHost, person);
-	
+
 	if(validateExpirationDate) {
 	    try {
 		final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
@@ -238,30 +239,30 @@ public class Authenticate extends Service implements Serializable {
 
     public static class RegisterUserLoginThread extends Thread implements TransactionalCommand {
 
-        private final Integer userID;
-        private final String remoteHost;
+	private final Integer userID;
+	private final String remoteHost;
 
-        public RegisterUserLoginThread(final User user, final String remoteHost) {
-            userID = user.getIdInternal();
-            this.remoteHost = remoteHost;
-        }
+	public RegisterUserLoginThread(final User user, final String remoteHost) {
+	    userID = user.getIdInternal();
+	    this.remoteHost = remoteHost;
+	}
 
-        public void run() {
-            Transaction.withTransaction(this);
-        }
+	public void run() {
+	    Transaction.withTransaction(this);
+	}
 
-        public void doIt() {
-            final User user = rootDomainObject.readUserByOID(userID);
-            user.setLastLoginHost(user.getCurrentLoginHost());
-            user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
-            user.setCurrentLoginDateTimeDateTime(new DateTime());
-            user.setCurrentLoginHost(remoteHost);
-        }
+	public void doIt() {
+	    final User user = rootDomainObject.readUserByOID(userID);
+	    user.setLastLoginHost(user.getCurrentLoginHost());
+	    user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
+	    user.setCurrentLoginDateTimeDateTime(new DateTime());
+	    user.setCurrentLoginHost(remoteHost);
+	}
 
-        protected static void runThread(final User user, final String remoteHost) {
-            final RegisterUserLoginThread registerUserLoginThread = new RegisterUserLoginThread(user, remoteHost);
-            registerUserLoginThread.start();
-        }
+	protected static void runThread(final User user, final String remoteHost) {
+	    final RegisterUserLoginThread registerUserLoginThread = new RegisterUserLoginThread(user, remoteHost);
+	    registerUserLoginThread.start();
+	}
     }
 
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
@@ -270,7 +271,7 @@ public class Authenticate extends Service implements Serializable {
     }
 
     public static CASReceipt getCASReceipt(final String casTicket, final String requestURL)
-	    throws ExcepcaoAutenticacao {
+    throws ExcepcaoAutenticacao {
 	CASReceipt receipt = null;
 
 	try {
@@ -300,8 +301,10 @@ public class Authenticate extends Service implements Serializable {
 	return receipt;
     }
 
-    protected Collection<Role> getInfoRoles(final String username, final Collection personRoles,
-	    final Set allowedRoles) {
+    protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {	
+	String username = person.getUsername();
+	List<Role> personRoles = person.getPersonRoles();
+
 	final Map<RoleType, Role> infoRoles = new HashMap<RoleType, Role>(personRoles.size());
 	for (final Iterator iterator = personRoles.iterator(); iterator.hasNext();) {
 	    final Role role = (Role) iterator.next();
@@ -310,7 +313,8 @@ public class Authenticate extends Service implements Serializable {
 		infoRoles.put(roleType, role);
 	    }
 	}
-	filterRoles(infoRoles);
+
+	filterRoles(infoRoles, person);
 	return infoRoles.values();
     }
 
@@ -324,15 +328,23 @@ public class Authenticate extends Service implements Serializable {
 	return new HashSet(0);
     }
 
-    protected void filterRoles(final Map<RoleType, Role> infoRoles) {
-	filterEmployeeRoleForTeachers(infoRoles);
+    protected void filterRoles(final Map<RoleType, Role> infoRoles, Person person) {
+	filterEmployeeRoleForTeachers(infoRoles, person);
     }
 
-    protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles) {
-	if (infoRoles.containsKey(RoleType.EMPLOYEE) && 
-		(infoRoles.containsKey(RoleType.TEACHER) || infoRoles.containsKey(RoleType.RESEARCHER))) {
-	    infoRoles.remove(RoleType.EMPLOYEE);
-	}
+    protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles, Person person) {
+	if(!personHasAssiduousness(person)) {
+	    infoRoles.remove(RoleType.EMPLOYEE);    
+	}	
     }
 
+    private boolean personHasAssiduousness(Person person) {	
+	if(person.hasEmployee()) {
+	    YearMonthDay currentDate = new YearMonthDay();
+	    if(person.getEmployee().hasAssiduousness()) {
+		return person.getEmployee().getAssiduousness().isStatusActive(currentDate, currentDate);
+	    }
+	}	
+	return false;
+    }
 }
