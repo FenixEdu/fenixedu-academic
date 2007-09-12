@@ -203,13 +203,13 @@ public class Registration extends Registration_Base {
 
 	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
 	    ;
-	
+
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
 	removeRootDomainObject();
 	getShiftsSet().clear();
-	
+
 	super.deleteDomainObject();
     }
 
@@ -224,9 +224,9 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getLastStudentCurricularPlan() {
-        final Set<StudentCurricularPlan> studentCurricularPlans = getStudentCurricularPlansSet();
+	final Set<StudentCurricularPlan> studentCurricularPlans = getStudentCurricularPlansSet();
 
-        if (studentCurricularPlans.isEmpty()) {
+	if (studentCurricularPlans.isEmpty()) {
 	    return null;
 	}
 	return (StudentCurricularPlan) Collections.max(studentCurricularPlans,
@@ -535,15 +535,54 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Collection<ExternalEnrolment> getApprovedExternalEnrolments() {
+	final Collection<ExternalEnrolment> result = new HashSet<ExternalEnrolment>();
+	for (final ExternalEnrolment externalEnrolment : getExternalEnrolments()) {
+	    if (externalEnrolment.isApproved()) {
+		result.add(externalEnrolment);
+	    }
+	}
+	return result;
+    }
+
+    public YearMonthDay getLastExternalApprovedEnrolmentEvaluationDate() {
+
+	if (getExternalEnrolments().isEmpty()) {
+	    return null;
+	}
+
+	ExternalEnrolment externalEnrolment = Collections.max(getExternalEnrolments(),
+		ExternalEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_EVALUATION_DATE);
+
+	return externalEnrolment.getApprovementDate() != null ? externalEnrolment.getApprovementDate() : externalEnrolment
+		.getExecutionPeriod().getEndDateYearMonthDay();
+    }
+
     final public YearMonthDay getLastApprovedEnrolmentEvaluationDate() {
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID);
 	enrolments.addAll(getApprovedEnrolments());
 
-	if (enrolments.isEmpty()) {
-	    throw new DomainException("Registration.no.approved.enrolments");
+	YearMonthDay internalEnrolmentExamDate = enrolments.isEmpty() ? null : enrolments.last().getLatestEnrolmentEvaluation()
+		.getExamDateYearMonthDay();
+
+	YearMonthDay externalEnrolmentExamDate = getExternalEnrolments().isEmpty() ? null
+		: getLastExternalApprovedEnrolmentEvaluationDate();
+
+	if (internalEnrolmentExamDate == null && externalEnrolmentExamDate == null) {
+	    return null;
 	}
 
-	return enrolments.last().getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
+	if (internalEnrolmentExamDate == null) {
+	    return externalEnrolmentExamDate;
+	}
+
+	if (externalEnrolmentExamDate == null) {
+	    return internalEnrolmentExamDate;
+	}
+
+	return internalEnrolmentExamDate.compareTo(externalEnrolmentExamDate) > 1 ? internalEnrolmentExamDate
+		: externalEnrolmentExamDate;
+
     }
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
@@ -583,7 +622,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasAnyApprovedEnrolment() {
-	return getLastStudentCurricularPlan().hasAnyApprovedEnrolment();
+	return getLastStudentCurricularPlan().hasAnyApprovedEnrolment() || hasAnyExternalApprovedEnrolment();
     }
 
     final public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
@@ -596,6 +635,15 @@ public class Registration extends Registration_Base {
 	}
 	return false;
 
+    }
+
+    final public boolean hasAnyExternalApprovedEnrolment() {
+	for (final ExternalEnrolment externalEnrolment : this.getExternalEnrolments()) {
+	    if (externalEnrolment.isApproved()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     final public Substitution getSubstitution(final IEnrolment iEnrolment) {
@@ -1581,7 +1629,7 @@ public class Registration extends Registration_Base {
     }
 
     final public YearMonthDay getConclusionDate() {
-	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : null; 
+	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : null;
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
@@ -1653,8 +1701,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * Retrieve concluded cycles before or equal to the given cycle
-     */
+         * Retrieve concluded cycles before or equal to the given cycle
+         */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
 
@@ -2153,55 +2201,55 @@ public class Registration extends Registration_Base {
     }
 
     private void transferAnyRemainingCurrentExecutionPeriodAttends() {
-        if (!getTargetTransitionRegistrations().isEmpty()) {
-            final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
-            for (final Attends attends : getAssociatedAttendsSet()) {
-                final ExecutionCourse executionCourse = attends.getExecutionCourse();
-                final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                    System.out.println("Did not find Target registration for attends!!! Transfering to any.");
-                    transferAttends(attends, newRegistration);
-                }
-            }
-        }
+	if (!getTargetTransitionRegistrations().isEmpty()) {
+	    final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
+	    for (final Attends attends : getAssociatedAttendsSet()) {
+		final ExecutionCourse executionCourse = attends.getExecutionCourse();
+		final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+		if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+		    System.out.println("Did not find Target registration for attends!!! Transfering to any.");
+		    transferAttends(attends, newRegistration);
+		}
+	    }
+	}
     }
 
     private void transferCurrentExecutionPeriodAttends(final Registration newRegistration) {
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            final ExecutionCourse executionCourse = attends.getExecutionCourse();
-            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-                    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                    if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
-                        transferAttends(attends, newRegistration);
-                    }
-                }
-            }
-        }
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+		    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+		    if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
+			transferAttends(attends, newRegistration);
+		    }
+		}
+	    }
+	}
     }
 
     private void transferAttends(final Attends attends, final Registration newRegistration) {
-        attends.setAluno(newRegistration);
-        for (final Shift shift : getShiftsSet()) {
-            if (shift.getExecutionCourse() == attends.getExecutionCourse()) {
-                removeShifts(shift);
-                newRegistration.addShifts(shift);
-            }
-        }
+	attends.setAluno(newRegistration);
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getExecutionCourse() == attends.getExecutionCourse()) {
+		removeShifts(shift);
+		newRegistration.addShifts(shift);
+	    }
+	}
     }
 
     /**
-     * 
-     * FIXME:Temporary solution until implementation of concluded first cycle is
-     * finished
-     */
+         * 
+         * FIXME:Temporary solution until implementation of concluded first
+         * cycle is finished
+         */
     public boolean hasConcluded() {
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
 	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
 	    if (cycle == null || cycle.getAprovedEctsCredits() < cycleType.getDefaultEcts()) {
-	        return false;
+		return false;
 	    }
 	}
 	return true;
@@ -2221,9 +2269,10 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {
-//	return isActive() && getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
-//		&& !isSecondCycleInternalCandidacyIngression();
-        return isActive() && !isSecondCycleInternalCandidacyIngression();
+	// return isActive() &&
+        // getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
+	// && !isSecondCycleInternalCandidacyIngression();
+	return isActive() && !isSecondCycleInternalCandidacyIngression();
     }
 
     private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {
