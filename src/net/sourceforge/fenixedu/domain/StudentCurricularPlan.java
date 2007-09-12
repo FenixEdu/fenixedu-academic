@@ -229,8 +229,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	for (; hasAnyCredits(); getCredits().get(0).delete())
 	    ;
 
+	for (; hasAnyTutorships(); getTutorships().get(0).delete())
+	    ;
+
 	removeStudent();
 	removeRootDomainObject();
+	
 	deleteDomainObject();
     }
 
@@ -2539,18 +2543,29 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isEmpty() {
-        if (hasAnyEnrolments()) return false;
-        if (hasAnyTutorships()) return false;
-//        if (hasRoot()) return false;
-        if (hasEquivalencePlan()) return false;
-        if (hasAnyGratuityEvents()) return false;
-        if (hasAnyNotNeedToEnrollCurricularCourses()) return false;
-        if (hasAnyCreditsInAnySecundaryAreas()) return false;
-        if (hasAnyGratuitySituations()) return false;
-        if (hasMasterDegreeThesis()) return false;
-        if (hasAnyCreditsInScientificAreas()) return false;
-        if (hasAnyCredits()) return false;
-        return true;
+	if (hasAnyEnrolments())
+	    return false;
+	if (hasAnyTutorships())
+	    return false;
+	if (hasRoot() && !getRoot().getAllCurriculumLines().isEmpty())
+	    return false;
+	if (hasEquivalencePlan())
+	    return false;
+	if (hasAnyGratuityEvents())
+	    return false;
+	if (hasAnyNotNeedToEnrollCurricularCourses())
+	    return false;
+	if (hasAnyCreditsInAnySecundaryAreas())
+	    return false;
+	if (hasAnyGratuitySituations())
+	    return false;
+	if (hasMasterDegreeThesis())
+	    return false;
+	if (hasAnyCreditsInScientificAreas())
+	    return false;
+	if (hasAnyCredits())
+	    return false;
+	return true;
     }
     
 }

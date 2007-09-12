@@ -37,6 +37,15 @@ public interface IEnrolment {
 
     static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
         public int compare(IEnrolment o1, IEnrolment o2) {
+	    if (o1.getApprovementDate() == null && o2.getApprovementDate() == null) {
+		return 0;
+	    }
+	    if (o1.getApprovementDate() == null) {
+		return -1;
+	    }
+	    if (o2.getApprovementDate() == null) {
+		return 1;
+	    }            
             return o1.getApprovementDate().compareTo(o2.getApprovementDate());
         }
     };

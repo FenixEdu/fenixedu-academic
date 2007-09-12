@@ -44,8 +44,17 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
     };
 
-    static final protected Comparator<EnrolmentEvaluation> COMPARATOR_BY_EXAM_DATE = new Comparator<EnrolmentEvaluation>() {
+    static final public Comparator<EnrolmentEvaluation> COMPARATOR_BY_EXAM_DATE = new Comparator<EnrolmentEvaluation>() {
         public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
+            if (o1.getExamDateYearMonthDay() == null && o2.getExamDateYearMonthDay() == null) {
+		return 0;
+	    }
+	    if (o1.getExamDateYearMonthDay() == null) {
+		return -1;
+	    }
+	    if (o2.getExamDateYearMonthDay() == null) {
+		return 1;
+	    }
             return o1.getExamDateYearMonthDay().compareTo(o2.getExamDateYearMonthDay());
         }
     };
