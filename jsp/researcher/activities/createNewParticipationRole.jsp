@@ -25,13 +25,13 @@
 					<fr:destination name="cancel" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter%>"/>
 			 	    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025 mbottom0"/>
-			        	<fr:property name="columnClasses" value="width6em,width30em,tdclear tderror1"/>
+			        	<fr:property name="columnClasses" value="width8em,width50em,tdclear tderror1"/>
 				    </fr:layout>
 				</fr:edit>
 				<table class="tstyle5 gluetop mtop0">
 					<tr>
-						<th class="width6em"></th>
-						<td class="width40em"><html:submit><bean:message key="button.add" bundle="RESEARCHER_RESOURCES"/></html:submit> <html:cancel><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:cancel></td>
+						<th class="width8em"></th>
+						<td class="width50em"><html:submit><bean:message key="button.add" bundle="RESEARCHER_RESOURCES"/></html:submit> <html:cancel><bean:message key="button.cancel" bundle="RESEARCHER_RESOURCES"/></html:cancel></td>
 					</tr>
 				</table>
 			</fr:form>
