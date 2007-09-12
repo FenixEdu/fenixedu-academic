@@ -15,5 +15,10 @@
 </h2>
 
 <div>
-	<fr:view name="site" property="unit" layout="organigram"/>
+	<fr:view name="site" property="unit" layout="organigram">
+		<fr:layout>
+			<fr:property name="showDates" value="false"/>
+			<fr:property name="unitShown" value="false"/>
+		</fr:layout>	
+	</fr:view>
 </div>

@@ -141,6 +141,10 @@ padding-left: 0.5em; /* FF */
 margin-left: 0.75em; /* IE */
 padding-left: 0.75em; /* FF */
 }
+.ulindent15 ul, ul.ulindent15 {
+margin-left: 1.5em; /* IE */
+padding-left: 1.5em; /* FF */
+}
 
 ul.lheight15 { line-height: 1.5em; } /* default */
 

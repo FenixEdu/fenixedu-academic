@@ -15,6 +15,8 @@
 			 name="candidacyBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
 			 schema="candidacy.choose.executionDegree.toCreate">
+			 
+		<fr:destination name="degreeTypePostback" path="/dfaCandidacy.do?method=chooseDegreeTypePostBack"/>
 		<fr:destination name="degreePostBack" path="/dfaCandidacy.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/dfaCandidacy.do?method=chooseDegreeCurricularPlanPostBack"/>		
 		<fr:destination name="invalid" path="/dfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>		
@@ -23,20 +25,22 @@
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:edit>
-	
-	<logic:present name="candidacyBean" property="executionDegree">
-		<br/>
-		<fr:edit id="person"
-			 name="candidacyBean"
-			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
-			 schema="candidacy.create.choose.person">
-			<fr:destination name="invalid" path="/dfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>					 
-			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
-			</fr:layout>
-		</fr:edit>
-		<br/>
-		<html:submit><bean:message key="button.submit" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>		
-	</logic:present>
 </fr:form>
+
+<logic:present name="candidacyBean" property="executionDegree">
+	<fr:form action="/dfaCandidacy.do?method=createCandidacy">
+			<fr:edit id="executionDegree-invisible" name="candidacyBean" visible="false"/> 
+			<fr:edit id="person"
+				 name="candidacyBean"
+				 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
+				 schema="candidacy.create.choose.person">
+				<fr:destination name="invalid" path="/dfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>					 
+				<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle4"/>
+			        <fr:property name="columnClasses" value="listClasses,,"/>
+				</fr:layout>
+			</fr:edit>
+			<br/>
+			<html:submit><bean:message key="button.submit" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>		
+	</fr:form>
+</logic:present>

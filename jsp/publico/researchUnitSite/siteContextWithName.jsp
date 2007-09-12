@@ -2,7 +2,7 @@
 
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h1 class="mbottom1 cnone">
+<h1 class="cnone">
 	<fr:view name="site" property="unit.nameWithAcronym"/>
 </h1>
 

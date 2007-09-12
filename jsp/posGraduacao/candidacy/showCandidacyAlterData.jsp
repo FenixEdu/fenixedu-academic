@@ -39,13 +39,15 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<h2><strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ADMIN_OFFICE_RESOURCES" /></strong></h2>
-	<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformation" schema="candidate.precedentDegreeInformation-freeEdit" >
-		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
-		</fr:layout>
-	</fr:edit>	
+	<logic:present name="precedentDegreeInformation">
+		<h2><strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ADMIN_OFFICE_RESOURCES" /></strong></h2>
+		<fr:edit id="precedentDegreeInformation" name="precedentDegreeInformation" schema="candidate.precedentDegreeInformation-freeEdit" >
+			<fr:layout name="tabular" >
+				<fr:property name="classes" value="tstyle4"/>
+		        <fr:property name="columnClasses" value="listClasses,,"/>
+			</fr:layout>
+		</fr:edit>	
+	</logic:present>
 
 	<html:submit><bean:message key="button.submit" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>	
 </html:form>

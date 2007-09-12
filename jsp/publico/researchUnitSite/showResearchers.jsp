@@ -9,7 +9,13 @@
 	<fr:view name="researchUnit" property="nameWithAcronym"/>
 </h1>
 
-<h2 class="mtop15"><bean:message key="label.members" bundle="SITE_RESOURCES"/></h2>
+<bean:define id="siteID" name="site" property="idInternal"/>
+
+<p>
+	<html:link href="<%= "viewResearchUnitSite.do?siteID=" + siteID + "&method=organization"%>" ><bean:message key="label.organization" bundle="SITE_RESOURCES"/></html:link> | <bean:message key="label.members" bundle="SITE_RESOURCES"/>
+</p>
+
+<h2><bean:message key="label.members" bundle="SITE_RESOURCES"/></h2>
 	<bean:define id="researchUnit" name="researchUnit" toScope="request"/>
 	<jsp:include flush="true" page="viewMembersFromUnit.jsp"></jsp:include>
 

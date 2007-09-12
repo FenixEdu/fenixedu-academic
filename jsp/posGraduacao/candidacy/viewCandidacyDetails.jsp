@@ -46,7 +46,7 @@
 <h2><strong><bean:message key="label.candidacy.title.documents" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <fr:view name="candidacyDocuments" schema="candidacyDocuments.view" >
 	<fr:layout name="tabular" >
-		<fr:property name="linkFormat(download)" value="${candidacyDocument.file.donwloadUrl}"/>
+		<fr:property name="linkFormat(download)" value="${candidacyDocument.file.downloadUrl}"/>
 		<fr:property name="key(download)" value="link.common.download"/>
 		<fr:property name="bundle(download)" value="APPLICATION_RESOURCES"/>
 		<fr:property name="visibleIf(download)" value="isFileUploaded"/>

@@ -12,6 +12,20 @@
 		<li><html:link page="/publications/search.do?method=prepareSearchPublication"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.search"/> </html:link>
 	</ul>
 
+	<bean:define id="workingResearchUnits" name="UserView" property="person.workingResearchUnits" type="java.util.List"/>
+
+	<logic:empty name="workingResearchUnits"> 
+		<ul style="margin-top: 0.75em;"> 
+			<li><html:link page="/interests/interestsManagement.do?method=prepare"><bean:message bundle="RESEARCHER_RESOURCES" key="link.interestsManagement"/></html:link></li>
+			<li><html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
+			<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
+			<li><html:link page="/activities/activitiesManagement.do?method=listActivities"><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></html:link></li>
+			<li><html:link page="/prizes/prizeManagement.do?method=listPrizes"><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></html:link></li>	
+		</ul>
+	</logic:empty>
+	
+	<logic:notEmpty name="workingResearchUnits">
+	<logic:equal name="UserView" property="person.researcher" value="true">
 	<ul style="margin-top: 0.75em;">
 		<li><html:link page="/interests/interestsManagement.do?method=prepare"><bean:message bundle="RESEARCHER_RESOURCES" key="link.interestsManagement"/></html:link></li>
 		<li><html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
@@ -26,10 +40,7 @@
 		<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
 		--%>
 	</ul>
-
-	<bean:define id="workingResearchUnits" name="UserView" property="person.workingResearchUnits" type="java.util.List"/>
-
-	<logic:notEmpty name="workingResearchUnits">
+	</logic:equal>
 	<ul>
 		<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
 		<logic:iterate id="unitIter" name="workingResearchUnits">

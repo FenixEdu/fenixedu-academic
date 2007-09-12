@@ -449,29 +449,6 @@ td.pleft4 { padding-left: 4em; }
 td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
 
-
-/* ----------------------
------ To Organize ------
------------------------ */
-
-table .tab_lay {
-width: 100%;
-margin-bottom: 1em;
-}
-table .tab_lay th {
-font-size: 130%;
-}
-table .tab_lay th center {
-vertical-align: middle;
-padding: 0;
-margin: 0;
-font-size: 80%;
-text-decoration: underline;
-}
-
-
-ul.ostructure li.osrootunit h3 { margin: 0; }
-
 /* ----------------------
 ------ Feedback  -------
 ----------------------- */
@@ -496,3 +473,79 @@ ul.ostructure li.osrootunit h3 { margin: 0; }
 .warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fbf8cc; color: #805500; }
 
 
+/* ----------------------
+----- To Organize ------
+----------------------- */
+
+table .tab_lay {
+width: 100%;
+margin-bottom: 1em;
+}
+table .tab_lay th {
+font-size: 130%;
+}
+table .tab_lay th center {
+vertical-align: middle;
+padding: 0;
+margin: 0;
+font-size: 80%;
+text-decoration: underline;
+}
+
+
+ul.ostructure li.osrootunit h3 { margin: 0; }
+
+ul.ostructure1 li.osrootunit h3 { margin: 0; }
+ul.ostructure1 { padding-left: 2em; padding-top: 0.75em; }
+ul.ostructure1 ul { padding-left: 1.5em; padding-top: 1.0em; padding-bottom: 1.0em; }
+/*
+ul.ostructure1 .osrootunit { padding-left: 1em; }
+ul.ostructure1 .osfunction { padding-left: 1em; }
+*/
+
+
+
+/** temporary place for teachers and employees presentation */
+
+div.personalcard {
+/*
+border: 1px solid #ccc;
+background: #fafafa;
+border-bottom: 1px dotted #999;
+*/
+padding: 0.5em;
+	margin-top: 0em;
+	margin-bottom: 1em;
+	background: #fafafa;
+	border-bottom: 1px dotted #999;
+}
+.personalcard table {
+margin-top: 0em;
+margin-bottom: 0em;
+}
+.personalcard table tr td {
+vertical-align: top;
+}
+td.personalcard_photo {
+width: 115px;
+text-align: center;
+}
+td.personalcard_photo div {
+width: 105px;
+border: 1px solid #ccc;
+background: #fff;
+padding: 0.5em;
+}
+td.personalcard_info {
+padding-left: 0.5em;
+}
+td.personalcard_info ul {
+padding-left: 1em;
+}
+
+
+/* lists */
+.ulindent15 ul, ul.ulindent15 {
+margin-left: 1.5em; /* IE */
+padding-left: 1.5em; /* FF */
+}
