@@ -27,3 +27,11 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table Academic Service Request" alterAcademicServiceRequest.sql
+execute "Alter table candidacy" alterTableCandidacy.sql
+execute "Alter table Event" alterTableEvent.sql
+execute "Alter table Posting Rule" alterTablePostingRule.sql
+execute "Alter table registration" alterTableRegistration.sql
+execute "Update Permissions" updatePermissions.sql
+execute "Update accountability types" updateAccountabilityTypes.sql
+execute "Update REsearch Contract" updateResearchContracts.sql
