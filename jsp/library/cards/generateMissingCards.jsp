@@ -10,7 +10,6 @@
 </h2>	
 
 <logic:notPresent name="nothingMissing">
-	<br/>
 	<p>
 		<html:link page="/cardManagement.do?method=generateMissingCards">
 			<bean:message key="link.card.generateMissingCards" bundle="LIBRARY_RESOURCES"/>
@@ -19,5 +18,5 @@
 </logic:notPresent>
 
 <logic:present name="nothingMissing">
-	<br/><p><em><bean:message key="message.card.noMissingCards" bundle="LIBRARY_RESOURCES"/></em></p>
+	<p><em><bean:message key="message.card.noMissingCards" bundle="LIBRARY_RESOURCES"/></em></p>
 </logic:present>

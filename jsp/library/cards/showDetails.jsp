@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <h2>
-	<bean:message key="title.library.card.generated"/>
+	<bean:message key="title.library.card.details"/>
 </h2>
 	
 <fr:form action="/cardManagement.do?method=generatePdfCard">
@@ -14,12 +14,14 @@
 	
 	<fr:view name="libraryCard" schema="library.card.generated">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5"/>
+			<fr:property name="classes" value="tstyle2 thlight thright"/>
 		</fr:layout>			
 	</fr:view>
-	
-	<html:submit ><bean:message key="button.emitCard" bundle="LIBRARY_RESOURCES"/></html:submit>
-	<html:cancel property="cancel" bundle="HTMLALT_RESOURCES" altKey="submit.back">
-		<bean:message key="button.back" bundle="LIBRARY_RESOURCES"/>
-	</html:cancel>
+
+	<p>
+		<html:submit><bean:message key="button.generateCard" bundle="LIBRARY_RESOURCES"/></html:submit>
+		<html:cancel property="cancel" bundle="HTMLALT_RESOURCES" altKey="submit.back">
+			<bean:message key="button.back" bundle="LIBRARY_RESOURCES"/>
+		</html:cancel>
+	</p>
 </fr:form>

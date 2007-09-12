@@ -14,7 +14,7 @@
 <fr:form action="/cardManagement.do?method=showUsers">
 	<fr:edit id="libraryCardSearch" name="libraryCardSearch" schema="library.card.search">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tdclear error0"/>
 		</fr:layout>
 	</fr:edit>
@@ -26,8 +26,9 @@
 </bean:define>
 	
 <bean:size id="numberOfElements" name="libraryCardSearch" property="search"/>
+
 <p class="mtop15">
-	<span class="warning0"><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></span>
+	<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
 </p>
 		
 <fr:view name="libraryCardSearch" property="search" schema="library.card.list">
@@ -40,7 +41,7 @@
         
         <fr:property name="link(generate)" value="/cardManagement.do?method=prepareGenerateCard"/>
 		<fr:property name="param(generate)" value="person.idInternal/personID"/>
-		<fr:property name="key(generate)" value="link.card.generate"/>
+		<fr:property name="key(generate)" value="link.card.create"/>
 		<fr:property name="visibleIf(generate)" value="isToGenerate"/>
 		
 		<fr:property name="link(details)" value="/cardManagement.do?method=showDetails"/>
