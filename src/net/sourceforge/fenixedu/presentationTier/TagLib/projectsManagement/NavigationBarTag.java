@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionMapping;
@@ -103,7 +104,7 @@ public class NavigationBarTag extends TagSupport {
         params.put("span", new Integer(span));
 
         try {
-            return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false).trim();
+            return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +116,7 @@ public class NavigationBarTag extends TagSupport {
 
         while (paramsIterator.hasNext()) {
             Object param = paramsIterator.next();
-            if (param.equals("span")) {
+            if (param.equals("span") || param.equals(RequestChecksumFilter.CHECKSUM_ATTRIBUTE_NAME)) {
                 paramsIterator.remove();
             }
         }
