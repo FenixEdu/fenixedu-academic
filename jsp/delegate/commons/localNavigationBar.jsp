@@ -41,7 +41,7 @@
 				</html:link>
 			</li>
 		</logic:present>
-		<br />
+
 		<li class="navheader">
 			<bean:message bundle="DELEGATES_RESOURCES" key="label.delegates.comunication"/>
 		</li>

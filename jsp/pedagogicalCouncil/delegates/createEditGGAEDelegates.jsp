@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
+<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.delegatesManagement.GGAE" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 <h3><bean:message key="label.delegatesManagement.GGAE.subTitle" bundle="PEDAGOGICAL_COUNCIL" /></h3>
 
@@ -99,27 +99,27 @@
 </logic:present>
 
 <p class="mtop2">
-		<b><bean:message key="label.delegate.ggae.groupA" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupA" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupA.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 	<p class="mtop05">
-		<b><bean:message key="label.delegate.ggae.groupB" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupB" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupB.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 	<p class="mtop05">
-		<b><bean:message key="label.delegate.ggae.groupC" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupC" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupC.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 	<p class="mtop05">
-		<b><bean:message key="label.delegate.ggae.groupD" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupD" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupD.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 	<p class="mtop05">
-		<b><bean:message key="label.delegate.ggae.groupE" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupE" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupE.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 	<p class="mtop05">
-		<b><bean:message key="label.delegate.ggae.groupF" bundle="DELEGATES_RESOURCES" /></b>:
+		<b><bean:message key="label.delegate.ggae.groupF" bundle="DELEGATES_RESOURCES" />:</b>
 		<bean:message key="label.delegate.ggae.groupF.description" bundle="DELEGATES_RESOURCES" />
 	</p>
 

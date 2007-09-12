@@ -7,6 +7,7 @@
 
 <bean:define id="forwardTo" value="showVotingPeriods" />
 
+<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <logic:present name="currentExecutionYear">

@@ -7,3 +7,6 @@
 <h2>
 	<bean:message bundle="PEDAGOGICAL_COUNCIL" key="portal.pedagogical.council"/>
 </h2>
+<p>
+	<bean:message bundle="PEDAGOGICAL_COUNCIL" key="message.pedagogical.council.welcome"/>
+</p>

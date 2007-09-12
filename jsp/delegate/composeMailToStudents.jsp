@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
 <h2><bean:message key="label.sendMailToStudents" bundle="DELEGATES_RESOURCES" /></h2>
 
 <logic:present name="currentExecutionYear">
@@ -42,7 +41,7 @@
     </html:messages>
 </logic:messagesPresent>
 
-<p class="mtop2 mbottom05">
+<p class="mbottom05">
 	<b><bean:message key="label.sendMailToStudents.chooseReceivers" bundle="DELEGATES_RESOURCES" /></b></p>
 <p class="color888 mvert05">
 	<bean:message key="label.sendMailToStudents.chooseReceivers.help" bundle="DELEGATES_RESOURCES" /></p>
@@ -58,7 +57,8 @@
 
 
 <logic:present name="mailBean">
-	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.delegate" action="/sendEmailToDelegateStudents.do?method=send">
+<fr:form action="/sendEmailToDelegateStudents.do?method=send">
+	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.delegate">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle5 tdtop thlight thright mtop0"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -66,6 +66,8 @@
 	    <fr:destination name="invalid" path="/sendEmailToDelegateStudents.do?method=sendInvalid"/>
 	    <fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
+	<html:submit><bean:message key="label.send" bundle="APPLICATION_RESOURCES"/></html:submit>
+</fr:form>
 </logic:present>
 
 

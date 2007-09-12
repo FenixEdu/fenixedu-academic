@@ -10,6 +10,7 @@
 <bean:define id="degreeOID" name="electionPeriodBean" property="degree.idInternal" />
 <bean:define id="electionOID" name="electionPeriodBean" property="election.idInternal" />
 
+<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.showCandidates" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 	
 <p class="mtop1 mbottom1"><b><bean:message key="label.currentExecutionYear" bundle="PEDAGOGICAL_COUNCIL" />:</b>
@@ -21,7 +22,7 @@
 
 <ul>
 	<li>
-		<p class="mtop2 mbottom1"><html:link page="<%= "/electionsPeriodsManagement.do?method=selectDegreeType&degreeOID=" + degreeOID + "&forwardTo=showCandidacyPeriods" %>">
+		<p class="mbottom1"><html:link page="<%= "/electionsPeriodsManagement.do?method=selectDegreeType&degreeOID=" + degreeOID + "&forwardTo=showCandidacyPeriods" %>">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.back" /></html:link></p>
 	</li>
 </ul>
@@ -43,8 +44,9 @@
 
 <logic:present name="candidatesWithoutPhotos" >
 	<logic:empty name="candidatesWithoutPhotos" >
-		<p class="mtop2 mbottom2">
-		<span class="error0"><b><bean:message key="elections.showCandidates.noCandidates" bundle="PEDAGOGICAL_COUNCIL"/></b></span></p>
+		<p>
+			<em><bean:message key="elections.showCandidates.noCandidates" bundle="PEDAGOGICAL_COUNCIL"/></em>
+		</p>
 	</logic:empty>
 	
 	<logic:notEmpty name="candidatesWithoutPhotos" >

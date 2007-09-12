@@ -22,7 +22,7 @@
 		<html:link page="/viewStudents.do?method=prepareShowStudentsByCurricularCourse">
 			<bean:message key="link.showStudentsByCurricularCourse" bundle="DELEGATES_RESOURCES"/>
 		</html:link>,
-		<span class="warning0"><bean:message key="link.showStudents" bundle="DELEGATES_RESOURCES"/></span>
+		<span class="highlight1"><bean:message key="link.showStudents" bundle="DELEGATES_RESOURCES"/></span>
 	</p>
 			
 	<logic:notEmpty name="studentsList">
@@ -47,7 +47,7 @@
 	
 	<p class="mtop1 mbottom05">
 		<b><bean:message key="label.delegates.studentsList.show" bundle="DELEGATES_RESOURCES" /></b>
-			<span class="warning0"><bean:message key="link.showStudentsByCurricularCourse" bundle="DELEGATES_RESOURCES"/></span>
+			<span class="highlight1"><bean:message key="link.showStudentsByCurricularCourse" bundle="DELEGATES_RESOURCES"/></span>
 		,
 		<html:link page="/viewStudents.do?method=showStudents">
 			<bean:message key="link.showStudents" bundle="DELEGATES_RESOURCES"/>
@@ -81,7 +81,8 @@
 	</fr:view>
 	
 	<p class="mtop2 mbottom05">
-		<b><bean:message key="label.delegates.studentsFromSelectedCurricularCourse" bundle="DELEGATES_RESOURCES" /></b></p>
+		<b><bean:message key="label.delegates.studentsFromSelectedCurricularCourse" bundle="DELEGATES_RESOURCES" /></b>
+	</p>
 	<logic:notEmpty name="selectedCurricularCourseBean" property="enrolledStudents">
 		<fr:view name="selectedCurricularCourseBean" property="enrolledStudents" schema="delegates.showStudents.studentInfo">
 			<fr:layout name="tabular">
@@ -91,7 +92,8 @@
 		</fr:view>
 	</logic:notEmpty>
 	<logic:empty name="selectedCurricularCourseBean" property="enrolledStudents">
-		<p class="mtop1"><span class="error0">
-			<b><bean:message key="error.delegates.showStudents.notFoundStudents" bundle="DELEGATES_RESOURCES" /></b></span></p>
+		<p class="mtop1">
+			<em><bean:message key="error.delegates.showStudents.notFoundStudents" bundle="DELEGATES_RESOURCES" /></em>
+		</p>
 	</logic:empty>
 </logic:present>

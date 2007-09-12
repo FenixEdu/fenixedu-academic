@@ -7,11 +7,14 @@
 
 <bean:define id="forwardTo" value="createEditCandidacyPeriods" />
 
+<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.createEditCandidacyPeriods" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <logic:present name="currentExecutionYear">
-	<p class="mtop1 mbottom1"><b><bean:message key="label.executionYear" bundle="PEDAGOGICAL_COUNCIL" />:</b>
-		<bean:write name="currentExecutionYear" property="year" /></p>
+	<p class="mtop1 mbottom1">
+		<b><bean:message key="label.executionYear" bundle="PEDAGOGICAL_COUNCIL" />:</b>
+		<bean:write name="currentExecutionYear" property="year" />
+	</p>
 </logic:present>
 
 <!-- AVISOS E ERROS -->
@@ -32,7 +35,7 @@
 	<fr:form action="<%="/electionsPeriodsManagement.do?method=selectDegreeType&forwardTo=" + forwardTo %>">
 			<fr:edit id="electionPeriodBean" name="electionPeriodBean" layout="tabular-editable" schema="elections.selectDegreeType">
 				<fr:layout>
-					<fr:property name="classes" value="tstyle5 thlight thleft mtop0 mbottom0"/>
+					<fr:property name="classes" value="tstyle5 thlight thleft mtop0 mbottom0 thmiddle"/>
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
 				<fr:destination name="invalid" path="<%="/electionsPeriodsManagement.do?method=prepare&forwardTo=" + forwardTo %>" />
@@ -73,9 +76,11 @@
 			<fr:destination name="invalid" path="<%="/electionsPeriodsManagement.do?method=prepare&forwardTo=" + forwardTo %>" />
 			<fr:destination name="post-back" path="<%="/electionsPeriodsManagement.do?method=selectDegreeType&forwardTo=" + forwardTo %>" />
 		</fr:view>
-		<html:submit property="create"><bean:message key="button.elections.createPeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
-		<html:submit property="edit"><bean:message key="button.elections.editPeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
-		<html:submit property="delete"><bean:message key="button.elections.deletePeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
+		<p>
+			<html:submit property="create"><bean:message key="button.elections.createPeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
+			<html:submit property="edit"><bean:message key="button.elections.editPeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
+			<html:submit property="delete"><bean:message key="button.elections.deletePeriods" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
+		</p>
 	</fr:form>
 </logic:present>
 
@@ -101,7 +106,7 @@
 		
 		<fr:edit id="newElectionPeriodBean" name="newElectionPeriodBean" layout="tabular-editable" schema="<%= schema %>">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thright thleft thmiddle mtop0 mbottom0"/>
+				<fr:property name="classes" value="tstyle5 thright thlight thleft thmiddle mtop0 mbottom0"/>
 				<fr:property name="columnClasses" value="width100px,aleft width250px,tdclear tderror1"/>
 			</fr:layout>
 			
@@ -147,7 +152,7 @@
 		
 		<fr:edit id="editElectionBean" name="editElectionBean" layout="tabular-editable" schema="<%= schema %>">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thright thleft thmiddle mtop0 mbottom0"/>
+				<fr:property name="classes" value="tstyle5 thright thlight thleft thmiddle mtop0 mbottom0"/>
 				<fr:property name="columnClasses" value="width100px,aleft width250px,tdclear tderror1"/>
 			</fr:layout>
 			
@@ -190,7 +195,7 @@
 		
 		<fr:edit id="editElectionBean" name="deleteElectionBean" layout="tabular-editable" schema="elections.deleteElectionsPeriods">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thright thleft thmiddle mtop0 mbottom0"/>
+				<fr:property name="classes" value="tstyle5 thright thlight thleft thmiddle mtop0 mbottom0"/>
 				<fr:property name="columnClasses" value="width100px,aleft width250px,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path="<%= "/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&" + parameters  %>" />

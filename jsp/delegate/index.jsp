@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.delegatesPortal" bundle="DELEGATES_RESOURCES" /></h2>
 
-<h3><p class="mtop1 mbottom05"><bean:message key="text.delegates.delegateOperations.intro" bundle="DELEGATES_RESOURCES" />:</p></h3>
+<p class="mbotttom05"><bean:message key="text.delegates.delegateOperations.intro" bundle="DELEGATES_RESOURCES" />:</p>
 <ul>
 	<li><p class="mtop05 mbottom05"><bean:message key="text.delegates.delegatesConsult.description" bundle="DELEGATES_RESOURCES" />;</p></li>
 	<li><p class="mtop05 mbottom05"><bean:message key="text.delegates.studentConsult.description" bundle="DELEGATES_RESOURCES" />;</p></li>

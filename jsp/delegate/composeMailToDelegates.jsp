@@ -5,12 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
 <h2><bean:message key="label.sendMailToDelegates" bundle="DELEGATES_RESOURCES" /></h2>
 
 <logic:present name="currentExecutionYear">
-	<p class="mtop1 mbottom1"><b><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" />:</b>
-		<bean:write name="currentExecutionYear" property="year" /></p>
+	<p class="mtop1 mbottom1">
+		<b><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" />:</b>
+		<bean:write name="currentExecutionYear" property="year" />
+	</p>
 </logic:present>
 
 <logic:messagesPresent property="error" message="true">
@@ -42,13 +43,14 @@
     </html:messages>
 </logic:messagesPresent>
 
-<p class="mtop2 mbottom05">
+<p class="mbottom05">
 	<b><bean:message key="label.sendMailToDelegates.chooseReceivers" bundle="DELEGATES_RESOURCES" /></b></p>
 <p class="color888 mvert05">
 	<bean:message key="label.sendMailToDelegates.chooseReceivers.help" bundle="DELEGATES_RESOURCES" /></p>
 
 <logic:present name="mailBean">
-	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.delegate" action="/sendEmailToDelegates.do?method=send">
+<fr:form action="/sendEmailToDelegates.do?method=send">
+	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.delegate">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle5 tdtop thlight thright mtop0"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -56,6 +58,8 @@
 	    <fr:destination name="invalid" path="/sendEmailToDelegates.do?method=sendInvalid"/>
 	    <fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
+	<html:submit><bean:message key="label.send" bundle="APPLICATION_RESOURCES"/></html:submit>
+</fr:form>
 </logic:present>
 
 
