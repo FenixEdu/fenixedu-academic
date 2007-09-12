@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -635,6 +637,54 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
+    public Set<Context> getActiveChildContexts() {
+	final Set<Context> result = new HashSet<Context>();
+
+	for (final Context context : getChildContexts()) {
+	    if (context.isOpen()) {
+		result.add(context);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<Context> getActiveChildContextsWithMax(final ExecutionPeriod executionPeriod) {
+	final Map<DegreeModule, Context> maxContextsByDegreeModule = new HashMap<DegreeModule, Context>();
+
+	for (final Context context : getActiveChildContexts()) {
+	    if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
+		final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
+		if (existingContext.getCurricularPeriod().getChildOrder() != executionPeriod.getSemester()
+			&& context.getChildOrder() == executionPeriod.getSemester()) {
+		    maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
+		}
+
+	    } else {
+		maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
+	    }
+	}
+
+	return new HashSet<Context>(maxContextsByDegreeModule.values());
+    }
+
+    public Map<CurricularPeriod, Set<Context>> getActiveChildCurricularContextsWithMaxByCurricularPeriod(
+	    final ExecutionPeriod executionPeriod) {
+	final Map<CurricularPeriod, Set<Context>> result = new HashMap<CurricularPeriod, Set<Context>>();
+
+	for (final Context context : getActiveChildContextsWithMax(executionPeriod)) {
+	    if (context.getChildDegreeModule().isCurricularCourse()) {
+		if (!result.containsKey(context.getCurricularPeriod())) {
+		    result.put(context.getCurricularPeriod(), new HashSet<Context>());
+		}
+
+		result.get(context.getCurricularPeriod()).add(context);
+	    }
+	}
+
+	return result;
+    }
+
     public Set<CurricularCourse> getChildCurricularCoursesValidOn(final ExecutionPeriod executionPeriod) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 
@@ -656,7 +706,17 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 
 	return result;
+    }
 
+    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(final ExecutionPeriod executionPeriod) {
+	final Set<Context> result = new HashSet<Context>();
+	for (final Context context : getActiveChildContextsWithMax(executionPeriod)) {
+	    if (context.getChildDegreeModule().isCurricularCourse()) {
+		result.add(context);
+	    }
+	}
+
+	return result;
     }
 
     public boolean hasDegreeModuleOnChilds(final DegreeModule degreeModuleToSearch) {

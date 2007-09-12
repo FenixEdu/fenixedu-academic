@@ -243,9 +243,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	}
 
 	return result;
-
     }
-
+    
     public boolean hasAnyParentContexts(final ExecutionPeriod executionPeriod) {
 	for (final Context context : getParentContextsSet()) {
 	    if (executionPeriod == null || context.isValid(executionPeriod)) {
