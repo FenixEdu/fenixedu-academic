@@ -545,11 +545,10 @@ public class RequestChecksumFilter implements Filter {
 
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
 	final String uri = httpServletRequest.getRequestURI();
-	final String queryString = decodeURL(httpServletRequest.getQueryString());
-	final String request = queryString != null ? uri + '?' + queryString : uri;
-	final String calculatedChecksum = calculateChecksum(request);
-	final boolean result = checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
-	return result || isValidChecksumIgnoringPath(httpServletRequest, checksum);
+	final String queryStringEncoded = httpServletRequest.getQueryString();
+	final String queryString = decodeURL(queryStringEncoded);
+	return isValidChecksum(uri, queryString, checksum) || isValidChecksum(uri, queryStringEncoded, checksum)
+	        || isValidChecksumIgnoringPath(httpServletRequest, checksum);
     }
 
     private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum) {
@@ -558,13 +557,18 @@ public class RequestChecksumFilter implements Filter {
             final int lastSlash = uri.lastIndexOf('/');
             if (lastSlash >= 0) {
                 final String chopedUri = uri.substring(lastSlash + 1);
-                final String queryString = decodeURL(httpServletRequest.getQueryString());
-                final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
-                final String calculatedChecksum = calculateChecksum(request);
-                return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
+                final String queryStringEncoded = httpServletRequest.getQueryString();
+                final String queryString = decodeURL(queryStringEncoded);
+                return isValidChecksum(chopedUri, queryString, checksum) || isValidChecksum(chopedUri, queryStringEncoded, checksum);
             }
         }
         return false;
+    }
+
+    private boolean isValidChecksum(final String uri, final String queryString, final String checksum) {
+        final String request = queryString != null ? uri + '?' + queryString : uri;
+        final String calculatedChecksum = calculateChecksum(request);
+        return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
     }
 
 }
