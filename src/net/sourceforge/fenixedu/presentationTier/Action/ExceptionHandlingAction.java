@@ -79,12 +79,17 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
         EMail email = null;
 
+        try {
         if (!request.getServerName().equals("localhost")) {
             email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
             email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
         } else {
             email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
             email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
+        }
+        } catch (Throwable t) {
+            t.printStackTrace();
+            throw new Error(t);
         }
 
         sessionRemover(request);
