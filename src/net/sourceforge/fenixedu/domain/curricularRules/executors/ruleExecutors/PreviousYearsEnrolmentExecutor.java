@@ -490,8 +490,6 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     private boolean canObtainApprovalInOtherCurricularPeriod(final double missingEctsToConcludeGroup,
 	    final Context curricularCourseContext, final Map<CurricularPeriod, Set<Context>> contextsByCurricularPeriod) {
 
-	// TODO: missing annual curricular courses
-
 	final int curricularCourseSemester = curricularCourseContext.getCurricularPeriod().getChildOrder();
 	double ectsToPerformInOtherCurricularPeriods = 0;
 
