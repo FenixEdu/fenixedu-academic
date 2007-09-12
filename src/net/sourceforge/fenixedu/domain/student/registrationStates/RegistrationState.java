@@ -151,6 +151,11 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	return null;
     }
 
+    public DateTime getEndDate() {
+	RegistrationState state = getNext();
+	return (state != null) ? state.getStateDate() : null;
+    }
+    
     public static class RegistrationStateDeleter extends IdInternalBean implements FactoryExecutor {
 
 	public RegistrationStateDeleter(Integer idInternal) {

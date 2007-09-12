@@ -115,15 +115,25 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	getCandidacy().moveToNextState(((CandidacyOperation) operation).getType(), person);
     }
 
-    public abstract void nextState();
+    public void nextState() {
+	this.getCandidacy().nextState(); 
+    }
 
-    public abstract void checkConditionsToForward();
+    public void nextState(String nextState)  {
+	this.getCandidacy().nextState(nextState);
+    }
+    
+    public Set<String> getValidNextStates() {
+	return this.getCandidacy().getValidNextStates();
+    }
+    
+    public void checkConditionsToForward() {
+	this.getCandidacy().checkConditionsToForward();
+    }
 
-    public abstract void nextState(String nextState);
-
-    public abstract void checkConditionsToForward(String nextState);
-
-    public abstract Set<String> getValidNextStates();
+    public void checkConditionsToForward(String nextState) {
+	this.getCandidacy().checkConditionsToForward(nextState);
+    }
 
     public abstract CandidacySituationType getCandidacySituationType();
 

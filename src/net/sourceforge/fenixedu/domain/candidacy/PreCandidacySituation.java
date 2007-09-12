@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -18,41 +16,6 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
     public PreCandidacySituation(Candidacy candidacy, Person person) {
         super();
         init(candidacy, person);
-    }
-
-    @Override
-    public void nextState() {
-        new StandByCandidacySituation(getCandidacy());
-    }
-
-    @Override
-    public void checkConditionsToForward() {
-        // TODO: check if the candidate has already payed emulamento
-    }
-
-    public void checkConditionsToForward(String nextState) {
-        checkConditionsToForward();
-    }
-
-    public Set<String> getValidNextStates() {
-        Set<String> nextStates = new HashSet<String>();
-        nextStates.add(CandidacySituationType.STAND_BY.toString());
-        nextStates.add(CandidacySituationType.CANCELLED.toString());
-        return nextStates;
-    }
-
-    public void nextState(String nextState) {
-	CandidacySituationType situationType = CandidacySituationType.valueOf(nextState);
-	switch (situationType) {
-	case STAND_BY:
-	    nextState();
-	    break;
-	case CANCELLED:
-	    new CancelledCandidacySituation(getCandidacy());
-	    break;
-	default:
-	    throw new DomainException("invalid next state");
-	}
     }
 
     @Override

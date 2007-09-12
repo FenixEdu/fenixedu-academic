@@ -11,6 +11,10 @@
 	<slot name="interest"/>
 </schema>	
 
+<schema name="researchInterest.name" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
+	<slot name="interest"/>
+</schema>	
+
 <schema name="researchInterest.title" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
 	<slot name="interest"/>
 </schema>	
@@ -2983,5 +2987,43 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="serviceArgs" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="3"/>
+	</slot>
+</schema>
+
+
+<schema name="present.research.member" type="net.sourceforge.fenixedu.domain.Person" bundle="RESEARCHER_RESOURCES">
+	<slot name="name" layout="conditional-link">
+		<property name="classes" value="bold"/>
+		<property name="useParent" value="true"/>
+		<property name="visibleIf" value="homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="blankTarget" value="true"/>
+	</slot>
+	<slot name="personWorkPhone" layout="null-as-label">
+		<property name="label" value="label.person.telephone"/>
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="key" value="true"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showPhone"/>
+	</slot>
+	<slot name="researchInterests" layout="prefixed">
+		<property name="prefixBundle" value="RESEARCHER_RESOURCES"/>
+		<property name="prefixKey" value="researcher.interests.title"/>
+		<property name="emptyBundle" value="RESEARCHER_RESOURCES"/>
+		<property name="emptyKey" value="label.personalCard.notDefined"/>
+		<property name="separator" value=":"/>
+		<property name="subProperty(sortBy)" value="order"/>
+		<property name="subProperty(classes)" value="ulindent15 nobullet lheight15 smalltxt mtop1"/>
+		<property name="subProperty(eachLayout)" value="values"/>
+		<property name="subProperty(eachSchema)" value="researchInterest.name"/>
+	</slot>
+</schema>
+
+<schema name="showPhone" type="net.sourceforge.fenixedu.domain.contacts.Phone" bundle="RESEARCHER_RESOURCES">
+	<slot name="number" layout="prefixed">
+		<property name="prefixKey" value="label.person.telephone"/>
+		<property name="prefixBundle" value="APPLICATION_RESOURCES"/>
+		<property name="subLayout" value="default"/>
 	</slot>
 </schema>

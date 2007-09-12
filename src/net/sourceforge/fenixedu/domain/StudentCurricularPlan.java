@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
@@ -2522,10 +2523,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
+    
+    public AdministrativeOffice getAdministrativeOffice() {
+	return AdministrativeOffice.readByAdministrativeOfficeType(getDegree().getDegreeType()
+			    .getAdministrativeOfficeType());
+    }
 
-    public CycleCurriculumGroup getCycle(final CycleType cycleType) {
+   public CycleCurriculumGroup getCycle(final CycleType cycleType) {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(cycleType) : null;
-}
+   }
+
     public boolean hasCycleCurriculumGroup(final CycleType cycleType) {
 	return getCycle(cycleType) != null;
     }

@@ -44,7 +44,10 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -134,9 +137,12 @@ public class Registration extends Registration_Base {
 	    RegistrationAgreement agreement, CycleType cycleType) {
 	this(person, null, agreement, studentCandidacy, degreeCurricularPlan);
 
+	ExecutionPeriod period = ExecutionPeriod.readActualExecutionPeriod();
 	// create scp
-	StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, new YearMonthDay(), ExecutionPeriod
+	StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, new YearMonthDay(), ExecutionPeriod
 		.readActualExecutionPeriod(), cycleType);
+	
+	EventGenerator.generateNecessaryEvents(scp, person, period.getExecutionYear());
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {

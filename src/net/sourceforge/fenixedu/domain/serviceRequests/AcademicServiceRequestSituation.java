@@ -21,7 +21,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	}
     };
 
-    private AcademicServiceRequestSituation() {
+    protected AcademicServiceRequestSituation() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());

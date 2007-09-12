@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -32,7 +31,7 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final List<ExecutionDegree> executionDegrees = getExecutionYear(request, (DynaActionForm) form)
-		.getExecutionDegreesFor(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+		.getExecutionDegreesFor(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_PHD_PROGRAM);
 	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	request.setAttribute("executionDegrees", executionDegrees);
 

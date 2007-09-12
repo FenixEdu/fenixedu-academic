@@ -1,0 +1,2 @@
+alter table REGISTRATION add column KEY_PHD_REGISTRATION_EVENT int(11);
+

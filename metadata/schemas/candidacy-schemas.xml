@@ -28,6 +28,12 @@
 </schema>
 <schema name="candidacy.choose.executionDegree.toCreate"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
+	<!-- <slot name="degreeType" key="label.degreeType" layout="radio-postback"  
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="includedValues" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA, BOLONHA_PHD_PROGRAM"/>
+		<property name="destination" value="degreeTypePostback"/>
+		<property name="classes" value="liinline, nobullet"/>
+	</slot> -->
 	<slot name="degree" key="label.degree" 
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -43,8 +49,6 @@
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegree" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreeCurricularPlanPostBack"/>		
 	</slot>
@@ -54,6 +58,7 @@
 		<property name="destination" value="degreeCurricularPlanPostBack"/>				
 	</slot>	
 </schema>
+
 <schema name="candidacy.create.choose.person"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
 	<slot name="name" key="label.name">

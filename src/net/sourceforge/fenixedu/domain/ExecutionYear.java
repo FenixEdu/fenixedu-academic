@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -222,16 +223,17 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 		.plusDays(1).toDateMidnight()).contains(dateTime);
     }
 
-    public List<ExecutionDegree> getExecutionDegreesFor(DegreeType degreeType) {
+    public List<ExecutionDegree> getExecutionDegreesFor(DegreeType... degreeTypes) {
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+	List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType() == degreeType) {
+	    if (degreeTypesList.contains(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
 		result.add(executionDegree);
 	    }
 	}
 	return result;
     }
-
+    
     public boolean isCurrent() {
 	return this.getState().equals(PeriodState.CURRENT);
     }

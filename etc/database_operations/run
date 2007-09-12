@@ -26,3 +26,12 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute alterAcademicServiceRequest.sql
+execute alterTableCandidacy.sql
+execute alterTableEvent.sql
+execute alterTablePostingRule.sql
+execute alterTableRegistration.sql
+execute updatePermissions.sql
+execute updateAccountabilityTypes.sql
+execute updateResearchContracts.sql

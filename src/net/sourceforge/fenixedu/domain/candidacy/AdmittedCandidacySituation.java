@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -18,55 +15,8 @@ public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base 
     }
 
     @Override
-    public void checkConditionsToForward() {
-    }
-
-    @Override
-    public void checkConditionsToForward(String nextState) {
-    }
-
-    @Override
     public CandidacySituationType getCandidacySituationType() {
 	return CandidacySituationType.ADMITTED;
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-	Set<String> nextStates = new HashSet<String>();
-	nextStates.add(CandidacySituationType.REGISTERED.toString());
-	nextStates.add(CandidacySituationType.ADMITTED.toString());
-	nextStates.add(CandidacySituationType.NOT_ADMITTED.toString());
-	nextStates.add(CandidacySituationType.SUBSTITUTE.toString());
-	nextStates.add(CandidacySituationType.CANCELLED.toString());
-	return nextStates;
-    }
-
-    @Override
-    public void nextState() {
-	new RegisteredCandidacySituation(this.getCandidacy());
-    }
-
-    @Override
-    public void nextState(String nextState) {
-	CandidacySituationType situationType = CandidacySituationType.valueOf(nextState);
-	switch (situationType) {
-	case REGISTERED:
-	    new RegisteredCandidacySituation(this.getCandidacy());
-	    break;
-	case ADMITTED:
-	    break;
-	case NOT_ADMITTED:
-	    new NotAdmittedCandidacySituation(this.getCandidacy());
-	    break;
-	case SUBSTITUTE:
-	    new SubstituteCandidacySituation(this.getCandidacy());
-	    break;
-	case CANCELLED:
-	    new CancelledCandidacySituation(getCandidacy());
-	    break;
-	default:
-	    break;
-	}
     }
 
     @Override
@@ -76,10 +26,7 @@ public class AdmittedCandidacySituation extends AdmittedCandidacySituation_Base 
 
     @Override
     public boolean canExecuteOperationAutomatically() {
-	if (getCandidacy() instanceof DegreeCandidacy) {
-	    return true;
-	}
-	return false;
+	return (getCandidacy() instanceof DegreeCandidacy || getCandidacy() instanceof IMDCandidacy);
     }
 
 }

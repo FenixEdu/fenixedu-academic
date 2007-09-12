@@ -35,9 +35,10 @@ public class ResearchUnit extends ResearchUnit_Base {
 	ResearchUnit researchUnit = new ResearchUnit();
 	researchUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
 	researchUnit.addParentUnit(parentUnit, accountabilityType);
-
+	
 	checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(researchUnit);
 
+	
 	return researchUnit;
     }
 
@@ -88,15 +89,31 @@ public class ResearchUnit extends ResearchUnit_Base {
 	return (Collection<Accountability>) getChildAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
     }
 
-    public Collection<Accountability> getActiveResearchContracts(ResearchFunctionType type) {
-	AccountabilityType accountabilityType = ResearchFunction
-	.readAccountabilityTypeByResearchFunctionType(type);
-	YearMonthDay today = new YearMonthDay();
+
+    public Collection<Person> getActivePeopleForContract(Class clazz) {
+	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+    	YearMonthDay today = new YearMonthDay();
+	List<Person> people = new ArrayList<Person>();
+	for (Accountability accountability : getChildsSet()) {
+	    if (accountability.getAccountabilityType().equals(accountabilityType)
+		    && (accountability.getEndDate() == null || accountability.getEndDate()
+			    .isAfter(today)) 
+			    && clazz.isAssignableFrom(accountability.getClass())) {
+		people.add((Person)accountability.getChildParty());
+	    }
+	}
+	return people;
+    }
+    
+    public Collection<Accountability> getActiveResearchContracts(Class clazz) {;
+	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+    	YearMonthDay today = new YearMonthDay();
 	List<Accountability> accountabilities = new ArrayList<Accountability>();
 	for (Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().equals(accountabilityType)
 		    && (accountability.getEndDate() == null || accountability.getEndDate()
-			    .isAfter(today))) {
+			    .isAfter(today)) 
+			    && clazz.isAssignableFrom(accountability.getClass())) {
 		accountabilities.add(accountability);
 	    }
 	}
@@ -120,47 +137,46 @@ public class ResearchUnit extends ResearchUnit_Base {
 	return this.getAllActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
     }
 
-    public Collection<Accountability> getPermanentResearchContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.PERMANENT_RESEARCHER);
+    public Collection<Person> getResearchers() {
+	return getActivePeopleForContract(ResearcherContract.class);
     }
-
-    public Collection<Accountability> getInvitedResearchContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.INVITED_RESEARCHER);
+    
+    public Collection<Accountability> getResearcherContracts() {
+	return getActiveResearchContracts(ResearcherContract.class);
     }
-
-    public Collection<Accountability> getOtherStaffContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.OTHER_STAFF);
+    
+    public Collection<Person> getTechnicalStaff() {
+	return getActivePeopleForContract(ResearchTechnicalStaffContract.class);
     }
-
+    
     public Collection<Accountability> getTechnicalStaffContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.TECHNICAL_STAFF);
+	return getActiveResearchContracts(ResearchTechnicalStaffContract.class);
     }
 
-    public Collection<Accountability> getCollaboratorsContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.COLLABORATORS);
+    public Collection<Person> getScholarships() {
+	return getActivePeopleForContract(ResearchScholarshipContract.class);
+    }
+    
+    public Collection<Accountability> getScholarshipContracts() {
+	return getActiveResearchContracts(ResearchScholarshipContract.class);
     }
 
-    public Collection<Accountability> getMsCStudentsContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.MSC_STUDENT);
+    public Collection<Person> getInternships() {
+	return getActivePeopleForContract(ResearchInternshipContract.class);
     }
-
-    public Collection<Accountability> getPhDStudentsContracts() {
-	return getActiveResearchContracts(ResearchFunctionType.PHD_STUDENT);
+    
+    public Collection<Accountability> getInternshipContracts() {
+	return getActiveResearchContracts(ResearchInternshipContract.class);
     }
 
     @Override
     public List<IGroup> getDefaultGroups() {
 	List<IGroup> groups = super.getDefaultGroups();
 
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.COLLABORATORS));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.INVITED_RESEARCHER));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.MSC_STUDENT));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.OTHER_STAFF));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.PERMANENT_RESEARCHER));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.PHD_STUDENT));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.POST_DOC_STUDENT));
-	groups.add(new ResearchUnitMembersGroup(this, ResearchFunctionType.TECHNICAL_STAFF));
-
+	groups.add(new ResearchUnitMembersGroup(this, ResearcherContract.class));
+	groups.add(new ResearchUnitMembersGroup(this, ResearchInternshipContract.class));
+	groups.add(new ResearchUnitMembersGroup(this, ResearchScholarshipContract.class));
+	groups.add(new ResearchUnitMembersGroup(this, ResearchTechnicalStaffContract.class));
 	groups.add(new ResearchUnitElementGroup(this));
 
 	return groups;
@@ -183,4 +199,5 @@ public class ResearchUnit extends ResearchUnit_Base {
     protected ResearchUnitSite createSite() {
     	return new ResearchUnitSite(this);
     }
+    
 }

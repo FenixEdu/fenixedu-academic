@@ -1,11 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -21,55 +18,13 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
     }
 
     @Override
-    public void checkConditionsToForward() {
-
-    }
-
-    @Override
-    public void nextState() {
-	new AdmittedCandidacySituation(getCandidacy());
-    }
-
-    @Override
     public boolean canChangePersonalData() {
 	return true;
     }
 
     @Override
-    public void checkConditionsToForward(String nextState) {
-	checkConditionsToForward();
-    }
-
-    @Override
     public CandidacySituationType getCandidacySituationType() {
 	return CandidacySituationType.STAND_BY_FILLED_DATA;
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-	Set<String> nextStates = new HashSet<String>();
-	nextStates.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
-	nextStates.add(CandidacySituationType.STAND_BY.toString());
-	nextStates.add(CandidacySituationType.CANCELLED.toString());
-	return nextStates;
-    }
-
-    @Override
-    public void nextState(String nextState) {
-	CandidacySituationType nextStateType = CandidacySituationType.valueOf(nextState);
-	switch (nextStateType) {
-	case STAND_BY_CONFIRMED_DATA:
-	    new StandByConfirmedDataCandidacySituation(getCandidacy());
-	    break;
-	case STAND_BY:
-	    new StandByCandidacySituation(getCandidacy());
-	    break;
-	case CANCELLED:
-	    new CancelledCandidacySituation(getCandidacy());
-	    break;
-	default:
-	    throw new DomainException("invalid.next.state");
-	}
     }
 
     @Override

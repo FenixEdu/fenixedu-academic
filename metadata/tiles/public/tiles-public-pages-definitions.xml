@@ -639,7 +639,7 @@
     </definition>
     <definition name="show-research-unit-organization" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
-        <put name="body" value="/commons/sites/unitSite/unitOrganization.jsp"/>
+        <put name="body" value="/publico/researchUnitSite/unitOrganization.jsp"/>
     </definition>
     
     <definition name="view-researchUnit-section-deny" extends="definition.public.researchUnit">

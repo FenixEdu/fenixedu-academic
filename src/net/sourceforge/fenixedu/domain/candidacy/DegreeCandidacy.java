@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -183,6 +184,16 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     public boolean isConcluded() {
 	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
 		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
+    }
+
+    @Override
+    public String getDefaultState() {
+	return null;
+    }
+
+    @Override
+    public Map<String, Set<String>> getStateMapping() {
+	return null;
     }
 
 }

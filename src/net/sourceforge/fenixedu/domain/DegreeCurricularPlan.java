@@ -1392,8 +1392,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
-    public Set<ExecutionYear> getCandidacyPeriodsExecutionYears() {
-	return getEnrolmentPeriodsExecutionYears(CandidacyPeriodInDegreeCurricularPlan.class);
+    public Collection<ExecutionYear> getCandidacyPeriodsExecutionYears() {
+	
+	return getDegreeType().equals(DegreeType.BOLONHA_PHD_PROGRAM)  ?  getExecutionYears() : getEnrolmentPeriodsExecutionYears(CandidacyPeriodInDegreeCurricularPlan.class);
     }
 
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {

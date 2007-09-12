@@ -1434,6 +1434,23 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
 				}
 
+		class  net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CourseTradeEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+		}
+		
+		class  net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CourseEquivalenceEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+		}
+	
+		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+			YearMonthDay creationDate;
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDCandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event { 
+		
+		}
+			
 	class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime whenCreated;
 	}
@@ -1524,6 +1541,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime startDate;
 	}
 
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.PhDGratuityPR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {
+			Money phdGratuityAmount;
+			Money initialPayment;
+			BigDecimal penaltyPercentage;
+		}
+		
 		class net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {
 		}
 
@@ -2860,15 +2883,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			Integer functionOrder;
 		}
 
-		class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType {
-			ResearchFunctionType researchFunctionType;
+		class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
+			YearMonthDay beginDate;
+			YearMonthDay endDate;
 		}		
-		
-	class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
-	}		
-			
 		class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		}
 
@@ -2881,10 +2899,22 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
 				Boolean externalContract;
 			}
-			
-			class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
-			}
-		
+
+			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
+			 }
+			 
+			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchScholarshipContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
+			 }
+			 
+			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchTechnicalStaffContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
+			 }
+
+			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchInternshipContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
+			 }
+			 			 
+		class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+		}
+
 		class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 			Double credits;
 		}
@@ -3560,6 +3590,16 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String justification;
 	}
 
+		class net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
+		
+		}
+
+		class net.sourceforge.fenixedu.domain.serviceRequests.CourseTradeRequest extends net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest {	
+		}
+		
+		class net.sourceforge.fenixedu.domain.serviceRequests.CourseEquivalenceRequest extends net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest {
+		} 
+		
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
 
@@ -5592,6 +5632,11 @@ relation DepartmentUnit {
 relation DfaRegistrationEventRegistration {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 	net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
+}
+
+relation PhDRegistrationEventRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent playsRole phdRegistrationEvent;
 }
 
 relation DistributedTestAdvisories {
@@ -12354,4 +12399,23 @@ relation RootDomainObjectDelegateElectionPeriod {
 	net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
 		multiplicity *;
 	}
+}
+
+relation PhDCandidacyEventPhDProgramCandidacy {
+	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDCandidacyEvent playsRole phdCandidacyEvent;
+	net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy playsRole phdCandidacy;
+}
+
+relation CurricularCourseRequestCurricularCourseRequest {
+	net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest playsRole requests {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole requestedCurricularCourse;
+}
+
+relation CurricularCourseRequestCurricularCourseProposal {
+	net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest playsRole proposals {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole proposedCurricularCourse;
 }

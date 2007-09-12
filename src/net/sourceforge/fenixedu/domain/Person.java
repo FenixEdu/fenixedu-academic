@@ -59,6 +59,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -1708,17 +1709,21 @@ public class Person extends Person_Base {
     }
 
     public Set<? extends Event> getEventsByEventType(final EventType eventType) {
+	return getEventsByEventTypeAndClass(eventType, null);
+    }
+
+    public Set<? extends Event> getEventsByEventTypeAndClass(final EventType eventType, final Class clazz) {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
-	    if (!event.isCancelled() && event.getEventType() == eventType) {
+	    if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
 		result.add(event);
 	    }
 	}
 
 	return result;
     }
-
+    
     public Set<AnnualEvent> getAnnualEventsFor(final ExecutionYear executionYear) {
 	final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
 	for (final Event event : getEventsSet()) {
@@ -2513,7 +2518,7 @@ public class Person extends Person_Base {
     public List<ResearchUnit> getWorkingResearchUnits() {
 	List<ResearchUnit> units = new ArrayList<ResearchUnit>();
 	Collection<? extends Accountability> parentAccountabilities = 
-	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearchContract.class);
+	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Accountability accountability : parentAccountabilities) {
@@ -2624,4 +2629,14 @@ public class Person extends Person_Base {
     	return result;
     }
 
+    public boolean isResearcher() {
+	Collection<? extends Accountability> parentAccountabilities = 
+	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+	for(Accountability accountability : parentAccountabilities) {
+	    if(accountability instanceof ResearcherContract) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

@@ -137,7 +137,7 @@ public enum DegreeType {
     },
 
     BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, // canCreateStudent
-	    false, // canCreateStudentOnlyWithCandidacy
+	    true, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    true, // isThirdCycle

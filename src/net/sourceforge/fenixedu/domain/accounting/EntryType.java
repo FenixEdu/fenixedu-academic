@@ -30,8 +30,12 @@ public enum EntryType {
 
     ADMINISTRATIVE_OFFICE_FEE,
     
-    IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE;
+    IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE,
 
+    CURRICULAR_COURSE_TRADE_FEE,
+    
+    CURRICULAR_COURSE_EQUIVALENCE_FEE;
+    
     public String getName() {
 	return name();
     }

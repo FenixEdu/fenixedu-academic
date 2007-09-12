@@ -2,12 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
@@ -27,14 +25,15 @@ public class ResearchContractBean implements Serializable {
 
 	private DomainReference<ResearchUnit> unit;
 
-	private ResearchFunctionType functionType;
-	
 	private String email;
 	
 	private IDDocumentType documentType;
 	
 	private String documentIDNumber;
 	
+	private ResearchContractType contractType;
+	
+
 
 	public String getDocumentIDNumber() {
 		return documentIDNumber;
@@ -83,14 +82,6 @@ public class ResearchContractBean implements Serializable {
 		this.end = end;
 	}
 
-	public ResearchFunctionType getFunctionType() {
-		return functionType;
-	}
-
-	public void setFunctionType(ResearchFunctionType functionType) {
-		this.functionType = functionType;
-	}
-
 	public Person getPerson() {
 		PersonName personName = getPersonName();
 		return personName != null ? personName.getPerson() : null;	
@@ -130,5 +121,13 @@ public class ResearchContractBean implements Serializable {
 
 	public boolean getShowMessage() {
 		return getExternalPerson() && getPerson()==null && getPersonNameString()!=null && getPersonNameString().length()>0; 
+	}
+
+	public ResearchContractType getContractType() {
+	    return contractType;
+	}
+	
+	public void setContractType(ResearchContractType contractType) {
+	    this.contractType = contractType;
 	}
 }

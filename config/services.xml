@@ -9533,8 +9533,8 @@
 		</filterChains>
 	</service>	
 	<service>
-		<name>CreateDFACandidacy</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.CreateDFACandidacy</implementationClass>
+		<name>CreateCandidacy</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.CreateCandidacy</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -12430,6 +12430,16 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>
+	
+	<service>
+		<name>CreateCurricularCourseRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CreateCurricularCourseRequest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>	
 </serviceDefinitions>

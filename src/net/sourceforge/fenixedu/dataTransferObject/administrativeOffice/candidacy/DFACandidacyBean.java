@@ -7,9 +7,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DFACandidacyBean implements Serializable {
 
+    private DegreeType degreeType;
+    
     private DomainReference<Degree> degree;
 
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
@@ -18,6 +21,10 @@ public class DFACandidacyBean implements Serializable {
 
     private DomainReference<ExecutionYear> executionYear;
 
+    public DFACandidacyBean() {
+	degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+    }
+    
     public Degree getDegree() {
 	return (this.degree == null) ? null : this.degree.getObject();
     }
@@ -54,5 +61,14 @@ public class DFACandidacyBean implements Serializable {
 	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear)
 		: null;
     }
+
+    public DegreeType getDegreeType() {
+        return degreeType;
+    }
+
+    public void setDegreeType(DegreeType degreeType) {
+        this.degreeType = degreeType;
+    }
+
 
 }

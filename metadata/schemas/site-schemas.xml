@@ -181,8 +181,8 @@
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
-	<slot name="functionType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType"/> 
+	<slot name="contractType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract$ResearchContractType"/> 
 		<property name="eachLayout" value=""/>
 	</slot>
 </schema>
@@ -208,7 +208,9 @@
 		<property name="label" value="-"/>
 		<property name="subLayout" value="default"/>
 	</slot>
-	<slot name="accountabilityType.researchFunctionType" key="label.functionType"/>
+	<slot name="class" layout="label" key="label.contractType">
+		<property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
+	</slot>
 </schema>
 
 <schema name="person.in.contract" type="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract" bundle="WEBSITEMANAGER_RESOURCES">

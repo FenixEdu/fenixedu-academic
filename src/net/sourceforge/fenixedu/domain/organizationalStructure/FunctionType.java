@@ -39,8 +39,20 @@ public enum FunctionType {
     DELEGATE_OF_INTEGRATED_MASTER_DEGREE, //Delegado de Mestrado Integrado (delegado de ano do 4º ou 5º ano do Mestrado Integrado)
     DELEGATE_OF_GGAE, //Delegado de um Grupo de Grandes Áreas de Estudo (delegado de Licenciatura, Mestrado ou Mestrado Integrado )
     
-    VIRTUAL /* for functions that can be created unofficially */;
-             
+    VIRTUAL /* for functions that can be created unofficially */,
+    
+    /* Research */
+    PERMANENT_RESEARCHER,
+    INVITED_RESEARCHER,
+    TECHNICAL_STAFF,
+    COLLABORATORS,
+    OTHER_STAFF,
+    PHD_STUDENT,
+    MSC_STUDENT,
+    POST_DOC_STUDENT
+    ;
+	
+       
     public String getName() {
         return name();
     }    
@@ -61,5 +73,18 @@ public enum FunctionType {
     	result.remove(FunctionType.DELEGATE_OF_GGAE);
     	
     	return result;
+    }
+    
+    public static List<FunctionType> getResearchSubSet() {
+	List<FunctionType> functions = new ArrayList<FunctionType>();
+	functions.add(PERMANENT_RESEARCHER);
+	functions.add(INVITED_RESEARCHER);
+	functions.add(TECHNICAL_STAFF);
+	functions.add(COLLABORATORS);
+	functions.add(OTHER_STAFF);
+	functions.add(PHD_STUDENT);
+	functions.add(MSC_STUDENT);
+	functions.add(POST_DOC_STUDENT);
+	return functions;
     }
 }

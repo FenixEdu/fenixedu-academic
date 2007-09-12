@@ -158,6 +158,10 @@
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
 	</definition>
 
+	<definition name="prepare.curricular.course.requests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/curricularCourseRequests/curricularCourseRequests.jsp"/>
+	</definition>
+	
 	<!-- ************* Payments ************* -->
 	<definition name="payments.management.showOperations" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/showOperations.jsp"/>

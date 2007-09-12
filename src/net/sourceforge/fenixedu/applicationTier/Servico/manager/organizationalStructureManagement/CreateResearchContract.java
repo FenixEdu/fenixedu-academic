@@ -29,8 +29,7 @@ public class CreateResearchContract extends Service {
 			person = Person.createExternalPerson(bean.getPersonNameString(), Gender.MALE, null, null,
 					null, null, bean.getEmail(), bean.getDocumentIDNumber(), bean.getDocumentType());
 		}
-		new ResearchContract(person, bean.getBegin(), bean.getEnd(), bean.getUnit(), bean
-				.getFunctionType(), bean.getExternalPerson());
+		ResearchContract.createResearchContract(bean.getContractType(),person, bean.getBegin(), bean.getEnd(), bean.getUnit(), bean.getExternalPerson());
 		
 		Login loginIdentification = person.getLoginIdentification();
 		if (person.getPersonRole(RoleType.RESEARCHER) == null) {

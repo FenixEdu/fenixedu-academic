@@ -119,10 +119,34 @@ Documentation:
 		<property name="showRoleMessage" value="false"/>
 	</renderer>
 
+	<renderer type="java.lang.Object" layout="view-as-image" class="net.sourceforge.fenixedu.presentationTier.renderers.ImageObjectRenderer"/>
+	
+	<renderer type="java.lang.Object" layout="prefixed" class="net.sourceforge.fenixedu.presentationTier.renderers.GenericOutputWithPrefix">
+		<property name="indented" value="false"/>
+	</renderer>
+	    
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
+  	<renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonalCardRenderer">
+  		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
+		<property name="formatImageURL" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+  		<property name="contextRelative" value="true"/>
+		<property name="classes" value="personalcard"/>
+  		<property name="photoCellClasses" value="personalcard_photo"/>
+		<property name="infoCellClasses"  value="personalcard_info"/>
+  	</renderer>
+  	
+  	<renderer type="java.util.List" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiplePersonalCardRenderer">
+  		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
+		<property name="formatImageURL" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+  		<property name="contextRelative" value="true"/>
+		<property name="divClasses" value="personalcard"/>
+  		<property name="photoCellClasses" value="personalcard_photo"/>
+		<property name="infoCellClasses"  value="personalcard_info"/>
+  	</renderer>
+  	
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
-    
+          
     <renderer type="java.lang.String" layout="short" class="net.sourceforge.fenixedu.renderers.StringRenderer">
    		<property name="length" value="40"/>  
     </renderer>
@@ -686,6 +710,9 @@ Documentation:
   			<property name="htmlSeparator" value="&lt;br/&gt;"/>
     </renderer>
     
+    <renderer type="java.lang.Object" layout="values-as-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ValuesAsListRenderer"/>
+    
+
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
 
     <!--@ The layout username-as-person allows you to insert a person given a username -->
@@ -933,6 +960,7 @@ Documentation:
 		<property name="showEmptyEmployeesSection" value="false"/>
 		<property name="showEmptyFunctions" value="false"/>
 		<property name="showImplicityFunctionLabel" value="true"/>
+		<property name="showDates" value="true"/>
 
 		<property name="bundle" value="RENDERER_RESOURCES"/>
 		<property name="employeesSectionKey" value="fenix.renderers.organigram.employees"/>
@@ -940,7 +968,45 @@ Documentation:
 		<property name="dateFromKey" value="fenix.renderers.organigram.date.from"/>
 		<property name="dateToKey" value="fenix.renderers.organigram.date.to"/>
 		<property name="dateSinceKey" value="fenix.renderers.organigram.date.since"/>
+		<property name="unitShown" value="true"/>
+	
 	</renderer>
+
+	<renderer type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" layout="organigram-with-card" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitStructureUsingPersonalCardRenderer">
+		<property name="classes" value="ostructure"/>
+		<property name="rootUnitClasses" value="osrootunit"/>
+		<property name="unitClasses" value="osunit"/>
+		<property name="levelClasses" value="oslevel"/> <!-- 1..n is added to the class name -->
+		<property name="employeesSectionClasses" value="osemployees"/>
+		<property name="employeesClasses" value="osperson osworker"/>
+		<property name="functionsClasses" value="osfunction"/>
+		<property name="implicitFunctionsClasses" value="osfunction osimplicit"/>
+		<property name="membersClasses" value="osperson osmember nobullet"/>
+
+		<property name="homepageLocation" value="/homepage/%s"/>
+		<property name="showEmployeesSection" value="true"/>
+		<property name="showEmptyEmployeesSection" value="false"/>
+		<property name="showEmptyFunctions" value="false"/>
+		<property name="showImplicityFunctionLabel" value="true"/>
+		<property name="showDates" value="true"/>
+
+		<property name="bundle" value="RENDERER_RESOURCES"/>
+		<property name="employeesSectionKey" value="fenix.renderers.organigram.employees"/>
+		<property name="implicityFunctionKey" value="fenix.renderers.organigram.function.implicit"/>
+		<property name="dateFromKey" value="fenix.renderers.organigram.date.from"/>
+		<property name="dateToKey" value="fenix.renderers.organigram.date.to"/>
+		<property name="dateSinceKey" value="fenix.renderers.organigram.date.since"/>
+		<property name="unitShown" value="true"/>
+	
+	  	<property name="cardProperty(noPhotoAvailableImage)" value="/images/photo_placer01_pt.gif"/>
+		<property name="cardProperty(formatImageURL)" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+  		<property name="cardProperty(contextRelative)" value="true"/>
+		<property name="cardProperty(classes)" value="personalcard"/>
+  		<property name="cardProperty(photoCellClasses)" value="personalcard_photo"/>
+		<property name="cardProperty(infoCellClasses)"  value="personalcard_info"/>
+	</renderer>
+
+
 	
 	<renderer type="java.util.Collection" layout="student-performance-table" class="net.sourceforge.fenixedu.presentationTier.renderers.PerformanceGridRenderer">
     	<property name="emptySpace" value="emptySpace"/> <!-- span without border and #FFFFFF color  -->

@@ -7,36 +7,32 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.EnumOperator;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.ClassOperator;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit>{
 
-	private ResearchFunctionType functionType;
+	private Class classType;
 	
 	private static final long serialVersionUID = 1L;
 
-	public ResearchUnitMembersGroup(ResearchUnit unit, ResearchFunctionType type) {
+	public ResearchUnitMembersGroup(ResearchUnit unit, Class type) {
 		super(unit);
-		this.functionType = type;
+		this.classType = type;
 	}
 	
 	public String getName() {
-		return this.functionType.getName();
-	}
-	
-	public ResearchFunctionType getResearchFunctionType() {
-		return this.functionType;
+		return RenderUtils.getResourceString("MESSAGING_RESOURCES","label." + classType.getSimpleName());
 	}
 
 	@Override
 	public Set<Person> getElements() {
 		Set<Person> people = new HashSet<Person>();
-		for(Accountability accountability : getObject().getActiveResearchContracts(this.functionType)) {
+		for(Accountability accountability : getObject().getActiveResearchContracts(classType)) {
 			ResearchContract contract = (ResearchContract) accountability;
 			people.add(contract.getPerson());
 		}
@@ -47,7 +43,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit>{
 	protected Argument[] getExpressionArguments() {
 		return new Argument[] {
 				new IdOperator(getObject()),
-				new EnumOperator(this.functionType)
+				new ClassOperator(this.classType)
 		};
 
 	}
@@ -55,12 +51,12 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit>{
 	@Override
 	public boolean equals(Object other) {
 		return super.equals(other) &&
-			((ResearchUnitMembersGroup)other).functionType.equals(this.functionType);	
+			((ResearchUnitMembersGroup)other).classType.equals(this.classType);	
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() + this.functionType.hashCode();
+		return super.hashCode() + this.classType.hashCode();
 	}
 	
 	
@@ -68,9 +64,9 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit>{
 
 		public Group build(Object[] arguments) {
 			ResearchUnit unit = (ResearchUnit) arguments[0];
-			ResearchFunctionType type = (ResearchFunctionType) arguments[1];
+			Class type = (Class) arguments[1];
 			if( unit == null || type == null) {
-				throw new VariableNotDefinedException("unit or type"); 
+				throw new VariableNotDefinedException("unit or contract class"); 
 			}
 			return new ResearchUnitMembersGroup(unit,type);
 			

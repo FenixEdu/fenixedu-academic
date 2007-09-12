@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -51,8 +52,8 @@ import pt.utl.ist.fenix.tools.image.TextPngCreator;
 public class ViewHomepageDA extends SiteVisualizationDA {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	String homepageIDString = request.getParameter("homepageID");
 
 	if (homepageIDString != null) {
@@ -117,8 +118,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	}
     }
 
-    public ActionForward notFound(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward notFound(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	return mapping.findForward("not-found-homepage");
     }
 
@@ -229,7 +230,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(
 		Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	    final StudentCurricularPlan studentCurricularPlan = registration
+		    .getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
 			.getDegreeCurricularPlan();
@@ -258,16 +260,16 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("list-homepages-students");
     }
 
-    public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(
 		Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
 
 	    if (registration.getActiveState().getStateType().equals(RegistrationStateType.CONCLUDED)) {
 
-		final Degree degree = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
-			.getDegree();
+		final Degree degree = registration.getActiveStudentCurricularPlan()
+			.getDegreeCurricularPlan().getDegree();
 
 		final SortedSet<Homepage> degreeHomepages;
 		if (homepages.containsKey(degree)) {
@@ -295,13 +297,15 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("list-homepages-alumni");
     }
 
-    public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final String email = getEmailString(request);
-	final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email);
-	response.setContentType("image/png");
-	response.getOutputStream().write(pngFile);
-	response.getOutputStream().close();
+	if (StringUtils.isNotEmpty(email)) {
+	    final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email);
+	    response.setContentType("image/png");
+	    response.getOutputStream().write(pngFile);
+	    response.getOutputStream().close();
+	}
 	return null;
     }
 
@@ -325,13 +329,14 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return "";
     }
 
-    public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final String homepageIDString = request.getParameter("homepageID");
 	final Integer homepageID = Integer.valueOf(homepageIDString);
 	final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
-	if (homepage != null && homepage.getShowPhoto() != null && homepage.getShowPhoto().booleanValue()) {
+	if (homepage != null && homepage.getShowPhoto() != null
+		&& homepage.getShowPhoto().booleanValue()) {
 	    final Person person = homepage.getPerson();
 	    final FileEntry personalPhoto = person.getPersonalPhoto();
 
@@ -346,8 +351,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return null;
     }
 
-    public ActionForward showPublications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward showPublications(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final String homepageId = request.getParameter("homepageID");
 	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
@@ -371,8 +376,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("showPatents");
     }
 
-    public ActionForward showInterests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward showInterests(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	final String homepageId = request.getParameter("homepageID");
 	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
@@ -382,31 +387,31 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("showInterests");
     }
 
-    public ActionForward showParticipations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	
+    public ActionForward showParticipations(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 	final String homepageId = request.getParameter("homepageID");
 	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
 		.valueOf(homepageId));
 
-	setParticipationsInRequest(request,homepage.getPerson());
-	
+	setParticipationsInRequest(request, homepage.getPerson());
+
 	return mapping.findForward("showParticipations");
-	
+
     }
-    
+
     public ActionForward showPrizes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-    	    HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-    	final String homepageId = request.getParameter("homepageID");
-    	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-    		.valueOf(homepageId));
+	final String homepageId = request.getParameter("homepageID");
+	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
+		.valueOf(homepageId));
 
-    	request.setAttribute("prizes",homepage.getPerson().getPrizes());
-    	
-    	return mapping.findForward("showPrizes");
+	request.setAttribute("prizes", homepage.getPerson().getPrizes());
+
+	return mapping.findForward("showPrizes");
     }
-    
+
     private void setPublicationsInRequest(HttpServletRequest request, Person person) {
 
 	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks()));
@@ -421,9 +426,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	request.setAttribute("proceedings", ResearchResultPublication.sort(person.getProceedings()));
 	request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses()));
 	request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals()));
-	request
-		.setAttribute("technicalReports", ResearchResultPublication
-			.sort(person.getTechnicalReports()));
+	request.setAttribute("technicalReports", ResearchResultPublication.sort(person
+		.getTechnicalReports()));
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(person
 		.getOtherPublications()));
 	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds()));
@@ -445,13 +449,14 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 		.getAssociatedScientificJournals(ScopeType.NATIONAL)));
 	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
 		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
-	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations()));
+	request.setAttribute("cooperations", new ArrayList<Cooperation>(person
+		.getAssociatedCooperations()));
 	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person
 		.getAssociatedJournalIssues(ScopeType.NATIONAL)));
 	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
 		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
     }
-    
+
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {

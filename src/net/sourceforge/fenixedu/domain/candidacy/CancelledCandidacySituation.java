@@ -1,10 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CancelledCandidacySituation extends CancelledCandidacySituation_Base {
@@ -24,33 +20,8 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
     }
 
     @Override
-    public void checkConditionsToForward() {
-	throw new DomainException("error.impossible.to.forward.from.cancelled");
-    }
-
-    @Override
-    public void checkConditionsToForward(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.cancelled");
-    }
-
-    @Override
     public CandidacySituationType getCandidacySituationType() {
 	return CandidacySituationType.CANCELLED;
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-	return new HashSet<String>();
-    }
-
-    @Override
-    public void nextState() {
-	throw new DomainException("error.impossible.to.forward.from.cancelled");
-    }
-
-    @Override
-    public void nextState(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.cancelled");
     }
 
     @Override

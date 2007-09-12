@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent;
 import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
