@@ -655,8 +655,8 @@ public class CourseGroup extends CourseGroup_Base {
 	for (final Context context : getActiveChildContexts()) {
 	    if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
 		final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
-		if (existingContext.getCurricularPeriod().getChildOrder() != executionPeriod.getSemester()
-			&& context.getCurricularPeriod().getChildOrder() == executionPeriod.getSemester()) {
+		if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionPeriod.getSemester().intValue()
+			&& context.getCurricularPeriod().getChildOrder().intValue() == executionPeriod.getSemester().intValue()) {
 		    maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
 		}
 
