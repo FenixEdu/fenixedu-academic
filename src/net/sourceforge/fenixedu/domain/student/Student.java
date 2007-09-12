@@ -717,7 +717,7 @@ public class Student extends Student_Base {
 
 	return false;
     }
-
+    
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
@@ -742,6 +742,17 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
+    public List<Registration> getTransitedRegistrations() {
+	List<Registration> result = new ArrayList<Registration>();
+	for (Registration registration : super.getRegistrations()) {
+	    if(registration.isTransited()){
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+    	    
     public boolean isAnyTuitionInDebt() {
 	for (final Registration registration : super.getRegistrations()) {
 	    if (!registration.getPayedTuition()) {
@@ -776,7 +787,7 @@ public class Student extends Student_Base {
     	List<DelegateElection> elections = new ArrayList<DelegateElection>(getElectedElections());
     	return (elections.isEmpty() ? null : Collections.max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE));
     }
-	
+        
     /*
      * ACTIVE DELEGATE FUNCTIONS OWNED BY STUDENT
      */
