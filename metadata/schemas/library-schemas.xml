@@ -91,11 +91,21 @@
 
 <schema name="library.card.generated" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
 	<slot name="number" key="label.card.number"/>
-	<slot name="pin" key="label.card.pin"/>	
+	<slot name="pinToShow" key="label.card.pin"/>	
 	<slot name="userName" key="label.card.name"/>
+	<slot name="person" layout="values-dash" schema="library.card.person.adress" key="label.card.person.address"/>
+	<slot name="person.email" key="label.card.person.email"/>
+	<slot name="phone" key="label.card.phone"/>
+    <slot name="mobile" key="label.card.mobile"/>
 	<slot name="unitName" layout="menu-select" key="label.card.unitName"/>
 	<slot name="roleType" key="label.card.category"/>
     <slot name="validUntil" key="label.card.date"/>
+</schema>
+
+<schema name="library.card.person.adress" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="address"/>
+	<slot name="parishOfResidence"/>
+	<slot name="postalCode"/>
 </schema>
 
 <schema name="library.card.search" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch" bundle="LIBRARY_RESOURCES">

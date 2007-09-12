@@ -34,6 +34,7 @@
 <fr:view name="libraryCardSearch" property="search" schema="library.card.list">
 	<fr:layout name="tabular-sortable">
 		<fr:property name="classes" value="tstyle1"/>
+		<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>
 		
 		<fr:property name="sortParameter" value="sortBy"/>
         <fr:property name="sortUrl" value="/cardManagement.do?method=showUsers"/>
