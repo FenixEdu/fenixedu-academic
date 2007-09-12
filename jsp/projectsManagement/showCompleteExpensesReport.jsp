@@ -31,8 +31,7 @@
 						<bean:define id="rubric" value="<%=request.getAttribute("rubric").toString()%>" />
 						<bean:define id="rubric2url" value="<%="&amp;rubric="+rubric%>" />
 					</logic:present>
-					<td class="infoop" width="20"><html:link
-						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=completeExpensesReport&amp;projectCode="+projectCode+rubric2url+code%>">
+					<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType=completeExpensesReport&amp;projectCode="+projectCode+rubric2url+code%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 				</logic:notEmpty>

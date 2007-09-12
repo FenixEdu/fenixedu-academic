@@ -40,12 +40,10 @@
 			<logic:iterate id="project" name="projectList">
 				<bean:define id="projectCode" name="project" property="projectCode" />
 				<tr>
-					<td class="listClasses"><html:link
-						page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
 						<bean:write name="project" property="projectIdentification" />
 					</html:link></td>
-					<td class="listClasses"><html:link
-						page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
 						<bean:write name="project" property="title" />
 					</html:link></td>
 				</tr>

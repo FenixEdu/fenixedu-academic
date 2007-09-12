@@ -103,7 +103,7 @@ public class NavigationBarTag extends TagSupport {
         params.put("span", new Integer(span));
 
         try {
-            return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false);
+            return RequestUtils.computeURL(pageContext, null, null, null, mapping.getPath(), params, null, false).trim();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

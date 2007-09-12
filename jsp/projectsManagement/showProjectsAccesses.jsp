@@ -41,8 +41,7 @@
 					<td td class="listClasses"><bean:write name="infoProject" property="title" /></td>
 					<td td class="listClasses"><bean:write name="projectAccess" property="beginDateFormatted" /></td>
 					<td td class="listClasses"><bean:write name="projectAccess" property="endDateFormatted" /></td>
-					<td><html:link
-						page="<%="/projectAccessEdition.do?method=prepareEditProjectAccess&amp;projectCode="+projectCode+"&amp;personCode="+personCode+code%>">Editar</html:link></td>
+					<td><html:link page="<%="/projectAccessEdition.do?method=prepareEditProjectAccess&amp;projectCode="+projectCode+"&amp;personCode="+personCode+code%>">Editar</html:link></td>
 					<td><html:link page="<%="/projectAccess.do?method=removeProjectAccess&amp;projectCode="+projectCode+"&amp;username="+username+code%>">Remover</html:link></td>
 				</tr>
 			</logic:iterate>
