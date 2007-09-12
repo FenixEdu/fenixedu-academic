@@ -16,8 +16,9 @@
 	<ul>
 		<li>
 			<bean:define id="searchMethod" name="searchMethod" type="java.lang.String"/>
-			<p class="mtop2 mbottom2"><html:link page="<%="/findDelegates.do?method=prepare&amp;" + searchMethod + "=true" %>">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.back" /></html:link></p>
+			<html:link page="<%="/findDelegates.do?method=prepare&amp;" + searchMethod + "=true" %>">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.back" />
+			</html:link>
 		</li>
 	</ul>
 </logic:present>

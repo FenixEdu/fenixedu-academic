@@ -49,12 +49,18 @@
     </html:messages>
 </logic:messagesPresent>
 
-<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.researchUnits"
-         action="<%= action + "?method=send&amp;unitId=" + unitID %>">
-    <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-    </fr:layout>
-    
-    <fr:destination name="invalid" path="<%= action + "?method=sendInvalid&amp;unitId=" + unitID %>"/>
-</fr:edit>
+
+<fr:form action="<%= action + "?method=send&amp;unitId=" + unitID %>">
+	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.researchUnits">
+	    <fr:layout name="tabular">
+	        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+	    </fr:layout>
+	    
+	    <fr:destination name="invalid" path="<%= action + "?method=sendInvalid&amp;unitId=" + unitID %>"/>
+	</fr:edit>
+
+	<html:submit><bean:message key="label.send" bundle="APPLICATION_RESOURCES"/></html:submit>
+
+</fr:form>
+
