@@ -175,7 +175,11 @@ public class LibraryCardDTO implements Serializable {
 
     public String getPinToShow() {
         if (getPin() != null) {
-            return getPin().toString();
+            String pinToShow = getPin().toString();
+            if(getPin() < 10000) {
+                pinToShow = "0" + pinToShow;
+            }
+            return pinToShow;
         }
         return "";
     }

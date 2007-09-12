@@ -25,6 +25,11 @@
 	<%= request.getParameter("sortBy") == null ? "number" : request.getParameter("sortBy") %>
 </bean:define>
 	
+<bean:size id="numberOfElements" name="libraryCardSearch" property="search"/>
+<p class="mtop15">
+	<span class="warning0"><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></span>
+</p>
+		
 <fr:view name="libraryCardSearch" property="search" schema="library.card.list">
 	<fr:layout name="tabular-sortable">
 		<fr:property name="classes" value="tstyle1"/>
