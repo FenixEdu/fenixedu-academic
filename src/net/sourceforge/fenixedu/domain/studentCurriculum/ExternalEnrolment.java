@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -26,6 +27,17 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
     };
+
+    static final public Comparator<ExternalEnrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_EVALUATION_DATE = new Comparator<ExternalEnrolment>() {
+	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD);
+	    comparatorChain.addComparator(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
+
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
+
 
     protected ExternalEnrolment() {
 	super();
