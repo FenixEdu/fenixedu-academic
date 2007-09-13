@@ -548,7 +548,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    final public Double getAprovedEctsCredits() {
+    public Double getAprovedEctsCredits() {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    bigDecimal = bigDecimal.add(new BigDecimal(curriculumModule.getAprovedEctsCredits()));

@@ -1257,6 +1257,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Double getAprovedEctsCredits() {
+	if (isExtraCurricular()) {
+	    return Double.valueOf(0d);
+	}
+
 	return isApproved() ? getEctsCredits() : Double.valueOf(0d);
     }
 

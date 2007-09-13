@@ -59,7 +59,8 @@ public class Dismissal extends Dismissal_Base {
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup, final Collection<CurricularCourse> noEnrolCurricularCourses) {
-	return new CreditsDismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup), noEnrolCurricularCourses);
+	return new CreditsDismissal(credits, findCurriculumGroupForCourseGroup(studentCurricularPlan, courseGroup),
+		noEnrolCurricularCourses);
     }
 
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan,
@@ -140,7 +141,7 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public Double getAprovedEctsCredits() {
-	return getEctsCredits();
+	return isExtraCurricular() ? Double.valueOf(0d) : getEctsCredits();
     }
 
     @Override

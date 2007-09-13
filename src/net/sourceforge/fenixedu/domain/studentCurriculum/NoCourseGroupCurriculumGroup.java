@@ -21,20 +21,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurriculumGroup_Base {
-    
-    protected  NoCourseGroupCurriculumGroup() {
-        super();
+
+    protected NoCourseGroupCurriculumGroup() {
+	super();
     }
-    
+
     protected void init(final CurriculumGroup curriculumGroup) {
-	if(!curriculumGroup.isRoot()) {
+	if (!curriculumGroup.isRoot()) {
 	    throw new DomainException("error.no.root.curriculum.group");
 	}
-	
+
 	this.setCurriculumGroup(curriculumGroup);
     }
-    
-    public static NoCourseGroupCurriculumGroup createNewNoCourseGroupCurriculumGroup(final NoCourseGroupCurriculumGroupType groupType, final CurriculumGroup curriculumGroup) {
+
+    public static NoCourseGroupCurriculumGroup createNewNoCourseGroupCurriculumGroup(
+	    final NoCourseGroupCurriculumGroupType groupType, final CurriculumGroup curriculumGroup) {
 	switch (groupType) {
 	case PROPAEDEUTICS:
 	    return new PropaedeuticsCurriculumGroup(curriculumGroup);
@@ -44,36 +45,37 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	    throw new DomainException("error.unknown.NoCourseGroupCurriculumGroupType");
 	}
     }
-    
+
     @Override
     public boolean isNoCourseGroupCurriculumGroup() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public MultiLanguageString getName() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	
-	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT")).getString(getNoCourseGroupCurriculumGroupType().toString()));
-        
+
+	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
+		new Locale("pt", "PT")).getString(getNoCourseGroupCurriculumGroupType().toString()));
+
 	return multiLanguageString;
     }
-    
+
     @Override
     public List<Context> getCurricularCourseContextsToEnrol(ExecutionPeriod executionPeriod) {
-        return Collections.emptyList();
+	return Collections.emptyList();
     }
-    
+
     @Override
     public List<Context> getCourseGroupContextsToEnrol(ExecutionPeriod executionPeriod) {
-        return Collections.emptyList();
+	return Collections.emptyList();
     }
-    
+
     @Override
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
-        return Collections.EMPTY_LIST;
+	return Collections.EMPTY_LIST;
     }
-    
+
     @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
@@ -83,7 +85,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	}
 	return false;
     }
-    
+
     @Override
     public boolean hasCourseGroup(CourseGroup courseGroup) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
@@ -94,59 +96,65 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 		}
 	    }
 	}
-	
+
 	return false;
     }
-    
+
     /**
-     *  Flat structure below NoCourseGroupCurriculumGroup
+     * Flat structure below NoCourseGroupCurriculumGroup
      */
     @Override
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
-        for (final CurriculumModule each : getCurriculumModulesSet()) {
-            if (!each.isLeaf() && each.getDegreeModule() == courseGroup) {
-        	return (CurriculumGroup) each;
-            }
-        }
-        return null;
+	for (final CurriculumModule each : getCurriculumModulesSet()) {
+	    if (!each.isLeaf() && each.getDegreeModule() == courseGroup) {
+		return (CurriculumGroup) each;
+	    }
+	}
+	return null;
     }
-    
+
     @Override
     public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
-        return Integer.MAX_VALUE;
+	return Integer.MAX_VALUE;
     }
-    
+
     @Override
     protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
 	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
 	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
-        return result.indexOf(child);
+	return result.indexOf(child);
     }
-    
+
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
-        return Collections.EMPTY_SET;
+	return Collections.EMPTY_SET;
     }
-    
+
     @Override
     public boolean isConcluded(ExecutionYear executionYear) {
-        return true;
+	return true;
     }
-    
+
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-        return Double.valueOf(0d);
+	return Double.valueOf(0d);
     }
-    
+
     @Override
     public boolean canAdd(CurriculumLine curriculumLine) {
-        return false;
+	return false;
     }
-   
+
     public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
-    
+
     @Override
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
 	return Collections.singleton(this);
     }
+
+    @Override
+    public Double getAprovedEctsCredits() {
+	return Double.valueOf(0d);
+    }
+
 }
