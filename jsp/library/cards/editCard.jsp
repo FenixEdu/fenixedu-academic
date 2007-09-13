@@ -26,11 +26,11 @@
 	</span>
 </p>
 
-<bean:define id="personID" name="libraryCard" property="person.idInternal"/>
+<bean:define id="personID" name="libraryCardDTO" property="person.idInternal"/>
 
 <fr:form action="/cardManagement.do?method=createCard">
 
-	<fr:edit id="libraryCard" name="libraryCard" schema="library.card.generate">
+	<fr:edit id="libraryCardToCreate" name="libraryCardDTO" schema="library.card.generate">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -40,7 +40,7 @@
 	</fr:edit>
 
 	<logic:present name="presentDate">
-		<fr:edit id="validUntil" name="libraryCard" schema="library.card.generate.date">
+		<fr:edit id="validUntil" name="libraryCardDTO" schema="library.card.generate.date">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

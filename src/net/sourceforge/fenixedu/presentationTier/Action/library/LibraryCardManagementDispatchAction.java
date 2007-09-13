@@ -61,29 +61,29 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         Integer personID = new Integer(request.getParameter("personID"));
         Person person = (Person) rootDomainObject.readPartyByOID(personID);
-        LibraryCardDTO libraryCard = null;
+        LibraryCardDTO libraryCardDTO = null;
         if (person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.TEACHER)) {
             if (person.getEmployee().getCurrentWorkingContract() != null) {
-                libraryCard = new LibraryCardDTO(person, RoleType.RESEARCHER, person.getNickname(),
+                libraryCardDTO = new LibraryCardDTO(person, RoleType.RESEARCHER, person.getNickname(),
                         person.getEmployee().getLastWorkingPlace(), person.getEmployee()
                                 .getEmployeeNumber());
             }
         } else if (person.hasRole(RoleType.TEACHER)) {
             Teacher teacher = person.getTeacher();
             if (!teacher.isInactive(ExecutionPeriod.readActualExecutionPeriod())) {
-                libraryCard = new LibraryCardDTO(person, RoleType.TEACHER, person.getNickname(), teacher
+                libraryCardDTO = new LibraryCardDTO(person, RoleType.TEACHER, person.getNickname(), teacher
                         .getLastWorkingUnit(), teacher.getTeacherNumber());
             }
         } else if (person.hasRole(RoleType.EMPLOYEE)) {
             if (person.getEmployee().getCurrentWorkingContract() != null) {
-                libraryCard = new LibraryCardDTO(person, RoleType.EMPLOYEE, person.getNickname(), person
+                libraryCardDTO = new LibraryCardDTO(person, RoleType.EMPLOYEE, person.getNickname(), person
                         .getEmployee().getLastWorkingPlace(), person.getEmployee().getEmployeeNumber());
             }
         }
 
-        libraryCard.setUnlimitedCard(Boolean.TRUE);
+        libraryCardDTO.setUnlimitedCard(Boolean.TRUE);
         if (person.getName().length() > maxUserNameLength) {
-            addMessage(request, "message.card.userName.tooLong",maxUserNameLength);
+            addMessage(request, "message.card.userName.tooLong",person.getName().length());
         }
 
         List<Integer> pinList = getExistingPins();
@@ -95,12 +95,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
                 continue;
             }
             if (!pinList.contains(pin)) {
-                libraryCard.setPin(pin);
+                libraryCardDTO.setPin(pin);
                 break;
             }
         }
 
-        request.setAttribute("libraryCard", libraryCard);
+        request.setAttribute("libraryCardDTO", libraryCardDTO);
         return mapping.findForward("edit-card");
     }
 
@@ -114,15 +114,15 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();
 
-        if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
-            setError(request, "message.card.userName.tooLong");
-            request.setAttribute("libraryCard", libraryCardDTO);
+        if (libraryCardDTO.getUserName().length() > maxUserNameLength) {
+            setError(request, "message.card.userName.tooLong",libraryCardDTO.getUserName().length());
+            request.setAttribute("libraryCardDTO", libraryCardDTO);
             return mapping.findForward("edit-card");
         }
 
         LibraryCard libraryCard = (LibraryCard) ServiceUtils.executeService(SessionUtils
                 .getUserView(request), "CreateLibraryCard", new Object[] { libraryCardDTO });
-        request.setAttribute("libraryCard", new LibraryCardDTO(libraryCard));
+        request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 
         return mapping.findForward("show-details");
     }
@@ -135,7 +135,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             return showUsers(mapping, actionForm, request, response);
         }
 
-        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCard");
+        LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardDTO");
 
         ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
                 new Object[] { libraryCardDTO.getLibraryCard() });
@@ -171,7 +171,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
-            if (!libraryCard.getIsLetterGenerated()) {
+            if (!libraryCard.getIsCardEmited()) {
                 cardList.add(new LibraryCardDTO(libraryCard));
             }
         }
@@ -208,7 +208,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
 
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardLetterAsEmited",
                 new Object[] { libraryCard });
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
@@ -277,7 +277,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
         LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
-        request.setAttribute("libraryCard", new LibraryCardDTO(libraryCard));
+        request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 
         return mapping.findForward("show-details");
     }
@@ -295,7 +295,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         } else {
             libraryCardDTO.setValidUntil(null);
         }
-        request.setAttribute("libraryCard", libraryCardDTO);
+        request.setAttribute("libraryCardDTO", libraryCardDTO);
         RenderUtils.invalidateViewState();
         return mapping.findForward("edit-card");
     }
@@ -308,7 +308,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         }
 
         LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject();
-        request.setAttribute("libraryCard", libraryCardDTO);
+        request.setAttribute("libraryCardDTO", libraryCardDTO);
         request.setAttribute("presentDate", "presentDate");
         return mapping.findForward("edit-card");
     }
@@ -328,11 +328,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         actionMessages.add("message", new ActionMessage(msg,parameter));
         saveMessages(request, actionMessages);
     }
-
-    private void setError(HttpServletRequest request, String errorMsg) {
+    
+    private void setError(HttpServletRequest request, String errorMsg, int parameter) {
         ActionMessages actionMessages = getMessages(request);
-        actionMessages.add("error", new ActionMessage(errorMsg));
+        actionMessages.add("error", new ActionMessage(errorMsg, parameter));
         saveMessages(request, actionMessages);
     }
-
 }

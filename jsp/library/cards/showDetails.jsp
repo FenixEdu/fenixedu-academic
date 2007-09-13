@@ -10,9 +10,9 @@
 </h2>
 	
 <fr:form action="/cardManagement.do?method=generatePdfCard">
-	<fr:edit id="libraryCard" name="libraryCard" visible="false"/>
-	
-	<fr:view name="libraryCard" schema="library.card.generated">
+	<fr:edit id="libraryCardDTO" name="libraryCardDTO" visible="false"/>
+	<bean:write name="libraryCardDTO" property="libraryCard"/>
+	<fr:view name="libraryCardDTO" schema="library.card.generated">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright"/>
 		</fr:layout>			

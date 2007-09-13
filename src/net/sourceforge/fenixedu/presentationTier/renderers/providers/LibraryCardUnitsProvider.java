@@ -42,10 +42,11 @@ public class LibraryCardUnitsProvider implements DataProvider {
         unitsNames.add(new String("29 - DEMG - Secção Exploração Minas"));
         unitsNames.add(new String("30 - DEMG - Lab. Mine. e Pla. Mineiro"));
         unitsNames.add(new String("31 - DEQB"));
-        unitsNames.add(new String("32 - Depart. Física"));
+        unitsNames.add(new String("32 - DF"));
         unitsNames.add(new String("33 - DEI"));
         unitsNames.add(new String("34 - DEG"));
         unitsNames.add(new String("35 - SAEN"));
+        unitsNames.add(new String("36 - DEMAT"));
 
         return unitsNames;
     }
