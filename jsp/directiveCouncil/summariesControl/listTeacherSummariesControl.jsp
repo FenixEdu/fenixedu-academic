@@ -8,56 +8,67 @@
 
 <logic:present role="DIRECTIVE_COUNCIL,DEPARTMENT_ADMINISTRATIVE_OFFICE">
 
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<p><h2><bean:message key="link.summaries.control"/></h2></p>
+		
+	<p><span class="warning0"><!-- Error messages go here --><html:errors /></span></p>
 	<html:messages id="message" message="true" bundle="DEFAULT">
-		<span class="error"><!-- Error messages go here -->
-			<bean:write name="message"/>
-		</span>
+		<p>
+			<span class="warning0"><!-- Error messages go here -->
+				<bean:write name="message"/>
+			</span>
+		</p>
 	</html:messages>
 	
 	<html:form action="/summariesControl">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="listSummariesControl"/>
 	
-		<p><h2><bean:message key="link.summaries.control"/></h2></p>
-				
-		<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.department" property="department" onchange="this.form.method.value='listExecutionPeriods';this.form.submit()">
-				<html:option key="choose.department" value=""/>
-				<html:options collection="departments" property="value" labelProperty="label"/>
-			</html:select>
-			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-				<bean:message key="button.submit"/>
-			</html:submit>
-		</p>
-		
-		<logic:notEmpty name="executionPeriods">
-			<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriod" property="executionPeriod" onchange="this.form.submit()">
-						<html:option key="choose.execution.period" value=""/>
-						<html:options collection="executionPeriods" property="value" labelProperty="label"/>
+		<table class="tstyle5 mvert05">
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.department" property="department" onchange="this.form.method.value='listExecutionPeriods';this.form.submit()">
+					<html:option key="choose.department" value=""/>
+					<html:options collection="departments" property="value" labelProperty="label"/>
 				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
 				</html:submit>
-			</p>		
-		</logic:notEmpty>
+			</td>
+		
+			<logic:notEmpty name="executionPeriods">
+				<tr>
+					<td>
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriod" property="executionPeriod" onchange="this.form.submit()">
+								<html:option key="choose.execution.period" value=""/>
+								<html:options collection="executionPeriods" property="value" labelProperty="label"/>
+						</html:select>
+						<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
+					</td>
+				</tr>		
+			</logic:notEmpty>
+		</table>		
+		
 		
 		<logic:present name="listElements">
-			<br/>			
+
 			<bean:define id="url" type="java.lang.String">/summariesControl.do?method=exportToExcel&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
 			<bean:define id="url2" type="java.lang.String">/summariesControl.do?method=exportToCSV&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
 			
-			<p><html:link page="<%= url %>">
+			<p class="mvert15">
+			<html:link page="<%= url %>">
 				<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 				<bean:message key="link.export.to.excel"/>						
 			</html:link>
 			
-			&nbsp;&nbsp;&nbsp;
+			&nbsp;
 			
 			<html:link page="<%= url2 %>">			
 				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 				<bean:message key="link.export.to.csv"/>						
-			</html:link></p>
+			</html:link>
+			</p>
 			
-			<br/>
+
 			
 			<%
 				String sortCriteria = request.getParameter("sortBy");
@@ -70,16 +81,18 @@
 			<bean:define id="department" type="java.lang.String" name="department"/>
 			<bean:define id="executionPeriod" type="java.lang.String" name="executionPeriod"/>
 			
-			<p><fr:view name="listElements" schema="summaries.control.list">
-				<fr:layout name="tabular-sortable">
-					<fr:property name="rowClasses" value="listClasses"/>
-					<fr:property name="columnClasses" value=",,,,,,,bold,,bold"/>
-					<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
-					<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
-					<fr:property name="sortParameter" value="sortBy"/>
-					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
-				</fr:layout>
-			</fr:view></p>		
+			<p>
+				<fr:view name="listElements" schema="summaries.control.list">
+					<fr:layout name="tabular-sortable">
+						<fr:property name="classes" value="tstyle4 mtop05"/>
+						<fr:property name="columnClasses" value=",acenter,acenter,,,aright,aright,bold aright, aright,bold aright"/>
+						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
+						<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
+						<fr:property name="sortParameter" value="sortBy"/>
+						<fr:property name="sortBy" value="<%= sortCriteria %>"/>
+					</fr:layout>
+				</fr:view>
+			</p>		
 			
 		</logic:present>
 					

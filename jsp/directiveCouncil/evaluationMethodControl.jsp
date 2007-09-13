@@ -7,11 +7,16 @@
 <html:xhtml/>
 
 <logic:present role="DIRECTIVE_COUNCIL">
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+	<h2><bean:message key="label.evaluationMethodControl"/></h2>
+
+	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 	<html:messages id="message" message="true" bundle="DEFAULT">
-		<span class="error"><!-- Error messages go here -->
-			<bean:write name="message"/>
-		</span>
+		<p>
+			<span class="error"><!-- Error messages go here -->
+				<bean:write name="message"/>
+			</span>
+		</p>
 	</html:messages>
 
 	<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean1" action="/evaluationMethodControl.do?method=search"
@@ -19,71 +24,69 @@
 			 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
 			 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
+			<fr:property name="classes" value="tstyle5 thright thmiddle thlight inobullet"/>
   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	   	</fr:layout>	    	
 	</fr:edit>
+	
 	<logic:present name="executionCourses">
 		<bean:define id="executionPeriod" name="executionCourseWithNoEvaluationMethodSearchBean" property="executionPeriod"/>
 		<bean:define id="degreeTypes" name="executionCourseWithNoEvaluationMethodSearchBean" property="degreeTypes"/>
 
-		<fr:form action="/evaluationMethodControl.do?method=exportToCSV">
-			<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean2"
-					 name="executionCourseWithNoEvaluationMethodSearchBean"
-					 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-					 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
-  					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			   	</fr:layout>
-			</fr:edit>
-			<html:submit><bean:message key="button.download.csv"/></html:submit>
-		</fr:form>
+	<table class="mtop15">
+		<tr>
+			<td>
+				<fr:form action="/evaluationMethodControl.do?method=exportToCSV">
+					<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean2"
+							 name="executionCourseWithNoEvaluationMethodSearchBean"
+							 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+							 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+					</fr:edit>
+					<html:submit><bean:message key="button.download.csv"/></html:submit>
+				</fr:form>
+			</td>
+			<td>
+				<fr:form action="/evaluationMethodControl.do?method=exportToXLS">
+					<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean3"
+							 name="executionCourseWithNoEvaluationMethodSearchBean"
+							 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+							 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
+					</fr:edit>
+					<html:submit><bean:message key="button.download.xls"/></html:submit>
+				</fr:form>
+			</td>
+		</tr>
+	</table>
 
-		<fr:form action="/evaluationMethodControl.do?method=exportToXLS">
-			<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean3"
-					 name="executionCourseWithNoEvaluationMethodSearchBean"
-					 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-					 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean.xls">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
-  					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			   	</fr:layout>
-			</fr:edit>
-			<html:submit><bean:message key="button.download.xls"/></html:submit>
-		</fr:form>
 
-		<br/>
-		<bean:message key="label.total.execution.courses"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="total"/>
-		<br/>
-		<bean:message key="label.execution.courses.with.evaluation.method"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withEvaluationMethod"/>
-		<br/>
-		<bean:message key="label.execution.courses.without.evaluation.method"/>: <bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withoutEvaluationMethod"/>
-		<br/>
-		<table>
+		<p class="mtop15 mbottom05"><bean:message key="label.total.execution.courses"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="total"/></strong></p>
+		<p class="mvert05"><bean:message key="label.execution.courses.with.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withEvaluationMethod"/></strong></p>
+		<p class="mtop05 mbottom05"><bean:message key="label.execution.courses.without.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withoutEvaluationMethod"/></strong></p>
+
+		<table class="tstyle4">
 			<tr>
-				<th  class="listClasses-header">
+				<th>
 					<bean:message key="label.executionCourse.name"/>
 				</th>
-				<th  class="listClasses-header">
+				<th>
 					<bean:message key="label.executionCourse.responsible.teachers"/>
 				</th>
-				<th  class="listClasses-header">
+				<th>
 					<bean:message key="label.executionCourse.other.teachers"/>
 				</th>
-				<th  class="listClasses-header">
+				<th>
 					<bean:message key="label.executionCourse.degrees"/>
 				</th>
-				<th  class="listClasses-header">
+				<th>
 					<bean:message key="label.executionCourse.departments"/>
 				</th>
 			</tr>
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<tr>
-					<td  class="listClasses">
+					<td>
 						<bean:write name="executionCourse" property="nome"/>
 					</td>
-					<td  class="listClasses">
+					<td>
 						<logic:iterate id="professorship" name="executionCourse" property="professorships">
 							<logic:equal name="professorship" property="responsibleFor" value="true">
 								<p>
@@ -96,7 +99,7 @@
 							</logic:equal>
 						</logic:iterate>
 					</td>
-					<td  class="listClasses">
+					<td>
 						<logic:iterate id="professorship" name="executionCourse" property="professorships">
 							<logic:notEqual name="professorship" property="responsibleFor" value="true">
 								<p>
@@ -109,7 +112,7 @@
 							</logic:notEqual>
 						</logic:iterate>
 					</td>
-					<td  class="listClasses">
+					<td>
 						<logic:iterate id="degree" indexId="i" name="executionCourse" property="degreesSortedByDegreeName">
 							<logic:notEqual name="i" value="0">
 								,
@@ -117,7 +120,7 @@
 							<bean:write name="degree" property="sigla"/>
 						</logic:iterate>
 					</td>
-					<td  class="listClasses">
+					<td>
 						<logic:iterate id="department" indexId="i" name="executionCourse" property="departments">
 							<logic:notEqual name="i" value="0">
 								,

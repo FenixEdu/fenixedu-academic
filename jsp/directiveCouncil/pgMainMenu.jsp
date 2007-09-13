@@ -3,6 +3,5 @@
 
 <ul>
     <li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>
-    <li><html:link page="/summariesControl.do?method=prepareSummariesControl&amp;page=0"><bean:message key="link.summaries.control" /></html:link></li>    <li><html:link page="/evaluationMethodControl.do?method=search"><bean:message key="label.evaluationMethodControl"/></html:link></li>
-</ul>   
+    <li><html:link page="/summariesControl.do?method=prepareSummariesControl&amp;page=0"><bean:message key="link.summaries.control" /></html:link></li>    <li><html:link page="/evaluationMethodControl.do?method=search"><bean:message key="label.evaluationMethodControl"/></html:link></li></ul>   
      
