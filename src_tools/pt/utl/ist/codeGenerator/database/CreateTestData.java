@@ -12,6 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -932,9 +933,10 @@ public class CreateTestData {
             final Calendar cEnd = toCalendar(end);
             final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
             final Room room = lessonRoomManager.getNextOldRoom();
-            final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();
-//            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod);
-//            new LessonSpaceOccupation(room, lesson);
+            final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();            
+            GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();            
+            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight());
+            new LessonSpaceOccupation(room, lesson);
         }
     }
 
