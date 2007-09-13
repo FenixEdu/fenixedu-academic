@@ -491,10 +491,15 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    public void addPersonRoleByRoleType(RoleType roleType) {
-	if (!this.hasRole(roleType)) {
-	    this.addPersonRoles(Role.getRoleByRoleType(roleType));
+    @Override    
+    public void addPersonRoles(Role personRoles) {
+	if(!hasPersonRoles(personRoles)) {
+	    super.addPersonRoles(personRoles);
 	}
+    }
+    
+    public void addPersonRoleByRoleType(RoleType roleType) {
+	this.addPersonRoles(Role.getRoleByRoleType(roleType));	
     }
 
     public Boolean hasRole(final RoleType roleType) {
@@ -1102,7 +1107,7 @@ public class Person extends Person_Base {
 	public void afterAdd(Role insertedRole, Person person) {
 	    if (person != null && insertedRole != null) {
 		addDependencies(insertedRole, person);
-		person.addAlias(insertedRole);
+		person.addAlias(insertedRole);		
 		person.updateIstUsername();
 	    }
 	}
@@ -1143,7 +1148,6 @@ public class Person extends Person_Base {
 	    case GEP:
 	    case MANAGER:
 	    case WEBSITE_MANAGER:
-	    case MESSAGING:
 	    case RESOURCE_ALLOCATION_MANAGER:
 	    case RESOURCE_MANAGER:
 	    case EMPLOYEE:
