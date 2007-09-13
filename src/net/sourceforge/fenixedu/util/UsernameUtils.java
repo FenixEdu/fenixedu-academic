@@ -29,10 +29,9 @@ public class UsernameUtils extends FenixUtil {
     public static boolean shouldHaveUID(Person person) {
 	Login loginIdentification = person.getLoginIdentification();
 	if (loginIdentification != null) {
-	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
-		    || person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.GRANT_OWNER)
-		    || person.hasRole(RoleType.ALUMNI) || person.hasAnyInvitation()
-		    || person.hasExternalResearchContract();
+	    return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.STUDENT)
+		    || person.hasRole(RoleType.GRANT_OWNER) || person.hasRole(RoleType.ALUMNI)
+		    || person.hasRole(RoleType.CANDIDATE) || person.hasAnyInvitation() || person.hasExternalResearchContract();
 	}
 	return false;
     }
@@ -53,11 +52,19 @@ public class UsernameUtils extends FenixUtil {
 	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
 		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
 
-	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER && person.hasGrantOwner()) {
+	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER
+		    && person.hasGrantOwner()) {
 		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
 
-	    } else if (mostImportantRole != null && (mostImportantRole.getRoleType() == RoleType.STUDENT || mostImportantRole.getRoleType() == RoleType.ALUMNI)) {
-		
+	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.CANDIDATE) {
+		if (person.hasStudent()) {
+		    return ist + sumNumber(person.getStudent().getNumber(), 100000);
+		}
+		return currentISTUsername;
+
+	    } else if (mostImportantRole != null
+		    && (mostImportantRole.getRoleType() == RoleType.STUDENT || mostImportantRole.getRoleType() == RoleType.ALUMNI)) {
+
 		if (person.getStudentByType(DegreeType.MASTER_DEGREE) != null) {
 		    final Integer number = person.getStudentByType(DegreeType.MASTER_DEGREE).getNumber();
 		    if (number < 10000) {// old master degree students
@@ -65,13 +72,15 @@ public class UsernameUtils extends FenixUtil {
 		    } else {// new master degree students
 			istUsername = ist + sumNumber(number, 100000);
 		    }
-		    
+
 		} else if (person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) != null) {
-		    istUsername = ist + sumNumber(person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(), 100000);
-		    
+		    istUsername = ist
+			    + sumNumber(person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA).getNumber(),
+				    100000);
+
 		} else if (person.getStudentByType(DegreeType.BOLONHA_PHD_PROGRAM) != null) {
 		    istUsername = ist + sumNumber(person.getStudentByType(DegreeType.BOLONHA_PHD_PROGRAM).getNumber(), 100000);
-		    
+
 		} else {
 		    Registration registration = person.getStudentByType(DegreeType.DEGREE);
 		    if (registration == null) {
@@ -86,9 +95,9 @@ public class UsernameUtils extends FenixUtil {
 		    if (registration != null) {
 			if (registration.getRegistrationAgreement().isNormal() || person.getStudent().getNumber() > 10000) {
 			    istUsername = ist + sumNumber(person.getStudent().getNumber(), 100000);
-			
+
 			} else if (!registration.getRegistrationAgreement().isNormal()) {
-			    
+
 			    final Integer number = registration.getNumber();
 			    if (number > 100000) {
 				// we subtract 100000 from the external/foreign
@@ -101,7 +110,7 @@ public class UsernameUtils extends FenixUtil {
 			    } else {
 				istUsername = ist + sumNumber(number, 100000);
 			    }
-			    
+
 			}
 		    } else if (person.hasStudent() && person.getStudent().getNumber() < 10000) {
 			// phd
@@ -140,8 +149,7 @@ public class UsernameUtils extends FenixUtil {
 
 	} else if (roleType.equals(RoleType.STUDENT)) {
 
-	    Registration registration = person
-		    .getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	    Registration registration = person.getStudentByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	    if (registration != null) {
 
 		if (registration.getRegistrationAgreement().isNormal()) {
@@ -191,8 +199,7 @@ public class UsernameUtils extends FenixUtil {
 		return "B" + person.getGrantOwner().getNumber();
 	    }
 
-	} else if (roleType.equals(RoleType.PROJECTS_MANAGER)
-		|| roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
+	} else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
 	    return "G" + person.getIdInternal();
 
 	} else if (roleType.equals(RoleType.ALUMNI)) {
@@ -204,8 +211,7 @@ public class UsernameUtils extends FenixUtil {
 	    // RoleType.ALUMNI.getName());
 	    return null;
 
-	} else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)
-		|| roleType.equals(RoleType.CANDIDATE)) {
+	} else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE) || roleType.equals(RoleType.CANDIDATE)) {
 	    return "C" + person.getIdInternal();
 
 	} else if (roleType.equals(RoleType.PERSON)) {

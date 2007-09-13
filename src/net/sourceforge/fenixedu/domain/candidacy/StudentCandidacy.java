@@ -39,6 +39,45 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setPerson(person);
 	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
     }
+    
+    private void checkParameters(final Person person, final ExecutionDegree executionDegree,
+	    final Person creator, Double entryGrade, String contigent, String ingression,
+	     EntryPhase entryPhase) {
+	if (executionDegree == null) {
+	    throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
+	}
+
+	if (person == null) {
+	    throw new DomainException("error.candidacy.DegreeCandidacy.person.cannot.be.null");
+	}
+
+	if (person.hasDegreeCandidacyForExecutionDegree(executionDegree)) {
+	    throw new DomainException("error.candidacy.DegreeCandidacy.candidacy.already.created");
+	}
+
+	if (creator == null) {
+	    throw new DomainException("error.candidacy.DegreeCandidacy.creator.cannot.be.null");
+	}
+
+	if (entryPhase == null) {
+	    throw new DomainException("error.candidacy.DegreeCandidacy.entryPhase.cannot.be.null");
+	}
+
+    }
+
+    protected void init(final Person person, final ExecutionDegree executionDegree,
+	    final Person creator, Double entryGrade, String contigent, String ingression,
+	    EntryPhase entryPhase) {
+	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression,
+		entryPhase);
+	super.setExecutionDegree(executionDegree);
+	super.setPerson(person);
+	super.setPrecedentDegreeInformation(new PrecedentDegreeInformation());
+	super.setEntryGrade(entryGrade);
+	super.setContigent(contigent);
+	super.setIngression(ingression);
+	super.setEntryPhase(entryPhase);
+    }    
 
     public DateTime getCandidacyDate() {
 	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR)
@@ -131,5 +170,11 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	}
 
 	super.delete();
+    }
+
+    @Override
+    public boolean isConcluded() {
+	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
+		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 }

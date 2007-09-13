@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -32,21 +33,18 @@ import org.apache.struts.action.ActionMapping;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("showWelcome");
     }
 
-    public ActionForward showCandidacyDetails(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
+    public ActionForward showCandidacyDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	final DegreeCandidacy candidacy = getCandidacy(request);
+	final StudentCandidacy candidacy = getCandidacy(request);
 	request.setAttribute("candidacy", candidacy);
 
 	final SortedSet<Operation> operations = new TreeSet<Operation>();
-	operations.addAll(candidacy.getActiveCandidacySituation().getOperationsForPerson(
-		getLoggedPerson(request)));
+	operations.addAll(candidacy.getActiveCandidacySituation().getOperationsForPerson(getLoggedPerson(request)));
 	request.setAttribute("operations", operations);
 
 	request.setAttribute("person", getUserView(request).getPerson());
@@ -55,11 +53,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException,
-	    FenixServiceException {
-	final CandidacyOperation operation = (CandidacyOperation) getCandidacy(request)
-		.getActiveCandidacySituation().getOperationByTypeAndPerson(getOperationType(request),
-			getLoggedPerson(request));
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	final CandidacyOperation operation = (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation()
+		.getOperationByTypeAndPerson(getOperationType(request), getLoggedPerson(request));
 	request.setAttribute("operation", operation);
 	request.setAttribute("candidacy", getCandidacy(request));
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
@@ -79,13 +75,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	return (getUserView(request).getPerson().hasRole(RoleType.EMPLOYEE)) ? ".forEmployee" : "";
     }
 
-    public ActionForward processForm(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
+    public ActionForward processForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	request.setAttribute("candidacy", getCandidacy(request));
 
-	final CandidacyOperation operation = (CandidacyOperation) RenderUtils.getViewState(
-		"operation-view-state").getMetaObject().getObject();
+	final CandidacyOperation operation = (CandidacyOperation) RenderUtils.getViewState("operation-view-state")
+		.getMetaObject().getObject();
 	request.setAttribute("operation", operation);
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
@@ -103,12 +98,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private boolean validateCurrentForm(HttpServletRequest request) {
-	final Form form = (Form) RenderUtils.getViewState("fillData" + getCurrentFormPosition(request))
-		.getMetaObject().getObject();
+	final Form form = (Form) RenderUtils.getViewState("fillData" + getCurrentFormPosition(request)).getMetaObject()
+		.getObject();
 	final List<LabelFormatter> messages = form.validate();
 	if (!messages.isEmpty()) {
-	    request.setAttribute("formMessages", solveLabelFormatterArgs(request, messages
-		    .toArray(new LabelFormatter[messages.size()])));
+	    request.setAttribute("formMessages", solveLabelFormatterArgs(request, messages.toArray(new LabelFormatter[messages
+		    .size()])));
 	    request.setAttribute("currentForm", form);
 
 	    return false;
@@ -118,27 +113,24 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     }
 
-    private ActionForward executeOperation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response,
-	    final CandidacyOperation candidacyOperation) throws FenixServiceException,
+    private ActionForward executeOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, final CandidacyOperation candidacyOperation) throws FenixServiceException,
 	    FenixFilterException, FenixActionException {
 
 	try {
 	    final IUserView userView = getUserView(request);
-	    ServiceUtils.executeService(userView, "ExecuteStateOperation", new Object[] {
-		    candidacyOperation, getLoggedPerson(request) });
+	    ServiceUtils.executeService(userView, "ExecuteStateOperation", new Object[] { candidacyOperation,
+		    getLoggedPerson(request) });
 
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-		final List<InfoLesson> infoLessons = (List) ServiceUtils
-			.executeService(userView, "ReadStudentTimeTable", new Object[] { getCandidacy(
-				request).getRegistration() });
+		final List<InfoLesson> infoLessons = (List) ServiceUtils.executeService(userView, "ReadStudentTimeTable",
+			new Object[] { getCandidacy(request).getRegistration() });
 		request.setAttribute("infoLessons", infoLessons);
 
 		return mapping.findForward("printSchedule");
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_REGISTRATION_DECLARATION) {
 		request.setAttribute("registration", getCandidacy(request).getRegistration());
-		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree()
-			.getExecutionYear());
+		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
 
 		return mapping.findForward("printRegistrationDeclaration");
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
@@ -147,8 +139,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		return mapping.findForward("printSystemAccessData");
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
 		request.setAttribute("aditionalInformation", getResources(request).getMessage(
-			"label.candidacy.username.changed.message",
-			userView.getPerson().getIstUsername()));
+			"label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
 	    }
 
 	    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
@@ -163,23 +154,21 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     }
 
-    public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
+    public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	request.setAttribute("candidacy", getCandidacy(request));
-	request.setAttribute("operation", RenderUtils.getViewState("operation-view-state")
+	request.setAttribute("operation", RenderUtils.getViewState("operation-view-state").getMetaObject().getObject());
+	request.setAttribute("currentForm", RenderUtils.getViewState("fillData" + getCurrentFormPosition(request))
 		.getMetaObject().getObject());
-	request.setAttribute("currentForm", RenderUtils.getViewState(
-		"fillData" + getCurrentFormPosition(request)).getMetaObject().getObject());
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
 	return mapping.findForward("fillData");
     }
 
-    private DegreeCandidacy getCandidacy(HttpServletRequest request) {
-	return (DegreeCandidacy) rootDomainObject.readCandidacyByOID(Integer.valueOf(getFromRequest(
-		request, "candidacyID").toString()));
+    private StudentCandidacy getCandidacy(HttpServletRequest request) {
+	return (StudentCandidacy) rootDomainObject.readCandidacyByOID(Integer.valueOf(getFromRequest(request, "candidacyID")
+		.toString()));
     }
 
     private Integer getCurrentFormPosition(HttpServletRequest request) {

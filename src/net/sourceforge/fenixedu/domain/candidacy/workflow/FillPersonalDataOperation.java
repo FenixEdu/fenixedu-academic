@@ -5,6 +5,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm;
@@ -34,8 +35,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     private ResidenceApplianceInquiryForm residenceApplianceInquiryForm;
 
-    public FillPersonalDataOperation(final Set<RoleType> roleTypes, final DegreeCandidacy degreeCandidacy) {
-	super(roleTypes, degreeCandidacy);
+    public FillPersonalDataOperation(final Set<RoleType> roleTypes, final StudentCandidacy studentCandidacy) {
+	super(roleTypes, studentCandidacy);
 
 	addForm(new FillPersonalDataWelcomeForm());
 
@@ -62,12 +63,12 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     }
 
-    public DegreeCandidacy getDegreeCandidacy() {
-	return (DegreeCandidacy) getCandidacy();
+    public StudentCandidacy getStudentCandidacy() {
+	return (StudentCandidacy) getCandidacy();
     }
 
     private Person getPerson() {
-	return getDegreeCandidacy().getPerson();
+	return getStudentCandidacy().getPerson();
     }
 
     public FiliationForm getFiliationForm() {
@@ -146,7 +147,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     @Override
     protected void internalExecute() {
-	final Person person = getDegreeCandidacy().getPerson();
+	final Person person = getStudentCandidacy().getPerson();
 	fillPersonalInformation(person);
 	fillFiliation(person);
 	fillResidenceInformation(person);
@@ -157,14 +158,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     private void fillResidenceAppliance() {
-	getDegreeCandidacy().setApplyForResidence(
+	getStudentCandidacy().setApplyForResidence(
 		getResidenceApplianceInquiryForm().isToApplyForResidence());
-	getDegreeCandidacy().setNotesAboutResidenceAppliance(
+	getStudentCandidacy().setNotesAboutResidenceAppliance(
 		getResidenceApplianceInquiryForm().getNotesAboutApplianceForResidence());
     }
 
     protected void fillOriginInformation() {
-	final PrecedentDegreeInformation precedentDegreeInformation = getDegreeCandidacy()
+	final PrecedentDegreeInformation precedentDegreeInformation = getStudentCandidacy()
 		.getPrecedentDegreeInformation();
 	precedentDegreeInformation.setConclusionGrade(getOriginInformationForm().getConclusionGrade());
 	precedentDegreeInformation.setDegreeDesignation(getOriginInformationForm()
@@ -186,7 +187,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     protected void fillPersonalDataAuthorizationChoice() {
-	getDegreeCandidacy().setStudentPersonalDataAuthorizationChoice(
+	getStudentCandidacy().setStudentPersonalDataAuthorizationChoice(
 		getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationChoice());
     }
 

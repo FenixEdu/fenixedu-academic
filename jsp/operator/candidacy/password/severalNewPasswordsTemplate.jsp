@@ -110,14 +110,6 @@
           </tr>
           
           <tr>
-            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.username"/> </td>
-            <td> <bean:message  key="label.operator.candidacy.passwords.istUsername.explanation"/></td>
-          </tr>          
-	      <tr>
-	        <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.password"/> </td>
-	        <td> <font face="Verdana"><bean:write name="passwordBean" property="password"/> </font></td>
-	      </tr>
-          <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.accessAddress"/> </td>
             <td> <bean:message  key="label.operator.candidacy.mail.creation.page.url"/> </td>
           </tr>

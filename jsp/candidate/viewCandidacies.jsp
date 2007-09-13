@@ -34,6 +34,11 @@
 					<bean:message key="link.viewCandidacyDetails"/>
 				</html:link>
 			</logic:equal>
+			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy">
+				<html:link action="<%="/degreeCandidacyManagement.do?method=showCandidacyDetails&amp;candidacyID=" + idInternal%>">
+					<bean:message key="link.viewCandidacyDetails"/>
+				</html:link>
+			</logic:equal>
 			<logic:equal name="candidacy" property="class.name" value="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy">
 				<html:link action="<%="/viewCandidacies.do?method=viewDetail&amp;candidacyID=" + idInternal%>">
 					<bean:message key="link.viewCandidacyDetails"/>

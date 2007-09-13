@@ -133,16 +133,18 @@ public class Person extends Person_Base {
 	if(name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.person.empty.name");
 	}
+	
+	String formattedName = StringFormatter.prettyPrint(name);
 	    
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
-	partyName.setContent(LanguageUtils.getSystemLanguage(), name);
+	partyName.setContent(LanguageUtils.getSystemLanguage(), formattedName);
 	
 	super.setPartyName(partyName);
 	
 	PersonName personName = getPersonName();
 	personName = personName == null ? new PersonName(this) : personName;	
-	personName.setName(name);
+	personName.setName(formattedName);
     }
     
     @Override
@@ -499,8 +501,8 @@ public class Person extends Person_Base {
     }
     
     public void addPersonRoleByRoleType(RoleType roleType) {
-	this.addPersonRoles(Role.getRoleByRoleType(roleType));	
-    }
+	    this.addPersonRoles(Role.getRoleByRoleType(roleType));
+	}
 
     public Boolean hasRole(final RoleType roleType) {
 	for (final Role role : this.getPersonRoles()) {
@@ -1107,7 +1109,7 @@ public class Person extends Person_Base {
 	public void afterAdd(Role insertedRole, Person person) {
 	    if (person != null && insertedRole != null) {
 		addDependencies(insertedRole, person);
-		person.addAlias(insertedRole);		
+		person.addAlias(insertedRole);
 		person.updateIstUsername();
 	    }
 	}
@@ -1727,7 +1729,7 @@ public class Person extends Person_Base {
 
 	return result;
     }
-    
+
     public Set<AnnualEvent> getAnnualEventsFor(final ExecutionYear executionYear) {
 	final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
 	for (final Event event : getEventsSet()) {
@@ -2639,8 +2641,7 @@ public class Person extends Person_Base {
 	for(Accountability accountability : parentAccountabilities) {
 	    if(accountability instanceof ResearcherContract) {
 		return true;
-	    }
-	}
+}	}
 	return false;
     }
 }

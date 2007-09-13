@@ -126,12 +126,6 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     }
 
-    @Override
-    public boolean isConcluded() {
-	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
-    }
-
     public void cancelEvents() {
 	for (Event event : getPerson().getEventsByEventType(EventType.CANDIDACY_ENROLMENT)) {
 	    DFACandidacyEvent candidacyEvent = (DFACandidacyEvent) event;
@@ -145,7 +139,7 @@ public class DFACandidacy extends DFACandidacy_Base {
     public Map<String, Set<String>> getStateMapping() {
 	return stateMap;
     }
-
+    
     @Override
     public String getDefaultState() {
 	switch (this.getActiveCandidacySituation().getCandidacySituationType()) {

@@ -70,12 +70,6 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
     }
 
     @Override
-    public boolean isConcluded() {
-	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
-    }
-
-    @Override
     public String getDefaultState() {
 	switch (getActiveCandidacySituation().getCandidacySituationType()) {
 	case STAND_BY: 

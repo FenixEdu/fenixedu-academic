@@ -1967,16 +1967,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			Double entryGrade;
 			EntryPhase entryPhase;
 			String ingression;
+			Boolean applyForResidence;
+			String notesAboutResidenceAppliance;
+			StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
 		}
 
 			class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
 			}
 
 			class net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
-				Boolean applyForResidence;
-				String istUniversity;
-				String notesAboutResidenceAppliance;
-				StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
 			}
 
 			class net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy extends net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy {
@@ -2883,10 +2882,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			Integer functionOrder;
 		}
 
-		class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
-			YearMonthDay beginDate;
-			YearMonthDay endDate;
-		}		
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability extends net.sourceforge.fenixedu.domain.DomainObject {
+		YearMonthDay beginDate;
+		YearMonthDay endDate;
+	}		
+			
 		class net.sourceforge.fenixedu.domain.organizationalStructure.Contract extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		}
 
@@ -2899,7 +2899,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
 				Boolean externalContract;
 			}
-
+			
 			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
 			 }
 			 
@@ -2912,9 +2912,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			 class net.sourceforge.fenixedu.domain.organizationalStructure.ResearchInternshipContract extends net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract {
 			 }
 			 			 
-		class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
-		}
-
+			class net.sourceforge.fenixedu.domain.organizationalStructure.Invitation extends net.sourceforge.fenixedu.domain.organizationalStructure.Contract {
+			}
+		
 		class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 			Double credits;
 		}
@@ -12400,7 +12400,6 @@ relation RootDomainObjectDelegateElectionPeriod {
 		multiplicity *;
 	}
 }
-
 relation PhDCandidacyEventPhDProgramCandidacy {
 	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDCandidacyEvent playsRole phdCandidacyEvent;
 	net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy playsRole phdCandidacy;

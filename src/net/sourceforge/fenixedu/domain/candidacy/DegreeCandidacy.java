@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,15 +14,10 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintRegistrationDecla
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintScheduleOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.LanguageUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class DegreeCandidacy extends DegreeCandidacy_Base {
 
@@ -32,130 +26,71 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	init(person, executionDegree);
     }
 
-    public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, final Double entryGrade, final String contigent,
-	    final String ingression, final String istUniversity, EntryPhase entryPhase) {
+    public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,
+	    final Double entryGrade, final String contigent, final String ingression, EntryPhase entryPhase) {
 	super();
-	init(person, executionDegree, creator, entryGrade, contigent, ingression, istUniversity,
-		entryPhase);
-    }
-
-    private void checkParameters(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent, String ingression,
-	    String istUniversity, EntryPhase entryPhase) {
-	if (executionDegree == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
-	}
-
-	if (person == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.person.cannot.be.null");
-	}
-
-	if (person.hasDegreeCandidacyForExecutionDegree(executionDegree)) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.candidacy.already.created");
-	}
-
-	if (creator == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.creator.cannot.be.null");
-	}
-
-	if (entryPhase == null) {
-	    throw new DomainException("error.candidacy.DegreeCandidacy.entryPhase.cannot.be.null");
-	}
-
-    }
-
-    protected void init(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent, String ingression,
-	    String istUniversity, EntryPhase entryPhase) {
-	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression,
-		istUniversity, entryPhase);
-	super.setExecutionDegree(executionDegree);
-	super.setPerson(person);
-	super.setPrecedentDegreeInformation(new PrecedentDegreeInformation());
-	super.setEntryGrade(entryGrade);
-	super.setContigent(contigent);
-	super.setIngression(ingression);
-	super.setIstUniversity(istUniversity);
-	super.setEntryPhase(entryPhase);
+	init(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale())
-		.getString("label.studentCandidacy")
+	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString(
+		"label.degreeCandidacy")
 		+ " - "
 		+ getExecutionDegree().getDegreeCurricularPlan().getName()
 		+ " - "
 		+ getExecutionDegree().getExecutionYear().getYear();
     }
 
-    // Static Methods
-    public static Set<DegreeCandidacy> readAllCandidacies() {
-	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
-	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-	    if (candidacy instanceof DegreeCandidacy) {
-		degreeCandidacies.add((DegreeCandidacy) candidacy);
-	    }
-	}
-	return degreeCandidacies;
-    }
-
-    public static Set<DegreeCandidacy> readAllCandidaciesInStandBy() {
-	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
-	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-	    if (candidacy instanceof DegreeCandidacy) {
-		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
-		if (degreeCandidacy.getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.STAND_BY)
-		    degreeCandidacies.add((DegreeCandidacy) degreeCandidacy);
-	    }
-	}
-	return degreeCandidacies;
-    }
-
-    public static Set<DegreeCandidacy> readAllDegreeCandidaciesBetweenNumbers(final int fromNumber,
-	    final int toNumber) {
-	final Set<DegreeCandidacy> studentsCandidacies = new HashSet<DegreeCandidacy>();
-	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-	    if (candidacy instanceof DegreeCandidacy) {
-		DegreeCandidacy studentCandidacy = (DegreeCandidacy) candidacy;
-		final int candidacyNumber = studentCandidacy.getNumber();
-		if (candidacyNumber >= fromNumber && candidacyNumber <= toNumber)
-		    studentsCandidacies.add(studentCandidacy);
-	    }
-	}
-	return studentsCandidacies;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static int generateCandidateNumber() {
-	int number = 0;
-	final TreeSet<DegreeCandidacy> degreeCandidacies = new TreeSet<DegreeCandidacy>(
-		new ReverseComparator(new BeanComparator("number")));
-	degreeCandidacies.addAll(readAllCandidacies());
-
-	if (!degreeCandidacies.isEmpty()) {
-	    number = degreeCandidacies.iterator().next().getNumber();
-	}
-	return number + 1;
-    }
+//    // Static Methods
+//    public static Set<DegreeCandidacy> readAllCandidacies() {
+//	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
+//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
+//	    if (candidacy instanceof DegreeCandidacy) {
+//		degreeCandidacies.add((DegreeCandidacy) candidacy);
+//	    }
+//	}
+//	return degreeCandidacies;
+//    }
+//
+//    public static Set<DegreeCandidacy> readAllCandidaciesInStandBy() {
+//	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
+//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
+//	    if (candidacy instanceof DegreeCandidacy) {
+//		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
+//		if (degreeCandidacy.getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.STAND_BY)
+//		    degreeCandidacies.add((DegreeCandidacy) degreeCandidacy);
+//	    }
+//	}
+//	return degreeCandidacies;
+//    }
+//
+//    public static Set<DegreeCandidacy> readAllDegreeCandidaciesBetweenNumbers(final int fromNumber, final int toNumber) {
+//	final Set<DegreeCandidacy> studentsCandidacies = new HashSet<DegreeCandidacy>();
+//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
+//	    if (candidacy instanceof DegreeCandidacy) {
+//		DegreeCandidacy studentCandidacy = (DegreeCandidacy) candidacy;
+//		final int candidacyNumber = studentCandidacy.getNumber();
+//		if (candidacyNumber >= fromNumber && candidacyNumber <= toNumber)
+//		    studentsCandidacies.add(studentCandidacy);
+//	    }
+//	}
+//	return studentsCandidacies;
+//    }
 
     @Override
     public Set<Operation> getOperations(CandidacySituation candidacySituation) {
 	final Set<Operation> operations = new HashSet<Operation>();
 	switch (candidacySituation.getCandidacySituationType()) {
 	case STAND_BY:
-	    operations
-		    .add(new FillPersonalDataOperation(Collections.singleton(RoleType.CANDIDATE), this));
+	    operations.add(new FillPersonalDataOperation(Collections.singleton(RoleType.CANDIDATE), this));
 	    break;
 	case ADMITTED:
 	    operations.add(new RegistrationOperation(Collections.singleton(RoleType.CANDIDATE), this));
 	    break;
 	case REGISTERED:
 	    operations.add(new PrintScheduleOperation(Collections.singleton(RoleType.STUDENT), this));
-	    operations.add(new PrintRegistrationDeclarationOperation(Collections
-		    .singleton(RoleType.STUDENT), this));
-	    operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT),
-		    this));
+	    operations.add(new PrintRegistrationDeclarationOperation(Collections.singleton(RoleType.STUDENT), this));
+	    operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT), this));
 	    break;
 	}
 	return operations;

@@ -35,17 +35,11 @@ public class SDCandidacy extends SDCandidacy_Base {
     void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
     }
 
-    @Override
-    public boolean isConcluded() {
-        return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-                .getCandidacySituationType() == CandidacySituationType.CANCELLED);
-    }
-
+    
     @Override
     public String getDefaultState() {
 	return null;
-    }
-
+}
     @Override
     public Map<String, Set<String>> getStateMapping() {
 	return null;

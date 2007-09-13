@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
-import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -39,21 +39,19 @@ public class RegistrationOperation extends CandidacyOperation {
 	changePersonRoles();
     }
 
-    private void changePersonRoles() {	
-	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
+    private void changePersonRoles() {
+	getStudentCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
     }
 
     protected void associateShiftsFor(final Registration registration) {
 
 	if (getExecutionYear().hasShiftDistribution()) {
 
-	    final List<Registration> registrations = getExecutionDegree()
-		    .getRegistrationsForDegreeCandidacies();
+	    final List<Registration> registrations = getExecutionDegree().getRegistrationsForDegreeCandidacies();
 	    Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
 	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree()
-		    .getNotDistributedShiftsFromShiftDistributionBasedOn(
-			    registrations.indexOf(registration))) {
+		    .getNotDistributedShiftsFromShiftDistributionBasedOn(registrations.indexOf(registration))) {
 		shiftEntry.setDistributed(Boolean.TRUE);
 		shiftEntry.getShift().addStudents(registration);
 		correctExecutionCourseIfNecessary(registration, shiftEntry.getShift());
@@ -63,20 +61,16 @@ public class RegistrationOperation extends CandidacyOperation {
 
     private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
 
-	final StudentCurricularPlan studentCurricularPlan = registration
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	final ExecutionCourse finalExecutionCourse = shift.getDisciplinaExecucao();
 
-	for (final CurricularCourse curricularCourse : finalExecutionCourse
-		.getAssociatedCurricularCoursesSet()) {
+	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
 
-	    final Enrolment enrolment = studentCurricularPlan
-		    .getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, ExecutionPeriod
-			    .readActualExecutionPeriod());
+	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
+		    ExecutionPeriod.readActualExecutionPeriod());
 	    if (enrolment != null) {
 
-		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod
-			.readActualExecutionPeriod());
+		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
 		if (!attends.isFor(finalExecutionCourse)) {
 		    attends.setDisciplinaExecucao(finalExecutionCourse);
 		}
@@ -86,19 +80,17 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private ExecutionDegree getExecutionDegree() {
-	return getDegreeCandidacy().getExecutionDegree();
+	return getStudentCandidacy().getExecutionDegree();
     }
 
     protected ExecutionYear getExecutionYear() {
 	return getExecutionDegree().getExecutionYear();
     }
 
-    protected void enrolStudentInCurricularCourses(final ExecutionDegree executionDegree,
-	    final Registration registration) {
+    protected void enrolStudentInCurricularCourses(final ExecutionDegree executionDegree, final Registration registration) {
 	final ExecutionPeriod executionPeriod = getExecutionPeriod();
-	final StudentCurricularPlan studentCurricularPlan = StudentCurricularPlan
-		.createBolonhaStudentCurricularPlan(registration, executionDegree
-			.getDegreeCurricularPlan(), new YearMonthDay(), executionPeriod);
+	final StudentCurricularPlan studentCurricularPlan = StudentCurricularPlan.createBolonhaStudentCurricularPlan(
+		registration, executionDegree.getDegreeCurricularPlan(), new YearMonthDay(), executionPeriod);
 
 	studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionPeriod, getCurrentUsername());
     }
@@ -107,7 +99,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	if (AccessControl.getUserView() != null) {
 	    return AccessControl.getPerson().getUsername();
 	}
-	return getDegreeCandidacy().getPerson().getUsername();
+	return getStudentCandidacy().getPerson().getUsername();
     }
 
     private ExecutionPeriod getExecutionPeriod() {
@@ -115,22 +107,21 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     protected Registration createRegistration() {
-	final Registration registration = new Registration(getDegreeCandidacy().getPerson(),
-		getDegreeCandidacy());
+	final Registration registration = new Registration(getStudentCandidacy().getPerson(), getStudentCandidacy());
 
 	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
-		getDegreeCandidacy().getStudentPersonalDataAuthorizationChoice());
+		getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
 
-	if (getDegreeCandidacy().getApplyForResidence()) {
+	if (getStudentCandidacy().getApplyForResidence()) {
 	    registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
-		    getDegreeCandidacy().getNotesAboutResidenceAppliance());
+		    getStudentCandidacy().getNotesAboutResidenceAppliance());
 	}
 
 	return registration;
     }
 
-    private DegreeCandidacy getDegreeCandidacy() {
-	return ((DegreeCandidacy) getCandidacy());
+    private StudentCandidacy getStudentCandidacy() {
+	return ((StudentCandidacy) getCandidacy());
     }
 
     @Override
