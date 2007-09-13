@@ -14,64 +14,67 @@
 </logic:iterate>	
 	
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<p />
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<td align="center" class="infoselected">
-			<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>	
-			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="executionYearLabel"/><br/>
 
-			<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
-			<logic:notEqual name="degreeString" value="all">0
-				<bean:define id="degreeId"><%= pageContext.findAttribute("degree").toString().substring(pageContext.findAttribute("degree").toString().indexOf("#")+1)%></bean:define>
-				<bean:define id="degreeLabel"><%= degreeString.toString().substring(0, degreeString.toString().indexOf(">"))%></bean:define>	
-				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br/>
-			</logic:notEqual>
-			<logic:equal name="degreeString" value="all">
-				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br/>
-			</logic:equal>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+
+<div class="infoop2">
+	<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>	
+	<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel"/><br/>
+
+	<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
+	<logic:notEqual name="degreeString" value="all">0
+		<bean:define id="degreeId"><%= pageContext.findAttribute("degree").toString().substring(pageContext.findAttribute("degree").toString().indexOf("#")+1)%></bean:define>
+		<bean:define id="degreeLabel"><%= degreeString.toString().substring(0, degreeString.toString().indexOf(">"))%></bean:define>	
+		<bean:message key="label.qualification.degree" />:&nbsp;<bean:write name="degreeLabel"/><br/>
+	</logic:notEqual>
+	<logic:equal name="degreeString" value="all">
+		<b><bean:message key="label.qualification.degree" />:</b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br/>
+	</logic:equal>
+
+	<bean:define id="specializationLabel"><%=pageContext.findAttribute("specialization")%></bean:define>	
+	<logic:equal name="specializationLabel" value="all">
+		<b><bean:message key="label.masterDegree.gratuity.specializationArea" />:</b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br/>			
+	</logic:equal>
+	<logic:notEqual name="specializationLabel" value="all">
+		<b><bean:message key="label.masterDegree.gratuity.specializationArea" />:</b>&nbsp;<bean:write name="specializationLabel"/><br/>	
+	</logic:notEqual>
 	
-			<bean:define id="specializationLabel"><%=pageContext.findAttribute("specialization")%></bean:define>	
-			<logic:equal name="specializationLabel" value="all">
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br/>			
-			</logic:equal>
-			<logic:notEqual name="specializationLabel" value="all">
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:write name="specializationLabel"/><br/>	
-			</logic:notEqual>
-			
-			<bean:define id="gratuitySituationName"><%=pageContext.findAttribute("situation")%></bean:define>	
-			<b><bean:message key="label.masterDegree.gratuity.situation" /></b>&nbsp;<bean:message name="gratuitySituationName" bundle="ENUMERATION_RESOURCES"/><br/>					
-		</td>
-	</tr>
-</table>
-<p />
+	<bean:define id="gratuitySituationName"><%=pageContext.findAttribute("situation")%></bean:define>	
+	<b><bean:message key="label.masterDegree.gratuity.situation" />:</b>&nbsp;<bean:message name="gratuitySituationName" bundle="ENUMERATION_RESOURCES"/><br/>					
+</div>	
+
+	
 
 <logic:notPresent name="infoGratuitySituationList">
-	<span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList" /></span>
+	<p><span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList" /></span></p>
 </logic:notPresent>
 
 <logic:present name="infoGratuitySituationList">
 	<logic:empty name="infoGratuitySituationList">
-		<span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList.empty" /></span>
+		<p><span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList.empty" /></span></p>
 	</logic:empty>
 	<logic:notEmpty name="infoGratuitySituationList">
 		<bean:size id="sizeList" name="infoGratuitySituationList"/>
-		<h2><bean:message key="label.masterDegree.gratuity.sizeList" arg0="<%= sizeList.toString() %>" /></h2>	
-		<h2>
-		<logic:present name="totalRemaingValue">
-			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
-			&nbsp;<bean:write name="totalRemaingValue" />
-		</logic:present>
-		</h2>
-		<h2>
-		<logic:present name="totalPayedValue">
-			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.payedValue"/>:
-			&nbsp;<bean:write name="totalPayedValue" />
-		</logic:present>
-		</h2>
 		
-		<table>
+		<p><em><bean:message key="label.masterDegree.gratuity.sizeList" arg0="<%= sizeList.toString() %>" /></em></p>
+		<p>
+			<logic:present name="totalRemaingValue">
+				<strong>
+					<bean:message key="label.masterDegree.gratuity.total" /> <bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
+					&nbsp;<bean:write name="totalRemaingValue" />
+				</strong>
+			</logic:present>
+		</p>
+		<p>
+			<logic:present name="totalPayedValue">
+				<strong>
+					<bean:message key="label.masterDegree.gratuity.total" /> <bean:message key="label.masterDegree.gratuity.payedValue"/>:
+					&nbsp;<bean:write name="totalPayedValue" />
+				</strong>
+			</logic:present>
+		</p>
+		
+		<table class="tstyle4">
 			<tr>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=studentNumber&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.number"/></center></html:link></th>
@@ -101,8 +104,8 @@
 							
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares -->
 					<tr>
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
-						<td bgcolor='#C0C0C0'>		
+						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
+						<td>		
 							<% if(masterDegreeUser) {%>					
 							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=MASTER_DEGREE&studentNumber="+studentNumber %>" >
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
@@ -111,12 +114,12 @@
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 							<% } %>
 						</td>
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/></center></td>
-						<td bgcolor='#C0C0C0'><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
-						<td bgcolor='#C0C0C0'><center><bean:message name="situationType" bundle="ENUMERATION_RESOURCES"/></center></td>
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>	
-						<td bgcolor='#C0C0C0'><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
+						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/></center></td>
+						<td><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
+						<td><center><bean:message name="situationType" bundle="ENUMERATION_RESOURCES"/></center></td>
+						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
+						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>	
+						<td><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
 					</tr>
 				</logic:equal>
 			

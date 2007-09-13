@@ -5,8 +5,10 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
+
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <html:form action="/studentsGratuityList" >
 <logic:notPresent name="showNextSelects">
@@ -18,23 +20,19 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 	
-			
-	<table width="98%" border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<td align="center" class="infoselected">
-				<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
-				<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
-			</td>
-		</tr>
-	</table>
-	<br />
+	<div class="infoop2">
+		<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
+		<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
+	</div>
+
 </logic:present>
-<table>
+
+<table class="tstyle5 thlight thright thmiddle">
 		<logic:notPresent name="showNextSelects">
 		<tr>
-			<td>
-				<bean:message key="label.masterDegree.gratuity.executionYear"/>
-			</td>
+			<th>
+				<bean:message key="label.masterDegree.gratuity.executionYear"/>:
+			</th>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear" onchange="this.form.value='prepareChooseDegree';this.form.submit();">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
@@ -50,9 +48,9 @@
 		</logic:notPresent>
 		<logic:present name="showNextSelects">			
 			<tr>
-				<td>
-					<bean:message key="label.qualification.degree"/>
-				</td>
+				<th>
+					<bean:message key="label.qualification.degree"/>:
+				</th>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
@@ -66,9 +64,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
-				</td>
+				<th>
+					<bean:message key="label.masterDegree.gratuity.specializationArea"/>:
+				</th>
 				<td>
 					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.specialization" property="specialization">
@@ -83,9 +81,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<bean:message key="label.masterDegree.gratuity.situation"/>
-				</td>
+				<th>
+					<bean:message key="label.masterDegree.gratuity.situation"/>:
+				</th>
 				<td>
 					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType" bundle="ENUMERATION_RESOURCES"/>	            
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.situation" property="situation">
@@ -97,14 +95,13 @@
 					</html:select>
 				</td>
 			</tr>
-			<tr>
-				<td>	
-					<br />
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-						<bean:message key="button.masterDegree.gratuity.list"/>
-					</html:submit>				
-				</td>
-			</tr>
 		</logic:present>		
 </table>	
+
+<p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="button.masterDegree.gratuity.list"/>
+	</html:submit>				
+</p>
+
 </html:form>	

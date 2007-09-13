@@ -15,7 +15,7 @@
 <%--<h2><bean:message key="label.teacherService.credits.resume"/></h2>--%>
 
 <tiles:useAttribute id="searchInfo" name="searchInfo"/>
-<p class="infoop">
+<p class="infoop2">
 	<bean:message name="searchInfo"/>
 </p>
 
@@ -40,8 +40,15 @@
 <html:form action="<%= path %>" focus="teacherNumber">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"/>
 	<input alt="input.page" type="hidden" name="page" value="0"/>
-	<bean:message key="label.teacher.number"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	size="6" maxlength="7"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.ok"/>
-	</html:submit>
+	<table class="tstyle5 thlight thright thmiddle mvert05">
+		<tr>
+			<th><bean:message key="label.teacher.number"/>:</th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	size="6" maxlength="7"/></td>
+		</tr>
+	</table>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="button.ok"/>
+		</html:submit>
+	</p>
 </html:form>
