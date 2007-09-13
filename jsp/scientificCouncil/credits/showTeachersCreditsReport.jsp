@@ -21,10 +21,14 @@
 	<bean:define id="fromExecutionYearID" name="fromExecutionYearID"/>
 	<bean:define id="untilExecutionYearID" name="untilExecutionYearID"/>	
 	
-	<html:link page="<%= "/creditsReport.do?method=exportToExcel&amp;departmentID=" + departmentID 
-		+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
-		<bean:message key="link.credits.xlsFileToDownload"/>
-	</html:link>	
+	<ul class="mtop15 mbottom05">
+		<li>
+			<html:link page="<%= "/creditsReport.do?method=exportToExcel&amp;departmentID=" + departmentID 
+				+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
+				<bean:message key="link.credits.xlsFileToDownload"/>
+			</html:link>	
+		</li>
+	</ul>
 
 	<logic:iterate id="mapElement" name="teachersCreditsDisplayMap">
 		<bean:size id="mapSize" name="teachersCreditsDisplayMap"/>
@@ -37,7 +41,7 @@
 		<logic:iterate id="creditsReportElement" name="teacherCreditsReportByUnit">
 			<h4 class="mbottom0"><bean:write name="creditsReportElement" property="key.name"/></h4>
 			<bean:define id="teacherCreditsReportList" name="creditsReportElement" property="value"/>
-			<table class="tstyle1">
+			<table class="tstyle4 thlight">
 				<logic:present name="executionPeriodHeader">
 					<tr>
 						<th></th>

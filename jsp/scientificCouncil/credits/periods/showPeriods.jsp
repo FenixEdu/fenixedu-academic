@@ -7,16 +7,20 @@
 
 <logic:present role="SCIENTIFIC_COUNCIL">
 
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<em><bean:message key="title.teaching"/></em>
+	<h2><bean:message key="link.define.periods"/></h2>
+
+	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+	
 	<logic:messagesPresent>
-		<span class="error"><!-- Error messages go here --><html:errors /></span>
+		<p>
+			<span class="error"><!-- Error messages go here --><html:errors /></span>
+		</p>
 	</logic:messagesPresent>
 
-	<p><h2><bean:message key="link.define.periods"/></h2></p>
-	
 	<html:form action="/defineCreditsPeriods.do?method=showPeriods">
 		<logic:notEmpty name="executionPeriods">
-			<p>
+			<p class="mtop2">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 					<html:option key="choose.execution.period" value=""/>
 					<html:options collection="executionPeriods" property="value" labelProperty="label"/>
@@ -27,10 +31,10 @@
 	</html:form>
 	
 	
-	<h3 class="mtop2 mbottom05"><bean:message key="label.teacher"/></h3>
+	<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>
 	<fr:view name="executionPeriod" schema="teacher.credits.period.view" layout="tabular">	
 		<fr:layout>
-			<fr:property name="classes" value="mtop0 thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 	<html:link page="/defineCreditsPeriods.do?method=editTeacherCreditsPeriods" paramName="executionPeriod" paramProperty="idInternal" paramId="executionPeriodId">
@@ -38,10 +42,10 @@
 	</html:link>
 
 	
-	<h3 class="mtop2 mbottom05"><bean:message key="label.department.adm.office"/></h3>
+	<h3 class="mtop15 mbottom05"><bean:message key="label.department.adm.office"/></h3>
 	<fr:view name="executionPeriod" schema="departmentAdmOffice.credits.period.view" layout="tabular">
 		<fr:layout>
-			<fr:property name="classes" value="mtop0 thlight"/>
+			<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 	<html:link page="/defineCreditsPeriods.do?method=editDepartmentAdmOfficeCreditsPeriods" paramName="executionPeriod" paramProperty="idInternal" paramId="executionPeriodId">

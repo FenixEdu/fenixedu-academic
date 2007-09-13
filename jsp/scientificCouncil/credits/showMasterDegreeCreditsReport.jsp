@@ -12,10 +12,10 @@
 
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
 
-<div class="simpleblock1">
-	<p><bean:message key="message.credits.masterDegree.degree"/>: <strong><bean:write name="executionDegree" property="degreeCurricularPlan.degree.presentationName"/></strong></p>
-	<p><bean:message key="message.credits.masterDegree.curricularPlan"/>: <strong><bean:write name="executionDegree" property="degreeCurricularPlan.name"/></strong></p>
-	<p><bean:message key="message.credits.masterDegree.executionYear"/>: <strong><bean:write name="executionDegree" property="executionYear.year"/></strong></p>
+<div class="infoop2">
+	<p><bean:message key="message.credits.masterDegree.degree"/>: <bean:write name="executionDegree" property="degreeCurricularPlan.degree.presentationName"/></p>
+	<p><bean:message key="message.credits.masterDegree.curricularPlan"/>: <bean:write name="executionDegree" property="degreeCurricularPlan.name"/></p>
+	<p><bean:message key="message.credits.masterDegree.executionYear"/>: <bean:write name="executionDegree" property="executionYear.year"/></p>
 </div>
 
 <p>
@@ -25,7 +25,6 @@
 	</html:link>
 </p>
 
-<p><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></p>
 
 <logic:notPresent name="masterDegreeCoursesDTOs">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.credits.nonExisting.executionCourses"/></span>

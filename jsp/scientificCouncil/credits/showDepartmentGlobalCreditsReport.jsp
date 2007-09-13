@@ -13,12 +13,16 @@
 	<bean:define id="fromExecutionYearID" name="fromExecutionYearID"/>
 	<bean:define id="untilExecutionYearID" name="untilExecutionYearID"/>	
 
-	<html:link page="<%= "/creditsReport.do?method=exportGlobalToExcel&amp;departmentID=" + departmentID 
-		+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
-		<bean:message key="link.credits.xlsFileToDownload"/>
-	</html:link>	
+	<ul class="mtop15">
+		<li>
+			<html:link page="<%= "/creditsReport.do?method=exportGlobalToExcel&amp;departmentID=" + departmentID 
+				+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
+				<bean:message key="link.credits.xlsFileToDownload"/>
+			</html:link>	
+		</li>
+	</ul>
 	
-	<table class="tstyle4">
+	<table class="tstyle4 thlight">
 		<tr>
 			<th rowspan="2" style="width: 300px;"><bean:message key="department"/></th>
 			<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">

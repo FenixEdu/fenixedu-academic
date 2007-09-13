@@ -28,19 +28,17 @@
 	
 		<h:inputHidden binding="#{scientificCouncilFunctionsManagementBackingBean.personIDHidden}"/>
 				
-		<h:outputText value="<H2>#{bundle['label.chooseUnit']}</H2>" escape="false"/>		
+		<h:outputText value="<h2>#{bundle['label.chooseUnit']}</h2>" escape="false"/>		
 
-		<h:outputText value="<br/>" escape="false" />
-		
-		<h:panelGroup styleClass="infoop">
-			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.name}" escape="false"/>		
-		</h:panelGroup>
-		<h:outputText value="<br/><br/><br/>" escape="false" />
+	
+
+		<h:outputText value="<p class='mtop2'><b>#{bundle['label.name']}:</b> " escape="false"/>		
+		<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.name}</p>" escape="false"/>		
+
 						
-		<h:outputText value="<p><strong>#{bundle['label.units']}</strong>:</p>" escape="false"/>		
+		<h:outputText value="<p class='mtop15'><strong>#{bundle['label.units']}:</strong></p>" escape="false"/>		
 					
-		<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.units}<br/>" escape="false"/>
+		<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.units}" escape="false"/>
 		
 		<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
 						    				

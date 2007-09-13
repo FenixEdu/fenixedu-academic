@@ -13,24 +13,22 @@
 	
 		<h:inputHidden binding="#{scientificCouncilFunctionsManagementBackingBean.personIDHidden}"/>
 			
-		<h:outputText value="<H2>#{bundle['label.search.functionManagement']}</H2>" escape="false"/>	
-
-		<h:outputText value="<br/>" escape="false" />	
+		<h:outputText value="<h2>#{bundle['label.search.functionManagement']}</h2>" escape="false"/>
 
 		<h:panelGroup>
-			<h:outputText value="<b>#{bundle['label.name']}</b>: " escape="false"/>		
-			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.name}" escape="false"/>		
+			<h:outputText value="<p class='mtop15'><b>#{bundle['label.name']}:</b> " escape="false"/>		
+			<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.person.name}</p>" escape="false"/>		
 		</h:panelGroup>
 		
-		<h:outputText value="<br/><br/>" escape="false" />	
+		<h:outputText value="<p class='mvert15'>" escape="false" />	
+			<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
+		<h:outputText value="</p>" escape="false" />	
 		
-		<h:commandLink value="#{bundle['label.associate']}" action="associateNewFunction" />
 		
-		<h:outputText value="<br/><br/>" escape="false" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"/>	
 		<h:outputText styleClass="error" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.errorMessage}"
 				value="#{bundle[scientificCouncilFunctionsManagementBackingBean.errorMessage]}" escape="false"/>		
 					
-		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}</h3>" escape="false" />
+		<h:outputText value="<h3 class='mtop15'>#{bundle['label.active.functions']}</h3>" escape="false" />
 	
 		<h:dataTable value="#{scientificCouncilFunctionsManagementBackingBean.activeFunctions}" var="person_function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.activeFunctions}">
@@ -89,10 +87,10 @@
 			</h:column>					
 		</h:dataTable>
 
-		<h:outputText value="#{bundle['error.noActiveFunctions.in.person']}<br/>" styleClass="error" 
+		<h:outputText value="<p><em>#{bundle['error.noActiveFunctions.in.person']}</em></p>" 
 				rendered="#{empty scientificCouncilFunctionsManagementBackingBean.activeFunctions}" escape="false"/>
 				
-		<h:outputText value="<br/><h3>#{bundle['label.inherent.functions']}</h3>" escape="false" 
+		<h:outputText value="<h3 class='mtop15'>#{bundle['label.inherent.functions']}</h3>" escape="false" 
 			rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.inherentFunctions}"/>
 	
 		<h:dataTable value="#{scientificCouncilFunctionsManagementBackingBean.inherentFunctions}" var="function"
@@ -120,7 +118,7 @@
 			
 		</h:dataTable>					
 	
-		<h:outputText value="<br/><h3>#{bundle['label.inactive.functions']}</h3>" escape="false" />
+		<h:outputText value="<h3 class='mtop15'>#{bundle['label.inactive.functions']}</h3>" escape="false" />
 	
 		<h:dataTable value="#{scientificCouncilFunctionsManagementBackingBean.inactiveFunctions}" var="person_function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty scientificCouncilFunctionsManagementBackingBean.inactiveFunctions}">
@@ -176,11 +174,12 @@
 			</h:column>		
 		</h:dataTable>
 		
-		<h:outputText value="#{bundle['error.noInactiveFunctions.in.person']}<br/>" styleClass="error" 
+		<h:outputText value="<p><em>#{bundle['error.noInactiveFunctions.in.person']}</em></p>" 
 				rendered="#{empty scientificCouncilFunctionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
 			
-		<h:outputText value="<br/><br/>" escape="false"/>				
-		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
+		<h:outputText value="<p class='mtop15'>" escape="false"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
+		<h:outputText value="</p>" escape="false"/>
 					
 	</h:form>
 
