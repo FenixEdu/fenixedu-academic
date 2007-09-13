@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -74,7 +75,15 @@ public class Thesis extends Thesis_Base {
 			
 		});
 	}
-	
+
+    public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = new Comparator<Thesis>() {
+
+        public int compare(Thesis t1, Thesis t2) {
+            return Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
+        }
+        
+    };
+    
 	private final static double CREDITS = 0.5; 
     
     public static class ThesisCondition {
@@ -345,9 +354,22 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree, ExecutionYear executionYear) {
-	List<Thesis> result = new ArrayList<Thesis>();
-        
+        List<Thesis> result = new ArrayList<Thesis>();
         result.addAll(getThesisInState(degree, executionYear, ThesisState.APPROVED));
+        
+        return result;
+    }
+
+    public static Collection<Thesis> getRevisionThesis() {
+        return getRevisionThesis(null);
+    }
+
+    public static Collection<Thesis> getRevisionThesis(Degree degree) {
+        return getRevisionThesis(degree, null);
+    }
+
+    public static Collection<Thesis> getRevisionThesis(Degree degree, ExecutionYear executionYear) {
+        List<Thesis> result = new ArrayList<Thesis>();
         result.addAll(getThesisInState(degree, executionYear, ThesisState.REVISION));
         
         return result;

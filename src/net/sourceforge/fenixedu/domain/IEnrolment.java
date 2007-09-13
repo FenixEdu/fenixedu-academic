@@ -5,6 +5,7 @@ import java.util.Comparator;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public interface IEnrolment {
@@ -83,5 +84,15 @@ public interface IEnrolment {
     boolean isExternalEnrolment();
 
     boolean isEnrolment();
+
+    /**
+     * Obtains the last valid thesis for this enrolment. The returned thesis may
+     * not be evaluated. You can used {@link Thesis#isFinalThesis()} and
+     * {@link Thesis#isFinalAndApprovedThesis()} to distinguish between a thesis
+     * currently in evaluation and a final thesis.
+     * 
+     * @return the last valid thesis for this enrolment
+     */
+    Thesis getThesis();
     
 }

@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
@@ -11,11 +13,17 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -64,13 +72,47 @@ public class ShowDegreeThesesDA extends FenixDispatchAction {
 		Map<String, Collection<Thesis>> theses =
 			new HashMap<String, Collection<Thesis>>();
 		
-		for (net.sourceforge.fenixedu.domain.thesis.Thesis thesis : degree.getThesis()) {
-			Thesis publication = thesis.getPublication();
-			if (publication != null) {
-				prepareMap(thesis, years, theses).add(publication);
-			}
-		}
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
+                List<IEnrolment> enrolments = new ArrayList<IEnrolment>();
 
+                for (CurriculumModule module : curricularCourse.getCurriculumModules()) {
+                    if (module.isEnrolment()) {
+                        enrolments.add((IEnrolment) module);
+                    } 
+                    else if (module.isDismissal()) {
+                        Dismissal dismissal = (Dismissal) module;
+
+                        enrolments.addAll(dismissal.getSourceIEnrolments());
+                    }
+                }
+
+                for (IEnrolment enrolment : enrolments) {
+                    net.sourceforge.fenixedu.domain.thesis.Thesis thesis = enrolment.getThesis();
+
+                    if (thesis == null) {
+                        continue;
+                    }
+
+                    // the thesis may not be final but usually only final and
+                    // approved thesis contain a publication
+                    Thesis publication = thesis.getPublication();
+
+                    if (publication == null) {
+                        continue;
+                    }
+
+                    // assert(thesis.isFinalAndApprovedThesis())
+
+                    prepareMap(thesis, years, theses).add(publication);
+                }
+            }
+        }
+        
+        if (degree.hasPendingThesis()) {
+            request.setAttribute("hasPendingThesis", true);
+        }
+        
 		request.setAttribute("years", years);
 		request.setAttribute("theses", theses);
 		
@@ -115,4 +157,30 @@ public class ShowDegreeThesesDA extends FenixDispatchAction {
 		
 		return mapping.findForward("showResult");
 	}
+    
+    public ActionForward showThesesState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Degree degree = getDegree(request);
+        
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
+        
+        SortedSet<net.sourceforge.fenixedu.domain.thesis.Thesis> theses = new TreeSet<net.sourceforge.fenixedu.domain.thesis.Thesis>(
+                net.sourceforge.fenixedu.domain.thesis.Thesis.COMPARATOR_BY_STUDENT);
+        
+        for (net.sourceforge.fenixedu.domain.thesis.Thesis thesis : degree.getThesis()) {
+            if (thesis.isEvaluated()) {
+                continue;
+            }
+         
+            if (thesis.getEnrolment().getExecutionYear().compareTo(executionYear) < 0) {
+                continue;
+            }
+            
+            theses.add(thesis);
+        }
+        
+        request.setAttribute("theses", theses);
+        
+        return mapping.findForward("showThesesState");
+    }
+    
 }

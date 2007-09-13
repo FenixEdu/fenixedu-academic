@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -177,4 +178,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getGrade().getValue();
     }
 
+    /**
+     * There is no thesis associated to an external enrolment.
+     * 
+     * @return <code>null</code>
+     */
+    public Thesis getThesis() {
+        return null;
+    }
+    
 }

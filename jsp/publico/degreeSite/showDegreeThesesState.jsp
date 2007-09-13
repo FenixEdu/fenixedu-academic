@@ -41,42 +41,36 @@
 
 <h2 class="greytxt"><bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" /></h2>
 
-<logic:present name="hasPendingThesis">
-	<div class="mtop1">
-		<bean:message key="public.degree.information.link.thesis.showPublication" bundle="PUBLIC_DEGREE_INFORMATION"/> |
-		<html:link page="<%= "/showDegreeTheses.do?method=showThesesState&amp;degreeID=" + request.getParameter("degreeID") %>">
-			<bean:message key="public.degree.information.link.thesis.showState" bundle="PUBLIC_DEGREE_INFORMATION"/>
-		</html:link>
-	</div>
-</logic:present>
+<div class="mtop1">
+	<html:link page="<%= "/showDegreeTheses.do?method=showTheses&amp;degreeID=" + request.getParameter("degreeID") %>">
+		<bean:message key="public.degree.information.link.thesis.showPublication" bundle="PUBLIC_DEGREE_INFORMATION"/>
+	</html:link> |
+	<bean:message key="public.degree.information.link.thesis.showState" bundle="PUBLIC_DEGREE_INFORMATION"/>
+</div>
 
-<logic:notEmpty name="years">
-	<logic:iterate id="executionYear" name="years" type="net.sourceforge.fenixedu.domain.ExecutionYear">
-		<h2 class="greytxt mtop2">
-			<fr:view name="executionYear" property="year"/>
-		</h2>
-		
-		<ul style="width: 600px;">
-			<logic:iterate id="thesis" name="theses" property="<%= executionYear.getYear() %>" scope="request">
-				<bean:define id="thesisId" name="thesis" property="idInternal"/>
-				<li>
-		 			<fr:view name="thesis" layout="nonNullValues" schema="result.publication.presentation.Thesis">
-		 				<fr:layout>
-		 					<fr:property name="htmlSeparator" value=", "/>
-		 					<fr:property name="indentation" value="false"/>
-		 				</fr:layout>
-		 				<fr:destination name="view.publication" path="<%= "/showDegreeTheses.do?method=showResult&amp;thesisID=" + thesisId + "&amp;degreeID=" + request.getParameter("degreeID")%>"/>
-		 			</fr:view> (<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ thesisId %>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
-				</li>
-			</logic:iterate>
-		</ul>
-	</logic:iterate>
+<logic:empty name="theses">
+	<em>
+		<bean:message key="public.degree.information.label.theses.empty.message" bundle="PUBLIC_DEGREE_INFORMATION"/>
+	</em>
+</logic:empty>
+
+<logic:notEmpty name="theses">
+	<ul>
+		<logic:iterate id="thesis" name="theses" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+			<li>
+				<div>
+					<p class="mvert0">
+						<fr:view name="thesis" property="student.number"/>,
+						<fr:view name="thesis" property="student.person.name" layout="person-name"/>,
+						<em><fr:view name="thesis" property="finalFullTitle"/></em>
+					</p>
+					<p class="greytxt mvert0">
+						<bean:define id="state" name="thesis" property="state"/>
+						<bean:message key="<%= "label.theses.state." + state %>" bundle="PUBLIC_DEGREE_INFORMATION"/>.
+					</p>
+				</div>
+			</li>
+		</logic:iterate>
+	</ul>
 </logic:notEmpty>
 
-<logic:empty name="years">
-	<p class="mtop2">
-		<em>
-			<bean:message key="public.degree.information.label.theses.empty.message" bundle="PUBLIC_DEGREE_INFORMATION"/>
-		</em>
-	</p>
-</logic:empty>

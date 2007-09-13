@@ -79,7 +79,7 @@
             <fr:property name="visibleIf(view)" value="evaluated"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortUrl" value="/scientificCouncilManageThesis.do?method=listThesis"/>
+            <fr:property name="sortUrl" value="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;degreeID=%s&amp;executionYearID=%s", degreeId, executionYearId) %>"/>
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         </fr:layout>
     </fr:view>

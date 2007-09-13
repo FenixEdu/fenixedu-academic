@@ -1349,11 +1349,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * Obtains the first non evaluated thesis associated with this Enrolment or
-     * the Thesis with the final evaluation. This method assumes that each
-     * Student has at most one non evaluated Thesis and no more that two Thesis.
+     * {@inheritDoc}
      * 
-     * @return the first non evaluated Thesis for this Enrolment
+     * <p>
+     * This method assumes that each Student has at most one non evaluated
+     * Thesis and no more that two Thesis.
      */
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();

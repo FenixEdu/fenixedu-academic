@@ -35,6 +35,8 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -976,16 +978,33 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getDegreeType().isSecondCycle();
     }
     
-    /**
-     * Provide {@link #hasAnyThesis()} with a standard getter signature. 
-     */
     public boolean isAnyThesisAvailable() {
-    	for (Thesis thesis : getThesis()) {
-    		if (thesis.isFinalAndApprovedThesis()) {
-    			return true;
-}
-}
-    	return false;
+        for (DegreeCurricularPlan dcp : getDegreeCurricularPlans()) {
+            for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
+                List<IEnrolment> enrolments = new ArrayList<IEnrolment>();
+
+                for (CurriculumModule module : curricularCourse.getCurriculumModules()) {
+                    if (module.isEnrolment()) {
+                        enrolments.add((IEnrolment) module);
+                    } 
+                    else if (module.isDismissal()) {
+                        Dismissal dismissal = (Dismissal) module;
+
+                        enrolments.addAll(dismissal.getSourceIEnrolments());
+                    }
+                }
+
+                for (IEnrolment enrolment : enrolments) {
+                    Thesis thesis = enrolment.getThesis();
+
+                    if (thesis != null && thesis.hasPublication()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
     }
     
     /* 
@@ -1245,6 +1264,18 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     	
     	return result;
     }
-    
+
+    /**
+     * @return <code>true</code> if any of the thesis associated with this degree is not final
+     */
+    public boolean hasPendingThesis() {
+        for (Thesis thesis : getThesis()) {
+            if (! thesis.isFinalThesis()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     
 }
