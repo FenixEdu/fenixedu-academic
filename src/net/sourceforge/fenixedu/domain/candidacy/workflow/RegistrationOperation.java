@@ -39,8 +39,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	changePersonRoles();
     }
 
-    private void changePersonRoles() {
-	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
+    private void changePersonRoles() {	
 	getDegreeCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
     }
 
