@@ -13,13 +13,13 @@
 			</html:link>
 		</li>
 		
-		<%--  
+		  
 		<li>
 			<html:link page="/competenceCourses/manageVersions.do?method=prepare">
 				<bean:message key="label.manage.versions"/>
 			</html:link>
 		</li>
-		--%>
+		
 		
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
