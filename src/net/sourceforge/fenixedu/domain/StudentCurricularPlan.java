@@ -2117,16 +2117,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod executionPeriod, String createdBy) {
 
-	for (final Context context : curriculumGroup.getDegreeModule().getContextsWithCurricularCourseByCurricularPeriod(
-		curricularPeriod, executionPeriod)) {
-	    new Enrolment(this, curriculumGroup, (CurricularCourse) context.getChildDegreeModule(), executionPeriod,
-		    EnrollmentCondition.FINAL, createdBy);
+	if (curriculumGroup.hasDegreeModule()) {
+	    for (final Context context : curriculumGroup.getDegreeModule().getContextsWithCurricularCourseByCurricularPeriod(
+		    curricularPeriod, executionPeriod)) {
+		new Enrolment(this, curriculumGroup, (CurricularCourse) context.getChildDegreeModule(), executionPeriod,
+			EnrollmentCondition.FINAL, createdBy);
+	    }
 	}
 
-	for (final CurriculumModule curriculumModule : curriculumGroup.getCurriculumModulesSet()) {
-	    if (!curriculumModule.isLeaf()) {
-		internalCreateFirstTimeStudentEnrolmentsFor((CurriculumGroup) curriculumModule, curricularPeriod,
-			executionPeriod, createdBy);
+	if (curriculumGroup.hasAnyCurriculumModules()) {
+	    for (final CurriculumModule curriculumModule : curriculumGroup.getCurriculumModulesSet()) {
+		if (!curriculumModule.isLeaf()) {
+		    internalCreateFirstTimeStudentEnrolmentsFor((CurriculumGroup) curriculumModule, curricularPeriod,
+			    executionPeriod, createdBy);
+		}
 	    }
 	}
     }
