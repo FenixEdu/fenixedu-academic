@@ -36,6 +36,8 @@ public class PrintSystemAccessDataOperation extends CandidacyOperation {
 
     @Override
     public boolean isAuthorized(Person person) {
-	return super.isAuthorized(person) && person == getCandidacy().getPerson();
+	// Disable operation
+	return false;//super.isAuthorized(person) && person == getCandidacy().getPerson();
     }
+    
 }
