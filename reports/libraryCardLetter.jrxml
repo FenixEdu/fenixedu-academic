@@ -91,7 +91,7 @@
 						x="29"
 						y="315"
 						width="491"
-						height="166"
+						height="184"
 						key="staticText-3"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" lineSpacing="Single">
