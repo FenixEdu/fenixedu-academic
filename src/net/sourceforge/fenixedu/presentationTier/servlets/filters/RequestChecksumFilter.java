@@ -145,18 +145,19 @@ public class RequestChecksumFilter implements Filter {
 			if (indexOfHrefBodyEnd >= 0) {
 
 			    final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-			    if (indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) {
+			    final boolean isJavascriptLink = !(indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd);
 
-			        final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
-			        boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
-			        if (hasCardinal) {
-			            response.append(source, iOffset, indexOfCardinal);
-			        } else {
-			            response.append(source, iOffset, indexOfHrefBodyEnd);
-			        }
+			    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
+			    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
+			    if (hasCardinal) {
+				response.append(source, iOffset, indexOfCardinal);
+			    } else {
+				response.append(source, iOffset, indexOfHrefBodyEnd);
+			    }
 
-			        final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
-			        final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+			    final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
+			    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+			    if (!isJavascriptLink) {
 			        if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
 			            response.append('?');
 			        } else {
@@ -165,16 +166,16 @@ public class RequestChecksumFilter implements Filter {
 			        response.append(CHECKSUM_ATTRIBUTE_NAME);
 			        response.append("=");
 			        response.append(checksum);
-
-			        if (hasCardinal) {
-			            response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
-			        }
-
-			        final int nextChar = indexOfAclose + 1;
-			        response.append(source, indexOfHrefBodyEnd, nextChar);
-			        rewrite(response, source, nextChar);
-			        return;
 			    }
+
+			    if (hasCardinal) {
+				response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
+			    }
+
+			    final int nextChar = indexOfAclose + 1;
+			    response.append(source, indexOfHrefBodyEnd, nextChar);
+			    rewrite(response, source, nextChar);
+			    return;
 			}
 		    }
 		}

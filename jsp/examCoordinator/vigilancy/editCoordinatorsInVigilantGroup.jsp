@@ -25,7 +25,9 @@
 <div id="coordinatorsInGroup">
 <p class="mbottom0"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.coordinatorsGroup"/></strong></p>
 
-<fr:form id="removeCoordinatorsForm" action="/vigilancy/vigilantGroupManagement.do?method=removeCoordinatorsFromGroup">
+<fr:form id="removeCoordinatorsForm" action="/vigilancy/vigilantGroupManagement.do">
+<html:hidden property="method" value="removeCoordinatorsFromGroup"/>
+
 <fr:edit name="bean" id="removeCoordinators" schema="removeCoordinators" 
 action="vigilancy/vigilantGroupManagement.do?method=removeCoordinatorsFromGroup"
 nested="true">
@@ -36,16 +38,22 @@ nested="true">
 </fr:edit>
 <p class="mtop0">
 	<span class="switchInline"><a href="javascript:document.getElementById('removeCoordinatorsForm').submit()"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.remove"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
+<%-- 
 	<span class="switchInline"><a href="javascript:checkall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.selectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a>, </span>
 	<span class="switchInline"><a href="javascript:uncheckall('removeCoordinatorsForm')"><bean:message bundle="VIGILANCY_RESOURCES" key="label.unselectAll"/> <bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></a></span>
+--%>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.vigilancy.remove" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </p>
 </fr:form>
 </div>
 
-<fr:form id="selectedUnit" action="/vigilancy/vigilantGroupManagement.do?method=selectUnit&forwardTo=editCoordinators">
+
+<fr:form id="selectedUnit" action="/vigilancy/vigilantGroupManagement.do">
+<html:hidden property="method" value="selectUnit"/>
+<html:hidden property="forwardTo" value="editCoordinators"/>
+
 <fr:edit id="selectUnit" name="bean" schema="selectUnitInVigilantGroup" nested="true">
-<fr:destination name="postback" path="/vigilancy/vigilantGroupManagement.do?method=selectUnit"/>
+<fr:destination name="postback" path="/vigilancy/vigilantGroupManagement.do"/>
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thmiddle thlight thright mtop15"/>
 	</fr:layout>
@@ -55,8 +63,8 @@ nested="true">
 
 <div id="addCoordinatorsToGroup">
 <p class="mbottom05"><strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.examCoordinators"/></strong></p>
-<fr:form id="addCoordinatorsForm" action="/vigilancy/vigilantGroupManagement.do?method=addCoordinatorsToGroup">
-
+<fr:form id="addCoordinatorsForm" action="/vigilancy/vigilantGroupManagement.do">
+<html:hidden property="method" value="addCoordinatorsToGroup"/>
 <fr:edit name="bean" id="addCoordinators" schema="addCoordinators" 
 			action="/vigilancy/vigilantGroupManagement.do?method=addCoordinatorsToGoup">
 			<fr:layout>
