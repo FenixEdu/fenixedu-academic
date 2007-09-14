@@ -30,15 +30,15 @@ public class EventGenerator {
 		    .getRegistration());
 	    break;
 	    
-	case BOLONHA_PHD_PROGRAM:
-
-	    new PhDGratuityEvent(administrativeOffice, person, studentCurricularPlan, executionYear);
-	    new PhDRegistrationEvent(administrativeOffice, person, studentCurricularPlan
-		    .getRegistration());
-	    if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-		new InsuranceEvent(person, executionYear);
-	    }
-	    break;
+//	case BOLONHA_PHD_PROGRAM:
+//
+//	    new PhDGratuityEvent(administrativeOffice, person, studentCurricularPlan, executionYear);
+//	    new PhDRegistrationEvent(administrativeOffice, person, studentCurricularPlan
+//		    .getRegistration());
+//	    if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
+//		new InsuranceEvent(person, executionYear);
+//	    }
+//	    break;
 
 	default:
 	    break;
