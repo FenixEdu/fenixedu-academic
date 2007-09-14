@@ -224,9 +224,9 @@ public class Lesson extends Lesson_Base {
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
 	if(!wasFinished() && newBeginDate != null && newBeginDate.isAfter(getPeriod().getStartYearMonthDay())) {						
-	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);
+	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);	    
+	    refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    			
 	    createAllLessonInstances(instanceDates, null);
-	    refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    			    
 	}
     }
 
@@ -235,9 +235,9 @@ public class Lesson extends Lesson_Base {
 	    YearMonthDay dayToNotCreateInstance) {
 
 	removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	    
-	SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
-	createAllLessonInstances(instanceDates, dayToNotCreateInstance);
+	SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);	
 	refreshPeriod(newBeginDate, newEndDate);	
+	createAllLessonInstances(instanceDates, dayToNotCreateInstance);
     }
 
     private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates, YearMonthDay dayToNotCreateInstance) {
