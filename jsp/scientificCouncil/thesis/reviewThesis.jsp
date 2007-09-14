@@ -55,6 +55,12 @@
 	</div>
 </logic:notPresent>
 
+<logic:messagesPresent message="true" property="error">
+    <html:messages id="message" message="true" property="error">
+        <p><span class="error0"><bean:write name="message" filter="false"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
 <%-- Dissertation --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.evaluation.details"/></h3>
 

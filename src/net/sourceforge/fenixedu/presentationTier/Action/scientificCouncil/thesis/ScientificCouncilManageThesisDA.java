@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -100,22 +101,21 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {
-	ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
-	RenderUtils.invalidateViewState("contextBean");
-	
-	if (bean != null) {
-	    return bean;
-	}
-	else {
+        ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+        RenderUtils.invalidateViewState("contextBean");
+
+        if (bean != null) {
+            return bean;
+        } else {
             Degree degree = getDegree(request);
             ExecutionYear executionYear = getExecutionYear(request);
 
             if (executionYear == null) {
-            	executionYear = ExecutionYear.readCurrentExecutionYear();
+                executionYear = ExecutionYear.readCurrentExecutionYear();
             }
-            
+
             return new ThesisContextBean(degree, executionYear);
-	}
+        }
     }
 
     public ActionForward reviewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -156,8 +156,13 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
         Thesis thesis = getThesis(request);
 
         if (thesis != null) {
-            executeService("ApproveThesisDiscussion", thesis);
-            addActionMessage("mail", request, "thesis.evaluated.mail.sent");
+            try {
+                executeService("ApproveThesisDiscussion", thesis);
+                addActionMessage("mail", request, "thesis.evaluated.mail.sent");
+            } catch (DomainException e) {
+                addActionMessage("error", request, e.getKey(), e.getArgs());
+                return reviewThesis(mapping, actionForm, request, response);
+            }
         }
         
         return listThesis(mapping, actionForm, request, response);

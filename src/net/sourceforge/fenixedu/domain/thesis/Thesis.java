@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -653,11 +654,23 @@ public class Thesis extends Thesis_Base {
      */
     public boolean hasAnyEvaluations() {
         for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluations()) {
-            if (evaluation.hasMarkSheet()) {
+            if (! evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
+                continue;
+            }
+            
+            if (! evaluation.hasMarkSheet()) {
+                continue;
+            }
+
+            String gradeValue = evaluation.getGradeValue();
+            if (gradeValue.equals(getEvaluationMark())) {
                 return true;
+            } 
+            else {
+                throw new DomainException("thesis.approve.evaluation.has.different.mark", gradeValue);
             }
         }
-        
+
         return false;
     }
 
