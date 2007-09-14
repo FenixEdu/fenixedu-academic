@@ -191,12 +191,10 @@ public class Registration extends Registration_Base {
 
 	checkRulesToDelete();
 
-	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
-	    ;
-
-	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete())
-	    ;
-
+	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete());
+	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete());
+	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete());
+	
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
 	}
@@ -205,8 +203,7 @@ public class Registration extends Registration_Base {
 	    getExternalRegistrationData().delete();
 	}
 
-	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
-	    ;
+	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete());
 	
 	removeRegistrationYear();
 	removeDegree();
