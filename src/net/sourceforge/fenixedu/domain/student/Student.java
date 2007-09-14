@@ -763,6 +763,18 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public Registration getRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+	for (Registration registration : super.getRegistrations()) {
+	    Set<DegreeCurricularPlan> degreeCurricularPlans = registration.getDegreeCurricularPlans();
+	    for (DegreeCurricularPlan degreeCurricularPlanToTest : degreeCurricularPlans) {
+		if(degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
+		    return registration;
+		}
+	    }
+	}
+	return null;
+    }
+    
     public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
