@@ -75,7 +75,7 @@
           </tr>
        
           <tr>
-            <td width="40%"><strong><bean:message  key="label.operator.candidacy.enrolment.process"/>:</strong></td>
+            <td width="40%"><strong><bean:message  key="label.operator.candidacy.system.access"/>:</strong></td>
             <td width="60%">&nbsp;</td>
           </tr>
           <tr>
@@ -104,15 +104,6 @@
             <td>&nbsp;</td>
           </tr>
           
-          <tr>
-            <td width="40%"><strong><bean:message  key="label.operator.candidacy.mail.creation.process"/>:</strong></td>
-            <td width="60%">&nbsp;</td>
-          </tr>
-          
-          <tr>
-            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.accessAddress"/> </td>
-            <td> <bean:message  key="label.operator.candidacy.mail.creation.page.url"/> </td>
-          </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>

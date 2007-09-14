@@ -39,14 +39,11 @@
 			<bean:define id="emptyOperations" value="false" />
 			<bean:define id="operationType" name="operation" property="type.name" />
 			<bean:define id="candidacyID" name="candidacy" property="idInternal" />
-			
+
 			<logic:equal name="operationType" value="PRINT_SCHEDULE">
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
-			<logic:equal name="operationtype" value="PRINT_REGISTRATION_DECLARATION">
-				<bean:define id="requiresNewWindow" value="true" />
-			</logic:equal>
-			<logic:equal name="operationType" value="PRINT_SYSTEM_ACCESS_DATA">
+			<logic:equal name="operationType" value="PRINT_REGISTRATION_DECLARATION"> 
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
 			
@@ -80,9 +77,12 @@
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />
-	<div class="warning0 mtop2">
+	<div class="warning0 mtop2" style="padding: 0.5em 1em;">
 		<p class="mvert025"><strong><bean:message key="label.attention"/></strong>:</p>
-		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/></span></p>
+		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/>:</span></p>
+		<p class="mvert05">
+			<h3><html:link style="border-bottom: 1px solid #97b7ce;" href="https://ciist.ist.utl.pt/inscricoes/passo2.html"><bean:message key="link.candidacy.institutional.email.creation.nextStep"/> &gt;&gt;</html:link></h3>
+		</p>
 	</div>
 </logic:equal>
 
