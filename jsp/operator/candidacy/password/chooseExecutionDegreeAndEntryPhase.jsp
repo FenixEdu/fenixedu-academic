@@ -5,21 +5,22 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<br />
+
+
 <html:form action="/generatePasswordsForCandidacies.do?method=showCandidacies">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 	
+	<em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES"/></em>
 	<h2><bean:message key="label.operator.candidacy.passwords" /></h2>
 	
-	<br/>
+	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 	
-	<table>
+	<table class="tstyle5 thlight thright">
 	  <tr>
-	    <td>
-	    	<strong><bean:message key="label.operator.candidacy.passwords.chooseExecutionDegree" /></strong>
-	    </td>
+	    <th>
+	    	<bean:message key="label.operator.candidacy.passwords.chooseExecutionDegree" />:
+	    </th>
 	    <td>	
 	    	<html:select property="executionDegreeId">
 				<html:option value="0">&nbsp;</html:option>
@@ -28,9 +29,9 @@
 		</td>
 	  </tr>
 	  <tr>
-	  	<td>
-			<strong><bean:message key="label.operator.candidacy.passwords.chooseEntryPhase" /></strong>
-	    </td>
+	  	<th>
+			<bean:message key="label.operator.candidacy.passwords.chooseEntryPhase" />:
+	    </th>
 	    <td>
 		 	<html:select property="entryPhase">
 		 		<logic:iterate id="entryPhase" name="entryPhases">

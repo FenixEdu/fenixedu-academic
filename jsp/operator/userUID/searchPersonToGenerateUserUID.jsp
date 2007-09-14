@@ -12,19 +12,19 @@
 	
 	<logic:messagesPresent message="true">
 		<p>
-		<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
-				<bean:write name="message"/>
-			</html:messages>
-		</span>
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages>
+			</span>
 		<p>
 	</logic:messagesPresent>	
 	
 	<fr:form action="/generateUserUID.do?method=searchPerson">		
 		<fr:edit name="personBean" id="personBeanID" schema="SearchPersonAttributesToGenerateUserUID">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>
-		        <fr:property name="columnClasses" value=",,noborder"/>
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>			
 		<html:submit><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>	
@@ -34,8 +34,8 @@
 		<logic:notEmpty name="resultPersons">			
 			<fr:view name="resultPersons" schema="ShowExistentPersonsDetailsBeforeGenerateUserUID" >
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4"/>
-					<fr:property name="rowClasses" value="listClasses"/>					
+					<fr:property name="classes" value="tstyle4 tdcenter"/>
+					<fr:property name="columnClasses" value=",,,,bold"/>
 																					
 		   			<fr:property name="link(aliasManagement)" value="/generateUserUID.do?method=generateUserUID"/>
 		            <fr:property name="param(aliasManagement)" value="idInternal/personID"/>
