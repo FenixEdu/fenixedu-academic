@@ -11,17 +11,20 @@
 		<logic:present name="cases">
 			<logic:present name="modalities">
 				<logic:present name="cases">
+
+						<em><bean:message key="label.portal.seminaries"/></em>
 						<h2><bean:message key="label.candicaciesGrid.Title"/></h2>
+
 						<html:form action="/showCandidacies.do">
-							<table>
-								<tr>
-									<td colspan="2" class="infoop">
-										<bean:message key="message.candidaciesGridHints"/>
-									</td>
-								</tr>
+
+							<div class="infoop2">
+								<bean:message key="message.candidaciesGridHints"/>
+							</div>
+
+							<table class="tstyle5">
 								<tr>
 									<td>
-										<bean:message key="label.seminary.candidaciesGrid"/>
+										<bean:message key="label.seminary.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.seminaryID" property="seminaryID">
@@ -34,7 +37,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.degree.candidaciesGrid"/>
+										<bean:message key="label.degree.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID">
@@ -47,7 +50,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.course.candidaciesGrid"/>
+										<bean:message key="label.course.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.courseID" property="courseID">
@@ -60,7 +63,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.modality.candidaciesGrid"/>
+										<bean:message key="label.modality.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.modalityID" property="modalityID">
@@ -73,7 +76,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.theme.candidaciesGrid"/>
+										<bean:message key="label.theme.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.themeID" property="themeID">
@@ -86,7 +89,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.case1.candidaciesGrid"/>
+										<bean:message key="label.case1.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case1ID" property="case1ID">
@@ -104,7 +107,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.case2.candidaciesGrid"/>
+										<bean:message key="label.case2.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case2ID" property="case2ID">
@@ -122,7 +125,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.case3.candidaciesGrid"/>
+										<bean:message key="label.case3.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case3ID" property="case3ID">
@@ -140,7 +143,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.case4.candidaciesGrid"/>
+										<bean:message key="label.case4.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case4ID" property="case4ID">
@@ -158,7 +161,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.case5.candidaciesGrid"/>
+										<bean:message key="label.case5.candidaciesGrid"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case5ID" property="case5ID">
@@ -176,7 +179,7 @@
 								</tr>
 								<tr>
 									<td>
-										<bean:message key="label.onlyApproved"/>
+										<bean:message key="label.onlyApproved"/>:
 									</td>
 									<td>
 										<html:select bundle="HTMLALT_RESOURCES" altKey="select.approved" property="approved">
@@ -192,88 +195,95 @@
 										</html:select>
 									</td>
 								</tr>
-								<tr>
-									<td colspan="2">
-										<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" property="submition"/>
-										<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button" value="Limpar"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
+							</table>
+							
+							<p>							
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" property="submition"/>
+								<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button" value="Limpar"/>
+							</p>
+							
+
 									<%Map parameters = request.getParameterMap();
 									request.setAttribute("parameters",parameters);%>
 									<bean:define id="args" type="java.util.Map" name="parameters"/>
-								<html:link page="/getTabSeparatedCandidacies.do" name="args">
-									<bean:message key="link.getExcelSpreadSheet"/><br/><br/>
-								</html:link>
+								<p class="mtop15">
+									<html:link page="/getTabSeparatedCandidacies.do" name="args">
+										<bean:message key="link.getExcelSpreadSheet"/>
+									</html:link>
+								</p>
 								<%Map sendMailParameters = new TreeMap(request.getParameterMap());
 						              sendMailParameters.put("method","prepareCandidaciesSend");
 						              sendMailParameters.put("candidaciesSend","true");
 									  request.setAttribute("sendMailParameters",sendMailParameters);
 								%>
 								<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
-							   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
-									<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
-							   </html:link>
+								<p>
+									<html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
+										<bean:message key="link.sendEmailToAllStudents"/>
+									</html:link>
+								</p>
 								<bean:define name="candidacies" type="java.util.List" id="candidacies"/>
-								<%=candidacies.size()%> <bean:message key="message.enrolledStudents"/>
-									</td>
-								</tr>
-							</table>
-							<table>
+								<p class="mbottom15">
+									<%=candidacies.size()%> <bean:message key="message.enrolledStudents"/>
+								</p>
+
+
+							
+							
+							<table class="tstyle4 tdcenter">
 								<tr>
-									<th class="listClasses-header">
+									<th>
 										Detalhes
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Nº
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Nome
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Média
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Cadeiras Feitas
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Aceite
 									</th>
-									<th class="listClasses-header">
+									<th>
 										E-Mail
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Seminário
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Curso
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Disciplina
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Modalidade
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Tema
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Motivação
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Caso 1
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Caso 2
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Caso 3
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Caso 4
 									</th>
-									<th class="listClasses-header">
+									<th>
 										Caso 5
 									</th>
 								</tr>
@@ -282,7 +292,7 @@
 						<logic:notEmpty name="candidacies">
 							<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails">
 								<tr>
-									<td class="listClasses">
+									<td>
 										<html:link page="/candidacyDetails.do" 
 												paramId="objectCode" 
 												paramName="candidacy" 
@@ -290,7 +300,7 @@
 											Ver
 										</html:link>
 									</td>
-									<td class="listClasses">
+									<td>
 										<html:link page="/viewCandidateCurriculum.do" 
 												paramId="username" 
 												paramName="candidacy" 
@@ -298,7 +308,7 @@
 											<bean:write name="candidacy" property="student.number"/>
 										</html:link>
 									</td>
-									<td  class="listClasses" title="<bean:write name="candidacy" property="student.infoPerson.nome"/>">
+									<td  title="<bean:write name="candidacy" property="student.infoPerson.nome"/>">
 										<html:link page="/viewCandidateCurriculum.do" 
 											paramId="username" 
 											paramName="candidacy" 
@@ -312,13 +322,13 @@
 										%>
 										</html:link>
 									</td>
-									<td class="listClasses">
+									<td>
 										<bean:write name="candidacy" property="infoClassification.aritmeticClassification"/>
 									</td>
-									<td class="listClasses">
+									<td>
 										<bean:write name="candidacy" property="infoClassification.completedCourses"/>
 									</td>
-									<td class="listClasses">
+									<td>
 										<logic:equal name="candidacy" property="approved" value="true">
 											Sim
 										</logic:equal>
@@ -326,13 +336,13 @@
 											Não
 										</logic:notEqual>
 									</td>
-									<td class="listClasses">
+									<td>
 										&nbsp;
 										<a href="mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>">
 											<bean:write name="candidacy" property="student.infoPerson.email"/>
 										</a>
 									</td>
-									<td class="listClasses">
+									<td>
 										<html:link page="/showCandidacies.do" 
 											  paramId="seminaryID" 
 											  paramName="candidacy" 
@@ -340,7 +350,7 @@
 											<bean:write name="candidacy" property="seminary.name"/>
 										</html:link>
 									</td>
-									<td  class="listClasses" title="<bean:write name="candidacy" property="curricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>">
+									<td  title="<bean:write name="candidacy" property="curricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>">
 										<html:link page="/showCandidacies.do"
 											  paramId="degreeID"
 											  paramName="candidacy"
@@ -348,7 +358,7 @@
 											<bean:write name="candidacy" property="curricularCourse.infoDegreeCurricularPlan.infoDegree.sigla"/>
 										</html:link>
 									</td>
-									<td class="listClasses">
+									<td>
 										<html:link page="/showCandidacies.do"
 											  paramId="courseID"
 											  paramName="candidacy"
@@ -356,7 +366,7 @@
 											<bean:write name="candidacy" property="curricularCourse.name"/>
 										</html:link>
 									</td>
-									<td class="listClasses">
+									<td>
 										<html:link page="/showCandidacies.do"
 											  paramId="modalityID"
 											  paramName="candidacy"
@@ -364,7 +374,7 @@
 											<bean:write name="candidacy" property="modality.name"/>
 										</html:link>
 									</td>
-									<td class="listClasses">
+									<td>
 										<logic:notEmpty name="candidacy" property="theme">
 											<html:link page="/showCandidacies.do"
 													paramId="themeID"
@@ -377,7 +387,7 @@
 												N/A
 										</logic:empty>
 									</td>
-									<td class="listClasses">
+									<td>
 										&nbsp;
 										<%
                 
@@ -395,7 +405,7 @@
 									</td>
 										<bean:size id="selectedCasesSize" name="candidacy" property="cases"/>
 									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy">
-										<td  class="listClasses" title="<bean:write name="caseStudy" property="name"/>">
+										<td  title="<bean:write name="caseStudy" property="name"/>">
 										<html:link page="/showCandidacies.do"
 														paramId="<%="case" + (index.intValue()+1) +"ID"%>"
 														paramName="caseStudy"

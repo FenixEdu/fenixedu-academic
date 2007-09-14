@@ -16,56 +16,64 @@
 		<logic:present name="curricularCourse">
 			<logic:present name="curricularCourse">
 					<logic:present name="motivation">
+				
+				<em><bean:message key="label.portal.seminaries"/></em>
 				<h2><bean:message key="label.viewCandidacyTitle"/></h2>
-				<h3><bean:message key="label.seminaries.showCandidacy.Student"/></h3>	
-				<table width="90%" class="infotable">
+
+				<h3 class="mbottom05"><bean:message key="label.seminaries.showCandidacy.Student"/></h3>	
+				<table class="tstyle4 mtop05">
 					<tr>
-						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.Student.Number"/>:</strong></td>
+						<td width="75px"><bean:message key="label.seminaries.showCandidacy.Student.Number"/>:</td>
 						<td><bean:write name="student" property="number"/></td>
 					</tr>
 					<tr>
-						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.Student.Name"/>:</strong></td>
+						<td width="75px"><bean:message key="label.seminaries.showCandidacy.Student.Name"/>:</td>
 						<td><bean:write name="student" property="infoPerson.nome"/></td>
 					</tr>
 				</table>
-				<h3><bean:message key="label.seminaries.showCandidacy.CurricularCourse"/></h3>
-				<table width="90%" class="infotable">
+				
+				<h3 class="mbottom05"><bean:message key="label.seminaries.showCandidacy.CurricularCourse"/></h3>
+				<table class="tstyle4 mtop05">
 					<tr>
-						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Name"/>:</Strong></td>
+						<td width="75px"><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Name"/>:</Strong></td>
 						<td><bean:write name="curricularCourse" property="name"/></td>
 					</tr>
 					<tr>
-						<td width="75px"><strong><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Code"/>:</strong></td>
+						<td width="75px"><bean:message key="label.seminaries.showCandidacy.CurricularCourse.Code"/>:</td>
 						<td><bean:write name="curricularCourse" property="code"/></td>
 					</tr>
 				</table>
-				<h3><bean:message key="label.seminaries.showCandidacy.Candidacy"/></h3>
-				<table width="90%"class="infotable">
+				
+				<h3 class="mbottom05"><bean:message key="label.seminaries.showCandidacy.Candidacy"/></h3>
+				<table class="tstyle4 mtop05">
 					<logic:present name="theme">
 						<logic:notEmpty name="theme">
 							<tr>
-								<td><strong><bean:message key="label.seminaries.showCandidacy.Theme"/>:</strong></td>
+								<td><bean:message key="label.seminaries.showCandidacy.Theme"/>:</td>
 								<td><bean:write name="theme" property="name"/></td>
 							</tr>
 						</logic:notEmpty>
 					</logic:present>
 					<tr>
-						<td><strong><bean:message key="label.seminaries.showCandidacy.Modality"/>:</strong></td>
+						<td><bean:message key="label.seminaries.showCandidacy.Modality"/>:</td>
 						<td><bean:write name="modality" property="name"/></td>
 					</tr>
 					<tr>
-						<td><strong><bean:message key="label.seminaries.showCandidacy.Motivation"/>:</strong></td>
+						<td><bean:message key="label.seminaries.showCandidacy.Motivation"/>:</td>
 						<td><bean:write name="motivation"/></td>
 					</tr>
 					<logic:iterate indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
 					<tr>
-						<td><strong><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></strong></td>
+						<td><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></td>
 						<td><bean:write name="caseStudy" property="code"/> - <bean:write name="caseStudy" property="name"/></td>
 					</tr>
 					</logic:iterate>
 				</table>
-				<br />
-				<html:link page="/showCandidacies.do?seminaryID=5"><bean:message key="label.seminaries.showCandidacy.Back"/></html:link><br/>				
+
+				<p>
+					<html:link page="/showCandidacies.do?seminaryID=5">&lt; <bean:message key="label.seminaries.showCandidacy.Back"/></html:link>
+				</p>
+				
 					</logic:present>
 				</logic:present>
 			</logic:present>

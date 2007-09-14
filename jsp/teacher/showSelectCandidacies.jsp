@@ -5,42 +5,45 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <logic:present name="candidacies">
-	<h2>
-		<bean:message key="label.selectCandicaciesGrid.Title"/>
-	</h2>
+
+	<em><bean:message key="label.portal.seminaries"/></em>
+	<h2><bean:message key="label.selectCandicaciesGrid.Title"/></h2>
+
 	<html:form action="/selectCandidacies.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.seminaryID" property="seminaryID">
-			<html:option value="-1" key="label.seminary.candidaciesGrid.select">
-				<bean:message key="label.seminary.candidaciesGrid.select"/>
-			</html:option>
-			<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
-		</html:select>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="OK" property="submition"/>
+		<p>
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.seminaryID" property="seminaryID">
+				<html:option value="-1" key="label.seminary.candidaciesGrid.select">
+					<bean:message key="label.seminary.candidaciesGrid.select"/>
+				</html:option>
+				<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
+			</html:select>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="OK" property="submition"/>
+		</p>
 	</html:form>
 	
 	<html:form action="/selectCandidacies.do">
-		<table>
+		<table class="tstyle4 tdcenter">
 			<tr>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.details"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.Number"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.Name"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.Average"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.courses.done"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.Email"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="label.seminaries.showCandidacy.Student.Candidacy.Accepted" />
 				</th>
 			</tr>
@@ -48,7 +51,7 @@
 				<logic:notEmpty name="candidacies">
 					<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO">
 						<tr>
-							<td class="listClasses">
+							<td>
 								<html:link page="/candidacyDetails.do" 
 									paramId="objectCode" 
 									paramName="candidacy" 
@@ -56,7 +59,7 @@
 									<bean:message key="label.seminaries.showCandidacy.See"/>
 								</html:link>
 							</td> 
-							<td class="listClasses">
+							<td>
 								<html:link page="/viewCandidateCurriculum.do" 
 										paramId="username" 
 										paramName="candidacy" 
@@ -64,7 +67,7 @@
 									<bean:write name="candidacy" property="number"/>
 								</html:link>
 							</td> 
-							<td  class="listClasses" title="<bean:write name="candidacy" property="name"/>">
+							<td  title="<bean:write name="candidacy" property="name"/>">
 								<html:link page="/viewCandidateCurriculum.do" 
 										paramId="username" 
 										paramName="candidacy" 
@@ -78,19 +81,19 @@
 									%>
 								</html:link>
 							</td>
-							<td class="listClasses">
+							<td>
 								<bean:write name="candidacy" property="infoClassification.aritmeticClassification"/>
 							</td>
-							<td class="listClasses">
+							<td>
 								<bean:write name="candidacy" property="infoClassification.completedCourses"/>
 							</td>
-							<td class="listClasses">
+							<td>
 								&nbsp;
 								<a href="mailto:<%=candidacy.getEmail()%>">
 									<bean:write name="candidacy" property="email"/>
 								</a>
 							</td> 
-							<td class="listClasses">
+							<td>
 								<input alt="input.selectedStudents" type="checkbox" name="selectedStudents" value="<%=candidacy.getCandidacyId().toString()%>"
 									<%  if (candidacy.getApproved().booleanValue())
 											out.print("checked");	
@@ -99,14 +102,15 @@
 							</td>
 						</tr>
 					</logic:iterate>
-					<tr>
-						<td>
-							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition" value="OK"/>
-						</td>
-					</tr>
+					</table>
+					
+					<p>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition" value="OK"/>
+					</p>
+					
 				</logic:notEmpty>
 			</logic:present>
-		</table>
+
 		<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO">
 			<logic:equal name="candidacy" property="approved" value="true">
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.previousSelected" property="previousSelected" value="<%=candidacy.getCandidacyId().toString()%>"/>
