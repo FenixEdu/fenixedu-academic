@@ -68,7 +68,7 @@
 		</fr:view>
 			
 		<logic:notEmpty name="displayCurrentDayNote">
-			<bean:message key="message.employee.currentDayIgnored"/>
+			<em><bean:message key="message.employee.currentDayIgnored"/></em>
 		</logic:notEmpty>
 		<logic:present name="employeeWorkSheet" property="totalBalance">
 			<p class="mvert05"><bean:message key="label.totalBalance" />: <b><bean:write name="employeeWorkSheet" property="totalBalanceString"/></b></p>

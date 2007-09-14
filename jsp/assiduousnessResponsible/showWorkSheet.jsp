@@ -45,7 +45,7 @@
 		</fr:view>
 			
 		<logic:notEmpty name="displayCurrentDayNote">
-			<bean:message key="message.employee.currentDayIgnored" bundle="ASSIDUOUSNESS_RESOURCES"/>
+			<em><bean:message key="message.employee.currentDayIgnored" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
 		</logic:notEmpty>
 		
 		<logic:present name="employeeWorkSheet" property="totalBalance">

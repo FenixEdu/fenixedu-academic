@@ -37,7 +37,7 @@
 <schema name="show.workDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
 	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="weekDay" key="label.hyphen" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -48,7 +48,7 @@
 <schema name="show.workDaySheet.management"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
 	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="weekDay" key="label.hyphen" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
