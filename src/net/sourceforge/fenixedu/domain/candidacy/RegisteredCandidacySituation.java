@@ -56,12 +56,15 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	if(candidacy instanceof DFACandidacy) {
 	    DFACandidacy dfaCandidacy = ((DFACandidacy)candidacy);
 	    registration = new Registration(person, dfaCandidacy.getExecutionDegree().getDegreeCurricularPlan());
+	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));	    
 	    dfaCandidacy.setRegistration(registration);
 	    createQualification();
+	    
 	}
 	else if(candidacy instanceof PHDProgramCandidacy) {
 	    PHDProgramCandidacy programCandidacy = (PHDProgramCandidacy)candidacy;
 	    registration = new Registration(person, (programCandidacy).getExecutionDegree().getDegreeCurricularPlan());
+	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 	    programCandidacy.setRegistration(registration);
 	}
 	

@@ -173,7 +173,6 @@ public class Registration extends Registration_Base {
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
 	setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
-	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
     }
 
     @Override
