@@ -44,7 +44,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency, 
-	    ExecutionPeriod executionPeriod, YearMonthDay beginDate, YearMonthDay endDate) {
+	    ExecutionPeriod executionPeriod, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
 
 	super();
 
@@ -72,16 +72,20 @@ public class Lesson extends Lesson_Base {
 	setPeriod(period);
 
 	checkShiftLoad(shift);	
+
+	if(room != null) {
+	    new LessonSpaceOccupation(room, this);
+	}
     }
 
     public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
-	    FrequencyType frequency, Boolean createLessonInstances) {
+	    FrequencyType frequency, Boolean createLessonInstances, AllocatableSpace newRoom) {
 
-	edit(newBeginDate, newEndDate, diaSemana, inicio, fim, frequency, createLessonInstances, null);
+	edit(newBeginDate, newEndDate, diaSemana, inicio, fim, frequency, createLessonInstances, null, newRoom);
     }
 
     private void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
-	    FrequencyType frequency, Boolean createLessonInstances, YearMonthDay dayToNotCreateInstance) {			
+	    FrequencyType frequency, Boolean createLessonInstances, YearMonthDay dayToNotCreateInstance, AllocatableSpace newRoom) {			
 
 	if(newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
 	    throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
@@ -106,7 +110,26 @@ public class Lesson extends Lesson_Base {
 	setFim(fim);	
 	setFrequency(frequency);
 
-	checkShiftLoad(getShift());	
+	checkShiftLoad(getShift());
+
+	lessonSpaceOccupationManagement(newRoom);
+    }
+
+    private void lessonSpaceOccupationManagement(AllocatableSpace newRoom) {
+	LessonSpaceOccupation lessonSpaceOccupation = getLessonSpaceOccupation();
+	if(newRoom != null) {
+	    if(!wasFinished()) {
+		if(lessonSpaceOccupation == null) {                	                    	                    
+		    lessonSpaceOccupation = new LessonSpaceOccupation(newRoom, this);   
+		} else {
+		    lessonSpaceOccupation.edit(newRoom);
+		}		   	
+	    }
+	} else {
+	    if(lessonSpaceOccupation != null) {
+		lessonSpaceOccupation.delete();
+	    }
+	}
     }   
 
     public void delete() {

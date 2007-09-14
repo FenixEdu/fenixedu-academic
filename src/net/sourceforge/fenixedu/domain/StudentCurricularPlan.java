@@ -203,35 +203,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	removeEmployee();
 	removeMasterDegreeThesis();
 
-	for (; !getEnrolmentsSet().isEmpty(); getEnrolments().get(0).delete())
-	    ;
+	for (; !getEnrolmentsSet().isEmpty(); getEnrolments().get(0).delete());
 
 	if (getRoot() != null) {
 	    getRoot().delete();
 	}
 
-	for (Iterator iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
-	    NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) iter.next();
+	for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
+	    NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = iter.next();
 	    iter.remove();
 	    notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
 	    notNeedToEnrollInCurricularCourse.delete();
 	}
 
-	for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete())
-	    ;
+	for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete());
 
-	for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
-	    CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) iter.next();
+	for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
+	    CreditsInScientificArea creditsInScientificArea = iter.next();
 	    iter.remove();
 	    creditsInScientificArea.removeStudentCurricularPlan();
 	    creditsInScientificArea.delete();
 	}
 
-	for (; hasAnyCredits(); getCredits().get(0).delete())
-	    ;
-
-	for (; hasAnyTutorships(); getTutorships().get(0).delete())
-	    ;
+	for (; hasAnyCredits(); getCredits().get(0).delete());
+	for (; hasAnyTutorships(); getTutorships().get(0).delete());
 
 	removeStudent();
 	removeRootDomainObject();
@@ -247,7 +242,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (hasAnyGratuitySituations()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.situations");
 	}
-
     }
 
     final public String print() {

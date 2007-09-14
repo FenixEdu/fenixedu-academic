@@ -11,12 +11,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -29,9 +24,6 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -364,29 +356,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, 
 			    infoShift, newBeginDate, newEndDate, createLessonInstances };
 		    
-		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);
+		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);		    	
 		    
-		} catch (EditLesson.InvalidLoadException ex) {
-		    if (ex.getMessage().endsWith("REACHED")) {
-			actionErrors.add("errors.shift.hours.limit.reached", new ActionError("errors.shift.hours.limit.reached"));
-		    } else {
-			actionErrors.add("errors.shift.hours.limit.exceeded", new ActionError("errors.shift.hours.limit.exceeded"));
-		    }
-		    saveErrors(request, actionErrors);
-		    return mapping.getInputForward();
-		    
-		} catch (ExistingServiceException ex) {
-		    actionErrors.add("error.existing.service", new ActionError("error.existing.service"));
-		    throw new ExistingActionException("A aula", ex);
-		
-		} catch (InterceptingServiceException ex) {
-		    actionErrors.add("error.intercepting.service", new ActionError("error.intercepting.service"));
-		    throw new InterceptingActionException(infoSala.getNome(), ex);
-		
-		} catch (InvalidTimeIntervalServiceException ex) {
-		    actionErrors.add("error.invalid.time.service", new ActionError("error.invalid.time.service"));
-		    throw new InvalidTimeIntervalActionException(ex);
-		
 		} catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
 		    saveErrors(request, actionErrors);   
@@ -396,16 +367,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		try {
 		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate, newEndDate };		   
 		    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", argsCreateLesson);
-		    
-		} catch (CreateLesson.InvalidLoadException ex) {
-		    if (ex.getMessage().endsWith("REACHED")) {
-			actionErrors.add("errors.shift.hours.limit.reached", new ActionError("errors.shift.hours.limit.reached"));
-		    } else {
-			actionErrors.add("errors.shift.hours.limit.exceeded", new ActionError("errors.shift.hours.limit.exceeded"));
-		    }
-		    saveErrors(request, actionErrors);
-		    return mapping.getInputForward();
-		
+		    				
 		}  catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
 		    saveErrors(request, actionErrors);   

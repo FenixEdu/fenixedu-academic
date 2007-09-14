@@ -37,7 +37,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	AllocatableSpace space = (AllocatableSpace) getResource();
 	if(!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
 		lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
-	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free");
+	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free",
+		    space.getIdentification(), lessonInstance.getDay().toString("dd-MM-yy"));
 	}
 	
 	addLessonInstances(lessonInstance);

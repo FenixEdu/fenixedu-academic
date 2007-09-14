@@ -1001,7 +1001,7 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final public List readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {
+    final public List<InsuranceTransaction> readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {
 	List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 	for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactions()) {
 	    if (insuranceTransaction.getExecutionYear().equals(executionYear)) {

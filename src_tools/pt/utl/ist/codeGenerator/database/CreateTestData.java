@@ -129,7 +129,6 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Floor;
-import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -935,8 +934,7 @@ public class CreateTestData {
             final Room room = lessonRoomManager.getNextOldRoom();
             final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();            
             GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();            
-            final Lesson lesson = new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight());
-            new LessonSpaceOccupation(room, lesson);
+            new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight(), room);            
         }
     }
 
