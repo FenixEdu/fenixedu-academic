@@ -68,7 +68,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	if(!person.hasStudent()) {
 	    new Student(person);
 	}
-	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
     }
 
     

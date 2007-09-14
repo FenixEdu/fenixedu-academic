@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -61,6 +62,7 @@ import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -166,10 +168,14 @@ public class Registration extends Registration_Base {
 	setNumber(registrationNumber);
 	setPayedTuition(true);
 	setStudentCandidacy(studentCandidacy);
+	if(studentCandidacy != null) {
+	    setDegree(studentCandidacy.getExecutionDegree().getDegree());
+	}
 	setRegistrationYear(ExecutionYear.readCurrentExecutionYear());
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
 	setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
+	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
     }
 
     @Override
@@ -194,7 +200,7 @@ public class Registration extends Registration_Base {
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete());
 	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete());
 	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete());
-	
+
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
 	}
