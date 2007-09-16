@@ -354,8 +354,8 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.parking.ParkingRequestState" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
-	<slot name="parkingPartyClassification" key="label.type" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification" />
+	<slot name="partyClassification" key="label.type" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.PartyClassification" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="personName" key="label.name" bundle="PARKING_RESOURCES">

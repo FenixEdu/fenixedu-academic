@@ -16,7 +16,7 @@ public class YearMonthList implements Serializable {
     private List<YearMonth> yearsMonths;
 
     public YearMonthList() {
-    };
+    }
 
     public YearMonthList(List<YearMonth> yearsMonths) {
 	setYearsMonths(yearsMonths);

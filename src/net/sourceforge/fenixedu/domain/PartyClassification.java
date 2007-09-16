@@ -1,11 +1,12 @@
-package net.sourceforge.fenixedu.domain.parking;
+package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 
-public enum ParkingPartyClassification {
+public enum PartyClassification {    
     TEACHER, 
-    EMPLOYEE, 
+    EMPLOYEE,
+    RESEARCHER,
     GRANT_OWNER, 
     MASTER_DEGREE,
     DEGREE,
@@ -13,11 +14,12 @@ public enum ParkingPartyClassification {
     BOLONHA_ADVANCED_FORMATION_DIPLOMA,
     BOLONHA_MASTER_DEGREE, 
     BOLONHA_INTEGRATED_MASTER_DEGREE,
+    BOLONHA_PHD_PROGRAM,
     BOLONHA_DEGREE, 
     PERSON,
     UNIT;
 
-    public static ParkingPartyClassification getClassificationByDegreeType(DegreeType degreeType) {
+    public static PartyClassification getClassificationByDegreeType(DegreeType degreeType) {
         return valueOf(degreeType.name());
     }
 }

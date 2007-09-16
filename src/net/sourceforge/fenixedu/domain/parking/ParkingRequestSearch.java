@@ -2,32 +2,29 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 public class ParkingRequestSearch implements Serializable {
     private ParkingRequestState parkingRequestState;
 
-    private ParkingPartyClassification parkingPartyClassification;
+    private PartyClassification partyClassification;
 
     private String personName;
 
     private String carPlateNumber;
 
-    public ParkingPartyClassification getParkingPartyClassification() {
-        return parkingPartyClassification;
+    public PartyClassification getPartyClassification() {
+        return partyClassification;
     }
 
-    public void setParkingPartyClassification(ParkingPartyClassification parkingPartyClassification) {
-        this.parkingPartyClassification = parkingPartyClassification;
+    public void setPartyClassification(PartyClassification partyClassification) {
+        this.partyClassification = partyClassification;
     }
 
     public ParkingRequestState getParkingRequestState() {
@@ -78,9 +75,9 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
-        if (getParkingPartyClassification() == null
-                || request.getParkingParty().getParty().getPartyClassification() == getParkingPartyClassification()) {
-            if (getParkingPartyClassification() == ParkingPartyClassification.TEACHER) {
+        if (getPartyClassification() == null
+                || request.getParkingParty().getParty().getPartyClassification() == getPartyClassification()) {
+            if (getPartyClassification() == PartyClassification.TEACHER) {
                 Person person = (Person) request.getParkingParty().getParty();
                 if (person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                     return false;

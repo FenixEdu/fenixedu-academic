@@ -13,9 +13,13 @@ public class LibraryCard extends LibraryCard_Base {
         setPin(libraryCardDTO.getPin());
         setValidUntil(libraryCardDTO.getValidUntil());
         setPerson(libraryCardDTO.getPerson());
-        setRole(libraryCardDTO.getRoleType());
+        setPartyClassification(libraryCardDTO.getPartyClassification());
         setIsCardEmited(Boolean.FALSE);
         setIsLetterGenerated(Boolean.FALSE);
     }
-    
+
+    public void edit(LibraryCardDTO libraryCardDTO) {
+        setUserName(libraryCardDTO.getUserName());
+        setUnitName(libraryCardDTO.getChosenUnitName());
+    }    
 }

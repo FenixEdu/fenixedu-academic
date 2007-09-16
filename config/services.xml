@@ -12442,4 +12442,13 @@
 			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>	
+	<service>
+		<name>EditLibraryCard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.library.EditLibraryCard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="LibraryAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

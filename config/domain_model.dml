@@ -187,7 +187,7 @@ valueType org.joda.time.TimeOfDay                                               
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 											 as YearMonthList;
 valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType 						 as BonusType;
-
+valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification;
 
 /*
 *
@@ -4476,7 +4476,7 @@ class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Empl
 class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforge.fenixedu.domain.DomainObject {
 	String userName;
 	String unitName;	
-	RoleType role;
+	PartyClassification partyClassification;
 	Integer pin;
 	YearMonthDay validUntil;
 	Boolean isCardEmited;

@@ -32,10 +32,14 @@
 		<put name="body" value="/library/cards/showUsers.jsp"/>
 	</definition>
 	
+	<definition name="create-card" extends="definition.library.master">
+		<put name="body" value="/library/cards/createCard.jsp"/>
+	</definition>
+	
 	<definition name="edit-card" extends="definition.library.master">
 		<put name="body" value="/library/cards/editCard.jsp"/>
 	</definition>
-
+	
 	<definition name="show-details" extends="definition.library.master">
 		<put name="body" value="/library/cards/showDetails.jsp"/>
 	</definition>

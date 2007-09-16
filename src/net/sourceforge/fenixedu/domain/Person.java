@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.IdDocument;
@@ -1947,31 +1946,34 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public ParkingPartyClassification getPartyClassification() {
-	final Teacher teacher = getTeacher();
-	if (teacher != null) {
-	    if (teacher.getCurrentWorkingDepartment() != null
-		    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-		return ParkingPartyClassification.TEACHER;
-	    }
-	}
-	final Employee employee = getEmployee();
-	if (employee != null && employee.getCurrentWorkingContract() != null
-		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
-	    return ParkingPartyClassification.EMPLOYEE;
-	}
-	final GrantOwner grantOwner = getGrantOwner();
-	if (grantOwner != null && grantOwner.hasCurrentContract()) {
-	    return ParkingPartyClassification.GRANT_OWNER;
-	}
-	final Student student = getStudent();
-	if (student != null) {
-	    final DegreeType degree = student.getMostSignificantDegreeType();
-	    if (degree != null) {
-		return ParkingPartyClassification.getClassificationByDegreeType(degree);
-	    }
-	}
-	return ParkingPartyClassification.PERSON;
+    public PartyClassification getPartyClassification() {
+        final Teacher teacher = getTeacher();
+        if (teacher != null) {
+            if (teacher.getCurrentWorkingDepartment() != null
+                    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+                return PartyClassification.TEACHER;
+            }
+        }        
+        final Employee employee = getEmployee();
+        if (employee != null && employee.getCurrentWorkingContract() != null
+                && (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
+            return PartyClassification.EMPLOYEE;
+        }
+        if (isResearcher()) {
+            return PartyClassification.RESEARCHER;
+        }
+        final GrantOwner grantOwner = getGrantOwner();
+        if (grantOwner != null && grantOwner.hasCurrentContract()) {
+            return PartyClassification.GRANT_OWNER;
+        }
+        final Student student = getStudent();
+        if (student != null) {
+            final DegreeType degree = student.getMostSignificantDegreeType();
+            if (degree != null) {
+                return PartyClassification.getClassificationByDegreeType(degree);
+            }
+        }
+        return PartyClassification.PERSON;
     }
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
@@ -2636,12 +2638,35 @@ public class Person extends Person_Base {
     }
 
     public boolean isResearcher() {
-	Collection<? extends Accountability> parentAccountabilities = 
-	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-	for(Accountability accountability : parentAccountabilities) {
-	    if(accountability instanceof ResearcherContract) {
-		return true;
-}	}
-	return false;
+        return getPersonRole(RoleType.RESEARCHER) != null &&
+            (getWorkingResearchUnits().isEmpty() || 
+                    !getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class).isEmpty());       
+    }
+
+    public Integer getMostSignificantNumber() {
+        if(getPartyClassification().equals(PartyClassification.TEACHER)) {
+            return getTeacher().getTeacherNumber();
+        }
+        if (getPartyClassification().equals(PartyClassification.EMPLOYEE)){
+            return getEmployee().getEmployeeNumber();
+        }
+        if (getPartyClassification().equals(PartyClassification.RESEARCHER) && getEmployee() != null){
+            return getEmployee().getEmployeeNumber();
+        }
+        if (getStudent() != null) {
+            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
+            Collection<Registration> registrations = getStudent()
+                    .getRegistrationsByDegreeType(degreeType);
+            for (Registration registration : registrations) {
+                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+                if (scp != null) {
+                    return getStudent().getNumber();
+                }
+            }
+        }
+        if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {                
+            return getGrantOwner().getNumber();
+        }        
+        return 0;
     }
 }

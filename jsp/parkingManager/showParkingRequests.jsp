@@ -33,9 +33,9 @@
 		<bean:define id="parkingRequestState" name="parkingRequestSearch" property="parkingRequestState"/>
 		<bean:define id="query" value="<%="&parkingRequestState="+ parkingRequestState.toString()%>"/>
 	</logic:notEmpty>
-	<logic:notEmpty name="parkingRequestSearch" property="parkingPartyClassification">
-		<bean:define id="parkingPartyClassification" name="parkingRequestSearch" property="parkingPartyClassification"/>
-		<bean:define id="query" value="<%=query+"&parkingPartyClassification="+ parkingPartyClassification.toString()%>"/>
+	<logic:notEmpty name="parkingRequestSearch" property="partyClassification">
+		<bean:define id="partyClassification" name="parkingRequestSearch" property="partyClassification"/>
+		<bean:define id="query" value="<%=query+"&partyClassification="+ partyClassification.toString()%>"/>
 	</logic:notEmpty>
 	<logic:notEmpty name="parkingRequestSearch" property="personName">
 		<bean:define id="personName" name="parkingRequestSearch" property="personName"/>

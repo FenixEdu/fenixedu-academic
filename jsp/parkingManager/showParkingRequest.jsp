@@ -101,7 +101,7 @@ function hideCardValidPeriod(toShow){
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.code" property="code" value="<%= parkingRequestID.toString()%>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editFirstTimeParkingParty"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingRequestState" property="parkingRequestState" value="<%= pageContext.findAttribute("parkingRequestState").toString() %>"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.parkingPartyClassification" property="parkingPartyClassification" value="<%= pageContext.findAttribute("parkingPartyClassification").toString() %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.partyClassification" property="partyClassification" value="<%= pageContext.findAttribute("partyClassification").toString() %>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personName" property="personName" value="<%= pageContext.findAttribute("personName").toString() %>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.carPlateNumber" property="carPlateNumber" value="<%= pageContext.findAttribute("carPlateNumber").toString() %>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.accepted" property="accepted" value=""/>	

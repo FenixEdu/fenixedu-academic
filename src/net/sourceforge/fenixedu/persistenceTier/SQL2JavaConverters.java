@@ -165,4 +165,5 @@ public class SQL2JavaConverters {
     public static FieldConversion Grade2SqlGradeStringConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Grade2SqlGradeStringConversion();
     public static FieldConversion YearMonthList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.YearMonthList2SqlVarcharConverter();
     public static FieldConversion BonusType2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.BonusType2SqlVarcharConverter();
+    public static FieldConversion PartyClassification2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartyClassification2SqlVarcharConverter();
 }

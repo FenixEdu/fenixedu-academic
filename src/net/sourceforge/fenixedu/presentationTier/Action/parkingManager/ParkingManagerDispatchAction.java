@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.FileEntry;
+import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
-import net.sourceforge.fenixedu.domain.parking.ParkingPartyClassification;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
@@ -63,10 +63,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 parkingRequestSearch.setParkingRequestState(ParkingRequestState
                         .valueOf(parkingRequestState));
             }
-            String parkingPartyClassification = request.getParameter("parkingPartyClassification");
-            if (!StringUtils.isEmpty(parkingPartyClassification)) {
-                parkingRequestSearch.setParkingPartyClassification(ParkingPartyClassification
-                        .valueOf(parkingPartyClassification));
+            String partyClassification = request.getParameter("partyClassification");
+            if (!StringUtils.isEmpty(partyClassification)) {
+                parkingRequestSearch.setPartyClassification(PartyClassification
+                        .valueOf(partyClassification));
             }
             String personName = request.getParameter("personName");
             if (!StringUtils.isEmpty(personName)) {
@@ -118,9 +118,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (parkingRequestState == null) {
             parkingRequestState = "";
         }
-        String parkingPartyClassification = request.getParameter("parkingPartyClassification");
-        if (parkingPartyClassification == null) {
-            parkingPartyClassification = "";
+        String partyClassification = request.getParameter("partyClassification");
+        if (partyClassification == null) {
+            partyClassification = "";
         }
         String personName = request.getParameter("personName");
         if (personName == null) {
@@ -133,7 +133,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
 
         request.setAttribute("parkingRequestState", parkingRequestState);
-        request.setAttribute("parkingPartyClassification", parkingPartyClassification);
+        request.setAttribute("partyClassification", partyClassification);
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
         return mapping.findForward("showParkingRequest");
@@ -173,9 +173,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         if (parkingRequestState == null) {
             parkingRequestState = "";
         }
-        String parkingPartyClassification = request.getParameter("parkingPartyClassification");
-        if (parkingPartyClassification == null) {
-            parkingPartyClassification = "";
+        String partyClassification = request.getParameter("partyClassification");
+        if (partyClassification == null) {
+            partyClassification = "";
         }
         String personName = request.getParameter("personName");
         if (personName == null) {
@@ -186,7 +186,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             carPlateNumber = "";
         }
         request.setAttribute("parkingRequestState", parkingRequestState);
-        request.setAttribute("parkingPartyClassification", parkingPartyClassification);
+        request.setAttribute("partyClassification", partyClassification);
         request.setAttribute("personName", personName);
         request.setAttribute("carPlateNumber", carPlateNumber);
 

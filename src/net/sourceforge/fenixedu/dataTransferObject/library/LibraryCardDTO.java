@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.YearMonthDay;
@@ -20,7 +24,7 @@ public class LibraryCardDTO implements Serializable {
 
     private DomainReference<Unit> unit;
 
-    private RoleType roleType;
+    private PartyClassification partyClassification;
 
     private String userName;
 
@@ -40,49 +44,75 @@ public class LibraryCardDTO implements Serializable {
 
     private YearMonthDay validUntil;
 
-    public LibraryCardDTO(Person person, RoleType roleType, String userName, Unit unit, Integer number) {
+    public LibraryCardDTO(Person person, PartyClassification partyClassification) {
         setPerson(person);
-        setRoleType(roleType);
-        setUserName(userName);
+        setPartyClassification(partyClassification);
+        setUserName(person.getNickname());
+        Unit unit = getPersonUnit();
         setUnit(unit);
-        setUnitName(unit != null ? unit.getName() : "");
-        setNumber(number);
+        String unitName = unit != null ? unit.getName() : "";
+        if(isStudent()) {
+            unitName = unit != null ? unit.getAcronym() : "";
+        }
+        setUnitName(unitName);
+        setChosenUnitName(unitName);
+        setNumber(person.getMostSignificantNumber());
         setPhone(person.getPhone());
         setMobile(person.getMobile());
-    }
-
-    public LibraryCardDTO(LibraryCard libraryCard, Integer number) {
-        setLibraryCard(libraryCard);
-        setPin(libraryCard.getPin());
-        setPerson(libraryCard.getPerson());
-        setRoleType(libraryCard.getRole());
-        setUserName(libraryCard.getUserName());
-        setUnitName(libraryCard.getUnitName());
-        setNumber(number);
-        setPhone(libraryCard.getPerson().getPhone());
-        setMobile(libraryCard.getPerson().getMobile());
     }
 
     public LibraryCardDTO(LibraryCard libraryCard) {
         setLibraryCard(libraryCard);
         setPin(libraryCard.getPin());
         setPerson(libraryCard.getPerson());
-        setRoleType(libraryCard.getRole());
+        setPartyClassification(libraryCard.getPartyClassification());
         setUserName(libraryCard.getUserName());
         setUnitName(libraryCard.getUnitName());
-        setNumber(libraryCard.getPerson().getEmployee().getEmployeeNumber());
+        setChosenUnitName(libraryCard.getUnitName());
+        setNumber(libraryCard.getPerson().getMostSignificantNumber());
         setValidUntil(libraryCard.getValidUntil());
         setPhone(libraryCard.getPerson().getPhone());
         setMobile(libraryCard.getPerson().getMobile());
     }
+    
+    private Unit getPersonUnit() {
+        if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
+            return getPerson().getEmployee().getLastWorkingPlace();
+        } else if (getPartyClassification().equals(PartyClassification.TEACHER)) {
+            return getPerson().getTeacher().getCurrentWorkingUnit();
+        } else if (getPartyClassification().equals(PartyClassification.RESEARCHER)) {
+            YearMonthDay today = new YearMonthDay();
+            for (Accountability accountability : getPerson().getParentAccountabilities(
+                    AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class)) {
+                ResearcherContract researcherContract = (ResearcherContract) accountability;
+                if (researcherContract.isActive(today)) {
+                    return researcherContract.getUnit();
+                }
+            }
+        } else if (isStudent()) {
+            return getPerson().getStudentByType(DegreeType.valueOf(getPartyClassification().toString()))
+                    .getDegree().getUnit();
+        }
+        return null;
+    }
+
+    public boolean isStudent() {
+        return getPartyClassification().equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+                || getPartyClassification().equals(PartyClassification.BOLONHA_DEGREE)
+                || getPartyClassification().equals(PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE)
+                || getPartyClassification().equals(PartyClassification.BOLONHA_MASTER_DEGREE)
+                || getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)
+                || getPartyClassification().equals(PartyClassification.DEGREE)
+                || getPartyClassification().equals(PartyClassification.MASTER_DEGREE);
+    }
 
     public String getMailCostCenterCode() {
-        if(getPerson().getEmployee().getCurrentMailingPlace() != null) {
+        if (getPerson().getEmployee().getCurrentMailingPlace() != null) {
             return getPerson().getEmployee().getCurrentMailingPlace().getCostCenterCode().toString();
         }
         return "";
     }
-    
+
     public Integer getLibraryCardID() {
         return getLibraryCard() != null ? getLibraryCard().getIdInternal() : 0;
     }
@@ -119,18 +149,21 @@ public class LibraryCardDTO implements Serializable {
         this.unit = unit != null ? new DomainReference<Unit>(unit) : null;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public PartyClassification getPartyClassification() {
+        return partyClassification;
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
+    public void setPartyClassification(PartyClassification partyClassification) {
+        this.partyClassification = partyClassification;
     }
 
     public String getCategory() {
+        if(isStudent()) {
+            return "Aluno";
+        }
         final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
                 "resources.EnumerationResources", LanguageUtils.getLocale());
-        return enumerationBundle.getString(getRoleType().name());
+        return enumerationBundle.getString(getPartyClassification().name());
     }
 
     public String getUnitName() {
@@ -176,7 +209,7 @@ public class LibraryCardDTO implements Serializable {
     public String getPinToShow() {
         if (getPin() != null) {
             String pinToShow = getPin().toString();
-            if(getPin() < 10000) {
+            if (getPin() < 10000) {
                 pinToShow = "0" + pinToShow;
             }
             return pinToShow;
@@ -242,10 +275,12 @@ public class LibraryCardDTO implements Serializable {
         return chosenUnitName;
     }
 
-    public void setChosenUnitName(String chosenUnitName) {        
-        if (chosenUnitName != null) {
+    public void setChosenUnitName(String chosenUnitName) {
+        if (chosenUnitName != null && getPartyClassification().equals(PartyClassification.TEACHER)) {
             int position = chosenUnitName.indexOf("-");
             this.chosenUnitName = chosenUnitName.substring(position + 2);
+        } else {
+            this.chosenUnitName = chosenUnitName;
         }
     }
 }

@@ -4,17 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PartyClassification;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.apache.commons.lang.StringUtils;
 
 public class LibraryCardSearch implements Serializable {
 
-    private RoleType category;
+    private PartyClassification partyClassification;
 
     private String userName;
 
@@ -23,62 +26,18 @@ public class LibraryCardSearch implements Serializable {
     public LibraryCardSearch() {
     }
 
+    public LibraryCardSearch(PartyClassification partyClassification) {
+        setPartyClassification(partyClassification);
+    }
+
     public List<LibraryCardDTO> getSearch() {
         List<LibraryCardDTO> libraryCardDTOList = new ArrayList<LibraryCardDTO>();
-        for (Employee employee : RootDomainObject.getInstance().getEmployees()) {
-            if (employee.getPerson().hasRole(RoleType.RESEARCHER)
-                    && !employee.getPerson().hasRole(RoleType.TEACHER)
-                    && satisfiesNumber(employee.getEmployeeNumber())) {
-                if (satisfiesCategory(RoleType.RESEARCHER)
-                        && satisfiesUserName(employee.getPerson().getName())) {
-                    if (employee.getCurrentWorkingContract() != null) {
-                        LibraryCardDTO libraryCardDTO = null;
-                        if (employee.getPerson().getLibraryCard() != null) {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson().getLibraryCard(),
-                                    employee.getEmployeeNumber());
-                        } else {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson(),
-                                    RoleType.RESEARCHER, employee.getPerson().getNickname(), employee
-                                            .getLastWorkingPlace(), employee.getEmployeeNumber());
-                        }
-
-                        libraryCardDTOList.add(libraryCardDTO);
-                    }
-                }
-            } else if (employee.getPerson().hasRole(RoleType.TEACHER)) {
-                if (satisfiesCategory(RoleType.TEACHER)
-                        && satisfiesUserName(employee.getPerson().getName())
-                        && satisfiesNumber(employee.getEmployeeNumber())) {
-                    Teacher teacher = employee.getPerson().getTeacher();
-                    if (!teacher.isInactive(ExecutionPeriod.readActualExecutionPeriod())) {
-                        LibraryCardDTO libraryCardDTO = null;
-                        if (employee.getPerson().getLibraryCard() != null) {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson().getLibraryCard(),
-                                    employee.getEmployeeNumber());
-                        } else {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson(), RoleType.TEACHER,
-                                    employee.getPerson().getNickname(), teacher.getLastWorkingUnit(),
-                                    teacher.getTeacherNumber());
-                        }
-                        libraryCardDTOList.add(libraryCardDTO);
-                    }
-                }
-            } else if (employee.getPerson().hasRole(RoleType.EMPLOYEE)) {
-                if (satisfiesCategory(RoleType.EMPLOYEE)
-                        && satisfiesUserName(employee.getPerson().getName())
-                        && satisfiesNumber(employee.getEmployeeNumber())) {
-                    if (employee.getCurrentWorkingContract() != null) {
-                        LibraryCardDTO libraryCardDTO = null;
-                        if (employee.getPerson().getLibraryCard() != null) {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson().getLibraryCard(),
-                                    employee.getEmployeeNumber());
-                        } else {
-                            libraryCardDTO = new LibraryCardDTO(employee.getPerson(), RoleType.EMPLOYEE,
-                                    employee.getPerson().getNickname(), employee.getLastWorkingPlace(),
-                                    employee.getEmployeeNumber());
-                        }
-                        libraryCardDTOList.add(libraryCardDTO);
-                    }
+        for (Person person : getAssociatedPersons(getPartyClassification())) {
+            if (satisfiesSearch(person)) {
+                if (person.hasLibraryCard()) {
+                    libraryCardDTOList.add(new LibraryCardDTO(person.getLibraryCard()));
+                } else {
+                    libraryCardDTOList.add(new LibraryCardDTO(person, getPartyClassification()));
                 }
             }
         }
@@ -86,25 +45,94 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesUserName(String name) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    private boolean satisfiesCategory(RoleType researcher) {
+        if (researcher != null && researcher.equals(RoleType.TEACHER)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean satisfiesNumber(Integer employeeNumber) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    private List<Person> getAssociatedPersons(PartyClassification partyClassification) {
+        if (partyClassification == null) {
+            return Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons();
+        } else {
+            switch (partyClassification) {
+            case TEACHER:
+                return Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons();
+            case EMPLOYEE:
+                return Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons();
+            case RESEARCHER:
+                return Role.getRoleByRoleType(RoleType.RESEARCHER).getAssociatedPersons();
+            case GRANT_OWNER:
+                return Role.getRoleByRoleType(RoleType.GRANT_OWNER).getAssociatedPersons();
+            case MASTER_DEGREE:
+                return getPersonsFromDegreeType(DegreeType.MASTER_DEGREE);
+            case DEGREE:
+                return getPersonsFromDegreeType(DegreeType.DEGREE);
+            case BOLONHA_DEGREE:
+                return getPersonsFromDegreeType(DegreeType.BOLONHA_DEGREE);
+            case BOLONHA_MASTER_DEGREE:
+                return getPersonsFromDegreeType(DegreeType.BOLONHA_MASTER_DEGREE);
+            case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+                return getPersonsFromDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+            case BOLONHA_INTEGRATED_MASTER_DEGREE:
+                return getPersonsFromDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+            case BOLONHA_SPECIALIZATION_DEGREE:
+                return getPersonsFromDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+            case PERSON:
+                return Person.readAllExternalPersons();
+            default:
+                return Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons();
+            }
+        }
+    }
+
+    private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {
+        List<Person> persons = new ArrayList<Person>();
+        for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
+            for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(ExecutionYear
+                    .readCurrentExecutionYear())) {
+                if (scp.getRegistration().isActive()) {
+                    persons.add(scp.getRegistration().getPerson());
+                }
+            }
+        }
+        return persons;
+    }
+
+    private boolean satisfiesSearch(Person person) {
+        return satisfiesCategory(person) && satisfiesNumber(person) && satisfiesUserName(person);
+    }
+
+    private boolean satisfiesUserName(Person person) {
         return StringUtils.isEmpty(getUserName())
-                || net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(name,
-                        getUserName());
+                || net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(
+                        person.getName(), getUserName());
     }
 
-    private boolean satisfiesCategory(RoleType roleType) {
-        return getCategory() == null || getCategory().equals(roleType);
+    private boolean satisfiesCategory(Person person) {
+        return getPartyClassification() == null || getPartyClassification().equals(person.getPartyClassification());
     }
 
-    private boolean satisfiesNumber(Integer number) {
-        return getNumber() == null || getNumber().equals(number);
+    private boolean satisfiesNumber(Person person) {
+        return getNumber() == null || getNumber().equals(person.getMostSignificantNumber());
     }
 
-    public RoleType getCategory() {
-        return category;
+    public PartyClassification getPartyClassification() {
+        return partyClassification;
     }
 
-    public void setCategory(RoleType category) {
-        this.category = category;
+    public void setPartyClassification(PartyClassification partyClassification) {
+        this.partyClassification = partyClassification;
     }
 
     public String getUserName() {

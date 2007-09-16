@@ -24,7 +24,7 @@
 <bean:define id="sortedBy">
 	<%= request.getParameter("sortBy") == null ? "number" : request.getParameter("sortBy") %>
 </bean:define>
-	
+
 <bean:size id="numberOfElements" name="libraryCardSearch" property="search"/>
 
 <p class="mtop15">

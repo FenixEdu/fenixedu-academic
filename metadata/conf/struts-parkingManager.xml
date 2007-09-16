@@ -11,7 +11,7 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
 			<form-property name="parkingRequestState" type="java.lang.String" />
-			<form-property name="parkingPartyClassification" type="java.lang.String" />
+			<form-property name="partyClassification" type="java.lang.String" />
 			<form-property name="parkingPartyID" type="java.lang.String" />						
 			<form-property name="personName" type="java.lang.String" />
 			<form-property name="groupID" type="java.lang.Integer" />

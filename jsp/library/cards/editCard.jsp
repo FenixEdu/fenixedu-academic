@@ -6,9 +6,9 @@
 <html:xhtml/>
 
 <h2>
-	<bean:message key="title.library.card.generate"/>
+	<bean:message key="title.library.card.edit"/>
 </h2>
-
+	
 <p>	
 	<span class="error0">
 		<html:errors/>
@@ -17,42 +17,32 @@
 		</html:messages>
 	</span>
 </p>
-
-<p>
-	<span class="warning0">
-		<html:messages id="message" property="message" message="true">
-			<bean:write name="message" />
-		</html:messages>
-	</span>
-</p>
-
-<bean:define id="personID" name="libraryCardDTO" property="person.idInternal"/>
-
-<fr:form action="/cardManagement.do?method=createCard">
-
-	<fr:edit id="libraryCardToCreate" name="libraryCardDTO" schema="library.card.generate">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>			
-		<fr:destination name="changeDateVisibility" path="/cardManagement.do?method=changeDateVisibility"/>
-		<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()%>"/>
-	</fr:edit>
-
-	<logic:present name="presentDate">
-		<fr:edit id="validUntil" name="libraryCardDTO" schema="library.card.generate.date">
+	
+<fr:form action="/cardManagement.do?method=editCard">
+	<fr:edit id="libraryCardSearch" name="libraryCardSearch" visible="false"/>	
+	
+	<logic:equal name="libraryCardDTO" property="partyClassification" value="TEACHER">
+		<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.teacher">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle2 thlight thright"/>
+				<fr:property name="columnClasses" value=",,tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/cardManagement.do?method=invalidDate"/>	
-			<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString() %>"/>
+			<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
 		</fr:edit>
-	</logic:present>
-
+	</logic:equal>
+	<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
+		<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight thright"/>
+				<fr:property name="columnClasses" value=",,tderror1"/>
+			</fr:layout>			
+			<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+		</fr:edit>
+	</logic:notEqual>	
+	
 	<p>
-		<html:submit ><bean:message key="button.confirm" bundle="LIBRARY_RESOURCES"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.back">
+		<html:submit><bean:message key="button.confirm" bundle="LIBRARY_RESOURCES"/></html:submit>		
+		<html:cancel property="cancel" bundle="HTMLALT_RESOURCES" altKey="submit.back">
 			<bean:message key="button.back" bundle="LIBRARY_RESOURCES"/>
 		</html:cancel>
 	</p>
