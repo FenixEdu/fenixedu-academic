@@ -1,12 +1,24 @@
 package net.sourceforge.fenixedu.domain.candidacy.degree;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
+    static final public Comparator<ShiftDistributionEntry> NUMBER_COMPARATOR = new Comparator<ShiftDistributionEntry>() {
+        public int compare(ShiftDistributionEntry o1, ShiftDistributionEntry o2) {
+            return o1.getAbstractStudentNumber().compareTo(o2.getAbstractStudentNumber());
+        }
+    };
+    
     private ShiftDistributionEntry() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
@@ -59,6 +71,16 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
     
     public void changeShift(Shift newShift) {
 	super.setShift(newShift);
+    }
+    
+    public static List<ShiftDistributionEntry> readByAbstractNumber(Integer abstractNumber) {
+        List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
+        for (ShiftDistributionEntry entry : RootDomainObject.getInstance().getShiftDistributionEntries()) {
+            if (entry.getAbstractStudentNumber().equals(abstractNumber)) {
+                result.add(entry);
+            }
+        }
+        return result;
     }
 
     @Override

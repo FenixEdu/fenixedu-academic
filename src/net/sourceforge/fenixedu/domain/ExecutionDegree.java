@@ -759,6 +759,22 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return getShiftsFor(studentNumber, false);
     }
 
+    public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
+
+        final ArrayList<ShiftDistributionEntry> entries = new ArrayList<ShiftDistributionEntry>(getShiftDistributionEntriesSet());
+        Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
+
+        for (final ShiftDistributionEntry shiftDistributionEntry : entries) {
+            if (!shiftDistributionEntry.getDistributed()) {
+                return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber());
+            }
+        }
+
+        System.out.println("Empty result!!!");
+        return Collections.EMPTY_LIST;
+    }
+
+    
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
 	final List<Integer> abstractStudentNumbers = new ArrayList<Integer>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
@@ -782,7 +798,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)) {
 
 		result.add(shiftDistributionEntry);
-	    }
+	    } 
+	}
+	if (result.isEmpty()) {
+	    System.out.println("Empty result!!!");
 	}
 	return result;
     }
