@@ -47,8 +47,16 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 	super.setShift(shift);
 	super.setAbstractStudentNumber(abstractStudentNumber);
     }
-    
 
+    public void delete() {
+	super.setShiftDistribution(null);
+	super.setExecutionDegree(null);
+	super.setShift(null);
+
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+    
     public void changeShift(Shift newShift) {
 	super.setShift(newShift);
     }

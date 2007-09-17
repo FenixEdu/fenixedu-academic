@@ -35,6 +35,14 @@ public class ShiftDistribution extends ShiftDistribution_Base {
 	super.setExecutionYear(executionYear);
     }
 
+    public void delete() {
+	for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete());
+	super.setExecutionYear(null);
+	
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+    
     public List<ShiftDistributionEntry> getEntriesByStudentNumber(Integer studentNumber) {
 	final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
