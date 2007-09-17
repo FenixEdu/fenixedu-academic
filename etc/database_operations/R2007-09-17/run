@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove availability policy from dissertation section in degree site" removeDissertationsAP.sql
+execute "Alter Table LibraryCard" alterTableLibraryCard.sql
