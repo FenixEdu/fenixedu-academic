@@ -47,7 +47,7 @@ public class RegistrationOperation extends CandidacyOperation {
 
 	if (getExecutionYear().hasShiftDistribution()) {
 
-	    final List<Registration> registrations = getExecutionDegree().getRegistrationsForDegreeCandidacies();
+	    final List<Registration> registrations = getExecutionDegree().getRegistrationsForFirstCycleCandidacies();
 	    Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
 	    for (final ShiftDistributionEntry shiftEntry : getExecutionDegree()

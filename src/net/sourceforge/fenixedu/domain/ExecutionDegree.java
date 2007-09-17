@@ -17,6 +17,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -706,6 +707,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
+    public Set<StudentCandidacy> getFirstCycleCandidacies() {
+	final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+	for (final StudentCandidacy studentCandidacy : getStudentCandidacies()) {
+	    if (studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy) {
+		result.add(studentCandidacy);
+	    }
+	}
+	return result;
+    }
+    
     public List<Registration> getRegistrationsForDegreeCandidacies() {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
@@ -716,6 +727,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
+    public List<Registration> getRegistrationsForFirstCycleCandidacies() {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final StudentCandidacy studentCandidacy : getFirstCycleCandidacies()) {
+	    if (studentCandidacy.hasRegistration()) {
+		result.add(studentCandidacy.getRegistration());
+	    }
+	}
+	return result;
+    }
+    
     public Set<DFACandidacy> getDFACandidacies() {
 	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
 
