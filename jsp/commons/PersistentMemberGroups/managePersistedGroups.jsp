@@ -46,15 +46,29 @@
 	</p>
 	
 	<logic:empty name="unit" property="allowedPeopleToUploadFiles">
-		<bean:message key="label.noUploadersDefined" bundle="RESEARCHER_RESOURCES"/>
+		<p>
+			<em><bean:message key="label.noUploadersDefined" bundle="RESEARCHER_RESOURCES"/>.</em>
+		</p>
 	</logic:empty>
 	
 	<logic:notEmpty name="unit" property="allowedPeopleToUploadFiles">
-		<fr:view name="unit" property="allowedPeopleToUploadFiles">
-			<fr:layout>
-				<fr:property name="eachLayout" value="values"/>
-				<fr:property name="eachSchema" value="showNickName"/>
-			</fr:layout>	
-		</fr:view>
+		<table class="tstyle2 thlight">
+		<tr>
+			<th><bean:message key="label.group" bundle="RESEARCHER_RESOURCES"/></th><th><bean:message key="label.members" bundle="RESEARCHER_RESOURCES"/></th>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.uploaders.groupName" bundle="RESEARCHER_RESOURCES"/>
+			</td>
+			<td>
+				<fr:view name="unit" property="allowedPeopleToUploadFiles">
+					<fr:layout>
+						<fr:property name="eachLayout" value="values"/>
+						<fr:property name="eachSchema" value="showNickName"/>
+					</fr:layout>	
+				</fr:view>
+			</td>
+		</tr>
+		</table>
 	</logic:notEmpty>
 </logic:equal>
