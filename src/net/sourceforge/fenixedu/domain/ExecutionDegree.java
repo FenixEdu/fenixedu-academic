@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -684,6 +685,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public Set<DFACandidacy> getDfaCandidacies() {
+	return getDFACandidacies();
+    }
+
+    public Set<DFACandidacy> getDFACandidacies() {
 	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
 
 	for (final StudentCandidacy studentCandidacy : getStudentCandidacies()) {
@@ -717,6 +722,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
     
+    public Collection<StudentCandidacy> getFirstCycleCandidacies(final CandidacySituationType candidacySituationType) {
+	final Collection<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+	for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
+	    if ((studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy) && studentCandidacy.getActiveCandidacySituationType() == candidacySituationType) {
+		result.add(studentCandidacy);
+	    }
+	}
+	return result;
+    }
+    
     public List<Registration> getRegistrationsForDegreeCandidacies() {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
@@ -737,18 +752,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
     
-    public Set<DFACandidacy> getDFACandidacies() {
-	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
-
-	for (final StudentCandidacy studentCandidacy : getStudentCandidacies()) {
-	    if (studentCandidacy instanceof DFACandidacy) {
-		result.add((DFACandidacy) studentCandidacy);
-	    }
-	}
-
-	return result;
-    }
-
     public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(
 	    Integer studentNumberPosition) {
 	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
@@ -798,10 +801,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		    && shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)) {
 
 		result.add(shiftDistributionEntry);
-	    } 
-	}
-	if (result.isEmpty()) {
-	    System.out.println("Empty result!!!");
+	    }
 	}
 	return result;
     }
