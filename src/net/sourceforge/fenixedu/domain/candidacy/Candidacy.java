@@ -44,6 +44,10 @@ public abstract class Candidacy extends Candidacy_Base {
 	return Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
     }
 
+    public CandidacySituationType getActiveCandidacySituationType() {
+	return getActiveCandidacySituation().getCandidacySituationType();
+    }
+
     private CandidacySituation getFirstCandidacySituation() {
 	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
     }
