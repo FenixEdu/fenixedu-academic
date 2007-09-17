@@ -14,7 +14,7 @@
 	</div>
 	
 	<p>
-		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 25 de Setembro de 2007</span>
+		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 24 de Setembro de 2007</span>
 	</p>
 
 	<logic:messagesPresent message="true">
