@@ -39,6 +39,11 @@ public class ResearchUnitFunctionalities extends UnitFunctionalities {
 		request.setAttribute("bean",publicationBean);
 		putPublicationsInRequest(request,(ResearchUnit)unit);
 		request.setAttribute("publications", unit.getResearchResultPublications());
+		String publicationType = request.getParameter("publicationType");
+		if(publicationType != null) {
+		    request.setAttribute("publicationType", publicationType);
+		}
+		
 		return mapping.findForward("publications");
 	}
 	
