@@ -66,7 +66,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	    if (enrolment != null) {
 
 		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
-		if (!attends.isFor(finalExecutionCourse)) {
+		if (attends != null && !attends.isFor(finalExecutionCourse)) {
 		    attends.setDisciplinaExecucao(finalExecutionCourse);
 		}
 		break;
