@@ -197,7 +197,7 @@ public class Registration extends Registration_Base {
 	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete());
 	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete());
 	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete());
-
+		
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
 	}
@@ -207,6 +207,10 @@ public class Registration extends Registration_Base {
 	}
 
 	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete());
+
+	if (hasSenior()) {
+	    getSenior().delete();
+	}
 	
 	removeRegistrationYear();
 	removeDegree();
@@ -2215,6 +2219,7 @@ public class Registration extends Registration_Base {
 
     @Checked("RegistrationPredicates.transitToBolonha")
     public void transitToBolonha(final Person person) {
+	
 	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
@@ -2224,9 +2229,9 @@ public class Registration extends Registration_Base {
 	    } else {
 		RegistrationState.createState(registration, person, new DateTime(), RegistrationStateType.REGISTERED);
 	    }
-
-	    registration.setRegistrationAgreement(getRegistrationAgreement());
-
+	    	    
+	    registration.setRegistrationAgreement(getRegistrationAgreement());	    
+	    
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
 

@@ -55,11 +55,9 @@ public class LessonInstance extends LessonInstance_Base {
 	setEndDateTime(endDateTime);
 	setLesson(lesson);      
 	
-	editSummaryAndCourseLoad(summary, lesson);	
+	summaryAndCourseLoadManagement(summary, lesson);	
 	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));	
-	lessonInstanceSpaceOccupationManagement(room);
-	
-	checkCourseLoad();
+	lessonInstanceSpaceOccupationManagement(room);	
     }
 
     public LessonInstance(Lesson lesson, YearMonthDay day) {
@@ -112,7 +110,7 @@ public class LessonInstance extends LessonInstance_Base {
 	deleteDomainObject();	
     }
     
-    public void editSummaryAndCourseLoad(Summary summary, Lesson lesson) {
+    public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
 	CourseLoad courseLoad = null;
 	if(lesson != null && summary != null) {	
 	    courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());		 
@@ -120,16 +118,7 @@ public class LessonInstance extends LessonInstance_Base {
 	setSummary(summary);	
 	setCourseLoad(courseLoad);		
     } 
-    
-    private void checkCourseLoad() {
-	if (!hasCourseLoad()) {
-	    throw new DomainException("error.LessonInstance.empty.courseLoad");
-	}
-	if (getCourseLoad().getUnitQuantity() != null && getInstanceDurationInHours().compareTo(getCourseLoad().getUnitQuantity()) == 1){
-	    throw new DomainException("error.LessonInstance.shift.load.unit.quantity.exceeded");		
-	}	
-    }
-    
+           
     private int getUnitMinutes() {	
 	return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
     }

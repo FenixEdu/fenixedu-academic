@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -22,6 +23,27 @@ public class Senior extends Senior_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setRegistration(registration);
+    }
+    
+    public void delete() {
+	if(isEmpty()) {
+	    super.setStudent(null);
+	    removeRootDomainObject();	 
+	    deleteDomainObject();
+	} else {
+	    throw new DomainException("error.Senior.not.empty");
+	}
+    }
+    
+    public boolean isEmpty() {
+	return getExpectedDegreeAverageGrade() == null 
+	&& getExpectedDegreeTerminationDateTime() == null
+	&& (getExtracurricularActivities() == null || StringUtils.isEmpty(getExtracurricularActivities().trim())) 
+	&& (getInformaticsSkills() == null || StringUtils.isEmpty(getInformaticsSkills().trim()))
+	&& (getLanguageSkills() == null || StringUtils.isEmpty(getLanguageSkills().trim()))
+	&& (getProfessionalExperience() == null || StringUtils.isEmpty(getProfessionalExperience().trim()))
+	&& (getProfessionalInterests() == null || StringUtils.isEmpty(getProfessionalInterests().trim()))
+	&& (getSpecialtyField() == null || StringUtils.isEmpty(getSpecialtyField().trim()));		
     }
 
     public void setExpectedDegreeTerminationYearMonthDay(YearMonthDay date) {	
@@ -112,5 +134,4 @@ public class Senior extends Senior_Base {
     public boolean isSenior(ExecutionYear executionYear) {
 	return getExpectedDegreeTerminationYearMonthDay().isAfter(executionYear.getBeginDateYearMonthDay());
     }
-
 }
