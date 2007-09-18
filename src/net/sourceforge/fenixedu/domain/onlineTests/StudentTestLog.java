@@ -21,6 +21,7 @@ public class StudentTestLog extends StudentTestLog_Base {
 
     public void delete() {
         removeStudent();
+        removeDistributedTest();
         removeRootDomainObject();
         deleteDomainObject();
     }
