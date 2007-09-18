@@ -117,7 +117,7 @@ public class Summary extends Summary_Base {
 	if(lessonInstance == null) {	    
 	    new LessonInstance(this, lesson);	    
 	} else {
-	    lessonInstance.editSummaryAndCourseLoad(this, lesson);	    
+	    lessonInstance.summaryAndCourseLoadManagement(this, lesson);	    
 	}
     }
 
