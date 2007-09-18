@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -686,19 +685,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public Set<DFACandidacy> getDfaCandidacies() {
 	return getDFACandidacies();
-    }
-
-    public Set<DFACandidacy> getDFACandidacies() {
-	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
-
-	for (final StudentCandidacy studentCandidacy : getStudentCandidacies()) {
-	    if (studentCandidacy instanceof DFACandidacy) {
-		result.add((DFACandidacy) studentCandidacy);
 	    }
-	}
-
-	return result;
-    }
 
     public Set<DegreeCandidacy> getDegreeCandidacies() {
 	final Set<DegreeCandidacy> result = new HashSet<DegreeCandidacy>();
@@ -752,6 +739,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
     
+    public Set<DFACandidacy> getDFACandidacies() {
+	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
+
+	for (final StudentCandidacy studentCandidacy : getStudentCandidacies()) {
+	    if (studentCandidacy instanceof DFACandidacy) {
+		result.add((DFACandidacy) studentCandidacy);
+	    }
+	}
+
+	return result;
+    }
+
     public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(
 	    Integer studentNumberPosition) {
 	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
@@ -809,6 +808,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public List<DegreeCandidacy> getDegreeCandidaciesBy(CandidacySituationType candidacySituationType) {
 	final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
 	for (final DegreeCandidacy candidacy : getDegreeCandidacies()) {
+	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
+		result.add(candidacy);
+	    }
+	}
+	return result;
+    }
+    
+    public List<StudentCandidacy> getFirstCycleCandidaciesBy(CandidacySituationType candidacySituationType) {
+	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
+	for (final StudentCandidacy candidacy : getFirstCycleCandidacies()) {
 	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
 		result.add(candidacy);
 	    }
