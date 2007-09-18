@@ -978,7 +978,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getDegreeType().isSecondCycle();
     }
     
-    public boolean isAnyThesisAvailable() {
+    public boolean isAnyPublishedThesisAvailable() {
         for (DegreeCurricularPlan dcp : getDegreeCurricularPlans()) {
             for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
                 List<IEnrolment> enrolments = new ArrayList<IEnrolment>();
@@ -1005,6 +1005,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
         
         return false;
+    }
+    
+    public boolean isAnyThesisAvailable() {
+        return hasAnyThesis();
     }
     
     /* 

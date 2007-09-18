@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Hide dissertation's section when no thesis exist for the degree" newDissertationsAP.sql
