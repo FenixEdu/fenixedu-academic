@@ -13,8 +13,8 @@
 	</p>
 </html:messages>
 
-<fr:form action="/studentsListByDegree.do?method=searchByDegree">
-
+<fr:form action="<%= "/studentsListByDegree.do" %>">
+<html:hidden property="method" value="searchByDegree"/>
 	<fr:edit name="searchParametersBean" schema="student.list.searchByDegree.chooseDegree" id="chooseDegree">
 		<fr:destination name="postBack" path="/studentsListByDegree.do?method=postBack"/>
 		<fr:layout name="tabular">
@@ -29,13 +29,16 @@
 			schema="student.list.searchByDegree.parameters">
 			<fr:layout name="tabular-row" />
 		</fr:edit>
-		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='searchByDegree';this.form.submit();">
+		<bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:submit>		
 	</logic:notEmpty>
 
-</fr:form>
-	
 <logic:present name="studentCurricularPlanList">
+
 	<bean:size id="studentCurricularPlanListSize" name="studentCurricularPlanList" />
+	
+
 	<p class="mtop2">
 		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/> <%= studentCurricularPlanListSize %>
 	</p>
@@ -44,4 +47,12 @@
 			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		</fr:layout>	
 	</fr:view>
+	<logic:greaterThan name="studentCurricularPlanListSize" value="0">
+		<p class="mtop15 mbottom15">	
+			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>	
+				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
+		</p>
+	</logic:greaterThan>
 </logic:present>
+
+</fr:form>
