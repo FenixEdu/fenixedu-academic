@@ -1372,8 +1372,8 @@ public class Person extends Person_Base {
 	    if (existingContributor != null && existingContributor != this) {
 		throw new DomainException("PERSON.createContributor.existing.contributor.number");
 	    }
-	    super.setSocialSecurityNumber(socialSecurityNumber);
 	}
+	super.setSocialSecurityNumber(socialSecurityNumber);
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {
