@@ -1968,9 +1968,9 @@ public class Person extends Person_Base {
         }
         final Student student = getStudent();
         if (student != null) {
-            final DegreeType degree = student.getMostSignificantDegreeType();
-            if (degree != null) {
-                return PartyClassification.getClassificationByDegreeType(degree);
+            final DegreeType degreeType = student.getMostSignificantDegreeType();
+            if (degreeType != null) {
+                return PartyClassification.getClassificationByDegreeType(degreeType);
             }
         }
         return PartyClassification.PERSON;

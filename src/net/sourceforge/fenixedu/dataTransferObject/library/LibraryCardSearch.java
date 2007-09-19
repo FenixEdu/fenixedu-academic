@@ -44,23 +44,6 @@ public class LibraryCardSearch implements Serializable {
         return libraryCardDTOList;
     }
 
-    private boolean satisfiesUserName(String name) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    private boolean satisfiesCategory(RoleType researcher) {
-        if (researcher != null && researcher.equals(RoleType.TEACHER)) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean satisfiesNumber(Integer employeeNumber) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
     private List<Person> getAssociatedPersons(PartyClassification partyClassification) {
         if (partyClassification == null) {
             return Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons();
@@ -98,11 +81,26 @@ public class LibraryCardSearch implements Serializable {
 
     private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {
         List<Person> persons = new ArrayList<Person>();
+        System.out.println("raios ma partam!");
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        //TODO *remove in 2008/2009 when the type DEGREE will no longer be relevant to obtain current data
+        if (degreeType.equals(DegreeType.DEGREE)) {
+            executionYear = executionYear.getPreviousExecutionYear();
+        }
         for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
-            for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(ExecutionYear
-                    .readCurrentExecutionYear())) {
+            for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(executionYear)) {
+                if (scp.getRegistration().getStudent().getNumber() == 49873) {
+                    scp.getRegistration().isActive();
+                    System.out.println("o gajo ta ca!");
+                }
                 if (scp.getRegistration().isActive()) {
-                    persons.add(scp.getRegistration().getPerson());
+                    if (!degreeType.equals(DegreeType.DEGREE)) {
+                        persons.add(scp.getRegistration().getPerson());
+                    } else { // *                                       
+                        if (scp.getRegistration().getStudent().getTransitedRegistrations().isEmpty()) {
+                            persons.add(scp.getRegistration().getPerson());
+                        }
+                    }
                 }
             }
         }
@@ -120,7 +118,8 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesCategory(Person person) {
-        return getPartyClassification() == null || getPartyClassification().equals(person.getPartyClassification());
+        return getPartyClassification() == null
+                || getPartyClassification().equals(person.getPartyClassification());
     }
 
     private boolean satisfiesNumber(Person person) {
