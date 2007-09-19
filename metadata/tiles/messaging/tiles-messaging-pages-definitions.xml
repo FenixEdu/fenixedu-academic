@@ -7,7 +7,7 @@
     </definition>
 
    	<definition name="df.page.structure" extends="definition.messaging.masterPage" >
-		<put name="body"  value="/common/blank.jsp"/>
+		<put name="body"  value="/commons/blank.jsp"/>
 	</definition>   
 
 	<definition name="search-boards" extends="definition.messaging.masterPage" >

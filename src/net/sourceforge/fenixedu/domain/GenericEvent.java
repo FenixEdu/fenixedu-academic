@@ -79,9 +79,13 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }  
     
     public void edit(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> newRooms, List<GenericEventSpaceOccupation> roomOccupationsToRemove) {	
-		
-	if(getPunctualRoomsOccupationRequest() != null && !getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.NEW)) {
-            throw new DomainException("error.edit.GenericEvent.request.was.resolved.or.opened");
+	
+	if(getLastInstant().isBeforeNow()) {
+	    throw new DomainException("error.edit.GenericEvent.because.was.old.event");
+	}	
+	
+	if(getPunctualRoomsOccupationRequest() != null && getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
+            throw new DomainException("error.edit.GenericEvent.request.was.resolved");
         }		
 		
 	setTitle(title);

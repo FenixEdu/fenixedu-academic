@@ -626,7 +626,7 @@
     </definition>
     
    	<definition name="df.page.structure" extends="definition.manager.masterPage" >
-		<put name="body"  value="/common/blank.jsp"/>
+		<put name="body"  value="/commons/blank.jsp"/>
 	</definition>   
 
 	<definition name="manager-add-announcement" extends="definition.manager.masterPage" >

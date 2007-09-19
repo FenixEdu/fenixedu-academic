@@ -9,7 +9,7 @@
 		<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
 		<put name="navLocal" value="/messaging/mainMenu.jsp"/>
-		<put name="body-context" value="/common/blank.jsp"/>
+		<put name="body-context" value="/commons/blank.jsp"/>
 		<put name="body" value="/messaging/welcomeScreen.jsp"/>
 		<put name="footer" value="/copyright.jsp"/>
 	</definition>
