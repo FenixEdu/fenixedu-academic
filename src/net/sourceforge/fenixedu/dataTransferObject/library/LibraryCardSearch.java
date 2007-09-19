@@ -80,21 +80,16 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {
-        List<Person> persons = new ArrayList<Person>();
-        System.out.println("raios ma partam!");
+        List<Person> persons = new ArrayList<Person>();        
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         //TODO *remove in 2008/2009 when the type DEGREE will no longer be relevant to obtain current data
-        if (degreeType.equals(DegreeType.DEGREE)) {
+        if (degreeType.equals(DegreeType.DEGREE) || degreeType.equals(DegreeType.MASTER_DEGREE)) {
             executionYear = executionYear.getPreviousExecutionYear();
         }
         for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
             for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(executionYear)) {
-                if (scp.getRegistration().getStudent().getNumber() == 49873) {
-                    scp.getRegistration().isActive();
-                    System.out.println("o gajo ta ca!");
-                }
                 if (scp.getRegistration().isActive()) {
-                    if (!degreeType.equals(DegreeType.DEGREE)) {
+                    if (!degreeType.equals(DegreeType.DEGREE) && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
                         persons.add(scp.getRegistration().getPerson());
                     } else { // *                                       
                         if (scp.getRegistration().getStudent().getTransitedRegistrations().isEmpty()) {

@@ -68,6 +68,11 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         PartyClassification partyClassification = person.getPartyClassification();
         LibraryCardDTO libraryCardDTO = new LibraryCardDTO(person, partyClassification);
 
+        if (!partyClassification.equals(PartyClassification.EMPLOYEE)
+                && !partyClassification.equals(PartyClassification.TEACHER)) {
+            request.setAttribute("presentDate", "presentDate");
+        }
+
         if (!libraryCardDTO.isStudent()) {
             libraryCardDTO.setUnlimitedCard(Boolean.TRUE);
         } else {
@@ -125,21 +130,6 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCardDTO.getPerson()
                 .getPartyClassification()));
         return mapping.findForward("show-details");
-    }
-
-    private boolean validateNamesMaxLength(HttpServletRequest request, LibraryCardDTO libraryCardDTO) {
-        boolean validationError = Boolean.FALSE;
-        if (libraryCardDTO.getUserName().length() > maxUserNameLength) {
-            setError(request, "message.card.userName.tooLong", libraryCardDTO.getUserName().length());
-            validationError = Boolean.TRUE;
-        }
-        if (libraryCardDTO.getPerson().getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
-            if (libraryCardDTO.getUnitName().length() > maxUnitNameLength) {
-                setError(request, "message.card.unitName.tooLong", libraryCardDTO.getUnitName().length());
-                validationError = Boolean.TRUE;
-            }
-        }
-        return validationError;
     }
 
     public ActionForward generatePdfCard(ActionMapping mapping, ActionForm actionForm,
@@ -371,6 +361,21 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
                 .getPartyClassification()));
         request.setAttribute("presentDate", "presentDate");
         return mapping.findForward("create-card");
+    }
+
+    private boolean validateNamesMaxLength(HttpServletRequest request, LibraryCardDTO libraryCardDTO) {
+        boolean validationError = Boolean.FALSE;
+        if (libraryCardDTO.getUserName().length() > maxUserNameLength) {
+            setError(request, "message.card.userName.tooLong", libraryCardDTO.getUserName().length());
+            validationError = Boolean.TRUE;
+        }
+        if (libraryCardDTO.getPerson().getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
+            if (libraryCardDTO.getChosenUnitName().length() > maxUnitNameLength) {
+                setError(request, "message.card.unitName.tooLong", libraryCardDTO.getUnitName().length());
+                validationError = Boolean.TRUE;
+            }
+        }
+        return validationError;
     }
 
     private List<Integer> getExistingPins() {

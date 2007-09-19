@@ -158,8 +158,14 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public String getCategory() {
-        if(isStudent()) {
-            return "Aluno";
+        if(getPartyClassification().equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+            return "DFA";
+        }
+        if(getPartyClassification().equals(PartyClassification.BOLONHA_DEGREE)) {
+            return "Lic. Bolonha";
+        }
+        if(getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)) {
+            return "Curso Especialização";
         }
         final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
                 "resources.EnumerationResources", LanguageUtils.getLocale());
