@@ -3812,7 +3812,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
 		class net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence extends net.sourceforge.fenixedu.domain.studentCurriculum.Credits {
-			Grade grade (REQUIRED);
+			Grade grade;
 		}
 
 			class net.sourceforge.fenixedu.domain.studentCurriculum.Substitution extends net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence {

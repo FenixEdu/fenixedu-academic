@@ -63,10 +63,16 @@ public class Substitution extends Substitution_Base {
     
     @Override
     public Grade getGrade() {
-	return super.getGrade() != null ? super.getGrade() : getEnrolmentsAverageGrade();
+	return getEnrolmentsAverageGrade();
     }
 
     private Grade getEnrolmentsAverageGrade() {
 	return null;
+    }
+    
+    @Override
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkGrade() {
+        return true;
     }
 }

@@ -58,4 +58,10 @@ public class Equivalence extends Equivalence_Base {
     public boolean isEquivalence() {
         return true;
     }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkGrade() {
+        return getGrade() != null;
+    }
+
 }
