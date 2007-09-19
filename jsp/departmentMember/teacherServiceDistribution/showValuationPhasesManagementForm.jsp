@@ -148,15 +148,15 @@
 		</td>
 		<td class="acenter">
 			<logic:equal name="valuationPhase" property="isPublished" value="true">
-				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=setPublishedStateOnValuationPhase&isPublished=false&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+				<html:link page="<%= "/valuationPhasesManagement.do?method=setPublishedStateOnValuationPhase&isPublished=false&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
 				<%-- <html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='false'; document.valuationPhasesManagementForm.submit();" %>'> 
-					--%> <bean:message key="label.unpublish"/>
-				</html:link>
+					--%> <bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.unpublish"/>
+				</html:link> 
 			</logic:equal>
 			<logic:notEqual name="valuationPhase" property="isPublished" value="true">
-				<html:link href="<%= request.getContextPath() + "/departmentMember/valuationPhasesManagement.do?&method=setPublishedStateOnValuationPhase&isPublished=true&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
+				<html:link page="<%= "/valuationPhasesManagement.do?method=setPublishedStateOnValuationPhase&isPublished=true&valuationPhase=" + ((ValuationPhase) valuationPhase).getIdInternal() + "&teacherServiceDistribution=" + teacherServiceDistribution%>">
 				<%-- <html:link href='<%= "javascript: document.valuationPhasesManagementForm.valuationPhase.value=" + ((ValuationPhase) valuationPhase).getIdInternal() + ";document.valuationPhasesManagementForm.method.value='setPublishedStateOnValuationPhase'; document.valuationPhasesManagementForm.isPublished.value='true'; document.valuationPhasesManagementForm.submit();" %>'> 
-					--%> <bean:message key="label.publish"/>
+					--%> <bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.publish"/>
 				</html:link>
 			</logic:notEqual>
 		</td>					
