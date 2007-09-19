@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTypeNotFoundException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
@@ -175,6 +176,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
             return mapping.findForward("manage-grant-contract");
         } catch (GrantTypeNotFoundException e) {
             return setError(request, mapping, "errors.grant.type.not.found", null, null);
+        } catch (InvalidGrantPaymentEntityException e) {
+            return setError(request, mapping, "errors.invalidCostCenter", null, null);
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.contract.bd.create", null, null);
         } catch (Exception e) {
