@@ -19,7 +19,8 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-<table class="mtop1 mbottom15">
+
+<table class="tstyle5 thmiddle mtop1 mbottom1">
 	<tr>
 		<td nowrap="nowrap">
 			<bean:message key="property.executionPeriod"/>:
@@ -47,56 +48,53 @@
 
 
 <logic:notEmpty name="executionCourses">
-<table class="tstyle4 thleft">
-	<tr>
-		<th>
-			<bean:message key="label.professorship.course"/>
-		</th>
-		<th>
-			<bean:message key="label.professorships.degrees"/>
-		</th>
-		<th>
-			<bean:message key="label.semestre"/>
-		</th>
-        <th>
-            <bean:message key="link.executionCourseManagement.menu.view.course.page"/>
-        </th>
-	</tr>
-	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	<p class="mbottom05"><bean:message key="label.choose.course.to.administrate"/>:</p>
+	<table class="tstyle4 thlight tdpadding1 mtop05">
 		<tr>
-			<td class="nowrap" style="text-align:left">
-				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:write name="executionCourse" property="nome"/>
-                    (<bean:write name="executionCourse" property="sigla"/>)
-				</html:link>
-			</td>
-			<td style="text-align:left">
-	            <span class="smalltxt">
-					<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-						<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
-						<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
-						<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
-							<bean:write name="degreeCode"/>
+			<th><bean:message key="label.semestre"/></th>
+			<th><bean:message key="label.executionCourseManagement.menu.view.courseAndPage"/></th>
+			<th><bean:message key="label.professorships.degrees"/></th>
+		</tr>
+	<logic:iterate id="executionCourse" name="executionCourses" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+			<tr>
+				<td style="width: 150px;" class="acenter">
+		            <span class="smalltxt">
+						<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
+					</span>
+				</td>
+				<td style="width: 450px;">
+					<strong>
+						<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:write name="executionCourse" property="nome"/>
+		                    (<bean:write name="executionCourse" property="sigla"/>)
 						</html:link>
-					</logic:iterate>
-				</span>
-			</td>
-			<td class="nowrap" style="text-align:left">
-	            <span class="smalltxt">
-					<bean:write name="executionCourse" property="executionPeriod.qualifiedName"/>
-				</span>
-			</td>
-            <td class="aleft breakword" style="word-wrap: break-word !important;">
-	            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
-	            <span class="smalltxt breakword" style="word-wrap: break-word !important;">
-	                <html:link href="<%= executionCourseURL %>" >
-	                    <bean:write name="executionCourseURL"/>
-	                </html:link>
-                </span>
-            </td>
-		</tr>		
+					</strong>
+					
+		            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
+		            <p class="mtop05 mbottom0">
+			            <span class="smalltxt breakword color888" style="word-wrap: break-word !important;">
+							<html:link href="<%= executionCourseURL %>" styleClass="color888">
+			                    <bean:write name="executionCourseURL"/>
+			                </html:link>
+		                </span>
+	                </p>
+				</td>
+				<td>
+		            <span class="smalltxt">
+						<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+							<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
+							<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
+							<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
+								<bean:write name="degreeCode"/>
+							</html:link>
+						</logic:iterate>
+					</span>				
+				</td>
+			</tr>
+
 	</logic:iterate>
-</table>
+	</table>
 </logic:notEmpty>
+
 
 
