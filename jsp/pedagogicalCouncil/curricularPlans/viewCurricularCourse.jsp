@@ -22,7 +22,7 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
 		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.name}</span></p>" escape="false"/>	
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
+		<h:outputLink value="#{CurricularCourseManagement.contextPath}/pedagogicalCouncil/competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
 			<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
 		</h:outputLink>

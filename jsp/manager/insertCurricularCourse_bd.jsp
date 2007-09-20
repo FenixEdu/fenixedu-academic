@@ -9,7 +9,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<html:form action="/insertCurricularCourse" method ="get">  
+<html:form action="/insertCurricularCourse">  
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insert"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>

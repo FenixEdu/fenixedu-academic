@@ -23,11 +23,11 @@
 		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.name} " escape="false"/>
 		<h:outputText rendered="#{!empty CurricularCourseManagement.curricularCourse.acronym})" value="(#{CurricularCourseManagement.curricularCourse.acronym})" escape="false"/>
 		<h:outputText value="</span></p>" escape="false"/>		
-		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
+		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>		
+		<h:outputLink value="#{CurricularCourseManagement.contextPath}/bolonhaManager/competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
-			<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
-		</h:outputLink>
+			<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>			
+		</h:outputLink>	
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 	</h:panelGroup>
 

@@ -177,6 +177,10 @@ public class RequestChecksumFilter implements Filter {
 			    rewrite(response, source, nextChar);
 			    return;
 			}
+		    } else {
+			response.append(source, iOffset, indexOfAopen + 1);
+			rewrite(response, source, indexOfAopen + 2);
+			return;
 		    }
 		}
 	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)
@@ -507,6 +511,10 @@ public class RequestChecksumFilter implements Filter {
 	if (FileUpload.isMultipartContent(httpServletRequest)) {
 	    return false;
 	}
+	if(uri.indexOf("notAuthorized.do") >= 0){
+	    return false;
+	}
+	
 	return RequestUtils.isPrivateURI(httpServletRequest);
     }
 
