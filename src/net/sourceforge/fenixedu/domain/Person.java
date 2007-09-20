@@ -2448,8 +2448,10 @@ public class Person extends Person_Base {
 
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
 	final Collection<Person> people = new ArrayList<Person>();
-	for (final IdDocument idDocument : IdDocument.find(documentIDValue)) {
-	    people.add(idDocument.getPerson());
+	if (!StringUtils.isEmpty(documentIDValue)) {
+	    for (final IdDocument idDocument : IdDocument.find(documentIDValue)) {
+		people.add(idDocument.getPerson());
+	    }
 	}
 	return people;
     }

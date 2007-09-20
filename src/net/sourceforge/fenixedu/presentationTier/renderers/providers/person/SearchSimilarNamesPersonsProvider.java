@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.person;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -21,8 +23,10 @@ public class SearchSimilarNamesPersonsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
-	return Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
-		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName()));
+	Collection<Person> result = Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber());
+	result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
+		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
+	return result;
     }
 
 }

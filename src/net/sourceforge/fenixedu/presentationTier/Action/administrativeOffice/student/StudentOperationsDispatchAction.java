@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -172,12 +174,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	if (choosePersonBean.getPerson() == null) {
 
-	    person = Person.readByDocumentIdNumberAndDateOfBirth(identificationNumber, dateOfBirth);
+	    Collection<Person> persons = Person.findPersonByDocumentID(identificationNumber);
 
-	    if (person == null && choosePersonBean.isFirstTimeSearch()) {
+	    if (choosePersonBean.isFirstTimeSearch()) {
 		choosePersonBean.setFirstTimeSearch(false);
-		if (!Person.findByDateOfBirth(dateOfBirth,
-			Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()) {
+		if (!persons.isEmpty()
+			|| !Person.findByDateOfBirth(dateOfBirth,
+				Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()) {
 		    // show similar persons
 		    RenderUtils.invalidateViewState();
 		    request.setAttribute("choosePersonBean", choosePersonBean);
