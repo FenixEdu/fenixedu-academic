@@ -2340,7 +2340,7 @@ public class Person extends Person_Base {
 		}
 	    }
 	    if (employee && !teacher) {
-		mainRoles.add("Funcionário");
+		mainRoles.add("Funcionï¿½rio");
 	    }
 	}
 	return mainRoles;
@@ -2430,9 +2430,12 @@ public class Person extends Person_Base {
     }
     
     public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
-	String[] splittedName = completeName.split(" ");
-	return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1])
-		: Collections.EMPTY_LIST;
+	if(completeName != null){
+	    String[] splittedName = completeName.split(" ");
+	    return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1])
+		    : Collections.EMPTY_LIST;	    
+	}
+	return Collections.EMPTY_LIST;
     }
     
     public static Collection<Person> findExternalPerson(final String name) {
