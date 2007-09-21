@@ -55,8 +55,7 @@
             <bean:define id="available" name="protectedItem" property="available"/>
             
             <logic:equal name="item" property="nameVisible" value="true">
-	       		<h3 class="mtop2 mbottom05">
-	                <a name="<%= "item" + item.getIdInternal() %>" ></a>
+	       		<h3 class="mtop2 mbottom05" id="<%= "item" + item.getIdInternal() %>">
 	                <fr:view name="item" property="name"/>
 	                <logic:present name="directLinkContext">
 	                    <bean:define id="directLinkContext" name="directLinkContext"/>
