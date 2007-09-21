@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.lang.StringUtils;
@@ -72,11 +74,20 @@ public class LibraryCardSearch implements Serializable {
             case BOLONHA_SPECIALIZATION_DEGREE:
                 return getPersonsFromDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
             case PERSON:
-                return Person.readAllExternalPersons();
+                return getPersons(getUserName(), 200);
             default:
                 return Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons();
             }
         }
+    }
+
+    private List<Person> getPersons(String userName, int size) {
+        Collection<PersonName> personNames = PersonName.find(userName, size);
+        List<Person> persons = new ArrayList<Person>();
+        for (PersonName personName : personNames) {
+            persons.add(personName.getPerson());
+        }
+        return persons;
     }
 
     private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {

@@ -62,7 +62,9 @@
     		<forward name="edit-card" path="edit-card"/>    		
     		<forward name="show-details" path="show-details"/>
     		<forward name="generate-missing-cards" path="generate-missing-cards"/> 
-    		<forward name="generate-missing-letters" path="generate-missing-letters"/>     		    		
+    		<forward name="generate-missing-letters" path="generate-missing-letters"/>
+			<forward name="create-person" path="create-person"/>
+			<forward name="create-unit-person" path="create-unit-person"/>			
     	</action>
     </action-mappings>
 

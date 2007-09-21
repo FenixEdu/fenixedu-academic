@@ -51,8 +51,12 @@ public class LibraryCardDTO implements Serializable {
         Unit unit = getPersonUnit();
         setUnit(unit);
         String unitName = unit != null ? unit.getName() : "";
-        if(isStudent()) {
+        if (isStudent()) {
             unitName = unit != null ? unit.getAcronym() : "";
+        } else if (partyClassification.equals(PartyClassification.PERSON)) {
+            if (person.hasExternalContract()) {
+                unitName = person.getExternalContract().getInstitutionUnit().getPresentationName();
+            }
         }
         setUnitName(unitName);
         setChosenUnitName(unitName);
@@ -74,7 +78,7 @@ public class LibraryCardDTO implements Serializable {
         setPhone(libraryCard.getPerson().getPhone());
         setMobile(libraryCard.getPerson().getMobile());
     }
-    
+
     private Unit getPersonUnit() {
         if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
             return getPerson().getEmployee().getLastWorkingPlace();
@@ -158,14 +162,19 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public String getCategory() {
-        if(getPartyClassification().equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+        if (getPartyClassification().equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
             return "DFA";
         }
-        if(getPartyClassification().equals(PartyClassification.BOLONHA_DEGREE)) {
+        if (getPartyClassification().equals(PartyClassification.BOLONHA_DEGREE)) {
             return "Lic. Bolonha";
         }
-        if(getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)) {
+        if (getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)) {
             return "Curso Especialização";
+        }
+        if (getPartyClassification().equals(PartyClassification.PERSON)) {
+            if (getPerson().isExternalPerson()) {
+                return "Externo";
+            }
         }
         final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
                 "resources.EnumerationResources", LanguageUtils.getLocale());

@@ -23,7 +23,7 @@ public class LibraryCardUnitsProvider implements DataProvider {
         unitsNames.add(new String("10 - DEEC - Área Científica Energia"));
         unitsNames.add(new String("11 - DEEC - Área Científica Computadores"));
         unitsNames.add(new String("12 - DEEC - Área Científica Electrónica"));
-        unitsNames.add(new String("13 - DEEC - Área Científica Dec. e Control"));
+        unitsNames.add(new String("13 - DEEC - Área Científica Dec. e Controlo"));
         unitsNames.add(new String("14 - DEEC - Área Científica Telecomunicações"));
         unitsNames.add(new String("15 - DEM"));
         unitsNames.add(new String("16 - DEM - Secção Projecto Mecânico"));

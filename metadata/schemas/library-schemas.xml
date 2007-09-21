@@ -184,3 +184,46 @@
 	</slot>
 	<slot name="number" key="label.card.number" bundle="LIBRARY_RESOURCES"/>	
 </schema>
+
+<schema name="library.card.create.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
+	 <slot name="person" layout="autoComplete" key="label.card.name">
+		<property name="size" value="80"/>
+		<property name="labelField" value="text"/>		
+		<property name="rawSlotName" value="name"/>		
+		<property name="format" value="${text}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalPersons"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="phone" key="label.card.person.phone">
+		<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+	</slot>
+	<slot name="mobile" key="label.card.person.mobile">
+		<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+	</slot>
+	<slot name="email" key="label.card.person.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+		<property name="size" value="60"/>
+	</slot>
+</schema>
+
+<schema name="library.card.create.unitPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
+	<slot name="name" key="label.card.name" read-only="true"/>
+	<slot name="phone" key="label.card.person.phone" read-only="true"/>
+	<slot name="mobile" key="label.card.person.mobile" read-only="true"/>
+	<slot name="email" key="label.card.person.email" read-only="true"/>
+	<slot name="unitNameDomainReference" layout="autoComplete" key="label.card.unitName">
+		<property name="size" value="80"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="unitName"/>		
+		<property name="format" value="${unit.presentationNameWithParents}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>	
+</schema>
