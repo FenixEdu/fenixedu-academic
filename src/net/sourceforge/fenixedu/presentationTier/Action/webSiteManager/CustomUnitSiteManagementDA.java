@@ -645,8 +645,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	Unit unit = getTargetUnit(request);
-	request.setAttribute("target", unit);
 
+    request.setAttribute("target", unit);
+    request.setAttribute("functions", unit.getOrderedActiveFunctions());
+    
 	return mapping.findForward("organizeFunctions");
     }
 
@@ -658,7 +660,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    return manageExistingFunctions(mapping, actionForm, request, response);
 	}
 
-	List<Function> initialFunctions = new ArrayList<Function>(unit.getOrderedFunctions());
+	List<Function> initialFunctions = new ArrayList<Function>(unit.getOrderedActiveFunctions());
 	List<Function> orderedFunctions = new ArrayList<Function>();
 
 	String[] nodes = orderString.split(",");

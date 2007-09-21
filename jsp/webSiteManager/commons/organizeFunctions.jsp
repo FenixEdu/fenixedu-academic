@@ -39,7 +39,7 @@
 </logic:messagesPresent>
 
 <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
-	<fr:view name="target" property="orderedFunctions">
+	<fr:view name="functions">
 	   <fr:layout name="unit-functions-tree">
 	       <fr:property name="treeId" value="unitFunctionsOrder"/>
 	       <fr:property name="fieldId" value="functions-order"/>
