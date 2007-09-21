@@ -1166,6 +1166,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			Boolean showInstitutionLogo;
 			Boolean showIntroduction;
 			MultiLanguageString sideBanner;
+			String googleAnalyticsCode;
 		}
 
 			class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {

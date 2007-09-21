@@ -811,4 +811,20 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	}
     }
 
+    public ActionForward analytics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IViewState viewState = RenderUtils.getViewState("siteAnalytics");
+        
+        if (viewState != null && viewState.isValid()) {
+            UnitSite site = getSite(request);
+            
+            if (site.getGoogleAnalyticsCode() != null) {
+                request.setAttribute("codeAccepted", true);
+            } else {
+                request.setAttribute("codeRemoved", true);
+            }
+        }
+        
+        return mapping.findForward("analytics");
+    }
+    
 }

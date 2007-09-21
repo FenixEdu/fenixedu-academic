@@ -84,5 +84,7 @@
 	hideButtons()
 </script>
 
+<tiles:insert attribute="analytics" ignore="true"/>
+
 </body>
 </html:html>

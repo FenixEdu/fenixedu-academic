@@ -181,6 +181,9 @@
     <definition name="basicUnitSite-chooseManagers" extends="definition.basicUnit.site.management">
         <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
     </definition>
+    <definition name="basicUnitSite-analytics" extends="definition.basicUnit.site.management">
+        <put name="body" value="/webSiteManager/commons/analytics.jsp"/>
+    </definition>
 
 	<definition name="definition.basicUnit.site.announcements.management" extends="definition.websiteManager.masterPage">
 		<put name="navLocal-context" value="/webSiteManager/commons/navSiteContext.jsp"/>
@@ -403,6 +406,9 @@
     <definition name="researchSite-chooseManagers" extends="definition.researchUnitSite.masterPage">
         <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
     </definition>
+    <definition name="researchSite-analytics" extends="definition.researchUnitSite.masterPage">
+        <put name="body" value="/webSiteManager/commons/analytics.jsp"/>
+    </definition>
 
 	<!-- ======  -->
 
@@ -536,6 +542,9 @@
     </definition>
     <definition name="departmentSite-chooseManagers" extends="definition.department.site.management">
         <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
+    </definition>
+    <definition name="departmentSite-analytics" extends="definition.department.site.management">
+        <put name="body" value="/webSiteManager/commons/analytics.jsp"/>
     </definition>
     
         <!-- announcements -->
@@ -696,6 +705,9 @@
     <definition name="pedagogicalCouncil-chooseManagers" extends="definition.pedagogicalCouncil.site.management">
         <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
     </definition>
+    <definition name="pedagogicalCouncil-analytics" extends="definition.pedagogicalCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/analytics.jsp"/>
+    </definition>
     
         <!-- announcements -->
 
@@ -854,6 +866,9 @@
     </definition>
     <definition name="scientificCouncil-chooseManagers" extends="definition.scientificCouncil.site.management">
         <put name="body" value="/webSiteManager/commons/chooseManagers.jsp"/>
+    </definition>
+    <definition name="scientificCouncil-analytics" extends="definition.scientificCouncil.site.management">
+        <put name="body" value="/webSiteManager/commons/analytics.jsp"/>
     </definition>
     
         <!-- announcements -->

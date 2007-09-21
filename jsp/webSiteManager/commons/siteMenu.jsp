@@ -32,6 +32,11 @@
             <bean:message key="link.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
         </html:link>
     </li>
+    <li>
+        <html:link page="<%= String.format("%s?method=analytics&amp;%s", actionName, context) %>">
+            <bean:message key="link.site.analytics" bundle="WEBSITEMANAGER_RESOURCES"/>
+        </html:link>
+    </li>
     
     
 	<li class="navheader"><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></li>

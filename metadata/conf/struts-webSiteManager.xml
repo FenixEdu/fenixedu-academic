@@ -89,6 +89,7 @@
         <forward name="createPersonFunction" path="basicUnitSite-createPersonFunction"/>
         <forward name="editPersonFunction" path="basicUnitSite-editPersonFunction"/>
         <forward name="chooseManagers" path="basicUnitSite-chooseManagers"/>
+        <forward name="analytics" path="basicUnitSite-analytics"/>
 	  </action>
 	  
       <action path="/manageUnitAnnouncements"
@@ -148,6 +149,7 @@
         <forward name="createPersonFunction" path="researchSite-createPersonFunction"/>
         <forward name="editPersonFunction" path="researchSite-editPersonFunction"/>
         <forward name="chooseManagers" path="researchSite-chooseManagers"/>
+        <forward name="analytics" path="researchSite-analytics"/>
 	  </action>
 	  
 	  <action path="/manageResearchUnitAnnouncements"
@@ -216,6 +218,7 @@
         <forward name="createPersonFunction" path="departmentSite-createPersonFunction"/>
         <forward name="editPersonFunction" path="departmentSite-editPersonFunction"/>
         <forward name="chooseManagers" path="departmentSite-chooseManagers"/>
+        <forward name="analytics" path="departmentSite-analytics"/>
     </action>
 
     <action path="/manageDepartmentSiteAnnouncements"
@@ -281,6 +284,7 @@
         <forward name="createPersonFunction" path="pedagogicalCouncil-createPersonFunction"/>
         <forward name="editPersonFunction" path="pedagogicalCouncil-editPersonFunction"/>
         <forward name="chooseManagers" path="pedagogicalCouncil-chooseManagers"/>
+        <forward name="analytics" path="pedagogicalCouncil-analytics"/>
     </action>
 
     <action path="/managePedagogicalCouncilAnnouncements"
@@ -335,6 +339,7 @@
         <forward name="createPersonFunction" path="scientificCouncil-createPersonFunction"/>
         <forward name="editPersonFunction" path="scientificCouncil-editPersonFunction"/>
         <forward name="chooseManagers" path="scientificCouncil-chooseManagers"/>
+        <forward name="analytics" path="scientificCouncil-analytics"/>
     </action>
 
     <action path="/manageScientificCouncilAnnouncements"

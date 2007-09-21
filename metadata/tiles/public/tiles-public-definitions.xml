@@ -115,6 +115,7 @@
 			<put name="main_navigation" value="/commons/blank.jsp"/>
 			<put name="body" value="/commons/blank.jsp" />
 			<put name="footer" value="/publico/customized/footer.jsp" />
+			<put name="analytics" value="/publico/unitSite/analytics.jsp" />
 	</definition>
     <definition name="definition.public.paddingLayout" page="/layout/istLayout.jsp">
             <put name="title" value="Instituto Superior Técnico" />
@@ -122,6 +123,7 @@
             <put name="main_navigation" value="/customized/mainNavigation.jsp" />
             <put name="body" value="/commons/blank.jsp" />
             <put name="footer" value="/publico/customized/footer.jsp" />
+			<put name="analytics" value="/publico/unitSite/analytics.jsp" />
     </definition>
 	<definition name="definition.public.researchUnit.noPaddingLayout" extends="definition.public.noPaddingLayout">
 			<put name="main_navigation" value="/publico/researchUnitSite/mainNavigation.jsp" />

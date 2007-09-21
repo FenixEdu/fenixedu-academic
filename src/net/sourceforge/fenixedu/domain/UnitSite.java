@@ -297,6 +297,16 @@ public class UnitSite extends UnitSite_Base {
     	return template.hasModule() && template.getModule().hasAnyFunctionalities();
     }
     
+    @Override
+    public void setGoogleAnalyticsCode(String code) {
+        if (code == null || code.trim().length() == 0) {
+            super.setGoogleAnalyticsCode(null);
+        }
+        else {
+            super.setGoogleAnalyticsCode(code);
+        }
+    }
+    
     /**
      * Manage the role WEBSITE_MANAGER associated with the person. The person
      * becomes a WEBSITE_MANAGER when it's added as a manager of a UnitSite. This

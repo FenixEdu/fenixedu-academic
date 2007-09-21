@@ -386,3 +386,9 @@
 <schema name="unitSite.tree.unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
     <slot name="nameWithAcronym"/>
 </schema>
+
+<schema name="unitSite.analytics.code" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="SITE_RESOURCES">
+    <slot name="googleAnalyticsCode" key="label.analytics">
+    	<property name="size" value="30"/>
+    </slot>
+</schema>
