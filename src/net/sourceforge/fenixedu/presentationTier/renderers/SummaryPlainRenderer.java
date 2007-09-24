@@ -32,7 +32,7 @@ public class SummaryPlainRenderer extends OutputRenderer {
 		builder.append(summary.getSummaryDateYearMonthDay().getYear());
 		builder.append(" - ").append(RenderUtils.getResourceString("DEFAULT", "label.lesson") + ": ");
 
-		if (summary.getIsExtraLesson()) {
+		if (summary.isExtraSummary()) {
 		    
 		    builder.append(RenderUtils.getEnumString(SummaryType.EXTRA_SUMMARY, null)).append(" ");
 		    builder.append(" (").append(summary.getSummaryHourHourMinuteSecond().getHour());

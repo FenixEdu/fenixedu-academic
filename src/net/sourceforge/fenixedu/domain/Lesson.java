@@ -113,24 +113,7 @@ public class Lesson extends Lesson_Base {
 	checkShiftLoad(getShift());
 
 	lessonSpaceOccupationManagement(newRoom);
-    }
-
-    private void lessonSpaceOccupationManagement(AllocatableSpace newRoom) {
-	LessonSpaceOccupation lessonSpaceOccupation = getLessonSpaceOccupation();
-	if(newRoom != null) {
-	    if(!wasFinished()) {
-		if(lessonSpaceOccupation == null) {                	                    	                    
-		    lessonSpaceOccupation = new LessonSpaceOccupation(newRoom, this);   
-		} else {
-		    lessonSpaceOccupation.edit(newRoom);
-		}		   	
-	    }
-	} else {
-	    if(lessonSpaceOccupation != null) {
-		lessonSpaceOccupation.delete();
-	    }
-	}
-    }   
+    }  
 
     public void delete() {
 
@@ -164,7 +147,36 @@ public class Lesson extends Lesson_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getFrequency() != null && getDiaSemana() != null;		 
+    }
 
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkTimeInterval() {
+	final HourMinuteSecond start = getBeginHourMinuteSecond();
+	final HourMinuteSecond end = getEndHourMinuteSecond();	
+	return start != null && end != null && start.isBefore(end);
+    }
+
+    private void lessonSpaceOccupationManagement(AllocatableSpace newRoom) {
+	LessonSpaceOccupation lessonSpaceOccupation = getLessonSpaceOccupation();
+	if(newRoom != null) {
+	    if(!wasFinished()) {
+		if(lessonSpaceOccupation == null) {                	                    	                    
+		    lessonSpaceOccupation = new LessonSpaceOccupation(newRoom, this);   
+		} else {
+		    lessonSpaceOccupation.edit(newRoom);
+		}		   	
+	    }
+	} else {
+	    if(lessonSpaceOccupation != null) {
+		lessonSpaceOccupation.delete();
+	    }
+	}
+    }  
+    
     @Override
     public void setShift(Shift shift) {
 	if (shift == null) {
@@ -188,19 +200,7 @@ public class Lesson extends Lesson_Base {
 	}
 	super.setPeriod(period);
     }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return getFrequency() != null && getDiaSemana() != null;		 
-    }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkTimeInterval() {
-	final HourMinuteSecond start = getBeginHourMinuteSecond();
-	final HourMinuteSecond end = getEndHourMinuteSecond();	
-	return start != null && end != null && start.isBefore(end);
-    }
-
+    
     public boolean wasFinished() {
 	return !hasPeriod();
     }

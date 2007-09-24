@@ -251,7 +251,7 @@ public class Summary extends Summary_Base {
 
     @Override
     public AllocatableSpace getRoom() {
-	if(getIsExtraLesson()) {
+	if(isExtraSummary()) {
 	    return (AllocatableSpace) super.getRoom();
 	} else if(hasLessonInstance()) {
 	    return getLessonInstance().getRoom();	   
@@ -272,5 +272,9 @@ public class Summary extends Summary_Base {
 
     public ShiftType getShiftType() {
 	return getLessonInstance().getCourseLoad().getType();
+    }
+    
+    public boolean isExtraSummary() {
+	return getIsExtraLesson().booleanValue();
     }
 }

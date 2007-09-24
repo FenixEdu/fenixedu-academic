@@ -317,7 +317,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Summary summary = getSummaryFromParameter(request);
 
 	SummaryType summaryType;
-	if (summary.getIsExtraLesson()) {
+	if (summary.isExtraSummary()) {
 	    summaryType = SummaryType.EXTRA_SUMMARY;
 	    request.setAttribute("notShowLessonPlanningsAndSummaries", Boolean.TRUE);
 	} else {

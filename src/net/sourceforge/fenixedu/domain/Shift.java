@@ -323,7 +323,7 @@ public class Shift extends Shift_Base {
 	List<Summary> result = new ArrayList<Summary>();
 	Set<Summary> summaries = getAssociatedSummariesSet();
 	for (Summary summary : summaries) {
-	    if(summary.getIsExtraLesson()) {
+	    if(summary.isExtraSummary()) {
 		result.add(summary);
 	    }
 	} 

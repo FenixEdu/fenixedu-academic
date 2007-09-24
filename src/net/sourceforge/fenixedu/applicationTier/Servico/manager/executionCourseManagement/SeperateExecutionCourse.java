@@ -93,7 +93,7 @@ public class SeperateExecutionCourse extends Service {
     }
 
     private DomainObject findDomainObjectByID(final Set<? extends DomainObject> domainObjects, final Integer id) {
-        for (final DomainObject domainObject : (List<DomainObject>) domainObjects) {
+        for (final DomainObject domainObject : (Set<DomainObject>) domainObjects) {
             if (domainObject.getIdInternal().equals(id)) {
                 return domainObject;
             }
