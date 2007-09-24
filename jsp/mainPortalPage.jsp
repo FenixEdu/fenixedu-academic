@@ -6,5 +6,5 @@
   <tiles:put name="photos" value="/entryPhotos.jsp"/>  
   <tiles:put name="body-context" value="/commons/blank.jsp" />
   <tiles:put name="body" value="/mainPortalPage_bd.jsp" />
-  <tiles:put name="footer" value="/resourceAllocationManager/commonFooterSop.jsp" />
+  <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>
