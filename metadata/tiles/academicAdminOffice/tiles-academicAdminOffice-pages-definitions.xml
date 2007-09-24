@@ -371,7 +371,6 @@
 	<definition name="studentCredit.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditNotNeedToEnrol.jsp"/>
 	</definition>
-	
 
 	<!-- ===================== MarkSheet Management ====================== -->
 	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">

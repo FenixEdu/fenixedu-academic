@@ -47,7 +47,8 @@
 
 </ul>
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
-<fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() %>">
+<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
+<fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() + "&studentId=" + studentId.toString() %>">
 
 	<html:hidden property="method" value="deleteCredits"/>
 	

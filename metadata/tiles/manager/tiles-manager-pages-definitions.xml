@@ -974,6 +974,62 @@
     </definition>
     <!-- End: Manage Curriculum Line Location -->
     
+    <!-- Start: Student Dismissals Management -->
+	<definition name="studentDismissal.chooseEquivalents" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseEquivalents.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseEquivalents" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseSubstitutionEquivalents.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseEquivalents" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseEquivalenceEquivalents.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseEquivalents" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseCreditEquivalents.jsp"/>
+	</definition>	
+	<definition name="studentDismissal.chooseDismissalEnrolments" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseDismissalEnrolments.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseDismissalEnrolments" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseSubstitutionEnrolments.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseDismissalEnrolments" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseEquivalenceEnrolments.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseDismissalEnrolments" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseCreditEnrolments.jsp"/>
+	</definition>	
+    
+	<definition name="studentDismissal.management" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/managementDismissals.jsp"/>
+	</definition>
+	<definition name="studentDismissal.confirmCreateDismissals" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/confirmCreateDismissals.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.confirmCreateDismissals" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/confirmCreateSubstitution.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.confirmCreateDismissals" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/confirmCreateEquivalence.jsp"/>
+	</definition>
+	<definition name="studentCredit.confirmCreateDismissals" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/confirmCreateCredit.jsp"/>
+	</definition>
+	
+	<definition name="studentDismissal.prepareCreateExternalEnrolment" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/createExternalEnrolment.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseNotNeedToEnrol" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseSubstitutionNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseNotNeedToEnrol" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseEquivalenceNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseNotNeedToEnrol" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/dismissal/chooseCreditNotNeedToEnrol.jsp"/>
+	</definition>
+    <!-- End: Student Dismissals Management -->
+    
     <!-- Start: Payments Management -->
     <definition name="payments.events.chooseStudent" extends="definition.manager.masterPage">
         <put name="body" value="/manager/payments/events/chooseStudent.jsp"></put>
