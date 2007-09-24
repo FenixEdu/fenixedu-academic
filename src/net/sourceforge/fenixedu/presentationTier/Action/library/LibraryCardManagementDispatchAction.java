@@ -57,10 +57,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             }
         }
 
-        if (libraryCardSearch.getPartyClassification().equals(PartyClassification.PERSON)
-                && StringUtils.isEmpty(libraryCardSearch.getUserName())) {
-            addMessage(request, "message.card.searchPerson.emptyUserName");
-        }
+//        if (libraryCardSearch.getPartyClassification().equals(PartyClassification.PERSON)
+//                && StringUtils.isEmpty(libraryCardSearch.getUserName())) {
+//            addMessage(request, "message.card.searchPerson.emptyUserName");
+//        }
         RenderUtils.invalidateViewState();
         request.setAttribute("libraryCardSearch", libraryCardSearch);
         return mapping.findForward("show-users");
@@ -294,10 +294,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("generate-missing-letters");
     }
-    
-    public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
-            FenixFilterException, FenixServiceException {
+
+    public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+            throws JRException, IOException, FenixFilterException, FenixServiceException {
 
         return mapping.findForward("generate-missing-letters-for-students");
     }
@@ -322,7 +322,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             }
         }
 
-        if (!cardList.isEmpty()) {            
+        if (!cardList.isEmpty()) {
             final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
                     LanguageUtils.getLocale());
             String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
@@ -330,10 +330,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
                 reportID += "ForStudents";
             }
             byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
-            
+
             ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "MarkLibraryCardListLettersAsEmited", new Object[] { cardList });
-            
+
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", "attachment; filename=cartas.pdf");
             response.setContentLength(data.length);
@@ -346,7 +346,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             return null;
         } else {
             request.setAttribute("nothingMissing", "nothingMissing");
-            if(result.equalsIgnoreCase("yes")) {
+            if (result.equalsIgnoreCase("yes")) {
                 return mapping.findForward("generate-missing-letters-for-students");
             }
             return mapping.findForward("generate-missing-letters");
@@ -371,6 +371,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createPerson");
         if (externalPersonBean == null) {
             externalPersonBean = (ExternalPersonBean) request.getAttribute("externalPersonBean");
+        }
+        if (externalPersonBean.getPerson() != null
+                && !externalPersonBean.getName().equalsIgnoreCase(
+                        externalPersonBean.getPerson().getName())) {
+            externalPersonBean.setPerson(null);
+            RenderUtils.invalidateViewState();
         }
         if (externalPersonBean.getPerson() == null && request.getParameter("createPerson") == null) {
             request.setAttribute("externalPersonBean", externalPersonBean);
@@ -399,6 +405,11 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("create-person");
         }
 
+        if (externalPersonBean.getUnit() != null
+                && !externalPersonBean.getUnit().getName().equalsIgnoreCase(
+                        externalPersonBean.getUnitName())) {
+            externalPersonBean.setUnit(null);
+        }
         if (externalPersonBean.getUnit() == null && request.getParameter("createUnit") == null) {
             request.setAttribute("externalPersonBean", externalPersonBean);
             request.setAttribute("needToCreateUnit", "needToCreateUnit");
@@ -412,10 +423,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
         }
         if (externalPersonBean.getUnit() != null) {
-            Object[] args2 = { externalPersonBean.getName(),
+            Object[] args = { externalPersonBean.getName(),
                     externalPersonBean.getUnit().getIdInternal(), externalPersonBean.getPhone(),
                     externalPersonBean.getMobile(), externalPersonBean.getEmail() };
-            externalContract = (ExternalContract) executeService("InsertExternalPerson", args2);
+            externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
         }
 
         request.setAttribute("personID", externalContract.getPerson().getIdInternal());

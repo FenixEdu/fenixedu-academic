@@ -29,9 +29,7 @@ public class ExternalPersonBean extends PersonBean {
     }
 
     public void setUnit(Unit unit) {
-        if (unit != null) {
-            unitDomainReference = new DomainReference<Unit>(unit);
-        }
+        this.unitDomainReference = unit != null ? new DomainReference<Unit>(unit) : null;
     }
 
     public UnitName getUnitNameDomainReference() {

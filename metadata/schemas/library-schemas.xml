@@ -53,10 +53,7 @@
 <!-- Library Card -->
 
 <schema name="library.card.list" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
-    <slot name="partyClassification" key="label.card.category" layout="menu-select">
-	    <property name="eachLayout" value="this-does-not-exist" />
-    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
-    </slot>
+    <slot name="partyClassification" key="label.card.category"/>
     <slot name="number" key="label.card.number"/>
     <slot name="userName" key="label.card.name"/>
     <slot name="unitName" key="label.card.unitName"/>    
@@ -101,6 +98,32 @@
 		<property name="maxLength" value="41"/>
 	</slot>
 	<slot name="partyClassification" key="label.card.category" read-only="true"/>
+	<slot name="unlimitedCard" key="label.card" layout="radio-postback">
+        <property name="trueLabel" value="label.card.date.unlimited"/>
+        <property name="falseLabel" value="label.card.date.limited"/>
+        <property name="destination" value="changeDateVisibility"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>	
+</schema>
+
+<schema name="library.card.generate.person" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
+	<slot name="number" key="label.card.number" read-only="true"/>
+	<slot name="pin" key="label.card.pin" read-only="true"/>
+	<slot name="person.nickname" key="label.card.name" read-only="true"/>
+	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="maxLength" value="60"/>
+	</slot>
+	<slot name="unitName" key="label.card.unitName" read-only="true"/>
+	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="maxLength" value="41"/>
+	</slot>
+	<slot name="partyClassification" key="label.card.category" layout="menu-select">
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
+		<property name="nullOptionHidden" value="true"/>		
+	</slot>
 	<slot name="unlimitedCard" key="label.card" layout="radio-postback">
         <property name="trueLabel" value="label.card.date.unlimited"/>
         <property name="falseLabel" value="label.card.date.limited"/>
@@ -166,9 +189,34 @@
     <slot name="unitName" key="label.card.unitName" read-only="true"/>
 		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="41"/>
+		<property name="maxLength" value="50"/>
 	</slot>
 	<slot name="partyClassification" key="label.card.category" read-only="true"/>
+    <slot name="validUntil" key="label.card.date" read-only="true"/>
+</schema>
+
+<schema name="library.card.edit.person" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
+	<slot name="number" key="label.card.number" read-only="true"/>
+	<slot name="pinToShow" key="label.card.pin" read-only="true"/>
+	<slot name="person.nickname" key="label.card.name" read-only="true"/>
+	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="maxLength" value="45"/>
+	</slot>
+	<slot name="person" layout="values-dash" schema="library.card.person.adress" key="label.card.person.address" read-only="true"/>
+	<slot name="person.email" key="label.card.person.email" read-only="true"/>
+	<slot name="phone" key="label.card.phone" read-only="true"/>
+    <slot name="mobile" key="label.card.mobile" read-only="true"/>
+    <slot name="unitName" key="label.card.unitName" read-only="true"/>
+		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="60"/>
+		<property name="maxLength" value="50"/>
+	</slot>
+	<slot name="partyClassification" key="label.card.category" layout="menu-select">
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
+		<property name="nullOptionHidden" value="true"/>		
+	</slot>
     <slot name="validUntil" key="label.card.date" read-only="true"/>
 </schema>
 
@@ -180,8 +228,8 @@
 
 <schema name="library.card.search" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch">
 	<slot name="partyClassification" key="label.card.category" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.PartyClassification" />
-		<property name="eachLayout" value="this-does-not-exist" />
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
 	<slot name="userName" key="label.card.name" bundle="LIBRARY_RESOURCES">

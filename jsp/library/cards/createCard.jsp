@@ -42,14 +42,28 @@
 		</fr:edit>
 	</logic:equal>
 	<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
-		<fr:edit id="libraryCardToCreate" name="libraryCardDTO" schema="library.card.generate.employee">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>			
-			<fr:destination name="changeDateVisibility" path="/cardManagement.do?method=changeDateVisibility"/>
-			<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()%>"/>
-		</fr:edit>
+	
+		<logic:equal name="libraryCardDTO" property="partyClassification" value="PERSON">
+			<fr:edit id="libraryCardToCreate" name="libraryCardDTO" schema="library.card.generate.person">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thright"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>			
+				<fr:destination name="changeDateVisibility" path="/cardManagement.do?method=changeDateVisibility"/>
+				<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()%>"/>
+			</fr:edit>
+		</logic:equal>
+		
+		<logic:notEqual name="libraryCardDTO" property="partyClassification" value="PERSON">
+			<fr:edit id="libraryCardToCreate" name="libraryCardDTO" schema="library.card.generate.employee">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thright"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>			
+				<fr:destination name="changeDateVisibility" path="/cardManagement.do?method=changeDateVisibility"/>
+				<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString()%>"/>
+			</fr:edit>
+		</logic:notEqual>
 	</logic:notEqual>
 
 	<logic:present name="presentDate">

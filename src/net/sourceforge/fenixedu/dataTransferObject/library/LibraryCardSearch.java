@@ -3,15 +3,19 @@ package net.sourceforge.fenixedu.dataTransferObject.library;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -58,7 +62,7 @@ public class LibraryCardSearch implements Serializable {
             case RESEARCHER:
                 return Role.getRoleByRoleType(RoleType.RESEARCHER).getAssociatedPersons();
             case GRANT_OWNER:
-                return Role.getRoleByRoleType(RoleType.GRANT_OWNER).getAssociatedPersons();
+                return getGrantOwners();
             case MASTER_DEGREE:
                 return getPersonsFromDegreeType(DegreeType.MASTER_DEGREE);
             case DEGREE:
@@ -81,17 +85,38 @@ public class LibraryCardSearch implements Serializable {
         }
     }
 
-    private List<Person> getPersons(String userName, int size) {
-        Collection<PersonName> personNames = PersonName.find(userName, size);
-        List<Person> persons = new ArrayList<Person>();
-        for (PersonName personName : personNames) {
-            persons.add(personName.getPerson());
+    private List<Person> getGrantOwners() {
+        Set<Person> persons = new HashSet<Person>(Role.getRoleByRoleType(RoleType.GRANT_OWNER)
+                .getAssociatedPersonsSet());
+        for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
+            if (libraryCard.getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
+                persons.add(libraryCard.getPerson());
+            }
         }
-        return persons;
+        return new ArrayList<Person>(persons);
+    }
+
+    private List<Person> getPersons(String userName, int size) {
+        if (StringUtils.isEmpty(userName)) {
+            List<Person> persons = new ArrayList<Person>();
+            for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
+                if (libraryCard.getPartyClassification().equals(PartyClassification.PERSON)) {
+                    persons.add(libraryCard.getPerson());
+                }
+            }
+            return persons;
+        } else {
+            Collection<PersonName> personNames = PersonName.find(userName, size);
+            List<Person> persons = new ArrayList<Person>();
+            for (PersonName personName : personNames) {
+                persons.add(personName.getPerson());
+            }
+            return persons;
+        }
     }
 
     private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {
-        List<Person> persons = new ArrayList<Person>();        
+        List<Person> persons = new ArrayList<Person>();
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         //TODO *remove in 2008/2009 when the type DEGREE will no longer be relevant to obtain current data
         if (degreeType.equals(DegreeType.DEGREE) || degreeType.equals(DegreeType.MASTER_DEGREE)) {
@@ -100,7 +125,8 @@ public class LibraryCardSearch implements Serializable {
         for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
             for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(executionYear)) {
                 if (scp.getRegistration().isActive()) {
-                    if (!degreeType.equals(DegreeType.DEGREE) && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
+                    if (!degreeType.equals(DegreeType.DEGREE)
+                            && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
                         persons.add(scp.getRegistration().getPerson());
                     } else { // *                                       
                         if (scp.getRegistration().getStudent().getTransitedRegistrations().isEmpty()) {
@@ -124,8 +150,9 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesCategory(Person person) {
-        return getPartyClassification() == null
-                || getPartyClassification().equals(person.getPartyClassification());
+        PartyClassification partyClassification = person.getLibraryCard() != null ? person
+                .getLibraryCard().getPartyClassification() : person.getPartyClassification();
+        return getPartyClassification() == null || getPartyClassification().equals(partyClassification);
     }
 
     private boolean satisfiesNumber(Person person) {

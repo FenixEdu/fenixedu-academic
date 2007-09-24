@@ -173,7 +173,7 @@ public class LibraryCardDTO implements Serializable {
         }
         if (getPartyClassification().equals(PartyClassification.PERSON)) {
             if (getPerson().isExternalPerson()) {
-                return "Externo";
+                return "Externa";
             }
         }
         final ResourceBundle enumerationBundle = ResourceBundle.getBundle(

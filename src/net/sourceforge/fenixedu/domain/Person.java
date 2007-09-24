@@ -1358,11 +1358,13 @@ public class Person extends Person_Base {
     }
 
     public String getPostalCode() {
-	final StringBuilder result = new StringBuilder();
-	result.append(getDefaultPhysicalAddress().getAreaCode());
-	result.append(" ");
-	result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
-	return result.toString();
+        final StringBuilder result = new StringBuilder();
+        if (getDefaultPhysicalAddress() != null) {
+            result.append(getDefaultPhysicalAddress().getAreaCode());
+            result.append(" ");
+            result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
+        }
+        return result.toString();
     }
 
     @Override

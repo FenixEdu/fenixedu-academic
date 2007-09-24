@@ -31,13 +31,26 @@
 		</fr:edit>
 	</logic:equal>
 	<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
-		<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight thright"/>
-				<fr:property name="columnClasses" value=",,tderror1"/>
-			</fr:layout>			
-			<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
-		</fr:edit>
+		
+		<logic:notEqual name="libraryCardDTO" property="partyClassification" value="PERSON">
+			<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight thright"/>
+					<fr:property name="columnClasses" value=",,tderror1"/>
+				</fr:layout>			
+				<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+			</fr:edit>
+		</logic:notEqual>
+		
+		<logic:equal name="libraryCardDTO" property="partyClassification" value="PERSON">
+			<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.person">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight thright"/>
+					<fr:property name="columnClasses" value=",,tderror1"/>
+				</fr:layout>			
+				<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+			</fr:edit>
+		</logic:equal>
 	</logic:notEqual>	
 	
 	<p>
