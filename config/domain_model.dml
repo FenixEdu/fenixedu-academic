@@ -1121,8 +1121,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String shortName;
 	}
 
-	class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
-		Integer availabilityFinal;
+	class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {		
 		Integer lotacao;
 		String nome;		
 	}

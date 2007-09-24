@@ -124,10 +124,6 @@ public class InfoShift extends InfoObject {
         return stringBuilder.toString();
     }
 
-    public Integer getAvailabilityFinal() {
-        return getShift().getAvailabilityFinal();
-    }
-
     public List<InfoLesson> getInfoLessons() {
         final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
         for (final Lesson lesson : getShift().getLessonsOrderedByWeekDayAndStartTime()) {

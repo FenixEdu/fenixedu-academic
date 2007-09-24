@@ -114,8 +114,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	InfoExecutionCourse infoExecutionCourseNew = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm.get("courseInitials"));
 	InfoShiftEditor infoShiftNew = new InfoShiftEditor();                   
-	infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());
-	infoShiftNew.setAvailabilityFinal(infoShiftOld.getAvailabilityFinal());     
+	infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());	    
 	infoShiftNew.setInfoDisciplinaExecucao(infoExecutionCourseNew);
 	infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
 	infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));

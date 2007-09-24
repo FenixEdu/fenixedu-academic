@@ -40,9 +40,7 @@ public class Shift extends Shift_Base {
 	
 	setRootDomainObject(RootDomainObject.getInstance());	
 	shiftTypeManagement(types, executionCourse);
-	setLotacao(lotacao);	
-	Integer availabilityFinal = Integer.valueOf(Double.valueOf(Math.ceil(1.10 * lotacao.doubleValue())).intValue());
-	setAvailabilityFinal(availabilityFinal);
+	setLotacao(lotacao);		
 	executionCourse.setShiftNames();
 	
 	if(!hasAnyCourseLoads()) {
@@ -59,13 +57,11 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.with.this.name.already.exists");
 	}	
 
-	final int capacityDiference = newCapacity.intValue() - getLotacao().intValue();
-	Integer newAvailabilityFinal = Integer.valueOf(getAvailabilityFinal().intValue() + capacityDiference);
-	if (getAvailabilityFinal().intValue() + capacityDiference < 0) {
+	List<Registration> enrolledStudents = getStudents();
+	if(!enrolledStudents.isEmpty() && enrolledStudents.size() > getLotacao()) {
 	    throw new DomainException("errors.exception.invalid.finalAvailability");
-	}	
+	}
 		
-	setAvailabilityFinal(newAvailabilityFinal);	
 	setLotacao(newCapacity);		
 	shiftTypeManagement(newTypes, newExecutionCourse);
 		
@@ -102,7 +98,7 @@ public class Shift extends Shift_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getAvailabilityFinal() != null && getLotacao() != null && !StringUtils.isEmpty(getNome());		 
+	return getLotacao() != null && !StringUtils.isEmpty(getNome());		 
     }
 
     @Deprecated
