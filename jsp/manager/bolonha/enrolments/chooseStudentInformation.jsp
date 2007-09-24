@@ -42,7 +42,7 @@
 				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				<fr:property name="order(view)" value="1"/>
 				
-				<fr:property name="linkFormat(enrol)" value="<%="/bolonhaStudentEnrolment.do?method=prepareShowDegreeModulesToEnrol&amp;scpId=${idInternal}"%>"/>
+				<fr:property name="linkFormat(enrol)" value="<%="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod&amp;scpId=${idInternal}"%>"/>
 				<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 				<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				<fr:property name="order(enrol)" value="2"/>

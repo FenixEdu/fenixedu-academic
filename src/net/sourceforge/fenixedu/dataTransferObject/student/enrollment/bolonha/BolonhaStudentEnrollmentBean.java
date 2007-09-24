@@ -71,7 +71,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
     }
 
-    private void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
 

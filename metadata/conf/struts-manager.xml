@@ -671,6 +671,7 @@
 		<!-- bolonhaStudentEnrolmentForm -->
 		<form-bean name="bolonhaStudentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
+			<form-property name="scpId" type="java.lang.Integer" />
     	</form-bean>
     	
     </form-beans>
@@ -2377,6 +2378,7 @@
 		
 			<forward name="viewStudentCurriculum" path="student.enrolment.bolonha.viewStudentCurriculum" />
 			<forward name="chooseStudentInformation" path="student.enrolment.bolonha.chooseStudentInformation" />
+			<forward name="showExecutionPeriodToEnrol" path="student.enrolment.bolonha.showExecutionPeriodToEnrol" />
 			<forward name="showDegreeModulesToEnrol" path="student.enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
 			<forward name="chooseCycleCourseGroupToEnrol" path="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" />

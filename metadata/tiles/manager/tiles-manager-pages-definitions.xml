@@ -949,7 +949,10 @@
 	<definition name="student.enrolment.bolonha.chooseStudentInformation" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/chooseStudentInformation.jsp"/>
 	</definition>
-		<definition name="student.enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.manager.masterPage">
+	<definition name="student.enrolment.bolonha.showExecutionPeriodToEnrol" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/enrolments/chooseExecutionPeriod.jsp"/>
+	</definition>
+	<definition name="student.enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/showDegreeModulesToEnrol.jsp"/>
 	</definition>
 	<definition name="student.enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.manager.masterPage">

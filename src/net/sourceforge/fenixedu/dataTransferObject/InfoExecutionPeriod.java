@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionPeriod extends InfoObject {
 
-    private final DomainReference<ExecutionPeriod> executionPeriodDomainReference;
+    private DomainReference<ExecutionPeriod> executionPeriodDomainReference;
 
     private String qualifiedName;
 
@@ -135,6 +135,10 @@ public class InfoExecutionPeriod extends InfoObject {
 
     public ExecutionPeriod getExecutionPeriod() {
         return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+    }
+    
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod){
+	executionPeriodDomainReference = new DomainReference<ExecutionPeriod>(executionPeriod);
     }
 
 }

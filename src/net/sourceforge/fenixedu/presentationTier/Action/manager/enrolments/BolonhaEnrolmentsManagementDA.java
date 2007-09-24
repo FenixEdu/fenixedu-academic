@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
@@ -74,13 +76,23 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpId"));
     }
+    
+    public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	((DynaActionForm)form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
+	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod()));
+	return mapping.findForward("showExecutionPeriodToEnrol");
+    }
 
     public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
+	
+	InfoExecutionPeriod executionPeriodBean = (InfoExecutionPeriod) getRenderedObject("infoExecutionPeriod");
+	
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(getStudentCurricularPlan(request),
-		ExecutionPeriod.readActualExecutionPeriod(), getCurricularYearForCurricularCourses(),
+		executionPeriodBean.getExecutionPeriod(), getCurricularYearForCurricularCourses(),
 		getCurricularRuleLevel(form)));
+	
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
     
