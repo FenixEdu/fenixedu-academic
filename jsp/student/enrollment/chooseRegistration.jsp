@@ -8,8 +8,7 @@
 	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
 
-
-	<%--  
+  
 	<logic:notEmpty name="sourceRegistrationsForTransition">
 		<h3 class="mtop2 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsInTransition" bundle="STUDENT_RESOURCES"/></strong></h3>
 		<table class="tstyle2 indent1">
@@ -35,7 +34,7 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
-	--%>
+	
 
     <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></h3>
     <logic:empty name="registrationsToEnrol">
