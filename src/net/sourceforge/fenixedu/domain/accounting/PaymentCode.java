@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -223,6 +224,18 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+    
+    static public PaymentCode readByCode(final String code) {
+	if (StringUtils.isEmpty(code)) {
+	    return null;
+	}
+	for (final PaymentCode paymentCode : RootDomainObject.getInstance().getPaymentCodesSet()) {
+	    if (paymentCode.getCode().equals(code)) {
+		return paymentCode;
+	    }
+	}
+	return null;
     }
 
     abstract protected void internalProcess(final Person person, final Money amount,
