@@ -52,6 +52,10 @@
 		<put name="body" value="/library/cards/generateMissingLetters.jsp"/>
 	</definition>
 
+	<definition name="generate-missing-letters-for-students" extends="definition.library.master">
+		<put name="body" value="/library/cards/generateMissingLettersForStudents.jsp"/>
+	</definition>
+	
 	<definition name="create-person" extends="definition.library.master">
 		<put name="body" value="/library/cards/createPerson.jsp"/>
 	</definition>

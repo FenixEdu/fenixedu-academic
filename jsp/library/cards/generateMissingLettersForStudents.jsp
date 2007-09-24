@@ -5,13 +5,13 @@
 <html:xhtml/>
 
 <h2>
-	<bean:message key="title.library.card.generateMissingLetters"/>
+	<bean:message key="title.library.card.generateMissingLetters.studentsAndGrantOwner"/>
 </h2>	
 
 <logic:notPresent name="nothingMissing">
 	<p>
-		<html:link page="/cardManagement.do?method=generateMissingLetters&amp;students=no">
-			<bean:message key="link.card.generateMissingLetters" bundle="LIBRARY_RESOURCES"/>
+		<html:link page="/cardManagement.do?method=generateMissingLetters&amp;students=yes">
+			<bean:message key="link.card.generateMissingLetters.studentsAndGrantOwner" bundle="LIBRARY_RESOURCES"/>
 		</html:link>
 	</p>
 </logic:notPresent>

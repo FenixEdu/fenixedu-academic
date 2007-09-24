@@ -50,8 +50,13 @@
     <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
 </schema>
 
+<!-- Library Card -->
+
 <schema name="library.card.list" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
-    <slot name="partyClassification" key="label.card.category"/>
+    <slot name="partyClassification" key="label.card.category" layout="menu-select">
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
+    </slot>
     <slot name="number" key="label.card.number"/>
     <slot name="userName" key="label.card.name"/>
     <slot name="unitName" key="label.card.unitName"/>    
@@ -66,7 +71,7 @@
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
 	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="47"/>
+		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="unitName" key="label.card.unitName" read-only="true"/>
 	<slot name="chosenUnitName" key="label.card.unitNameToCard" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -88,12 +93,12 @@
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
 	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="47"/>
+		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="unitName" key="label.card.unitName" read-only="true"/>
 	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="42"/>
+		<property name="maxLength" value="41"/>
 	</slot>
 	<slot name="partyClassification" key="label.card.category" read-only="true"/>
 	<slot name="unlimitedCard" key="label.card" layout="radio-postback">
@@ -131,7 +136,7 @@
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
 	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="47"/>
+		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="person" layout="values-dash" schema="library.card.person.adress" key="label.card.person.address" read-only="true"/>
 	<slot name="person.email" key="label.card.person.email" read-only="true"/>
@@ -152,7 +157,7 @@
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
 	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="47"/>
+		<property name="maxLength" value="45"/>
 	</slot>
 	<slot name="person" layout="values-dash" schema="library.card.person.adress" key="label.card.person.address" read-only="true"/>
 	<slot name="person.email" key="label.card.person.email" read-only="true"/>
@@ -161,7 +166,7 @@
     <slot name="unitName" key="label.card.unitName" read-only="true"/>
 		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
-		<property name="maxLength" value="42"/>
+		<property name="maxLength" value="41"/>
 	</slot>
 	<slot name="partyClassification" key="label.card.category" read-only="true"/>
     <slot name="validUntil" key="label.card.date" read-only="true"/>

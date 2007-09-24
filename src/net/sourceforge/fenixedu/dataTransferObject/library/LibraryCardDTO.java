@@ -222,7 +222,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public String getPinToShow() {
-        if (getPin() != null) {
+        if (getPin() != null) {            
             String pinToShow = getPin().toString();
             if (getPin() < 10000) {
                 pinToShow = "0" + pinToShow;
@@ -297,5 +297,9 @@ public class LibraryCardDTO implements Serializable {
         } else {
             this.chosenUnitName = chosenUnitName;
         }
+    }
+    
+    public String getNumberToLetter() {
+        return getNumber() != 0 ? getNumber().toString() : "";
     }
 }

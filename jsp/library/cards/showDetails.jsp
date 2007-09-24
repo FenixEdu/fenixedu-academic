@@ -9,6 +9,14 @@
 	<bean:message key="title.library.card.details"/>
 </h2>
 	
+<p>
+	<span class="warning0">
+		<html:messages id="message" property="message" message="true">
+			<bean:write name="message" />
+		</html:messages>
+	</span>
+</p>
+
 <fr:form action="/cardManagement.do?method=generatePdfCard">
 	<fr:edit id="libraryCardSearch" name="libraryCardSearch" visible="false"/>
 	<fr:edit id="libraryCardDTO" name="libraryCardDTO" visible="false"/>

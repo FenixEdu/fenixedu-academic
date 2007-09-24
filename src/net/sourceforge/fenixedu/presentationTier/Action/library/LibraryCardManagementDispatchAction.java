@@ -36,9 +36,9 @@ import org.apache.struts.action.ActionMessages;
 
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
-    private final static int maxUserNameLength = 47;
+    private final static int maxUserNameLength = 45;
 
-    private final static int maxUnitNameLength = 42;
+    private final static int maxUnitNameLength = 41;
 
     private final static int minimumPinNumber = 6910;
 
@@ -66,77 +66,6 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("show-users");
     }
 
-    public ActionForward prepareCreatePerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-
-        request.setAttribute("externalPersonBean", new ExternalPersonBean());
-        return mapping.findForward("create-person");
-    }
-
-    public ActionForward createPerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-
-        if (isCancelled(request)) {
-            return showUsers(mapping, actionForm, request, response);
-        }
-
-        ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createPerson");
-        if (externalPersonBean == null) {
-            externalPersonBean = (ExternalPersonBean) request.getAttribute("externalPersonBean");
-        }
-        if (externalPersonBean.getPerson() == null && request.getParameter("createPerson") == null) {
-            request.setAttribute("externalPersonBean", externalPersonBean);
-            request.setAttribute("needToCreatePerson", "needToCreatePerson");
-            return mapping.findForward("create-person");
-        } else if (externalPersonBean.getPerson() == null
-                && request.getParameter("createPerson") != null) {
-            request.setAttribute("externalPersonBean", externalPersonBean);
-            return mapping.findForward("create-unit-person");
-        }
-
-        request.setAttribute("personID", externalPersonBean.getPerson().getIdInternal());
-        return prepareGenerateCard(mapping, actionForm, request, response);
-    }
-
-    public ActionForward createUnitPerson(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-
-        ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createUnitPerson");
-        if (request.getParameter("cancel") != null) {
-            if(externalPersonBean.getPerson() == null) {
-                request.setAttribute("needToCreatePerson", "needToCreatePerson");
-            }
-            request.setAttribute("externalPersonBean", externalPersonBean);
-            return mapping.findForward("create-person");
-            //return createPerson(mapping, actionForm, request, response);
-        }
-
-        if (externalPersonBean.getUnit() == null && request.getParameter("createUnit") == null) {
-            request.setAttribute("externalPersonBean", externalPersonBean);
-            request.setAttribute("needToCreateUnit", "needToCreateUnit");
-            return mapping.findForward("create-unit-person");
-        }
-        ExternalContract externalContract = null;
-        if (externalPersonBean.getUnit() == null) {
-            Object[] args = { externalPersonBean.getName(), externalPersonBean.getUnitName(),
-                    externalPersonBean.getPhone(), externalPersonBean.getMobile(),
-                    externalPersonBean.getEmail() };
-            externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
-        }
-        if (externalPersonBean.getUnit() != null) {
-            Object[] args2 = { externalPersonBean.getName(),
-                    externalPersonBean.getUnit().getIdInternal(), externalPersonBean.getPhone(),
-                    externalPersonBean.getMobile(), externalPersonBean.getEmail() };
-            externalContract = (ExternalContract) executeService("InsertExternalPerson", args2);
-        }
-
-        request.setAttribute("personID", externalContract.getPerson().getIdInternal());
-
-        return prepareGenerateCard(mapping, actionForm, request, response);
-    }
-
     public ActionForward prepareGenerateCard(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
@@ -153,14 +82,15 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         }
 
         if (person.getName().length() > maxUserNameLength) {
-            addMessage(request, "message.card.userName.tooLong", person.getName().length());
+            addMessage(request, "message.card.userName.tooLong", person.getName().length(),
+                    maxUserNameLength);
         }
         if (partyClassification.equals(PartyClassification.EMPLOYEE)
                 || partyClassification.equals(PartyClassification.PERSON)
                 || partyClassification.equals(PartyClassification.GRANT_OWNER)) {
             if (libraryCardDTO.getUnitName().length() > maxUnitNameLength) {
                 addMessage(request, "message.card.unitName.tooLong", libraryCardDTO.getUnitName()
-                        .length());
+                        .length(), maxUnitNameLength);
             }
             libraryCardDTO.setChosenUnitName(libraryCardDTO.getUnitName());
             request.setAttribute("employee", "employee");
@@ -221,10 +151,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         if (request.getParameter("modify") != null) {
             libraryCardDTO = getRenderedObject("libraryCardEdit") != null ? (LibraryCardDTO) getRenderedObject("libraryCardEdit")
                     : libraryCardDTO;
+            //TODO remove this condition, when user names that already exist are no longer bigger than the max length
+            if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
+                addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson()
+                        .getName().length(), maxUserNameLength);
+            }
             request.setAttribute("libraryCardDTO", libraryCardDTO);
             request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCardDTO.getPerson()
                     .getPartyClassification()));
-            //RenderUtils.invalidateViewState();
             return mapping.findForward("edit-card");
         }
 
@@ -336,8 +270,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         cardList.add(new LibraryCardDTO(libraryCard));
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
                 LanguageUtils.getLocale());
-        byte[] data = ReportsUtils.exportToPdf(
-                "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter", null, bundle, cardList);
+        String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
+        if (!libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE)
+                && !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
+            reportID += "ForStudents";
+        }
+        byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=carta.pdf");
         response.setContentLength(data.length);
@@ -356,27 +294,46 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("generate-missing-letters");
     }
+    
+    public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
+            FenixFilterException, FenixServiceException {
+
+        return mapping.findForward("generate-missing-letters-for-students");
+    }
 
     public ActionForward generateMissingLetters(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws JRException, IOException,
             FenixFilterException, FenixServiceException {
 
+        String result = request.getParameter("students");
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
             if (!libraryCard.getIsLetterGenerated()) {
-                cardList.add(new LibraryCardDTO(libraryCard));
+                if (result.equalsIgnoreCase("no")
+                        && (libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE) || libraryCard
+                                .getPartyClassification().equals(PartyClassification.TEACHER))) {
+                    cardList.add(new LibraryCardDTO(libraryCard));
+                } else if (result.equalsIgnoreCase("yes")
+                        && !libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE)
+                        && !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
+                    cardList.add(new LibraryCardDTO(libraryCard));
+                }
             }
         }
 
-        if (!cardList.isEmpty()) {
-            ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "MarkLibraryCardListLettersAsEmited", new Object[] { cardList });
-
+        if (!cardList.isEmpty()) {            
             final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
                     LanguageUtils.getLocale());
-            byte[] data = ReportsUtils.exportToPdf(
-                    "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter", null, bundle,
-                    cardList);
+            String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
+            if (result.equalsIgnoreCase("yes")) {
+                reportID += "ForStudents";
+            }
+            byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
+            
+            ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "MarkLibraryCardListLettersAsEmited", new Object[] { cardList });
+            
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", "attachment; filename=cartas.pdf");
             response.setContentLength(data.length);
@@ -389,8 +346,81 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             return null;
         } else {
             request.setAttribute("nothingMissing", "nothingMissing");
+            if(result.equalsIgnoreCase("yes")) {
+                return mapping.findForward("generate-missing-letters-for-students");
+            }
             return mapping.findForward("generate-missing-letters");
         }
+    }
+
+    public ActionForward prepareCreatePerson(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("externalPersonBean", new ExternalPersonBean());
+        return mapping.findForward("create-person");
+    }
+
+    public ActionForward createPerson(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        if (isCancelled(request)) {
+            return showUsers(mapping, actionForm, request, response);
+        }
+
+        ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createPerson");
+        if (externalPersonBean == null) {
+            externalPersonBean = (ExternalPersonBean) request.getAttribute("externalPersonBean");
+        }
+        if (externalPersonBean.getPerson() == null && request.getParameter("createPerson") == null) {
+            request.setAttribute("externalPersonBean", externalPersonBean);
+            request.setAttribute("needToCreatePerson", "needToCreatePerson");
+            return mapping.findForward("create-person");
+        } else if (externalPersonBean.getPerson() == null
+                && request.getParameter("createPerson") != null) {
+            request.setAttribute("externalPersonBean", externalPersonBean);
+            return mapping.findForward("create-unit-person");
+        }
+
+        request.setAttribute("personID", externalPersonBean.getPerson().getIdInternal());
+        return prepareGenerateCard(mapping, actionForm, request, response);
+    }
+
+    public ActionForward createUnitPerson(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createUnitPerson");
+        if (request.getParameter("cancel") != null) {
+            if (externalPersonBean.getPerson() == null) {
+                request.setAttribute("needToCreatePerson", "needToCreatePerson");
+            }
+            request.setAttribute("externalPersonBean", externalPersonBean);
+            return mapping.findForward("create-person");
+        }
+
+        if (externalPersonBean.getUnit() == null && request.getParameter("createUnit") == null) {
+            request.setAttribute("externalPersonBean", externalPersonBean);
+            request.setAttribute("needToCreateUnit", "needToCreateUnit");
+            return mapping.findForward("create-unit-person");
+        }
+        ExternalContract externalContract = null;
+        if (externalPersonBean.getUnit() == null) {
+            Object[] args = { externalPersonBean.getName(), externalPersonBean.getUnitName(),
+                    externalPersonBean.getPhone(), externalPersonBean.getMobile(),
+                    externalPersonBean.getEmail() };
+            externalContract = (ExternalContract) executeService("InsertExternalPerson", args);
+        }
+        if (externalPersonBean.getUnit() != null) {
+            Object[] args2 = { externalPersonBean.getName(),
+                    externalPersonBean.getUnit().getIdInternal(), externalPersonBean.getPhone(),
+                    externalPersonBean.getMobile(), externalPersonBean.getEmail() };
+            externalContract = (ExternalContract) executeService("InsertExternalPerson", args2);
+        }
+
+        request.setAttribute("personID", externalContract.getPerson().getIdInternal());
+
+        return prepareGenerateCard(mapping, actionForm, request, response);
     }
 
     public ActionForward showDetails(ActionMapping mapping, ActionForm actionForm,
@@ -398,6 +428,11 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
         LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+        //TODO remove this condition, when user names that already exist are no longer bigger than the max length
+        if (libraryCard.getUserName().length() > maxUserNameLength) {
+            addMessage(request, "message.card.userName.tooLong", libraryCard.getUserName().length(),
+                    maxUserNameLength);
+        }
         request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
         request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCard.getPerson()
                 .getPartyClassification()));
@@ -409,7 +444,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("validUntil");
         if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
-            addMessage(request, "message.card.userName.tooLong", maxUserNameLength);
+            addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName()
+                    .length(), maxUserNameLength);
         }
 
         if (!libraryCardDTO.getUnlimitedCard()) {
@@ -442,12 +478,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     private boolean validateNamesMaxLength(HttpServletRequest request, LibraryCardDTO libraryCardDTO) {
         boolean validationError = Boolean.FALSE;
         if (libraryCardDTO.getUserName().length() > maxUserNameLength) {
-            setError(request, "message.card.userName.tooLong", libraryCardDTO.getUserName().length());
+            setError(request, "message.card.userName.tooLong", libraryCardDTO.getUserName().length(),
+                    maxUserNameLength);
             validationError = Boolean.TRUE;
         }
         if (libraryCardDTO.getPerson().getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
             if (libraryCardDTO.getChosenUnitName().length() > maxUnitNameLength) {
-                setError(request, "message.card.unitName.tooLong", libraryCardDTO.getUnitName().length());
+                setError(request, "message.card.unitName.tooLong",
+                        libraryCardDTO.getUnitName().length(), maxUnitNameLength);
                 validationError = Boolean.TRUE;
             }
         }
@@ -470,15 +508,15 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         saveMessages(request, actionMessages);
     }
 
-    private void addMessage(HttpServletRequest request, String msg, int parameter) {
+    private void addMessage(HttpServletRequest request, String msg, int parameter1, int parameter2) {
         ActionMessages actionMessages = getMessages(request);
-        actionMessages.add("message", new ActionMessage(msg, parameter));
+        actionMessages.add("message", new ActionMessage(msg, parameter1, parameter2));
         saveMessages(request, actionMessages);
     }
 
-    private void setError(HttpServletRequest request, String errorMsg, int parameter) {
+    private void setError(HttpServletRequest request, String errorMsg, int parameter1, int parameter2) {
         ActionMessages actionMessages = getMessages(request);
-        actionMessages.add("error", new ActionMessage(errorMsg, parameter));
+        actionMessages.add("error", new ActionMessage(errorMsg, parameter1, parameter2));
         saveMessages(request, actionMessages);
     }
 }
