@@ -86,7 +86,8 @@ public class Shift extends Shift_Base {
 
 	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
 	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
-
+	    for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().get(0).delete());
+	    
 	    getAssociatedClasses().clear();
 	    getCourseLoads().clear();	    
 	    removeRootDomainObject();
@@ -168,9 +169,6 @@ public class Shift extends Shift_Base {
 	}
 	if (hasAnyDegreeTeachingServices()) {
 	    throw new DomainException("error.deleteShift.with.degreeTeachingServices", getNome());
-	}	
-	if (hasAnyShiftDistributionEntries()) {
-	    throw new DomainException("error.deleteShift.with.shiftDistributionEntries", getNome());
 	}
 	return true;
     }
