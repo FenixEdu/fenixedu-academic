@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import pt.utl.ist.fenix.tools.file.utils.FileUtils;
-
 import net.sourceforge.fenixedu.util.Money;
 
 public class SibsIncommingPaymentFile {
