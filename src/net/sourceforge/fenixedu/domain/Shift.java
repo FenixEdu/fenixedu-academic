@@ -56,9 +56,8 @@ public class Shift extends Shift_Base {
 	if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != this) {
 	    throw new DomainException("error.Shift.with.this.name.already.exists");
 	}	
-
-	List<Registration> enrolledStudents = getStudents();
-	if(!enrolledStudents.isEmpty() && enrolledStudents.size() > getLotacao()) {
+	
+	if(newCapacity != null && getStudentsCount() > newCapacity.intValue()) {
 	    throw new DomainException("errors.exception.invalid.finalAvailability");
 	}
 		
