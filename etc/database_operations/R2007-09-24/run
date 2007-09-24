@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Change UnitSite to support analytics" addAnalyticsToUnitSite.sql
+execute "Correct permitted group expression from unit files" correctUnitFile.sql
+execute "Update Library Portal Menu" updateLibraryPortalMenu.sql
