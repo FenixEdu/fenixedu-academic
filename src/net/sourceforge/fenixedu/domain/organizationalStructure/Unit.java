@@ -150,6 +150,7 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
+	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
@@ -160,6 +161,7 @@ public class Unit extends Unit_Base {
 	    getSite().delete();
 	}
 
+	removeCampus();
 	getUnitName().delete();
 	super.delete();
     }
@@ -174,7 +176,8 @@ public class Unit extends Unit_Base {
 	&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
 	&& !hasAnyParticipations() && !hasAnyBoards()
 	&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
-	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols();
+	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols()
+	&& !hasAnyPrecedentDegreeInformations();
     }
 
     @Override
@@ -1005,7 +1008,8 @@ public class Unit extends Unit_Base {
 	destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
 	destinationUnit.getResultUnitAssociations().addAll(fromUnit.getResultUnitAssociations());
 	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
-
+	destinationUnit.getPrecedentDegreeInformations().addAll(fromUnit.getPrecedentDegreeInformations());
+	
 	fromUnit.delete();
     }
 

@@ -340,7 +340,7 @@ public abstract class Party extends Party_Base {
 
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
 	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
-
+	
 	removePartyType();
 	removeRootDomainObject();
 	deleteDomainObject();
