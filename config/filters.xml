@@ -185,13 +185,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>StudentCurriculumAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>
-    <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>

@@ -79,13 +79,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>StudentCurriculumAccess</name>
-        <expression>StudentCurriculumAuthorization || SeminaryCoordinator</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>MasterDegreeAdministrativeOfficeAuthorization</name>
         <expression>MasterDegreeAdministrativeOfficeAuthorization </expression>
         <description/>
@@ -186,13 +179,6 @@
     <filterChain>
         <name>CAFilter</name>
         <expression>CAFilter</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
-        <name>StudentCurriculumAuthorization</name>
-        <expression>StudentCurriculumAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
