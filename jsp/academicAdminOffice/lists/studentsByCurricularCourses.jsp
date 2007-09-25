@@ -11,9 +11,19 @@
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
+<fr:form action='<%= "/studentsListByCurricularCourse.do" %>'>
+<html:hidden property="method" value="searchByCurricularCourse"/>
 <bean:define id="searchBean" name="searchBean"/>
 <bean:define id="semester" name="semester"/>
+<bean:define id="curricularYear" name="curricularYear" property="year"/>
 <bean:define id="year" name="year"/>
+<bean:define id="curricularCourseCode" name="searchBean" property="curricularCourse.idInternal"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.searchBean" name="searchBean" property="searchBean" value="<%= searchBean.toString() %>"  />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.semester" property="semester" value="<%= semester.toString() %>"  />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYear" property="curricularYear" value="<%= curricularYear.toString() %>"  />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseCode" property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"  />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseCode" property="year" value="<%= year.toString() %>"  />
+
 
 
 <h2>
@@ -36,4 +46,12 @@
 		</fr:layout>	
 		
 	</fr:view>
+	
+	<logic:greaterThan name="enrolmentListSize" value="0">
+		<p class="mtop15 mbottom15">	
+			<html:image border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>	
+				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
+		</p>
+	</logic:greaterThan>
 </logic:present>
+</fr:form>

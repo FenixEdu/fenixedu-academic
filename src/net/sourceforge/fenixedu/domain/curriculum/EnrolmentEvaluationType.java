@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.LanguageUtils;
+
 import org.apache.struts.util.LabelValueBean;
 
 /**
@@ -56,5 +58,10 @@ public enum EnrolmentEvaluationType {
     public String getAcronym() {
 	return getQualifiedName() + ".acronym";
     }
+    
+    public String getDescription() {
+		return ResourceBundle.getBundle("resources.EnumerationResources",
+				LanguageUtils.getLocale()).getString(getQualifiedName());
+	}
     
 }
