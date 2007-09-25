@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.stm.RelationList;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -399,10 +400,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	if (hasAnyWrittenEvaluationEnrolments()) {
 	    throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
 	}
-	// getAssociatedExecutionCourses().clear();
 	deleteAllVigilanciesAssociated();
 	deleteAllRoomOccupations();
 	getAssociatedCurricularCourseScope().clear();
+	getAssociatedContextsSet().clear();
 	super.delete();
     }
 

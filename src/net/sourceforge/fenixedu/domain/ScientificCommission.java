@@ -31,7 +31,7 @@ public class ScientificCommission extends ScientificCommission_Base {
     public void delete() {
         removePerson();
         removeExecutionDegree();
-        
+        removeRootDomainObject();
         deleteDomainObject();
     }
     

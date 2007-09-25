@@ -83,6 +83,8 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -991,6 +993,7 @@ public class Person extends Person_Base {
      * @return true if the person have been deleted, false otherwise
      */
     public void delete() {
+	
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
@@ -1009,39 +1012,29 @@ public class Person extends Person_Base {
 	if (hasUser()) {
 	    getUser().delete();
 	}
-
-	getPersonRoles().clear();
-	getManageableDepartmentCredits().clear();
-	getAdvisories().clear();
-
+	if (hasStudent()) {
+	    getStudent().delete();
+	}
 	if (hasPersonName()) {
 	    getPersonName().delete();
 	}
 
+	getPersonRoles().clear();
+	getManageableDepartmentCredits().clear();
+	getAdvisories().clear();
 	getBookmarkedBoards().clear();
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getAdvisories().clear();
 
-	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
-	    ;
-
+	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());	
+	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
+	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next().delete());
+	
 	removeNationality();
 	removeCountryOfBirth();
-
-	if (hasStudent()) {
-	    getStudent().delete();
-	}
 	
-	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants()
-	.iterator().next().delete())
-	    ;
-
-	while (hasAnyScientificCommissions()) {
-	    getScientificCommissions().iterator().next().delete();
-	}
-
-	super.delete();
+	super.delete();	
     }
     
     private boolean canBeDeleted() {	    	 

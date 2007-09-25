@@ -85,5 +85,10 @@ public class FunctionalitySection extends FunctionalitySection_Base {
         
         removeFunctionality();
     }
- 
+
+    @Override
+    public void delete() {
+	removeFunctionality();
+        super.delete();
+    }
 }

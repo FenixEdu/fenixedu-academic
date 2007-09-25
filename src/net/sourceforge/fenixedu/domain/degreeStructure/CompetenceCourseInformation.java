@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
@@ -66,7 +68,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setEvaluationMethodEn(evaluationMethodEn);
     }
     
-    public void delete() {       
+    public void delete() {
+	removeExecutionPeriod();
         removeCompetenceCourse();
         for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete());
         removeRootDomainObject();

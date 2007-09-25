@@ -54,6 +54,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -341,9 +343,11 @@ public abstract class Party extends Party_Base {
 	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
 	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
 	
+	removeNationality();
 	removePartyType();
 	removeRootDomainObject();
-	deleteDomainObject();
+	
+	deleteDomainObject();		   
     }
 
     private boolean canBeDeleted() {

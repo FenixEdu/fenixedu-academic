@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
@@ -73,9 +75,12 @@ public class Attends extends Attends_Base {
 
     public void delete() throws DomainException {
 	if (canDelete()) {
+	    
+	    getProjectSubmissionLogsSet().clear();
+	    getGroupingsSet().clear();
 	    removeAluno();
 	    removeDisciplinaExecucao();
-	    removeEnrolment();
+	    removeEnrolment();	    
 	    
 	    removeRootDomainObject();
 	    deleteDomainObject();
@@ -87,6 +92,7 @@ public class Attends extends Attends_Base {
 	if (hasAnyStudentGroups()) throw new DomainException("error.attends.cant.delete");
 	if (hasAnyAssociatedMarks()) throw new DomainException("error.attends.cant.delete");
 	if (hasAnyProjectSubmissions()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyWeeklyWorkLoads()) throw new DomainException("error.attends.cant.delete");
 	return true;
     }
 

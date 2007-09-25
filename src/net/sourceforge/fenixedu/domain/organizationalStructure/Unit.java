@@ -46,6 +46,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -154,16 +156,27 @@ public class Unit extends Unit_Base {
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
+	
 	if (hasAnyParentUnits()) {
 	    getParents().get(0).delete();
 	}
+	
 	if (hasSite()) {
 	    getSite().delete();
 	}
 
-	removeCampus();
+	for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().get(0).delete());
+	
 	getUnitName().delete();
-	super.delete();
+	getFunctionalityPrinters().clear();
+	getAllowedPeopleToUploadFiles().clear();
+	
+	removeRootDomainObjectForEarthUnit();
+	removeRootDomainObjectForExternalInstitutionUnit();
+	removeRootDomainObjectForInstitutionUnit();
+	removeCampus();	
+		
+	super.delete();														
     }
 
     private boolean canBeDeleted() {
@@ -177,7 +190,10 @@ public class Unit extends Unit_Base {
 	&& !hasAnyParticipations() && !hasAnyBoards()
 	&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
 	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols()
-	&& !hasAnyPrecedentDegreeInformations();
+	&& !hasAnyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations()
+	&& !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests() && !hasAnyExternalRegistrationDatas()
+	&& !hasAnyUnitExtraWorkAmounts() && !hasAnyCooperation() && !hasAnyFiles()
+	&& !hasAnyPersistentGroups();
     }
 
     @Override
