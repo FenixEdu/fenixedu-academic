@@ -19,5 +19,5 @@
   <tiles:put name="navGeral" value="/commons/blank.jsp" />
  <tiles:put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
   <tiles:put name="body" value="/publico/chooseContext_bd.jsp" />
-  <tiles:put name="footer" value="/publico/commonFooterPub.jsp" />
+  <tiles:put name="footer" value="/commons/blank.jsp" />
 </tiles:insert>
