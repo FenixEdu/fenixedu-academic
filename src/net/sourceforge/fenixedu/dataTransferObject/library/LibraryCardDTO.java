@@ -172,9 +172,7 @@ public class LibraryCardDTO implements Serializable {
             return "Curso Especialização";
         }
         if (getPartyClassification().equals(PartyClassification.PERSON)) {
-            if (getPerson().isExternalPerson()) {
-                return "Externa";
-            }
+            return "Externa";
         }
         final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
                 "resources.EnumerationResources", LanguageUtils.getLocale());
@@ -222,7 +220,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public String getPinToShow() {
-        if (getPin() != null) {            
+        if (getPin() != null) {
             String pinToShow = getPin().toString();
             if (getPin() < 10000) {
                 pinToShow = "0" + pinToShow;
@@ -298,8 +296,8 @@ public class LibraryCardDTO implements Serializable {
             this.chosenUnitName = chosenUnitName;
         }
     }
-    
-    public String getNumberToLetter() {
+
+    public String getNumberToPDF() {
         return getNumber() != 0 ? getNumber().toString() : "";
     }
 }
