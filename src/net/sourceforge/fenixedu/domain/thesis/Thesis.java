@@ -703,8 +703,12 @@ public class Thesis extends Thesis_Base {
         Teacher responsible = getExecutionCourseTeacher();
         Date evaluationDate = getDiscussed().toDate();
         MarkSheetType type = MarkSheetType.SPECIAL_AUTHORIZATION;
-        Employee employee = responsible.getPerson().getEmployee();
         
+        if (responsible == null) {
+            responsible = AccessControl.getPerson().getTeacher();
+        }
+        
+        Employee employee = responsible.getPerson().getEmployee();
         List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
         
         return curricularCourse.createNormalMarkSheet(executionPeriod, responsible, evaluationDate, type, true, evaluations, employee);

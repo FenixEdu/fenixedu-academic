@@ -15,6 +15,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
@@ -44,6 +45,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
@@ -834,38 +836,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
     
     final private Collection<Coordinator> getCurrentCoordinators(final boolean responsible) {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-	Collection<Coordinator> result = getCoordinators(currentExecutionYear, responsible);
-        if (!result.isEmpty()) {
-            return result;
+        SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
+        years.addAll(getDegreeCurricularPlansExecutionYears());
+        
+        ExecutionYear current = ExecutionYear.readCurrentExecutionYear();
+        for (ExecutionYear year : years) {
+            if (year.isAfter(current)) {
+                continue;
+            }
+            
+            Collection<Coordinator> coordinators = getCoordinators(year, responsible);
+            if (! coordinators.isEmpty()) {
+                return coordinators;
+            }
         }
-
-	final List<ExecutionYear> sortedDegreeCurricularPlansExecutionYears = getDegreeCurricularPlansExecutionYears();
-	Collections.sort(sortedDegreeCurricularPlansExecutionYears, ExecutionYear.COMPARATOR_BY_YEAR);
-	
-	if(!sortedDegreeCurricularPlansExecutionYears.isEmpty() && sortedDegreeCurricularPlansExecutionYears.iterator().next().isAfter(currentExecutionYear)) {
-	    final ExecutionYear executionYear = sortedDegreeCurricularPlansExecutionYears.iterator().next();
-
-	    result = getCoordinators(executionYear, responsible);
-	    if (!result.isEmpty()) {
-		return result;
-	    }
-	}
-	
-	final ListIterator<ExecutionYear> iterator = sortedDegreeCurricularPlansExecutionYears.listIterator();
-	while (iterator.hasPrevious()) {
-	    final ExecutionYear executionYear = iterator.previous();
-	    
-	    if (executionYear.isBeforeOrEquals(currentExecutionYear)) {
-		result = getCoordinators(executionYear, responsible);
-		if (!result.isEmpty()) {
-		    return result;
-		}
-	    }
-	}
-	
-	return Collections.emptyList();
+        
+        return Collections.emptyList();
     }
     
     final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {

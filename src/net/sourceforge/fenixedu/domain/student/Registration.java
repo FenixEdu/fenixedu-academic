@@ -2091,17 +2091,19 @@ public class Registration extends Registration_Base {
 	return getDissertationEnrolment(null);
     }
 
-    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
-	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	if (lastStudentCurricularPlan == null) {
-	    return null;
-	}
-
-	if (degreeCurricularPlan != null && lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-	    return null;
-	}
-
-	return lastStudentCurricularPlan.getLatestDissertationEnrolment();
+    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+        for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+            if (degreeCurricularPlan != null && scp.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                continue;
+            }
+            
+            Enrolment enrolment = scp.getLatestDissertationEnrolment();
+            if (enrolment != null) {
+                return enrolment;
+            }
+        }
+        
+        return null;
     }
 
     final public Proposal getDissertationProposal(final ExecutionYear executionYear) {

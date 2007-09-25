@@ -244,7 +244,6 @@ public class ManageThesisDA extends FenixDispatchAction {
 
         List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
-            // TODO: thesis, allow to choose executionYear
             for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(bean.getExecutionYear())) {
                 StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
                 

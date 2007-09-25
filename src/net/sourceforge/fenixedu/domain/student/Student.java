@@ -637,19 +637,16 @@ public class Student extends Student_Base {
 	return getDissertationEnrolment(null);
     }
 
-    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
-	for (Registration registration : getRegistrations()) {
-	    if (!registration.isActive()) {
-		continue;
-	    }
+    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+        for (Registration registration : getRegistrations()) {
+            Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
+            
+            if (dissertationEnrolment != null) {
+                return dissertationEnrolment;
+            }
+        }
 
-	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
-	    if (dissertationEnrolment != null) {
-		return dissertationEnrolment;
-	    }
-	}
-
-	return null;
+        return null;
     }
 
     public boolean doesNotWantToRespondToInquiries() {

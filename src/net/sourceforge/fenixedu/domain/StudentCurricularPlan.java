@@ -630,10 +630,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.getCurricularCourse().isDissertation()) {
-		result.add(enrolment);
+	        result.add(enrolment);
 	    }
 	}
 
+    for (Dismissal dismissal : getDismissals()) {
+        for (IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
+            if (! enrolment.isEnrolment()) {
+                continue;
+            }
+            
+            Enrolment realEnrolment = (Enrolment) enrolment;
+            if (realEnrolment.getCurricularCourse().isDissertation()) {
+                result.add(realEnrolment);
+            }
+        }
+    }
+    
 	return result;
     }
 
