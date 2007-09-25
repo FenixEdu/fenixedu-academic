@@ -147,14 +147,14 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     private RuleResult createFalseRuleResult(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
 	    final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+	return RuleResult.createFalse(degreeModuleToEvaluate.getDegreeModule(),
 		"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate.getName(),
 		degreeModuleToEvaluate.getContext().getCurricularYear().toString());
     }
 
     private RuleResult createImpossibleRuleResult(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
 	    final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-	return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+	return RuleResult.createImpossible(degreeModuleToEvaluate.getDegreeModule(),
 		"curricularRules.ruleExecutors.PreviousYearsEnrolmentExecutor", sourceDegreeModuleToEvaluate.getName(),
 		degreeModuleToEvaluate.getContext().getCurricularYear().toString());
     }
