@@ -17,6 +17,16 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
+	<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
+				 onchange='this.form.method.value=\'prepare\';this.form.page.value=\'0\';this.form.submit();'>
+		<html:option value=""><!-- w3c complient--></html:option>
+		<html:options property="idInternal"
+					  labelProperty="nextYearsYearString"
+					  collection="executionYears" />
+	</html:select>
+	<br/>
+	<br/>
+
 	<logic:present name="infoGroup">
 		<p class="mtop15 mbottom05">
 			<bean:message key="label.finalDegreeWork.group"/>

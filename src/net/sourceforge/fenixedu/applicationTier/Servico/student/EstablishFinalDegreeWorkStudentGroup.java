@@ -22,13 +22,15 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Person person, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
+    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+
     	Registration registration = person.getStudentByType(DegreeType.DEGREE);
     	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
     	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
     	if (registration == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}
-        FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+        FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree.getExecutionYear());
         if (group == null) {
             group = new FinalDegreeWorkGroup();
                 GroupStudent groupStudent = new GroupStudent();
@@ -45,7 +47,6 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
         if (group.getExecutionDegree() == null
                 || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
             if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);
             }

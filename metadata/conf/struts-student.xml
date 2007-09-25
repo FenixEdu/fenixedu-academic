@@ -102,6 +102,7 @@
         	       dynamic="true">
     	    <form-property name="page" type="java.lang.Integer" />
 			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="executionYearOID" type="java.lang.String"/>
 			<form-property name="executionDegreeOID" type="java.lang.String"/>
 			<form-property name="students" type="java.lang.String[]"/>
 			<form-property name="studentUsernameToAdd" type="java.lang.String"/>
@@ -114,6 +115,7 @@
 				   type="org.apache.struts.validator.DynaValidatorForm"
         	       dynamic="true">
     	    <form-property name="page" type="java.lang.Integer" />
+    	    <form-property name="executionYearOID" type="java.lang.String"/>
 			<form-property name="selectedGroupProposal" type="java.lang.String"/>
 			<form-property name="attributedByTeacher" type="java.lang.String"/>
 			<form-property name="confirmAttributions" type="java.lang.String[]"/>

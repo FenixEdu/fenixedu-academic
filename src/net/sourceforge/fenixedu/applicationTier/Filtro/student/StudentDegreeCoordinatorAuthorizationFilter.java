@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -65,7 +66,8 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
         for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
             Registration registration = (Registration) studentsIterator.next();
 
-            FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
+            for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
+            	final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
 
             if (group != null) {
                 ExecutionDegree executionDegree = group.getExecutionDegree();
@@ -106,6 +108,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                         return null;
                     }
                 }
+            }
             }
             /*-----*/
 

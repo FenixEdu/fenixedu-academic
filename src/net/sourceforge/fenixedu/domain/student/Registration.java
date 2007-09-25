@@ -993,16 +993,16 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForCurrentExecutionYear() {
-	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-	    final ExecutionDegree executionDegree = group.getExecutionDegree();
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    if (executionYear != null && executionYear.getState().equals(PeriodState.CURRENT)) {
-		return group;
-	    }
-	}
-	return null;
+    final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForExecutionYear(final ExecutionYear executionYear) {
+    	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
+    		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
+    		final ExecutionDegree executionDegree = group.getExecutionDegree();
+    		final ExecutionYear executionYearFromGroup = executionDegree.getExecutionYear();
+    		if (executionYearFromGroup == executionYear) {
+    			return group;
+    		}
+    	}
+    	return null;
     }
 
     final public List<InsuranceTransaction> readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {

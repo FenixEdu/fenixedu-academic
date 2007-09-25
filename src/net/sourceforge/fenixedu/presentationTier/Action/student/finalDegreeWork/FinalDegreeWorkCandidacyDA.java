@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,13 +46,27 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request);
-
-        List infoExecutionDegrees = placeListOfExecutionDegreesInRequest(request);
-
-        setDefaultExecutionDegree(form, request, infoExecutionDegrees);
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
+
+        final ExecutionYear executionYear;
+        final String executionYearOID = (String) dynaActionForm.get("executionYearOID");
+        if (executionYearOID == null || executionYearOID.equals("")) {
+        	executionYear = ExecutionYear.readCurrentExecutionYear();
+        	dynaActionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+        } else {
+        	executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+        }
+
+        final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+        executionYears.addAll(rootDomainObject.getExecutionYearsSet());
+    	request.setAttribute("executionYears", executionYears);
+
+        InfoGroup infoGroup =  fillOutFinalDegreeWorkCandidacyForm(form, request, executionYear);
+
+        List infoExecutionDegrees = placeListOfExecutionDegreesInRequest(request, executionYear);
+
+        setDefaultExecutionDegree(form, request, infoExecutionDegrees);
 
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
         if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
@@ -89,6 +104,14 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             }
         }
 
+        request.setAttribute("CalledFromSelect", Boolean.TRUE);
+        return prepareCandidacy(mapping, form, request, response);
+    }
+
+    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        dynaActionForm.set("executionDegreeOID", null);
         request.setAttribute("CalledFromSelect", Boolean.TRUE);
         return prepareCandidacy(mapping, form, request, response);
     }
@@ -240,13 +263,13 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         return true;
     }
 
-    private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request)
+    private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request, ExecutionYear executionYear)
             throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = { userView.getPerson() };
+        Object[] args = { userView.getPerson(), executionYear };
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
 
@@ -305,10 +328,10 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     /**
      * @param request
+     * @param executionYear 
      */
-    private List placeListOfExecutionDegreesInRequest(HttpServletRequest request)
+    private List placeListOfExecutionDegreesInRequest(HttpServletRequest request, ExecutionYear executionYear)
             throws FenixServiceException, FenixFilterException {
-        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         if (executionYear == null) {
             return new ArrayList(0);
         }
@@ -319,10 +342,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
         degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
         Object[] args = new Object[] { infoExecutionYear.getIdInternal(), degreeTypes };
-        List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
-                "ReadExecutionDegreesByExecutionYearAndType", args);
-        Collections.sort(infoExecutionDegrees, new BeanComparator(
-                "infoDegreeCurricularPlan.infoDegree.nome"));
+        List infoExecutionDegrees = (List) ServiceUtils.executeService(null, "ReadExecutionDegreesByExecutionYearAndType", args);
+        Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 
         return infoExecutionDegrees;

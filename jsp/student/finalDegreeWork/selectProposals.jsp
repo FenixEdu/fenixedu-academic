@@ -7,10 +7,12 @@
 
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
+<html:form action="/finalDegreeWorkCandidacy">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearOID" property="executionYearOID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID"/>
 
 	<logic:present name="finalDegreeWorkProposalHeaders">
 		<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
