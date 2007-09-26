@@ -19,6 +19,16 @@
         </html:link>
     </li>
     <li>
+        <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+	        <bean:message key="label.coordinator.list.submitted.thesis.reprint"/>
+	    </html:link>
+    </li>
+    <li>
+        <html:link page="<%= String.format("/manageThesis.do?method=downloadIdentificationSheet&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+            <bean:message key="link.student.thesis.identification.download"/>
+        </html:link>
+    </li>
+    <li>
         <html:link page="<%= String.format("/manageThesis.do?method=confirmRevision&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
             <bean:message key="title.coordinator.thesis.enterRevision"/>
         </html:link>

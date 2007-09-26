@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
@@ -746,4 +747,24 @@ public class ManageThesisDA extends FenixDispatchAction {
         return mapping.findForward("view-evaluated");
     }
     
+    public ActionForward downloadIdentificationSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
+        
+        try {
+            StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
+            byte[] data = ReportsUtils.exportToPdf(document);
+            
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+            response.getOutputStream().write(data);
+            
+            return null;
+        } catch (JRException e) {
+            addActionMessage("error", request, "student.thesis.generate.identification.failed");
+            return listThesis(mapping, actionForm, request, response);
+        }
+    }
+
 }
