@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 import java.util.Calendar;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -11,27 +9,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
-
-import org.apache.commons.lang.time.DateFormatUtils;
 
 public class EditDistributedTest extends Service {
 
     private String contextPath = new String();
 
-    public Integer run(Integer executionCourseId, final Integer distributedTestId,
+    public void run(Integer executionCourseId, final Integer distributedTestId,
             String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsFeedback, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
@@ -57,12 +50,10 @@ public class EditDistributedTest extends Service {
         distributedTest.setTestType(testType);
         distributedTest.setCorrectionAvailability(correctionAvailability);
         distributedTest.setImsFeedback(imsFeedback);
-        // create advisory for students that already have the test to anounce
-        // the date changes
 
         CalendarDateComparator dateComparator = new CalendarDateComparator();
         CalendarHourComparator hourComparator = new CalendarHourComparator();
-        Advisory advisory = null;
+
         if (dateComparator.compare(distributedTest.getBeginDate(), beginDate) != 0
                 || hourComparator.compare(distributedTest.getBeginHour(), beginHour) != 0
                 || dateComparator.compare(distributedTest.getEndDate(), endDate) != 0
@@ -72,9 +63,6 @@ public class EditDistributedTest extends Service {
             distributedTest.setBeginHour(beginHour);
             distributedTest.setEndDate(endDate);
             distributedTest.setEndHour(endHour);
-            advisory = createTestAdvisory(distributedTest);
-            distributedTest.updateDistributedTestAdvisoryDates(endDate.getTime());
-            createDistributedTestAdvisory(distributedTest, advisory);
         }
 
         if (change2OtherType) {
@@ -111,51 +99,6 @@ public class EditDistributedTest extends Service {
                 }
             }
         }
-        if (advisory == null)
-            return null;
-        return advisory.getIdInternal();
-    }
-
-    private Advisory createTestAdvisory(DistributedTest distributedTest) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-
-        Advisory advisory = new Advisory();
-        advisory.setCreated(Calendar.getInstance().getTime());
-        advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"),
-                new Object[] { ((ExecutionCourse) distributedTest.getTestScope().getDomainObject())
-                        .getNome() }));
-        advisory.setSubject(MessageFormat.format(bundle
-                .getString("message.distributedTest.subjectChangeDates"), new Object[] { distributedTest
-                .getTitle() }));
-
-        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(),
-                "HH:mm");
-        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(),
-                "dd/MM/yyyy");
-        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
-        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(),
-                "dd/MM/yyyy");
-
-        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour,
-                beginDate, endHour, endDate };
-        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
-            advisory.setMessage(MessageFormat.format(bundle
-                    .getString("message.distributedTest.messageChangeInquiryDates"), args));
-        } else {
-            advisory.setMessage(MessageFormat.format(bundle
-                    .getString("message.distributedTest.messageChangeTestDates"), args));
-        }
-
-        return advisory;
-    }
-
-    private DistributedTestAdvisory createDistributedTestAdvisory(DistributedTest distributedTest,
-            Advisory advisory) {
-        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
-        distributedTestAdvisory.setAdvisory(advisory);
-        distributedTestAdvisory.setDistributedTest(distributedTest);
-        return distributedTestAdvisory;
     }
 
 }

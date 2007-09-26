@@ -1,21 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -25,21 +21,17 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.time.DateFormatUtils;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
 public class InsertDistributedTest extends Service {
 
-    private String contextPath = new String();
-
-    public Integer run(Integer executionCourseId, Integer testId, String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
+    public void run(Integer executionCourseId, Integer testId, String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -70,6 +62,8 @@ public class InsertDistributedTest extends Service {
         }
         distributedTest.setTestScope(testScope);
 
+        final String replacedContextPath = contextPath.replace('\\', '/');
+
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (TestQuestion testQuestion : testQuestionList) {
@@ -92,7 +86,7 @@ public class InsertDistributedTest extends Service {
                 }
                 Question question = null;
                 try {
-                    question = getStudentQuestion(questionList, contextPath.replace('\\', '/'));
+                    question = getStudentQuestion(questionList, replacedContextPath);
                 } catch (ParseException e) {
                     throw new InvalidArgumentsServiceException();
                 } catch (ParseQuestionException e) {
@@ -115,15 +109,7 @@ public class InsertDistributedTest extends Service {
             onlineTest.setDistributedTest(distributedTest);
         }
 
-        // Create Advisory
-        Advisory advisory = getAdvisory(distributedTest, executionCourse.getNome());
-
-        // Create DistributedTestAdvisory
-        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
-        distributedTestAdvisory.setAdvisory(advisory);
-        distributedTestAdvisory.setDistributedTest(distributedTest);
-
-        return advisory.getIdInternal();
+        return ;
     }
 
     private Question getStudentQuestion(List<Question> questions, String path) throws ParseException, ParseQuestionException {
@@ -137,28 +123,6 @@ public class InsertDistributedTest extends Service {
             }
         }
         return question;
-    }
-
-    private Advisory getAdvisory(DistributedTest distributedTest, String sender) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-        Advisory advisory = new Advisory();
-        advisory.setCreated(Calendar.getInstance().getTime());
-        advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { sender }));
-        advisory.setSubject(distributedTest.getTitle());
-        final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
-        final String beginDate = DateFormatUtils.format(distributedTest.getBeginDate().getTime(), "dd/MM/yyyy");
-        final String endHour = DateFormatUtils.format(distributedTest.getEndHour().getTime(), "HH:mm");
-        final String endDate = DateFormatUtils.format(distributedTest.getEndDate().getTime(), "dd/MM/yyyy");
-        Object[] args = { this.contextPath, distributedTest.getIdInternal().toString(), beginHour, beginDate, endHour, endDate };
-
-        if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY))) {
-            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeInquiryMessage"), args));
-        } else {
-            advisory.setMessage(MessageFormat.format(bundle.getString("message.distributedTest.distributeTestMessage"), args));
-        }
-
-        return advisory;
     }
 
 }

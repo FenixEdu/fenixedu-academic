@@ -53,8 +53,8 @@ public class TestScope extends TestScope_Base {
 
     public static TestScope readByDomainObject(Class clazz, Integer idInternal) {
         for (final TestScope testScope : RootDomainObject.getInstance().getTestScopes()) {
-            if (testScope.getClassName().equals(clazz.getName())
-                    && testScope.getKeyClass().equals(idInternal)) {
+            if (testScope.getKeyClass().equals(idInternal)
+                    && testScope.getClassName().equals(clazz.getName())) {
                 return testScope;
             }
         }

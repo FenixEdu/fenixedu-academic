@@ -2816,9 +2816,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String title;
 	}
 
-	class net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory extends net.sourceforge.fenixedu.domain.DomainObject {
-	}
-
 	class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourceforge.fenixedu.domain.DomainObject {
 		String author;
 		String description;
@@ -4692,13 +4689,6 @@ relation AdviseTeacherAdviseService {
 	}
 }
 
-relation AdvisoryFromDistributedTests {
-	net.sourceforge.fenixedu.domain.Advisory playsRole advisory;
-	net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestsAdvisories {
-		multiplicity *;
-	}
-}
-
 relation AffinityCycleCourseGroup {
 	net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup playsRole sourceAffinities {
 		multiplicity *;
@@ -5637,13 +5627,6 @@ relation DfaRegistrationEventRegistration {
 relation PhDRegistrationEventRegistration {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
 	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent playsRole phdRegistrationEvent;
-}
-
-relation DistributedTestAdvisories {
-	net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisories {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.onlineTests.DistributedTest playsRole distributedTest;
 }
 
 relation DistributedTestQuestions {
@@ -9079,13 +9062,6 @@ relation RootDomainObjectDepartment {
 relation RootDomainObjectDistributedTest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.onlineTests.DistributedTest playsRole distributedTests {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectDistributedTestAdvisory {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory playsRole distributedTestAdvisorys {
 		multiplicity *;
 	}
 }

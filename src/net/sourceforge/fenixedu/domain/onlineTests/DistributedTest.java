@@ -32,8 +32,6 @@ public class DistributedTest extends DistributedTest_Base {
     public void delete() {
         for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete())
             ;
-        for (; hasAnyDistributedTestAdvisories(); getDistributedTestAdvisories().get(0).delete())
-            ;
         for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete())
             ;
         if (getTestType().getType().intValue() == TestType.EVALUATION) {
@@ -133,12 +131,6 @@ public class DistributedTest extends DistributedTest_Base {
             }
         }
         return result;
-    }
-
-    public void updateDistributedTestAdvisoryDates(final Date newExpiresDate) {
-        for (final DistributedTestAdvisory distributedTestAdvisory : this.getDistributedTestAdvisories()) {
-            distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
-        }
     }
 
     public SortedSet<StudentTestQuestion> getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder() {

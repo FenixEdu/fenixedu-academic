@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
@@ -48,7 +47,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
@@ -676,40 +674,19 @@ public class TestsManagementAction extends FenixDispatchAction {
             imsFeedbackArg = new Boolean(imsFeedback);
         }
 
-        List<InfoStudent> infoStudentList = null;
-        Integer advisoryId = null;
-        try {
 
-            infoStudentList = (List) ServiceUtils.executeService(userView, "ReadStudentsByIdArray",
+        try {
+        	List<InfoStudent> infoStudentList = (List) ServiceUtils.executeService(userView, "ReadStudentsByIdArray",
                     new Object[] { objectCode, selected, new Boolean(insertByShifts) });
             Object[] args = { objectCode, testCode, testInformation, beginDate, beginHour, endDate,
                     endHour, testTypeArg, correctionAvailabilityArg, imsFeedbackArg, infoStudentList,
                     getServlet().getServletContext().getRealPath("/") };
-            advisoryId = (Integer) ServiceUtils.executeService(userView, "InsertDistributedTest", args);
+            ServiceUtils.executeService(userView, "InsertDistributedTest", args);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        if (advisoryId == null) {
-            request.setAttribute("successfulDistribution", new Boolean(false));
-            return showDistributedTests(mapping, form, request, response);
-        }
 
-        for (int times = 0; times < 3; times++) {
-            List<InfoStudent> studentWithoutAdvisory = new ArrayList<InfoStudent>();
-            for (InfoStudent infoStudent : infoStudentList) {
-                try {
-                    Object[] args = { objectCode, advisoryId, infoStudent.getIdInternal() };
-                    ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory", args);
-                } catch (FenixServiceException e) {
-                    studentWithoutAdvisory.add(infoStudent);
-                }
-            }
-            infoStudentList = studentWithoutAdvisory;
-            if (infoStudentList.size() == 0)
-                break;
-        }
-        request.setAttribute("infoStudentList", infoStudentList);
         request.setAttribute("successfulDistribution", new Boolean(true));
         return showDistributedTests(mapping, form, request, response);
     }
@@ -871,13 +848,11 @@ public class TestsManagementAction extends FenixDispatchAction {
         request.setAttribute("objectCode", objectCode);
 
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        Integer dataChangesAdvisory = null;
-
         try {
             Object[] args = { objectCode, distributedTestCode, testInformation, beginDate, beginHour,
                     endDate, endHour, testTypeArg, correctionAvailabilityArg, imsFeedbackArg,
                     request.getContextPath() };
-            dataChangesAdvisory = (Integer) ServiceUtils.executeService(userView, "EditDistributedTest",
+            ServiceUtils.executeService(userView, "EditDistributedTest",
                     args);
         } catch (FenixServiceException e) {
             request.setAttribute("successfulEdition", new Boolean(false));
@@ -886,40 +861,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         request.setAttribute("successfulEdition", new Boolean(true));
 
-        List<InfoStudent> infoOldStudentList = new ArrayList<InfoStudent>();
-        if (dataChangesAdvisory != null) {
-            try {
-                infoOldStudentList = (List) ServiceUtils.executeService(userView,
-                        "ReadStudentsWithDistributedTest", new Object[] { objectCode,
-                                distributedTestCode });
-            } catch (FenixServiceException e) {
-                request.setAttribute("insuccessfulAdvisoryDistribution", new Boolean(true));
-                return showDistributedTests(mapping, form, request, response);
-            }
-            for (int times = 0; times < 3; times++) {
-                List<InfoStudent> studentWithoutAdvisory = new ArrayList<InfoStudent>();
-                for (InfoStudent infoStudent : infoOldStudentList) {
-                    try {
-                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory",
-                                new Object[] { objectCode, dataChangesAdvisory,
-                                        infoStudent.getIdInternal() });
-                    } catch (FenixServiceException e) {
-                        studentWithoutAdvisory.add(infoStudent);
-                    }
-                }
-                infoOldStudentList = studentWithoutAdvisory;
-                if (infoOldStudentList.size() == 0)
-                    break;
-            }
-            request.setAttribute("infoStudentList", infoOldStudentList);
-        } else
-            infoOldStudentList = new ArrayList<InfoStudent>();
-        Integer addStudentsAdvisory = null;
         if (selected != null) {
             try {
                 infoStudentList = (List) ServiceUtils.executeService(userView, "ReadStudentsByIdArray",
                         new Object[] { objectCode, selected, new Boolean(insertByShifts) });
-                addStudentsAdvisory = (Integer) ServiceUtils.executeService(userView,
+                ServiceUtils.executeService(userView,
                         "AddStudentsToDistributedTest", new Object[] { objectCode, distributedTestCode,
                                 infoStudentList, request.getContextPath() });
             } catch (FenixServiceException e) {
@@ -927,27 +873,6 @@ public class TestsManagementAction extends FenixDispatchAction {
                 return showDistributedTests(mapping, form, request, response);
             }
 
-            if (addStudentsAdvisory != null) {
-
-                for (int times = 0; times < 3; times++) {
-                    List<InfoStudent> studentWithoutAdvisory = new ArrayList<InfoStudent>();
-                    for (InfoStudent infoStudent : infoStudentList) {
-                        try {
-                            Object[] args = { objectCode, addStudentsAdvisory,
-                                    infoStudent.getIdInternal() };
-                            ServiceUtils.executeService(userView,
-                                    "InsertStudentDistributedTestAdvisory", args);
-                        } catch (FenixServiceException e) {
-                            studentWithoutAdvisory.add(infoStudent);
-                        }
-                    }
-                    infoStudentList = studentWithoutAdvisory;
-                    if (infoStudentList.size() == 0)
-                        break;
-                }
-            }
-            infoOldStudentList.addAll(infoStudentList);
-            request.setAttribute("infoStudentList", infoOldStudentList);
         }
         request.setAttribute("objectCode", objectCode);
         return showDistributedTests(mapping, form, request, response);
@@ -1240,9 +1165,9 @@ public class TestsManagementAction extends FenixDispatchAction {
             request.setAttribute("changesType", changesType);
             return chooseAnotherExercise(mapping, form, request, response);
         }
-        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
+        Boolean result = Boolean.FALSE;
         try {
-            infoSiteDistributedTestAdvisoryList = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
+            result = (Boolean) ServiceUtils
                     .executeService(userView, "ChangeStudentTestQuestion", new Object[] {
                             executionCourseId, distributedTestId, questionId, metadataId, studentId,
                             new TestQuestionChangesType(new Integer(changesType)), new Boolean(delete),
@@ -1251,42 +1176,12 @@ public class TestsManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        if (infoSiteDistributedTestAdvisoryList == null
-                || infoSiteDistributedTestAdvisoryList.size() == 0) {
+        if (!result.booleanValue()) {
             request.setAttribute("successfulChanged", new Boolean(false));
             request.setAttribute("studentsType", studentsType);
             request.setAttribute("changesType", changesType);
             return chooseAnotherExercise(mapping, form, request, response);
         }
-        // Collections.sort(result, new BeanComparator("label"));
-        request.setAttribute("successfulChanged", infoSiteDistributedTestAdvisoryList);
-
-        List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        for (InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory : infoSiteDistributedTestAdvisoryList) {
-            List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory
-                    .getInfoStudentList();
-            List<InfoStudent> result = new ArrayList<InfoStudent>();
-            for (int times = 0; times < 3; times++) {
-                for (InfoStudent student : studentWithoutAdvisory) {
-                    try {
-                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory",
-                                new Object[] {
-                                        executionCourseId,
-                                        infoSiteDistributedTestAdvisory.getInfoAdvisory()
-                                                .getIdInternal(), student.getIdInternal() });
-                    } catch (FenixServiceException e) {
-                        result.add(student);
-                    }
-                }
-                studentWithoutAdvisory = result;
-                if (studentWithoutAdvisory.size() == 0) {
-                    break;
-                }
-            }
-            infoStudentList.addAll(studentWithoutAdvisory);
-        }
-
-        request.setAttribute("studentWithoutAdvisory", infoStudentList);
         return mapping.findForward("showStudentTest");
     }
 
@@ -1315,13 +1210,12 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
 
         try {
-            List<InfoSiteDistributedTestAdvisory> result = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
+            ServiceUtils
                     .executeService(userView, "ChangeStudentTestQuestionValue", new Object[] {
                             objectCode, distributedTestCode, new Double(questionValueString),
                             questionCode, studentCode,
                             new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
                             getServlet().getServletContext().getRealPath("/") });
-            request.setAttribute("successfulChanged", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -1356,14 +1250,13 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
 
         try {
-            List<InfoSiteDistributedTestAdvisory> result = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
+            ServiceUtils
                     .executeService(userView, "ChangeStudentTestQuestionMark", new Object[] {
                             objectCode, distributedTestCode,
                             new Double(questionValueString.replaceAll(",", ".")), questionCode,
                             studentCode,
                             new TestQuestionStudentsChangesType(new Integer(studentTypeString)),
                             getServlet().getServletContext().getRealPath("/") });
-            request.setAttribute("successfulChanged", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

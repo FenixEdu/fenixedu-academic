@@ -47,16 +47,6 @@ function invertSelect(){
 			<span class="error"><!-- Error messages go here --><bean:message key="message.successfulTestDeletion" /></span>
 		</logic:equal>
 	</logic:present>
-	<logic:present name="infoStudentList">
-		<logic:notEmpty name="infoStudentList">
-			<br/>
-			<span class="error"><!-- Error messages go here --><bean:message key="message.insuccessfulAdvisoryDistribution" /></span>
-			<logic:iterate id="infoStudent" name="infoStudentList">
-				<br/>
-				<bean:write name="infoStudent" property="number"/>
-			</logic:iterate>
-		</logic:notEmpty>
-	</logic:present>
 	<br />
 	<br />
 	<bean:size id="distrubutedTestsSize" name="distributedTests" />

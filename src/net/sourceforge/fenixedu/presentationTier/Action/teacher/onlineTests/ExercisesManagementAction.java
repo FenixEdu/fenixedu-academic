@@ -18,10 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidMetadataException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.MetadataComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -30,7 +28,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -820,9 +817,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("asc", request.getParameter("asc"));
         request.setAttribute("exerciseCode", exerciseId);
 
-        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
         try {
-            infoSiteDistributedTestAdvisoryList = (List<InfoSiteDistributedTestAdvisory>) ServiceUtils
+            ServiceUtils
                     .executeService(userView, "ChangeStudentTestQuestion", new Object[] {
                             executionCourseId,
                             null,
@@ -838,35 +834,6 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-
-        request.setAttribute("successfulChanged", infoSiteDistributedTestAdvisoryList);
-
-        List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        for (InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory : infoSiteDistributedTestAdvisoryList) {
-            List<InfoStudent> studentWithoutAdvisory = infoSiteDistributedTestAdvisory
-                    .getInfoStudentList();
-            List<InfoStudent> result = new ArrayList<InfoStudent>();
-            for (int times = 0; times < 3; times++) {
-                for (InfoStudent student : studentWithoutAdvisory) {
-                    try {
-                        ServiceUtils.executeService(userView, "InsertStudentDistributedTestAdvisory",
-                                new Object[] {
-                                        executionCourseId,
-                                        infoSiteDistributedTestAdvisory.getInfoAdvisory()
-                                                .getIdInternal(), student.getIdInternal() });
-                    } catch (FenixServiceException e) {
-                        result.add(student);
-                    }
-                }
-                studentWithoutAdvisory = result;
-                if (studentWithoutAdvisory.size() == 0) {
-                    break;
-                }
-            }
-            infoStudentList.addAll(studentWithoutAdvisory);
-        }
-
-        request.setAttribute("infoStudentList", infoStudentList);
 
         return prepareEditExercise(mapping, form, request, response);
     }

@@ -4168,15 +4168,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertStudentDistributedTestAdvisory</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertStudentDistributedTestAdvisory</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadStudentsByIdArray</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentsByIdArray</implementationClass>
 		<description />

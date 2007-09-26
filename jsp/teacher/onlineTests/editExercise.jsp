@@ -19,22 +19,6 @@ function back(){
 <h2><bean:message key="title.editTestQuestion" /></h2>
 <br />
 <logic:present name="metadata">
-	<logic:present name="successfulChanged">
-		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulChanged" /></span>
-		<br />
-		<table>
-			<logic:iterate id="changed" name="successfulChanged">
-				<logic:iterate id="student" name="changed" property="infoStudentList">
-					<tr>
-						<td><strong><bean:write name="changed" property="infoDistributedTest.title" /></strong></td>
-						<td><bean:write name="student" property="number" /></td>
-					</tr>
-				</logic:iterate>
-			</logic:iterate>
-		</table>
-		<br />
-		<br />
-	</logic:present>
 	<bean:define id="objectCode" name="metadata" property="executionCourse.idInternal" />
 	<bean:define id="metadataId" name="metadata" property="idInternal" />
 	<bean:define id="variationCode" value="<%=(pageContext.findAttribute("variationCode")).toString()%>" />

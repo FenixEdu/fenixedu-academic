@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.tests.IQuestionCorrecti
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.QuestionCorrectionStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
-import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
@@ -34,9 +32,8 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.joda.time.DateTime;
 
 public class ChangeStudentTestQuestionValue extends Service {
-    public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
+    public void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
             Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
-        List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
 
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
@@ -55,9 +52,6 @@ public class ChangeStudentTestQuestionValue extends Service {
             studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());
         }
         for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
-            InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
-            infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(studentTestQuestion.getDistributedTest()));
-            infoSiteDistributedTestAdvisory.setInfoAdvisory(null);
             List<InfoStudent> group = new ArrayList<InfoStudent>();
 
             if (!group.contains(studentTestQuestion.getStudent().getPerson())) {
@@ -78,8 +72,6 @@ public class ChangeStudentTestQuestionValue extends Service {
             }
             studentTestQuestion.setTestQuestionValue(newValue);
 
-            infoSiteDistributedTestAdvisory.setInfoStudentList(group);
-            infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
             StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
@@ -88,7 +80,6 @@ public class ChangeStudentTestQuestionValue extends Service {
             studentTestLog.setEvent(MessageFormat.format(bundle
                     .getString("message.changeStudentValueLogMessage"), new Object[] { newValue }));
         }
-        return infoSiteDistributedTestAdvisoryList;
     }
 
     private String getNewStudentMark(DistributedTest dt, Registration s) throws ExcepcaoPersistencia {
