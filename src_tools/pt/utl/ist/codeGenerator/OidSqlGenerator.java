@@ -166,7 +166,7 @@ public class OidSqlGenerator {
         fileWriterUpdateKeys.append(";\n");
 
         for (final Role role : relation.getRoles()) {
-            final String otherTablename = getTableName(role.getType().getName());
+            final String otherTablename = getTopLevelTableName((DomainClass) role.getType());
             final String key = getIndirectionKeyFromRole(role);
             final String newKey = getNewIndirectionKeyFromRole(role);
             appendUpdateKeyInstruction(tablename, otherTablename, key, newKey);
