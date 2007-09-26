@@ -113,7 +113,7 @@ public class OidSqlGenerator {
         }
 
         for (final Role role : domainClass.getRoleSlotsList()) {
-            final String otherTablename = getTableName(role.getType().getName());
+            final String otherTablename = getTopLevelTableName((DomainClass) role.getType());
 
             if (role.getMultiplicityUpper() == 1) {
                 final String key = getKeyFromRole(role);
