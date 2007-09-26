@@ -416,18 +416,18 @@ public class ManageSpacesDA extends FenixDispatchAction {
         	    row.setCell((spaceFloor != null) ? spaceFloor.getSpaceInformation().getPresentationName() : "--");        	
         	}
         	        	               
-        	row.setCell(room.getSpaceInformation().getDescription());
-                row.setCell(room.getSpaceInformation().getIdentification());
-                row.setCell(room.getSpaceInformation().getDoorNumber());
-                row.setCell(room.getSpaceInformation().getBlueprintNumber());                
+        	row.setCell(room.getSpaceInformation().getDescription() != null ? room.getSpaceInformation().getDescription() : "--");
+                row.setCell(room.getSpaceInformation().getIdentification() != null ? room.getSpaceInformation().getIdentification() : "--");
+                row.setCell(room.getSpaceInformation().getDoorNumber() != null ? room.getSpaceInformation().getDoorNumber() : "--");
+                row.setCell(room.getSpaceInformation().getBlueprintNumber() != null ? room.getSpaceInformation().getBlueprintNumber() : "--");                
                 row.setCell((room.getSpaceInformation().getRoomClassification() != null) ? room.getSpaceInformation().getRoomClassification().getPresentationCode() : "--");
                 row.setCell((room.getSpaceInformation().getArea() != null) ? room.getSpaceInformation().getArea().toString() : "--");
                 
-                row.setCell(room.getSpaceInformation().getHeightQuality().toString());
-                row.setCell(room.getSpaceInformation().getIlluminationQuality().toString());
-                row.setCell(room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality().toString());
-                row.setCell(room.getSpaceInformation().getSecurityQuality().toString());
-                row.setCell(room.getSpaceInformation().getAgeQuality().toString());
+                row.setCell(room.getSpaceInformation().getHeightQuality() != null ? room.getSpaceInformation().getHeightQuality().toString() : "--");
+                row.setCell(room.getSpaceInformation().getIlluminationQuality() != null ? room.getSpaceInformation().getIlluminationQuality().toString() : "--");
+                row.setCell(room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality() != null ? room.getSpaceInformation().getDistanceFromSanitaryInstalationsQuality().toString() : "--");
+                row.setCell(room.getSpaceInformation().getSecurityQuality() != null ? room.getSpaceInformation().getSecurityQuality().toString() : "--");
+                row.setCell(room.getSpaceInformation().getAgeQuality() != null ? room.getSpaceInformation().getAgeQuality().toString() : "--");
                 
                 StringBuilder builder = new StringBuilder();
                 for (ResourceResponsibility responsibility : room.getResourceResponsibility()) {
