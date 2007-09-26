@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -311,7 +312,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setPersonResponsibleForGrade(responsibleFor);
 
         if (examDate != null) {
-            if (!getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight()).isActive()) {
+            final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
+	    if (stateInExamDate == null || !stateInExamDate.isActive()) {
         	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState");
 	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
@@ -351,9 +353,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean getCanBeDeleted() {
-        return isTemporary() && (!hasImprovementOfApprovedEnrolmentEvent() || !getImprovementOfApprovedEnrolmentEvent().isPayed());
+        return isTemporary() && !hasConfirmedMarkSheet()
+		&& (!hasImprovementOfApprovedEnrolmentEvent() || !getImprovementOfApprovedEnrolmentEvent().isPayed());
     }
 
+    public boolean hasConfirmedMarkSheet() {
+	return hasMarkSheet() && getMarkSheet().isConfirmed();
+    }
+    
     public boolean isTemporary() {
         return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
