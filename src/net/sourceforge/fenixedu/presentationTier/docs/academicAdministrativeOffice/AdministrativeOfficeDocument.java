@@ -243,7 +243,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
     
     final protected String getDismissalsEctsCreditsInfo() {
-	return StringUtils.multipleLineRightPadWithSuffix("Créditos por Dispensas:", LINE_LENGTH, '-', getDocumentRequest().getRegistration().getDismissalsEctsCreditsExceptApproved() + getCreditsDescription());
+	final Double dismissalsEctsCreditsExceptApproved = getDocumentRequest().getRegistration().getDismissalsEctsCreditsExceptApproved();
+	
+	final StringBuilder result = new StringBuilder();
+	if (dismissalsEctsCreditsExceptApproved != 0d) {
+	    result.append("\n");
+	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos por Dispensas:", LINE_LENGTH, '-', dismissalsEctsCreditsExceptApproved + getCreditsDescription()));
+	    result.append("\n");
+	}
+	
+	return result.toString();
     }
 
     final protected String getAcademicUnitInfo(final Map<Unit, String> academicUnitIdentifiers, final MobilityProgram mobilityProgram) {

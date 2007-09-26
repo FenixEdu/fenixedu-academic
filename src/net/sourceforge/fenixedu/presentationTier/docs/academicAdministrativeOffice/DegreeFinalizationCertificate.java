@@ -107,7 +107,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    }
 		
 	    if (getDocumentRequest().isToShowCredits()) {
-		result.append("\n").append(getDismissalsEctsCreditsInfo()).append("\n");
+		result.append(getDismissalsEctsCreditsInfo());
 	    }
 	    
 	    result.append(generateEndLine());
