@@ -1,10 +1,14 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:xhtml/>
+
+<bean:define id="listThesesActionPath" value="/showDegreeTheses.do" toScope="request"/>
+<bean:define id="listThesesContext" value="<%= "degreeID=" + request.getParameter("degreeID") %>" toScope="request"/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0">
@@ -17,8 +21,13 @@
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 	</logic:present>
 	&nbsp;&gt;&nbsp;
-	<html:link page="<%= "/showDegreeTheses.do?method=showTheses&amp;degreeID=" + request.getAttribute("degreeID") %>">
+	<html:link page="<%= "/showDegreeTheses.do?method=showTheses&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
 		<bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" />
+	</html:link>
+	&nbsp;&gt;&nbsp;
+	<bean:define id="yearId" name="thesis" property="enrolment.executionYear.idInternal"/>
+	<html:link page="<%= "/showDegreeTheses.do?method=showTheses&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionYearID=" + yearId  %>">
+		<fr:view name="thesis" property="enrolment.executionYear.year"/>
 	</html:link>
 	&nbsp;&gt;&nbsp;
 	<bean:message key="public.degree.information.label.theses.details"  bundle="PUBLIC_DEGREE_INFORMATION" />
@@ -43,7 +52,6 @@
 	</logic:present>
 </h1>
 
-<h2 class="greytxt mbottom2"><bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" /></h2>
+<h2 class="greytxt mbottom2"><bean:message key="public.degree.information.label.thesis"  bundle="PUBLIC_DEGREE_INFORMATION" /></h2>
 
-<bean:define id="hideResultPageTitle" toScope="request" value="true"/>
-<jsp:include page="/publico/researcher/showResearchResult.jsp"/>
+<jsp:include flush="true" page="/publico/showThesisDetails.jsp"/>

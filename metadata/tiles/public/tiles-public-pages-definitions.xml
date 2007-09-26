@@ -447,6 +447,13 @@
         <put name="body" value="/publico/department/department-teachers-area.jsp"/>
     </definition>
 
+    <definition name="department-showDegreeTheses" extends="definition.public.department">
+        <put name="body" value="/publico/department/showDepartmentTheses.jsp"/>
+    </definition>
+    <definition name="department-showDegreeThesisDetails" extends="definition.public.department">
+        <put name="body" value="/publico/department/showDepartmentThesisDetails.jsp"/>
+    </definition>
+
     <definition name="definition.public.department.site" extends="definition.public.department">
         <put name="body-context" value="/publico/department/site-context.jsp"/>
     </definition>
@@ -699,13 +706,9 @@
         <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
         <put name="body" value="/publico/degreeSite/showDegreeTheses.jsp"/>
     </definition>
-    <definition name="degree-showDegreeThesesState" extends="definition.public.mainPageIST">
+    <definition name="degree-showDegreeThesisDetails" extends="definition.public.mainPageIST">
         <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-        <put name="body" value="/publico/degreeSite/showDegreeThesesState.jsp"/>
-    </definition>
-    <definition name="degree-showResult" extends="definition.public.mainPageIST">
-        <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-        <put name="body" value="/publico/degreeSite/showDegreeResult.jsp"/>
+        <put name="body" value="/publico/degreeSite/showDegreeThesisDetails.jsp"/>
     </definition>
 	
 </tiles-definitions>

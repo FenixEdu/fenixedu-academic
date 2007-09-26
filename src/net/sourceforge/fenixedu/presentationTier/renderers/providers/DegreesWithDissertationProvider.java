@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -16,7 +17,7 @@ public class DegreesWithDissertationProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         
-        for (Degree degree : RootDomainObject.getInstance().getDegrees()) {
+        for (Degree degree : getDegrees(source)) {
             switch (degree.getDegreeType()) {
             case DEGREE:
             case MASTER_DEGREE:
@@ -43,6 +44,10 @@ public class DegreesWithDissertationProvider implements DataProvider {
         }
 
         return degrees;
+    }
+
+    protected Collection<Degree> getDegrees(Object source) {
+        return RootDomainObject.getInstance().getDegrees();
     }
 
     public Converter getConverter() {

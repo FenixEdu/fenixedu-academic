@@ -392,3 +392,62 @@
     	<property name="size" value="30"/>
     </slot>
 </schema>
+
+<schema name="degree.thesis.list.filter" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean">
+    <slot name="year" key="label.execution.year" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisExecutionYearsProvider"/>
+    	<property name="format" value="${year}"/>
+    	<property name="destination" value="listThesis"/>
+    	<property name="defaultText" value="message.all"/>
+    	<property name="key" value="true"/>
+	</slot>
+	<slot name="state" key="label.thesis.state" layout="menu-select-postback">
+    	<property name="choiceType" value="net.sourceforge.fenixedu.domain.thesis.ThesisState"/>
+    	<property name="eachLayout" value=""/>
+    	<property name="destination" value="listThesis"/>
+    	<property name="defaultText" value="message.all"/>
+    	<property name="key" value="true"/>
+	</slot>
+</schema>
+
+<schema name="department.thesis.list.filter" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean">
+    <slot name="degree" key="label.Degree" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentDegreesWithDissertationProvider"/>
+    	<property name="format" value="${presentationName} (${sigla})"/>
+    	<property name="destination" value="listThesis"/>
+    	<property name="defaultText" value="message.all"/>
+    	<property name="key" value="true"/>
+	</slot>
+    <slot name="year" key="label.execution.year" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisExecutionYearsProvider"/>
+    	<property name="format" value="${year}"/>
+    	<property name="destination" value="listThesis"/>
+    	<property name="defaultText" value="message.all"/>
+    	<property name="key" value="true"/>
+	</slot>
+	<slot name="state" key="label.thesis.state" layout="menu-select-postback">
+    	<property name="choiceType" value="net.sourceforge.fenixedu.domain.thesis.ThesisState"/>
+    	<property name="eachLayout" value=""/>
+    	<property name="destination" value="listThesis"/>
+    	<property name="defaultText" value="message.all"/>
+    	<property name="key" value="true"/>
+	</slot>
+</schema>
+
+<schema name="public.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student.person" key="student" layout="name-with-alias"/>
+    <slot name="state" key="label.thesis.state"/>
+    <slot name="finalFullTitle" key="label.thesis.fullTitle"/>
+    <slot name="thesisAbstract" key="label.thesis.abstract" layout="null-as-label">
+    	<property name="label" value="label.thesis.abstract.notDefined"/>
+    	<property name="key" value="true"/>
+    </slot>
+    <slot name="keywords" key="label.thesis.keywords" layout="null-as-label">
+    	<property name="label" value="label.thesis.keywords.notDefined"/>
+    	<property name="key" value="true"/>
+    </slot>
+</schema>
+
+<schema name="public.thesis.coordinator" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="personNameWithLogin"/>
+</schema>

@@ -1,10 +1,15 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:xhtml/>
+
+<bean:define id="listThesesActionPath" value="/showDegreeTheses.do" toScope="request"/>
+<bean:define id="listThesesContext" value="<%= "degreeID=" + request.getParameter("degreeID") %>" toScope="request"/>
+<bean:define id="listThesesSchema" value="degree.thesis.list.filter" toScope="request"/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0">
@@ -41,42 +46,4 @@
 
 <h2 class="greytxt"><bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" /></h2>
 
-<logic:present name="hasPendingThesis">
-	<div class="mtop1">
-		<bean:message key="public.degree.information.link.thesis.showPublication" bundle="PUBLIC_DEGREE_INFORMATION"/> |
-		<html:link page="<%= "/showDegreeTheses.do?method=showThesesState&amp;degreeID=" + request.getParameter("degreeID") %>">
-			<bean:message key="public.degree.information.link.thesis.showState" bundle="PUBLIC_DEGREE_INFORMATION"/>
-		</html:link>
-	</div>
-</logic:present>
-
-<logic:notEmpty name="years">
-	<logic:iterate id="executionYear" name="years" type="net.sourceforge.fenixedu.domain.ExecutionYear">
-		<h2 class="greytxt mtop2">
-			<fr:view name="executionYear" property="year"/>
-		</h2>
-		
-		<ul style="width: 600px;">
-			<logic:iterate id="thesis" name="theses" property="<%= executionYear.getYear() %>" scope="request">
-				<bean:define id="thesisId" name="thesis" property="idInternal"/>
-				<li>
-		 			<fr:view name="thesis" layout="nonNullValues" schema="result.publication.presentation.Thesis">
-		 				<fr:layout>
-		 					<fr:property name="htmlSeparator" value=", "/>
-		 					<fr:property name="indentation" value="false"/>
-		 				</fr:layout>
-		 				<fr:destination name="view.publication" path="<%= "/showDegreeTheses.do?method=showResult&amp;thesisID=" + thesisId + "&amp;degreeID=" + request.getParameter("degreeID")%>"/>
-		 			</fr:view> (<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ thesisId %>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
-				</li>
-			</logic:iterate>
-		</ul>
-	</logic:iterate>
-</logic:notEmpty>
-
-<logic:empty name="years">
-	<p class="mtop2">
-		<em>
-			<bean:message key="public.degree.information.label.theses.empty.message" bundle="PUBLIC_DEGREE_INFORMATION"/>
-		</em>
-	</p>
-</logic:empty>
+<jsp:include flush="true" page="/publico/showTheses.jsp"/>

@@ -660,10 +660,9 @@
 	     <forward name="viewDegreeEvaluation" path="viewDegreeEvaluation"/>  	  
      </action>
 
-     <action path="/showDegreeTheses" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeThesesDA" parameter="method">
+     <action path="/showDegreeTheses" type="net.sourceforge.fenixedu.presentationTier.Action.publico.DegreeShowThesesDA" parameter="method">
 	     <forward name="showTheses" path="degree-showDegreeTheses"/>
-	     <forward name="showThesesState" path="degree-showDegreeThesesState"/>
-	     <forward name="showResult" path="degree-showResult"/>
+	     <forward name="showThesisDetails" path="degree-showDegreeThesisDetails"/>
      </action>
 
      <action path="/showDegreeAnnouncements"
@@ -1014,6 +1013,12 @@
         <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
         <action path="/department/degrees" forward="/department/departmentSite.do?method=degrees"/>
         <action path="/department/teachers" forward="/department/departmentSite.do?method=teachers"/>
+        <action path="/department/theses"
+        	    parameter="method"
+        	    type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.DepartmentShowThesesDA">
+		     <forward name="showTheses" path="department-showDegreeTheses"/>
+		     <forward name="showThesisDetails" path="department-showDegreeThesisDetails"/>
+        </action>
 
         <action path="/department/announcements"
                 parameter="method"
