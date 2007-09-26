@@ -10,15 +10,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -580,12 +579,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateDismissalDetails(final HtmlTable mainTable, Dismissal dismissal, int level) {
-	    for (final EnrolmentWrapper enrolmentWrapper : dismissal.getCredits().getEnrolments()) {
-		if (enrolmentWrapper.getIEnrolment().isExternalEnrolment()) {
-		    generateExternalEnrolmentRow(mainTable, (ExternalEnrolment) enrolmentWrapper.getIEnrolment(), level + 1);
-
+	    for (final IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
+		if (enrolment.isExternalEnrolment()) {
+		    generateExternalEnrolmentRow(mainTable, (ExternalEnrolment) enrolment, level + 1);
 		} else {
-		    generateEnrolmentRow(mainTable, (Enrolment) enrolmentWrapper.getIEnrolment(), level + 1, false);
+		    generateEnrolmentRow(mainTable, (Enrolment) enrolment, level + 1, false);
 		}
 	    }
 	}
@@ -820,11 +818,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private String getPresentationNameFor(final Enrolment enrolment) {
-	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse().getCode() + " - " : "";
-		    
+	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
+		    .getCode()
+		    + " - " : "";
+
 	    if (enrolment instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
-		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code + optionalEnrolment.getCurricularCourse().getName() + ")";
+		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
+			+ optionalEnrolment.getCurricularCourse().getName() + ")";
 	    } else {
 		return code + enrolment.getName().getContent();
 	    }
