@@ -50,6 +50,7 @@ public class OidSqlGenerator {
 	}
 	closeFile(fileWriterAlterTables);
 	closeFile(fileWriterUpdates);
+	closeFile(fileWriterUpdateKeys);
     }
 
     private static FileWriter createFileWriter(final String filename) throws IOException {
