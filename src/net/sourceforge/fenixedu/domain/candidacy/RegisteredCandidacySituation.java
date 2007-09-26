@@ -20,6 +20,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     public RegisteredCandidacySituation(Candidacy candidacy, Person person) {
 	super();
 	init(candidacy, person);
+	
 	registerCandidacy(candidacy);
     }
 
@@ -61,12 +62,12 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	    createQualification();
 	    
 	}
-	else if(candidacy instanceof PHDProgramCandidacy) {
-	    PHDProgramCandidacy programCandidacy = (PHDProgramCandidacy)candidacy;
-	    registration = new Registration(person, (programCandidacy).getExecutionDegree().getDegreeCurricularPlan());
-	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
-	    programCandidacy.setRegistration(registration);
-	}
+//	else if(candidacy instanceof PHDProgramCandidacy) {
+//	    PHDProgramCandidacy programCandidacy = (PHDProgramCandidacy)candidacy;
+//	    registration = new Registration(person, (programCandidacy).getExecutionDegree().getDegreeCurricularPlan());
+//	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+//	    programCandidacy.setRegistration(registration);
+//	}
 	
 	if(!person.hasStudent()) {
 	    new Student(person);

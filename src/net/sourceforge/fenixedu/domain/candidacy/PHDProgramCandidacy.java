@@ -45,9 +45,9 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 	init(person, executionDegree);
 	new StandByCandidacySituation(this);
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	new PhDCandidacyEvent(administrativeOffice, person, this);
+	//final AdministrativeOffice administrativeOffice = AdministrativeOffice
+	//	.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+	//new PhDCandidacyEvent(administrativeOffice, person, this);
     }
 
     @Override
