@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -127,12 +128,14 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
     private boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
         for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
+            final Degree degree = degreeCurricularPlan.getDegree();
             final Student student = userView.getPerson().getStudent();
-            for (final Registration registration : student.getActiveRegistrations()) {
-        	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-        	if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
-        	    return true;
-        	}
+            for (final Registration registration : student.getRegistrationsSet()) {
+                for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+                    if (studentCurricularPlan.getDegree() == degree) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
