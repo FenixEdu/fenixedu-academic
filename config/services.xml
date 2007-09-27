@@ -1076,24 +1076,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateAdvisory</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.advisoriesManagement.CreateAdvisory</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditAdvisory</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.advisoriesManagement.EditAdvisory</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadAvailableExecutionPeriods</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAvailableExecutionPeriods</implementationClass>

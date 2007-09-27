@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
@@ -161,14 +160,6 @@ public class InfoPerson extends InfoObject {
 
     public String getUsername() {
         return getPerson().getUsername();
-    }
-
-    public List<InfoAdvisory> getInfoAdvisories() {
-        final List<InfoAdvisory> result = new ArrayList<InfoAdvisory>(getPerson().getAdvisoriesCount());
-        for (final Advisory advisory : getPerson().getAdvisoriesSet()) {
-            result.add(InfoAdvisory.newInfoFromDomain(advisory));
-        }
-        return result;
     }
 
     public Boolean getAvailableEmail() {

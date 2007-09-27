@@ -6,8 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
@@ -106,18 +103,6 @@ public class NewProjectProposal extends Service {
 
         allOtherProfessors.addAll(group);
 
-        // Create Advisory
-        if (acceptProposal == false) {
-            Advisory advisory = createNewProjectProposalAdvisory(goalExecutionCourse,
-                    startExecutionCourse, groupProperties, senderPerson);
-            for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-                final Person person = (Person) iterator.next();
-
-                person.getAdvisories().add(advisory);
-                advisory.getPeople().add(person);
-            }
-        }
-
         List groupAux = new ArrayList();
 
         List professorshipsAux = startExecutionCourse.getProfessorships();
@@ -155,99 +140,9 @@ public class NewProjectProposal extends Service {
                     groupPropertiesExecutionCourse.getGrouping().addAttends(attend);                    
                 }
             }
-
-            Advisory advisoryAux = createNewProjectProposalAcceptedAdvisory(goalExecutionCourse,
-                    startExecutionCourse, groupProperties, senderPerson);
-            for (final Iterator iterator = allOtherProfessors.iterator(); iterator.hasNext();) {
-                final Person person = (Person) iterator.next();
-                person.getAdvisories().add(advisoryAux);
-                advisoryAux.getPeople().add(person);
-            }
-
-        } else {
-            Advisory advisoryAux = createNewProjectProposalAdvisoryAux(goalExecutionCourse,
-                    startExecutionCourse, groupProperties, senderPerson);
-            for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
-                final Person person = (Person) iterator.next();
-                person.getAdvisories().add(advisoryAux);
-                advisoryAux.getPeople().add(person);
-            }
         }
 
         return result;
-    }
-
-    private Advisory createNewProjectProposalAdvisory(ExecutionCourse goalExecutionCourse,
-            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = new Advisory();
-        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (groupProperties.getEnrolmentEndDay() != null) {
-            advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
-        } else {
-            advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-        }
-        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome());
-
-        advisory.setSubject("Proposta de Co-Avaliação");
-
-        String msg;
-        msg = new String("Recebeu uma proposta de co-avaliação da disciplina "
-                + startExecutionCourse.getNome() + " para a disciplina " + goalExecutionCourse.getNome()
-                + " relativa ao agrupamento " + groupProperties.getName() + "!"
-                + "<br/>Para mais informações dirija-se à área de gestão de grupos da disciplina "
-                + goalExecutionCourse.getNome() + ".");
-
-        advisory.setMessage(msg);
-        return advisory;
-    }
-
-    private Advisory createNewProjectProposalAdvisoryAux(ExecutionCourse goalExecutionCourse,
-            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = new Advisory();
-        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (groupProperties.getEnrolmentEndDay() != null) {
-            advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
-        } else {
-            advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-        }
-        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome());
-
-        advisory.setSubject("Proposta de Co-Avaliação");
-
-        String msg;
-        msg = new String("O Docente " + senderPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome()
-                + " fez uma proposta de co-avaliação para a disciplina " + goalExecutionCourse.getNome()
-                + " relativa ao agrupamento " + groupProperties.getName() + "!");
-
-        advisory.setMessage(msg);        
-        return advisory;
-    }
-
-    private Advisory createNewProjectProposalAcceptedAdvisory(ExecutionCourse goalExecutionCourse,
-            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = new Advisory();
-        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (groupProperties.getEnrolmentEndDay() != null) {
-            advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
-        } else {
-            advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-        }
-        advisory.setSender("Docente " + senderPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome());
-
-        advisory.setSubject("Realização de Co-Avaliação");
-
-        String msg;
-        msg = new String("O Docente " + senderPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome() + " criou uma co-avaliação para a disciplina "
-                + goalExecutionCourse.getNome() + " relativa ao agrupamento "
-                + groupProperties.getName() + "!");
-
-        advisory.setMessage(msg);
-        return advisory;
     }
 
 }

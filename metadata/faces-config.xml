@@ -191,13 +191,6 @@
 	<!-- BEGIN: AdvisoriesManagement Managed Beans -->
 	
 	<managed-bean>
-		<description>AdvisoriesManagementBackingBean</description>
-		<managed-bean-name>advisoriesManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.advisoriesManagement.AdvisoriesManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<managed-bean>
 		<managed-bean-name>SendMailBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.SendMailBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>

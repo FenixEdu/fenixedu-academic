@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove unnecessary stuff from database." clean.sql

@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
@@ -98,18 +95,6 @@ public class AcceptNewProjectProposal extends Service {
 						groupTeachers.add(teacher.getPerson());
 					}
 				}
-
-				// Create Advisory for Teachers already in Grouping
-				// executioncourses
-				Advisory advisory = createAcceptAdvisory(executionCourse, personExecutionCourse,
-						groupPropertiesExecutionCourse, receiverPerson, senderPerson);
-				for (final Iterator iterator = groupTeachers.iterator(); iterator.hasNext();) {
-					final Person person = (Person) iterator.next();
-
-					person.getAdvisories().add(advisory);
-					advisory.getPeople().add(person);
-				}
-
 			}
 		}
 
@@ -125,56 +110,10 @@ public class AcceptNewProjectProposal extends Service {
 			}
 		}
 
-		// Create Advisory for teachers of the new executioncourse
-		Advisory advisoryAux = createAcceptAdvisory(executionCourse, executionCourse,
-				groupPropertiesExecutionCourse, receiverPerson, senderPerson);
-		for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
-			final Person person = (Person) iterator.next();
-
-			person.getAdvisories().add(advisoryAux);
-			advisoryAux.getPeople().add(person);
-		}
-
 		groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
 		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
 
 		return Boolean.TRUE;
-	}
-
-	private Advisory createAcceptAdvisory(ExecutionCourse executionCourse,
-			ExecutionCourse personExecutionCourse, ExportGrouping groupPropertiesExecutionCourse,
-			Person receiverPerson, Person senderPerson) {
-		Advisory advisory = new Advisory();
-		advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-		if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
-			advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()
-					.getTime());
-		} else {
-			advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-		}
-		advisory.setSender("Docente " + receiverPerson.getName() + " da disciplina "
-				+ executionCourse.getNome());
-
-		advisory.setSubject("Proposta Enviada Aceite");
-
-		String msg;
-		msg = new String(
-				"A proposta de co-avaliação do agrupamento "
-						+ groupPropertiesExecutionCourse.getGrouping().getName()
-						+ ", enviada pelo docente "
-						+ senderPerson.getName()
-						+ "da disciplina "
-						+ groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
-						+ " foi aceite pelo docente "
-						+ receiverPerson.getName()
-						+ " da disciplina "
-						+ executionCourse.getNome()
-						+ "!"
-						+ "<br/>A partir deste momento poder-se-á dirijir à área de gestão de grupos da disciplina "
-						+ personExecutionCourse.getNome() + " para gerir a nova co-avaliação.");
-
-		advisory.setMessage(msg);
-		return advisory;
 	}
 
 }

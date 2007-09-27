@@ -240,14 +240,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				String prefix;
 			}
 
-	class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime createdDateTime;
-		DateTime expiresDateTime;
-		String message;
-		String sender;
-		String subject;
-	}
-
 	class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
@@ -7652,15 +7644,6 @@ relation PersonAccountingEvent {
 	}
 }
 
-relation PersonAdvisory {
-	net.sourceforge.fenixedu.domain.Person playsRole people {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Advisory playsRole advisories {
-		multiplicity *;
-	}
-}
-
 relation PersonArticleAssociation {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
 	net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation playsRole articleAssociations {
@@ -8551,13 +8534,6 @@ relation RootDomainObjectAdministrativeOffice {
 relation RootDomainObjectAdvise {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advises {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAdvisory {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Advisory playsRole advisorys {
 		multiplicity *;
 	}
 }

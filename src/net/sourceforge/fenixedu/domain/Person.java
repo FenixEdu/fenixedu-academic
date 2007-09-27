@@ -576,19 +576,6 @@ public class Person extends Person_Base {
 	return resultPatents;
     }
 
-    @Override
-    public List<Advisory> getAdvisories() {
-	final DateTime currentDate = new DateTime();
-	final List<Advisory> result = new ArrayList<Advisory>();
-	for (final Advisory advisory : super.getAdvisories()) {
-	    if (advisory.getExpiresDateTime() == null
-		    || advisory.getExpiresDateTime().isAfter(currentDate)) {
-		result.add(advisory);
-	    }
-	}
-	return result;
-    }
-
     public Boolean getIsExamCoordinatorInCurrentYear() {
 	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear
 		.readCurrentExecutionYear());
@@ -1021,11 +1008,9 @@ public class Person extends Person_Base {
 
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
-	getAdvisories().clear();
 	getBookmarkedBoards().clear();
 	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
-	getAdvisories().clear();
 
 	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());	
 	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());

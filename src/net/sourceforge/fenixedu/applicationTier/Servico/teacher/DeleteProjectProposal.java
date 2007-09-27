@@ -5,15 +5,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -92,48 +89,9 @@ public class DeleteProjectProposal extends Service {
             }
         }
 
-        // Create Advisory
-        Advisory advisory = createDeleteProjectProposalAdvisory(executionCourse, startExecutionCourse,
-                withdrawalPerson, groupingExecutionCourse, groupProperties);
-        for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-            final Person person = (Person) iterator.next();
-
-            person.getAdvisories().add(advisory);
-            advisory.getPeople().add(person);
-        }
         groupingExecutionCourse.delete();
         
         return true;
-    }
-
-    private Advisory createDeleteProjectProposalAdvisory(ExecutionCourse goalExecutionCourse,
-            ExecutionCourse startExecutionCourse, Person withdrawalPerson,
-            ExportGrouping groupPropertiesExecutionCourse, Grouping grouping) {
-        Advisory advisory = new Advisory();
-        advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
-        if (grouping.getEnrolmentEndDay() != null) {
-            advisory.setExpires(grouping.getEnrolmentEndDay()
-                    .getTime());
-        } else {
-            advisory.setExpires(new Date(Calendar.getInstance().getTimeInMillis() + 1728000000));
-        }
-        advisory.setSender("Docente " + withdrawalPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome());
-
-        advisory.setSubject("Desistência de proposta de Co-Avaliação");
-
-        String msg;
-        msg = new String("O Docente " + withdrawalPerson.getName() + " da disciplina "
-                + startExecutionCourse.getNome()
-                + " desistiu da proposta de co-avaliação para a disciplina "
-                + goalExecutionCourse.getNome() + " relativa ao agrupamento "
-                + grouping.getName()
-                + " previamente enviada pelo docente "
-                + groupPropertiesExecutionCourse.getSenderPerson().getName() + " da disciplina "
-                + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome() + "!");
-
-        advisory.setMessage(msg);        
-        return advisory;
     }
 
 }

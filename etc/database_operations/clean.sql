@@ -1,0 +1,3 @@
+drop table DISTRIBUTED_TEST_ADVISORY;
+drop table ADVISORY;
+drop table PERSON_ADVISORY;
