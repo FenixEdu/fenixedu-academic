@@ -3499,18 +3499,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 				YearMonthDay begin;
 				YearMonthDay end;
-			}		
-
-	class net.sourceforge.fenixedu.domain.resource.ResourceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay begin;
-		YearMonthDay end;
-	}
-
-		class net.sourceforge.fenixedu.domain.material.MaterialResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
-		}
-
-		class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
-		}
+			}			
 
 		class net.sourceforge.fenixedu.domain.material.Material extends net.sourceforge.fenixedu.domain.resource.Resource {
 			YearMonthDay acquisition;
@@ -3566,6 +3555,17 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
 			}
+
+	class net.sourceforge.fenixedu.domain.resource.ResourceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
+		YearMonthDay begin;
+		YearMonthDay end;
+	}
+
+		class net.sourceforge.fenixedu.domain.material.MaterialResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
+		}
+
+		class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
+		}
 
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean freeProcessed;

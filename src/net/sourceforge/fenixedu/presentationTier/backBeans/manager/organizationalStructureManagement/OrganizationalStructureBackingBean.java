@@ -396,7 +396,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	
 	for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {
 	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(administrativeOffice.getAdministrativeOfficeType().getName()));
+	    selectItem.setLabel(bundle.getString(administrativeOffice.getAdministrativeOfficeType().getClass().getSimpleName()
+		    + "." + administrativeOffice.getAdministrativeOfficeType().getName()));
 	    selectItem.setValue(administrativeOffice.getIdInternal().toString());
 	    list.add(selectItem);
 	}

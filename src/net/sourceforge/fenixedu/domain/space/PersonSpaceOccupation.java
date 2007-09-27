@@ -61,7 +61,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setPerson(null);
 	super.delete();
     }
-
+      
     @Override
     public boolean isPersonSpaceOccupation() {
         return true;
@@ -122,5 +122,12 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	if (end != null && !end.isAfter(begin)) {
 	    throw new DomainException("error.begin.after.end");
 	}
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBegin();
+	final YearMonthDay end = getEnd();	
+	return start != null && (end == null || end.isAfter(start));
     }
 }

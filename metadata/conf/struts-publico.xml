@@ -200,6 +200,10 @@
    		<form-property name="professorshipID" type="java.lang.String"/>
 	</form-bean>
 
+	<form-bean name="findSpacesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
+        <form-property name="method" type="java.lang.String" initial=""/>        
+      </form-bean>
+
   </form-beans>     
   
     
@@ -403,7 +407,7 @@
         <forward name="list" path="chooseRoom"/>
         <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
       </action>
-
+           
        <action attribute="roomForm"
               input="/prepareConsultRoomsNew.do?method=prepare&amp;page=0"
               name="roomForm"
@@ -1165,6 +1169,18 @@
             <forward name="requestLoginFinished" path="request-login-finish-process"/>
       </action>
 
+	 <!-- =================== Find Spaces Interface  =================== -->
+	
+	 <action path="/findSpaces"
+             parameter="method"
+             name="findSpacesForm"
+             type="net.sourceforge.fenixedu.presentationTier.Action.publico.spaces.FindSpacesDA">
+         
+         <forward name="listFoundSpaces" path="list-found-spaces"/>
+         <forward name="viewSelectedSpace" path="view-selected-space"/>
+                  
+     </action>
+	 	
      </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -1191,6 +1207,8 @@
    	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.WebSiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.SpaceResources" key="SPACE_RESOURCES" null="false"/>
+   	  	
     
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

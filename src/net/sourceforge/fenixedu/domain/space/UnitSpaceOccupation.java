@@ -107,4 +107,11 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 	    throw new DomainException("error.begin.after.end");
 	}
     }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBegin();
+	final YearMonthDay end = getEnd();	
+	return start != null && (end == null || end.isAfter(start));
+    }
 }

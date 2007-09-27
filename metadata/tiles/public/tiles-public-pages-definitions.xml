@@ -325,7 +325,7 @@
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="/publico/chooseRoom_bd.jsp" />
-		<put name="footer" value="/publico/commonFooterPub.jsp" />
+		<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 
 	<definition name="viewRoom" extends="chooseRoom">
@@ -335,7 +335,7 @@
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="/publico/viewRoom_bd.jsp" />
-		<put name="footer" value="/publico/commonFooterPub.jsp" />
+		<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 
 	<!-- ========== BASIC UNIT SITE -->
@@ -693,13 +693,13 @@
 	<definition name="start-request-login-process" path="/layout/istLayout.jsp">
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
-	  	<put name="footer" value="/publico/commonFooterPub.jsp" />
+	  	<put name="footer" value="/commons/blank.jsp" />
 	</definition>		
 
 	<definition name="request-login-finish-process" path="/layout/istLayout.jsp">
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
-	  	<put name="footer" value="/publico/commonFooterPub.jsp" />
+	  	<put name="footer" value="/commons/blank.jsp" />
 	</definition>		
 
     <definition name="degree-showDegreeTheses" extends="definition.public.mainPageIST">
@@ -710,5 +710,16 @@
         <put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
         <put name="body" value="/publico/degreeSite/showDegreeThesisDetails.jsp"/>
     </definition>
+
+	<!-- =================== Find Spaces  =================== -->
+	
+	<definition name="list-found-spaces" extends="definition.public.findSpaces">
+		<put name="body" value="/publico/spaces/findSpaces.jsp" />
+	</definition>	
+	
+	<definition name="view-selected-space" extends="definition.public.findSpaces">
+		<put name="body" value="/publico/spaces/viewSelectedSpace.jsp" />
+	</definition>	
+
 	
 </tiles-definitions>

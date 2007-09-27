@@ -1,0 +1,1 @@
+alter table SHIFT drop column AVAILABILITY_FINAL;

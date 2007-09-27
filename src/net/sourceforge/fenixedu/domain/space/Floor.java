@@ -142,4 +142,16 @@ public class Floor extends Floor_Base {
 	}
 
     }
+
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
 }

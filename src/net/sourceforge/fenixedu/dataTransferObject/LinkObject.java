@@ -11,6 +11,12 @@ public class LinkObject implements Serializable {
     public LinkObject() {
     }
     
+    public LinkObject(Integer id, String method, String label) {
+	this.id = id;
+	this.method = method;
+	this.label = label;
+    }
+    
     public Integer getId() {
         return id;
     }

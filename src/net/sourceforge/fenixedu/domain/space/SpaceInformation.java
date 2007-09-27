@@ -10,6 +10,8 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 
     public abstract String getPresentationName();
 
+    public abstract RoomClassification getRoomClassification();
+    
     public abstract FactoryExecutor getSpaceFactoryEditor();
 
     protected SpaceInformation() {

@@ -495,3 +495,62 @@
 		<property name="bundle" value="SPACE_RESOURCES"/>
 	</slot>	
 </schema>
+
+<schema name="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="labelToSearch" key="label.find.spaces.label"/>						         
+</schema>
+
+<schema name="PublicFindSpacesWithExtraOptions" extends="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">		
+	<slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />
+		<property name="destination" value="postBack"/>	
+	</slot>
+	<slot name="building" key="label.find.spaces.building" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.BuildingProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />	
+	</slot>							        
+</schema>
+
+<schema name="PublicFoundSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="spacePath" key="label.find.spaces.identification" layout="list-link">
+		<property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+	</slot>
+	<slot name="space.class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="ViewSelectedSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="space.spaceInformation.presentationName" key="label.find.spaces.space.name"/>
+	<slot name="suroundingSpacePath" key="label.find.spaces.location" layout="list-link">
+		<property name="linkFormat" value="/findSpaces.do?method=${method}&amp;spaceID=${id}"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true"/>
+	</slot>
+	<slot name="space.class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="space.spaceInformation.roomClassification" layout="null-as-label" key="label.space.classification">
+		<property name="label" value="--"/>
+		<property name="subLayout" value="roomClassification-label" />
+	</slot>
+	<slot name="space.normalCapacity" layout="null-as-label" key="label.space.normal.capacity">
+		<property name="label" value="--"/>		
+	</slot>
+	<slot name="space.examCapacity" layout="null-as-label" key="label.space.exam.capacity">
+		<property name="label" value="--"/>		
+	</slot>	
+</schema>
+
+<schema name="ViewSelectedSpaceContainedSpaces" type="net.sourceforge.fenixedu.domain.space.Space" bundle="DEFAULT">
+	<slot name="class" layout="label" key="label.space.type">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>	
+	<slot name="spaceInformation.presentationName" key="label.find.spaces.space.name"/>	
+</schema>

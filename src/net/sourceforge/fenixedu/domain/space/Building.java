@@ -168,4 +168,16 @@ public class Building extends Building_Base {
 		    getBlueprintNumber());
 	}
     }
+
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
 }

@@ -80,4 +80,10 @@ public class FloorInformation extends FloorInformation_Base {
 	}	
 	return String.valueOf(getLevel());
     }
+
+    @Override
+    public RoomClassification getRoomClassification() {	
+	// Necessary for Renderers
+	return null;
+    }
 }

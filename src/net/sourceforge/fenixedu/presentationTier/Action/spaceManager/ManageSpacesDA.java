@@ -397,15 +397,17 @@ public class ManageSpacesDA extends FenixDispatchAction {
     }
    
     private void fillSpreadSheet(Space space, final Spreadsheet spreadsheet) {        	
-	for (Space subSpace : space.getContainedSpacesSet()) {	    	   
-            if(subSpace instanceof Room) {
+	for (Space subSpace : space.getContainedSpacesSet()) {
+	    
+            if(subSpace.isActive() && (subSpace.isRoom() || subSpace.isRoomSubdivision())) {
+        	
         	Room room = (Room) subSpace;
         	final Row row = spreadsheet.addRow();
         	
         	Building spaceBuilding = room.getSpaceBuilding();        	
         	row.setCell((spaceBuilding != null) ? spaceBuilding.getSpaceInformation().getPresentationName() : "--");
         	
-        	Floor spaceFloor = room.getSpaceFloor();                
+        	Floor spaceFloor = room.getSpaceFloorWithIntermediary();                
         	if(spaceFloor != null && spaceFloor.getSuroundingSpace() instanceof Floor) {
         	    if(spaceFloor.getSpaceInformation().getLevel().intValue() == 1) {
         		row.setCell(spaceFloor.getSuroundingSpace().getSpaceInformation().getPresentationName() + "i");        	    

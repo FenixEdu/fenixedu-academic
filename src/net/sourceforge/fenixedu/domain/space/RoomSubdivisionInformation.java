@@ -63,5 +63,10 @@ public class RoomSubdivisionInformation extends RoomSubdivisionInformation_Base 
 	roomFactoryEditor.setSpace((RoomSubdivision) getSpace());
 	roomFactoryEditor.setBegin(getNextPossibleValidFromDate());
 	return roomFactoryEditor;
+    }
+
+    @Override
+    public RoomClassification getRoomClassification() {
+	return getSpace().getSuroundingSpace().getSpaceInformation().getRoomClassification();
     }    
 }

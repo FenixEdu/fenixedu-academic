@@ -993,7 +993,7 @@ public class Person extends Person_Base {
 	if (hasAssociatedPersonAccount()) {
 	    getAssociatedPersonAccount().delete();
 	}
-	if (hasHomepage()) { // check if can delete made in #canBeDeleted()
+	if (hasHomepage()) {
 	    getHomepage().delete();
 	}
 	if (hasUser()) {
@@ -1010,10 +1010,10 @@ public class Person extends Person_Base {
 	getManageableDepartmentCredits().clear();
 	getBookmarkedBoards().clear();
 	getPersonRoles().clear();
-	getManageableDepartmentCredits().clear();
-
+	getManageableDepartmentCredits().clear();	
+	getThesisEvaluationParticipants().clear();
+	
 	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());	
-	for (; !getThesisEvaluationParticipants().isEmpty(); getThesisEvaluationParticipants().iterator().next().delete());
 	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next().delete());
 	
 	removeNationality();

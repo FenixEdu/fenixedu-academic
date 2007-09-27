@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -66,7 +68,7 @@ public class Campus extends Campus_Base {
 	}
 	return null;
     } 
-      
+             
     @Override
     public boolean isCampus() {
 	return true;
@@ -136,5 +138,17 @@ public class Campus extends Campus_Base {
 	public CampusInformation execute() {
 	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
+    }
+
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
     }
 }

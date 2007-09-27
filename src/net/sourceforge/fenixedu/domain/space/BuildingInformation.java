@@ -66,4 +66,9 @@ public class BuildingInformation extends BuildingInformation_Base {
 	return getName();
     }
 
+    @Override
+    public RoomClassification getRoomClassification() {
+	// Necessary for Renderers
+	return null;
+    }
 }

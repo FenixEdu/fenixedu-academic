@@ -66,4 +66,10 @@ public class CampusInformation extends CampusInformation_Base {
 	return getName();
     }
 
+    @Override
+    public RoomClassification getRoomClassification() {
+	// Necessary for Renderers
+	return null;
+    }
+
 }

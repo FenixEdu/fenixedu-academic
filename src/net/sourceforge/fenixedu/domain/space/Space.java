@@ -42,12 +42,15 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class Space extends Space_Base {
 
+    public abstract Integer getExamCapacity();    
+    public abstract Integer getNormalCapacity();
+    
     public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();   
     static {
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);	
     }
-    
+
     protected Space() {
 	super();	
 	setCreatedOn(new YearMonthDay());
@@ -123,11 +126,11 @@ public abstract class Space extends Space_Base {
 	}
 	return personSpaceOccupations;
     }
-    
+
     public int getSpaceResponsibilityCount() {
 	return getSpaceResponsibility().size();
     }
-    
+
     public List<SpaceResponsibility> getSpaceResponsibility(){
 	List<SpaceResponsibility> result = new ArrayList<SpaceResponsibility>();
 	for (ResourceResponsibility responsibility : getResourceResponsibility()) {
@@ -158,6 +161,20 @@ public abstract class Space extends Space_Base {
 	return unitSpaceOccupations;
     }
 
+    public Set<? extends Space> getActiveContainedSpacesByType(Class<? extends Space> clazz){
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
+	List<Space> containedSpaces = getContainedSpaces();
+	for (Space space : containedSpaces) {
+	    if(space.getClass().equals(clazz) && space.isActive()) {
+		result.add(space);
+	    }
+	}
+	for (Space subSpace : containedSpaces) {
+	    result.addAll(subSpace.getActiveContainedSpacesByType(clazz));
+	}
+	return result;
+    }
+    
     public List<Space> getContainedSpacesByState(SpaceState spaceState){
 	List<Space> result = new ArrayList<Space>();
 	for (Space space : getContainedSpaces()) {
@@ -329,9 +346,9 @@ public abstract class Space extends Space_Base {
 	super.setSuroundingSpace(null);
 	super.delete();
     }
-    
+
     private boolean canBeDeleted() {
-        return !hasAnyContainedSpaces();
+	return !hasAnyContainedSpaces();
     }
 
     public boolean isActive() {
@@ -341,7 +358,7 @@ public abstract class Space extends Space_Base {
     public Boolean getActiveFlag() {
 	return Boolean.valueOf(isActive());
     }
-    
+
     public static List<Space> getAllSpacesByPresentationName(String name) {
 	List<Space> result = new ArrayList<Space>();	
 	String[] identificationWords = getIdentificationWords(name);
@@ -352,7 +369,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
+
     protected boolean verifyNameEquality(String[] nameWords) {
 	if (nameWords != null) {	
 	    String spacePresentationName = getSpaceInformation().getPresentationName();
@@ -379,7 +396,7 @@ public abstract class Space extends Space_Base {
 	}
 	return false;
     }
-    
+
     protected static String[] getIdentificationWords(String name) {
 	String[] identificationWords = null;
 	if (name != null && !StringUtils.isEmpty(name.trim())) {
@@ -388,7 +405,7 @@ public abstract class Space extends Space_Base {
 	}
 	return identificationWords;
     }
-    
+
     public static List<Campus> getAllCampus() {
 	return (List<Campus>) getAllSpacesByClass(Campus.class, null);
     }
@@ -425,7 +442,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-
+  
     public static boolean personIsSpacesAdministrator(Person person) {
 	return (person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.SPACE_MANAGER_SUPER_USER)) && person.hasRole(RoleType.SPACE_MANAGER);
     }
@@ -591,13 +608,13 @@ public abstract class Space extends Space_Base {
     @Checked("SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator")
     @FenixDomainObjectActionLogAnnotation(actionName = "Add or remove person from access group", parameters = {"this",
 	    "accessGroupType", "toAdd", "isToMaintainElements", "expression" })
-    public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Boolean toAdd, Boolean isToMaintainElements,
-	    String expression) throws DomainException {
+	    public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Boolean toAdd, Boolean isToMaintainElements,
+		    String expression) throws DomainException {
 
 	if(StringUtils.isEmpty(expression)) {
 	    throw new DomainException("error.space.access.groups.management.no.person");
 	}
-	
+
 	if(!toAdd) {
 	    byte[] encodeHex;
 	    try {
@@ -607,9 +624,9 @@ public abstract class Space extends Space_Base {
 	    }	
 	    expression = new String(encodeHex);
 	}
-	
+
 	Group groupToAddOrRemove = (Group) new Group2StringConverter().sqlToJava(expression);	
-	
+
 	Set<Person> elementsToAddOrRemove = null;
 	Group existentGroup = null, newGroupUnion = null;
 
@@ -628,7 +645,7 @@ public abstract class Space extends Space_Base {
 
 	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
 	    setPersonOccupationsAccessGroup(newGroupUnion);
-	    
+
 	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	   
 	    break;
 
@@ -645,7 +662,7 @@ public abstract class Space extends Space_Base {
 
 	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
 	    setExtensionOccupationsAccessGroup(newGroupUnion);
-	    
+
 	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
 	    break;
 
@@ -662,7 +679,7 @@ public abstract class Space extends Space_Base {
 
 	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
 	    setUnitOccupationsAccessGroup(newGroupUnion);
-	    
+
 	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
 	    break;
 
@@ -679,7 +696,7 @@ public abstract class Space extends Space_Base {
 
 	    newGroupUnion = manageGroups(toAdd, groupToAddOrRemove, existentGroup);
 	    setSpaceManagementAccessGroup(newGroupUnion);
-	    
+
 	    spaceManagerRoleManagement(elementsToAddOrRemove, toAdd);	    
 	    break;
 
@@ -738,8 +755,7 @@ public abstract class Space extends Space_Base {
 	if(toAdd) {	    
 	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
 		IGroup existentGroup_ = (IGroup) iter.next();
-		if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
-			&& existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
+		if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
 		    iter.remove();
 		    existentGroups.remove(groupToAddOrRemove);
 		}
@@ -750,8 +766,7 @@ public abstract class Space extends Space_Base {
 	    if(groupToAddOrRemove instanceof PersonGroup) {		    
 		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
 		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
-			    && ((PersonGroup)existentGroup_).getPerson().equals(((PersonGroup)groupToAddOrRemove).getPerson())) {
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((PersonGroup)existentGroup_).getPerson().equals(((PersonGroup)groupToAddOrRemove).getPerson())) {
 			iter.remove();
 			existentGroups.remove(groupToAddOrRemove);
 		    }
@@ -759,8 +774,7 @@ public abstract class Space extends Space_Base {
 	    } else if(groupToAddOrRemove instanceof PersistentGroup) {
 		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
 		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
-			    && ((PersistentGroup)existentGroup_).getPersistentGroupMembers().equals(((PersistentGroup)groupToAddOrRemove).getPersistentGroupMembers())) {
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((PersistentGroup)existentGroup_).getPersistentGroupMembers().equals(((PersistentGroup)groupToAddOrRemove).getPersistentGroupMembers())) {
 			iter.remove();
 			existentGroups.remove(groupToAddOrRemove);
 		    }
@@ -768,15 +782,14 @@ public abstract class Space extends Space_Base {
 	    } else if(groupToAddOrRemove instanceof RoleGroup) {
 		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
 		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) 
-			    && ((RoleGroup)existentGroup_).getRole().equals(((RoleGroup)groupToAddOrRemove).getRole())) {
+		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((RoleGroup)existentGroup_).getRole().equals(((RoleGroup)groupToAddOrRemove).getRole())) {
 			iter.remove();
 			existentGroups.remove(groupToAddOrRemove);
 		    }
 		}		    
 	    }			    
 	}	
-	
+
 	return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(existentGroups)); 
     }
 
@@ -871,6 +884,16 @@ public abstract class Space extends Space_Base {
 	return getSuroundingSpace().getSpaceFloor();
     }
 
+    public Floor getSpaceFloorWithIntermediary() {
+	if(isFloor()) {
+	    return (Floor) this;
+	}	
+	if(getSuroundingSpace() == null) {
+	    return null;
+	}	
+	return getSuroundingSpace().getSpaceFloorWithIntermediary();
+    }
+
     public Campus getSpaceCampus() {
 	if(isCampus()) {
 	    return (Campus) this;
@@ -880,6 +903,20 @@ public abstract class Space extends Space_Base {
 	}	
 	return getSuroundingSpace().getSpaceCampus();
     }
+
+    public List<Space> getSpaceFullPath(){	
+	List<Space> result = new ArrayList<Space>();	
+	result.add(this);	
+	Space suroundingSpace = getSuroundingSpace();
+	while(suroundingSpace != null) {
+	    if(suroundingSpace.isFloor()) {
+		suroundingSpace = suroundingSpace.getSpaceFloor();
+	    }
+	    result.add(0, suroundingSpace);
+	    suroundingSpace = suroundingSpace.getSuroundingSpace();
+	}	
+	return result;
+    }       
 
     public Set<Space> getPossibleParentSpacesToMoveSpaceUp() {
 	Set<Space> result = new HashSet<Space>();
@@ -911,7 +948,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
+
     public String getResourceAllocationsResume() {	
 	StringBuilder builder = new StringBuilder();	
 	int eventOccupations = 0, personOccupations = 0, unitOccupations = 0, materialOccupations = 0;	
@@ -931,6 +968,48 @@ public abstract class Space extends Space_Base {
 	builder.append(unitOccupations).append(" (Units)").append(", ");
 	builder.append(materialOccupations).append(" (Material)");
 	return builder.toString();
-    }  
+    }
+
+    public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building) {
+
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
+
+	if(labelToSearch == null || !StringUtils.isEmpty(labelToSearch)) {
+	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
+		if(resource.isSpace()) {	
+		    Space space = (Space) resource;
+		    
+		    String[] labelWords = getIdentificationWords(labelToSearch);		    
+		    boolean toAdd = space.verifyNameEquality(labelWords);		    
+		    if(!toAdd) {
+			SortedSet<PersonSpaceOccupation> persons = space.getActivePersonSpaceOccupations();
+			for (PersonSpaceOccupation personSpaceOccupation : persons) {
+			    if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
+				toAdd = true;
+				break;
+			    }
+			} 		
+		    }	
+		    if(!toAdd) {
+			continue;
+		    }
+
+		    if(building != null) {
+			Building spaceBuilding = space.getSpaceBuilding();
+			if(spaceBuilding != null && !spaceBuilding.equals(building)) {
+			    continue;
+			}
+		    } else if(campus != null) {
+			Campus spaceCampus = space.getSpaceCampus();
+			if(spaceCampus != null && !spaceCampus.equals(campus)) {
+			    continue;
+			}
+		    }
+		    result.add(space);
+		}
+	    }	
+	}
+	return result;
+    }
 }
 

@@ -36,6 +36,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     public ActionForward showBlueprintVersions(final ActionMapping mapping,
 	    final HttpServletRequest request, final SpaceInformation spaceInformation,
 	    final Blueprint blueprint) {
+	
 	setBlueprint(request, blueprint);
 	setSpaceInfo(request, spaceInformation);
 	return mapping.findForward("showBlueprintVersions");
