@@ -161,16 +161,17 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
                     .getPartyClassification()));
             return mapping.findForward("edit-card");
         }
-
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
-                new Object[] { libraryCardDTO.getLibraryCard() });
-
+        
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         cardList.add(libraryCardDTO);
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
                 LanguageUtils.getLocale());
         byte[] data = ReportsUtils.exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard",
                 null, bundle, cardList);
+
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited",
+                new Object[] { libraryCardDTO.getLibraryCard() });
+
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=cartao.pdf");
         response.setContentLength(data.length);
@@ -231,14 +232,15 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             }
         }
 
-        if (!cardList.isEmpty()) {
-            ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "MarkLibraryCardListAsEmited", new Object[] { cardList });
-
+        if (!cardList.isEmpty()) {            
             final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources",
                     LanguageUtils.getLocale());
             byte[] data = ReportsUtils.exportToPdf(
                     "net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
+            
+            ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "MarkLibraryCardListAsEmited", new Object[] { cardList });
+            
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", "attachment; filename=cartoes.pdf");
             response.setContentLength(data.length);
@@ -261,10 +263,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
 
-        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
-
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardLetterAsEmited",
-                new Object[] { libraryCard });
+        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);        
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         cardList.add(new LibraryCardDTO(libraryCard));
@@ -276,6 +275,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             reportID += "ForStudents";
         }
         byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
+        
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardLetterAsEmited",
+                new Object[] { libraryCard });
+        
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=carta.pdf");
         response.setContentLength(data.length);
