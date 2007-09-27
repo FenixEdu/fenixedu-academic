@@ -471,6 +471,7 @@
 </schema>
 
 <!-- Search Spaces Schemas -->
+
 <schema name="SearchSpace" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean" bundle="SPACE_RESOURCES">
 	<slot name="spaceName" key="label.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />						         
 </schema>	
@@ -553,4 +554,8 @@
 		<property name="bundle" value="SPACE_RESOURCES" />
 	</slot>	
 	<slot name="spaceInformation.presentationName" key="label.find.spaces.space.name"/>	
+</schema>
+
+<schema name="ViewActivePersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
+	<slot name="person.name"/>		
 </schema>

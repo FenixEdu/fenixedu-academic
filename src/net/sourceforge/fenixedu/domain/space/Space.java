@@ -44,7 +44,7 @@ public abstract class Space extends Space_Base {
 
     public abstract Integer getExamCapacity();    
     public abstract Integer getNormalCapacity();
-    
+
     public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();   
     static {
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
@@ -174,7 +174,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
+
     public List<Space> getContainedSpacesByState(SpaceState spaceState){
 	List<Space> result = new ArrayList<Space>();
 	for (Space space : getContainedSpaces()) {
@@ -442,7 +442,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-  
+
     public static boolean personIsSpacesAdministrator(Person person) {
 	return (person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.SPACE_MANAGER_SUPER_USER)) && person.hasRole(RoleType.SPACE_MANAGER);
     }
@@ -974,24 +974,27 @@ public abstract class Space extends Space_Base {
 
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
 
-	if(labelToSearch == null || !StringUtils.isEmpty(labelToSearch)) {
+	if(building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch))) {
+
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 		if(resource.isSpace()) {	
 		    Space space = (Space) resource;
-		    
-		    String[] labelWords = getIdentificationWords(labelToSearch);		    
-		    boolean toAdd = space.verifyNameEquality(labelWords);		    
-		    if(!toAdd) {
-			SortedSet<PersonSpaceOccupation> persons = space.getActivePersonSpaceOccupations();
-			for (PersonSpaceOccupation personSpaceOccupation : persons) {
-			    if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
-				toAdd = true;
-				break;
-			    }
-			} 		
-		    }	
-		    if(!toAdd) {
-			continue;
+
+		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch)){
+			String[] labelWords = getIdentificationWords(labelToSearch);		    
+			boolean toAdd = space.verifyNameEquality(labelWords);		    
+			if(!toAdd) {
+			    SortedSet<PersonSpaceOccupation> persons = space.getActivePersonSpaceOccupations();
+			    for (PersonSpaceOccupation personSpaceOccupation : persons) {
+				if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
+				    toAdd = true;
+				    break;
+				}
+			    } 		
+			}	
+			if(!toAdd) {
+			    continue;
+			}
 		    }
 
 		    if(building != null) {

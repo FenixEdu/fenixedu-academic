@@ -1170,7 +1170,6 @@
       </action>
 
 	 <!-- =================== Find Spaces Interface  =================== -->
-	
 	 <action path="/findSpaces"
              parameter="method"
              name="findSpacesForm"

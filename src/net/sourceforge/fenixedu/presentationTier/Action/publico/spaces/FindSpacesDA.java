@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceState;
 import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
@@ -101,6 +102,12 @@ public class FindSpacesDA extends FenixDispatchAction {
 	}
 	
 	return mapping.findForward("viewSelectedSpace");
+    }
+    
+    public ActionForward viewSpaceBlueprint(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+	return new ManageSpaceBlueprintsDA().view(mapping, actionForm, request, response);	
     }
     
     // Private Methods

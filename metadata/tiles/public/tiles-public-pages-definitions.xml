@@ -715,8 +715,7 @@
 	
 	<definition name="list-found-spaces" extends="definition.public.findSpaces">
 		<put name="body" value="/publico/spaces/findSpaces.jsp" />
-	</definition>	
-	
+	</definition>		
 	<definition name="view-selected-space" extends="definition.public.findSpaces">
 		<put name="body" value="/publico/spaces/viewSelectedSpace.jsp" />
 	</definition>	
