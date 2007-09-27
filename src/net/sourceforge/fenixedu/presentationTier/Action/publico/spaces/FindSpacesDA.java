@@ -49,9 +49,8 @@ public class FindSpacesDA extends FenixDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
-	
-	if(bean != null) {
+	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");	
+	if(bean != null) {	    
 	    
 	    String labelToSearch = bean.getLabelToSearch();
 	    Campus campus = bean.getCampus();
@@ -61,8 +60,8 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building);
 	    for (Space space : resultSpaces) {
 		result.add(new FindSpacesBean(space));
-	    }
-	   
+	    }	   
+	    
 	    request.setAttribute("foundSpaces", result);
 	}
 	

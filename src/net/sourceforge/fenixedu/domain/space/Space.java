@@ -45,7 +45,7 @@ public abstract class Space extends Space_Base {
     public abstract Integer getExamCapacity();    
     public abstract Integer getNormalCapacity();
 
-    public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();   
+    public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();       
     static {
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);	
@@ -999,15 +999,16 @@ public abstract class Space extends Space_Base {
 
 		    if(building != null) {
 			Building spaceBuilding = space.getSpaceBuilding();
-			if(spaceBuilding != null && !spaceBuilding.equals(building)) {
+			if(spaceBuilding == null || !spaceBuilding.equals(building)) {
 			    continue;
 			}
 		    } else if(campus != null) {
 			Campus spaceCampus = space.getSpaceCampus();
-			if(spaceCampus != null && !spaceCampus.equals(campus)) {
+			if(spaceCampus == null || !spaceCampus.equals(campus)) {
 			    continue;
 			}
 		    }
+		    
 		    result.add(space);
 		}
 	    }	
