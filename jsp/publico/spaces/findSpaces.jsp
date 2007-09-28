@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<h2><bean:message key="title.search.spaces" bundle="DEFAULT"/></h2>
+<h1><bean:message key="title.search.spaces" bundle="DEFAULT"/></h1>
 
 <logic:notEmpty name="bean">
 
@@ -27,29 +27,29 @@
 		<bean:define id="schemaName" type="java.lang.String" value="PublicFindSpacesWithExtraOptions" />		
 	</logic:equal>
 	
-	<fr:form action="/findSpaces.do">		
+	<fr:form id="searchform" action="/findSpaces.do">		
 		<html:hidden name="findSpacesForm" property="method" value="search"/>				
 		<fr:edit id="beanWithLabelToSearchID" name="bean" schema="<%= schemaName %>">
 			<fr:destination name="postBack" path="/findSpaces.do?method=prepareSearchSpacesPostBack"/>	
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
-				<fr:property name="columnClasses" value="," />			
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />			
 			</fr:layout>			
 		</fr:edit>		
 		<html:submit><bean:message key="link.search" bundle="DEFAULT"/></html:submit>
 		
 		<logic:equal name="bean" property="extraOptions" value="false">
-			<html:submit onclick="this.form.method.value='searchWithExtraOptions';this.form.submit();"><bean:message key="link.search.with.extra.options" bundle="DEFAULT"/></html:submit>
+			<a href="#" onclick="document.getElementById('searchform').method.value='searchWithExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.with.extra.options" bundle="DEFAULT"/></a>
 		</logic:equal>
 		<logic:equal name="bean" property="extraOptions" value="true">
-			<html:submit onclick="this.form.method.value='searchWithoutExtraOptions';this.form.submit();"><bean:message key="link.search.without.extra.options" bundle="DEFAULT"/></html:submit>
+			<a href="#" onclick="document.getElementById('searchform').method.value='searchWithoutExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.without.extra.options" bundle="DEFAULT"/></a>
 		</logic:equal>
 		
 	</fr:form>
 	
 	<logic:notEmpty name="bean" property="labelToSearch">
 		<logic:empty name="foundSpaces">
-			<p class="mtop2"><i><bean:message key="label.not.found.spaces" bundle="DEFAULT"/></i></p>
+			<p class="mtop15"><em><bean:message key="label.not.found.spaces" bundle="DEFAULT"/></em></p>
 		</logic:empty>
 	</logic:notEmpty>
 			
@@ -61,7 +61,7 @@
 		<p class="mtop15">						
 			<fr:view name="foundSpaces" schema="PublicFoundSpaceInfo">			
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 mtop05" />
+					<fr:property name="classes" value="tstyle2 mtop05" />
 					<fr:property name="columnClasses" value=",acenter,acenter" />					
 					<fr:property name="link(viewSchedule)" value="/viewRoom.do?method=roomViewer" />
 					<fr:property name="param(viewSchedule)" value="space.identification/roomName" />
