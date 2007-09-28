@@ -791,9 +791,14 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<p class="mtop2">
 			<logic:notPresent name="allowToChoose">
 			<div class="infoop2">
-				<bean:message key="message.requestQuotasFinishedPeriod" bundle="PARKING_RESOURCES"/>
+				<bean:message key="message.requestQuotasLimitedCard" bundle="PARKING_RESOURCES"/>
 			</div>
 			</logic:notPresent>
+			<logic:present name="periodExpired">
+				<div class="infoop2">
+					<bean:message key="message.periodForUnlimitedCardExpired" bundle="PARKING_RESOURCES"/>
+				</div>
+			</logic:present>
 			
 			<logic:present name="allowToChoose">		
 			<div class="infoop2">

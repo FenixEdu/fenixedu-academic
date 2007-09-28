@@ -2,14 +2,20 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
@@ -99,19 +105,15 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	}
 	List<RoleType> roles = parkingParty.getSubmitAsRoles();
 	ParkingRequest parkingRequest = parkingParty.getFirstRequest();
-	if (roles.contains(RoleType.STUDENT) || roles.contains(RoleType.GRANT_OWNER)) {
-
-	    //((Person)parkingParty.getParty()).getStudent().geta;
-
-	    //Registration.getCurricularYear
-
-	    //mestrado = 2
-	    //licenciatura antiga=5
-
+	if (roles.contains(RoleType.GRANT_OWNER)
+		|| (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) parkingParty
+			.getParty()).getStudent()))) {
 	    if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
 		DateTime now = new DateTime();
 		if (ParkingRequestPeriod.isDateInAnyRequestPeriod(now)) {
 		    request.setAttribute("allowToChoose", "true");
+		} else {
+		    request.setAttribute("periodExpired", "true");
 		}
 	    }
 	}
@@ -126,8 +128,9 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     public boolean canRequestUnlimitedCard(Student student) {
 	Registration registration = getRegistrationByDegreeType(student, DegreeType.DEGREE);
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	if (registration != null && registration.getCurricularYear() == 5) {
-	    return true;
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 5);
 	}
 	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 	//	if (registration != null)
@@ -140,11 +143,11 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	//	    return registration.getCurricularYear();
 	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_MASTER_DEGREE);
 	if (registration != null && registration.getCurricularYear() == 2) {
-	    return true;
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
 	}
 	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	if (registration != null && registration.getCurricularYear() == 2) {
-	    return true;
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
 	}
 	return false;
 
@@ -158,6 +161,25 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad = não estão
 	//	BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização  - não estão no fénix
 
+    }
+
+    private boolean isFirstTimeEnrolledInYear(Registration registration, ExecutionYear executionYear,
+	    int curricularYear) {
+	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
+	for (final StudentCurricularPlan studentCurricularPlan : registration
+		.getStudentCurricularPlansSet()) {
+	    enrolments.addAll(studentCurricularPlan.getEnrolments());
+	}
+	for (Enrolment enrolment : enrolments) {
+	    for (Context context : enrolment.getCurricularCourse().getParentContexts()) {
+		if (executionYear != enrolment.getExecutionYear()
+			&& context.getCurricularYear() == curricularYear
+			&& registration.getCurricularYear(enrolment.getExecutionYear()) == curricularYear) {
+		    return false;
+		}
+	    }
+	}
+	return true;
     }
 
     private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {
