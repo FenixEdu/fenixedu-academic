@@ -864,7 +864,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         if (selected != null) {
             try {
                 infoStudentList = (List) ServiceUtils.executeService(userView, "ReadStudentsByIdArray",
-                        new Object[] { objectCode, selected, new Boolean(insertByShifts) });
+                        new Object[] { objectCode, distributedTestCode, selected, new Boolean(insertByShifts) });
                 ServiceUtils.executeService(userView,
                         "AddStudentsToDistributedTest", new Object[] { objectCode, distributedTestCode,
                                 infoStudentList, request.getContextPath() });
