@@ -54,6 +54,10 @@
 	</logic:notEmpty>
 			
 	<logic:notEmpty name="foundSpaces">	
+	
+		<bean:size id="foundSpacesSize" name="foundSpaces"/>
+		<p class="mtop20"><i><bean:message key="label.number.of.found.spaces" bundle="DEFAULT"/> <b><bean:write name="foundSpacesSize"/></b> <bean:message key="label.find.spaces.space" bundle="DEFAULT"/>.</i></p>
+				
 		<p class="mtop15">						
 			<fr:view name="foundSpaces" schema="PublicFoundSpaceInfo">			
 				<fr:layout name="tabular">

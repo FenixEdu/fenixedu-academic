@@ -57,17 +57,17 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    Campus campus = bean.getCampus();
 	    Building building = bean.getBuilding();
 	    
-	    if(campus != null && building == null) {
+	    if(campus != null && building == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
 		addActionMessage(request, "error.findSpaces.empty.building");
 		request.setAttribute("bean", bean);
 		return mapping.findForward("listFoundSpaces");
 	    }
 	    
-	    if(campus == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch))) {
+	    if(campus == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch.trim()))) {
 		 addActionMessage(request, "error.findSpaces.empty.labelToSearch");
 		 request.setAttribute("bean", bean);
 		 return mapping.findForward("listFoundSpaces");
-	    }
+	    }	    	    
 	    
 	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building);

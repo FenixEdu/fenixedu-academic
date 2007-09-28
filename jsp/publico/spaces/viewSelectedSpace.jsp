@@ -33,7 +33,7 @@
 	</p>			
 							
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
-		<p class="mtop20 mbottom15"><b><bean:message key="label.selected.space.persons" bundle="DEFAULT"/></b></p>		
+		<p class="mtop20 mbottom05"><b><bean:message key="label.selected.space.persons" bundle="DEFAULT"/></b></p>		
 		
 		<fr:view schema="ViewActivePersonSpaceOccupations" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 			<fr:layout name="tabular">      			
@@ -72,7 +72,7 @@
 	<logic:notEmpty name="containedSpaces">
 		
 		<p class="mbottom15"><b><bean:message key="label.selected.space.contained.spaces" bundle="DEFAULT"/></b></p>
-		
+					
 		<fr:view name="containedSpaces" schema="ViewSelectedSpaceContainedSpaces">			
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 mtop05" />

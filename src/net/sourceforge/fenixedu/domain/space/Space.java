@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -31,10 +30,8 @@ import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotati
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.persistenceTier.Conversores.Group2StringConverter;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
@@ -45,12 +42,22 @@ public abstract class Space extends Space_Base {
     public abstract Integer getExamCapacity();    
     public abstract Integer getNormalCapacity();
 
-    public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new ComparatorChain();       
-    static {
-	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(new BeanComparator("spaceInformation.presentationName", Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);	
-    }
-
+    public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new Comparator<Space>() {
+	public int compare(Space o1, Space o2) {	    
+	    
+	    if(o1.isFloor() && o2.isFloor()) {
+		return ((Floor)o1).getSpaceInformation().getLevel().compareTo(((Floor)o2).getSpaceInformation().getLevel());
+	    }	    
+	    
+	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
+	    if(compareTo == 0) {
+		return o1.getIdInternal().compareTo(o2.getIdInternal());
+	    }	    
+	    
+	    return compareTo;   
+	}	
+    };       
+        
     public final static Comparator<Space> COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS = new Comparator<Space>() {
 	public int compare(Space o1, Space o2) {
 
@@ -69,7 +76,12 @@ public abstract class Space extends Space_Base {
 		return floorCheck.intValue();
 	    }
 	    
-	    return o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());
+	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
+	    if(compareTo == 0) {
+		return o1.getIdInternal().compareTo(o2.getIdInternal());
+	    }	    
+	    
+	    return compareTo;  	    
 	}
 	
 	private Integer checkObjects(Space space1, Space space2) {
@@ -1010,14 +1022,14 @@ public abstract class Space extends Space_Base {
 
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);
 
-	if(campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch))) {
+	if(campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim()))) {
 
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 		
 		if(resource.isSpace() && !resource.equals(campus) && !resource.equals(building)) {	
 		    Space space = (Space) resource;
 
-		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch)){
+		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim())){
 			String[] labelWords = getIdentificationWords(labelToSearch);		    
 			boolean toAdd = space.verifyNameEquality(labelWords);		    
 			if(!toAdd) {
