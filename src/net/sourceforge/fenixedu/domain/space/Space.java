@@ -46,7 +46,11 @@ public abstract class Space extends Space_Base {
 	public int compare(Space o1, Space o2) {	    
 	    
 	    if(o1.isFloor() && o2.isFloor()) {
-		return ((Floor)o1).getSpaceInformation().getLevel().compareTo(((Floor)o2).getSpaceInformation().getLevel());
+		int compareTo = ((Floor)o1).getSpaceInformation().getLevel().compareTo(((Floor)o2).getSpaceInformation().getLevel());
+		if(compareTo == 0) {
+		    return o1.getIdInternal().compareTo(o2.getIdInternal());
+		}
+		return compareTo;
 	    }	    
 	    
 	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
@@ -92,9 +96,12 @@ public abstract class Space extends Space_Base {
 		return Integer.valueOf(-1);
 	    }
 	    if(!space1.equals(space2)) {
-		return Integer.valueOf(space1.getSpaceInformation().getPresentationName()
-			.compareTo(space2.getSpaceInformation().getPresentationName()));
-	    }    
+		int compareTo = Integer.valueOf(space1.getSpaceInformation().getPresentationName().compareTo(space2.getSpaceInformation().getPresentationName()));
+		if(compareTo == 0) {
+		    return space1.getIdInternal().compareTo(space2.getIdInternal());
+		}
+		return compareTo;
+	    }     
 	    return null;
 	}
     };
