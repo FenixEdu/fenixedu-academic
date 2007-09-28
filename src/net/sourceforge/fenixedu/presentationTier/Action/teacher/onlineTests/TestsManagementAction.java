@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
@@ -688,7 +689,12 @@ public class TestsManagementAction extends FenixDispatchAction {
         }
 
         request.setAttribute("successfulDistribution", new Boolean(true));
-        return showDistributedTests(mapping, form, request, response);
+        final ActionForward actionForward = new ActionForward();
+        actionForward.setRedirect(true);
+        final String path = request.getContextPath() + "/teacher/testDistribution.do?method=showDistributedTests&amp;objectCode=" + objectCode;
+        final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode + "&_request_checksum_=" + RequestChecksumFilter.calculateChecksum(path);
+        actionForward.setPath(requestPath);
+        return actionForward;
     }
 
     public ActionForward showDistributedTests(ActionMapping mapping, ActionForm form,
