@@ -3062,6 +3062,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String secondCarPlateNumber;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
 	}
+	
+	class net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+		DateTime beginDate;
+		DateTime endDate;
+	}
 
 	class net.sourceforge.fenixedu.domain.parking.Vehicle extends net.sourceforge.fenixedu.domain.DomainObject {
 		DocumentDeliveryType authorizationDeclarationDeliveryType;
@@ -9907,6 +9912,13 @@ relation RootDomainObjectParkingParty {
 relation RootDomainObjectParkingRequest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectParkingRequestPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod playsRole parkingRequestPeriods {
 		multiplicity *;
 	}
 }

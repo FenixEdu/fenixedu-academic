@@ -393,3 +393,11 @@
 		<property name="fileNameSlot" value="fileName"/>
 	</slot>
 </schema>
+
+<schema name="show.parkingRequestPeriod" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod" 
+	constructor="beginDate, endDate">
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
+	<setter signature="editParkingRequestPeriod(beginDate,endDate)"/>
+</schema>
+

@@ -28,4 +28,7 @@
 	<definition name="export-file" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/exportFile.jsp" />
 	</definition>	
+	<definition name="manage-requests-periods" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/manageRequestsPeriods.jsp" />
+	</definition>
 </tiles-definitions>

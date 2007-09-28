@@ -10497,6 +10497,15 @@
         	<chain name="ParkingManagerAuthorizationFilter"></chain>
         </filterChains>   
     </service>   
+    <service>
+    	<name>DeleteParkingRequestPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.DeleteParkingRequestPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+         <filterChains>
+        	<chain name="ParkingManagerAuthorizationFilter"></chain>
+        </filterChains>   
+    </service>   
 	<service>
     	<name>SelectCandidacies</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>
