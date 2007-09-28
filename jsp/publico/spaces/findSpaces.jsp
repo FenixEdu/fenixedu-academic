@@ -9,6 +9,16 @@
 
 <logic:notEmpty name="bean">
 
+	<logic:messagesPresent message="true">
+		<p class="mtop15">
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true">
+					<bean:write name="message" filter="true"/>
+				</html:messages>
+			</span>
+		<p>
+	</logic:messagesPresent>
+
 	<bean:define id="schemaName" value="" />	
 	<logic:equal name="bean" property="extraOptions" value="false">
 		<bean:define id="schemaName" type="java.lang.String" value="PublicFindSpaces" />

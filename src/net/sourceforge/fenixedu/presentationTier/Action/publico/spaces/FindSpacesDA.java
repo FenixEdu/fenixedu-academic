@@ -3,16 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.spaces;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
@@ -26,6 +22,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 public class FindSpacesDA extends FenixDispatchAction {
     
@@ -56,7 +57,19 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    Campus campus = bean.getCampus();
 	    Building building = bean.getBuilding();
 	    
-	    Set<FindSpacesBean> result = new HashSet<FindSpacesBean>();
+	    if(campus != null && building == null) {
+		addActionMessage(request, "error.findSpaces.empty.building");
+		request.setAttribute("bean", bean);
+		return mapping.findForward("listFoundSpaces");
+	    }
+	    
+	    if(campus == null && (labelToSearch == null || StringUtils.isEmpty(labelToSearch))) {
+		 addActionMessage(request, "error.findSpaces.empty.labelToSearch");
+		 request.setAttribute("bean", bean);
+		 return mapping.findForward("listFoundSpaces");
+	    }
+	    
+	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building);
 	    for (Space space : resultSpaces) {
 		result.add(new FindSpacesBean(space));
@@ -84,6 +97,8 @@ public class FindSpacesDA extends FenixDispatchAction {
 		
 	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
 	bean.setExtraOptions(false);
+	bean.setCampus(null);
+	bean.setBuilding(null);
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
@@ -95,7 +110,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	Space space = getSpaceFromParameter(request);	
 	if(space != null) {
 	    setBlueprintTextRectangles(request, space);	
-	    List<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
+	    Set<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
 	    request.setAttribute("containedSpaces", containedSpaces);
 	    request.setAttribute("selectedSpace", new FindSpacesBean(space));	    
 	}

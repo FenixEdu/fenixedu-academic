@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -375,10 +376,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	MoveSpaceBean spaceBean = (MoveSpaceBean) getRenderedObject("subSpacesStateBeanID");
 	spaceBean = (spaceBean == null) ? new MoveSpaceBean(spaceInformation.getSpace()) : spaceBean;
 	
-	Space space = spaceInformation.getSpace();
-	
-	SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);	
-	spaces.addAll(space.getContainedSpacesByState(spaceBean.getSpaceState()));
+	Space space = spaceInformation.getSpace();	
+	Set<Space> spaces = space.getContainedSpacesByState(spaceBean.getSpaceState());
 	setBlueprintTextRectangles(request, space);
 	
 	request.setAttribute("subSpacesStateBean", spaceBean);

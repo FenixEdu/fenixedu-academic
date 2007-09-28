@@ -51,6 +51,42 @@ public abstract class Space extends Space_Base {
 	((ComparatorChain) COMPARATOR_BY_PRESENTATION_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);	
     }
 
+    public final static Comparator<Space> COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS = new Comparator<Space>() {
+	public int compare(Space o1, Space o2) {
+
+	    Integer buildingCheck = checkObjects(o1.getSpaceBuilding(), o2.getSpaceBuilding());
+	    if(buildingCheck != null) {
+		return buildingCheck.intValue();
+	    }	    
+	    
+	    Integer campusCheck = checkObjects(o1.getSpaceCampus(), o2.getSpaceCampus());
+	    if(campusCheck != null) {
+		return campusCheck.intValue();
+	    }
+	    
+	    Integer floorCheck = checkObjects(o1.getSpaceFloorWithIntermediary(), o2.getSpaceFloorWithIntermediary());
+	    if(floorCheck != null) {
+		return floorCheck.intValue();
+	    }
+	    
+	    return o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());
+	}
+	
+	private Integer checkObjects(Space space1, Space space2) {
+	    if(space1 != null && space2 == null) {
+		return Integer.valueOf(1);
+	    }
+	    if(space1 == null && space2 != null) {
+		return Integer.valueOf(-1);
+	    }
+	    if(!space1.equals(space2)) {
+		return Integer.valueOf(space1.getSpaceInformation().getPresentationName()
+			.compareTo(space2.getSpaceInformation().getPresentationName()));
+	    }    
+	    return null;
+	}
+    };
+
     protected Space() {
 	super();	
 	setCreatedOn(new YearMonthDay());
@@ -175,8 +211,8 @@ public abstract class Space extends Space_Base {
 	return result;
     }
 
-    public List<Space> getContainedSpacesByState(SpaceState spaceState){
-	List<Space> result = new ArrayList<Space>();
+    public Set<Space> getContainedSpacesByState(SpaceState spaceState){
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
 	for (Space space : getContainedSpaces()) {
 	    if((spaceState.equals(SpaceState.ACTIVE) && space.isActive()) 
 		    || spaceState.equals(SpaceState.INACTIVE) && !space.isActive()) {
@@ -972,12 +1008,13 @@ public abstract class Space extends Space_Base {
 
     public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building) {
 
-	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);
 
-	if(building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch))) {
+	if(campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch))) {
 
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
-		if(resource.isSpace()) {	
+		
+		if(resource.isSpace() && !resource.equals(campus) && !resource.equals(building)) {	
 		    Space space = (Space) resource;
 
 		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch)){
@@ -1008,7 +1045,7 @@ public abstract class Space extends Space_Base {
 			    continue;
 			}
 		    }
-		    
+
 		    result.add(space);
 		}
 	    }	
