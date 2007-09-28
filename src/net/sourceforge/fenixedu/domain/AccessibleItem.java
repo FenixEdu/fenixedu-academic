@@ -180,9 +180,7 @@ public class AccessibleItem extends AccessibleItem_Base {
      * this is the place to do it.
      */
     protected void disconnect() {
-        if (hasAvailabilityPolicy()) {
-            getAvailabilityPolicy().delete();
-        }
+        setAvailabilityPolicy(null); // deletes previous one if any
     }
     
     /**
