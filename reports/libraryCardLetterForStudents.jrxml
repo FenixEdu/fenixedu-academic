@@ -27,7 +27,7 @@
 	<field name="userName" class="java.lang.String"/>
 	<field name="pinToShow" class="java.lang.String"/>
 	<field name="unitName" class="java.lang.String"/>
-	<field name="numberToLetter" class="java.lang.String"/>
+	<field name="numberToPDF" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -225,7 +225,7 @@
 					<textElement>
 						<font pdfFontName="Times-Bold" size="13" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{numberToLetter}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{numberToPDF}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
