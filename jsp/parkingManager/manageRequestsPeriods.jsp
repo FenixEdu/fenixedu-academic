@@ -7,19 +7,29 @@
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.manageRequestsPeriods" /></h2>
 
-<p>	
+<p class="mtop15 mbottom05">	
 	<span class="error0">
 		<html:messages id="message" message="true" bundle="PARKING_RESOURCES">
 			<bean:write name="message" />
 		</html:messages>
 	</span>
-	</p>
+</p>
 	
 <logic:present name="parkingRequestPeriodToEdit">
-	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/parking.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod"/>
+	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/parking.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05" />
+			<fr:property name="columnClasses" value=",,tderror1 tdclear" />
+		</fr:layout>
+	</fr:edit>
 </logic:present>
 <logic:notPresent name="parkingRequestPeriodToEdit">
-	<fr:create id="aa" schema="show.parkingRequestPeriod" action="/parking.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod"/>
+	<fr:create id="aa" schema="show.parkingRequestPeriod" action="/parking.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05" />
+			<fr:property name="columnClasses" value=",,tderror1 tdclear" />
+		</fr:layout>
+	</fr:create>
 </logic:notPresent>
 
 
@@ -27,7 +37,7 @@
 <logic:present name="parkingRequestPeriods">
 	<fr:view name="parkingRequestPeriods" schema="show.parkingRequestPeriod">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 printborder" />
+			<fr:property name="classes" value="tstyle1" />
 			<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
 			<fr:property name="headerClasses" value="acenter" />
 			

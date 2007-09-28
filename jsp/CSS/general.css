@@ -621,7 +621,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .lowlight1 { color: #999; }
 .color888 { color: #888; }
 .color777 { color: #777; }
-a.color888 { color: #888 !important; }
+a.color888 { color: #888 !important; border-bottom: 1px solid #ddd !important;}
 .color555 { color: #555; }
 .color007b4d { color: #007b4d; }
 a.color007b4d { color: #007b4d !important; }
