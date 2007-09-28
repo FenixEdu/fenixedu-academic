@@ -49,7 +49,7 @@
 	
 	<logic:notEmpty name="bean" property="labelToSearch">
 		<logic:empty name="foundSpaces">
-			<p><bean:message key="label.not.found.spaces" bundle="DEFAULT"/></p>
+			<p class="mtop2"><i><bean:message key="label.not.found.spaces" bundle="DEFAULT"/></i></p>
 		</logic:empty>
 	</logic:notEmpty>
 			
