@@ -75,7 +75,7 @@
 					
 		<fr:view name="containedSpaces" schema="ViewSelectedSpaceContainedSpaces">			
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 mtop05" />
+				<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
 				<fr:property name="columnClasses" value="acenter,acenter" />					
 				<fr:property name="link(view)" value="/findSpaces.do?method=viewSpace" />
 				<fr:property name="param(view)" value="idInternal/spaceID" />
