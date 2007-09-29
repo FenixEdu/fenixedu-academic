@@ -10480,6 +10480,14 @@
         <filterChains>
         </filterChains>     
     </service>  
+     <service>
+    	<name>RenewUnlimitedParkingRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.RenewUnlimitedParkingRequest</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>  
     <service>
     	<name>AcceptRegulation</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.parking.AcceptRegulation</implementationClass>

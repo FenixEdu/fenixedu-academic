@@ -2,20 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
@@ -26,9 +17,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -103,18 +91,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 		prepareRadioButtonsDocuments((DynaActionForm) actionForm, parkingRequestFactoryEditor);
 	    }
 	}
-	List<RoleType> roles = parkingParty.getSubmitAsRoles();
-	ParkingRequest parkingRequest = parkingParty.getFirstRequest();
-	if (roles.contains(RoleType.GRANT_OWNER)
-		|| (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) parkingParty
-			.getParty()).getStudent()))) {
-	    if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
-		DateTime now = new DateTime();
-		if (ParkingRequestPeriod.isDateInAnyRequestPeriod(now)) {
-		    request.setAttribute("allowToChoose", "true");
-		} else {
-		    request.setAttribute("periodExpired", "true");
-		}
+
+	if (parkingParty.canRequestUnlimitedCard()) {
+	    DateTime now = new DateTime();
+	    if (ParkingRequestPeriod.isDateInAnyRequestPeriod(now)) {
+		request.setAttribute("allowToChoose", "true");
+	    } else {
+		request.setAttribute("periodExpired", "true");
 	    }
 	}
 
@@ -124,74 +107,6 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("editParkingRequest");
-    }
-
-    public boolean canRequestUnlimitedCard(Student student) {
-	Registration registration = getRegistrationByDegreeType(student, DegreeType.DEGREE);
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registration != null && registration.getCurricularYear() == 5) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 5);
-	}
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_PHD_PROGRAM);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_MASTER_DEGREE);
-	if (registration != null && registration.getCurricularYear() == 2) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
-	}
-	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	if (registration != null && registration.getCurricularYear() == 2) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
-	}
-	return false;
-
-	//	DEGREE=Licenciatura (5 anos) - 5º ano
-	//	MASTER_DEGREE=Mestrado = 2ciclo - não tem 
-	//	BOLONHA_DEGREE=Licenciatura Bolonha - não podem
-	//	BOLONHA_MASTER_DEGREE=Mestrado Bolonha  - só no 5+ ano 1º vez
-	//	BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
-
-	//	BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
-	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad = não estão
-	//	BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização  - não estão no fénix
-
-    }
-
-    private boolean isFirstTimeEnrolledInYear(Registration registration, ExecutionYear executionYear,
-	    int curricularYear) {
-	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
-	for (final StudentCurricularPlan studentCurricularPlan : registration
-		.getStudentCurricularPlansSet()) {
-	    enrolments.addAll(studentCurricularPlan.getEnrolments());
-	}
-	for (Enrolment enrolment : enrolments) {
-	    for (Context context : enrolment.getCurricularCourse().getParentContexts()) {
-		if (executionYear != enrolment.getExecutionYear()
-			&& context.getCurricularYear() == curricularYear
-			&& registration.getCurricularYear(enrolment.getExecutionYear()) == curricularYear) {
-		    return false;
-		}
-	    }
-	}
-	return true;
-    }
-
-    private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {
-	for (Registration registration : student.getRegistrationsByDegreeType(degreeType)) {
-	    if (registration.isActive()) {
-		StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-		if (scp != null) {
-		    return registration;
-		}
-	    }
-	}
-	return null;
     }
 
     private void prepareRadioButtonsDocuments(DynaActionForm actionForm,
@@ -765,5 +680,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
     private boolean isStudent(IUserView userView) {
 	return (userView.getPerson().getTeacher() != null || userView.getPerson().getEmployee() != null) ? false
 		: true;
+    }
+
+    public ActionForward renewUnlimitedParkingRequest(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+	ServiceUtils.executeService(SessionUtils.getUserView(request), "RenewUnlimitedParkingRequest",
+		new Object[] { userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE });
+	return prepareParking(mapping, actionForm, request, response);
     }
 }

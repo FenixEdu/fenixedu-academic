@@ -4,18 +4,22 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
@@ -31,6 +35,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
@@ -74,7 +79,32 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public ParkingRequest getFirstRequest() {
-	return (getParkingRequests().isEmpty() ? null : getParkingRequests().iterator().next());
+	ParkingRequest first = null;
+	if (!getParkingRequests().isEmpty()) {
+	    if (getParkingRequests().size() == 1) {
+		return getParkingRequests().get(0);
+	    }
+
+	    for (ParkingRequest parkingRequest : getParkingRequests()) {
+		if (first == null || parkingRequest.getCreationDate().isBefore(first.getCreationDate())) {
+		    first = parkingRequest;
+		}
+	    }
+	}
+	return first;
+    }
+
+    public ParkingRequest getLastRequest() {
+	if (getParkingRequests().isEmpty() || getParkingRequests().size() < 2) {
+	    return null;
+	}
+	ParkingRequest last = null;
+	for (ParkingRequest parkingRequest : getParkingRequests()) {
+	    if (last == null || parkingRequest.getCreationDate().isAfter(last.getCreationDate())) {
+		last = parkingRequest;
+	    }
+	}
+	return last;
     }
 
     public ParkingRequestFactoryCreator getParkingRequestFactoryCreator() {
@@ -182,9 +212,11 @@ public class ParkingParty extends ParkingParty_Base {
 		roles.add(RoleType.TEACHER);
 	    }
 	    Employee employee = person.getEmployee();
-	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
+	    if (employee != null
+		    && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
+		    && employee
+			    .getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		roles.add(RoleType.EMPLOYEE);
 	    }
 	    Student student = person.getStudent();
@@ -228,9 +260,11 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 	    }
 	    Employee employee = person.getEmployee();
-	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
+	    if (employee != null
+		    && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
+		    && employee
+			    .getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
 		    occupations.add("<strong>Funcionário</strong><br/> Nº "
@@ -255,6 +289,8 @@ public class ParkingParty extends ParkingParty_Base {
 			    stringBuilder.append(student.getNumber()).append(" ");
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
+			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
+				"º ano)");
 			stringBuilder.append("\t");
 		    }
 		}
@@ -306,8 +342,10 @@ public class ParkingParty extends ParkingParty_Base {
 	    setParty(null);
 	    setParkingGroup(null);
 	    deleteDriverLicenseDocument();
-	    for (; getVehicles().size() != 0; getVehicles().get(0).delete());
-	    for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete());
+	    for (; getVehicles().size() != 0; getVehicles().get(0).delete())
+		;
+	    for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete())
+		;
 	    deleteDomainObject();
 	}
     }
@@ -416,6 +454,92 @@ public class ParkingParty extends ParkingParty_Base {
 	for (Vehicle vehicle : getVehicles()) {
 	    if (vehicle.getPlateNumber().equalsIgnoreCase(plateNumber)) {
 		return vehicle;
+	    }
+	}
+	return null;
+    }
+
+    public boolean getCanRequestUnlimitedCardAndIsInAnyRequestPeriod() {
+	return canRequestUnlimitedCard()
+		&& ParkingRequestPeriod.isDateInAnyRequestPeriod(new DateTime());
+    }
+
+    public boolean canRequestUnlimitedCard() {
+	List<RoleType> roles = getSubmitAsRoles();
+	ParkingRequest parkingRequest = getFirstRequest();
+	if (getLastRequest() == null
+		&& (roles.contains(RoleType.GRANT_OWNER) || (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty())
+			.getStudent())))) {
+	    if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean canRequestUnlimitedCard(Student student) {
+	Registration registration = getRegistrationByDegreeType(student, DegreeType.DEGREE);
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	if (registration != null && registration.getCurricularYear() == 5) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 5);
+	}
+	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+	//	if (registration != null)
+	//	    return registration.getCurricularYear();
+	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	//	if (registration != null)
+	//	    return registration.getCurricularYear();
+	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_PHD_PROGRAM);
+	//	if (registration != null)
+	//	    return registration.getCurricularYear();
+	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_MASTER_DEGREE);
+	if (registration != null && registration.getCurricularYear() == 2) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
+	}
+	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	if (registration != null && registration.getCurricularYear() == 2) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
+	}
+	return false;
+
+	//	DEGREE=Licenciatura (5 anos) - 5º ano
+	//	MASTER_DEGREE=Mestrado = 2ciclo - não tem 
+	//	BOLONHA_DEGREE=Licenciatura Bolonha - não podem
+	//	BOLONHA_MASTER_DEGREE=Mestrado Bolonha  - só no 5+ ano 1º vez
+	//	BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
+
+	//	BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
+	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad = não estão
+	//	BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização  - não estão no fénix
+
+    }
+
+    private boolean isFirstTimeEnrolledInYear(Registration registration, ExecutionYear executionYear,
+	    int curricularYear) {
+	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
+	for (final StudentCurricularPlan studentCurricularPlan : registration
+		.getStudentCurricularPlansSet()) {
+	    enrolments.addAll(studentCurricularPlan.getEnrolments());
+	}
+	for (Enrolment enrolment : enrolments) {
+	    for (Context context : enrolment.getCurricularCourse().getParentContexts()) {
+		if (executionYear != enrolment.getExecutionYear()
+			&& context.getCurricularYear() == curricularYear
+			&& registration.getCurricularYear(enrolment.getExecutionYear()) == curricularYear) {
+		    return false;
+		}
+	    }
+	}
+	return true;
+    }
+
+    private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {
+	for (Registration registration : student.getRegistrationsByDegreeType(degreeType)) {
+	    if (registration.isActive()) {
+		StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+		if (scp != null) {
+		    return registration;
+		}
 	    }
 	}
 	return null;

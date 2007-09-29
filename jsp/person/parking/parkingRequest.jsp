@@ -80,7 +80,25 @@
 				</html:link></li>
 			</logic:equal>
 		</ul>
-
+		
+		<logic:equal name="canEdit" value="false">
+			<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
+				<logic:empty name="parkingParty" property="lastRequest" >
+						<div class="infoop2">
+							<bean:message key="message.canRenewToUnlimitedCard" bundle="PARKING_RESOURCES"/>
+						</div>
+						<li class="mtop05"><html:link page="/parking.do?method=renewUnlimitedParkingRequest">
+							<bean:message key="label.renewToUnlimitedCard"
+								bundle="PARKING_RESOURCES" />
+						</html:link></li>
+				</logic:empty>
+			</logic:equal>
+			<logic:notEmpty name="parkingParty" property="lastRequest" >
+				<div class="infoop2">
+					<bean:message key="message.renewToUnlimitedCardRequested" bundle="PARKING_RESOURCES"/>
+				</div>
+			</logic:notEmpty>
+		</logic:equal>
 
 		<logic:notEmpty name="parkingParty" property="firstRequest.requestedAs">
 			<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/>
