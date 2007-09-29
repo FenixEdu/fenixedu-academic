@@ -147,6 +147,16 @@ public class RequestChecksumFilter implements Filter {
 			    final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
 			    final boolean isJavascriptLink = !(indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd);
 
+			    final int indexOfPublic = source.indexOf("publico/", indexOfHrefBodyStart);
+			    final boolean isPublicLink = !(indexOfPublic < 0 || indexOfPublic > indexOfHrefBodyEnd);
+
+			    final int indexOfHrefSep = source.indexOf("://", indexOfHrefBodyStart);
+			    final int indexOfHrefSepAndFenix = source.indexOf("://fenix", indexOfHrefBodyStart);
+			    final boolean isExternalList = !(indexOfHrefSep < 0 || indexOfHrefSep > indexOfHrefBodyEnd) && indexOfHrefSep != indexOfHrefSepAndFenix;
+
+	                     final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+	                     final boolean isMailtoLink = !(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd);
+
 			    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 			    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
 			    if (hasCardinal) {
@@ -157,7 +167,7 @@ public class RequestChecksumFilter implements Filter {
 
 			    final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
 			    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
-			    if (!isJavascriptLink) {
+			    if (!isJavascriptLink && !isPublicLink && !isExternalList && !isMailtoLink) {
 			        if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
 			            response.append('?');
 			        } else {
