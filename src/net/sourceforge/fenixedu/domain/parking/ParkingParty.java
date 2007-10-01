@@ -489,8 +489,9 @@ public class ParkingParty extends ParkingParty_Base {
     public boolean canRequestUnlimitedCard(Student student) {
 	Registration registration = getRegistrationByDegreeType(student, DegreeType.DEGREE);
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registration != null && registration.getCurricularYear() == 5) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 5);
+	if (registration != null && registration.isInFinalDegreeYear()) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
+		    .getYears());
 	}
 	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 	//	if (registration != null)
@@ -502,12 +503,14 @@ public class ParkingParty extends ParkingParty_Base {
 	//	if (registration != null)
 	//	    return registration.getCurricularYear();
 	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_MASTER_DEGREE);
-	if (registration != null && registration.getCurricularYear() == 2) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
+	if (registration != null && registration.isInFinalDegreeYear()) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
+		    .getYears());
 	}
 	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	if (registration != null && registration.getCurricularYear() == 2) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, 2);
+	if (registration != null && registration.isInFinalDegreeYear()) {
+	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
+		    .getYears());
 	}
 	return false;
 
