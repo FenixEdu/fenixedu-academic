@@ -25,7 +25,7 @@
 	<bean:size id="parkingRequestsNumber" name="parkingRequests"/>
 
 	<p class="mtop15">
-		<span class="warning0"><bean:message key="message.requestsNumber" bundle="PARKING_RESOURCES" arg0="<%= parkingRequestsNumber.toString() %>"/></span>
+		<em><bean:message key="message.requestsNumber" bundle="PARKING_RESOURCES" arg0="<%= parkingRequestsNumber.toString() %>"/></em>
 	</p>
 
 	<bean:define id="query" value=""/>
@@ -75,6 +75,8 @@
 	</logic:notEmpty>
 	
 	<logic:empty name="parkingRequests">
-		<bean:message key="message.no.parkingRequests" />
+		<p>
+			<em><bean:message key="message.no.parkingRequests" /></em>
+		</p>
 	</logic:empty>
 </logic:present>

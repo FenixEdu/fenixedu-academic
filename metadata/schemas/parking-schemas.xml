@@ -16,6 +16,9 @@
 
 <schema name="view.parkingParty.personalInfo"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 	<slot name="cardNumber" key="label.cardNumber" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
@@ -26,9 +29,6 @@
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES" layout="null-as-label">	
-		<property name="label" value="-"/>
-	</slot>
-	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">

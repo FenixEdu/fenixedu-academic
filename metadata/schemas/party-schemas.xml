@@ -29,8 +29,8 @@
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="documentIdNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="idDocumentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="documentIdNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="documentIdEmissionLocation"/>
 	<slot name="documentIdEmissionDate">
 		<property name="size" value="12"/>
@@ -51,8 +51,8 @@
 <schema name="net.sourceforge.fenixedu.domain.Person" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES" > 
 	<slot name="name"/>
 	<slot name="gender"/>
-	<slot name="documentIdNumber" key="label.identificationNumber"/>
 	<slot name="idDocumentType" key="label.idDocumentType"/>
+	<slot name="documentIdNumber" key="label.identificationNumber"/>
 	<slot name="emissionLocationOfDocumentId"/>
 	<slot name="emissionDateOfDocumentIdYearMonthDay">
 		<property name="size" value="12"/>
@@ -74,8 +74,8 @@
 	<slot name="name">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="documentIdNumber" key="label.identificationNumber"/>
 	<slot name="idDocumentType" key="label.idDocumentType"/>
+	<slot name="documentIdNumber" key="label.identificationNumber"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
 	<slot name="unit" key="unitName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -180,8 +180,8 @@
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="name" key="label.person.name"/>
 	<slot name="gender" key="label.person.sex"/>
-	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
 	<slot name="idDocumentType" key="label.person.identificationDocumentType"/>
+	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
 	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/>
 	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate"/>
 	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate"/>

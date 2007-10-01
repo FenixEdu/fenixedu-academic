@@ -7,14 +7,22 @@
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.users"/></h2>
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.search"/></strong></p>
-<fr:edit id="searchPartyBean" action="/parking.do?method=showParkingPartyRequests" name="searchPartyBean" schema="search.party">
-	<fr:destination name="cancel" path="/index.do"/>	
-	<fr:layout>
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
-		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-	</fr:layout>
-</fr:edit>
+<p class="mtop15 mbottom05"><strong><bean:message key="label.searchUser"/></strong></p>
+
+<fr:form action="/parking.do?method=showParkingPartyRequests">
+	<fr:edit id="searchPartyBean" name="searchPartyBean" schema="search.party">
+		<fr:destination name="cancel" path="/index.do"/>	
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thmiddle"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+	</fr:edit>
+	<p class="mtop05">
+		<html:submit>
+			<bean:message key="button.submit" />
+		</html:submit>
+	</p>
+</fr:form>
 
 
 
@@ -64,8 +72,8 @@
 			
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thright thlight mtop025 mbottom05" />
-					<fr:property name="rowClasses" value=",,,,trhighlight2,,," />
+					<fr:property name="classes" value="tstyle2 thright thlight mtop025 mbottom05" />
+					<fr:property name="rowClasses" value="trhighlight2,,,,,,," />
 				</fr:layout>
 			</fr:view>
 			
@@ -93,8 +101,8 @@
 				</table>
 			
 				<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
-				<table class="tstyle1 thright thlight mvert025 mbottom1">
 				<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
+				<table class="tstyle1 thright thlight mvert025 mbottom1">
 					<tr>
 						<th><bean:message key="label.vehicleMake" bundle="PARKING_RESOURCES"/>:</th>
 						<td><bean:write name="vehicle" property="vehicleMake"/></td>
@@ -165,8 +173,9 @@
 						</logic:notEqual>		
 						</td>
 					</tr>
-				</logic:iterate>
 				</table>
+				</logic:iterate>
+				
 				
 			</logic:notEmpty>
 			
@@ -200,7 +209,9 @@
 			</logic:notEmpty>
 
 			<logic:empty name="parkingRequests">
-				<em><bean:message key="label.userWithoutRequests" bundle="PARKING_RESOURCES"/></em>
+				<p>
+					<em><bean:message key="label.userWithoutRequests" bundle="PARKING_RESOURCES"/>.</em>
+				</p>
 			</logic:empty>
 			
 		</logic:notEmpty>
@@ -262,7 +273,9 @@
 		
 	</logic:notEmpty>
 	<logic:empty name="partyList">
-		<bean:message key="label.noRecordFound"/>
+		<p class="mtop2">
+			<em><bean:message key="label.noRecordFound"/></em>
+		</p>
 	</logic:empty>
 </logic:present>
 
