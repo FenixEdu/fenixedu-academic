@@ -60,27 +60,13 @@ public class EmployeeBalanceResume implements Serializable {
 		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
 			    DateTimeFieldType.monthOfYear()) < thisMonth.get(DateTimeFieldType
 			    .monthOfYear())) {
-		if (!assiduousnessClosedMonth.getBalance().isShorterThan(Duration.ZERO)) {
-		    anualBalance = anualBalance.plus(assiduousnessClosedMonth.getBalance());
-		} else {
-		    if (Duration.ZERO.minus(assiduousnessClosedMonth.getBalanceToDiscount())
-			    .isLongerThan(assiduousnessClosedMonth.getBalance())) {
-			anualBalance = anualBalance
-				.plus(assiduousnessClosedMonth.getBalanceToDiscount());
-		    } else {
-			anualBalance = anualBalance.plus(new Duration(Math.abs(assiduousnessClosedMonth
-				.getBalance().getMillis())));
-		    }
-		}
+		anualBalance = anualBalance.plus(assiduousnessClosedMonth.getBalance());
 	    }
 
-	    if (!anualBalance.isShorterThan(Duration.ZERO)) {
-		setAnualBalanceToCompensate(remainingBalanceToCompansate);
-	    } else {
-		setAnualBalanceToCompensate(anualBalance.plus(remainingBalanceToCompansate));
-	    }
+	    setAnualBalanceToCompensate(remainingBalanceToCompansate);
 	    Duration anualBalanceMinusCompensation = anualBalance.plus(getFinalMonthlyBalance()).minus(
 		    getAnualBalanceToCompensate());
+
 	    setFinalAnualBalance(anualBalanceMinusCompensation);
 
 	    Duration futureBalanceToCompensate = new Duration(Math.abs(anualBalanceMinusCompensation
