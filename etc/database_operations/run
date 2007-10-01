@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changes to Competence Course Information Requests" changeCompetenceCourseInformationChangeRequests.sql

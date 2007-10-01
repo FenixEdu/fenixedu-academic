@@ -29,3 +29,4 @@ function executeWithTempFile() {
 
 execute "Changes to Bolonha Functionalities" changesToBolonhaFunctionalities.20070927.sql
 execute  "create table ParkingRequestPeriod" createTableParkingRequestPeriod.sql
+execute "Changes to Competence Course Information Requests" changeCompetenceCourseInformationChangeRequests.sql
