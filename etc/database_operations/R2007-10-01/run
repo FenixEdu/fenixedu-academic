@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changes to Bolonha Functionalities" changesToBolonhaFunctionalities.20070927.sql
+execute  "create table ParkingRequestPeriod" createTableParkingRequestPeriod.sql
