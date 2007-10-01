@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -90,6 +89,8 @@ public class DFACandidacy extends DFACandidacy_Base {
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
 		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
 	new DFACandidacyEvent(administrativeOffice, person, this);
+
+	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
 
     public DFACandidacy(Person person, ExecutionDegree executionDegree, YearMonthDay startDate) {
@@ -98,11 +99,6 @@ public class DFACandidacy extends DFACandidacy_Base {
 	    this.setStartDate(startDate);
 	}
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	new DFACandidacyEvent(administrativeOffice, person, this);
-
-	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
 
     @Override
@@ -134,12 +130,12 @@ public class DFACandidacy extends DFACandidacy_Base {
 	    }
 	}
     }
-    
+
     @Override
     public Map<String, Set<String>> getStateMapping() {
 	return stateMap;
     }
-    
+
     @Override
     public String getDefaultState() {
 	switch (this.getActiveCandidacySituation().getCandidacySituationType()) {
