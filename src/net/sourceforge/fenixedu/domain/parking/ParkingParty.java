@@ -290,7 +290,16 @@ public class ParkingParty extends ParkingParty_Base {
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
 			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
-				"º ano)");
+				"º ano");
+
+			ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+			if (isFirstTimeEnrolledInYear(registration, executionYear, registration
+				.getCurricularYear())) {
+			    stringBuilder.append(" - 1ª vez)");
+			} else {
+			    stringBuilder.append(")");
+			}
+
 			stringBuilder.append("\t");
 		    }
 		}
