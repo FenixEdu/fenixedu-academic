@@ -1404,7 +1404,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	double result = 0.0;
 
 	for (final Dismissal dismissal : getDismissals()) {
-	    if (!dismissal.isApproved()) {
+	    if (!dismissal.getCredits().isSubstitution()) {
 		result += dismissal.getEctsCredits();
 	    }
 	}
