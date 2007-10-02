@@ -398,7 +398,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private void fillSpreadSheet(Space space, final Spreadsheet spreadsheet) {        	
 	for (Space subSpace : space.getContainedSpacesSet()) {
 	    
-            if(subSpace.isActive() && (subSpace.isRoom() || subSpace.isRoomSubdivision())) {
+            if(subSpace.isActive() && (subSpace.isRoom() && !subSpace.isRoomSubdivision())) {
         	
         	Room room = (Room) subSpace;
         	final Row row = spreadsheet.addRow();
