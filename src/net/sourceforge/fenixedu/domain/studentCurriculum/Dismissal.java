@@ -116,7 +116,7 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public boolean isApproved() {
-	return getCredits().isSubstitution();
+	return true;
     }
 
     public Collection<IEnrolment> getSourceIEnrolments() {
