@@ -292,8 +292,7 @@ public class ParkingParty extends ParkingParty_Base {
 			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
 				"º ano");
 
-			ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-			if (isFirstTimeEnrolledInYear(registration, executionYear, registration
+			if (isFirstTimeEnrolledInCurrentYear(registration, registration
 				.getCurricularYear())) {
 			    stringBuilder.append(" - 1ª vez)");
 			} else {
@@ -487,47 +486,34 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean canRequestUnlimitedCard(Student student) {
-	Registration registration = getRegistrationByDegreeType(student, DegreeType.DEGREE);
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registration != null && registration.isInFinalDegreeYear()) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
-		    .getYears());
-	}
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	//	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_PHD_PROGRAM);
-	//	if (registration != null)
-	//	    return registration.getCurricularYear();
-	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_MASTER_DEGREE);
-	if (registration != null && registration.isInFinalDegreeYear()) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
-		    .getYears());
-	}
-	registration = getRegistrationByDegreeType(student, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	if (registration != null && registration.isInFinalDegreeYear()) {
-	    return isFirstTimeEnrolledInYear(registration, executionYear, registration.getDegreeType()
-		    .getYears());
+	List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
+	degreeTypes.add(DegreeType.DEGREE);
+	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+
+	for (DegreeType degreeType : degreeTypes) {
+	    Registration registration = getRegistrationByDegreeType(student, degreeType);
+	    if (registration != null && registration.isInFinalDegreeYear()) {
+		return isFirstTimeEnrolledInCurrentYear(registration, registration.getDegreeType()
+			.getYears());
+	    }
 	}
 	return false;
-
 	//	DEGREE=Licenciatura (5 anos) - 5º ano
 	//	MASTER_DEGREE=Mestrado = 2ciclo - não tem 
 	//	BOLONHA_DEGREE=Licenciatura Bolonha - não podem
 	//	BOLONHA_MASTER_DEGREE=Mestrado Bolonha  - só no 5+ ano 1º vez
 	//	BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
+	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad
 
 	//	BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
-	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad = não estão
 	//	BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização  - não estão no fénix
 
     }
 
-    private boolean isFirstTimeEnrolledInYear(Registration registration, ExecutionYear executionYear,
-	    int curricularYear) {
+    private boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
 	for (final StudentCurricularPlan studentCurricularPlan : registration
 		.getStudentCurricularPlansSet()) {
