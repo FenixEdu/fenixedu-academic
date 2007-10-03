@@ -1007,7 +1007,9 @@ public class TestsManagementAction extends FenixDispatchAction {
             throw new FenixActionException();
         }
 
-        List<StudentTestLog> studentTestLogList = distributedTest.getStudentTestLogs(student);
+        List<StudentTestLog> studentTestLogList = new ArrayList<StudentTestLog>(distributedTest.getStudentTestLogs(student));
+        Collections.sort(studentTestLogList, new BeanComparator("dateDateTime"));
+        
         request.setAttribute("questionNumber", distributedTest.getNumberOfQuestions());
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("studentTestLogList", studentTestLogList);
