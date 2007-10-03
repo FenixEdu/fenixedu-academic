@@ -47,4 +47,8 @@ public enum RegistrationStateType {
 		.getString(getQualifiedName());
     }
 
+    public boolean canReingress() {
+	return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON;
+    }
+
 }

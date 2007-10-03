@@ -15,9 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformati
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -192,6 +195,10 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    person = choosePersonBean.getPerson();
 	}
 
+	if (!checkIngression(mapping, request, executionDegreeBean, ingressionInformationBean, person, choosePersonBean)) {
+	    return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
+	}
+
 	if (person != null) {
 	    personBean = new PersonBean(person);
 
@@ -207,6 +214,38 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("personBean", personBean);
 	return mapping.findForward("fillNewPersonData");
+    }
+
+    private boolean checkIngression(ActionMapping mapping, HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
+	    IngressionInformationBean ingressionInformationBean, Person person, ChoosePersonBean choosePersonBean) {
+	if (ingressionInformationBean.getIngression() == Ingression.RI) {
+	    Degree sourceDegree = executionDegreeBean.getDegreeCurricularPlan().getEquivalencePlan()
+		    .getSourceDegreeCurricularPlan().getDegree();
+
+	    if (person == null || !person.hasStudent()) {
+		RenderUtils.invalidateViewState();
+		request.setAttribute("choosePersonBean", choosePersonBean);
+		addActionMessage(request, "error.registration.preBolonhaSourceDegreeNotFound");
+		return false;
+
+	    } else {
+		final Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
+		if (sourceRegistration == null) {
+		    RenderUtils.invalidateViewState();
+		    request.setAttribute("choosePersonBean", choosePersonBean);
+		    addActionMessage(request, "error.registration.preBolonhaSourceDegreeNotFound");
+		    return false;
+		}
+		if (!sourceRegistration.getActiveStateType().canReingress()) {
+		    RenderUtils.invalidateViewState();
+		    request.setAttribute("choosePersonBean", choosePersonBean);
+		    addActionMessage(request, "error.registration.preBolonhaSourceRegistrationCannotReingress");
+		    return false;
+		}
+	    }
+
+	}
+	return true;
     }
 
     public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping, ActionForm actionForm,

@@ -8,9 +8,11 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.Executio
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -36,11 +38,11 @@ public class CreateStudent extends Service {
 	new RegisteredCandidacySituation(studentCandidacy);
 
 	// set ingression information
+	final Ingression ingression = ingressionInformationBean.getIngression();
 	studentCandidacy
-		.setIngression(ingressionInformationBean.getIngression() != null ? ingressionInformationBean
-			.getIngression().getName()
+		.setIngression(ingression != null ? ingression.getName()
 			: null);
-	studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());
+	studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());	
 
 	// edit precedent degree information
 	studentCandidacy.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
@@ -52,6 +54,14 @@ public class CreateStudent extends Service {
 	registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
 	registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());
 
+	
+	if (ingression == Ingression.RI) {
+	    Degree sourceDegree = executionDegreeBean.getDegreeCurricularPlan().getEquivalencePlan()
+		    .getSourceDegreeCurricularPlan().getDegree();
+	    Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
+	    registration.setSourceRegistration(sourceRegistration);
+	}
+	
 	// create qualification
 	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());
 

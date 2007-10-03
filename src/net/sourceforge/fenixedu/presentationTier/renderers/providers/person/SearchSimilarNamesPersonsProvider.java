@@ -3,7 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.person;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,7 +24,7 @@ public class SearchSimilarNamesPersonsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
-	Collection<Person> result = Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber());
+	Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
 	result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
 		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
 	return result;

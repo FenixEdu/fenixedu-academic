@@ -8262,6 +8262,11 @@ relation RegistrationDataByExecutionYearRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 }
 
+relation RegistrationSourceDestiny {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole destinyRegistration;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole sourceRegistration;
+}
+
 relation RegistrationDegree {
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {

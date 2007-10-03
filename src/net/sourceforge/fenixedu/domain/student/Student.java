@@ -95,6 +95,15 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    public Registration readRegistrationByDegree(Degree degree) {
+	for (final Registration registration : this.getRegistrations()) {
+	    if (registration.getDegree() == degree) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+
     public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(DegreeType degreeType,
 	    ExecutionPeriod executionPeriod) {
 	List<Registration> result = new ArrayList<Registration>();
