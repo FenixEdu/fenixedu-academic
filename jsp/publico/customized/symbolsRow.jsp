@@ -42,12 +42,12 @@
 					<fr:view name="site" property="unit.acronym"/>
 				</h1>
 				<p>
-					<fr:view name="site" property="unit.name"/>
+					<fr:view name="site" property="unit.nameI18n"/>
 				</p>
 			</logic:notEmpty>
 			<logic:empty name="site" property="unit.acronym">
 				<h1>
-					<fr:view name="site" property="unit.name"/>
+					<fr:view name="site" property="unit.nameI18n"/>
 				</h1>
 			</logic:empty>
 		</div>

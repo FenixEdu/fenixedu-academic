@@ -42,7 +42,7 @@
 
         <fr:property name="schemaFor(Unit)" value="site.functions.tree.unit"/>
         <fr:property name="schemaFor(Function)" value="site.functions.tree.function"/>
-
+		
         <fr:property name="addFunctionLink">
         	<html:link page="<%= String.format("%s?method=addFunction&amp;%s&amp;unitID=${idInternal}", actionName, context) %>">
         		<bean:message key="link.site.manage.existingFunctions.addFunction" bundle="SITE_RESOURCES"/>

@@ -71,17 +71,17 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
         
         BeanComparator employeeComparator = new BeanComparator("person", Party.COMPARATOR_BY_NAME_AND_ID);
         
-        SortedSet<Unit> areas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
-		SortedSet<Employee> employeesNoArea = new TreeSet<Employee>(employeeComparator);
+        SortedSet<Unit> workingUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+		SortedSet<Employee> noUnitAvailable = new TreeSet<Employee>(employeeComparator);
         Map<String, SortedSet<Employee>> employeesMap = new Hashtable<String, SortedSet<Employee>>();
         
         for (Employee employee : unit.getAllCurrentNonTeacherEmployees()) {
-        	Unit area = employee.getCurrentSectionOrScientificArea();
+        	Unit workingUnit = employee.getCurrentWorkingPlace();
         	
-        	if (area != null) {
-        		areas.add(area);
+        	if (workingUnit != null) {
+        		workingUnits.add(workingUnit);
         		
-        		String areaKey = area.getIdInternal().toString();
+        		String areaKey = workingUnit.getIdInternal().toString();
 				SortedSet<Employee> employees = employeesMap.get(areaKey);
         		if (employees == null) {
         			employees = new TreeSet<Employee>(employeeComparator);
@@ -91,17 +91,17 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
         		employees.add(employee);
         	}
         	else {
-        		employeesNoArea.add(employee);
+        		noUnitAvailable.add(employee);
         	}
         }
         
-        if (areas.isEmpty()) {
+        if (workingUnits.isEmpty()) {
         	request.setAttribute("ignoreAreas", true);
         }
         
-        request.setAttribute("areas", areas);
+        request.setAttribute("areas", workingUnits);
         request.setAttribute("employees", employeesMap);
-        request.setAttribute("employeesNoArea", employeesNoArea);
+        request.setAttribute("employeesNoArea", noUnitAvailable);
         
         return mapping.findForward("department-employees");
     }
