@@ -82,6 +82,8 @@
 		</ul>
 		
 		<logic:equal name="canEdit" value="false">
+			<br/>
+			<br/>
 			<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
 				<logic:empty name="parkingParty" property="lastRequest" >
 						<div class="infoop2">
@@ -92,12 +94,14 @@
 								bundle="PARKING_RESOURCES" />
 						</html:link></li>
 				</logic:empty>
+				<logic:notEmpty name="parkingParty" property="lastRequest" >
+					<div class="infoop2">
+						<bean:message key="message.renewToUnlimitedCardRequested" bundle="PARKING_RESOURCES"/>
+					</div>
+				</logic:notEmpty>
 			</logic:equal>
-			<logic:notEmpty name="parkingParty" property="lastRequest" >
-				<div class="infoop2">
-					<bean:message key="message.renewToUnlimitedCardRequested" bundle="PARKING_RESOURCES"/>
-				</div>
-			</logic:notEmpty>
+			<br/>
+			<br/>
 		</logic:equal>
 
 		<logic:notEmpty name="parkingParty" property="firstRequest.requestedAs">

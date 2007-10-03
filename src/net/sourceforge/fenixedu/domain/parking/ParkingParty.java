@@ -475,11 +475,14 @@ public class ParkingParty extends ParkingParty_Base {
     public boolean canRequestUnlimitedCard() {
 	List<RoleType> roles = getSubmitAsRoles();
 	ParkingRequest parkingRequest = getFirstRequest();
-	if (getLastRequest() == null
-		&& (roles.contains(RoleType.GRANT_OWNER) || (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty())
-			.getStudent())))) {
-	    if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
+	if (getLastRequest() == null) {
+	    if (roles.contains(RoleType.GRANT_OWNER)) {
 		return true;
+	    } else if (roles.contains(RoleType.STUDENT)
+		    && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
+		if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
+		    return true;
+		}
 	    }
 	}
 	return false;
