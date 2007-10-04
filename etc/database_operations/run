@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Nuno Ochoa, apaga esta merda, 'não há razão nenhuma pra usarmos SQL directamente' :p" fixNullKeyPersonOnLibraryCard.sql
+execute "Alter Table LibraryCard" alterTableLibraryCard.sql
+

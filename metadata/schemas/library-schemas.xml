@@ -192,7 +192,11 @@
 		<property name="maxLength" value="50"/>
 	</slot>
 	<slot name="partyClassification" key="label.card.category" read-only="true"/>
-    <slot name="validUntil" key="label.card.date" read-only="true"/>
+    <slot name="validUntil" key="label.card.date">
+   		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+		</validator>
+    </slot>
 </schema>
 
 <schema name="library.card.edit.person" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
@@ -217,7 +221,11 @@
     	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
-    <slot name="validUntil" key="label.card.date" read-only="true"/>
+    <slot name="validUntil" key="label.card.date">
+  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
 </schema>
 
 <schema name="library.card.person.adress" type="net.sourceforge.fenixedu.domain.Person">

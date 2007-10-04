@@ -2639,15 +2639,16 @@ public class Person extends Person_Base {
             return getEmployee().getEmployeeNumber();
         }
         if (getStudent() != null) {
-            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
-            Collection<Registration> registrations = getStudent()
-                    .getRegistrationsByDegreeType(degreeType);
-            for (Registration registration : registrations) {
-                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-                if (scp != null) {
-                    return getStudent().getNumber();
-                }
-            }
+            return getStudent().getNumber();
+//            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
+//            Collection<Registration> registrations = getStudent()
+//                    .getRegistrationsByDegreeType(degreeType);
+//            for (Registration registration : registrations) {
+//                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+//                if (scp != null) {
+//                    return getStudent().getNumber();
+//                }
+//            }
         }
         if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {                
             return getGrantOwner().getNumber();
