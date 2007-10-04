@@ -20,107 +20,124 @@
 		</fr:layout>
 	</fr:view>
 	<logic:empty name="parkingParty" property="parkingRequests">
-		<logic:equal name="parkingParty"
-			property="hasAllNecessaryPersonalInfo" value="false">
-			<p class="infoop2"><bean:message key="message.personalDataCondition"
-				bundle="PARKING_RESOURCES" /></p>
-			<p><bean:message key="message.no.necessaryPersonalInfo"
-				bundle="PARKING_RESOURCES" /></p>
+		<logic:equal name="parkingParty" property="hasAllNecessaryPersonalInfo" value="false">
+			<p class="infoop2">
+				<bean:message key="message.personalDataCondition" bundle="PARKING_RESOURCES" /><br/>
+				<bean:message key="message.no.necessaryPersonalInfo" bundle="PARKING_RESOURCES" />
+			</p>
 		</logic:equal>
 		<logic:notEqual name="parkingParty"	property="hasAllNecessaryPersonalInfo" value="false">
-			<ul class="mvert025">
-				<li>
-					<html:link page="/parking.do?method=downloadParkingRegulamentation">
-						<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
-					</html:link>
-				</li>
-			</ul>
+			<p>
+				<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
+				<html:link page="/parking.do?method=downloadParkingRegulamentation">
+					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+					<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
+				</html:link>
+			</p>
 
 
 			<logic:equal name="parkingParty" property="acceptedRegulation" value="false">				
-				<p class="infoop2 mvert1"><bean:message key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
-										
-				<bean:message key="message.acceptRegulation" bundle="PARKING_RESOURCES" />
-				<ul>
-					<li><html:link page="/parking.do?method=acceptRegulation">
-						<bean:message key="button.acceptRegulation"
-							bundle="PARKING_RESOURCES" />
-					</html:link></li>
-				</ul>				
+				<div class="mvert1 infoop2">
+					<p class="mvert05"><bean:message key="message.acceptRegulationCondition" bundle="PARKING_RESOURCES" /></p>
+					<p class="mvert05"><bean:message key="message.acceptRegulation" bundle="PARKING_RESOURCES" /></p>
+					<p class="mvert05">
+						<strong>
+							<html:link page="/parking.do?method=acceptRegulation">
+								<bean:message key="button.acceptRegulation" bundle="PARKING_RESOURCES" /> &gt;&gt;
+							</html:link>
+						</strong>
+					</p>
+				</div>
 			</logic:equal>
+
 			<logic:notEqual name="parkingParty" property="acceptedRegulation" value="false">
 				
-				<div class="infoop2 mvert15"> <%-- message.acceptedRegulation --%>
-					<bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/>
+				<div class="infoop2 mtop15"> <%-- message.acceptedRegulation --%>
+					<div style="padding-bottom: 0.25em;"><bean:write name="parkingParty" property="parkingAcceptedRegulationMessage" filter="false"/></div>
+					<p>
+						<strong>
+							<html:link page="/parking.do?method=prepareEditParking">
+								<bean:message key="label.insertParkingDocuments" bundle="PARKING_RESOURCES" /> &gt;&gt;
+							</html:link>
+						</strong>
+					</p>
 				</div>
 				
-				<ul> <%-- first time - inserir --%>
-					<li><html:link page="/parking.do?method=prepareEditParking">
-						<bean:message key="label.insertParkingDocuments"
-							bundle="PARKING_RESOURCES" />
-					</html:link></li>
-				</ul>
+
 				
 			</logic:notEqual>
 		</logic:notEqual>
 	</logic:empty>
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
 
-		<ul class="mvert025">
-			<li>
+			<p>
+				<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
 				<html:link page="/parking.do?method=downloadParkingRegulamentation">
 					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
+					<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
 				</html:link>
-			</li>
+			</p>
 			<%-- editar --%>
 			<logic:equal name="canEdit" value="true">
-				<li class="mtop05"><html:link page="/parking.do?method=prepareEditParking">
-					<bean:message key="label.editParkingDocuments"
-						bundle="PARKING_RESOURCES" />
-				</html:link></li>
+				<p>
+					<html:link page="/parking.do?method=prepareEditParking">
+						<bean:message key="label.editParkingDocuments"
+							bundle="PARKING_RESOURCES" />
+					</html:link>
+				</p>
 			</logic:equal>
-		</ul>
+
 		
 		<logic:equal name="canEdit" value="false">
-			<br/>
-			<br/>
-			<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
-				<logic:empty name="parkingParty" property="lastRequest" >
-						<div class="infoop2">
-							<bean:message key="message.canRenewToUnlimitedCard" bundle="PARKING_RESOURCES"/>
-						</div>
-						<li class="mtop05"><html:link page="/parking.do?method=renewUnlimitedParkingRequest">
-							<bean:message key="label.renewToUnlimitedCard"
-								bundle="PARKING_RESOURCES" />
-						</html:link></li>
-				</logic:empty>
+			<div class="mvert15">
+				<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
+					<logic:empty name="parkingParty" property="lastRequest" >
+							<div class="infoop2">
+								<bean:message key="message.canRenewToUnlimitedCard" bundle="PARKING_RESOURCES"/>
+							</div>
+							<ul class="mvert05">
+								<li>
+									<html:link page="/parking.do?method=renewUnlimitedParkingRequest">
+										<bean:message key="label.renewToUnlimitedCard" bundle="PARKING_RESOURCES" />
+									</html:link>
+								</li>
+							</ul>
+					</logic:empty>
+				</logic:equal>
 				<logic:notEmpty name="parkingParty" property="lastRequest" >
-					<div class="infoop2">
-						<bean:message key="message.renewToUnlimitedCardRequested" bundle="PARKING_RESOURCES"/>
-					</div>
+					<p class="mbottom2">
+						<span class="infoop2">
+							<bean:message key="message.renewToUnlimitedCardRequested" bundle="PARKING_RESOURCES"/>
+						</span>
+					</p>
 				</logic:notEmpty>
-			</logic:equal>
-			<br/>
-			<br/>
+			</div>
 		</logic:equal>
 
 		<logic:notEmpty name="parkingParty" property="firstRequest.requestedAs">
-			<p><span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/>
-				<strong><bean:message name="parkingParty" property="firstRequest.requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong>
+			<p>
+				<span class="infoop2"><bean:message key="message.userRequestedAs" bundle="PARKING_RESOURCES"/>
+					<strong><bean:message name="parkingParty" property="firstRequest.requestedAs.name" bundle="ENUMERATION_RESOURCES"/></strong>
 				</span>
 			</p>
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="parkingParty" property="firstRequest.note">
-			<p><span class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
-				<bean:write name="parkingParty" property="firstRequest.note"/>
-			</span></p>
+			<p>
+				<span class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
+					<bean:write name="parkingParty" property="firstRequest.note"/>
+				</span>
+			</p>
 		</logic:notEmpty>
 
 		<logic:equal name="parkingParty" property="firstRequest.limitlessAccessCard" value="true">
-			<p><span class="infoop2"><bean:message key="label.requestedLimitlessAccessCard" bundle="PARKING_RESOURCES"/>						 
-				<strong><bean:message key="label.limitlessAccessCard" bundle="PARKING_RESOURCES"/></strong>
-			</span></p>
+			<p>
+				<span class="infoop2">
+					<bean:message key="label.requestedLimitlessAccessCard" bundle="PARKING_RESOURCES"/>						 
+					<strong><bean:message key="label.limitlessAccessCard" bundle="PARKING_RESOURCES"/></strong>
+					<bean:message key="label.requestedLimitlessAccessCard.done" bundle="PARKING_RESOURCES"/>
+				</span>
+			</p>
 		</logic:equal>
 	
 		<bean:define id="parkingRequest" name="parkingParty"/>
