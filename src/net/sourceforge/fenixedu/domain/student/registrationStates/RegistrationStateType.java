@@ -48,7 +48,7 @@ public enum RegistrationStateType {
     }
 
     public boolean canReingress() {
-	return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON;
+	return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON || this == CANCELED;
     }
 
 }
