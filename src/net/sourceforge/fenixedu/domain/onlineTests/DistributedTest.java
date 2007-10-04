@@ -126,7 +126,7 @@ public class DistributedTest extends DistributedTest_Base {
     public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
         List<StudentTestLog> result = new ArrayList<StudentTestLog>();
         for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-            if (studentTestLog.getStudent().equals(registration)) {
+            if (studentTestLog.getStudent().getStudent().equals(registration.getStudent())) {
                 result.add(studentTestLog);
             }
         }
