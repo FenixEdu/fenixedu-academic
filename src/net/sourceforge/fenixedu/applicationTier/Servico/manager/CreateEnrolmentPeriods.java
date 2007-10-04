@@ -20,7 +20,7 @@ public class CreateEnrolmentPeriods extends Service {
     	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
     	for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
     		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-    		if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getTipoCurso()) {
+    		if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
     			createPeriod(enrolmentPeriodClassName, startDate, endDate, executionPeriod, degreeCurricularPlan);
     		}
     	}
