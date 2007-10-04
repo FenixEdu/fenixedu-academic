@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Nuno Ochoa, apaga esta merda, 'não há razão nenhuma pra usarmos SQL directamente' :p" fixNullKeyPersonOnLibraryCard.sql
