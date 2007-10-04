@@ -125,7 +125,7 @@ public class InsertStudentTestResponses extends Service {
                                 if (studentTestQuestion.getSubQuestionByItem().getNextItemId() != null) {
                                     Integer newOrder = studentTestQuestion.getTestQuestionOrder() + 1;
                                     StudentTestQuestion nextStudentTestQuestion = new StudentTestQuestion();
-                                    nextStudentTestQuestion.setStudent(registration);
+                                    nextStudentTestQuestion.setStudent(studentTestQuestion.getStudent());
                                     nextStudentTestQuestion.setDistributedTest(distributedTest);
                                     nextStudentTestQuestion.setTestQuestionOrder(newOrder);
                                     nextStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
