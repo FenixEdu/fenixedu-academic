@@ -30,7 +30,6 @@ public enum CycleType {
 
     private CycleType(Integer weight, Double ectsCredits) {
 	this(weight, ectsCredits, null);
-
     }
 
     private CycleType(Integer weight, Double ectsCredits, CycleType sourceCycleAffinity) {

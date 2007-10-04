@@ -500,7 +500,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
 	    for (final Context context : each.getValue()) {
 		final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-		final String name = curricularCourse.getName();
+		//final String name = curricularCourse.getName();
 		ectsToPerformInOtherCurricularPeriods += curricularCourse.getMinEctsCredits();
 	    }
 	}

@@ -385,6 +385,17 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return (List<Exclusiveness>) getCurricularRules(CurricularRuleType.EXCLUSIVENESS, executionPeriod);
     }
 
+    public Set<EquivalencePlanEntry> getNewDegreeModuleEquivalencePlanEntries(final EquivalencePlan equivalencePlan) {
+	final Set<EquivalencePlanEntry> equivalencePlanEntries = new TreeSet<EquivalencePlanEntry>(
+		EquivalencePlanEntry.COMPARATOR);
+	for (final EquivalencePlanEntry equivalencePlanEntry : getNewEquivalencePlanEntriesSet()) {
+	    if (equivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
+		equivalencePlanEntries.add(equivalencePlanEntry);
+	    }
+	}
+	return equivalencePlanEntries;
+    }
+    
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
 
     abstract public void print(StringBuilder stringBuffer, String tabs, Context previousContext);
@@ -410,15 +421,5 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
 
-    public Set<EquivalencePlanEntry> getNewDegreeModuleEquivalencePlanEntries(final EquivalencePlan equivalencePlan) {
-	final Set<EquivalencePlanEntry> equivalencePlanEntries = new TreeSet<EquivalencePlanEntry>(
-		EquivalencePlanEntry.COMPARATOR);
-	for (final EquivalencePlanEntry equivalencePlanEntry : getNewEquivalencePlanEntriesSet()) {
-	    if (equivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {
-		equivalencePlanEntries.add(equivalencePlanEntry);
-	    }
-	}
-	return equivalencePlanEntries;
-    }
 
 }
