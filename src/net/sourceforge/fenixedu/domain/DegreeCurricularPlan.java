@@ -53,7 +53,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -63,6 +62,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
@@ -585,6 +585,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return null;
     }
+    
+    public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
+	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && enrolmentPeriod.isValid()) {
+		return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
+	    }
+	}
+	return null;
+    }
 
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionPeriod executionPeriod) {
 	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
@@ -601,11 +610,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
-	List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
-	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses)
-		    && DateFormatUtil.isAfter("yyyyMMddHHmm", enrolmentPeriod.getStartDate(), new Date())) {
+	final DateTime now = new DateTime();
+	final List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) &&  enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
 		result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
+	    }
+	}
+	if (!result.isEmpty()) {
+	    Collections.sort(result, new BeanComparator("startDate"));
+	    return result.get(0);
+	}
+	return null;
+    }
+    
+    public EnrolmentPeriodInCurricularCoursesSpecialSeason getNextEnrolmentPeriodInCurricularCoursesSpecialSeason() {
+	final DateTime now = new DateTime();
+	final List<EnrolmentPeriodInCurricularCoursesSpecialSeason> result = new ArrayList<EnrolmentPeriodInCurricularCoursesSpecialSeason>();
+	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
+		result.add((EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod);
 	    }
 	}
 	if (!result.isEmpty()) {
@@ -1777,5 +1801,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public ExecutionPeriod getFirstExecutionPeriodEnrolments() {
 	return ExecutionPeriod.readBySemesterAndExecutionYear(Integer.valueOf(PropertiesManager
 		.getProperty("semester.for.from.enrolments")), PropertiesManager.getProperty("year.for.from.enrolments"));
+    }
+
+    public boolean hasTargetEquivalencePlanFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : getTargetEquivalencePlansSet()) {
+	    if (equivalencePlan.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		return true;
+	    }
+	}
+	return false;
     }    
 }

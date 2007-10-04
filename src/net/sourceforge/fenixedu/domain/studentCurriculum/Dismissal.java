@@ -184,10 +184,7 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	if (isConcluded(executionYear)) {
-	    return getEctsCredits();
-	}
-	return Double.valueOf(0d);
+	return isConcluded(executionYear) ? getEctsCredits() : Double.valueOf(0d);
     }
 
     @Override

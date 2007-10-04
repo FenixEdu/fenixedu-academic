@@ -110,10 +110,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         if (rooms != null && rooms.length > 0) {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-                Integer argRoom[] = { Integer.valueOf(rooms[iterRooms]) };
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
-                        argRoom);
-
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", new Object[] { Integer.valueOf(rooms[iterRooms]) });
                 selectedRooms.add(infoRoom);
             }
 

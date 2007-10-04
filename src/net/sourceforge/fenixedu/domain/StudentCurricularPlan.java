@@ -593,7 +593,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
 	for (final Enrolment enrolment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
-	    if (enrolment.isEnrolmentStateApproved()) {
+	    if (enrolment.isApproved()) {
 		result.add(enrolment);
 	    }
 	}
@@ -973,7 +973,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final public boolean evaluate(Object arg0) {
 		Enrolment enrolment = (Enrolment) arg0;
 		if ((enrolment.getCurricularCourse().getIdInternal().equals(course.getIdInternal()))
-			&& (enrolment.isEnrolmentStateApproved())
+			&& (enrolment.isApproved())
 			&& (enrolment.getExecutionPeriod().compareTo(executionPeriod) <= 0)) {
 		    return true;
 		}
@@ -1897,7 +1897,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	int numberCompletedCourses = 0;
 	for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlansSet()) {
 	    for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		if (!enrolment.isInvisible() && enrolment.isEnrolmentStateApproved()) {
+		if (!enrolment.isInvisible() && enrolment.isApproved()) {
 		    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 		    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 		    if (!PeriodState.CURRENT.equals(executionYear.getState())) {
@@ -1916,10 +1916,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return numberCompletedCourses;
     }
 
-    final public boolean isEnroledInSpecialSeason(ExecutionPeriod executionPeriod) {
-	List<Enrolment> enrolments = getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
-	for (Enrolment enrolment : enrolments) {
+    public boolean isEnroledInSpecialSeason(final ExecutionPeriod executionPeriod) {
+	for (final Enrolment enrolment : getAllStudentEnrollmentsInExecutionPeriod(executionPeriod)) {
 	    if (enrolment.hasSpecialSeason()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear) {
+	final List<ExecutionPeriod> executionPeriods = new ArrayList<ExecutionPeriod>(executionYear.getExecutionPeriods());
+	Collections.sort(executionPeriods, new ReverseComparator(ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+	
+	for (final ExecutionPeriod executionPeriod : executionPeriods) {
+	    if (isEnroledInSpecialSeason(executionPeriod)) {
 		return true;
 	    }
 	}
@@ -1960,21 +1971,40 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    final public boolean hasSpecialSeasonForActualExecutionPeriod() {
+    public boolean hasSpecialSeasonForActualExecutionPeriod() {
 	return hasSpecialSeasonFor(ExecutionPeriod.readActualExecutionPeriod());
     }
 
-    final public boolean hasSpecialSeasonFor(ExecutionPeriod executionPeriod) {
-	final ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
-
-	if (previousExecutionPeriod != null
-		&& (isEnroledInSpecialSeason(previousExecutionPeriod) || isEnroledInSpecialSeason(previousExecutionPeriod
-			.getPreviousExecutionPeriod()))) {
-	    final EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = getDegreeCurricularPlan()
-		    .getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
-
-	    return (periodInCurricularCoursesSpecialSeason != null && periodInCurricularCoursesSpecialSeason
-		    .containsDate(new DateTime()));
+    public boolean hasSpecialSeasonFor(ExecutionPeriod executionPeriod) {
+	if (executionPeriod.hasPreviousExecutionPeriod()
+		&& isEnroledInSpecialSeason(executionPeriod.getPreviousExecutionPeriod().getExecutionYear())) {
+	    return hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(executionPeriod, new DateTime());
+	}
+	return false;
+    }
+    
+    private boolean hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionPeriod executionPeriod, final DateTime date) {
+	 final EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = getDegreeCurricularPlan()
+		.getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
+	 return (periodInCurricularCoursesSpecialSeason != null && periodInCurricularCoursesSpecialSeason.containsDate(date));
+    }
+    
+    public boolean hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(final ExecutionPeriod executionPeriod) {
+	return hasSpecialSeasonFor(executionPeriod) || hasTransitedRegistrationAndOpenEnrolmentPeriodInSpecialSeason(executionPeriod);
+    }
+    
+    private boolean hasTransitedRegistrationAndOpenEnrolmentPeriodInSpecialSeason(final ExecutionPeriod executionPeriod) {
+	final DateTime now = new DateTime();
+	for (final Registration registration : getRegistration().getStudent().getTransitedRegistrations()) {
+	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	    
+	    if (!studentCurricularPlan.equals(this) && studentCurricularPlan.getDegreeCurricularPlan().hasTargetEquivalencePlanFor(getDegreeCurricularPlan())) {
+		if (executionPeriod.hasPreviousExecutionPeriod()
+			&& studentCurricularPlan.isEnroledInSpecialSeason(executionPeriod.getPreviousExecutionPeriod().getExecutionYear())
+			&& hasAnyEnrolmentPeriodInCurricularCoursesSpecialSeason(executionPeriod, now)) {
+		    return true;
+		}
+	    }
 	}
 	return false;
     }
@@ -2208,14 +2238,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	    }
 
-	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)) {
-		throw new DomainException(
-			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
-	    }
-
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)
+		    && !hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionPeriod)) {
+		throw new DomainException("error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
 	}
-
+    }
+    
     final public String getName() {
 	return getDegreeCurricularPlan().getName();
     }

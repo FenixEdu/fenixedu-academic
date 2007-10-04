@@ -96,24 +96,19 @@ import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
 
-    private static final List<DegreeType> DEGREE_TYPES_TO_ENROL_IN_SHIFTS_BY_STUDENT = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
-	    DegreeType.MASTER_DEGREE });
-
-    private static final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
+    static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
 	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
-
-    private transient Double approvationRatio;
-
-    private transient Double arithmeticMean;
-
-    private transient Integer approvedEnrollmentsNumber = 0;
 
     static final public Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
 	public int compare(Registration o1, Registration o2) {
 	    return o1.getNumber().compareTo(o2.getNumber());
 	}
     };
+    
+    private transient Double approvationRatio;
+    private transient Double arithmeticMean;
+    private transient Integer approvedEnrollmentsNumber = 0;
+
 
     private Registration() {
 	super();
@@ -458,7 +453,7 @@ public class Registration extends Registration_Base {
 		if (enrolmentExecutionYear != currentExecutionYear) {
 
 		    enrollmentsNumber++;
-		    if (enrolment.isEnrolmentStateApproved()) {
+		    if (enrolment.isApproved()) {
 			actualApprovedEnrollmentsNumber++;
 
 			Integer finalGrade = enrolment.getFinalGrade();
@@ -1219,7 +1214,7 @@ public class Registration extends Registration_Base {
     final public List<Shift> getShiftsForCurrentExecutionPeriod() {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getDisciplinaExecucao().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+	    if (shift.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		result.add(shift);
 	    }
 	}
@@ -1229,7 +1224,7 @@ public class Registration extends Registration_Base {
     final public List<Shift> getShiftsFor(final ExecutionPeriod executionPeriod) {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+	    if (shift.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		result.add(shift);
 	    }
 	}
@@ -1239,7 +1234,7 @@ public class Registration extends Registration_Base {
     final public List<Shift> getShiftsFor(final ExecutionCourse executionCourse) {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getDisciplinaExecucao() == executionCourse) {
+	    if (shift.getExecutionCourse() == executionCourse) {
 		result.add(shift);
 	    }
 	}
@@ -1249,8 +1244,8 @@ public class Registration extends Registration_Base {
     private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionPeriod executionPeriod) {
 	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-		result.add(shift.getDisciplinaExecucao());
+	    if (shift.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		result.add(shift.getExecutionCourse());
 	    }
 	}
 	return result.size();
@@ -2233,7 +2228,6 @@ public class Registration extends Registration_Base {
 	    }
 	    	    
 	    registration.setRegistrationAgreement(getRegistrationAgreement());	    
-	    
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
 
@@ -2309,14 +2303,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {
-	// return isActive() &&
-        // getDegreeTypesToEnrolInShiftsByStudent().contains(getDegreeType())
-//		&& !isSecondCycleInternalCandidacyIngression();
         return isActive() && !isSecondCycleInternalCandidacyIngression();
-    }
-
-    private List<DegreeType> getDegreeTypesToEnrolInShiftsByStudent() {
-	return DEGREE_TYPES_TO_ENROL_IN_SHIFTS_BY_STUDENT;
     }
 
 }
