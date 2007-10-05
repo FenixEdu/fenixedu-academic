@@ -2,14 +2,9 @@ package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 import net.sourceforge.fenixedu.util.tests.Response;
 
@@ -37,30 +32,14 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
     public Object sqlToJava(Object source) {
 	if (source instanceof String) {
 	    String xmlResponse2 = (String) source;
-
-	    InputStreamReader inputStreamReader = null;
-
-	    inputStreamReader = new InputStreamReader(new ByteArrayInputStream(xmlResponse2.getBytes()),
-		    Charset.forName("utf-8"));
-
-	    StringBuffer stringBuffer = new StringBuffer();
-	    Reader in = new BufferedReader(inputStreamReader);
-
-	    int ch;
+	    
+	    String xmlResponse = null;
 	    try {
-		while ((ch = in.read()) > -1) {
-		    stringBuffer.append((char) ch);
-		}
-	    } catch (IOException e2) {
+		xmlResponse = new String(xmlResponse2.getBytes("latin1"), "UTF-8");
+	    } catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
 	    }
-
-	    try {
-		in.close();
-	    } catch (IOException e1) {
-
-	    }
-	    String xmlResponse = stringBuffer.toString();
-
+	    
 	    Response response = getResponse(xmlResponse);
 
 	    return response;
@@ -71,8 +50,9 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
     private Response getResponse(String xmlResponse) {
 	XMLDecoder decoder = null;
 	try {
-	    decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes("utf-8")));
+	    decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes("UTF-8")));
 	} catch (UnsupportedEncodingException e1) {
+	    e1.printStackTrace();
 	}
 	Response response = null;
 	try {
