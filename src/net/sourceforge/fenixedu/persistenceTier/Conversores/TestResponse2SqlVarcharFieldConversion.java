@@ -2,15 +2,18 @@ package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import net.sourceforge.fenixedu.util.tests.Response;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
 
@@ -20,44 +23,64 @@ public class TestResponse2SqlVarcharFieldConversion implements FieldConversion {
 	    XMLEncoder encoder = new XMLEncoder(out);
 	    encoder.writeObject((Response) source);
 	    encoder.close();
-	    return out.toString();
+	    try {
+		return out.toString("ISO-8859-1");
+	    } catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return out.toString();
+	    }
 	}
 	return source;
     }
 
     public Object sqlToJava(Object source) {
 	if (source instanceof String) {
-	    String xmlResponse = source.toString();
-	    XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes()));
-	    Response response = null;
+	    String xmlResponse2 = (String) source;
+
+	    InputStreamReader inputStreamReader = null;
+
+	    inputStreamReader = new InputStreamReader(new ByteArrayInputStream(xmlResponse2.getBytes()),
+		    Charset.forName("utf-8"));
+
+	    StringBuffer stringBuffer = new StringBuffer();
+	    Reader in = new BufferedReader(inputStreamReader);
+
+	    int ch;
 	    try {
-		response = (Response) decoder.readObject();
-	    } catch (ArrayIndexOutOfBoundsException e) {
-	    }
-	    if (response == null) {
-		try {
-		    xmlResponse = new String(source.toString().getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e2) {
-		    System.out.println("--------------> " + e2);
+		while ((ch = in.read()) > -1) {
+		    stringBuffer.append((char) ch);
 		}
-		decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes()));
-		try {
-		    response = (Response) decoder.readObject();
-		} catch (ArrayIndexOutOfBoundsException e) {
-		    try {
-			decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer.normalize(
-				xmlResponse).getBytes()));
-			response = (Response) decoder.readObject();
-		    } catch (ArrayIndexOutOfBoundsException e2) {
-			decoder = new XMLDecoder(new ByteArrayInputStream(StringNormalizer
-				.normalizeAndRemoveMinorChars(xmlResponse).getBytes()));
-			response = (Response) decoder.readObject();
-		    }
-		}
+	    } catch (IOException e2) {
 	    }
-	    decoder.close();
+
+	    try {
+		in.close();
+	    } catch (IOException e1) {
+
+	    }
+	    String xmlResponse = stringBuffer.toString();
+
+	    Response response = getResponse(xmlResponse);
+
 	    return response;
 	}
 	return source;
+    }
+
+    private Response getResponse(String xmlResponse) {
+	XMLDecoder decoder = null;
+	try {
+	    decoder = new XMLDecoder(new ByteArrayInputStream(xmlResponse.getBytes("utf-8")));
+	} catch (UnsupportedEncodingException e1) {
+	}
+	Response response = null;
+	try {
+	    response = (Response) decoder.readObject();
+	} catch (ArrayIndexOutOfBoundsException e) {
+	    e.printStackTrace();
+	}
+	decoder.close();
+	return response;
     }
 }
