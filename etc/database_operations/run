@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-
-execute "Fixing attends" fixAttends.sql
