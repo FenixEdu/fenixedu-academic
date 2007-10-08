@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class UICourseGroup extends UIDegreeModule {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
@@ -285,8 +287,10 @@ public class UICourseGroup extends UIDegreeModule {
         String editAndDeleteAditionalParameters = "&courseGroupID=" + this.courseGroup.getIdInternal() + ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
 
         encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
-        //writer.append(" , ");
-        //encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
+        if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+            writer.append(" , ");
+            encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
+        }
         if (!this.courseGroup.isRoot()) {
             writer.append(" , ");
             encodeLink("editCourseGroup.faces", editAndDeleteAditionalParameters, false, "edit");
