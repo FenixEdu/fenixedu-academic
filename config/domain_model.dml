@@ -12259,7 +12259,9 @@ relation LibraryCardRootDomainObject {
 }
 
 relation LibraryCardPerson {
-	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.Person playsRole person {
+		multiplicity 1..1;
+	}
 	net.sourceforge.fenixedu.domain.library.LibraryCard playsRole libraryCard;
 }
 
