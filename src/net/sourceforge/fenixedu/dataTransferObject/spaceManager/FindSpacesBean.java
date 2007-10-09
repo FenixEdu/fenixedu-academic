@@ -27,15 +27,19 @@ public class FindSpacesBean implements Serializable {
     private Boolean extraOptions;
     
     private Boolean withSchedule;
+    
+    private SearchType searchType;
         
 
     public FindSpacesBean() {
 	setExtraOptions(false);
+	setSearchType(SearchType.SPACE);
     }
     
     public FindSpacesBean(Space space) {
 	setSpace(space);
 	setExtraOptions(false);
+	setSearchType(SearchType.SPACE);
     }
     
     public List<LinkObject> getSuroundingSpacePath() {
@@ -113,5 +117,22 @@ public class FindSpacesBean implements Serializable {
 
     public void setWithSchedule(Boolean withSchedule) {
         this.withSchedule = withSchedule;
+    }
+    
+    public static enum SearchType {
+	
+	SPACE, PERSON, EXECUTION_COURSE;
+	
+	public String getName() {
+	    return name();
+	}	
+    }
+
+    public SearchType getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(SearchType searchType) {
+        this.searchType = searchType;
     }
 }

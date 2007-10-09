@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -37,6 +39,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * 
  */
 public class FindPersonAction extends FenixDispatchAction {
+    
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	return mapping.findForward("findPerson");
@@ -68,8 +71,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	    if (roleType.equals(RoleType.EMPLOYEE.getName())
 		    || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
-		    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments",
-			    null);
+		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService(null, "ReadAllDepartments", null);
 		    request.setAttribute("departments", departments);
 		}
 		// request.removeAttribute("degreeType");
@@ -79,8 +81,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 		if (degreeType.length() != 0) {
 		    Object[] args = { degreeType };
-		    List nonMasterDegree = (List) ServiceUtils.executeService(null,
-			    "ReadAllDegreesByType", args);
+		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadAllDegreesByType", args);
 
 		    request.setAttribute("nonMasterDegree", nonMasterDegree);
 		    request.setAttribute("degreeType", true);
@@ -156,8 +157,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else if (roleType.equals(RoleType.STUDENT.getName())) {
 	    if (degreeType.length() != 0) {
 		Object[] args1 = { degreeType };
-		List nonMasterDegree = (List) ServiceUtils.executeService(null, "ReadAllDegreesByType",
-			args1);
+		List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadAllDegreesByType", args1);
 
 		request.setAttribute("nonMasterDegree", nonMasterDegree);
 		request.setAttribute("degreeType", degreeType);
@@ -175,7 +175,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType.equals(RoleType.TEACHER.getName())) {
-	    List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService(null, "ReadAllDepartments", null);
 	    request.setAttribute("departments", departments);
 	}
 
@@ -195,8 +195,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	CollectionPager result = null;
 	try {
-	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView,
-		    "SearchPerson", args);
+	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
@@ -219,8 +218,8 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer
-		.valueOf(pageNumberString) : Integer.valueOf(1);
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
 
@@ -238,6 +237,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else {
 	    request.setAttribute("show", Boolean.FALSE);
 	}
+	
 	Boolean viewPhoto = null;
 	if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
 	    viewPhoto = getCheckBoxValue((String) request.getParameter("viewPhoto"));
@@ -245,10 +245,13 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else if (findPersonForm.get("viewPhoto") != null) {
 	    viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
 	}
+	
 	findPersonForm.set("viewPhoto", viewPhoto.toString());
 	request.setAttribute("viewPhoto", viewPhoto);
+	
+	
+	
 	return mapping.findForward("findPerson");
-
     }
 
     private boolean isEmployeeOrTeacher(IUserView userView) {

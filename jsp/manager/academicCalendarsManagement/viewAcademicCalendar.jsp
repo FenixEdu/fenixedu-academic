@@ -12,7 +12,7 @@
 <logic:present role="MANAGER">
 	
 	
-	<style>
+	<style type="text/css">
 	.tcalendar {
 	border-collapse: collapse;
 	/*border: 1px solid #ccc;*/
@@ -41,7 +41,7 @@
 	}
 	td.padded { }
 	.tdbar {
-	background-color: #fed;
+	background-color: #a3d1d9;
 	}
 	tr.active td {
 	background-color: #fefeea;

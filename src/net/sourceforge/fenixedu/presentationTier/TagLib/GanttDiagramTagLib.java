@@ -230,13 +230,14 @@ public class GanttDiagramTagLib extends TagSupport {
                                             }
                                             
                                             else if(interval.getStart().getDayOfMonth() == dayOfMonth && interval.getEnd().getDayOfMonth() == dayOfMonth) {
-                                                startIndex = calculateTimeOfDay(interval.getStart());
+                                               
+                                        	startIndex = calculateTimeOfDay(interval.getStart());
                                                 endIndex = calculateTimeOfDay(interval.getEnd());
                                                 
                                                 if(startIndex == endIndex) {
                                                     addSpecialDiv(builder, convertToEm(1), convertToEm(startIndex - 1));
                                                 } else {
-                                                    addSpecialDiv(builder, convertToEm(endIndex - startIndex), convertToEm(startIndex - 1));					    
+                                                    addSpecialDiv(builder, convertToEm((endIndex - startIndex) + 1), convertToEm(startIndex - 1));					    
                                                 }
                                             }					
                                         }
@@ -369,8 +370,7 @@ public class GanttDiagramTagLib extends TagSupport {
                                     else {	
                             		    
                                 	//Ended in this month
-                                	if(intervalEnd.getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){        		                        	                          	    
-                                	   
+                                	if(intervalEnd.getMonthOfYear() == month.getMonthOfYear() && intervalEnd.getYear() == month.getYear()){        		                        	                          	                                    	  
                                 	    entryDays = convertToEm((Days.daysBetween(firstDayOfMonth, intervalEnd).getDays() + 1) * scale);                                	
                                             startDay = convertToEm((firstDayOfMonth.getDayOfMonth() - 1) * scale);                                	  
                                             addSpecialDiv(builder, entryDays, startDay);                        	   											
@@ -594,6 +594,7 @@ public class GanttDiagramTagLib extends TagSupport {
     }
     
     private int calculateTimeOfDay(DateTime time) {
+	
 	int hourOfDay = time.getHourOfDay();
         int minuteOfHour = time.getMinuteOfHour();
         

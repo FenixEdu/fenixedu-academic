@@ -27,6 +27,8 @@
 		<bean:define id="schemaName" type="java.lang.String" value="PublicFindSpacesWithExtraOptions" />		
 	</logic:equal>
 	
+	<p class="infoop2"><bean:message key="label.search.spaces.info" bundle="DEFAULT"/></p>
+	
 	<fr:form id="searchform" action="/findSpaces.do">		
 		<html:hidden name="findSpacesForm" property="method" value="search"/>				
 		<fr:edit id="beanWithLabelToSearchID" name="bean" schema="<%= schemaName %>">

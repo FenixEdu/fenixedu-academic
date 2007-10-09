@@ -14,9 +14,9 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadAllDegreesByType extends Service {
 
-    public List run(String degreeType) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoDegree> run(String degreeType) throws FenixServiceException, ExcepcaoPersistencia {
         List<Degree> degreesList = Degree.readAllByDegreeType(DegreeType.valueOf(degreeType));
-        List infoDegreesList = (List) CollectionUtils.collect(degreesList, new Transformer() {
+        List<InfoDegree> infoDegreesList = (List<InfoDegree>) CollectionUtils.collect(degreesList, new Transformer() {
 
             public Object transform(Object input) {
                 Degree degree = (Degree) input;

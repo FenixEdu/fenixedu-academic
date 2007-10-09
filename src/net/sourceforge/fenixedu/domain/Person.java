@@ -75,6 +75,8 @@ import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPate
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
+import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
@@ -83,8 +85,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.stm.RelationList;
-import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -2654,5 +2654,17 @@ public class Person extends Person_Base {
             return getGrantOwner().getNumber();
         }        
         return 0;
+    }
+    
+    public List<Space> getActivePersonSpaces() {
+	List<Space> result = new ArrayList<Space>();
+	Set<PersonSpaceOccupation> personSpaceOccupationsSet = getPersonSpaceOccupationsSet();
+	YearMonthDay current = new YearMonthDay();
+	for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupationsSet) {
+	    if(personSpaceOccupation.contains(current)) {
+		result.add(personSpaceOccupation.getSpace());
+	    }
+	}
+	return result;
     }
 }

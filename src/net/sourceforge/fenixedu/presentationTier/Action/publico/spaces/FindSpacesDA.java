@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SearchType;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Building;
@@ -70,7 +71,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    }	    	    
 	    
 	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
-	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building);
+	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building, bean.getSearchType());
 	    for (Space space : resultSpaces) {
 		result.add(new FindSpacesBean(space));
 	    }	   
@@ -86,7 +87,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
-	bean.setExtraOptions(true);
+	bean.setExtraOptions(true);	
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
@@ -98,7 +99,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
 	bean.setExtraOptions(false);
 	bean.setCampus(null);
-	bean.setBuilding(null);
+	bean.setBuilding(null);	
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");

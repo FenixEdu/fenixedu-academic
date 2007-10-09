@@ -498,10 +498,18 @@
 </schema>
 
 <schema name="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
-	<slot name="labelToSearch" key="label.find.spaces.label"/>						         
+	<slot name="searchType" key="label.find.space.search.type" layout="radio">
+		<property name="bundle" value="DEFAULT" />
+		<property name="classes" value="list2 liinline" />
+	</slot>
+	<slot name="labelToSearch" key="label.find.spaces.label"/>							        
 </schema>
 
-<schema name="PublicFindSpacesWithExtraOptions" extends="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">		
+<schema name="PublicFindSpacesWithExtraOptions" extends="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
+	<slot name="searchType" key="label.find.space.search.type" layout="radio">
+		<property name="bundle" value="DEFAULT" />
+		<property name="classes" value="list2 liinline" />
+	</slot>			
 	<slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
 		<property name="format"	value="${spaceInformation.presentationName}" />
@@ -510,7 +518,7 @@
 	<slot name="building" key="label.find.spaces.building" layout="menu-select">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.BuildingProvider"/>		
 		<property name="format"	value="${spaceInformation.presentationName}" />	
-	</slot>							        
+	</slot>								       
 </schema>
 
 <schema name="PublicFoundSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
@@ -523,6 +531,19 @@
 		<property name="labelFormat" value="label.${simpleName}" />
 		<property name="bundle" value="SPACE_RESOURCES" />
 	</slot>
+</schema>
+
+<schema name="FindPersonSpaceSchema" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceFullPath" layout="separator-list">		
+		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
+		<property name="eachLayout" value="values" />
+		<property name="param" value="idInternal/spaceID" />
+		<property name="link" value="/publico/findSpaces.do?method=viewSpace" />		
+	</slot>
+</schema>
+
+<schema name="FindPersonSpaceNameSchema" type="net.sourceforge.fenixedu.domain.space.Space" bundle="SPACE_RESOURCES">
+	<slot name="spaceInformation.presentationName"/>
 </schema>
 
 <schema name="ViewSelectedSpaceInfo" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">

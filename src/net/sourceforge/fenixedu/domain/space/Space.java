@@ -9,8 +9,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SearchType;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -95,6 +98,9 @@ public abstract class Space extends Space_Base {
 	    if(space1 == null && space2 != null) {
 		return Integer.valueOf(-1);
 	    }
+	    if(space1 == null && space2 == null) {
+		return null;
+	    }
 	    if(!space1.equals(space2)) {
 		int compareTo = Integer.valueOf(space1.getSpaceInformation().getPresentationName().compareTo(space2.getSpaceInformation().getPresentationName()));
 		if(compareTo == 0) {
@@ -136,7 +142,7 @@ public abstract class Space extends Space_Base {
 	}
 	return selectedSpaceInformation;
     }
-
+     
     public SpaceInformation getSpaceInformation() {
 	return getSpaceInformation(null);
     }
@@ -426,7 +432,7 @@ public abstract class Space extends Space_Base {
     }
 
     protected boolean verifyNameEquality(String[] nameWords) {
-	if (nameWords != null) {	
+	if (nameWords != null) {		    
 	    String spacePresentationName = getSpaceInformation().getPresentationName();
 	    if (spacePresentationName != null) {
 		String[] spaceIdentificationWords = spacePresentationName.trim().split(" ");
@@ -452,7 +458,7 @@ public abstract class Space extends Space_Base {
 	return false;
     }
 
-    protected static String[] getIdentificationWords(String name) {
+    public static String[] getIdentificationWords(String name) {
 	String[] identificationWords = null;
 	if (name != null && !StringUtils.isEmpty(name.trim())) {
 	    identificationWords = name.trim().split(" ");
@@ -1025,11 +1031,11 @@ public abstract class Space extends Space_Base {
 	return builder.toString();
     }
 
-    public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building) {
+    public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building, SearchType searchType) {
 
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);
 
-	if(campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim()))) {
+	if(searchType != null && (campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim())))) {
 
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 		
@@ -1037,17 +1043,40 @@ public abstract class Space extends Space_Base {
 		    Space space = (Space) resource;
 
 		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim())){
-			String[] labelWords = getIdentificationWords(labelToSearch);		    
-			boolean toAdd = space.verifyNameEquality(labelWords);		    
-			if(!toAdd) {
+			
+			String[] labelWords = getIdentificationWords(labelToSearch);		    			
+			boolean toAdd = false;
+			
+			switch (searchType) {
+			
+			case SPACE:
+			    toAdd = space.verifyNameEquality(labelWords);    
+			    break;
+			    
+			case PERSON:			    
 			    SortedSet<PersonSpaceOccupation> persons = space.getActivePersonSpaceOccupations();
 			    for (PersonSpaceOccupation personSpaceOccupation : persons) {
 				if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
 				    toAdd = true;
 				    break;
 				}
-			    } 		
-			}	
+			    } 	
+			    break;			   
+			
+			case EXECUTION_COURSE:
+			    Set<ExecutionCourse> executionCoursesSet = ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet();
+			    for (ExecutionCourse executionCourse : executionCoursesSet) {
+				if(executionCourse.verifyNameEquality(labelWords) && executionCourse.getAllRooms().contains(resource)) {
+				    toAdd = true;
+				    break;
+				}
+			    }			    
+			    break;
+			    
+			default:
+			    break;
+			}
+																	
 			if(!toAdd) {
 			    continue;
 			}

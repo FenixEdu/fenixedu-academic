@@ -1,8 +1,9 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <script type="text/javascript">
@@ -267,9 +268,27 @@ function check(e,v){
 								<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
 							</tr>
 						</logic:present>					
-					</logic:present>
+					</logic:present>									
 					
-					<logic:present  name="personalInfo" property="teacher" >
+					<%--   
+					<bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
+					<logic:notEmpty name="personSpaces">
+						<tr>
+							<td class="ppleft2"><bean:message key="label.person.rooms"/>:</td>	   						
+							<td>
+								<fr:view name="personSpaces">
+									<fr:layout name="list">
+										<fr:property name="classes" value="mvert05 ulindent0 nobullet" />
+										<fr:property name="eachSchema" value="FindPersonSpaceSchema" />
+										<fr:property name="eachLayout" value="values" />																				
+									</fr:layout>																			
+								</fr:view>
+							</td>																		
+						</tr>			
+					</logic:notEmpty>
+					--%>
+					
+					<logic:present name="personalInfo" property="teacher" >
 						<logic:present  name="personalInfo" property="teacher.category" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
@@ -321,13 +340,11 @@ function check(e,v){
 		</div>
 	 </logic:iterate>
 
-
 	<logic:notEqual name="numberOfPages" value="1">
 		<p class="mtop15"><bean:message key="label.pages" />:			
 			<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 		</p>
 	</logic:notEqual>	 
-
 	
 </logic:present>
 

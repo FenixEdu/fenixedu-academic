@@ -38,6 +38,8 @@ import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -51,6 +53,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -59,6 +62,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
@@ -1718,5 +1722,44 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasCourseLoadForType(ShiftType type) {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
 	return courseLoad != null && !courseLoad.isEmpty();
+    }
+    
+    public boolean verifyNameEquality(String[] nameWords) {	
+	if (nameWords != null) {		    
+	    String courseName = getNome() + " " + getSigla();
+	    if (courseName != null) {
+		String[] courseNameWords = courseName.trim().split(" ");
+		StringNormalizer.normalize(courseNameWords);
+		int j, i;
+		for (i = 0; i < nameWords.length; i++) {
+		    if (!nameWords[i].equals("")) {
+			for (j = 0; j < courseNameWords.length; j++) {
+			    if (courseNameWords[j].equals(nameWords[i])) {
+				break;
+			    }
+			}
+			if (j == courseNameWords.length) {
+			    return false;
+			}
+		    }
+		}
+		if (i == nameWords.length) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    public Set<AllocatableSpace> getAllRooms(){
+	Set<AllocatableSpace> result = new HashSet<AllocatableSpace>();
+	Set<Lesson> lessons = getLessons();
+	for (Lesson lesson : lessons) {
+	    AllocatableSpace room = lesson.getSala();
+	    if(room != null) {
+		result.add(room);
+	    }
+	}
+	return result;
     }
 }
