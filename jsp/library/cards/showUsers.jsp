@@ -50,11 +50,12 @@
 		</p>
 	</logic:equal>
 	
-	<bean:size id="numberOfElements" name="libraryCardSearch" property="search"/>		
+	<bean:define id="users" name="libraryCardSearch" property="search"/>
+	<bean:size id="numberOfElements" name="users"/>		
 	<p class="mtop15">
 		<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
 	</p>
-	<fr:view name="libraryCardSearch" property="search" schema="library.card.list">
+	<fr:view name="users" schema="library.card.list">
 		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>
