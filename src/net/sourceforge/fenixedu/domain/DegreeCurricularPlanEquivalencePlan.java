@@ -43,5 +43,12 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	entries.addAll(getEntriesSet());
 	return entries;
     }
+    
+    @Override
+    public void delete() {
+	removeDegreeCurricularPlan();
+	removeSourceDegreeCurricularPlan();
+        super.delete();
+    }
 
 }
