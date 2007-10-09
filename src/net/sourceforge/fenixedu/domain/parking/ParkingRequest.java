@@ -766,18 +766,22 @@ public class ParkingRequest extends ParkingRequest_Base {
 	    setDriverLicenseFileName(parkingRequest.getDriverLicenseFileName());
 	    setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
 
-	    Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
-	    setFirstVechicleID(firstVehicle.getIdInternal());
-	    setFirstCarMake(firstVehicle.getVehicleMake());
-	    setFirstCarPlateNumber(firstVehicle.getPlateNumber());
-	    setFirstCarPropertyRegistryFileName(firstVehicle.getPropertyRegistryFileName());
-	    setFirstInsuranceFileName(firstVehicle.getInsuranceFileName());
-	    setFirstCarOwnerIdFileName(firstVehicle.getOwnerIdFileName());
-	    setFirstDeclarationAuthorizationFileName(firstVehicle.getAuthorizationDeclarationFileName());
-	    setFirstCarPropertyRegistryDeliveryType(firstVehicle.getPropertyRegistryDeliveryType());
-	    setFirstCarInsuranceDeliveryType(firstVehicle.getInsuranceDeliveryType());
-	    setFirstCarOwnerIdDeliveryType(firstVehicle.getOwnerIdDeliveryType());
-	    setFirstCarDeclarationDeliveryType(firstVehicle.getAuthorizationDeclarationDeliveryType());
+	    if (!parkingRequest.getVehicles().isEmpty()) {
+		Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
+		setFirstVechicleID(firstVehicle.getIdInternal());
+		setFirstCarMake(firstVehicle.getVehicleMake());
+		setFirstCarPlateNumber(firstVehicle.getPlateNumber());
+		setFirstCarPropertyRegistryFileName(firstVehicle.getPropertyRegistryFileName());
+		setFirstInsuranceFileName(firstVehicle.getInsuranceFileName());
+		setFirstCarOwnerIdFileName(firstVehicle.getOwnerIdFileName());
+		setFirstDeclarationAuthorizationFileName(firstVehicle
+			.getAuthorizationDeclarationFileName());
+		setFirstCarPropertyRegistryDeliveryType(firstVehicle.getPropertyRegistryDeliveryType());
+		setFirstCarInsuranceDeliveryType(firstVehicle.getInsuranceDeliveryType());
+		setFirstCarOwnerIdDeliveryType(firstVehicle.getOwnerIdDeliveryType());
+		setFirstCarDeclarationDeliveryType(firstVehicle
+			.getAuthorizationDeclarationDeliveryType());
+	    }
 
 	    if (parkingRequest.getVehicles().size() > 1) {
 		Vehicle secondVehicle = parkingRequest.getVehicles().get(1);
