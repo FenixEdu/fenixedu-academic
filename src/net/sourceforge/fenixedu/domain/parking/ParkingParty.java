@@ -498,8 +498,9 @@ public class ParkingParty extends ParkingParty_Base {
 	for (DegreeType degreeType : degreeTypes) {
 	    Registration registration = getRegistrationByDegreeType(student, degreeType);
 	    if (registration != null && registration.isInFinalDegreeYear()) {
-		return isFirstTimeEnrolledInCurrentYear(registration, registration.getDegreeType()
-			.getYears());
+		return degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ? true
+			: isFirstTimeEnrolledInCurrentYear(registration, registration.getDegreeType()
+				.getYears());
 	    }
 	}
 	return false;
