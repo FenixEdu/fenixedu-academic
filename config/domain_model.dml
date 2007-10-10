@@ -1174,6 +1174,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.ScientificCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
 			}
+			
+			class net.sourceforge.fenixedu.domain.ScientificAreaSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
 
 		class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.Site {
 			Boolean activated;

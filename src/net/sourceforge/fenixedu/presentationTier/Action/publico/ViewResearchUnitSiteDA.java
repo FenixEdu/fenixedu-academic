@@ -46,35 +46,6 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 	return mapping.findForward("showResearchers");
     }
 
-    public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	ResearchUnit unit = getSite(request).getUnit();
-	putPublicationsInRequest(request, unit);
-	return mapping.findForward("showPublications");
-    }
-
-    private void putPublicationsInRequest(HttpServletRequest request, ResearchUnit unit) {
-	request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks()));
-	request.setAttribute("national-articles", ResearchResultPublication.sort(unit
-		.getArticles(ScopeType.NATIONAL)));
-	request.setAttribute("international-articles", ResearchResultPublication.sort(unit
-		.getArticles(ScopeType.INTERNATIONAL)));
-	request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit
-		.getInproceedings(ScopeType.NATIONAL)));
-	request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit
-		.getInproceedings(ScopeType.INTERNATIONAL)));
-	request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings()));
-	request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses()));
-	request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals()));
-	request.setAttribute("technicalReports", ResearchResultPublication.sort(unit
-		.getTechnicalReports()));
-	request.setAttribute("otherPublications", ResearchResultPublication.sort(unit
-		.getOtherPublications()));
-	request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds()));
-	request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks()));
-
-    }
-
     @Override
     protected String getContextParamName(HttpServletRequest request) {
 	return "siteID";

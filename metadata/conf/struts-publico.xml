@@ -234,6 +234,7 @@
        <forward name="viewDepartmentUnitSite" path="/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=%s"/>
        <forward name="viewPedagogicalCouncilUnitSite" path="/pedagogicalCouncil/viewSite.do?method=presentation&amp;unitID=%s"/>
        <forward name="viewScientificCouncilUnitSite" path="/scientificCouncil/viewSite.do?method=presentation&amp;unitID=%s"/>
+	   <forward name="viewScientificAreaUnitSite" path="/scientificArea/viewSite.do?method=presentation&amp;unitID=%s"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -1123,6 +1124,51 @@
         <action path="/scientificCouncil/eventsRSS" parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificCouncil.ScientificCouncilEventsRSS"/>
 
+	   <!-- ===== Scientific Area Visualization ======= -->
+	   <action path="/scientificArea/viewSite"
+	   	parameter="method"
+ 		type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificalArea.PublicScientificAreaSiteDA">
+	 		<forward name="frontPage-BANNER_INTRO" path="basicUnit-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="basicUnit-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="basicUnit-site-front-page-intro-float"/>
+            <forward name="site-section" path="basicUnit-section"/>
+            <forward name="site-section-deny" path="basicUnit-section-deny"/>
+            <forward name="site-section-adviseLogin" path="basicUnit-section-adviseLogin"/>
+            <forward name="site-item" path="basicUnit-item"/>
+            <forward name="site-item-deny" path="basicUnit-item-deny"/>
+            <forward name="site-item-adviseLogin" path="basicUnit-item-adviseLogin"/>
+            <forward name="unit-organization" path="basicUnit-organization"/>
+            <forward name="unit-subunits" path="basicUnit-subunits"/>
+
+
+	        <forward name="showPublications" path="show-unit-publications"/>
+            <forward name="announcementsAction" path="/scientificArea/announcements.do"/>
+            <forward name="eventsAction" path="/scientificArea/events.do"/>
+            <forward name="announcementsRSSAction" path="/scientificArea/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/scientificArea/eventsRSS.do"/>
+ 			
+ 		</action>
+	   	
+	   	<action path="/scientificArea/announcements"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA">
+            <forward name="listAnnouncements" path="public-basicUnit-list-announcements"/>
+            <forward name="viewAnnouncement" path="basicUnit-view-announcement"/>
+        </action>
+        
+        <action path="/scientificArea/events"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.EventsBoardDA">
+            <forward name="listAnnouncements" path="public-basicUnit-list-events"/>
+            <forward name="viewAnnouncement" path="basicUnit-view-event"/>
+        </action>
+
+        <action path="/scientificArea/announcementsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitAnnouncementsRSS"/>
+        <action path="/scientificArea/eventsRSS" parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitEventsRSS"/>
+   
+   
        <!-- ===== ResearchUnit Site Visualization ===== -->
        <action path="/researchSite/viewResearchUnitSite"
         parameter="method"

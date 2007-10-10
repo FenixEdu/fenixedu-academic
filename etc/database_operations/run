@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding functionalities regarding ScientificAreaSite" changes-20071010132647.sql
+execute "Creating Template For Scientific Area and associating Module" createTemplateForScientificAreas.sql
