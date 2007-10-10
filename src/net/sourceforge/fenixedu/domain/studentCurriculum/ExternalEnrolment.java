@@ -100,7 +100,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	    checkIfCanCreateExternalEnrolment(registration, getExternalCurricularCourse());
 	}
 
-	checkConstraints(grade, ectsCredits);
+	checkConstraints(registration, getExternalCurricularCourse(), executionPeriod, grade, ectsCredits);
 
 	setRegistration(registration);
 	setGrade(grade);
