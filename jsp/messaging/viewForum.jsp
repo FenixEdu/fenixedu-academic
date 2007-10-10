@@ -54,7 +54,7 @@
 
 	<logic:empty name="conversationThreads">
 		<p class="mvert15">
-			<em class="error0"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></em>
+			<em><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/>.</em>
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="conversationThreads">
