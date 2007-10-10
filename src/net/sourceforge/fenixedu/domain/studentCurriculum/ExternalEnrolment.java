@@ -54,14 +54,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	    final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate,
 	    final Double ectsCredits) {
 	this();
-	if (registration == null) {
-	    throw new DomainException("error.externalEnrolment.student.cannot.be.null");
-	}
-	if (externalCurricularCourse == null) {
-	    throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
-	}
 
-	checkConstraints(grade, ectsCredits);
+	checkConstraints(registration, externalCurricularCourse, executionPeriod, grade, ectsCredits);
 	checkIfCanCreateExternalEnrolment(registration, externalCurricularCourse);
 
 	setRegistration(registration);
@@ -72,18 +66,24 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	setEctsCredits(ectsCredits);
     }
 
-    private void checkIfCanCreateExternalEnrolment(final Registration registration,
-	    final ExternalCurricularCourse externalCurricularCourse) {
+    private void checkIfCanCreateExternalEnrolment(final Registration registration, final ExternalCurricularCourse externalCurricularCourse) {
 	for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
 	    if (externalEnrolment.getExternalCurricularCourse() == externalCurricularCourse) {
-		throw new DomainException(
-			"error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse",
-			externalCurricularCourse.getName());
+		throw new DomainException("error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse", externalCurricularCourse.getName());
 	    }
 	}
     }
 
-    private void checkConstraints(final Grade grade, final Double ectsCredits) {
+    private void checkConstraints(final Registration registration, final ExternalCurricularCourse externalCurricularCourse, final ExecutionPeriod executionPeriod, final Grade grade, final Double ectsCredits) {
+	if (registration == null) {
+	    throw new DomainException("error.externalEnrolment.student.cannot.be.null");
+	}
+	if (externalCurricularCourse == null) {
+	    throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
+	}
+	if (executionPeriod == null) {
+	    throw new DomainException("error.externalEnrolment.executionPeriod.cannot.be.null");
+	}
 	if (grade == null || grade.isEmpty()) {
 	    throw new DomainException("error.externalEnrolment.invalid.grade");
 	}

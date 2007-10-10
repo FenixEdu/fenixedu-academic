@@ -984,7 +984,7 @@
 		<property name="size" value="5" />	
 	</slot>
 	<slot name="externalEnrolmentBean.ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod">
+	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
@@ -1015,7 +1015,7 @@
 	<slot name="ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="10" />
 	</slot>
-	<slot name="executionPeriod" layout="menu-select">
+	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
@@ -1035,7 +1035,7 @@
 		<property name="size" value="5" />
 	</slot>
 	<slot name="ectsCredits" key="label.ects.credits" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="executionPeriod" layout="menu-select">
+	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>
