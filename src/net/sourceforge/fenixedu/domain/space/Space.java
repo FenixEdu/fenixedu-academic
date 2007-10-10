@@ -50,11 +50,7 @@ public abstract class Space extends Space_Base {
 	public int compare(Space o1, Space o2) {	    
 
 	    if(o1.isFloor() && o2.isFloor()) {
-		int compareTo = ((Floor)o1).getSpaceInformation().getLevel().compareTo(((Floor)o2).getSpaceInformation().getLevel());
-		if(compareTo == 0) {
-		    return o1.getIdInternal().compareTo(o2.getIdInternal());
-		}
-		return compareTo;
+		return compareFloors((Floor)o1, (Floor)o2);
 	    }	    
 
 	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
@@ -84,34 +80,46 @@ public abstract class Space extends Space_Base {
 		return floorCheck.intValue();
 	    }
 
-	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
-	    if(compareTo == 0) {
-		return o1.getIdInternal().compareTo(o2.getIdInternal());
-	    }	    
-
-	    return compareTo;  	    
+	    return comparePresentationName(o1, o2);   
 	}
 
 	private Integer checkObjects(Space space1, Space space2) {
+
 	    if(space1 != null && space2 == null) {
 		return Integer.valueOf(1);
-	    }
-	    if(space1 == null && space2 != null) {
+
+	    } else if(space1 == null && space2 != null) {
 		return Integer.valueOf(-1);
-	    }
-	    if(space1 == null && space2 == null) {
+
+	    } else if(space1 == null && space2 == null) {
 		return null;
+
+	    } else if(!space1.equals(space2)){
+		if(space1.isFloor() && space2.isFloor()) {
+		    return compareFloors((Floor)space1, (Floor)space2);
+		}		
+		return comparePresentationName(space1, space2);
 	    }
-	    if(!space1.equals(space2)) {
-		int compareTo = Integer.valueOf(space1.getSpaceInformation().getPresentationName().compareTo(space2.getSpaceInformation().getPresentationName()));
-		if(compareTo == 0) {
-		    return space1.getIdInternal().compareTo(space2.getIdInternal());
-		}
-		return compareTo;
-	    }     
+	    
 	    return null;
 	}
     };
+
+    private static int comparePresentationName(Space space1, Space space2) {
+	int compareTo = space1.getSpaceInformation().getPresentationName().compareTo(space2.getSpaceInformation().getPresentationName());	    
+	if(compareTo == 0) {
+	    return space1.getIdInternal().compareTo(space2.getIdInternal());
+	}	
+	return compareTo;
+    }
+
+    private static int compareFloors(Floor floor1, Floor floor2) {
+	int compareTo = floor1.getSpaceInformation().getLevel().compareTo(floor2.getSpaceInformation().getLevel());
+	if(compareTo == 0) {
+	    return floor1.getIdInternal().compareTo(floor2.getIdInternal());
+	}
+	return compareTo;
+    }
 
     protected Space() {
 	super();	
@@ -1103,7 +1111,7 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
+
     private static Set<ExecutionCourse> searchExecutionCoursesByName(SearchType searchType, String[] labelWords) {
 	Set<ExecutionCourse> executionCoursesToTest = null;
 	if(searchType.equals(SearchType.EXECUTION_COURSE) && labelWords != null) {
@@ -1116,7 +1124,7 @@ public abstract class Space extends Space_Base {
 	}
 	return executionCoursesToTest;
     }
-    
+
     public Set<Extension> getActiveSpaceExtensions() {
 	Set<Extension> result = new HashSet<Extension>();
 	YearMonthDay current = new YearMonthDay();
