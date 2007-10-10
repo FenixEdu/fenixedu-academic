@@ -36,7 +36,7 @@ public class FunctionalitySection extends FunctionalitySection_Base {
 
     @Override
     public AvailabilityPolicy getAvailabilityPolicy() {
-        return getFunctionality().getAvailabilityPolicy();
+        return getFunctionality() == null ? null : getFunctionality().getAvailabilityPolicy();
     }
 
     @Override
