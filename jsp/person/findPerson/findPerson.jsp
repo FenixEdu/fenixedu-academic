@@ -269,8 +269,7 @@ function check(e,v){
 							</tr>
 						</logic:present>					
 					</logic:present>									
-					
-					<%--   
+					   
 					<bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
 					<logic:notEmpty name="personSpaces">
 						<tr>
@@ -286,7 +285,6 @@ function check(e,v){
 							</td>																		
 						</tr>			
 					</logic:notEmpty>
-					--%>
 					
 					<logic:present name="personalInfo" property="teacher" >
 						<logic:present  name="personalInfo" property="teacher.category" >
