@@ -34,18 +34,27 @@
 		<fr:edit id="beanWithLabelToSearchID" name="bean" schema="<%= schemaName %>">
 			<fr:destination name="postBack" path="/findSpaces.do?method=prepareSearchSpacesPostBack"/>	
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
-				<fr:property name="columnClasses" value=",,tdclear tderror1" />			
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mbottom0" />
+				<fr:property name="columnClasses" value="width100px,width300px,tdclear tderror1" />			
 			</fr:layout>			
-		</fr:edit>		
-		<html:submit><bean:message key="link.search" bundle="DEFAULT"/></html:submit>
+		</fr:edit>
+
+		<table class="tstyle5 mtop0">
+			<tr>
+			<td class="width100px"></td>
+			<td class="width300px">
+				<html:submit><bean:message key="link.search" bundle="DEFAULT"/></html:submit> &nbsp;
+				<logic:equal name="bean" property="extraOptions" value="false">
+					<a href="#" onclick="document.getElementById('searchform').method.value='searchWithExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.with.extra.options" bundle="DEFAULT"/></a>
+				</logic:equal>
+				<logic:equal name="bean" property="extraOptions" value="true">
+					<a href="#" onclick="document.getElementById('searchform').method.value='searchWithoutExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.without.extra.options" bundle="DEFAULT"/></a>
+				</logic:equal>
+			</td>
+			</tr>
+		</table>
 		
-		<logic:equal name="bean" property="extraOptions" value="false">
-			<a href="#" onclick="document.getElementById('searchform').method.value='searchWithExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.with.extra.options" bundle="DEFAULT"/></a>
-		</logic:equal>
-		<logic:equal name="bean" property="extraOptions" value="true">
-			<a href="#" onclick="document.getElementById('searchform').method.value='searchWithoutExtraOptions';document.getElementById('searchform').submit();"><bean:message key="link.search.without.extra.options" bundle="DEFAULT"/></a>
-		</logic:equal>
+
 		
 	</fr:form>
 	
