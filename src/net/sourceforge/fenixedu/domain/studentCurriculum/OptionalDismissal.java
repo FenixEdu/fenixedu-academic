@@ -22,19 +22,18 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     @Override
     public void setDegreeModule(final DegreeModule degreeModule) {
 	if (degreeModule != null && !(degreeModule instanceof OptionalCurricularCourse)) {
-	    throw new DomainException(
-		    "error.optionalDismissal.DegreeModuleCanOnlyBeOptionalCurricularCourse");
+	    throw new DomainException("error.optionalDismissal.DegreeModuleCanOnlyBeOptionalCurricularCourse");
 	}
 	super.setDegreeModule(degreeModule);
     }
     
     @Override
     public Double getEctsCredits() {
-	if(super.getEctsCredits() != null) {
-	    return super.getEctsCredits();
-	} else {
-	    return getEnrolmentsEcts();
-	}
+	return hasEctsCredits() ? super.getEctsCredits() : getEnrolmentsEcts();
+    }
+    
+    private boolean hasEctsCredits() {
+	return super.getEctsCredits() != null;
     }
 
     @Override
@@ -44,4 +43,5 @@ public class OptionalDismissal extends OptionalDismissal_Base {
 	builder.append("[OD ").append(hasDegreeModule() ? getDegreeModule().getName() :  "").append(" ]\n");
 	return builder;
     }
+    
 }

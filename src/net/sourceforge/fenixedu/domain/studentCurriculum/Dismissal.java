@@ -125,10 +125,10 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return isValid(executionPeriod) && getCurricularCourse().isEquivalent(curricularCourse);
+	return isValid(executionPeriod) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod);
     }
 
-    private boolean isValid(final ExecutionPeriod executionPeriod) {
+    protected boolean isValid(final ExecutionPeriod executionPeriod) {
 	return (executionPeriod == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionPeriod));
     }
 

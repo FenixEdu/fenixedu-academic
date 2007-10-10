@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -176,6 +177,30 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     
     public boolean hasExecutionPeriod() {
 	return getExecutionPeriod() != null;
+    }
+    
+    protected boolean hasCurricularCourse(final CurricularCourse own, final CurricularCourse other, final ExecutionPeriod executionPeriod) {
+	return own.isEquivalent(other) || hasCurricularCourseEquivalence(own, other, executionPeriod);
+    }
+    
+    private boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse, final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
+	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence, final ExecutionPeriod executionPeriod) {
+	boolean result = true;
+	for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCourses()) {
+	    result &= getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
+	    if (!result) {
+		return result;
+	    }
+	}
+	return result;
     }
 
     abstract public boolean isApproved();

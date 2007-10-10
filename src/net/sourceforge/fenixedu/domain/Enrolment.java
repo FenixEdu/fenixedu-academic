@@ -769,9 +769,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return isApproved()
-		    && (getCurricularCourse().isEquivalent(curricularCourse) || hasCurricularCourseEquivalence(
-			    getCurricularCourse(), curricularCourse, executionPeriod));
+	    return isApproved() && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod);
 	} else {
 	    return false;
 	}
@@ -1083,29 +1081,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public Registration getRegistration() {
 	return getStudentCurricularPlan().getRegistration();
-    }
-
-    protected boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse,
-	    final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
-	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse
-		.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
-	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence,
-	    final ExecutionPeriod executionPeriod) {
-	boolean result = true;
-	for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCourses()) {
-	    result &= getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
-	    if (!result) {
-		return result;
-	    }
-	}
-	return result;
     }
 
     @Override
