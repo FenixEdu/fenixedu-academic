@@ -712,7 +712,7 @@ Documentation:
     
     <renderer type="java.lang.Object" layout="values-as-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ValuesAsListRenderer"/>
     
-    <renderer type="java.util.List" layout="separator-list" class="net.sourceforge.fenixedu.presentationTier.renderers.SeparatorListRenderer"/>
+    <renderer type="java.util.Collection" layout="separator-list" class="net.sourceforge.fenixedu.presentationTier.renderers.SeparatorListRenderer"/>
 
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
 

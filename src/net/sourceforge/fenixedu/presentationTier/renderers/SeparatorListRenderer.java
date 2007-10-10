@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
@@ -28,7 +28,17 @@ public class SeparatorListRenderer extends OutputRenderer {
     private String param;
 
     private String link;
+    
+    private String emptyLabel;
 
+
+    public String getEmptyLabel() {
+        return emptyLabel;
+    }
+
+    public void setEmptyLabel(String emptyLabel) {
+        this.emptyLabel = emptyLabel;
+    }
 
     public String getSeparator() {
 	return hasSeparator() ? this.separator : DEFAULT_SEPARATOR;
@@ -83,9 +93,9 @@ public class SeparatorListRenderer extends OutputRenderer {
 
 		final HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 
-		final List<Object> objects = (List<Object>) object;
+		final Collection<Object> objects = (Collection<Object>) object;
+		
 		final Iterator<Object> iterator = objects.iterator();
-
 		while(iterator.hasNext()) {
 
 		    final Object each = iterator.next();
@@ -100,6 +110,10 @@ public class SeparatorListRenderer extends OutputRenderer {
 
 		    blockContainer.addChild(htmlComponent);
 		    blockContainer.addChild(iterator.hasNext() ? new HtmlText(getSeparator()) : new HtmlText());
+		}
+		
+		if(objects.isEmpty() && getEmptyLabel() != null && !StringUtils.isEmpty(getEmptyLabel())) {
+		    blockContainer.addChild(new HtmlText(getEmptyLabel()));
 		}
 
 		return blockContainer;
@@ -126,6 +140,7 @@ public class SeparatorListRenderer extends OutputRenderer {
 	    }
 
 	    private String getSlotValue(Object object, String slotName) {
+		
 		String slotValue = null;		
 		
 		try {
@@ -134,6 +149,7 @@ public class SeparatorListRenderer extends OutputRenderer {
 		} catch (Exception e) {
 		    throw new RuntimeException("could not set param name by reading property '" + slotName + "' from object " + object, e);
 		}
+		
 		return slotValue;
 	    }
 	};  

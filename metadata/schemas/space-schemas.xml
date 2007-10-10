@@ -567,6 +567,16 @@
 	<slot name="space.examCapacity" layout="null-as-label" key="label.space.exam.capacity">
 		<property name="label" value="--"/>		
 	</slot>	
+	<slot name="space.activeSpaceExtensions" layout="separator-list" key="label.space.extensions">
+		<property name="separator" value=", "/>
+		<property name="eachSchema" value="SelectedSpaceExtensionsSchema" />	
+		<property name="eachLayout" value="values" />
+		<property name="emptyLabel" value="--" />
+	</slot>
+</schema>
+
+<schema name="SelectedSpaceExtensionsSchema" type="net.sourceforge.fenixedu.domain.material.Extension" bundle="DEFAULT">
+	<slot name="number"/>	
 </schema>
 
 <schema name="ViewSelectedSpaceContainedSpaces" type="net.sourceforge.fenixedu.domain.space.Space" bundle="DEFAULT">

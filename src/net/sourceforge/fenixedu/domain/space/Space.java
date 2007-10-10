@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -47,7 +48,7 @@ public abstract class Space extends Space_Base {
 
     public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new Comparator<Space>() {
 	public int compare(Space o1, Space o2) {	    
-	    
+
 	    if(o1.isFloor() && o2.isFloor()) {
 		int compareTo = ((Floor)o1).getSpaceInformation().getLevel().compareTo(((Floor)o2).getSpaceInformation().getLevel());
 		if(compareTo == 0) {
@@ -55,16 +56,16 @@ public abstract class Space extends Space_Base {
 		}
 		return compareTo;
 	    }	    
-	    
+
 	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
 	    if(compareTo == 0) {
 		return o1.getIdInternal().compareTo(o2.getIdInternal());
 	    }	    
-	    
+
 	    return compareTo;   
 	}	
     };       
-        
+
     public final static Comparator<Space> COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS = new Comparator<Space>() {
 	public int compare(Space o1, Space o2) {
 
@@ -72,25 +73,25 @@ public abstract class Space extends Space_Base {
 	    if(buildingCheck != null) {
 		return buildingCheck.intValue();
 	    }	    
-	    
+
 	    Integer campusCheck = checkObjects(o1.getSpaceCampus(), o2.getSpaceCampus());
 	    if(campusCheck != null) {
 		return campusCheck.intValue();
 	    }
-	    
+
 	    Integer floorCheck = checkObjects(o1.getSpaceFloorWithIntermediary(), o2.getSpaceFloorWithIntermediary());
 	    if(floorCheck != null) {
 		return floorCheck.intValue();
 	    }
-	    
+
 	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
 	    if(compareTo == 0) {
 		return o1.getIdInternal().compareTo(o2.getIdInternal());
 	    }	    
-	    
+
 	    return compareTo;  	    
 	}
-	
+
 	private Integer checkObjects(Space space1, Space space2) {
 	    if(space1 != null && space2 == null) {
 		return Integer.valueOf(1);
@@ -142,7 +143,7 @@ public abstract class Space extends Space_Base {
 	}
 	return selectedSpaceInformation;
     }
-     
+
     public SpaceInformation getSpaceInformation() {
 	return getSpaceInformation(null);
     }
@@ -1033,50 +1034,52 @@ public abstract class Space extends Space_Base {
 
     public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building, SearchType searchType) {
 
-	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);	
 
 	if(searchType != null && (campus != null || building != null || (labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim())))) {
 
+	    String[] labelWords = getIdentificationWords(labelToSearch);
+	    Set<ExecutionCourse> executionCoursesToTest = searchExecutionCoursesByName(searchType, labelWords);
+
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
-		
-		if(resource.isSpace() && !resource.equals(campus) && !resource.equals(building)) {	
+
+		if(resource.isSpace() && ((Space)resource).isActive() && !resource.equals(campus) && !resource.equals(building)) {	
+
 		    Space space = (Space) resource;
 
-		    if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch.trim())){
-			
-			String[] labelWords = getIdentificationWords(labelToSearch);		    			
+		    if(labelWords != null){
+
 			boolean toAdd = false;
-			
+
 			switch (searchType) {
-			
+
 			case SPACE:
 			    toAdd = space.verifyNameEquality(labelWords);    
 			    break;
-			    
+
 			case PERSON:			    
-			    SortedSet<PersonSpaceOccupation> persons = space.getActivePersonSpaceOccupations();
-			    for (PersonSpaceOccupation personSpaceOccupation : persons) {
+			    SortedSet<PersonSpaceOccupation> personSpaceOccupations = space.getActivePersonSpaceOccupations();
+			    for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
 				if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
 				    toAdd = true;
 				    break;
 				}
 			    } 	
 			    break;			   
-			
-			case EXECUTION_COURSE:
-			    Set<ExecutionCourse> executionCoursesSet = ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet();
-			    for (ExecutionCourse executionCourse : executionCoursesSet) {
-				if(executionCourse.verifyNameEquality(labelWords) && executionCourse.getAllRooms().contains(resource)) {
+
+			case EXECUTION_COURSE:			    
+			    for (ExecutionCourse executionCourse : executionCoursesToTest) {
+				if(executionCourse.getAllRooms().contains(resource)) {
 				    toAdd = true;
 				    break;
 				}
 			    }			    
 			    break;
-			    
+
 			default:
 			    break;
 			}
-																	
+
 			if(!toAdd) {
 			    continue;
 			}
@@ -1097,6 +1100,30 @@ public abstract class Space extends Space_Base {
 		    result.add(space);
 		}
 	    }	
+	}
+	return result;
+    }
+    
+    private static Set<ExecutionCourse> searchExecutionCoursesByName(SearchType searchType, String[] labelWords) {
+	Set<ExecutionCourse> executionCoursesToTest = null;
+	if(searchType.equals(SearchType.EXECUTION_COURSE) && labelWords != null) {
+	    executionCoursesToTest = new HashSet<ExecutionCourse>();
+	    for (ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+		if(executionCourse.verifyNameEquality(labelWords)) {
+		    executionCoursesToTest.add(executionCourse);
+		}
+	    }
+	}
+	return executionCoursesToTest;
+    }
+    
+    public Set<Extension> getActiveSpaceExtensions() {
+	Set<Extension> result = new HashSet<Extension>();
+	YearMonthDay current = new YearMonthDay();
+	for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
+	    if (materialSpaceOccupation.getMaterial().isExtension() && materialSpaceOccupation.isActive(current)) {
+		result.add((Extension) materialSpaceOccupation.getMaterial());
+	    }
 	}
 	return result;
     }
