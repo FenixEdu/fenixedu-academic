@@ -1137,10 +1137,12 @@
             <forward name="site-item" path="basicUnit-item"/>
             <forward name="site-item-deny" path="basicUnit-item-deny"/>
             <forward name="site-item-adviseLogin" path="basicUnit-item-adviseLogin"/>
-            <forward name="unit-organization" path="basicUnit-organization"/>
             <forward name="unit-subunits" path="basicUnit-subunits"/>
-
-
+			<forward name="view-teachers" path="scientific-area-site-teachers"/>
+			<forward name="view-employees" path="scientific-area-site-employees"/>
+			<forward name="view-courses" path="scientific-area-site-courses"/>
+            <forward name="unit-organization" path="scientific-area-organization"/>
+			
 	        <forward name="showPublications" path="show-unit-publications"/>
             <forward name="announcementsAction" path="/scientificArea/announcements.do"/>
             <forward name="eventsAction" path="/scientificArea/events.do"/>

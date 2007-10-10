@@ -731,4 +731,22 @@
 	</definition>	
 
 	
+	<!--  ==== Scientific Area Site -->
+	<definition name="scientific-area-site-teachers" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/teachers.jsp" />
+	</definition>		
+	<definition name="scientific-area-site-employees" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/employees.jsp" />
+	</definition>	
+
+	<definition name="scientific-area-site-courses" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/courses.jsp" />
+	</definition>		
+
+	<definition name="scientific-area-organization" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/organization.jsp" />
+	</definition>		
+		
+	
+
 </tiles-definitions>

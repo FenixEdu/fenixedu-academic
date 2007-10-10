@@ -44,6 +44,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     private boolean showEmployeesSection;
 
+    private boolean showOnlyPeopleWithFunctions;
+    
     private boolean showEmptyEmployeesSection;
 
     private boolean showEmptyFunctions;
@@ -63,6 +65,15 @@ public class UnitStructureRenderer extends OutputRenderer {
     private String dateToKey;
 
     private String dateSinceKey;
+
+    
+    public boolean isShowOnlyPeopleWithFunctions() {
+        return showOnlyPeopleWithFunctions;
+    }
+
+    public void setShowOnlyPeopleWithFunctions(boolean showPeopleWithFunctions) {
+        this.showOnlyPeopleWithFunctions = showPeopleWithFunctions;
+    }
 
     public boolean isShowEmployeesSection() {
 	return showEmployeesSection;
@@ -345,7 +356,9 @@ public class UnitStructureRenderer extends OutputRenderer {
 
 	HtmlList elements = createList(level, null);
 
-	addEmployees(unit, elements, level);
+	if(!isShowOnlyPeopleWithFunctions()) {
+	    addEmployees(unit, elements, level);
+	}
 	addFunctions(unit, elements, level);
 	addSubUnits(unit, elements, level);
 

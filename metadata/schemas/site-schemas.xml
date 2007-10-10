@@ -451,3 +451,36 @@
 <schema name="public.thesis.coordinator" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
     <slot name="personNameWithLogin"/>
 </schema>
+
+<schema name="view.competence.courses" type="net.sourceforge.fenixedu.domain.CompetenceCourse">
+    <slot name="name" layout="link">
+    	<property name="useParent" value="true"/>
+    	<property name="destination" value="view.competence.course"/>
+    </slot>
+</schema>
+
+<schema name="view.person" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" layout="conditional-link">
+		<property name="visibleIf" value="homePageAvailable"/>
+		<property name="useParent" value="true"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${istUsername}"/>	
+		<property name="blankTarget" value="true"/>
+	</slot>
+	<slot name="personWorkPhone" layout="null-as-label">
+		<property name="label" value="label.person.telephone"/>
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="key" value="true"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="showPhone"/>
+	</slot>
+</schema>
+
+
+<schema name="showPhone" type="net.sourceforge.fenixedu.domain.contacts.Phone" bundle="RESEARCHER_RESOURCES">
+	<slot name="number" layout="prefixed">
+		<property name="prefixKey" value="label.person.telephone"/>
+		<property name="prefixBundle" value="APPLICATION_RESOURCES"/>
+		<property name="subLayout" value="default"/>
+	</slot>
+</schema>
