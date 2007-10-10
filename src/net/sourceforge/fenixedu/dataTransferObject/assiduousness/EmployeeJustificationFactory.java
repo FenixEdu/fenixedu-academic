@@ -185,7 +185,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
-			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getBeginTime());
+			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
 			if (numberOfHours == null) {
 			    return new ActionMessage("errors.required", bundle
 				    .getString("label.hoursNumber"));
@@ -317,6 +317,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    setEmployee(justification.getAssiduousness().getEmployee());
 	    setBeginDate(justification.getDate().toYearMonthDay());
 	    setJustificationMotive(justification.getJustificationMotive());
+	    setNotes(justification.getNotes());
 	    if (justification.isLeave()) {
 		setCorrectionType(CorrectionType.JUSTIFICATION);
 		setJustificationType(justification.getJustificationMotive().getJustificationType());
@@ -387,7 +388,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()),
 				getDuration(getBeginTime(), getEndTime()), getJustificationMotive(),
-				null, null, getModifiedBy());
+				null, getNotes(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(
 			    JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(
@@ -441,7 +442,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
-			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getBeginTime());
+			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
 			if (numberOfHours == null) {
 			    return new ActionMessage("errors.required", bundle
 				    .getString("label.hoursNumber"));
@@ -450,7 +451,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.numberOfHoursLongerThanDay");
 			}
 			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(),
-				numberOfHours)) {
+				numberOfHours, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
 			((Leave) getJustification()).modify(getBeginDate().toDateTime(
@@ -680,7 +681,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (ClosedMonth.isMonthClosed(getBeginDate())) {
 			return new ActionMessage("errors.datesInClosedMonth");
 		    }
-		    Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getBeginTime());
+		    Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
 		    if (numberOfHours == null) {
 			return new ActionMessage("errors.required", bundle
 				.getString("label.hoursNumber"));
@@ -988,18 +989,24 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return false;
     }
 
-    protected boolean isOverlapingAnotherBalanceLeave(Assiduousness assiduousness, Duration duration) {
+    protected boolean isOverlapingAnotherBalanceLeave(Assiduousness assiduousness, Duration duration,
+	    Justification justification) {
 	final List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate());
 	if (!leaves.isEmpty()) {
 	    for (Leave leave : leaves) {
-		if (leave.getJustificationMotive().getJustificationType().equals(
-			JustificationType.BALANCE)
-			&& leave.getDuration().equals(duration)) {
+		if ((justification == null || !justification.getIdInternal().equals(
+			leave.getIdInternal()))
+			&& leave.getJustificationMotive().getJustificationType().equals(
+				JustificationType.BALANCE) && leave.getDuration().equals(duration)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
+    }
+
+    protected boolean isOverlapingAnotherBalanceLeave(Assiduousness assiduousness, Duration duration) {
+	return isOverlapingAnotherBalanceLeave(assiduousness, duration, null);
     }
 
     protected String canInsertTimeJustification(Assiduousness assiduousness) {
