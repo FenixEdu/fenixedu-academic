@@ -455,7 +455,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     public void addISTUnit(Unit unit) {
         if (getUnits() == null) {
             setUnits(new DomainListReference<Unit>());
-        }
+        }        
         getUnits().add(unit);
     }
 

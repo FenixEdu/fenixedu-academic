@@ -28,336 +28,341 @@ import org.apache.struts.action.DynaActionForm;
 public class CreateProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateProtocolData(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("protocolFactory", new ProtocolFactory());
-        return mapping.findForward("prepareCreate-protocol-data");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("protocolFactory", new ProtocolFactory());
+	return mapping.findForward("prepareCreate-protocol-data");
     }
 
     public ActionForward prepareCreateProtocolResponsibles(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        request.setAttribute("protocolFactory", protocolFactory);
-        if (isCancelled(request)) {
-            List<Protocol> protocolList = new ArrayList<Protocol>();
-            ProtocolSearch protocolSearch = new ProtocolSearch();
-            for (Protocol protocol : rootDomainObject.getProtocols()) {
-                if (protocolSearch.satisfiedActivity(protocol)) {
-                    protocolList.add(protocol);
-                }
-            }
-            request.setAttribute("protocolSearch", protocolSearch);
-            request.setAttribute("protocols", protocolList);
-            return mapping.findForward("show-protocols");
-        }
-        if (isProtocolNumberValid(protocolFactory)) {
-            protocolFactory.resetSearches();
-            if (validateDates(protocolFactory, request)) {
-                return mapping.findForward("prepareCreate-protocol-responsibles");
-            } else {
-                return mapping.findForward("prepareCreate-protocol-data");
-            }
-        } else {
-            validateDates(protocolFactory, request);
-            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                    "error.protocol.number.alreadyExists"));
-            return mapping.findForward("prepareCreate-protocol-data");
-        }
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	request.setAttribute("protocolFactory", protocolFactory);
+	if (isCancelled(request)) {
+	    List<Protocol> protocolList = new ArrayList<Protocol>();
+	    ProtocolSearch protocolSearch = new ProtocolSearch();
+	    for (Protocol protocol : rootDomainObject.getProtocols()) {
+		if (protocolSearch.satisfiedActivity(protocol)) {
+		    protocolList.add(protocol);
+		}
+	    }
+	    request.setAttribute("protocolSearch", protocolSearch);
+	    request.setAttribute("protocols", protocolList);
+	    return mapping.findForward("show-protocols");
+	}
+	if (isProtocolNumberValid(protocolFactory)) {
+	    protocolFactory.resetSearches();
+	    if (validateDates(protocolFactory, request)) {
+		return mapping.findForward("prepareCreate-protocol-responsibles");
+	    } else {
+		return mapping.findForward("prepareCreate-protocol-data");
+	    }
+	} else {
+	    validateDates(protocolFactory, request);
+	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+		    "error.protocol.number.alreadyExists"));
+	    return mapping.findForward("prepareCreate-protocol-data");
+	}
     }
 
     private boolean validateDates(ProtocolFactory protocolFactory, HttpServletRequest request) {
-        if (protocolFactory.getBeginDate() != null && protocolFactory.getEndDate() != null) {
-            if (!protocolFactory.getBeginDate().isBefore(protocolFactory.getEndDate())) {
-                setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                        "error.protocol.dates.notContinuous"));
-                return false;
-            }
-        }
-        return true;
+	if (protocolFactory.getBeginDate() != null && protocolFactory.getEndDate() != null) {
+	    if (!protocolFactory.getBeginDate().isBefore(protocolFactory.getEndDate())) {
+		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			"error.protocol.dates.notContinuous"));
+		return false;
+	    }
+	}
+	return true;
     }
 
     public ActionForward invalidProtocolData(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("protocolFactory", (ProtocolFactory) getRenderedObject());
-        return mapping.findForward("prepareCreate-protocol-data");
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("protocolFactory", (ProtocolFactory) getRenderedObject());
+	return mapping.findForward("prepareCreate-protocol-data");
     }
 
     public ActionForward insertResponsible(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("back") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-data");
-        }
-        if (request.getParameter("next") != null) {
-            if (protocolFactory.getResponsibles() == null) {
-                setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                        "error.protocol.empty.istResponsibles"));
-                request.setAttribute("protocolFactory", protocolFactory);
-                return mapping.findForward("prepareCreate-protocol-responsibles");
-            }
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        }
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("back") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-data");
+	}
+	if (request.getParameter("next") != null) {
+	    if (protocolFactory.getResponsibles() == null) {
+		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			"error.protocol.empty.istResponsibles"));
+		request.setAttribute("protocolFactory", protocolFactory);
+		return mapping.findForward("prepareCreate-protocol-responsibles");
+	    }
+	    return prepareCreateProtocolUnits(mapping, actionForm, request, response);
+	    //	    request.setAttribute("protocolFactory", protocolFactory);
+	    //	    return mapping.findForward("prepareCreate-protocol-units");
+	}
 
-        if (request.getParameter("cancel") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-responsibles");
-        }
-        if (request.getParameter("createNew") != null) {
-            request.setAttribute("createExternalPerson", "true");
-            protocolFactory.setInternalUnit(false);
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-responsibles");
-        }
+	if (request.getParameter("cancel") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-responsibles");
+	}
+	if (request.getParameter("createNew") != null) {
+	    request.setAttribute("createExternalPerson", "true");
+	    protocolFactory.setInternalUnit(false);
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-responsibles");
+	}
 
-        if (protocolFactory.getPartnerResponsible() == null && protocolFactory.getResponsible() == null) {
-            if (StringUtils.isEmpty(protocolFactory.getResponsibleName())
-                    || protocolFactory.getIstResponsible()) {
-                setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                        "error.protocol.person.selectFromList"));
-            } else if (!protocolFactory.getIstResponsible()) {
-                request.setAttribute("needToCreatePerson", "true");
-            }
-        } else {
-            if (protocolFactory.getIstResponsible()) {
-                if (!protocolFactory.addISTResponsible()) {
-                    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                            "error.protocol.duplicated.responsible"));
-                }
-            } else {
-                if (!protocolFactory.addPartnerResponsible()) {
-                    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                            "error.protocol.duplicated.responsible"));
-                }
-            }
-        }
-        RenderUtils.invalidateViewState();
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-responsibles");
+	if (protocolFactory.getPartnerResponsible() == null && protocolFactory.getResponsible() == null) {
+	    if (StringUtils.isEmpty(protocolFactory.getResponsibleName())
+		    || protocolFactory.getIstResponsible()) {
+		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			"error.protocol.person.selectFromList"));
+	    } else if (!protocolFactory.getIstResponsible()) {
+		request.setAttribute("needToCreatePerson", "true");
+	    }
+	} else {
+	    if (protocolFactory.getIstResponsible()) {
+		if (!protocolFactory.addISTResponsible()) {
+		    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			    "error.protocol.duplicated.responsible"));
+		}
+	    } else {
+		if (!protocolFactory.addPartnerResponsible()) {
+		    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			    "error.protocol.duplicated.responsible"));
+		}
+	    }
+	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
     }
 
     public ActionForward createExternalResponsible(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("cancel") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-responsibles");
-        }
-        if (protocolFactory.getUnitObject() != null) {
-            ExternalContract externalContract = (ExternalContract) executeService(
-                    "InsertExternalPerson", new Object[] { protocolFactory.getResponsibleName(),
-                            protocolFactory.getUnitObject().getUnit() });
-            protocolFactory.addPartnerResponsible(externalContract.getPerson());
-        } else if (request.getParameter("createNew") != null) {
-            request.setAttribute("createExternalUnit", "true");
-        } else {
-            request.setAttribute("createExternalPerson", "true");
-            request.setAttribute("needToCreateUnit", "true");
-        }
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-responsibles");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("cancel") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-responsibles");
+	}
+	if (protocolFactory.getUnitObject() != null) {
+	    ExternalContract externalContract = (ExternalContract) executeService(
+		    "InsertExternalPerson", new Object[] { protocolFactory.getResponsibleName(),
+			    protocolFactory.getUnitObject().getUnit() });
+	    protocolFactory.addPartnerResponsible(externalContract.getPerson());
+	} else if (request.getParameter("createNew") != null) {
+	    request.setAttribute("createExternalUnit", "true");
+	} else {
+	    request.setAttribute("createExternalPerson", "true");
+	    request.setAttribute("needToCreateUnit", "true");
+	}
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
     }
 
     public ActionForward createExternalPersonAndUnit(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("cancel") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            request.setAttribute("createExternalPerson", "true");
-            return mapping.findForward("prepareCreate-protocol-responsibles");
-        }
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("cancel") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    request.setAttribute("createExternalPerson", "true");
+	    return mapping.findForward("prepareCreate-protocol-responsibles");
+	}
 
-        ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson",
-                new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName(),
-                        protocolFactory.getCountry() });
-        protocolFactory.addPartnerResponsible(externalContract.getPerson());
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-responsibles");
+	ExternalContract externalContract = (ExternalContract) executeService("InsertExternalPerson",
+		new Object[] { protocolFactory.getResponsibleName(), protocolFactory.getUnitName(),
+			protocolFactory.getCountry() });
+	protocolFactory.addPartnerResponsible(externalContract.getPerson());
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
     }
 
     public ActionForward prepareCreateProtocolUnits(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        protocolFactory.resetSearches();
-        protocolFactory.addISTUnit(UnitUtils.readInstitutionUnit());
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-units");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	protocolFactory.resetSearches();
+	Unit institutionalUnit = UnitUtils.readInstitutionUnit();
+	if (protocolFactory.getUnits() == null
+		|| !protocolFactory.getUnits().contains(institutionalUnit)) {
+	    protocolFactory.addISTUnit(institutionalUnit);
+	}
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-units");
     }
 
     public ActionForward insertUnit(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("back") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-responsibles");
-        }
-        if (request.getParameter("next") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-files");
-        }
-        if (request.getParameter("cancel") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        }
-        if (request.getParameter("createNew") != null) {
-            request.setAttribute("createExternalUnit", "true");
-            protocolFactory.setInternalUnit(false);
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        }
-        if (request.getParameter("createProtocol") != null) {
-            return createProtocol(mapping, request, protocolFactory);
-        }
-        if (protocolFactory.getUnitObject() == null) {
-            if (StringUtils.isEmpty(protocolFactory.getUnitName()) || protocolFactory.getInternalUnit()) {
-                setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                        "error.protocol.unit.selectFromList"));
-            } else if (!protocolFactory.getInternalUnit()) {
-                request.setAttribute("needToCreateUnit", "true");
-            }
-        } else {
-            if (protocolFactory.getInternalUnit()) {
-                if (!protocolFactory.addISTUnit()) {
-                    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                            "error.protocol.duplicated.unit"));
-                }
-            } else {
-                if (!protocolFactory.addPartnerUnit()) {
-                    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                            "error.protocol.duplicated.unit"));
-                }
-            }
-        }
-        RenderUtils.invalidateViewState();
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-units");
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("back") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-responsibles");
+	}
+	if (request.getParameter("next") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-files");
+	}
+	if (request.getParameter("cancel") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	}
+	if (request.getParameter("createNew") != null) {
+	    request.setAttribute("createExternalUnit", "true");
+	    protocolFactory.setInternalUnit(false);
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	}
+	if (request.getParameter("createProtocol") != null) {
+	    return createProtocol(mapping, request, protocolFactory);
+	}
+	if (protocolFactory.getUnitObject() == null) {
+	    if (StringUtils.isEmpty(protocolFactory.getUnitName()) || protocolFactory.getInternalUnit()) {
+		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			"error.protocol.unit.selectFromList"));
+	    } else if (!protocolFactory.getInternalUnit()) {
+		request.setAttribute("needToCreateUnit", "true");
+	    }
+	} else {
+	    if (protocolFactory.getInternalUnit()) {
+		if (!protocolFactory.addISTUnit()) {
+		    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			    "error.protocol.duplicated.unit"));
+		}
+	    } else {
+		if (!protocolFactory.addPartnerUnit()) {
+		    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+			    "error.protocol.duplicated.unit"));
+		}
+	    }
+	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-units");
     }
 
     private ActionForward createProtocol(ActionMapping mapping, HttpServletRequest request,
-            ProtocolFactory protocolFactory) throws Exception {
-        if (protocolFactory.getPartnerUnits() == null || protocolFactory.getPartnerUnits().size() == 0) {
-            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                    "error.protocol.empty.partnerUnits"));
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        } else if (protocolFactory.getUnits() == null || protocolFactory.getUnits().size() == 0) {
-            setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-                    "error.protocol.empty.units"));
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        } else {
-            Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
-                    new Object[] { protocolFactory });
-            request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
-            return mapping.findForward("view-protocol");
-        }
+	    ProtocolFactory protocolFactory) throws Exception {
+	if (protocolFactory.getPartnerUnits() == null || protocolFactory.getPartnerUnits().size() == 0) {
+	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+		    "error.protocol.empty.partnerUnits"));
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	} else if (protocolFactory.getUnits() == null || protocolFactory.getUnits().size() == 0) {
+	    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+		    "error.protocol.empty.units"));
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	} else {
+	    Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
+		    new Object[] { protocolFactory });
+	    request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
+	    return mapping.findForward("view-protocol");
+	}
     }
 
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("cancel") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        }
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("cancel") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	}
 
-        Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry", new Object[] {
-                protocolFactory.getUnitName(), protocolFactory.getCountry() });
-        protocolFactory.addPartnerUnit(externalUnit);
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-units");
+	Unit externalUnit = (Unit) executeService("CreateExternalUnitByNameAndCountry", new Object[] {
+		protocolFactory.getUnitName(), protocolFactory.getCountry() });
+	protocolFactory.addPartnerUnit(externalUnit);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-units");
     }
 
     public ActionForward removeISTResponsible(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        Person responsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class, getInteger(
-                (DynaActionForm) actionForm, "responsibleID"));
-        protocolFactory.getResponsibles().remove(responsible);
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-responsibles");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	Person responsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class, getInteger(
+		(DynaActionForm) actionForm, "responsibleID"));
+	protocolFactory.getResponsibles().remove(responsible);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
     }
 
     public ActionForward removePartnerResponsible(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        Person partnerResponsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class,
-                getInteger((DynaActionForm) actionForm, "responsibleID"));
-        protocolFactory.getPartnerResponsibles().remove(partnerResponsible);
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-responsibles");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	Person partnerResponsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class,
+		getInteger((DynaActionForm) actionForm, "responsibleID"));
+	protocolFactory.getPartnerResponsibles().remove(partnerResponsible);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
     }
 
     public ActionForward removeISTUnit(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, getInteger(
-                (DynaActionForm) actionForm, "unitID"));
-        protocolFactory.getUnits().remove(unit);
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-units");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, getInteger(
+		(DynaActionForm) actionForm, "unitID"));
+	protocolFactory.getUnits().remove(unit);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-units");
     }
 
     public ActionForward removePartnerUnit(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        Unit partnerUnit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, getInteger(
-                (DynaActionForm) actionForm, "unitID"));
-        protocolFactory.getPartnerUnits().remove(partnerUnit);
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-units");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	Unit partnerUnit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, getInteger(
+		(DynaActionForm) actionForm, "unitID"));
+	protocolFactory.getPartnerUnits().remove(partnerUnit);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-units");
     }
 
     public ActionForward prepareCreateProtocolFiles(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("protocolFactory", (ProtocolFactory) getRenderedObject());
-        return mapping.findForward("prepareCreate-protocol-files");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("protocolFactory", (ProtocolFactory) getRenderedObject());
+	return mapping.findForward("prepareCreate-protocol-files");
     }
 
     public ActionForward addFile(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        if (request.getParameter("back") != null) {
-            request.setAttribute("protocolFactory", protocolFactory);
-            return mapping.findForward("prepareCreate-protocol-units");
-        }
-        if (request.getParameter("createProtocol") != null) {
-            Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
-                    new Object[] { protocolFactory });
-            request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
-            return mapping.findForward("view-protocol");
-        }
-        if (protocolFactory.getInputStream() != null) {
-            protocolFactory.addFile();
-            protocolFactory.resetFile();
-            RenderUtils.invalidateViewState();
-        }
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-files");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	if (request.getParameter("back") != null) {
+	    request.setAttribute("protocolFactory", protocolFactory);
+	    return mapping.findForward("prepareCreate-protocol-units");
+	}
+	if (request.getParameter("createProtocol") != null) {
+	    Protocol protocol = (Protocol) executeService(request, "ExecuteFactoryMethod",
+		    new Object[] { protocolFactory });
+	    request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
+	    return mapping.findForward("view-protocol");
+	}
+	if (protocolFactory.getInputStream() != null) {
+	    protocolFactory.addFile();
+	    protocolFactory.resetFile();
+	    RenderUtils.invalidateViewState();
+	}
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-files");
     }
 
     public ActionForward removeFile(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        protocolFactory.removeFile(dynaActionForm.getString("fileName"));
-        request.setAttribute("protocolFactory", protocolFactory);
-        return mapping.findForward("prepareCreate-protocol-files");
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	protocolFactory.removeFile(dynaActionForm.getString("fileName"));
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-files");
     }
 
     private boolean isProtocolNumberValid(ProtocolFactory protocolFactory) {
-        for (Protocol protocol : rootDomainObject.getProtocols()) {
-            if (protocol.getProtocolNumber().equals(protocolFactory.getProtocolNumber())) {
-                return false;
-            }
-        }
-        return true;
+	for (Protocol protocol : rootDomainObject.getProtocols()) {
+	    if (protocol.getProtocolNumber().equals(protocolFactory.getProtocolNumber())) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     private void setError(HttpServletRequest request, String error, ActionMessage actionMessage) {
-        ActionMessages actionMessages = getMessages(request);
-        actionMessages.add(error, actionMessage);
-        saveMessages(request, actionMessages);
+	ActionMessages actionMessages = getMessages(request);
+	actionMessages.add(error, actionMessage);
+	saveMessages(request, actionMessages);
     }
 }

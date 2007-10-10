@@ -36,6 +36,12 @@ public class LibraryCardSearch implements Serializable {
 	setPartyClassification(partyClassification);
     }
 
+    public LibraryCardSearch(PartyClassification partyClassification, String name, Integer number) {
+	setPartyClassification(partyClassification);
+	setUserName(name);
+	setNumber(number);
+    }
+
     public List<LibraryCardDTO> getSearch() {
 	List<LibraryCardDTO> libraryCardDTOList = new ArrayList<LibraryCardDTO>();
 	for (Person person : getAssociatedPersons(getPartyClassification())) {
@@ -183,4 +189,11 @@ public class LibraryCardSearch implements Serializable {
 	this.number = number;
     }
 
+    public String getNumberString() {
+	if (getNumber() != null) {
+	    return getNumber().toString();
+	} else {
+	    return "";
+	}
+    }
 }

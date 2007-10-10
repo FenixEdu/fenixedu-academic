@@ -29,8 +29,8 @@
 	<p>
 		<html:submit property="modify"><bean:message key="button.modify" bundle="LIBRARY_RESOURCES"/></html:submit>
 		<html:submit><bean:message key="button.generateCard" bundle="LIBRARY_RESOURCES"/></html:submit>
-		<html:cancel property="cancel" bundle="HTMLALT_RESOURCES" altKey="submit.back">
+		<html:submit property="back" bundle="HTMLALT_RESOURCES" altKey="submit.back">
 			<bean:message key="button.back" bundle="LIBRARY_RESOURCES"/>
-		</html:cancel>
+		</html:submit>
 	</p>
 </fr:form>
