@@ -2315,12 +2315,13 @@ public class Person extends Person_Base {
 
 		} else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
 		    mainRoles.add("Bolseiro");
+		
 		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
 		    employee = true;
 		}
 	    }
 	    if (employee && !teacher) {
-		mainRoles.add("Funcionï¿½rio");
+		mainRoles.add("Funcionário");
 	    }
 	}
 	return mainRoles;

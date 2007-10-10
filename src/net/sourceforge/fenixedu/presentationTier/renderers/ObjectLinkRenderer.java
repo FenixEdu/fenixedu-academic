@@ -50,14 +50,14 @@ public class ObjectLinkRenderer extends OutputRenderer {
     private String text;
 
     private String linkIf;
-    
+
     private boolean blankTarget = false;
 
     private boolean indentation = false;
-        
-	public boolean isBlankTarget() {
-		return blankTarget;
-	}
+
+    public boolean isBlankTarget() {
+	return blankTarget;
+    }
 
     /**
      * This property allows you to specify if the link opens in a new
@@ -65,12 +65,12 @@ public class ObjectLinkRenderer extends OutputRenderer {
      *
      * @property
      */
-	public void setBlankTarget(boolean blankTarget) {
-		this.blankTarget = blankTarget;
-	}
-    
+    public void setBlankTarget(boolean blankTarget) {
+	this.blankTarget = blankTarget;
+    }
+
     public String getLinkFormat() {
-        return this.linkFormat;
+	return this.linkFormat;
     }
 
     /**
@@ -85,11 +85,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setLinkFormat(String linkFormat) {
-        this.linkFormat = linkFormat;
+	this.linkFormat = linkFormat;
     }
 
     public boolean isContextRelative() {
-        return this.contextRelative;
+	return this.contextRelative;
     }
 
     /**
@@ -100,11 +100,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setContextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
+	this.contextRelative = contextRelative;
     }
 
     public boolean isModuleRelative() {
-        return this.moduleRelative;
+	return this.moduleRelative;
     }
 
     /**
@@ -114,11 +114,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setModuleRelative(boolean moduleRelative) {
-        this.moduleRelative = moduleRelative;
+	this.moduleRelative = moduleRelative;
     }
 
     public boolean isUseParent() {
-        return this.useParent;
+	return this.useParent;
     }
 
     /**
@@ -134,11 +134,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setUseParent(boolean useParent) {
-        this.useParent = useParent;
+	this.useParent = useParent;
     }
 
     public String getDestination() {
-        return this.destination;
+	return this.destination;
     }
 
     /**
@@ -151,11 +151,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setDestination(String destination) {
-        this.destination = destination;
+	this.destination = destination;
     }
 
     public String getText() {
-        return this.text;
+	return this.text;
     }
 
     /**
@@ -165,11 +165,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setText(String text) {
-        this.text = text;
+	this.text = text;
     }
 
     public String getKey() {
-        return this.key;
+	return this.key;
     }
 
     /**
@@ -180,11 +180,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setKey(String key) {
-        this.key = key;
+	this.key = key;
     }
 
     public String getBundle() {
-        return this.bundle;
+	return this.bundle;
     }
 
     /**
@@ -193,11 +193,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setBundle(String bundle) {
-        this.bundle = bundle;
+	this.bundle = bundle;
     }
 
     public String getSubLayout() {
-        return this.subLayout;
+	return this.subLayout;
     }
 
     /**
@@ -208,11 +208,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setSubLayout(String subLayout) {
-        this.subLayout = subLayout;
+	this.subLayout = subLayout;
     }
 
     public String getSubSchema() {
-        return this.subSchema;
+	return this.subSchema;
     }
 
     /**
@@ -222,11 +222,11 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setSubSchema(String subSchema) {
-        this.subSchema = subSchema;
+	this.subSchema = subSchema;
     }
 
     public String getLinkIf() {
-        return this.linkIf;
+	return this.linkIf;
     }
 
     /**
@@ -235,9 +235,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setLinkIf(String linkIf) {
-        this.linkIf = linkIf;
+	this.linkIf = linkIf;
     }
-    
+
     /**
      * Chooses if the generated elements should be indented or not. This can be
      * usefull when you want to introduce a separator but need to remove extra
@@ -246,128 +246,128 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setIndentation(boolean indentation) {
-    	this.indentation  = indentation;
+	this.indentation  = indentation;
     }
-    
+
     public boolean isIndentation() {
-    	return this.indentation;
+	return this.indentation;
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                Object usedObject = getTargetObject(object);
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		Object usedObject = getTargetObject(object);
 
-                if (usedObject == null) {
-                    return new HtmlText();
-                }
+		if (usedObject == null) {
+		    return new HtmlText();
+		}
 
-                if (isAllowedToLink(usedObject)) {
-                    HtmlLink link = getLink(usedObject);
-                    link.setIndented(isIndentation());
-    
-                    String text = getLinkText();
-                    if (text != null) {
-                        link.setText(text);
-                    } else {
-                        link.setBody(getLinkBody(object));
-                    }
-    
-                    if (isBlankTarget()) {
-                	        link.setTarget(Target.BLANK);
-                    }
-    
-                    return link;
-                }
-                else {
-                    return getLinkBody(object);
-                }
-            }
+		if (isAllowedToLink(usedObject)) {
+		    HtmlLink link = getLink(usedObject);
+		    link.setIndented(isIndentation());
 
-            private boolean isAllowedToLink(Object usedObject) {
-                if (getLinkIf() == null) {
-                    return true;
-                }
-                else {
-                    try {
-                        Object object = PropertyUtils.getProperty(usedObject, getLinkIf());
-                        if (object == null) {
-                            return true;
-                        }
-                        else {
-                            return (Boolean) object;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return false;
-                    } 
-                }
-            }
+		    String text = getLinkText();
+		    if (text != null) {
+			link.setText(text);
+		    } else {
+			link.setBody(getLinkBody(object));
+		    }
 
-            public HtmlComponent getLinkBody(Object object) {
-                Schema findSchema = RenderKit.getInstance().findSchema(getSubSchema());
-                return renderValue(object, findSchema, getSubLayout());
-            }
+		    if (isBlankTarget()) {
+			link.setTarget(Target.BLANK);
+		    }
 
-            private String getLinkText() {
-                if (getText() != null) {
-                    return getText();
-                }
+		    return link;
+		}
+		else {
+		    return getLinkBody(object);
+		}
+	    }
 
-                if (getKey() == null) {
-                    return null;
-                }
+	    private boolean isAllowedToLink(Object usedObject) {
+		if (getLinkIf() == null) {
+		    return true;
+		}
+		else {
+		    try {
+			Object object = PropertyUtils.getProperty(usedObject, getLinkIf());
+			if (object == null) {
+			    return true;
+			}
+			else {
+			    return (Boolean) object;
+			}
+		    } catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		    } 
+		}
+	    }
 
-                return RenderUtils.getResourceString(getBundle(), getKey());
-            }
+	    public HtmlComponent getLinkBody(Object object) {
+		Schema findSchema = RenderKit.getInstance().findSchema(getSubSchema());
+		return renderValue(object, findSchema, getSubLayout());
+	    }
 
-            private HtmlLink getLink(Object usedObject) {
-                HtmlLink link = new HtmlLink();
+	    private String getLinkText() {
+		if (getText() != null) {
+		    return getText();
+		}
 
-                String url;
+		if (getKey() == null) {
+		    return null;
+		}
 
-                if (getDestination() != null) {
-                    ViewDestination destination = getContext().getViewState().getDestination(
-                            getDestination());
+		return RenderUtils.getResourceString(getBundle(), getKey());
+	    }
 
-                    if (destination != null) {
-                        link.setModule(destination.getModule());
-                        url = destination.getPath();
-                    } else {
-                        url = "#";
-                    }
-                } else {
-                    if (getLinkFormat() != null) {
-                        url = getLinkFormat();
-                    } else {
-                        url = "#";
-                    }
-                }
+	    private HtmlLink getLink(Object usedObject) {
+		HtmlLink link = new HtmlLink();
 
-                link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
+		String url;
 
-                link.setModuleRelative(isModuleRelative());
-                link.setContextRelative(isContextRelative());
-                
-                return link;
-            }
+		if (getDestination() != null) {
+		    ViewDestination destination = getContext().getViewState().getDestination(
+			    getDestination());
 
-        };
+		    if (destination != null) {
+			link.setModule(destination.getModule());
+			url = destination.getPath();
+		    } else {
+			url = "#";
+		    }
+		} else {
+		    if (getLinkFormat() != null) {
+			url = getLinkFormat();
+		    } else {
+			url = "#";
+		    }
+		}
+
+		link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
+
+		link.setModuleRelative(isModuleRelative());
+		link.setContextRelative(isContextRelative());
+
+		return link;
+	    }
+
+	};
     }
 
     protected Object getTargetObject(Object object) {
-        if (isUseParent()) {
-            if (getContext().getParentContext() != null) {
-                return getContext().getParentContext().getMetaObject().getObject();
-            } else {
-                return null;
-            }
-        } else {
-            return object;
-        }
+	if (isUseParent()) {
+	    if (getContext().getParentContext() != null) {
+		return getContext().getParentContext().getMetaObject().getObject();
+	    } else {
+		return null;
+	    }
+	} else {
+	    return object;
+	}
     }
 
 }

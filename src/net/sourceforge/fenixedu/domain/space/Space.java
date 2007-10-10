@@ -978,10 +978,7 @@ public abstract class Space extends Space_Base {
 	List<Space> result = new ArrayList<Space>();	
 	result.add(this);	
 	Space suroundingSpace = getSuroundingSpace();
-	while(suroundingSpace != null) {
-	    if(suroundingSpace.isFloor()) {
-		suroundingSpace = suroundingSpace.getSpaceFloor();
-	    }
+	while(suroundingSpace != null) {	    
 	    result.add(0, suroundingSpace);
 	    suroundingSpace = suroundingSpace.getSuroundingSpace();
 	}	

@@ -588,5 +588,11 @@
 </schema>
 
 <schema name="ViewActivePersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			
-	<slot name="person.name"/>		
+	<slot name="person.name" layout="conditional-link">
+		<property name="useParent" value="true"/>
+		<property name="visibleIf" value="person.homePageAvailable"/>
+		<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/homepage/${person.istUsername}"/>	
+		<property name="blankTarget" value="true"/>
+	</slot>		
 </schema>
