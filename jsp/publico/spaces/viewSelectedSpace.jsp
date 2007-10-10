@@ -42,32 +42,34 @@
 		</fr:view>
 	</logic:notEmpty>
 
+	<%-- 
 	<logic:notEmpty name="mostRecentBlueprint">
 
 		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.blueprint" bundle="DEFAULT"/></b></p>
 
 		<bean:define id="urlToImage"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpaceBlueprint&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&amp;viewSpaceIdentifications=true&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>			
 		<div style="width: 710px; height: 510px; border: 1px solid #ccc; padding: 10px 5px 5px 10px;">
-		<div style="width: 700px; height: 500px; overflow: scroll;">
-			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px solid #ddd; padding: 10px;"/>
-			<map id ="roomLinksMap" name="roomLinksMap">
-				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
-					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
-					<logic:iterate id="blueprintTextRectangle" name="blueprintTextRectanglesEntry" property="value">
-						<bean:define id="p1" name="blueprintTextRectangle" property="p1" />				
-						<bean:define id="p2" name="blueprintTextRectangle" property="p2" />				
-						<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
-						<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
-						<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 									
-						<bean:define id="urlToCoords"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpace&amp;spaceID=<bean:write name="blueprintSpace" property="idInternal"/>&amp;viewSpaceIdentifications=true</bean:define>
-						<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
-					</logic:iterate>										
-				</logic:iterate>					
-			</map>
-		</div>
+			<div style="width: 700px; height: 500px; overflow: scroll;">
+				<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px solid #ddd; padding: 10px;"/>
+				<map id ="roomLinksMap" name="roomLinksMap">
+					<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
+						<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
+						<logic:iterate id="blueprintTextRectangle" name="blueprintTextRectanglesEntry" property="value">
+							<bean:define id="p1" name="blueprintTextRectangle" property="p1" />				
+							<bean:define id="p2" name="blueprintTextRectangle" property="p2" />				
+							<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
+							<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
+							<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 									
+							<bean:define id="urlToCoords"><%= request.getContextPath() %>/publico/findSpaces.do?method=viewSpace&amp;spaceID=<bean:write name="blueprintSpace" property="idInternal"/>&amp;viewSpaceIdentifications=true</bean:define>
+							<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
+						</logic:iterate>										
+					</logic:iterate>					
+				</map>
+			</div>
 		</div>					
 					
 	</logic:notEmpty>
+	--%>
 	
 	<logic:notEmpty name="containedSpaces">
 		
