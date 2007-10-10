@@ -110,7 +110,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	
 	Space space = getSpaceFromParameter(request);	
 	if(space != null) {
-	    setBlueprintTextRectangles(request, space);	
+	    //setBlueprintTextRectangles(request, space);	
 	    Set<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
 	    request.setAttribute("containedSpaces", containedSpaces);
 	    request.setAttribute("selectedSpace", new FindSpacesBean(space));	    
