@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # -----------------------------------------------------------------------------
 #
 #   Runs sql scripts to update database from previous release.
@@ -26,4 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "update table AccountabilityType" updateAccountabilityType.sql
 
