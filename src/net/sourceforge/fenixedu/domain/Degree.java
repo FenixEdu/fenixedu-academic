@@ -369,6 +369,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    public List<DegreeCurricularPlan> getPastDegreeCurricularPlans() {
+	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+	for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.PAST) {
+		result.add(degreeCurricularPlan);
+	    }
+	}
+	return result;
+    }
+    
     public List<DegreeCurricularPlan> getDegreeCurricularPlansForYear(ExecutionYear year) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
@@ -838,20 +848,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     final private Collection<Coordinator> getCurrentCoordinators(final boolean responsible) {
         SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
         years.addAll(getDegreeCurricularPlansExecutionYears());
-        
+
         ExecutionYear current = ExecutionYear.readCurrentExecutionYear();
         for (ExecutionYear year : years) {
             if (year.isAfter(current)) {
                 continue;
-            }
-            
+        }
+
             Collection<Coordinator> coordinators = getCoordinators(year, responsible);
             if (! coordinators.isEmpty()) {
                 return coordinators;
-            }
-        }
-        
-        return Collections.emptyList();
+	    }
+	}
+	
+	return Collections.emptyList();
     }
     
     final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {
