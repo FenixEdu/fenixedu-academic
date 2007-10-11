@@ -9,13 +9,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SearchType;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SpacesSearchCriteriaType;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
@@ -100,7 +101,7 @@ public abstract class Space extends Space_Base {
 		}		
 		return comparePresentationName(space1, space2);
 	    }
-	    
+
 	    return null;
 	}
     };
@@ -186,7 +187,17 @@ public abstract class Space extends Space_Base {
     public SortedSet<Blueprint> getOrderedBlueprints() {
 	return new TreeSet<Blueprint>(getBlueprints());
     }
-
+    
+    public List<WrittenEvaluationSpaceOccupation> getWrittenEvaluationSpaceOccupations() {
+	List<WrittenEvaluationSpaceOccupation> occupations = new ArrayList<WrittenEvaluationSpaceOccupation>();
+	for (ResourceAllocation allocation : getResourceAllocations()) {
+	    if (allocation.isWrittenEvaluationSpaceOccupation()) {
+		occupations.add((WrittenEvaluationSpaceOccupation) allocation);
+	    }
+	}
+	return occupations;
+    }
+    
     public List<PersonSpaceOccupation> getPersonSpaceOccupations() {
 	List<PersonSpaceOccupation> personSpaceOccupations = new ArrayList<PersonSpaceOccupation>();
 	for (ResourceAllocation allocation : getResourceAllocations()) {
@@ -230,7 +241,7 @@ public abstract class Space extends Space_Base {
 	}
 	return unitSpaceOccupations;
     }
-
+    
     public Set<? extends Space> getActiveContainedSpacesByType(Class<? extends Space> clazz){
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
 	List<Space> containedSpaces = getContainedSpaces();
@@ -1037,7 +1048,7 @@ public abstract class Space extends Space_Base {
 	return builder.toString();
     }
 
-    public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building, SearchType searchType) {
+    public static Set<Space> findSpaces(String labelToSearch, Campus campus, Building building, SpacesSearchCriteriaType searchType) {
 
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS);	
 
@@ -1081,6 +1092,21 @@ public abstract class Space extends Space_Base {
 			    }			    
 			    break;
 
+			case WRITTEN_EVALUATION:
+			    for (ExecutionCourse executionCourse : executionCoursesToTest) {				
+				SortedSet<WrittenEvaluation> writtenEvaluations = executionCourse.getWrittenEvaluations();
+				for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {				    
+				    if(writtenEvaluation.getAssociatedRooms().contains(resource)) {
+					toAdd = true;
+					break;
+				    }				    
+				}	
+				if(toAdd) {
+				    break;
+				}
+			    }			    			    
+			    break;
+
 			default:
 			    break;
 			}
@@ -1109,9 +1135,10 @@ public abstract class Space extends Space_Base {
 	return result;
     }
 
-    private static Set<ExecutionCourse> searchExecutionCoursesByName(SearchType searchType, String[] labelWords) {
+    private static Set<ExecutionCourse> searchExecutionCoursesByName(SpacesSearchCriteriaType searchType, String[] labelWords) {
 	Set<ExecutionCourse> executionCoursesToTest = null;
-	if(searchType.equals(SearchType.EXECUTION_COURSE) && labelWords != null) {
+	if(labelWords != null && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) 
+		|| searchType.equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
 	    executionCoursesToTest = new HashSet<ExecutionCourse>();
 	    for (ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
 		if(executionCourse.verifyNameEquality(labelWords)) {

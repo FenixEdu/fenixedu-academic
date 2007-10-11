@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean;
-import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.SearchType;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Building;
@@ -73,7 +73,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building, bean.getSearchType());
 	    for (Space space : resultSpaces) {
-		result.add(new FindSpacesBean(space));
+		result.add(new FindSpacesBean(space, bean.getSearchType(), ExecutionPeriod.readActualExecutionPeriod()));
 	    }	   
 	    
 	    request.setAttribute("foundSpaces", result);
@@ -113,7 +113,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    //setBlueprintTextRectangles(request, space);	
 	    Set<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
 	    request.setAttribute("containedSpaces", containedSpaces);
-	    request.setAttribute("selectedSpace", new FindSpacesBean(space));	    
+	    request.setAttribute("selectedSpace", new FindSpacesBean(space, ExecutionPeriod.readActualExecutionPeriod()));	    
 	}
 	
 	return mapping.findForward("viewSelectedSpace");

@@ -18,17 +18,16 @@
 		</fr:layout>								
 	</fr:view>
 
-
-<p>	
-	<html:link page="/findSpaces.do?method=prepareSearchSpaces"> &lt; <bean:message key="link.search.for.spaces.again"/></html:link>		
-</p>
-<logic:equal name="selectedSpace" property="withSchedule" value="true">
-	<bean:define id="viewScheduleLink">/viewRoom.do?method=roomViewer&amp;roomName=<bean:write name="selectedSpace" property="space.identification"/></bean:define>				
-	<p>
-		<html:link target="_blank" page="<%= viewScheduleLink %>"><bean:message key="link.view.schedule"/></html:link>		
-	</p>
-</logic:equal>
+	<p><html:link page="/findSpaces.do?method=prepareSearchSpaces"> &lt; <bean:message key="link.search.for.spaces.again"/></html:link><p>
+	<logic:equal name="selectedSpace" property="withSchedule" value="true">
+		<bean:define id="viewScheduleLink">/viewRoom.do?method=roomViewer&amp;roomName=<bean:write name="selectedSpace" property="space.identification"/></bean:define>				
+		<p><html:link target="_blank" page="<%= viewScheduleLink %>"><bean:message key="link.view.schedule"/></html:link></p>
+	</logic:equal>
 		
+	<logic:notEmpty name="selectedSpace" property="space.writtenEvaluationSpaceOccupations">
+		<bean:define id="viewWrittenEvaluationsLink">/spaces/writtenEvaluationsByRoom.faces?executionPeriodOID=<bean:write name="selectedSpace" property="executionPeriod.idInternal"/>&selectedRoomID=<bean:write name="selectedSpace" property="space.idInternal"/></bean:define>				
+		<p><html:link target="_blank" page="<%= viewWrittenEvaluationsLink %>"><bean:message key="link.view.written.evaluations"/></html:link></p>
+	</logic:notEmpty>
 
 	<logic:notEmpty name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.persons" bundle="DEFAULT"/></b></p>		
@@ -40,6 +39,7 @@
 	   			<fr:property name="eachSchema" value="ViewActivePersonSpaceOccupations"/>
 	   		</fr:layout>
 		</fr:view>
+		
 	</logic:notEmpty>
 
 	<%-- 

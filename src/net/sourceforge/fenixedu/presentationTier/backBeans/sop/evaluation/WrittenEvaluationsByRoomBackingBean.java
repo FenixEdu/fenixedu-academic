@@ -145,6 +145,11 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                 for (final String roomIDString : selectedRoomIDStrings) {
                     selectedRoomIDs.add(Integer.valueOf(roomIDString));
                 }
+           
+            } else if(getRequest().getParameter("selectedRoomID") != null){
+        	String roomID = (String) getRequest().getParameter("selectedRoomID");
+        	selectedRoomIDs = new HashSet<Integer>(1);
+        	selectedRoomIDs.add(Integer.valueOf(roomID));
             }
         }
         return selectedRoomIDs;
@@ -286,7 +291,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	}
     }
 
-    private boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, ExecutionPeriod executionPeriod) {
+    protected boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, ExecutionPeriod executionPeriod) {
 	for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
 	    if(executionCourse.getExecutionPeriod() == executionPeriod) {
 		return true;
@@ -348,7 +353,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	return null;
     }
 
-    private String constructEvaluationCalendarPresentarionString(
+    protected String constructEvaluationCalendarPresentarionString(
 	    final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	if (writtenEvaluation instanceof WrittenTest) {
