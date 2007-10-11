@@ -67,14 +67,24 @@
 		<p class="mtop15">						
 			<fr:view name="foundSpaces" schema="PublicFoundSpaceInfo">			
 				<fr:layout name="tabular">
+					
 					<fr:property name="classes" value="tstyle2 mtop05" />
 					<fr:property name="columnClasses" value=",acenter,acenter" />					
+					
 					<fr:property name="link(viewSchedule)" value="/viewRoom.do?method=roomViewer" />
 					<fr:property name="param(viewSchedule)" value="space.identification/roomName" />
 					<fr:property name="key(viewSchedule)" value="link.view.schedule" />
 					<fr:property name="bundle(viewSchedule)" value="DEFAULT" />
 					<fr:property name="order(viewSchedule)" value="0" />
-					<fr:property name="visibleIf(viewSchedule)" value="withSchedule"/>						
+					<fr:property name="visibleIf(viewSchedule)" value="withSchedule"/>
+					
+					<fr:property name="link(viewWrittenEvaluation)" value="/spaces/writtenEvaluationsByRoom.faces" />					
+					<fr:property name="param(viewWrittenEvaluation)" value="space.idInternal/selectedRoomID,executionPeriod.idInternal/executionPeriodOID" />
+					<fr:property name="key(viewWrittenEvaluation)" value="link.view.written.evaluations" />
+					<fr:property name="bundle(viewWrittenEvaluation)" value="DEFAULT" />
+					<fr:property name="order(viewWrittenEvaluation)" value="1" />
+					<fr:property name="visibleIf(viewWrittenEvaluation)" value="withWrittenEvaluations"/>
+												
 				</fr:layout>
 			</fr:view>
 		</p>		
