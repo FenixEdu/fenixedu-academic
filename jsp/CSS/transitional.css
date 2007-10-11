@@ -1340,13 +1340,13 @@ border-top: none;
 }
 
 /* showsection1: section header as h2, item as h3 */
-div.showsection1 h1.section { font: bold 14px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
-div.showsection1 h2.item { font: bold 12px "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #333; margin-bottom: 0; }
+div.showsection1 h1.section { font: bold 14px "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
+div.showsection1 h2.item { font: bold 12px "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; margin-bottom: 0; }
 /* showsection2: section header as h1, item as h2 */
-div.showsection2 h1.section { color: #069; font: 18px/0.75em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; clear: both; }
-div.showsection2 h2.item { font: bold 14px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
+div.showsection2 h1.section { color: #069; font: 18px/0.75em "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; clear: both; }
+div.showsection2 h2.item { font: bold 14px "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
 /* showsection3: item as h1 */
-div.showsection3 h2.item { color: #069; font: 18px/0.75em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; clear: both; }
+div.showsection3 h2.item { color: #069; font: 18px/0.75em "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; clear: both; }
 
 a.aimage img {
 padding: 0.5em;
@@ -1401,7 +1401,7 @@ width: 100%;
 border-collapse: collapse;
 }
 .usitechannel1, .usitechannel2 {
-font-family: "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+font-family: "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif;
 font-weight: bold;
 font-size: 15px;
 text-align: left;
@@ -1414,7 +1414,7 @@ height: 25px;
 
 .usitechannels td {
 width: 50%;
-font-family: "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+font-family: "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif;
 font-size: 11px;
 color: #333;
 background: #fff;

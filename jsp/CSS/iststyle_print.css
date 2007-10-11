@@ -86,7 +86,7 @@ td#main p { font: 11pt/1.5em Arial, Helvetica, sans-serif; color: #333; }
 .tab_lay { border: 1pt solid #999; font-size: 11pt; }
 .tab_lay th { color: #333; background: #ccc; text-align: left; padding: 2.5pt; }
 .tab_lay td { padding: 5pt; height: 2em; }
-.tab_lay td.subheader { font: bold 11pt "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 2.5pt 2.5pt 2.5pt 2.5pt; }
+.tab_lay td.subheader { font: bold 11pt "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 2.5pt 2.5pt 2.5pt 2.5pt; }
 .tab_lay td.bluecell { background: #EDF3FE; }
 .tab_themes { border: 1pt solid #999; font-size: 11pt; }
 .tab_themes td { line-height: 1.5em; padding: 2.5pt; height: 2em; }
