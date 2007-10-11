@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -67,7 +68,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
 		beginDate.dayOfMonth().getMaximumValue());
 	List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>();
-	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(beginDate, endDate)) {
+	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(
+		AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE, beginDate, endDate)) {
 	    if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
 		List<Employee> employeeList = personFunction.getFunction().getUnit()
 			.getAllWorkingEmployees(beginDate, endDate);

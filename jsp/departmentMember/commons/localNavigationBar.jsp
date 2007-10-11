@@ -77,7 +77,8 @@
 		</ul>	
 		<%
 			IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {
+        	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE,
+    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
         %>
 		<ul style="margin-top: 1em">
 			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>

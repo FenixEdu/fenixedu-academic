@@ -878,6 +878,11 @@ public class Person extends Person_Base {
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
 
+    public Collection<PersonFunction> getPersonFunctions(AccountabilityTypeEnum accountabilityTypeEnum) {
+	return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum,
+		PersonFunction.class);
+    }
+
     public Collection<PersonFunction> getPersonFunctions(Function function) {
 	Collection<PersonFunction> personFunctions = getPersonFunctions();
 
@@ -895,15 +900,20 @@ public class Person extends Person_Base {
 	return personFunctions;
     }
 
-    public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
+    public List<PersonFunction> getPersonFuntions(AccountabilityTypeEnum accountabilityTypeEnum,
+	    YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+		accountabilityTypeEnum, PersonFunction.class)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		result.add((PersonFunction) accountability);
 	    }
 	}
 	return result;
+    }
+
+    public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
+	return getPersonFuntions(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, begin, end);
     }
 
     public List<PersonFunction> getPersonFunctions(Unit unit) {
@@ -929,10 +939,7 @@ public class Person extends Person_Base {
 
 	YearMonthDay today = new YearMonthDay();
 
-	for (PersonFunction personFunction : getPersonFunctions()) {
-	    if (!accountabilityTypeEnum.equals(personFunction.getFunction().getType())) {
-		continue;
-	    }
+	for (PersonFunction personFunction : getPersonFunctions(accountabilityTypeEnum)) {
 	    if (active != null && (personFunction.isActive(today) == !active)) {
 		continue;
 	    }
@@ -958,8 +965,10 @@ public class Person extends Person_Base {
 
     }
 
-    public boolean hasFunctionType(FunctionType functionType) {
-	for (PersonFunction accountability : getActivePersonFunctions()) {
+    public boolean hasFunctionType(FunctionType functionType,
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
+	for (PersonFunction accountability : getPersonFunctions(null, false, true, false,
+		accountabilityTypeEnum)) {
 	    if (accountability.getFunction().getFunctionType() == functionType) {
 		return true;
 	    }
@@ -2680,13 +2689,13 @@ public class Person extends Person_Base {
 	}
 	return 0;
     }
-    
+
     public List<Space> getActivePersonSpaces() {
 	List<Space> result = new ArrayList<Space>();
 	Set<PersonSpaceOccupation> personSpaceOccupationsSet = getPersonSpaceOccupationsSet();
 	YearMonthDay current = new YearMonthDay();
 	for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupationsSet) {
-	    if(personSpaceOccupation.contains(current)) {
+	    if (personSpaceOccupation.contains(current)) {
 		result.add(personSpaceOccupation.getSpace());
 	    }
 	}

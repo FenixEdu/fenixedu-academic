@@ -26,7 +26,8 @@
 
 	
     <% IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-    if (userView.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {%>
+    if (userView.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE,
+        		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {%>
 	<li class="navheader"><bean:message
 		key="title.assiduousnessResponsible" /></li>
 	<li><html:link
