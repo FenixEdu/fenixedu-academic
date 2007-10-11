@@ -61,7 +61,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	//                && StringUtils.isEmpty(libraryCardSearch.getUserName())) {
 	//            addMessage(request, "message.card.searchPerson.emptyUserName");
 	//        }
-	libraryCardSearch.getSearch();
+	libraryCardSearch.doSearch();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("libraryCardSearch", libraryCardSearch);
 	return mapping.findForward("show-users");
@@ -129,6 +129,13 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardToCreate");
 
+	if(!libraryCardDTO.getUnlimitedCard() && libraryCardDTO.getValidUntil() == null) {
+	    setError(request, "error.card.date.canNotBeNull");
+	    request.setAttribute("presentDate", "presentDate");
+	    request.setAttribute("libraryCardDTO", libraryCardDTO);
+	    return mapping.findForward("create-card");
+	}
+	
 	boolean validationError = validateNamesMaxLength(request, libraryCardDTO);
 	if (validationError) {
 	    request.setAttribute("libraryCardDTO", libraryCardDTO);
@@ -469,14 +476,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName()
 		    .length(), maxUserNameLength);
 	}
-
+	
 	if (!libraryCardDTO.getUnlimitedCard()) {
 	    request.setAttribute("presentDate", "presentDate");
 	} else {
 	    libraryCardDTO.setValidUntil(null);
-	}
-	request.setAttribute("libraryCardDTO", libraryCardDTO);
+	}	
 	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
+	request.setAttribute("libraryCardDTO", libraryCardDTO);
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("create-card");
     }
@@ -534,6 +541,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	saveMessages(request, actionMessages);
     }
 
+    private void setError(HttpServletRequest request, String errorMsg) {
+	ActionMessages actionMessages = getMessages(request);
+	actionMessages.add("error", new ActionMessage(errorMsg));
+	saveMessages(request, actionMessages);
+    }
+    
     private void setError(HttpServletRequest request, String errorMsg, int parameter1, int parameter2) {
 	ActionMessages actionMessages = getMessages(request);
 	actionMessages.add("error", new ActionMessage(errorMsg, parameter1, parameter2));

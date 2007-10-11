@@ -29,6 +29,8 @@ public class LibraryCardSearch implements Serializable {
 
     private Integer number;
 
+    private List<LibraryCardDTO> searchResult;
+
     public LibraryCardSearch() {
     }
 
@@ -42,9 +44,11 @@ public class LibraryCardSearch implements Serializable {
 	setNumber(number);
     }
 
-    public List<LibraryCardDTO> getSearch() {
+    public void doSearch() {
 	List<LibraryCardDTO> libraryCardDTOList = new ArrayList<LibraryCardDTO>();
-	for (Person person : getAssociatedPersons(getPartyClassification())) {
+	List<Person> resultList = new ArrayList<Person>(getAssociatedPersons(getPartyClassification()));
+	resultList.addAll(getPersonsByCardClassification(getPartyClassification()));
+	for (Person person : resultList) {
 	    if (satisfiesSearch(person)) {
 		if (person.hasLibraryCard()) {
 		    libraryCardDTOList.add(new LibraryCardDTO(person.getLibraryCard()));
@@ -53,7 +57,7 @@ public class LibraryCardSearch implements Serializable {
 		}
 	    }
 	}
-	return libraryCardDTOList;
+	setSearchResult(libraryCardDTOList);
     }
 
     private List<Person> getAssociatedPersons(PartyClassification partyClassification) {
@@ -102,15 +106,20 @@ public class LibraryCardSearch implements Serializable {
 	return new ArrayList<Person>(persons);
     }
 
+    private List<Person> getPersonsByCardClassification(PartyClassification partyClassification) {
+	List<Person> persons = new ArrayList<Person>();
+	for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
+	    if (libraryCard.getPerson().getPartyClassification().equals(PartyClassification.PERSON)
+		    && libraryCard.getPartyClassification().equals(partyClassification)) {
+		persons.add(libraryCard.getPerson());
+	    }
+	}
+	return persons;
+    }
+
     private List<Person> getPersons(String userName, int size) {
 	if (StringUtils.isEmpty(userName)) {
-	    List<Person> persons = new ArrayList<Person>();
-	    for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
-		if (libraryCard.getPartyClassification().equals(PartyClassification.PERSON)) {
-		    persons.add(libraryCard.getPerson());
-		}
-	    }
-	    return persons;
+	    return getPersonsByCardClassification(PartyClassification.PERSON);
 	} else {
 	    Collection<PersonName> personNames = PersonName.find(userName, size);
 	    List<Person> persons = new ArrayList<Person>();
@@ -135,7 +144,7 @@ public class LibraryCardSearch implements Serializable {
 			    && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
 			persons.add(scp.getRegistration().getPerson());
 		    } else { // *                                       
-			if (scp.getRegistration().getStudent().getTransitedRegistrations().isEmpty()) {
+			if (!scp.getRegistration().getStudent().hasTransitionRegistrations()) {
 			    persons.add(scp.getRegistration().getPerson());
 			}
 		    }
@@ -156,9 +165,14 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesCategory(Person person) {
+	PartyClassification personClassification = person.getPartyClassification();
+	if (person.getLibraryCard() != null && personClassification.equals(PartyClassification.PERSON)
+		&& person.getLibraryCard().getPartyClassification().equals(getPartyClassification())) {
+	    return true;
+	}
 	PartyClassification partyClassification = person.getLibraryCard() != null ? person
-		.getLibraryCard().getPartyClassification() : person.getPartyClassification();
-	return getPartyClassification() == null || getPartyClassification().equals(partyClassification);
+		.getLibraryCard().getPartyClassification() : personClassification;
+	return getPartyClassification().equals(partyClassification);
     }
 
     private boolean satisfiesNumber(Person person) {
@@ -195,5 +209,13 @@ public class LibraryCardSearch implements Serializable {
 	} else {
 	    return "";
 	}
+    }
+
+    public List<LibraryCardDTO> getSearchResult() {
+	return searchResult;
+    }
+
+    public void setSearchResult(List<LibraryCardDTO> searchResult) {
+	this.searchResult = searchResult;
     }
 }

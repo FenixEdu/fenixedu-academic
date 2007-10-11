@@ -76,6 +76,9 @@
 			<fr:destination name="input" path="<%= "/cardManagement.do?method=prepareGenerateCard&personID=" + personID.toString() %>"/>
 		</fr:edit>
 	</logic:present>
+	<logic:notPresent name="presentDate">
+		<fr:edit id="validUntil" name="libraryCardDTO" visible="false"/>
+	</logic:notPresent>
 
 	<p>
 		<html:submit ><bean:message key="button.confirm" bundle="LIBRARY_RESOURCES"/></html:submit>

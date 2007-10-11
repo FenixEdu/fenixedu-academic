@@ -170,8 +170,16 @@
 		<property name="eachLayout" value="this-does-not-exist" />
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider"/>
 	</slot>
-	<slot name="partyClassification" key="label.card.category" read-only="true"/>
-    <slot name="validUntil" key="label.card.date" read-only="true"/>	 
+	<slot name="partyClassification" key="label.card.category" layout="menu-select">
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
+		<property name="nullOptionHidden" value="true"/>		
+	</slot>
+    <slot name="validUntil" key="label.card.date">
+  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
 </schema>
 
 <schema name="library.card.edit" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
@@ -191,7 +199,11 @@
 		<property name="size" value="60"/>
 		<property name="maxLength" value="50"/>
 	</slot>
-	<slot name="partyClassification" key="label.card.category" read-only="true"/>
+	<slot name="partyClassification" key="label.card.category" layout="menu-select">
+	    <property name="eachLayout" value="this-does-not-exist" />
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
+		<property name="nullOptionHidden" value="true"/>		
+	</slot>	
     <slot name="validUntil" key="label.card.date">
    		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="required" value="false"/>

@@ -49,9 +49,8 @@
 			</html:link>
 		</p>
 	</logic:equal>
-	
-	<bean:define id="users" name="libraryCardSearch" property="search"/>
-	<bean:size id="numberOfElements" name="users"/>		
+		
+	<bean:size id="numberOfElements" name="libraryCardSearch" property="searchResult"/>		
 	<p class="mtop15">
 		<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
 	</p>
@@ -62,7 +61,7 @@
 	</logic:notEmpty>
 	<bean:define id="searchNumber" name="libraryCardSearch" property="numberString"/>
 	
-	<fr:view name="users" schema="library.card.list">
+	<fr:view name="libraryCardSearch" property="searchResult" schema="library.card.list">
 		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>
