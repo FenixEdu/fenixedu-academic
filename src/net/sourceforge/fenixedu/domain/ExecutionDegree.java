@@ -565,6 +565,21 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
+    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
+	    ExecutionYear executionYear) {
+	if (degreeCurricularPlan == null || executionYear == null) {
+	    return null;
+	}
+
+	for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+	    if (executionYear == executionDegree.getExecutionYear()) {
+		return executionDegree;
+	    }
+	}
+
+	return null;
+    }
+    
     public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(
 	    DegreeCurricularPlan degreeCurricularPlan, String executionYear) {
 	if (degreeCurricularPlan == null) {
@@ -583,7 +598,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	return null;
     }
-
+        
     public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName,
 	    ExecutionYear executionYear) {
 	if (degreeName == null) {
