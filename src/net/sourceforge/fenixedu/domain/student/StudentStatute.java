@@ -18,8 +18,8 @@ public class StudentStatute extends StudentStatute_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public StudentStatute(Student student, StudentStatuteType statuteType,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    public StudentStatute(Student student, StudentStatuteType statuteType, ExecutionPeriod beginExecutionPeriod,
+	    ExecutionPeriod endExecutionPeriod) {
 	this();
 	setBeginExecutionPeriod(beginExecutionPeriod);
 	setEndExecutionPeriod(endExecutionPeriod);
@@ -59,53 +59,54 @@ public class StudentStatute extends StudentStatute_Base {
 	super.deleteDomainObject();
     }
 
-    public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements
-	    FactoryExecutor {
+    public static class CreateStudentStatuteFactory extends ManageStudentStatuteBean implements FactoryExecutor {
 
 	public CreateStudentStatuteFactory(Student student) {
 	    super(student);
 	}
 
 	public Object execute() {
-	    return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(),
-		    getEndExecutionPeriod());
+	    return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
 	}
     }
 
     public boolean overlapsWith(StudentStatute statute) {
 
-	if (statute.getStatuteType() != getStatuteType()) {
+	ExecutionPeriod statuteBegin = statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod()
+		: ExecutionPeriod.readFirstExecutionPeriod();
+	ExecutionPeriod statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionPeriod
+		.readLastExecutionPeriod();
+
+	return overlapsWith(statute.getStatuteType(), statuteBegin, statuteEnd);
+
+    }
+
+    public boolean overlapsWith(StudentStatuteType statuteType, ExecutionPeriod statuteBegin, ExecutionPeriod statuteEnd) {
+
+	if (statuteType != getStatuteType()) {
 	    return false;
 	}
 
-	ExecutionPeriod thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod()
-		: ExecutionPeriod.readFirstExecutionPeriod();
-	ExecutionPeriod thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod()
-		: ExecutionPeriod.readLastExecutionPeriod();
+	ExecutionPeriod thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod() : ExecutionPeriod
+		.readFirstExecutionPeriod();
+	ExecutionPeriod thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod() : ExecutionPeriod
+		.readLastExecutionPeriod();
 
-	ExecutionPeriod statuteBegin = statute.getBeginExecutionPeriod() != null ? statute
-		.getBeginExecutionPeriod() : ExecutionPeriod.readFirstExecutionPeriod();
-	ExecutionPeriod statuteEnd = statute.getEndExecutionPeriod() != null ? statute
-		.getEndExecutionPeriod() : ExecutionPeriod.readLastExecutionPeriod();
-
-	return statuteBegin.isAfterOrEquals(thisStatuteBegin)
-		&& statuteBegin.isBeforeOrEquals(thisStatuteEnd)
-		|| statuteEnd.isAfterOrEquals(thisStatuteBegin)
-		&& statuteEnd.isBeforeOrEquals(thisStatuteEnd);
+	return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)
+		|| statuteEnd.isAfterOrEquals(thisStatuteBegin) && statuteEnd.isBeforeOrEquals(thisStatuteEnd);
 
     }
 
     public void add(StudentStatute statute) {
 	if (this.overlapsWith(statute)) {
 	    if (statute.getBeginExecutionPeriod() == null
-		    || (getBeginExecutionPeriod() != null && statute.getBeginExecutionPeriod().isBefore(
-			    getBeginExecutionPeriod()))) {
+		    || (getBeginExecutionPeriod() != null && statute.getBeginExecutionPeriod()
+			    .isBefore(getBeginExecutionPeriod()))) {
 		setBeginExecutionPeriod(statute.getBeginExecutionPeriod());
 	    }
 
 	    if (statute.getEndExecutionPeriod() == null
-		    || (getEndExecutionPeriod() != null && statute.getEndExecutionPeriod().isAfter(
-			    getEndExecutionPeriod()))) {
+		    || (getEndExecutionPeriod() != null && statute.getEndExecutionPeriod().isAfter(getEndExecutionPeriod()))) {
 		setEndExecutionPeriod(statute.getEndExecutionPeriod());
 	    }
 	}
@@ -127,8 +128,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public String toDetailedString() {
-	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ")
-		+ " ..... "
+	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
 		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
 
