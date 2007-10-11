@@ -19,7 +19,9 @@ public enum AccountabilityTypeEnum {
     MAILING_CONTRACT,         
     INVITATION,
          
-    RESEARCH_CONTRACT;
+    RESEARCH_CONTRACT,
+    
+    ASSIDUOUSNESS_STRUCTURE;
     
     public String getName() {
         return name();

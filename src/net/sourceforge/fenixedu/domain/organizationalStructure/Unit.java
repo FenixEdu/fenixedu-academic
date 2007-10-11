@@ -1273,4 +1273,15 @@ public class Unit extends Unit_Base {
     public UnitSite initializeSite() {
 	return (UnitSite) super.initializeSite();
     }
+    
+    @Override
+    public List<Function> getFunctions() {
+	List<Function> result = new ArrayList<Function>();
+	for (Function function : super.getFunctions()) {
+	    if (function.getType().equals(AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {
+		result.add(function);
+	    }
+	}
+	return result;
+    }
 }

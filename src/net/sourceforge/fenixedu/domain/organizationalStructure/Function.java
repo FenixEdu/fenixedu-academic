@@ -39,6 +39,13 @@ public class Function extends Function_Base {
 	setUnit(unit);
 	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
+    
+    public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit, AccountabilityTypeEnum accountabilityTypeEnum) {
+	super();
+	edit(functionName, beginDate, endDate, type);	
+	setUnit(unit);
+	setType(accountabilityTypeEnum);
+    }
         
     public void edit(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
 	setTypeName(functionName);
@@ -150,8 +157,9 @@ public class Function extends Function_Base {
 		Set<Function> result = new HashSet<Function>();
 		List<AccountabilityType> accountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
 		for (AccountabilityType accountabilityType : accountabilityTypes) {
-			if(accountabilityType.isFunction() && ((Function)accountabilityType).getFunctionType() != null 
-					&& ((Function)accountabilityType).getFunctionType().equals(functionType)) {
+	    if (accountabilityType.isFunction()
+		    && ((Function) accountabilityType).getFunctionType() != null
+		    && ((Function) accountabilityType).getFunctionType().equals(functionType)) {
 				result.add((Function) accountabilityType);
 			}
 		}

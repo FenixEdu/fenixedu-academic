@@ -105,7 +105,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class Person extends Person_Base {
 
     final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator(
-    "sendDate");
+	    "sendDate");
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -121,33 +121,33 @@ public class Person extends Person_Base {
 
     @Override
     public void setPartyName(MultiLanguageString partyName) {
-        throw new UnsupportedOperationException();
+	throw new UnsupportedOperationException();
     }
-       
+
     public String getName() {
 	return super.getPartyName().getPreferedContent();
     }
-    
+
     @Override
     public void setName(String name) {
-	
-	if(name == null || StringUtils.isEmpty(name.trim())) {
+
+	if (name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.person.empty.name");
 	}
-	
+
 	String formattedName = StringFormatter.prettyPrint(name);
-	    
+
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
 	partyName.setContent(LanguageUtils.getSystemLanguage(), formattedName);
-	
+
 	super.setPartyName(partyName);
-	
+
 	PersonName personName = getPersonName();
-	personName = personName == null ? new PersonName(this) : personName;	
+	personName = personName == null ? new PersonName(this) : personName;
 	personName.setName(formattedName);
     }
-    
+
     @Override
     public void setDocumentIdNumber(String documentIdNumber) {
 	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
@@ -185,9 +185,10 @@ public class Person extends Person_Base {
 	setIdDocumentType(idDocumentType);
     }
 
-    private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber, final IDDocumentType documentType) {
+    private boolean checkIfDocumentNumberIdAndDocumentIdTypeExists(final String documentIDNumber,
+	    final IDDocumentType documentType) {
 	Person person = readByDocumentIdNumberAndIdDocumentType(documentIDNumber, documentType);
-	return person != null && !person.equals(this);        
+	return person != null && !person.equals(this);
     }
 
     final public String getValidatedName() {
@@ -324,21 +325,21 @@ public class Person extends Person_Base {
     }
 
     public void editPersonWithExternalData(PersonBean personBean) {
-	setProperties(personBean);		
+	setProperties(personBean);
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-	if(!hasDefaultPhone()) {
+	if (!hasDefaultPhone()) {
 	    updateDefaultPhone(personBean.getPhone());
 	}
-	if(!hasDefaultMobilePhone()) {
+	if (!hasDefaultMobilePhone()) {
 	    updateDefaultMobilePhone(personBean.getMobile());
 	}
-	if(!hasDefaultWebAddress()) {
+	if (!hasDefaultWebAddress()) {
 	    updateDefaultWebAddress(personBean.getWebAddress());
 	}
-	if(!hasDefaultEmailAddress()) {
+	if (!hasDefaultEmailAddress()) {
 	    updateDefaultEmailAddress(personBean.getEmail());
 	}
-    } 
+    }
 
     @Deprecated
     public void update(InfoPersonEditor updatedPersonalData, Country country) {
@@ -494,16 +495,16 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    @Override    
+    @Override
     public void addPersonRoles(Role personRoles) {
-	if(!hasPersonRoles(personRoles)) {
+	if (!hasPersonRoles(personRoles)) {
 	    super.addPersonRoles(personRoles);
 	}
     }
-    
+
     public void addPersonRoleByRoleType(RoleType roleType) {
-	    this.addPersonRoles(Role.getRoleByRoleType(roleType));
-	}
+	this.addPersonRoles(Role.getRoleByRoleType(roleType));
+    }
 
     public Boolean hasRole(final RoleType roleType) {
 	for (final Role role : this.getPersonRoles()) {
@@ -648,7 +649,8 @@ public class Person extends Person_Base {
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setName(infoPerson.getNome());
-	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
+		.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 
 	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
@@ -660,11 +662,14 @@ public class Person extends Person_Base {
 	setWorkPhone(infoPerson.getWorkPhone());
 
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
+	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
+		.getDataEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
+		.getDataValidadeDocumentoIdentificacao()));
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
 
-	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
+	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
+		.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -678,11 +683,14 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
+		    .generatePassword(this)));
 	}
 
-	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()	: Boolean.TRUE);
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
+		: Boolean.TRUE);
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
+		: Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
     }
 
@@ -691,7 +699,7 @@ public class Person extends Person_Base {
 	setName(valueToUpdateIfNewNotNull(getName(), infoPerson.getNome()));
 	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
 		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
-			getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
+		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
 
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
 
@@ -825,11 +833,11 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getActivePersonFunctions() {
-    	return getPersonFunctions(null, false, true, false);
+	return getPersonFunctions(null, false, true, false);
     }
 
     public List<PersonFunction> getInactivePersonFunctions() {
-    	return getPersonFunctions(null, false, false, false);
+	return getPersonFunctions(null, false, false, false);
     }
 
     public List<Function> getActiveInherentPersonFunctions() {
@@ -841,17 +849,17 @@ public class Person extends Person_Base {
     }
 
     /**
-	 * The main difference between this method and
-	 * {@link #getActivePersonFunctions()} is that person functions with a
-	 * virtual function are also included. This method also collects person
-	 * functions from the given unit and all subunits.
-	 * 
-	 * @see Function#isVirtual()
-	 */
-	public List<PersonFunction> getAllActivePersonFunctions(Unit unit) {
-		return getPersonFunctions(unit, true, true, null);
-	}
-    
+     * The main difference between this method and
+     * {@link #getActivePersonFunctions()} is that person functions with a
+     * virtual function are also included. This method also collects person
+     * functions from the given unit and all subunits.
+     * 
+     * @see Function#isVirtual()
+     */
+    public List<PersonFunction> getAllActivePersonFunctions(Unit unit) {
+	return getPersonFunctions(unit, true, true, null);
+    }
+
     public boolean containsActivePersonFunction(Function function) {
 	for (PersonFunction personFunction : getActivePersonFunctions()) {
 	    if (personFunction.getFunction().equals(function)) {
@@ -870,23 +878,23 @@ public class Person extends Person_Base {
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
 
-	public Collection<PersonFunction> getPersonFunctions(Function function) {
-		Collection<PersonFunction> personFunctions = getPersonFunctions();
-		
-		Iterator<PersonFunction> iterator = personFunctions.iterator();
-		while (iterator.hasNext()) {
-			PersonFunction element = iterator.next();
-			
-			if (element.getFunction() == function) {
-				continue;
-			}
-			
-			iterator.remove();
-		}
-		
-		return personFunctions;
+    public Collection<PersonFunction> getPersonFunctions(Function function) {
+	Collection<PersonFunction> personFunctions = getPersonFunctions();
+
+	Iterator<PersonFunction> iterator = personFunctions.iterator();
+	while (iterator.hasNext()) {
+	    PersonFunction element = iterator.next();
+
+	    if (element.getFunction() == function) {
+		continue;
+	    }
+
+	    iterator.remove();
 	}
-    
+
+	return personFunctions;
+    }
+
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
@@ -899,43 +907,55 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getPersonFunctions(Unit unit) {
-    	return getPersonFunctions(unit, false, null, null);
+	return getPersonFunctions(unit, false, null, null);
     }
 
     /**
-	 * Filters all parent PersonFunction accountabilities and returns all the
-	 * PersonFunctions that selection indicated in the parameters.
-	 * 
-	 * @param unit filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
-	 * @param includeSubUnits if even subunits of the given unit are considered
-	 * @param active the state of the function, <code>null</code> for all PersonFunctions 
-	 */
-    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual) {
-    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+     * Filters all parent PersonFunction accountabilities and returns all the
+     * PersonFunctions that selection indicated in the parameters.
+     * 
+     * @param unit filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
+     * @param includeSubUnits if even subunits of the given unit are considered
+     * @param active the state of the function, <code>null</code> for all PersonFunctions 
+     */
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
+	    Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
+	List<PersonFunction> result = new ArrayList<PersonFunction>();
 
-    	Collection<Unit> allSubUnits = Collections.emptyList();
-    	if (includeSubUnits) {
-    		allSubUnits = unit.getAllSubUnits();
-    	}
-    	
-		YearMonthDay today = new YearMonthDay();
+	Collection<Unit> allSubUnits = Collections.emptyList();
+	if (includeSubUnits) {
+	    allSubUnits = unit.getAllSubUnits();
+	}
 
-		for (PersonFunction personFunction : getPersonFunctions()) {
-			if (active != null && (personFunction.isActive(today) == !active)) {
-				continue;
-			}
-			
-			if (virtual != null && (personFunction.getFunction().isVirtual() == !virtual)) {
-				continue;
-			}
-			
-    	    Unit functionUnit = personFunction.getUnit();
-			if (unit == null || functionUnit.equals(unit) || (includeSubUnits && allSubUnits.contains(functionUnit))) {
-				result.add(personFunction);
-			}
-    	}
-		
-    	return result;
+	YearMonthDay today = new YearMonthDay();
+
+	for (PersonFunction personFunction : getPersonFunctions()) {
+	    if (!accountabilityTypeEnum.equals(personFunction.getFunction().getType())) {
+		continue;
+	    }
+	    if (active != null && (personFunction.isActive(today) == !active)) {
+		continue;
+	    }
+
+	    if (virtual != null && (personFunction.getFunction().isVirtual() == !virtual)) {
+		continue;
+	    }
+
+	    Unit functionUnit = personFunction.getUnit();
+	    if (unit == null || functionUnit.equals(unit)
+		    || (includeSubUnits && allSubUnits.contains(functionUnit))) {
+		result.add(personFunction);
+	    }
+	}
+
+	return result;
+    }
+
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
+	    Boolean virtual) {
+	return getPersonFunctions(unit, includeSubUnits, active, virtual,
+		AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+
     }
 
     public boolean hasFunctionType(FunctionType functionType) {
@@ -980,7 +1000,7 @@ public class Person extends Person_Base {
      * @return true if the person have been deleted, false otherwise
      */
     public void delete() {
-	
+
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.person.cannot.be.deleted");
 	}
@@ -1010,32 +1030,35 @@ public class Person extends Person_Base {
 	getManageableDepartmentCredits().clear();
 	getBookmarkedBoards().clear();
 	getPersonRoles().clear();
-	getManageableDepartmentCredits().clear();	
+	getManageableDepartmentCredits().clear();
 	getThesisEvaluationParticipants().clear();
-	
-	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete());	
-	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next().delete());
-	
+
+	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
+	    ;
+	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next()
+		.delete())
+	    ;
+
 	removeNationality();
 	removeCountryOfBirth();
-	
-	super.delete();	
+
+	super.delete();
     }
-    
-    private boolean canBeDeleted() {	    	 
+
+    private boolean canBeDeleted() {
 	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
-	&& !hasAnySentSms() && !hasAnyExportGroupingReceivers() 				
-	&& !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
-	&& !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
-	&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()				
-	&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
-	&& !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
-	&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-	&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
-	&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
-	&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
-	&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-	&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().canBeDeleted());
+		&& !hasAnySentSms() && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups()
+		&& !hasAnyPersonSpaceOccupations() && !hasAnyPunctualRoomsOccupationComments()
+		&& !hasAnyVehicleAllocations() && !hasAnyPunctualRoomsOccupationRequests()
+		&& !hasAnyPunctualRoomsOccupationRequestsToProcess()
+		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
+		&& !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
+		&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
+		&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
+		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().canBeDeleted());
     }
 
     private boolean hasParking() {
@@ -1258,7 +1281,7 @@ public class Person extends Person_Base {
 	}
 	return null;
     }
-    
+
     public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	return getStudent().readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
     }
@@ -1336,13 +1359,13 @@ public class Person extends Person_Base {
     }
 
     public String getPostalCode() {
-        final StringBuilder result = new StringBuilder();
-        if (getDefaultPhysicalAddress() != null) {
-            result.append(getDefaultPhysicalAddress().getAreaCode());
-            result.append(" ");
-            result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
-        }
-        return result.toString();
+	final StringBuilder result = new StringBuilder();
+	if (getDefaultPhysicalAddress() != null) {
+	    result.append(getDefaultPhysicalAddress().getAreaCode());
+	    result.append(" ");
+	    result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
+	}
+	return result.toString();
     }
 
     @Override
@@ -1357,7 +1380,8 @@ public class Person extends Person_Base {
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {
-	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
+	Set<Invitation> invitations = new TreeSet<Invitation>(
+		Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations.addAll((Collection<Invitation>) getParentAccountabilities(
 		AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
@@ -1426,16 +1450,18 @@ public class Person extends Person_Base {
 	}
 	return null;
     }
-    
-    public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
+
+    public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth,
+	    final Collection<Person> persons) {
 	List<Person> result = new ArrayList<Person>();
 	for (Person person : persons) {
-	    if (person.getDateOfBirthYearMonthDay() == null || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+	    if (person.getDateOfBirthYearMonthDay() == null
+		    || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
 		result.add(person);
 	    }
 	}
 	return result;
-    }    
+    }
 
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex,
@@ -1457,12 +1483,12 @@ public class Person extends Person_Base {
 	if (name != null) {
 	    final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
 	    for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-	        if (party.isPerson()) {
-	            final Person person = (Person) party;
-	            if (person.getName().toLowerCase().matches(nameToMatch)) {
-	                result.add(person);
-	            }
-	        }
+		if (party.isPerson()) {
+		    final Person person = (Person) party;
+		    if (person.getName().toLowerCase().matches(nameToMatch)) {
+			result.add(person);
+		    }
+		}
 	    }
 	}
 	return result;
@@ -1493,7 +1519,7 @@ public class Person extends Person_Base {
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
 	for (final Registration registration : getStudentsSet()) {
 	    final StudentCurricularPlan studentCurricularPlan = registration
-	    .getActiveStudentCurricularPlan();
+		    .getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 		studentCurricularPlans.add(studentCurricularPlan);
 	    }
@@ -1507,8 +1533,7 @@ public class Person extends Person_Base {
 
 	for (final Registration registration : getStudentsSet()) {
 	    if (registration.isConcluded()) {
-		StudentCurricularPlan lastStudent = registration
-		.getLastStudentCurricularPlan();
+		StudentCurricularPlan lastStudent = registration.getLastStudentCurricularPlan();
 		if (lastStudent != null) {
 		    studentCurricularPlans.add(lastStudent);
 		}
@@ -1701,7 +1726,8 @@ public class Person extends Person_Base {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
-	    if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
+	    if (!event.isCancelled() && event.getEventType() == eventType
+		    && (clazz == null || event.getClass().equals(clazz))) {
 		result.add(event);
 	    }
 	}
@@ -1740,7 +1766,7 @@ public class Person extends Person_Base {
     public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
 	    final ExecutionYear executionYear) {
 	return hasInsuranceEventFor(executionYear)
-	|| hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
+		|| hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
     public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
@@ -1904,7 +1930,7 @@ public class Person extends Person_Base {
     final public boolean isMale() {
 	return getGender() == Gender.MALE;
     }
-   
+
     @Deprecated
     public List<Registration> getStudents() {
 	return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
@@ -1927,33 +1953,33 @@ public class Person extends Person_Base {
 
     @Override
     public PartyClassification getPartyClassification() {
-        final Teacher teacher = getTeacher();
-        if (teacher != null) {
-            if (teacher.getCurrentWorkingDepartment() != null
-                    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-                return PartyClassification.TEACHER;
-            }
-        }        
-        final Employee employee = getEmployee();
-        if (employee != null && employee.getCurrentWorkingContract() != null
-                && (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
-            return PartyClassification.EMPLOYEE;
-        }
-        if (isResearcher()) {
-            return PartyClassification.RESEARCHER;
-        }
-        final GrantOwner grantOwner = getGrantOwner();
-        if (grantOwner != null && grantOwner.hasCurrentContract()) {
-            return PartyClassification.GRANT_OWNER;
-        }
-        final Student student = getStudent();
-        if (student != null) {
-            final DegreeType degreeType = student.getMostSignificantDegreeType();
-            if (degreeType != null) {
-                return PartyClassification.getClassificationByDegreeType(degreeType);
-            }
-        }
-        return PartyClassification.PERSON;
+	final Teacher teacher = getTeacher();
+	if (teacher != null) {
+	    if (teacher.getCurrentWorkingDepartment() != null
+		    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		return PartyClassification.TEACHER;
+	    }
+	}
+	final Employee employee = getEmployee();
+	if (employee != null && employee.getCurrentWorkingContract() != null
+		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
+	    return PartyClassification.EMPLOYEE;
+	}
+	if (isResearcher()) {
+	    return PartyClassification.RESEARCHER;
+	}
+	final GrantOwner grantOwner = getGrantOwner();
+	if (grantOwner != null && grantOwner.hasCurrentContract()) {
+	    return PartyClassification.GRANT_OWNER;
+	}
+	final Student student = getStudent();
+	if (student != null) {
+	    final DegreeType degreeType = student.getMostSignificantDegreeType();
+	    if (degreeType != null) {
+		return PartyClassification.getClassificationByDegreeType(degreeType);
+	    }
+	}
+	return PartyClassification.PERSON;
     }
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
@@ -1968,7 +1994,7 @@ public class Person extends Person_Base {
     }
 
     public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements
-    FactoryExecutor {
+	    FactoryExecutor {
 	public ExternalPersonBeanFactoryCreator() {
 	    super();
 	}
@@ -2021,8 +2047,8 @@ public class Person extends Person_Base {
 	private boolean matchesAnyCriteria(final String[] nameValues,
 		final String[] documentIdNumberValues, final Person person) {
 	    return matchesAnyCriteriaField(nameValues, name, person.getName())
-	    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person
-		    .getDocumentIdNumber());
+		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person
+			    .getDocumentIdNumber());
 	}
 
 	private boolean matchesAnyCriteriaField(final String[] nameValues, final String string,
@@ -2132,9 +2158,9 @@ public class Person extends Person_Base {
     private boolean validNickname(final String name) {
 	if (name != null && name.length() > 0) {
 	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '))
-	    .toLowerCase();
+		    .toLowerCase();
 	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '))
-	    .toLowerCase();
+		    .toLowerCase();
 
 	    final String[] nameParts = normalizedName.split(" ");
 	    final String[] personNameParts = normalizedPersonName.split(" ");
@@ -2206,8 +2232,8 @@ public class Person extends Person_Base {
 	    ExecutionPeriod executionPeriod) {
 	final Teacher teacher = getTeacher();
 	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
-	|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
-		.getExecutionYear());
+		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
+			.getExecutionYear());
     }
 
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
@@ -2228,7 +2254,7 @@ public class Person extends Person_Base {
 	    if (coordinator.hasExecutionDegree()
 		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
 		    && degreeTypes
-		    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
 		return true;
 	    }
 	}
@@ -2315,7 +2341,6 @@ public class Person extends Person_Base {
 
 		} else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
 		    mainRoles.add("Bolseiro");
-		
 		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
 		    employee = true;
 		}
@@ -2409,16 +2434,16 @@ public class Person extends Person_Base {
 	}
 	return people;
     }
-    
+
     public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
-	if(completeName != null){
+	if (completeName != null) {
 	    String[] splittedName = completeName.split(" ");
-	    return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1])
-		    : Collections.EMPTY_LIST;	    
+	    return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " "
+		    + splittedName[splittedName.length - 1]) : Collections.EMPTY_LIST;
 	}
 	return Collections.EMPTY_LIST;
     }
-    
+
     public static Collection<Person> findExternalPerson(final String name) {
 	final Collection<Person> people = new ArrayList<Person>();
 	for (final PersonName personName : PersonName.findExternalPerson(name, Integer.MAX_VALUE)) {
@@ -2511,16 +2536,15 @@ public class Person extends Person_Base {
 
     public List<ResearchUnit> getWorkingResearchUnits() {
 	List<ResearchUnit> units = new ArrayList<ResearchUnit>();
-	Collection<? extends Accountability> parentAccountabilities = 
-	    getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
-	
+	Collection<? extends Accountability> parentAccountabilities = getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Accountability accountability : parentAccountabilities) {
-	    if(accountability.isActive(currentDate)) {
+	    if (accountability.isActive(currentDate)) {
 		units.add((ResearchUnit) accountability.getParentParty());
+	    }
 	}
-	}
-	
+
 	return units;
     }
 
@@ -2529,7 +2553,7 @@ public class Person extends Person_Base {
 	String names = "";
 	List<ResearchUnit> units = getWorkingResearchUnits();
 	int length = units.size();
-	for(ResearchUnit unit : units) {
+	for (ResearchUnit unit : units) {
 	    names += unit.getName();
 	    if (--length > 0) {
 		names += ", ";
@@ -2548,7 +2572,7 @@ public class Person extends Person_Base {
 	    return false;
 	}
 
-	if (! isHomePageAvailable()) {
+	if (!isHomePageAvailable()) {
 	    return false;
 	}
 
@@ -2562,7 +2586,7 @@ public class Person extends Person_Base {
 	    return false;
 	}
 
-	if (! isHomePageAvailable()) {
+	if (!isHomePageAvailable()) {
 	    return false;
 	}
 
@@ -2572,8 +2596,8 @@ public class Person extends Person_Base {
 
     public List<UnitFile> getUploadedFiles(Unit unit) {
 	List<UnitFile> files = new ArrayList<UnitFile>();
-	for(UnitFile file : getUploadedFiles()) {
-	    if(file.getUnit().equals(unit)) {
+	for (UnitFile file : getUploadedFiles()) {
+	    if (file.getUnit().equals(unit)) {
 		files.add(file);
 	    }
 	}
@@ -2591,70 +2615,70 @@ public class Person extends Person_Base {
 
     @Override
     public Homepage getSite() {
-    	return getHomepage();
+	return getHomepage();
     }
-    
+
     @Override
     protected Homepage createSite() {
-    	return new Homepage(this);
+	return new Homepage(this);
     }
 
     @Override
     public Homepage initializeSite() {
-    	return (Homepage) super.initializeSite();
+	return (Homepage) super.initializeSite();
     }
-    
+
     public PersonFunction getActiveGGAEDelegatePersonFunction() {
-    	for(PersonFunction personFunction : getActivePersonFunctions()) {
-    		if(personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
-    			return personFunction;
-    		}
-    	}
-    	return null;
+	for (PersonFunction personFunction : getActivePersonFunctions()) {
+	    if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
+		return personFunction;
+	    }
+	}
+	return null;
     }
-    
+
     public List<PersonFunction> getAllGGAEDelegatePersonFunctions() {
-    	List<PersonFunction> result = new ArrayList<PersonFunction>();
-    	for(PersonFunction personFunction : getPersonFunctions()) {
-    		if(personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
-    			result.add(personFunction);
-    		}
-    	}
-    	return result;
+	List<PersonFunction> result = new ArrayList<PersonFunction>();
+	for (PersonFunction personFunction : getPersonFunctions()) {
+	    if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_GGAE)) {
+		result.add(personFunction);
+	    }
+	}
+	return result;
     }
 
     public boolean isResearcher() {
-        return getPersonRole(RoleType.RESEARCHER) != null &&
-            (getWorkingResearchUnits().isEmpty() || 
-                    !getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class).isEmpty());       
+	return getPersonRole(RoleType.RESEARCHER) != null
+		&& (getWorkingResearchUnits().isEmpty() || !getParentAccountabilities(
+			AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class).isEmpty());
     }
 
     public Integer getMostSignificantNumber() {
-        if(getPartyClassification().equals(PartyClassification.TEACHER)) {
-            return getTeacher().getTeacherNumber();
-        }
-        if (getPartyClassification().equals(PartyClassification.EMPLOYEE)){
-            return getEmployee().getEmployeeNumber();
-        }
-        if (getPartyClassification().equals(PartyClassification.RESEARCHER) && getEmployee() != null){
-            return getEmployee().getEmployeeNumber();
-        }
-        if (getStudent() != null) {
-            return getStudent().getNumber();
-//            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
-//            Collection<Registration> registrations = getStudent()
-//                    .getRegistrationsByDegreeType(degreeType);
-//            for (Registration registration : registrations) {
-//                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-//                if (scp != null) {
-//                    return getStudent().getNumber();
-//                }
-//            }
-        }
-        if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {                
-            return getGrantOwner().getNumber();
-        }        
-        return 0;
+	if (getPartyClassification().equals(PartyClassification.TEACHER)) {
+	    return getTeacher().getTeacherNumber();
+	}
+	if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
+	    return getEmployee().getEmployeeNumber();
+	}
+	if (getPartyClassification().equals(PartyClassification.RESEARCHER) && getEmployee() != null) {
+	    return getEmployee().getEmployeeNumber();
+	}
+	if (getStudent() != null) {
+	    return getStudent().getNumber();
+	    //            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
+	    //            Collection<Registration> registrations = getStudent()
+	    //                    .getRegistrationsByDegreeType(degreeType);
+	    //            for (Registration registration : registrations) {
+	    //                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+	    //                if (scp != null) {
+	    //                    return getStudent().getNumber();
+	    //                }
+	    //            }
+	}
+	if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
+	    return getGrantOwner().getNumber();
+	}
+	return 0;
     }
     
     public List<Space> getActivePersonSpaces() {
