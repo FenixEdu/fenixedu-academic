@@ -502,7 +502,9 @@
 		<property name="bundle" value="DEFAULT" />
 		<property name="classes" value="list2 liinline" />
 	</slot>
-	<slot name="labelToSearch" key="label.find.spaces.label"/>							        
+	<slot name="labelToSearch" key="label.find.spaces.label">
+		<property name="size" value="30"/>
+	</slot>							        
 </schema>
 
 <schema name="PublicFindSpacesWithExtraOptions" extends="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
@@ -511,6 +513,7 @@
 		<property name="classes" value="list2 liinline" />
 	</slot>			
 	<slot name="campus" key="label.find.spaces.campus" layout="menu-select-postback">	
+		<property name="size" value="30"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
 		<property name="format"	value="${spaceInformation.presentationName}" />
 		<property name="destination" value="postBack"/>	
@@ -584,7 +587,7 @@
 		<property name="labelFormat" value="label.${simpleName}" />
 		<property name="bundle" value="SPACE_RESOURCES" />
 	</slot>	
-	<slot name="spaceInformation.presentationName" key="label.find.spaces.space.name"/>	
+	<slot name="spaceInformation.presentationName" key="label.find.spaces.space.name"/>
 </schema>
 
 <schema name="ViewActivePersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">			

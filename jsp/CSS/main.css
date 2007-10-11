@@ -561,3 +561,21 @@ margin: 0.5em 0;
 .infoop2 p { margin: 0.25em 0; }
 .width100px { width: 100px; }
 .width300px { width: 300px; }
+.width500px { width: 500px; }
+
+fieldset {
+margin: 1em 0;
+padding: 1em;
+border: 1px solid #e1e1dc;
+background: #f0f0e2 url(../images/fieldset_bg_01.gif) top left repeat-x;
+}
+fieldset legend {
+margin: 0;
+padding: 0 0.5em;
+color: #000;
+font-weight: bold;
+font-size: 1.2em;
+}
+.tstyle0 tr td {
+padding: 4px;
+}
