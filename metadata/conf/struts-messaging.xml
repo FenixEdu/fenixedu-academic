@@ -127,6 +127,8 @@
 		parameter="method" scope="request">
 		<forward name="showSources" path="files.showSources"/>
 		<forward name="manageFiles" path="files.showFiles"/>
+		<forward name="uploadFile" path="files.uploadFile"/>
+		<forward name="editFile" path="files.editFile"/>
 	</action>
 
     </action-mappings>

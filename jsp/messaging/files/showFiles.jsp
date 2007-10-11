@@ -20,6 +20,11 @@
 
 
 <ul>
+	<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
+		<li>
+			<html:link page="<%= "/viewFiles.do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
+		</li>
+	</logic:equal>
 	<li>
 		<a href="#" onclick="switchDisplay('instructions');">Instruções</a>
 	</li>

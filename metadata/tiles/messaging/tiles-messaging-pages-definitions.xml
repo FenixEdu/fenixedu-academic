@@ -72,7 +72,16 @@
 		<put name="body" value="/messaging/files/showSources.jsp" />
 	</definition>
 	<definition name="files.showFiles" extends="definition.messaging.masterPage" >
-		<put name="body" value="/messaging/files/showFiles.jsp" />
+		<put name="head" value="/messaging/files/context.jsp"/>
+		<put name="body" value="/commons/unitFiles/manageFiles.jsp"/>
 	</definition>
+	<definition name="files.uploadFile" extends="definition.messaging.masterPage" >
+		<put name="head" value="/messaging/files/context.jsp"/>
+		<put name="body" value="/commons/unitFiles/uploadFile.jsp" />
+	</definition>	
+		<definition name="files.editFile" extends="definition.messaging.masterPage" >
+		<put name="head" value="/messaging/files/context.jsp"/>
+		<put name="body" value="/commons/unitFiles/editFile.jsp" />
+	</definition>	
 
 </tiles-definitions>

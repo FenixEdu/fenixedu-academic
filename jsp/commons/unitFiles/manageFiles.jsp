@@ -74,7 +74,7 @@
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight"/>
-				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,width100px"/>
+				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,width100px"/>				
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />
@@ -86,7 +86,7 @@
 				<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
 				<fr:property name="link(edit)" value="<%= "/" + actionName + ".do?method=prepareEditFile&unitId=" + unitID %>"/>
 				<fr:property name="param(edit)" value="idInternal/fid" />
-				<fr:property name="visibleIf(edit)" value="editableByCurrentUser"/>
+				<fr:property name="visibleIf(edit)" value="editableByCurrentUser"/>		
 				<fr:property name="sortParameter" value="sort"/>
 				<fr:property name="sortIgnored" value="true"/>
 				<fr:property name="sortBy" value="<%= request.getParameter("sort") == null ? "displayName" : request.getParameter("sort")%>"/>
