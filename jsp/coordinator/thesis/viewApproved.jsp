@@ -40,6 +40,16 @@
     </fr:layout>
 </fr:view>
 
+<%-- Discussion --%>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.discussion"/></h3>
+
+<fr:view name="thesis" schema="thesis.jury.proposal.discussion">
+    <fr:layout name="tabular">
+    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+    	<fr:property name="columnClasses" value="width12em,,"/>
+    </fr:layout>
+</fr:view>
+
 <%-- general process message --%>
 
 <div class="infoop2 mtop1">
