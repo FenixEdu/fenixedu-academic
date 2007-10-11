@@ -2219,7 +2219,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurricularRuleLevel level) {
 	
 	final Registration registration = this.getRegistration();
-	if (!registration.isActive()) {
+	if (!registration.isInRegisteredState(executionPeriod)) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 

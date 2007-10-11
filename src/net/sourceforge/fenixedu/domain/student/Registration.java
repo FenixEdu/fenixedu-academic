@@ -92,6 +92,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
 public class Registration extends Registration_Base {
@@ -104,7 +105,7 @@ public class Registration extends Registration_Base {
 	    return o1.getNumber().compareTo(o2.getNumber());
 	}
     };
-    
+
     private transient Double approvationRatio;
     private transient Double arithmeticMean;
     private transient Integer approvedEnrollmentsNumber = 0;
@@ -551,6 +552,10 @@ public class Registration extends Registration_Base {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
 
+    final public Collection<Enrolment> getEnrolments(final ExecutionPeriod executionPeriod) {
+	return getStudentCurricularPlan(executionPeriod.getExecutionYear()).getEnrolmentsByExecutionPeriod(executionPeriod);
+    }
+    
     final public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    studentCurricularPlan.addApprovedEnrolments(enrolments);
@@ -666,8 +671,18 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return false;
-
     }
+    
+    final public boolean hasAnyEnrolmentsIn(final ExecutionPeriod executionPeriod) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.getExecutionPeriod() == executionPeriod) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }    
 
     final public boolean hasAnyExternalApprovedEnrolment() {
 	for (final ExternalEnrolment externalEnrolment : this.getExternalEnrolments()) {
@@ -790,6 +805,15 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return result;
+    }
+    
+    final public StudentCurricularPlan getPastStudentCurricularPlanByDegree(Degree degree) {
+	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	    if (studentCurricularPlan.getDegree() == degree && studentCurricularPlan.isPast()) {
+		return studentCurricularPlan;
+	    }
+	}
+	return null;
     }
 
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
@@ -989,15 +1013,15 @@ public class Registration extends Registration_Base {
     }
 
     final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForExecutionYear(final ExecutionYear executionYear) {
-    	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
-    		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-    		final ExecutionDegree executionDegree = group.getExecutionDegree();
+	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
+	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
+	    final ExecutionDegree executionDegree = group.getExecutionDegree();
     		final ExecutionYear executionYearFromGroup = executionDegree.getExecutionYear();
     		if (executionYearFromGroup == executionYear) {
-    			return group;
-    		}
-    	}
-    	return null;
+		return group;
+	    }
+	}
+	return null;
     }
 
     final public List<InsuranceTransaction> readAllInsuranceTransactionByExecutionYear(ExecutionYear executionYear) {
@@ -1512,6 +1536,27 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionPeriod executionPeriod) {
+	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
+
+	for (final RegistrationState registrationState : getRegistrationStates(executionPeriod)) {
+	    result.add(registrationState.getStateType());
+	}
+
+	return result;
+    }
+
+    public boolean isInRegisteredState(ExecutionPeriod executionPeriod) {
+	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionPeriod);
+
+	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionPeriod) || registrationStatesTypes
+		.contains(RegistrationStateType.MOBILITY))
+		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
+			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
+			.contains(RegistrationStateType.EXTERNAL_ABANDON));
+    }
+    
     final public boolean isInRegisteredState(ExecutionYear executionYear) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
 
@@ -1569,7 +1614,17 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
+    public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
+	return getRegistrationStates(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionYear
+		.getEndDateYearMonthDay().toDateTimeAtMidnight());
+    }
+    
+    public Set<RegistrationState> getRegistrationStates(final ExecutionPeriod executionPeriod) {
+	return getRegistrationStates(executionPeriod.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionPeriod
+		.getEndDateYearMonthDay().toDateTimeAtMidnight());
+    }
+    
+    public Set<RegistrationState> getRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
 
 	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistrationStates());
@@ -1579,20 +1634,20 @@ public class Registration extends Registration_Base {
 		.hasPrevious();) {
 	    RegistrationState state = (RegistrationState) iter.previous();
 
-	    if (state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+	    if (state.getStateDate().isAfter(endDateTime)) {
 		continue;
 	    }
 
 	    result.add(state);
 
-	    if (!state.getStateDate().isAfter(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight())) {
+	    if (!state.getStateDate().isAfter(beginDateTime)) {
 		break;
 	    }
 
 	}
 
 	return result;
-    }
+    }    
 
     final public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
 	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistrationStates());
@@ -2090,14 +2145,14 @@ public class Registration extends Registration_Base {
         for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
             if (degreeCurricularPlan != null && scp.getDegreeCurricularPlan() != degreeCurricularPlan) {
                 continue;
-            }
-            
+	}
+
             Enrolment enrolment = scp.getLatestDissertationEnrolment();
             if (enrolment != null) {
                 return enrolment;
             }
-        }
-        
+	}
+
         return null;
     }
 
@@ -2228,6 +2283,7 @@ public class Registration extends Registration_Base {
 	    }
 	    	    
 	    registration.setRegistrationAgreement(getRegistrationAgreement());	    
+	    
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
 
