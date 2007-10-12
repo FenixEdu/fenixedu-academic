@@ -15,7 +15,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class GrantContract extends GrantContract_Base {
 
-    public GrantContract() {
+    private GrantContract() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -27,7 +27,7 @@ public class GrantContract extends GrantContract_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        removeRootDomainObject();        
         super.deleteDomainObject();
     }
 
@@ -42,9 +42,7 @@ public class GrantContract extends GrantContract_Base {
     public List<GrantContractRegime> readGrantContractRegimeByGrantContract() {
         List<GrantContractRegime> grantContractRegimes = new ArrayList();
         grantContractRegimes.addAll(getContractRegimes());
-        Collections.sort(grantContractRegimes, new ReverseComparator(
-                GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
-
+        Collections.sort(grantContractRegimes, new ReverseComparator(GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
         return grantContractRegimes;
     }
 
@@ -55,8 +53,7 @@ public class GrantContract extends GrantContract_Base {
                 grantContractRegimes.add(grantContractRegime);
             }
         }
-        Collections.sort(grantContractRegimes, new ReverseComparator(
-                GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
+        Collections.sort(grantContractRegimes, new ReverseComparator(GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
         return grantContractRegimes;
     }
 

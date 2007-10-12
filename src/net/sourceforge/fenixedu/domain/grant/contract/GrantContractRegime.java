@@ -1,45 +1,106 @@
 package net.sourceforge.fenixedu.domain.grant.contract;
 
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Login;
+import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.YearMonthDay;
 
 public class GrantContractRegime extends GrantContractRegime_Base {
 
-    public static Comparator BEGIN_DATE_CONTRACT_COMPARATOR = new BeanComparator("dateBeginContract");
-    
+    public final static Comparator<GrantContractRegime> BEGIN_DATE_CONTRACT_COMPARATOR = new ComparatorChain();
+    static {
+	((ComparatorChain) BEGIN_DATE_CONTRACT_COMPARATOR).addComparator(new BeanComparator("dateBeginContract"));
+	((ComparatorChain) BEGIN_DATE_CONTRACT_COMPARATOR).addComparator(DomainObject.COMPARATOR_BY_ID);
+    }
+
     public GrantContractRegime() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public Boolean getContractRegimeActive() {
-        if (getDateEndContract().after(Calendar.getInstance().getTime())) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
-    }
-
-    public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        if (!this.getDateBeginContract().after(endDate) && !this.getDateEndContract().before(beginDate)) {
-            return true;
-        }
-        return false;
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public void delete() {
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
-    public boolean isActive() {
-        final Date nowDate = Calendar.getInstance().getTime();
-        return ! DateFormatUtil.isBefore("yyyy/MM/dd", this.getDateEndContract(), nowDate);
+    public Boolean getContractRegimeActive() {
+	return isActive();
     }
 
+    public boolean belongsToPeriod(Date beginDate, Date endDate) {
+	return !getDateBeginContract().after(endDate) && !getDateEndContract().before(beginDate);
+    }
+
+    public boolean belongsToPeriod(YearMonthDay begin, YearMonthDay end) {
+	return !getDateBeginContractYearMonthDay().isAfter(end) && !getDateEndContractYearMonthDay().isBefore(begin);
+    }
+
+    public boolean isActive(YearMonthDay currentDate) {
+	return belongsToPeriod(currentDate, currentDate);
+    }
+
+    public boolean isActive() {			
+	return isActive(new YearMonthDay());
+    }
+
+    public void editTimeInterval(Date dateBeginContract, Date dateEndContract) {
+	super.setDateBeginContract(dateBeginContract);
+	super.setDateEndContract(dateEndContract);
+
+	addNewLoginPeriodIfNecessary();	
+    }
+
+    public void addNewLoginPeriodIfNecessary() {		
+	if(getDateBeginContractYearMonthDay() != null && getDateEndContractYearMonthDay() != null
+		&& !getDateEndContractYearMonthDay().isBefore(new YearMonthDay())) {
+	    
+	    GrantOwner grantOwner = getGrantContract().getGrantOwner();	    
+	    Login login = grantOwner.getPerson().createLoginIdentificationAndUserIfNecessary();	
+	    if(!loginPeriodAlreadyExists(login)) {	
+		new LoginPeriod(getDateBeginContractYearMonthDay(), getDateEndContractYearMonthDay(), login);		
+	    }
+	}
+    }
+
+    private boolean loginPeriodAlreadyExists(Login login) {
+	List<LoginPeriod> loginPeriods = login.getLoginPeriods();
+	for (LoginPeriod loginPeriod : loginPeriods) {
+	    if(loginPeriod.getBeginDate().equals(getDateBeginContractYearMonthDay())
+		    && loginPeriod.getEndDate() != null 
+		    && loginPeriod.getEndDate().equals(getDateEndContractYearMonthDay())){
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    @Override
+    public void setDateBeginContractYearMonthDay(YearMonthDay dateBeginContractYearMonthDay) {
+	throw new DomainException("error.GrantContractRegime.impossible.edit.beginDate");
+    }
+
+    @Override
+    public void setDateEndContractYearMonthDay(YearMonthDay dateEndContractYearMonthDay) {
+	throw new DomainException("error.GrantContractRegime.impossible.edit.endDate");
+    }
+
+    @Override
+    public void setDateBeginContract(Date date) {
+	throw new DomainException("error.GrantContractRegime.impossible.edit.beginDate");
+    }
+
+    @Override
+    public void setDateEndContract(Date date) {
+	throw new DomainException("error.GrantContractRegime.impossible.edit.endDate");
+    }
 }

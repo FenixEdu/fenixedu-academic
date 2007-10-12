@@ -20,12 +20,13 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
 	    throws ExcepcaoPersistencia {
+	
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
-	grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
+	
+	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;		
+	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(), infoGrantContractRegime.getDateEndContract());	
 	grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
-	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
-	grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
+	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());	
 	grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
 	grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
 	grantContractRegime.setKeyGrantCostCenter(infoGrantContractRegime.getCostCenterKey());

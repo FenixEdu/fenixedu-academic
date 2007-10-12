@@ -104,8 +104,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class Person extends Person_Base {
 
-    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator(
-	    "sendDate");
+    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -413,7 +412,7 @@ public class Person extends Person_Base {
 	createLoginIdentificationAndUserIfNecessary().setUserUID();
     }
 
-    private Login createLoginIdentificationAndUserIfNecessary() {
+    public Login createLoginIdentificationAndUserIfNecessary() {
 	Login login = getLoginIdentification();
 	if (login == null) {
 	    User user = getUser();
@@ -874,48 +873,59 @@ public class Person extends Person_Base {
     }
 
     public Collection<PersonFunction> getPersonFunctions() {
-	return (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
+	return (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
     }
-
-    public Collection<PersonFunction> getPersonFunctions(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum,
-		PersonFunction.class);
-    }
-
+    
     public Collection<PersonFunction> getPersonFunctions(Function function) {
-	Collection<PersonFunction> personFunctions = getPersonFunctions();
 
+	Collection<PersonFunction> personFunctions = getPersonFunctions();
 	Iterator<PersonFunction> iterator = personFunctions.iterator();
+	
 	while (iterator.hasNext()) {
 	    PersonFunction element = iterator.next();
-
 	    if (element.getFunction() == function) {
 		continue;
 	    }
-
 	    iterator.remove();
 	}
 
 	return personFunctions;
     }
 
-    public List<PersonFunction> getPersonFuntions(AccountabilityTypeEnum accountabilityTypeEnum,
-	    YearMonthDay begin, YearMonthDay end) {
+    public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
+	return getPersonFuntions(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, begin, end);
+    }
+    
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual) {
+	return getPersonFunctions(unit, includeSubUnits, active, virtual, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+    }
+    
+    public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
+	YearMonthDay currentDate = new YearMonthDay();
+	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
+	    if (personFunction.getUnit().equals(unit)
+		    && personFunction.getFunction().getFunctionType() == functionType
+		    && personFunction.isActive(currentDate)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    public Collection<PersonFunction> getPersonFunctions(AccountabilityTypeEnum accountabilityTypeEnum) {
+	return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum, PersonFunction.class);
+    }
+    
+    public List<PersonFunction> getPersonFuntions(AccountabilityTypeEnum accountabilityTypeEnum, YearMonthDay begin, YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
-		accountabilityTypeEnum, PersonFunction.class)) {
+	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum, PersonFunction.class)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		result.add((PersonFunction) accountability);
 	    }
 	}
 	return result;
     }
-
-    public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
-	return getPersonFuntions(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, begin, end);
-    }
-
+    
     public List<PersonFunction> getPersonFunctions(Unit unit) {
 	return getPersonFunctions(unit, false, null, null);
     }
@@ -928,8 +938,7 @@ public class Person extends Person_Base {
      * @param includeSubUnits if even subunits of the given unit are considered
      * @param active the state of the function, <code>null</code> for all PersonFunctions 
      */
-    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
-	    Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 
 	Collection<Unit> allSubUnits = Collections.emptyList();
@@ -949,48 +958,24 @@ public class Person extends Person_Base {
 	    }
 
 	    Unit functionUnit = personFunction.getUnit();
-	    if (unit == null || functionUnit.equals(unit)
-		    || (includeSubUnits && allSubUnits.contains(functionUnit))) {
+	    if (unit == null || functionUnit.equals(unit) || (includeSubUnits && allSubUnits.contains(functionUnit))) {
 		result.add(personFunction);
 	    }
 	}
 
 	return result;
     }
-
-    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
-	    Boolean virtual) {
-	return getPersonFunctions(unit, includeSubUnits, active, virtual,
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
-
-    }
-
-    public boolean hasFunctionType(FunctionType functionType,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
-	for (PersonFunction accountability : getPersonFunctions(null, false, true, false,
-		accountabilityTypeEnum)) {
+  
+    public boolean hasFunctionType(FunctionType functionType, AccountabilityTypeEnum accountabilityTypeEnum) {
+	for (PersonFunction accountability : getPersonFunctions(null, false, true, false, accountabilityTypeEnum)) {
 	    if (accountability.getFunction().getFunctionType() == functionType) {
 		return true;
 	    }
 	}
 	return false;
     }
-
-    public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
-	YearMonthDay currentDate = new YearMonthDay();
-	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-	    if (personFunction.getUnit().equals(unit)
-		    && personFunction.getFunction().getFunctionType() == functionType
-		    && personFunction.isActive(currentDate)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
-	    Double credits) {
+   
+    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
 	return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
 

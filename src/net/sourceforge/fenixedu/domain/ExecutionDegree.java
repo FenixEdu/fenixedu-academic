@@ -81,16 +81,26 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	setCampus(campus);
 	setTemporaryExamMap(temporaryExamMap);
     }
+    
+
+    public boolean canBeDeleted() {
+	return !hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() 
+		&& !hasAnyGuides() && !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
+		&& !hasAnyAssociatedInquiriesCoursesByCourse() && !hasAnyAssociatedInquiriesCoursesByStudent()
+		&& !hasAnyStudentCandidacies() && !hasAnyShiftDistributionEntries();
+    }
 
     public void delete() {
+	
 	if (canBeDeleted()) {
 	    
-	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());
+	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());	    
+	    for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete());
 	    
 	    if (hasGratuityValues()) {
 		getGratuityValues().delete();
 	    }
-
+	    
 	    deletePeriodLessonsFirstSemester();
 	    deletePeriodLessonsSecondSemester();
 
@@ -107,8 +117,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    removeCampus();
 
 	    removeRootDomainObject();
-	    deleteDomainObject();
-	    
+	    deleteDomainObject();	   	   	  
+	   
 	} else {
 	    throw new DomainException("execution.degree.cannot.be.deleted");
 	}
@@ -176,11 +186,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    removePeriodLessonsFirstSemester();
 	    occupationPeriodReference.delete();
 	}
-    }
-
-    public boolean canBeDeleted() {
-	return (!hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
-		&& !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups());
     }
 
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
