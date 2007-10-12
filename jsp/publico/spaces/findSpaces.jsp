@@ -87,7 +87,7 @@
 												
 				</fr:layout>
 			</fr:view>
-		</p>		
+		</p>	
 	</logic:notEmpty>
 
 </logic:notEmpty>
