@@ -27,6 +27,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
 	    final ExecutionPeriod begin, final ExecutionPeriod end, final CurricularRuleType type) {
 
+	// TODO assure only one rule of a certain type for a given execution period
+	
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
 	checkCurricularRuleType(type);
 	setCurricularRuleType(type);
