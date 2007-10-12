@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -64,8 +65,8 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	public ActionForward addPersonWrapper(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
-
-		return (request.getParameter("createPerson") != null) ? prepareAddNewPerson(mapping, actionForm,
+	    	ResearchContractBean bean = (ResearchContractBean) RenderUtils.getViewState("createPersonContract").getMetaObject().getObject();
+		return (request.getParameter("createPerson") != null || (bean.getPerson()!=null && bean.getExternalPerson() && StringUtils.isEmpty(bean.getPerson().getEmail()))) ? prepareAddNewPerson(mapping, actionForm,
 				request, response) : addPerson(mapping, actionForm, request, response);
 	}
 

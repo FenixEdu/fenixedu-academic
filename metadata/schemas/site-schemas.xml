@@ -238,7 +238,7 @@
 		<property name="label" value="-"/>
 		<property name="subLayout" value="default"/>
 	</slot>
-	<slot name="functionType"/>
+	<slot name="contractType"/>
 </schema>	
 
 <schema name="research.contract.extraInformation.for.externalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">

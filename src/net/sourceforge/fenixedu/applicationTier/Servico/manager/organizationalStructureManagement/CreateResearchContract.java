@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -30,10 +31,18 @@ public class CreateResearchContract extends Service {
 					null, null, bean.getEmail(), bean.getDocumentIDNumber(), bean.getDocumentType());
 		}
 		ResearchContract.createResearchContract(bean.getContractType(),person, bean.getBegin(), bean.getEnd(), bean.getUnit(), bean.getExternalPerson());
+		if (person.getPersonRole(RoleType.RESEARCHER) == null) {
+		    person.addPersonRoleByRoleType(RoleType.RESEARCHER);			
+		}
 		
 		Login loginIdentification = person.getLoginIdentification();
-		if (person.getPersonRole(RoleType.RESEARCHER) == null) {
-			person.addPersonRoleByRoleType(RoleType.RESEARCHER);			
+		
+		if(loginIdentification == null) {
+		    User user = person.getUser();
+		    if(user == null) {
+			user = new User(person);
+		    }
+		    loginIdentification = new Login(user);
 		}
 		
 		if (loginIdentification.getPassword() == null) {
