@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -15,6 +16,12 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public interface ICurricularRule {
+
+    static final public Comparator<ICurricularRule> COMPARATOR_BY_BEGIN = new Comparator<ICurricularRule>() {
+        public int compare(ICurricularRule o1, ICurricularRule o2) {
+            return o1.getBegin().compareTo(o2.getBegin());
+        }
+    };
 
     public List<GenericPair<Object, Boolean>> getLabel();
 
