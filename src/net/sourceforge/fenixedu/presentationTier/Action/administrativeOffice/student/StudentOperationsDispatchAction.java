@@ -66,7 +66,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	ExecutionDegree executionDegree = null;
 	if (executionDegreeBean.getDegreeCurricularPlan() != null) {
 	    executionDegree = executionDegreeBean.getDegreeCurricularPlan().getExecutionDegreeByYear(
-		    ExecutionYear.readCurrentExecutionYear());
+		    executionDegreeBean.getExecutionYear());
 	}
 
 	executionDegreeBean.setExecutionDegree(executionDegree);

@@ -6,13 +6,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 public class ExecutionDegreeBean implements Serializable {
 
     /**
-         * Serial version id.
-         */
+     * Serial version id.
+     */
     private static final long serialVersionUID = 1L;
 
     private DomainReference<Degree> degree;
@@ -20,6 +21,8 @@ public class ExecutionDegreeBean implements Serializable {
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
 
     private DomainReference<ExecutionDegree> executionDegree;
+
+    private DomainReference<ExecutionYear> executionYear;
 
     private CycleType cycleType;
 
@@ -29,6 +32,7 @@ public class ExecutionDegreeBean implements Serializable {
 	this.degree = new DomainReference<Degree>(null);
 	this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(null);
 	this.executionDegree = new DomainReference<ExecutionDegree>(null);
+	this.executionYear = new DomainReference<ExecutionYear>(null);
     }
 
     public ExecutionDegreeBean(Degree degree) {
@@ -71,6 +75,14 @@ public class ExecutionDegreeBean implements Serializable {
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
 	this.executionDegree = new DomainReference<ExecutionDegree>(executionDegree);
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return this.executionYear.getObject();
+    }
+
+    public void setExecutionYear(ExecutionYear executionYear) {
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
     }
 
     public CycleType getCycleType() {

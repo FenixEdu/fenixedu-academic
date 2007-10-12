@@ -182,8 +182,6 @@ public abstract class Candidacy extends Candidacy_Base {
 
 	case CANCELLED:
 	    throw new DomainException("error.impossible.to.forward.from.cancelled");
-	case REGISTERED:
-	    throw new DomainException("error.impossible.to.forward.from.registered");
 	case ADMITTED:
 	    if (this instanceof PHDProgramCandidacy) {
 		if(((PHDProgramCandidacy)this).getPhdCandidacyEvent().isInDebt()) {

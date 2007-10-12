@@ -177,4 +177,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
 		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
+    
+    public Ingression getIngressionEnum() {
+	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
+    }
 }

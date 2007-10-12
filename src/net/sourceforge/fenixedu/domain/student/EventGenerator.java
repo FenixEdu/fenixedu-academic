@@ -9,32 +9,35 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 
 public class EventGenerator {
 
-    public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan,
-	    Person person, ExecutionYear executionYear) {
+    public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
+	    ExecutionYear executionYear) {
 
 	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(studentCurricularPlan.getDegree().getDegreeType()
-			.getAdministrativeOfficeType());
+		.readByAdministrativeOfficeType(studentCurricularPlan.getDegree().getDegreeType().getAdministrativeOfficeType());
 
 	switch (studentCurricularPlan.getDegree().getDegreeType()) {
 
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 
-	    new DfaGratuityEvent(administrativeOffice, person, studentCurricularPlan, ExecutionYear
-		    .readCurrentExecutionYear());
-	    new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan
-		    .getRegistration());
+	    if (!studentCurricularPlan.getDegree().getSigla().equalsIgnoreCase("POSI")) {
+		new DfaGratuityEvent(administrativeOffice, person, studentCurricularPlan, ExecutionYear
+			.readCurrentExecutionYear());
+		new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
+	    }
 	    break;
-	    
-//	case BOLONHA_PHD_PROGRAM:
-//
-//	    new PhDGratuityEvent(administrativeOffice, person, studentCurricularPlan, executionYear);
-//	    new PhDRegistrationEvent(administrativeOffice, person, studentCurricularPlan
-//		    .getRegistration());
-//	    if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-//		new InsuranceEvent(person, executionYear);
-//	    }
-//	    break;
+
+	// case BOLONHA_PHD_PROGRAM:
+	//
+	// new PhDGratuityEvent(administrativeOffice, person,
+	// studentCurricularPlan, executionYear);
+	// new PhDRegistrationEvent(administrativeOffice, person,
+	// studentCurricularPlan
+	// .getRegistration());
+	// if(!person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear))
+	// {
+	// new InsuranceEvent(person, executionYear);
+	// }
+	// break;
 
 	default:
 	    break;

@@ -19,7 +19,9 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 	final ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	if (executionDegreeBean.getDegree() != null) {
-	    result.addAll(executionDegreeBean.getDegree().getDegreeCurricularPlansSet());
+	    result
+		    .addAll(executionDegreeBean.getDegree().getDegreeCurricularPlansForYear(
+			    executionDegreeBean.getExecutionYear()));
 	    Collections.sort(result, new BeanComparator("name"));
 	} else {
 	    executionDegreeBean.setDegreeCurricularPlan(null);

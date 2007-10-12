@@ -175,6 +175,11 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
+	//FIXME: TEMPORARY HACK! TO REMOVE AFTER NOVEMBER 2007!!
+	if(getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE){
+	    result.add(Degree.readBySigla("POSI"));
+	}
+	
 	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	return result;
     }

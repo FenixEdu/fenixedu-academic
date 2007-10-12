@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.FillPersonalDataOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintRegistrationDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintScheduleOperation;
@@ -40,42 +39,6 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 		+ " - "
 		+ getExecutionDegree().getExecutionYear().getYear();
     }
-
-//    // Static Methods
-//    public static Set<DegreeCandidacy> readAllCandidacies() {
-//	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
-//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-//	    if (candidacy instanceof DegreeCandidacy) {
-//		degreeCandidacies.add((DegreeCandidacy) candidacy);
-//	    }
-//	}
-//	return degreeCandidacies;
-//    }
-//
-//    public static Set<DegreeCandidacy> readAllCandidaciesInStandBy() {
-//	final Set<DegreeCandidacy> degreeCandidacies = new HashSet<DegreeCandidacy>();
-//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-//	    if (candidacy instanceof DegreeCandidacy) {
-//		final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
-//		if (degreeCandidacy.getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.STAND_BY)
-//		    degreeCandidacies.add((DegreeCandidacy) degreeCandidacy);
-//	    }
-//	}
-//	return degreeCandidacies;
-//    }
-//
-//    public static Set<DegreeCandidacy> readAllDegreeCandidaciesBetweenNumbers(final int fromNumber, final int toNumber) {
-//	final Set<DegreeCandidacy> studentsCandidacies = new HashSet<DegreeCandidacy>();
-//	for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacies()) {
-//	    if (candidacy instanceof DegreeCandidacy) {
-//		DegreeCandidacy studentCandidacy = (DegreeCandidacy) candidacy;
-//		final int candidacyNumber = studentCandidacy.getNumber();
-//		if (candidacyNumber >= fromNumber && candidacyNumber <= toNumber)
-//		    studentsCandidacies.add(studentCandidacy);
-//	    }
-//	}
-//	return studentsCandidacies;
-//    }
 
     @Override
     public Set<Operation> getOperations(CandidacySituation candidacySituation) {

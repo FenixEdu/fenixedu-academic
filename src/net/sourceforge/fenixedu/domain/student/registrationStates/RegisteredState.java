@@ -46,6 +46,7 @@ public class RegisteredState extends RegisteredState_Base {
 	states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
 	states.add(RegistrationStateType.MOBILITY.name());
 	states.add(RegistrationStateType.TRANSITION.name());
+	states.add(RegistrationStateType.TRANSITED.name());
 	return states;
     }
 
