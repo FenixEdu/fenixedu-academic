@@ -23,10 +23,6 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 			throw new DomainException("unit.acronym.cannot.be.null");
 		}
 		this.setUnit(unit);
-		new Section(this, new MultiLanguageString().new I18N().add("pt", "Lateral").add("en", "Side")
-				.finish());
-		new Section(this, new MultiLanguageString().new I18N().add("pt", "Topo").add("en", "Top")
-				.finish());
 	}
 
 	@Override

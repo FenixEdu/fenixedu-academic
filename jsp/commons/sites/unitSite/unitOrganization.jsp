@@ -17,6 +17,8 @@
 <div>
 	<fr:view name="site" property="unit" layout="organigram">
 		<fr:layout>
+			<fr:property name="showEmptyFunctions" value="false"/>
+			<fr:property name="showOnlyPeopleWithFunctions" value="true"/>
 			<fr:property name="showDates" value="false"/>
 			<fr:property name="unitShown" value="false"/>
 		</fr:layout>	

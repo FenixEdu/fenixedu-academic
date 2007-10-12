@@ -33,6 +33,7 @@ public class UnitFileTag extends UnitFileTag_Base {
 	    throw new DomainException("error.cannot.delete.tag.with.files");
 	}
 	removeUnit();
+	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 

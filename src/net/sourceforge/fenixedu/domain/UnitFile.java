@@ -59,6 +59,7 @@ public class UnitFile extends UnitFile_Base {
 			removeUnit();
 			for(;!getUnitFileTags().isEmpty(); getUnitFileTags().get(0).removeTaggedFiles(this));
 			removeRootDomainObject();
+			removeUploader();
 			super.deleteDomainObject();
 		} else {
 			throw new DomainException("error.cannot.delete.file");

@@ -570,7 +570,9 @@ public class UnitStructureRenderer extends OutputRenderer {
 	units.addAll(unit.getActiveSubUnits(new YearMonthDay()));
 
 	for (Unit sub : units) {
-	    createStructure(sub, root, level + 1);
+	    if(!sub.getOrderedActiveFunctions().isEmpty()) {
+		createStructure(sub, root, level + 1);
+	    }
 	}
     }
 
