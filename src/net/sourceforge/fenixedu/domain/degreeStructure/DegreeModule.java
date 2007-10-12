@@ -339,6 +339,31 @@ public abstract class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
+    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
+	final SortedSet<ICurricularRule> curricularRules = new TreeSet<ICurricularRule>(ICurricularRule.COMPARATOR_BY_BEGIN);
+	curricularRules.addAll(getCurricularRules(ruleType, parentCourseGroup, null));
+	
+	if (curricularRules.isEmpty()) {
+	    return null;
+	} else if (executionYear == null) {
+	    return curricularRules.last();
+	} else {
+	    ICurricularRule result = null;
+	    
+	    for (final ICurricularRule curricularRule : curricularRules) {
+		if (curricularRule.isValid(executionYear)) {
+		    if (curricularRule != null) {
+			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
+		    }
+		    
+		    result = curricularRule;
+		}
+	    }
+
+	    return result;
+	}
+    }
+
     public Double getMaxEctsCredits() {
 	return getMaxEctsCredits(ExecutionPeriod.readActualExecutionPeriod());
     }
