@@ -1144,13 +1144,13 @@ public class Registration extends Registration_Base {
 
     final public void setSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
 	if (specialSeasonCode == null) {
-	    if (!getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
+	    if (!getLastStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
 		throw new DomainException("error.cannot.change.specialSeasonCode");
 	    } else {
 		deleteYearSpecialSeasonCode(executionYear);
 	    }
 	} else {
-	    if (specialSeasonCode.getMaxEnrolments() < getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear)
+	    if (specialSeasonCode.getMaxEnrolments() < getLastStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear)
 		    .size()) {
 		throw new DomainException("error.cannot.change.specialSeasonCode");
 	    } else {
