@@ -50,7 +50,9 @@
 <bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
 <fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() + "&studentId=" + studentId.toString() %>">
 
+	<br/>
 	<html:hidden property="method" value="deleteCredits"/>
+	<html:cancel onclick="this.form.method.value='backViewRegistration'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 	
 	<logic:notEmpty name="studentCurricularPlan" property="credits">
 		<fr:view name="studentCurricularPlan" property="credits" schema="student.Dismissal.view.dismissals">

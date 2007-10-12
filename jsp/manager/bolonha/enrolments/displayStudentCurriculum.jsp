@@ -30,14 +30,25 @@
 		</span>
 	</p>
 	
+	<bean:define id="detailedView" name="bolonhaStudentEnrolmentForm" property="detailed" />
+	<bean:define id="scpId" name="studentCurricularPlan" property="idInternal" />
 	
+	<html:form action="<%= "/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=" + scpId.toString() %>">
+		<strong><bean:message key="label.show.detail" bundle="MANAGER_RESOURCES" />: </strong>
+		<html:select property="detailed" onchange="this.form.submit();">
+			<html:option value="true"><bean:message key="label.manager.yes" bundle="MANAGER_RESOURCES" /></html:option>
+			<html:option value="false"><bean:message key="label.manager.no" bundle="MANAGER_RESOURCES" /></html:option>
+		</html:select>
+	</html:form>
 	
+	<br/>
+
 	<fr:edit name="studentCurricularPlan" nested="true">
 		<fr:layout>
 			<fr:property name="organizedBy" value="GROUPS" />
 			<fr:property name="enrolmentStateFilter" value="ALL" />
-			<fr:property name="viewType" value="ALL>" />
-			<fr:property name="detailed" value="true" />
+			<fr:property name="viewType" value="ALL" />
+			<fr:property name="detailed" value="<%= detailedView.toString() %>" />
 		</fr:layout>
 	</fr:edit>
 

@@ -672,6 +672,7 @@
 		<form-bean name="bolonhaStudentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="scpId" type="java.lang.Integer" />
+			<form-property name="detailed" type="java.lang.String" />
     	</form-bean>
     	
     	<!-- Bean for Student Dismissal -->

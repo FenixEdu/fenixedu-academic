@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -107,7 +108,12 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     public ActionForward viewStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	if (StringUtils.isEmpty(form.getString("detailed"))) {
+	    form.set("detailed", Boolean.TRUE.toString());
+	}
 	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+	
 	return mapping.findForward("viewStudentCurriculum");
     }
 
