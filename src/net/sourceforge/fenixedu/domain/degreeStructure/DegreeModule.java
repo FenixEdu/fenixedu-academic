@@ -11,6 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -34,7 +35,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-public abstract class DegreeModule extends DegreeModule_Base {
+abstract public class DegreeModule extends DegreeModule_Base {
 
     static final public Comparator<DegreeModule> COMPARATOR_BY_NAME = new ComparatorByName();
 
@@ -445,6 +446,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
     abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
-
+    
+    abstract public Set<CurricularCourse> getAllCurricularCourses();
 
 }

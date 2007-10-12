@@ -732,4 +732,12 @@ public class CourseGroup extends CourseGroup_Base {
     public boolean isCourseGroup() {
 	return true;
     }
+    
+    public Set<CurricularCourse> getAllCurricularCourses() {
+	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+	for (final Context context : getChildContexts()) {
+	    result.addAll(context.getChildDegreeModule().getAllCurricularCourses());
+	}
+	return result;
+    }
 }

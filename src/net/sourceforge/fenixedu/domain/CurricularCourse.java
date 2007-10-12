@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -409,72 +408,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getCurricularYearWithLowerYear(scopesFound, date);
     }
 
-    // Old getCurricularYearByBranchAndSemester
-    /*
-     * public CurricularYear getCurricularYearByBranchAndSemester(final Branch
-     * branch, final Integer semester, final Date date) {
-     * 
-     * if (this.getScopes().size() == 1) { return
-     * this.getScopes().get(0).getCurricularSemester().getCurricularYear(); }
-     * 
-     * CurricularYear curricularYearToReturn = null; List<CurricularCourseScope>
-     * curricularCourseScopesFound = null; boolean foundInBranchButNotInSemester =
-     * false; boolean notFoundInBranch = false; boolean notFoundInSemester =
-     * false;
-     * 
-     * if (branch != null) { curricularCourseScopesFound = (List)
-     * CollectionUtils.select(this.getScopes(), new Predicate() { public boolean
-     * evaluate(Object arg0) { return ((CurricularCourseScope)
-     * arg0).getBranch().equals(branch) && ((CurricularCourseScope)
-     * arg0).isActive(date); } });
-     * 
-     * if (curricularCourseScopesFound != null &&
-     * !curricularCourseScopesFound.isEmpty()) {
-     * 
-     * if (semester != null) {
-     * 
-     * final List<CurricularCourseScope> newCurricularCourseScopesFound =
-     * (List) CollectionUtils .select(curricularCourseScopesFound, new
-     * Predicate() { public boolean evaluate(Object arg0) { return
-     * ((CurricularCourseScope) arg0).getCurricularSemester()
-     * .getSemester().equals(semester) && ((CurricularCourseScope)
-     * arg0).isActive(date); } });
-     * 
-     * if (newCurricularCourseScopesFound != null &&
-     * !newCurricularCourseScopesFound.isEmpty()) { curricularYearToReturn =
-     * getCurricularYearWithLowerYear( newCurricularCourseScopesFound, date); }
-     * else { foundInBranchButNotInSemester = true; } } else {
-     * foundInBranchButNotInSemester = true; } } else { notFoundInBranch = true; } }
-     * else { notFoundInBranch = true; }
-     * 
-     * if (foundInBranchButNotInSemester) { curricularYearToReturn =
-     * getCurricularYearWithLowerYear(curricularCourseScopesFound, date); }
-     * 
-     * if (notFoundInBranch) {
-     * 
-     * if (semester != null) { curricularCourseScopesFound = (List)
-     * CollectionUtils.select(this.getScopes(), new Predicate() { public boolean
-     * evaluate(Object arg0) { return ((CurricularCourseScope)
-     * arg0).getCurricularSemester() .getSemester().equals(semester) &&
-     * ((CurricularCourseScope) arg0).isActive(date); } });
-     * 
-     * if (curricularCourseScopesFound != null &&
-     * !curricularCourseScopesFound.isEmpty()) { // if
-     * (curricularCourseScopesFound.size() == 1) { // curricularYearToReturn = //
-     * getCurricularYearWithLowerYear(this.getScopes()); // } else {
-     * curricularYearToReturn =
-     * getCurricularYearWithLowerYear(curricularCourseScopesFound, date); // } }
-     * else { notFoundInSemester = true; } } else { notFoundInSemester = true; } }
-     * 
-     * if (notFoundInSemester) { curricularYearToReturn =
-     * getCurricularYearWithLowerYear(this.getScopes(), date); }
-     * 
-     * return curricularYearToReturn; }
-     */
-
     public String getCurricularCourseUniqueKeyForEnrollment() {
-	DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan().getDegree() != null) ? this
-		.getDegreeCurricularPlan().getDegree().getTipoCurso()
+	final DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan().getDegree() != null) ? this
+		.getDegreeCurricularPlan().getDegree().getDegreeType()
 		: null;
 	return constructUniqueEnrollmentKey(this.getCode(), this.getName(), degreeType);
     }
@@ -1955,5 +1891,10 @@ public class CurricularCourse extends CurricularCourse_Base {
     		}
     	}
     	return false;
+    }
+    
+    @Override
+    public Set<CurricularCourse> getAllCurricularCourses() {
+        return Collections.singleton(this);
     }
 }
