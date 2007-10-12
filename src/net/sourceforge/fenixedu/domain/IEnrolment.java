@@ -94,5 +94,6 @@ public interface IEnrolment {
      * @return the last valid thesis for this enrolment
      */
     Thesis getThesis();
-    
+
+    void delete();
 }
