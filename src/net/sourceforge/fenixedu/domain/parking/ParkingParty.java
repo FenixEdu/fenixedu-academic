@@ -474,18 +474,23 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean canRequestUnlimitedCard() {
 	List<RoleType> roles = getSubmitAsRoles();
-	ParkingRequest parkingRequest = getFirstRequest();
+//	ParkingRequest parkingRequest = getFirstRequest();
 	if (getLastRequest() == null) {
 	    if (roles.contains(RoleType.GRANT_OWNER)) {
-		return true;
+		return Boolean.TRUE;
 	    } else if (roles.contains(RoleType.STUDENT)
 		    && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
-		if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()) {
-		    return true;
-		}
+//		String parkingGroupName = parkingRequest.getParkingParty().getParkingGroup() != null ? parkingRequest
+//			.getParkingParty().getParkingGroup().getGroupName()
+//			: "";
+//		if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()
+//			|| parkingGroupName.equalsIgnoreCase("Limitados")) {
+//		    return true;
+//		}
+		return Boolean.TRUE;
 	    }
 	}
-	return false;
+	return Boolean.FALSE;
     }
 
     public boolean canRequestUnlimitedCard(Student student) {
