@@ -9,15 +9,16 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoRoom" name="component" property="infoRoom" />
 <bean:define id="lessonList" name="component" property="infoShowOccupation" />
-	<div id="invisible"><h2><bean:message key="title.info.room"/></h2></div>
-	<br/> 
+
+	<div id="invisible"><h1><bean:message key="title.info.room"/></h1></div>
+
 <html:form action="/viewRoom">
 	<bean:define id="room" name="infoRoom" property="nome"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="roomViewer"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roomName" property="roomName" value="<%=room.toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<table border="0" cellspacing="0" cellpadding="0">
+	<table class="mvert15">
 		<tr>
 		    <td nowrap="nowrap" width="125"><bean:message key="property.execution.period"/>:</td>
 		    <td nowrap="nowrap">
@@ -44,7 +45,7 @@
 	</table>
 </html:form>
 	<logic:present name="infoRoom" >
-       	<table class="tab_complex" cellspacing="1" cellpadding="2">
+       	<table class="tstyle2 thlight tdcenter mvert1">
                 <tr>
                     <th><bean:message key="property.room.name" /></th>
                     <th><bean:message key="property.room.type" /></th>
@@ -54,15 +55,14 @@
 					<th><bean:message key="property.room.capacity.exame" /></th>
                 </tr>
                 <tr>
-                    <td ><bean:write name="infoRoom" property="nome" /></td>
-                    <td ><bean:write name="infoRoom" property="tipo" /></td>
-                    <td ><bean:write name="infoRoom" property="edificio" /></td>
-					<td ><bean:write name="infoRoom" property="piso" /></td>
-                    <td ><bean:write name="infoRoom" property="capacidadeNormal" /></td>
-                    <td ><bean:write name="infoRoom" property="capacidadeExame" /></td>
+                    <td><strong><bean:write name="infoRoom" property="nome" /></strong></td>
+                    <td><bean:write name="infoRoom" property="tipo" /></td>
+                    <td><bean:write name="infoRoom" property="edificio" /></td>
+					<td><bean:write name="infoRoom" property="piso" /></td>
+                    <td><bean:write name="infoRoom" property="capacidadeNormal" /></td>
+                    <td><bean:write name="infoRoom" property="capacidadeExame" /></td>
                 </tr>
         </table>		
-		<br />
 		<br />
 	   	<app:gerarHorario name="lessonList" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 	</logic:present>

@@ -8,13 +8,13 @@
 
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundle"/>				
 	
-	<h:outputText value="<h2>#{bundle['label.selected.space.written.evaluations']}</h2>" escape="false"/>	
+	<h:outputText value="<h1>#{bundle['label.selected.space.written.evaluations']}</h1>" escape="false"/>	
 	
 	<fc:dataRepeater value="#{publicWrittenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks">
 	
 		<h:panelGroup>
 		
-			<h:outputText value="<table class='tstyle4 tdcenter'>" escape="false"/>
+			<h:outputText value="<table class='tstyle2 thlight tdcenter'>" escape="false"/>
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.name']}</th>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.building']}</th>" escape="false"/>
@@ -25,7 +25,7 @@
 			<h:outputText value="<tr>" escape="false"/>
 			
 			<h:outputText value="<tr>" escape="false"/>
-				<h:outputText value="<td>#{calendarLinks.key.nome}</td>" escape="false"/>
+				<h:outputText value="<td><strong>#{calendarLinks.key.nome}</strong></td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.spaceBuilding.name}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.piso}</td>" escape="false"/>
 				<h:outputText value="<td>#{calendarLinks.key.tipo.name}</td>" rendered="#{calendarLinks.key.tipo != null}" escape="false"/>
@@ -33,6 +33,8 @@
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeExame}</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
 			<h:outputText value="</table>" escape="false"/>
+			
+			<h:outputText value="<br/>" escape="false"/>
 			
 		 	<fc:fenixCalendar 
 		 		begin="#{publicWrittenEvaluationsByRoom.calendarBegin}"	
