@@ -23,7 +23,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     public RootCurriculumGroup() {
 	super();
-
 	createExtraCurriculumGroup();
     }
 
@@ -92,8 +91,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
 
     private void createExtraCurriculumGroup() {
-	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR,
-		this);
+	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR, this);
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {

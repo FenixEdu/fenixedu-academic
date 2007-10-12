@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Equivalence extends Equivalence_Base {
 
-    protected Equivalence() {
+    public Equivalence() {
 	super();
 	setGrade(Grade.createEmptyGrade());
     }

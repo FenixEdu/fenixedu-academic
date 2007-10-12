@@ -331,16 +331,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Override
     @Deprecated
-    final public void setStudent(final Registration registration) {
+    public void setStudent(final Registration registration) {
 	this.setRegistration(registration);
     }
 
-    final public Registration getRegistration() {
+    public Registration getRegistration() {
 	return super.getStudent();
     }
 
-    final public void setRegistration(final Registration registration) {
+    public void setRegistration(final Registration registration) {
 	super.setStudent(registration);
+    }
+    
+    public boolean hasRegistration() {
+	return super.hasStudent();
     }
 
     public Set<CurriculumLine> getAllCurriculumLines() {
@@ -2525,7 +2529,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isLastStudentCurricularPlanFromRegistration() {
-	return this == getRegistration().getLastStudentCurricularPlan();
+	return hasRegistration() && getRegistration().getLastStudentCurricularPlan() == this;
     }
 
     @Checked("StudentCurricularPlanPredicates.moveCurriculumLines")
