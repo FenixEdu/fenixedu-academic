@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.util;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -180,7 +181,7 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
             return 1;
         }
 
-        return getContent().compareTo(languageString.getContent());
+        return Collator.getInstance().compare(getContent(),languageString.getContent());
     }
 
     public class I18N {
