@@ -53,13 +53,9 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 			    .get(DateTimeFieldType.monthOfYear())) {
 		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth
 			.getClosedMonthJustifications()) {
-		    YearMonthDay day = new YearMonthDay(assiduousnessClosedMonth.getClosedMonth()
-			    .getClosedYearMonth().get(DateTimeFieldType.year()),
-			    assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
-				    DateTimeFieldType.monthOfYear()), 1);
-		    Integer code = 0;
-		    code = closedMonthJustification.getJustificationMotive().getGiafCode(
-			    assiduousnessClosedMonth.getAssiduousness(), day);
+		    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
+			    assiduousnessClosedMonth.getAssiduousness(),
+			    closedMonthJustification.getAssiduousnessStatus());
 		    Duration duration = pastJustificationsDurations.get(code);
 		    if (duration == null) {
 			duration = Duration.ZERO;
@@ -72,14 +68,11 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return pastJustificationsDurations;
     }
 
-    public HashMap<JustificationMotive, Duration> getClosedMonthJustificationsMap() {
+    public HashMap<Integer, Duration> getClosedMonthJustificationsMap() {
 	HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
-	YearMonthDay day = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.monthOfYear()), 1);
 	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
 	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-		    getAssiduousness(), day);
+		    getAssiduousness(), closedMonthJustification.getAssiduousnessStatus());
 	    Duration duration = closedMonthJustificationscodesMap.get(code);
 	    if (duration == null) {
 		duration = Duration.ZERO;
@@ -87,21 +80,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    duration = duration.plus(closedMonthJustification.getJustificationDuration());
 	    closedMonthJustificationscodesMap.put(code, duration);
 	}
-
-	HashMap<JustificationMotive, Duration> closedMonthJustificationsMap = new HashMap<JustificationMotive, Duration>();
-	for (Integer code : closedMonthJustificationscodesMap.keySet()) {
-	    Duration oldDuration = closedMonthJustificationscodesMap.get(code);
-	    JustificationMotive justificationMotive = JustificationMotive
-		    .getJustificationMotiveByGiafCode(code, getAssiduousness(), day);
-	    Duration duration = closedMonthJustificationsMap.get(justificationMotive);
-	    if (duration == null) {
-		duration = Duration.ZERO;
-	    }
-	    duration = duration.plus(oldDuration);
-	    closedMonthJustificationsMap.put(justificationMotive, duration);
-	}
-
-	return closedMonthJustificationsMap;
+	return closedMonthJustificationscodesMap;
     }
 
     private double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {

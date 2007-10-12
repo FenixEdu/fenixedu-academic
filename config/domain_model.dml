@@ -5072,6 +5072,13 @@ relation ClosedMonthJustificationJustificationMotive {
 	}
 }
 
+relation ClosedMonthJustificationAssiduousnessStatus {
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
+		multiplicity *;
+	}
+}
+
 relation CompetenceCourseDepartment {
 	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourses {
 		multiplicity *;

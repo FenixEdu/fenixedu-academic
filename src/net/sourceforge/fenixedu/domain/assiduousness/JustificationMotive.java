@@ -40,8 +40,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setActualWorkTime(actualWorkTime);
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
-        setActive(Boolean.TRUE);
-        setDiscountBonus(Boolean.FALSE);
+	setActive(Boolean.TRUE);
+	setDiscountBonus(Boolean.FALSE);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime,
@@ -122,9 +122,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return false;
     }
 
-    public Integer getGiafCode(Assiduousness assiduousness, YearMonthDay day) {
-	if (assiduousness.getStatusBetween(day, day).get(0).getAssiduousnessStatus().getDescription()
-		.equalsIgnoreCase("Contrato a termo certo")) {
+    public Integer getGiafCode(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus) {
+	if (assiduousnessStatus.getDescription().equalsIgnoreCase("Contrato a termo certo")) {
 	    if (getGiafCodeContractedStatus() == null) {
 		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(),
 			assiduousness.getEmployee().getEmployeeNumber().toString());
@@ -139,11 +138,12 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public static JustificationMotive getJustificationMotiveByGiafCode(Integer code,
-	    Assiduousness assiduousness, YearMonthDay day) {
+	    Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus) {
 	for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
 		.getJustificationMotives()) {
 	    try {
-		if (justificationMotive.getGiafCode(assiduousness, day).equals(code)) {
+		if (justificationMotive.getGiafCode(assiduousness, assiduousnessStatus).equals(code)
+			&& justificationMotive.getAccumulate()) {
 		    return justificationMotive;
 		}
 	    } catch (InvalidGiafCodeException e) {

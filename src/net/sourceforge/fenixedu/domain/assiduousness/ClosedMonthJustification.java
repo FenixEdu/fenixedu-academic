@@ -7,16 +7,20 @@ import org.joda.time.Duration;
 public class ClosedMonthJustification extends ClosedMonthJustification_Base {
 
     public ClosedMonthJustification(AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    JustificationMotive justificationMotive, Duration duration) {
+	    JustificationMotive justificationMotive, AssiduousnessStatus assiduousnessStatus,
+	    Duration duration) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousnessClosedMonth(assiduousnessClosedMonth);
 	setJustificationMotive(justificationMotive);
 	setJustificationDuration(duration);
+	setAssiduousnessStatus(assiduousnessStatus);
     }
 
     public void delete() {
 	removeRootDomainObject();
 	removeJustificationMotive();
+	removeAssiduousnessStatus();
+	removeAssiduousnessClosedMonth();
 	deleteDomainObject();
     }
 

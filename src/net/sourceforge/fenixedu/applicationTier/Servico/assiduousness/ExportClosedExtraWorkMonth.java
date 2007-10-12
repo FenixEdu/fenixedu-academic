@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
@@ -222,27 +223,28 @@ public class ExportClosedExtraWorkMonth extends Service {
 	}
 	HashMap<Integer, Duration> pastJustificationsDurations = assiduousnessClosedMonth
 		.getPastJustificationsDurations();
-	HashMap<JustificationMotive, Duration> closedMonthJustificationsMap = assiduousnessClosedMonth
+	HashMap<Integer, Duration> closedMonthJustificationsMap = assiduousnessClosedMonth
 		.getClosedMonthJustificationsMap();
-	for (JustificationMotive justificationMotive : closedMonthJustificationsMap.keySet()) {
+	for (Integer giafCode : closedMonthJustificationsMap.keySet()) {
+	    Duration pastDurationToDiscount = Duration.ZERO;
+	    Duration pastDuration = pastJustificationsDurations.get(giafCode);
+	    int scheduleHours = assiduousness.getAverageWorkTimeDuration(beginDate, endDate).toPeriod(
+		    PeriodType.dayTime()).getHours();
+	    if (pastDuration != null) {
+		Period pastToDiscount = Period.hours(pastDuration.toPeriod().getHours() % scheduleHours)
+			.withMinutes(pastDuration.toPeriod().getMinutes());
 
-	    if (justificationMotive.getAccumulate()) {
-		Duration pastDurationToDiscount = Duration.ZERO;
-		Duration pastDuration = pastJustificationsDurations.get(justificationMotive.getGiafCode(
-			assiduousness, beginDate));
-		int scheduleHours = assiduousness.getAverageWorkTimeDuration(beginDate, endDate)
-			.toPeriod(PeriodType.dayTime()).getHours();
-		if (pastDuration != null) {
-		    Period pastToDiscount = Period.hours(
-			    pastDuration.toPeriod().getHours() % scheduleHours).withMinutes(
-			    pastDuration.toPeriod().getMinutes());
-
-		    pastDurationToDiscount = pastToDiscount.toDurationFrom(new DateMidnight());
-		}
-		pastDurationToDiscount = pastDurationToDiscount.plus(closedMonthJustificationsMap
-			.get(justificationMotive));
-		int justificationDays = pastDurationToDiscount.toPeriod().getHours() / scheduleHours;
-		if (justificationDays != 0) {
+		pastDurationToDiscount = pastToDiscount.toDurationFrom(new DateMidnight());
+	    }
+	    pastDurationToDiscount = pastDurationToDiscount.plus(closedMonthJustificationsMap
+		    .get(giafCode));
+	    int justificationDays = pastDurationToDiscount.toPeriod().getHours() / scheduleHours;
+	    if (justificationDays != 0) {
+		AssiduousnessStatus assiduousnessStatus = assiduousness
+			.getLastAssiduousnessStatusBetween(beginDate, endDate);
+		JustificationMotive justificationMotive = JustificationMotive
+			.getJustificationMotiveByGiafCode(giafCode, assiduousness, assiduousnessStatus);
+		if (justificationMotive != null) {
 		    result.append(getLeaveLine(assiduousness, justificationMotive, closedMonth,
 			    justificationDays, leaves));
 		}
@@ -284,7 +286,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth, justificationDays, leaves);
 	StringBuilder line = new StringBuilder();
 	for (YearMonthDay day : daysToUnjustify) {
-	    Integer code = justificationMotive.getGiafCode(assiduousness, day);
+	    AssiduousnessStatus assiduousnessStatus = assiduousness
+		    .getActiveAssiduousnessStatusInDate(day);
+	    Integer code = justificationMotive.getGiafCode(assiduousness, assiduousnessStatus);
 	    if (code != 0) {
 		line.append(day.getYear()).append(fieldSeparator);
 		line.append(monthFormat.format(day.getMonthOfYear() + 1)).append(fieldSeparator);
@@ -349,13 +353,16 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    end = getPreviousWorkingDay(leave.getJustificationMotive(), leave.getAssiduousness(), leave
 		    .getEndYearMonthDay(), false);
 	}
-	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(), start);
+	AssiduousnessStatus assiduousnessStatus = leave.getAssiduousness()
+		.getActiveAssiduousnessStatusInDate(start);
+	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(),
+		assiduousnessStatus);
 	StringBuilder line = new StringBuilder();
 
 	if (code != 0) {
 	    if (leave.getJustificationMotive() == maternityJustificationMotive
 		    && endDate.getDayOfMonth() != 30
-		    && Days.daysBetween(start, end).getDays() +1 == endDate.getDayOfMonth()) {
+		    && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
 		if (!maternityJustificationList.contains(leave.getAssiduousness())
 			&& !isContractedEmployee(leave.getAssiduousness(), start, end)) {
 		    maternityJustificationList.add(leave.getAssiduousness());
@@ -409,7 +416,10 @@ public class ExportClosedExtraWorkMonth extends Service {
     }
 
     private StringBuilder getHalfLeaveLine(Leave leave, YearMonthDay beginDate) {
-	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(), beginDate);
+	AssiduousnessStatus assiduousnessStatus = leave.getAssiduousness()
+		.getActiveAssiduousnessStatusInDate(leave.getDate().toYearMonthDay());
+	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(),
+		assiduousnessStatus);
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
 	    line.append(beginDate.getYear()).append(fieldSeparator);
