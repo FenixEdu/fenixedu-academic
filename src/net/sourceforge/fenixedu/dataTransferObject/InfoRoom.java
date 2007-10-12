@@ -11,6 +11,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -27,7 +28,8 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public String getEdificio() {
-        return getRoom().getBuilding().getName();
+	Building building = getRoom().getBuilding();
+        return building != null ? building.getName() : "";
     }
 
     public Integer getPiso() {

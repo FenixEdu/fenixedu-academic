@@ -267,8 +267,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
 	    List<LabelValueBean> listaSalas = new ArrayList<LabelValueBean>();
 	    for (int i = 0; i < emptyRoomsList.size(); i++) {
-		InfoRoom elem = emptyRoomsList.get(i);
-		listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
+		InfoRoom elem = emptyRoomsList.get(i);		
+		String roomLabel = elem.getNome() + " - " + elem.getEdificio();
+		listaSalas.add(new LabelValueBean(roomLabel, elem.getNome()));
 	    }
 	    listaSalas.add(0, new LabelValueBean("- Sem Sala -", ""));
 	    
