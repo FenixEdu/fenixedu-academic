@@ -84,8 +84,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public void delete() {
 	if (canBeDeleted()) {
-	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete())
-		;
+	    
+	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());
+	    
 	    if (hasGratuityValues()) {
 		getGratuityValues().delete();
 	    }
@@ -107,6 +108,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	    removeRootDomainObject();
 	    deleteDomainObject();
+	    
 	} else {
 	    throw new DomainException("execution.degree.cannot.be.deleted");
 	}
@@ -178,11 +180,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean canBeDeleted() {
 	return (!hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
-		&& !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
-		&& (getPeriodLessonsFirstSemester() == null || getPeriodLessonsFirstSemester().getLessons().isEmpty())
-		&& (getPeriodLessonsSecondSemester() == null || getPeriodLessonsSecondSemester().getLessons().isEmpty())
-		&& (getPeriodExamsFirstSemester() == null || getPeriodExamsFirstSemester().getLessons().isEmpty())
-		&& (getPeriodExamsSecondSemester() == null || getPeriodExamsSecondSemester().getLessons().isEmpty()));
+		&& !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups());
     }
 
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
