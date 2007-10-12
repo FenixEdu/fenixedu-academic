@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
@@ -698,21 +699,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public Double getCreditsConcluded(ExecutionYear executionYear) {
 
 	final CourseGroup courseGroup = isRoot() ? getDegreeModule() : getCurriculumGroup().getDegreeModule();
-	final List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
-		CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
-	if (curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
-	}
+	final CreditsLimit creditsLimit = (CreditsLimit) getDegreeModule().getCurricularRuleMostRecent(CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
 
 	Double creditsConcluded = 0d;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
 	}
 
-	if (curricularRules.isEmpty()) {
+	if (creditsLimit == null) {
 	    return creditsConcluded;
 	} else {
-	    CreditsLimit creditsLimit = curricularRules.get(0);
 	    return Math.min(creditsLimit.getMaximumCredits(), creditsConcluded);
 	}
     }
@@ -732,6 +728,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+//    @Override
+//    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+//	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
+//
+//	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+//	    curriculum.add(curriculumModule.getCurriculum(executionYear));
+//	}
+//	
+//	return curriculum;
+//    }
+//    
     @Override
     public boolean isPropaedeutic() {
 	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();
