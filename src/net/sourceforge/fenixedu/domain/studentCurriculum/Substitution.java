@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
 public class Substitution extends Substitution_Base {
 
@@ -75,4 +77,11 @@ public class Substitution extends Substitution_Base {
     protected boolean checkGrade() {
         return true;
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<ICurriculumEntry> getAverageEntries() {
+	return new HashSet<ICurriculumEntry>(getIEnrolments());
+    }
+
 }

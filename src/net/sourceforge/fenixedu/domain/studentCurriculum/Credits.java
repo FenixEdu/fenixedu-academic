@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
 public class Credits extends Credits_Base {
 
@@ -190,6 +192,11 @@ public class Credits extends Credits_Base {
 
     public boolean isEquivalence() {
 	return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Collection<ICurriculumEntry> getAverageEntries() {
+	return Collections.EMPTY_SET;
     }
 
 }
