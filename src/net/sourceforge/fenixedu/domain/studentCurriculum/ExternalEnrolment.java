@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -158,10 +159,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 		.valueOf(grade);
     }
 
-    public Double getWeigth() {
-	return getEctsCredits();
-    }
-
     final public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod() != null ? getExecutionPeriod().getExecutionYear() : null;
     }
@@ -177,7 +174,23 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public String getGradeValue() {
 	return getGrade().getValue();
     }
+    
+    final public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(getEctsCredits());
+    }
+    
+    public Double getWeigth() {
+	return getEctsCredits();
+    }
 
+    final public BigDecimal getWeigthForCurriculum() {
+	return BigDecimal.valueOf(getWeigth());
+    }
+    
+    public BigDecimal getWeigthTimesGrade() {
+	return  getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
+    }
+    
     /**
      * There is no thesis associated to an external enrolment.
      * 
@@ -186,5 +199,5 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public Thesis getThesis() {
         return null;
     }
-    
+
 }

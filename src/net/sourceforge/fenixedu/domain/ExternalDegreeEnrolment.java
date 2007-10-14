@@ -55,5 +55,5 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 	builder.append(getDegreeCurricularPlanOfDegreeModule().getName()).append(") ]\n");
 	return builder;
     }
-
+    
 }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -19,10 +21,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
 import org.joda.time.YearMonthDay;
 
-public class Dismissal extends Dismissal_Base {
+public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     public Dismissal() {
 	super();
@@ -134,8 +138,13 @@ public class Dismissal extends Dismissal_Base {
 
     @Override
     public Double getEctsCredits() {
+	// FIXME must migrate Dismissal with optional curricular courses to OptionalDismissal
 	return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits(
 		getExecutionPeriod());
+    }
+
+    final public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(getEctsCredits());
     }
 
     protected Double getEnrolmentsEcts() {
@@ -199,6 +208,48 @@ public class Dismissal extends Dismissal_Base {
 	return iEnrolments.isEmpty() ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	final ExecutionPeriod executionPeriod = executionYear == null ? null : executionYear.getFirstExecutionPeriod();
+	return isValid(executionPeriod) ? 
+		new Curriculum(
+			this, 
+			executionYear, 
+			Collections.EMPTY_SET, 
+			getAverageEntries(), 
+			Collections.singleton((ICurriculumEntry) this))
+		: Curriculum.createEmpty(this, executionYear);
+    }
+    
+    private Collection<ICurriculumEntry> getAverageEntries() {
+	return getCredits().isEquivalence() ? Collections.singleton((ICurriculumEntry) this) : getCredits().getAverageEntries();
+    }
+    
+    public Grade getGrade() {
+	return getCredits().isEquivalence() ? getCredits().getGrade() : Grade.createEmptyGrade();
+    }
+    
+    public String getGradeValue() {
+	return getGrade().getValue();
+    }
+
+    public Double getWeigth() {
+	return getCredits().isEquivalence() ? getEctsCredits() : null;
+    }
+    
+    final public BigDecimal getWeigthForCurriculum() {
+	return BigDecimal.valueOf(getWeigth());
+    }
+    
+    public BigDecimal getWeigthTimesGrade() {
+	return getCredits().isEquivalence() && getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : BigDecimal.ZERO;
+    }
+    
+    public String getCode() {
+	return hasCurricularCourse() ? getCurricularCourse().getCode() : null;
+    }
+    
     @Override
     public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
