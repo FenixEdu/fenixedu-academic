@@ -1,20 +1,22 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -89,14 +91,17 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final StringBuilder result = new StringBuilder();
 	
 	if (degreeFinalizationCertificateRequest.getDetailed()) {
-	    final List<IEnrolment> approvedIEnrolments = new ArrayList<IEnrolment>(registration.getApprovedIEnrolments());
-	    Collections.sort(approvedIEnrolments, IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Curriculum curriculum = registration.getCurriculum();
+	    
+	    final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    entries.addAll(curriculum.getEntries());
+	    entries.addAll(curriculum.getDismissalRelatedEntries());
 
 	    final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
 	    final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
 	    final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
 
-	    reportIEnrolments(result, approvedIEnrolments, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
+	    reportEntries(result, entries, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
 
 	    if (!extraCurricularEnrolments.isEmpty()) {
 		reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
@@ -107,7 +112,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    }
 		
 	    if (getDocumentRequest().isToShowCredits()) {
-		result.append(getDismissalsEctsCreditsInfo());
+		result.append(getCreditsDismissalsEctsCreditsInfo(curriculum));
 	    }
 	    
 	    result.append(generateEndLine());
@@ -120,10 +125,10 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
-    final private void reportIEnrolments(final StringBuilder result, final List<IEnrolment> approvedIEnrolments, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
-	for (final IEnrolment approvedIEnrolment : approvedIEnrolments) {
-	    if (approvedIEnrolment.isEnrolment()) {
-		final Enrolment enrolment = (Enrolment) approvedIEnrolment;
+    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
+	for (final ICurriculumEntry entry : entries) {
+	    if (entry instanceof Enrolment) {
+		final Enrolment enrolment = (Enrolment) entry;
 		
 		if (enrolment.isExtraCurricular()) {
 		    extraCurricularEnrolments.add(enrolment);
@@ -134,7 +139,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 		}
 	    }
 	
-	    reportIEnrolment(result, approvedIEnrolment, academicUnitIdentifiers);
+	    reportEntry(result, entry, academicUnitIdentifiers);
 	}
     }
 
@@ -142,28 +147,28 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 	
 	for (final Enrolment enrolment : enrolments) {
-	    reportIEnrolment(result, enrolment, null);
+	    reportEntry(result, enrolment, null);
 	}
     }
 
-    final private void reportIEnrolment(final StringBuilder result, final IEnrolment approvedIEnrolment, final Map<Unit, String> academicUnitIdentifiers) {
+    final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
 	result.append(
 		StringUtils.multipleLineRightPadWithSuffix(
-			getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
+			"",//getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
 			LINE_LENGTH,
 			'-', 
-			getCreditsAndGradeInfo(approvedIEnrolment))).append("\n");
+			getCreditsAndGradeInfo(entry))).append("\n");
     }
 
-    final private String getCreditsAndGradeInfo(final IEnrolment approvedIEnrolment) {
+    final private String getCreditsAndGradeInfo(final ICurriculumEntry entry) {
 	final StringBuilder result = new StringBuilder();
 
 	if (getDocumentRequest().isToShowCredits()) {
-	    getCreditsInfo(result, approvedIEnrolment);
+	    getCreditsInfo(result, entry);
 	}
 	result.append(resourceBundle.getString("label.with"));
 	
-	final Grade grade = approvedIEnrolment.getGrade();
+	final Grade grade = entry.getGrade();
 	result.append(" ").append(grade.getValue());
 	result.append(
 		StringUtils.rightPad(

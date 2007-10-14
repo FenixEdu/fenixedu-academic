@@ -9,8 +9,6 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
@@ -23,7 +21,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -205,14 +205,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return StringUtils.rightPad(StringUtils.EMPTY, LINE_LENGTH, '-'); 
     }
     
-    final protected String getEnrolmentName(final Map<Unit, String> academicUnitIdentifiers, final IEnrolment approvedIEnrolment) {
+    final protected String getCurriculumEntryName(final Map<Unit, String> academicUnitIdentifiers, final ICurriculumEntry entry) {
 	StringBuilder result = new StringBuilder();
 	
-	if (approvedIEnrolment.isExternalEnrolment()) {
-	    result.append(getAcademicUnitIdentifier(academicUnitIdentifiers, approvedIEnrolment.getAcademicUnit()));
+	if (entry instanceof ExternalEnrolment) {
+	    result.append(getAcademicUnitIdentifier(academicUnitIdentifiers, ((ExternalEnrolment) entry).getAcademicUnit()));
 	}
 	
-	result.append(approvedIEnrolment.getName().toUpperCase());
+	result.append(entry.getName().toUpperCase());
 	
 	return result.toString();
     }
@@ -226,29 +226,17 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return academicUnitIdentifiers.get(academicUnit);
     }
 
-    final protected void getCreditsInfo(final StringBuilder result, final IEnrolment approvedIEnrolment) {
-        final Substitution substitution = getDocumentRequest().getRegistration().getSubstitution(approvedIEnrolment);
-    
-        Double ectsCredits = null;
-        if (substitution == null && approvedIEnrolment.isEnrolment()) {
-            final Enrolment enrolment = (Enrolment) approvedIEnrolment;
-            ectsCredits = enrolment.getCurricularCourse().getEctsCredits(enrolment.getExecutionPeriod());
-        } else {
-            ectsCredits = substitution.getGivenCredits();
-        }
-    
-        if (ectsCredits != null) {
-            result.append(ectsCredits).append(getCreditsDescription()).append(", ");
-        }
+    final protected void getCreditsInfo(final StringBuilder result, final ICurriculumEntry entry) {
+	result.append(entry.getEctsCreditsForCurriculum()).append(getCreditsDescription()).append(", ");
     }
     
-    final protected String getDismissalsEctsCreditsInfo() {
-	final Double dismissalsEctsCreditsExceptApproved = getDocumentRequest().getRegistration().getDismissalsEctsCreditsExceptApproved();
+    final protected String getCreditsDismissalsEctsCreditsInfo(final Curriculum curriculum) {
+	final BigDecimal creditsDismissalsEctsCredits = curriculum.getCreditsDismissalsEctsCredits();
 	
 	final StringBuilder result = new StringBuilder();
-	if (dismissalsEctsCreditsExceptApproved != 0d) {
+	if (creditsDismissalsEctsCredits != BigDecimal.ZERO) {
 	    result.append("\n");
-	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos por Dispensas:", LINE_LENGTH, '-', dismissalsEctsCreditsExceptApproved + getCreditsDescription()));
+	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos por Dispensas:", LINE_LENGTH, '-', creditsDismissalsEctsCredits + getCreditsDescription()));
 	    result.append("\n");
 	}
 	

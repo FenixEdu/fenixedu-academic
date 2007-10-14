@@ -1,17 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
@@ -29,14 +31,17 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private String getApprovementsInfo() {
 	final StringBuilder result = new StringBuilder();
 
-	final List<IEnrolment> approvedIEnrolments = new ArrayList<IEnrolment>(getDocumentRequest().getRegistration().getApprovedIEnrolments());
-	Collections.sort(approvedIEnrolments, IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	final Curriculum curriculum = getDocumentRequest().getRegistration().getCurriculum();
+	
+	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	entries.addAll(curriculum.getEntries());
+	entries.addAll(curriculum.getDismissalRelatedEntries());
 
 	final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
 	final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
 	final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
 
-	reportIEnrolments(result, approvedIEnrolments, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
+	reportEntries(result, entries, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
 	
 	if (!extraCurricularEnrolments.isEmpty()) {
 	    reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
@@ -47,7 +52,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	}
 	
     	if (getDocumentRequest().isToShowCredits()) {
-    	    result.append(getDismissalsEctsCreditsInfo());
+    	    result.append(getCreditsDismissalsEctsCreditsInfo(curriculum));
     	}
 	
     	result.append(generateEndLine());
@@ -59,11 +64,11 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    final private void reportIEnrolments(final StringBuilder result, final List<IEnrolment> approvedIEnrolments, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
-	ExecutionYear lastReportedExecutionYear = approvedIEnrolments.get(0).getExecutionPeriod().getExecutionYear(); 
-	for (final IEnrolment approvedIEnrolment : approvedIEnrolments) {
-	    if (approvedIEnrolment.isEnrolment()) {
-		final Enrolment enrolment = (Enrolment) approvedIEnrolment;
+    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
+	ExecutionYear lastReportedExecutionYear = entries.first().getExecutionYear(); 
+	for (final ICurriculumEntry entry : entries) {
+	    if (entry instanceof Enrolment) {
+		final Enrolment enrolment = (Enrolment) entry;
 
 		if (enrolment.isExtraCurricular()) {
 		    extraCurricularEnrolments.add(enrolment);
@@ -74,13 +79,13 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		}
 	    }
 	
-	    final ExecutionYear executionYear = approvedIEnrolment.getExecutionYear();
+	    final ExecutionYear executionYear = entry.getExecutionYear();
 	    if (executionYear != lastReportedExecutionYear) {
 		lastReportedExecutionYear = executionYear;
 		result.append("\n");
 	    }
 	    
-	    reportIEnrolment(result, approvedIEnrolment, academicUnitIdentifiers, executionYear);
+	    reportEntry(result, entry, academicUnitIdentifiers, executionYear);
 	}
     }
 
@@ -88,30 +93,30 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 	
 	for (final Enrolment enrolment : enrolments) {
-	    reportIEnrolment(result, enrolment, null, enrolment.getExecutionYear());
+	    reportEntry(result, enrolment, null, enrolment.getExecutionYear());
 	}
     }
 
-    final private void reportIEnrolment(final StringBuilder result, final IEnrolment approvedIEnrolment, final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
+    final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
 	result.append(
 	    StringUtils.multipleLineRightPadWithSuffix(
-		    getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
+		    getCurriculumEntryName(academicUnitIdentifiers, entry),
 		    LINE_LENGTH, 
 		    '-', 
-		    getCreditsAndGradeInfo(approvedIEnrolment,executionYear))).append("\n");
+		    getCreditsAndGradeInfo(entry,executionYear))).append("\n");
     }
 
-    final private String getCreditsAndGradeInfo(final IEnrolment approvedIEnrolment, final ExecutionYear executionYear) {
+    final private String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear) {
 	final StringBuilder result = new StringBuilder();
 	
 	if (getDocumentRequest().isToShowCredits()) {
-	    getCreditsInfo(result, approvedIEnrolment);
+	    getCreditsInfo(result, entry);
 	}
-	result.append(approvedIEnrolment.getGradeValue());
+	result.append(entry.getGradeValue());
 	result.append(
 	    StringUtils.rightPad(
 		    "(" 
-		    + enumerationBundle.getString(approvedIEnrolment.getGradeValue()) 
+		    + enumerationBundle.getString(entry.getGradeValue()) 
 		    + ")",
 		    SUFFIX_LENGTH,
 		    ' '));
