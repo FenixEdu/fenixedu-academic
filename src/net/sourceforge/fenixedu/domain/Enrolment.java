@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,7 +27,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.AverageType;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -36,7 +38,6 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -295,7 +296,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    if (eval.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)
 		    && eval.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)
-		    && (eval.getGradeValue() == null || eval.getGradeValue().equals(""))) {
+		    && eval.getGrade().isEmpty()) {
 		continue;
 	    } else {
 		throw new DomainException("error.enrolment.cant.unenroll");
@@ -420,17 +421,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
-	    final EnrolmentEvaluationType evaluationType, final String grade) {
+	    final EnrolmentEvaluationType evaluationType, final Grade grade) {
 
 	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
 	    final public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
-		String evaluationGrade = enrolmentEvaluation.getGradeValue();
+		Grade evaluationGrade = enrolmentEvaluation.getGrade();
 
 		return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType)
-			&& ((grade == null && evaluationGrade == null) || (evaluationGrade != null && evaluationGrade
-				.equals(grade)));
+			&& evaluationGrade.equals(grade);
 	    }
 
 	});
@@ -479,25 +479,24 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	// There can be only one enrolmentEvaluation with Temporary State
 	if (enrolmentEvaluation == null) {
-	    enrolmentEvaluation = new EnrolmentEvaluation();
-	    enrolmentEvaluation.setEnrolment(this);
+	    enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationType, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+	} else {
+	    enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
+	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+	    enrolmentEvaluation.setEmployee(employee);
 	}
 
 	// teacher responsible for execution course
-	String grade = null;
+	Grade grade = null;
 	if ((publishedMark == null) || (publishedMark.getMark().length() == 0))
-	    grade = GradeScale.NA;
+	    grade = Grade.createGrade(GradeScale.NA, getGradeScale());
 	else
-	    grade = publishedMark.getMark().toUpperCase();
+	    grade = Grade.createGrade(publishedMark.getMark(), getGradeScale());
 
-	enrolmentEvaluation.setGradeValue(grade);
+	enrolmentEvaluation.setGrade(grade);
 
-	enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
-	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	enrolmentEvaluation.setObservation(observation);
 	enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
-
-	enrolmentEvaluation.setEmployee(employee);
 
 	final YearMonthDay yearMonthDay = new YearMonthDay();
 	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(yearMonthDay);
@@ -518,9 +517,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		EnrolmentEvaluationType.NORMAL, null);
 
 	if (enrolmentEvaluation == null) {
-	    enrolmentEvaluation = new EnrolmentEvaluation();
-	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-	    enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+	    enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.NORMAL, EnrolmentEvaluationState.TEMPORARY_OBJ);
 	    enrolmentEvaluation.setWhenDateTime(new DateTime());
 
 	    addEvaluations(enrolmentEvaluation);
@@ -802,6 +799,40 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return enrolmentEvaluation.getExamDateYearMonthDay();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	return getExecutionYear().isBefore(executionYear) && isApproved() ? 
+		new Curriculum(
+			this, 
+			executionYear, 
+			Collections.singleton((ICurriculumEntry) this),
+			Collections.EMPTY_SET, 
+			Collections.singleton((ICurriculumEntry) this)) 
+		: Curriculum.createEmpty(this, executionYear);
+    }
+    
+    final public Grade getGrade() {
+	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
+	return enrolmentEvaluation == null ? Grade.createEmptyGrade() : enrolmentEvaluation.getGrade();
+    }
+
+    final public String getGradeValue() {
+	return getGrade().getValue();
+    }
+
+    final public Integer getFinalGrade() {
+	final Grade grade = getGrade();
+	return grade.isEmpty() || !grade.isNumeric() ? null : Integer.valueOf(grade.getValue());
+    }
+
+    public GradeScale getGradeScale() {
+	return getCurricularCourse().getGradeScaleChain();
+    }
+    
+    public BigDecimal getWeigthTimesGrade() {
+	return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
+    }
     final public boolean isEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
@@ -903,9 +934,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public EnrolmentEvaluation addNewEnrolmentEvaluation(EnrolmentEvaluationState enrolmentEvaluationState,
-	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String grade, Date availableDate,
+	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String gradeValue, Date availableDate,
 	    Date examDate, ExecutionPeriod executionPeriod) {
-	EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState,
+	
+	final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
+	
+	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState,
 		enrolmentEvaluationType, responsibleFor, grade, availableDate, examDate, new DateTime());
 	if (enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
 	    enrolmentEvaluation.setExecutionPeriod(executionPeriod);
@@ -1037,25 +1071,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
-    final public String getGradeValue() {
-	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
-	return (enrolmentEvaluation == null) ? null : enrolmentEvaluation.getGradeValue();
-    }
-
-    final public Grade getGrade() {
-	final String gradeValue = getGradeValue();
-	if (gradeValue == null || gradeValue.length() == 0) {
-	    return Grade.createEmptyGrade();
-	}
-
-	return Grade.createGrade(gradeValue, getCurricularCourse().getGradeScaleChain());
-    }
-
-    final public Integer getFinalGrade() {
-	final String grade = getGradeValue();
-	return (grade == null || StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
-    }
-
     final public Double getAccumulatedEctsCredits() {
 	return accumulatedEctsCredits;
     }
@@ -1167,27 +1182,23 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    static final double LMAC_AND_LCI_WEIGHT_FACTOR = 0.25d;
+    static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
 
     @Override
     final public Double getWeigth() {
-	if (isExtraCurricular() || isPropaedeutic()) {
-	    return Double.valueOf(0);
-	}
+	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0) : getWeigthForCurriculum().doubleValue();
+    }
 
-	if (getDegreeCurricularPlanOfStudent().getAverageType() == AverageType.SIMPLE) {
-	    return Double.valueOf(1);
-	}
-
+    final public BigDecimal getWeigthForCurriculum() {
 	if (!isBolonhaDegree()) {
 
 	    if (getDegreeCurricularPlanOfStudent().getDegreeType().isDegree()) {
 		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
-		    return getEctsCredits();
+		    return getEctsCreditsForCurriculum();
 		}
 
 		if (isFromLMAC() || isFromLCI()) {
-		    return getBaseWeigth() * LMAC_AND_LCI_WEIGHT_FACTOR;
+		    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
 		}
 	    }
 
@@ -1195,9 +1206,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	return getBaseWeigth();
     }
-
-    private Double getBaseWeigth() {
-	return (super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth() : super.getWeigth();
+    
+    private BigDecimal getBaseWeigth() {
+	return BigDecimal.valueOf((super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth() : super.getWeigth());
     }
 
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
@@ -1226,16 +1237,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Double getEctsCredits() {
-	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getCurricularCourse().getEctsCredits(
-		getExecutionPeriod());
+	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getEctsCreditsForCurriculum().doubleValue();
+    }
+
+    final public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(getCurricularCourse().getEctsCredits(getExecutionPeriod()));
     }
 
     @Override
     final public Double getAprovedEctsCredits() {
-	if (isExtraCurricular()) {
-	    return Double.valueOf(0d);
-	}
-
 	return isApproved() ? getEctsCredits() : Double.valueOf(0d);
     }
 
@@ -1377,4 +1387,5 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	return enrolments.get(0);
     }
+
 }
