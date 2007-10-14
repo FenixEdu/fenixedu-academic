@@ -289,7 +289,9 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagInputCloudRenderer">
     	<property name="textClasses" value="smalltxt color888"/>
     </renderer>
-   
+
+    <renderer type="net.sourceforge.fenixedu.domain.student.curriculum.Curriculum" class="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.CurriculumRenderer"/>   
+
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" class="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer"/>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" layout="student-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentCurricularPlanEnrolmentsRenderer"/>
@@ -705,7 +707,7 @@ Documentation:
     <renderer type="java.lang.Object" layout="values-comma" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
         <property name="htmlSeparator" value=", "/>
     </renderer>
-   
+
     <renderer type="java.lang.Object" layout="values-with-br" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
   			<property name="htmlSeparator" value="&lt;br/&gt;"/>
     </renderer>
