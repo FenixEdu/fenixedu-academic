@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -88,9 +87,8 @@ public class DelegateCurricularCourseBean implements Serializable {
 		List<Student> enrolledStudents = new ArrayList<Student>();
 		for(Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
 			Registration registration = enrolment.getRegistration();
-			StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
 			
-			if(studentCurriculum.calculateCurricularYear(getExecutionYear()) == getCurricularYear()) {
+			if(registration.getCurricularYear(getExecutionYear()) == getCurricularYear()) {
 				enrolledStudents.add(registration.getStudent());
 			}
 		}

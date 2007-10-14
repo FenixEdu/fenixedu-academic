@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -83,7 +82,7 @@ public class ConcludedState extends ConcludedState_Base {
 	    super(registration);
 	    setStateType(RegistrationStateType.CONCLUDED);
 	    setStateDate(registration.getLastApprovementDate());
-	    setFinalAverage(StudentCurriculum.applyRound(registration.getAverage(), false).intValue());
+	    setFinalAverage(registration.getAverage().intValue());
 	}
 
 	Integer finalAverage;

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -78,9 +77,8 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	final Registration registration = getRegistration();
 	final Person student = registration.getStudent().getPerson();
 	final ExecutionYear executionYear = getExecutionYear();
-	final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-	final int curricularYear = studentCurriculum.calculateCurricularYear(executionYear);
-	final StudentCurricularPlan studentCurricularPlan = studentCurriculum.getRegistration().getStudentCurricularPlan(executionYear);
+	final int curricularYear = registration.getCurricularYear(executionYear);
+	final StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
 	final int numberEnrolments = studentCurricularPlan.countEnrolments(executionYear);
 
 	final StringBuilder stringBuilder = new StringBuilder();

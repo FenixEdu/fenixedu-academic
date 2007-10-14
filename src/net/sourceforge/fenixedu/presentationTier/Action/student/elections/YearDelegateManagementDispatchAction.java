@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStuden
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -171,8 +169,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 		Registration registration = student.getLastActiveRegistration();
 		
 		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-		final int curricularYear = studentCurriculum.calculateCurricularYear(currentExecutionYear);
+		final int curricularYear = registration.getCurricularYear(currentExecutionYear);
 		yearDelegateElection =  (YearDelegateElection)registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(
 				currentExecutionYear, CurricularYear.readByYear(curricularYear));
 		

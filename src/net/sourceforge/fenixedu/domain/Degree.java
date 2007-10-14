@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -35,7 +34,6 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -848,20 +846,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     final private Collection<Coordinator> getCurrentCoordinators(final boolean responsible) {
         SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
         years.addAll(getDegreeCurricularPlansExecutionYears());
-
+        
         ExecutionYear current = ExecutionYear.readCurrentExecutionYear();
         for (ExecutionYear year : years) {
             if (year.isAfter(current)) {
                 continue;
-        }
-
+            }
+            
             Collection<Coordinator> coordinators = getCoordinators(year, responsible);
             if (! coordinators.isEmpty()) {
                 return coordinators;
-	    }
-	}
-	
-	return Collections.emptyList();
+            }
+        }
+        
+        return Collections.emptyList();
     }
     
     final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {
@@ -1165,8 +1163,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<Student> getStudentsFromGivenCurricularYear(int curricularYear, ExecutionYear executionYear) {
     	List<Student> result = new ArrayList<Student>();
 	    for (Registration registration : getActiveRegistrations()){
-	  		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-	  		if(studentCurriculum.calculateCurricularYear(executionYear) == curricularYear) {
+	  		if(registration.getCurricularYear(executionYear) == curricularYear) {
 	  			result.add(registration.getStudent());
 	  		}
 	  	}
@@ -1180,8 +1177,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     	List<Student> result = new ArrayList<Student>();
     	if(getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
         	for (Registration registration : getActiveRegistrations()){
-	    		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-	    		final int studentCurricularYear = studentCurriculum.calculateCurricularYear(executionYear);
+	    		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 	    		
 	    		if(studentCurricularYear >= 4 && studentCurricularYear <= 5) { //TODO: how to make this not hardcoded?
 	    			result.add(registration.getStudent());
@@ -1198,8 +1194,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     	List<Student> result = new ArrayList<Student>();
     	if(getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
         	for (Registration registration : getActiveRegistrations()){
-	    		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-	    		final int studentCurricularYear = studentCurriculum.calculateCurricularYear(executionYear);
+	    		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 	    		
 	    		if(studentCurricularYear >= 1 && studentCurricularYear <= 3) { //TODO: how to make this not hardcoded?
 	    			result.add(registration.getStudent());

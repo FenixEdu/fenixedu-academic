@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.elections;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
+
+import org.joda.time.YearMonthDay;
 
 public class YearDelegateElection extends YearDelegateElection_Base {
     
@@ -135,8 +134,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 		/* Add degree students to election students list */
 		for (DegreeCurricularPlan dcp : degree.getActiveDegreeCurricularPlans()) {
 			for (StudentCurricularPlan scp : dcp.getActiveStudentCurricularPlans()) {
-				final StudentCurriculum studentCurriculum = new StudentCurriculum(scp.getRegistration());
-				if(studentCurriculum.calculateCurricularYear(executionYear) == curricularYear.getYear()) {
+				if(scp.getRegistration().getCurricularYear(executionYear) == curricularYear.getYear()) {
 					election.addStudents(scp.getRegistration().getStudent());
 				}
 			}

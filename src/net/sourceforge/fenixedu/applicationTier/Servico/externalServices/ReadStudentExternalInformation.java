@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentCurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -63,10 +62,9 @@ public class ReadStudentExternalInformation extends Service {
 		info.setAvailableRemainingCourses(this.buildAvailableRemainingCourses(registration));
 		info.setNumber(registration.getNumber().toString());
 
-		final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-		final int curricularYear = studentCurriculum.calculateCurricularYear(null);
+		final int curricularYear = registration.getCurricularYear();
 		info.setCurricularYear(curricularYear);
-		final double average = Math.round((studentCurriculum.calculateAverage(null) * 100)) / 100.0;
+		final double average = registration.getAverage().doubleValue();
 		info.setAverage(average);
 
 		result.add(info);

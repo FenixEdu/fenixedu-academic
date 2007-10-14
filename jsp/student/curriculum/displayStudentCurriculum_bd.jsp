@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page language="java" %>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.StudentCurriculum"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.Curriculum"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
 <html:xhtml/>
 
@@ -126,26 +127,27 @@
 					<div class="infoop3">
 					
 							<%
-								final StudentCurriculum studentCurriculum = new StudentCurriculum(registration);
-								request.setAttribute("studentCurriculum", studentCurriculum);
-							
 								// average
-								final double average = studentCurriculum.getRoundedAverage(null, true);
-								request.setAttribute("average", average);
-				
-								final double sumPiCi = studentCurriculum.getSumPiCi(null);
+								Curriculum curriculum = registration.getCurriculum();
+
+								final BigDecimal sumPiCi = curriculum.getSumPiCi();
 								request.setAttribute("sumPiCi", sumPiCi);
 							
-								final double sumPi = studentCurriculum.getSumPi(null);
+								final BigDecimal sumPi = curriculum.getSumPi();
 								request.setAttribute("sumPi", sumPi);
+				
+								final BigDecimal average = curriculum.getAverage();
+								request.setAttribute("average", average);
 				
 								// curricular year
 								final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-								final int curricularYear = studentCurriculum.calculateCurricularYear(currentExecutionYear);
+								curriculum = registration.getCurriculum(currentExecutionYear);
+								
+								final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
+								request.setAttribute("sumEctsCredits", sumEctsCredits);
+
+								final Integer curricularYear = curriculum.getCurricularYear();
 								request.setAttribute("curricularYear", curricularYear);
-				
-								final double totalEctsCredits = studentCurriculum.getTotalEctsCredits(currentExecutionYear);
-								request.setAttribute("totalEctsCredits", totalEctsCredits);
 							%>
 
 							<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
@@ -164,7 +166,7 @@
 							<ul>
 								<li><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="curricularYear"/></b></li>
 								<li><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-								<li><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="totalEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</li>
+								<li><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="sumEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</li>
 							</ul>
 					</div>
 	
