@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
@@ -727,17 +728,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-//    @Override
-//    public Curriculum getCurriculum(final ExecutionYear executionYear) {
-//	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
-//
-//	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-//	    curriculum.add(curriculumModule.getCurriculum(executionYear));
-//	}
-//	
-//	return curriculum;
-//    }
-//    
+    @Override
+    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
+
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    curriculum.add(curriculumModule.getCurriculum(executionYear));
+	}
+	
+	return curriculum;
+    }
+    
     @Override
     public boolean isPropaedeutic() {
 	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();

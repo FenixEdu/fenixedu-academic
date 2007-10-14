@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.YearMonthDay;
 
@@ -23,6 +24,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     public RootCurriculumGroup() {
 	super();
+
 	createExtraCurriculumGroup();
     }
 
@@ -152,7 +154,32 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
 	return getCycleCurriculumGroup(cycleType).getConclusionDate();
     }
+    
+    /**
+     * Only the DegreeType's CycleTypes should be inspected.
+     * CycleCurriculumGroups of other CycleType might exist and shouldn't be
+     * taken into account.
+     * 
+     */
+    @Override
+    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
 
+	final DegreeType degreeType = getDegreeType();
+	if (degreeType.hasAnyCycleTypes()) {
+	    for (final CycleType cycleType : degreeType.getCycleTypes()) {
+		final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+		if (cycleCurriculumGroup != null) {
+		    curriculum.add(cycleCurriculumGroup.getCurriculum(executionYear));	    
+		}
+	    }
+	} else {
+	    curriculum.add(super.getCurriculum(executionYear));
+	}
+	
+	return curriculum;
+    }
+    
     @Override
     public void delete() {
 	removeParentStudentCurricularPlan();
@@ -173,4 +200,5 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
 	return false;
     }
+
 }

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -177,6 +178,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     abstract public YearMonthDay getConclusionDate();
 
+    abstract public Curriculum getCurriculum(final ExecutionYear executionYear);
+    
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
 
     abstract public boolean isPropaedeutic();

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurriculumGroup_Base {
@@ -135,6 +135,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	return true;
     }
 
+    @Override
+    public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	return Curriculum.createEmpty(this, executionYear);
+    }
+    
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
 	return Double.valueOf(0d);
