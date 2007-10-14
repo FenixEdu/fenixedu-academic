@@ -4,6 +4,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
@@ -32,6 +33,10 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 		this.evaluationDate = evaluationDate;
 	}
 
+	public Grade getRectifiedGrade() {
+	    return Grade.createGrade(getNewGrade(), getEnrolmentEvaluation().getGradeScale());
+	}
+	
 	public String getNewGrade() {
 		return newGrade;
 	}

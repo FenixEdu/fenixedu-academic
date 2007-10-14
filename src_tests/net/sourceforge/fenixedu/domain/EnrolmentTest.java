@@ -267,16 +267,17 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		EnrolmentEvaluation ee3 = new EnrolmentEvaluation();
 		EnrolmentEvaluation ee4 = new EnrolmentEvaluation();
+
+		enrolmentE.addEvaluations(ee3);
+		enrolmentF.addEvaluations(ee4);
 		
 		ee3.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		ee3.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 		
 		ee4.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 		ee4.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-		ee4.setGradeValue("20");
+		ee4.setGrade("20");
 		
-		enrolmentE.addEvaluations(ee3);
-		enrolmentF.addEvaluations(ee4);
 	}
 	
 	
@@ -684,9 +685,9 @@ public class EnrolmentTest extends DomainTestBase {
 	
 	private EnrolmentEvaluation createEnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type, String grade) {
 		EnrolmentEvaluation ee = new EnrolmentEvaluation();
-		ee.setEnrolmentEvaluationType(type);
-		ee.setGradeValue(grade);
 		ee.setEnrolment(enrolment);
+		ee.setEnrolmentEvaluationType(type);
+		ee.setGrade(grade);
 		return ee;
 	}
     

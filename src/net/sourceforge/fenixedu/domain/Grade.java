@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class Grade implements Serializable {
+import org.apache.commons.lang.StringUtils;
+
+public class Grade implements Serializable, Comparable<Grade> {
     
     private static Grade emptyGrade = new EmptyGrade();
     
@@ -23,7 +25,7 @@ public class Grade implements Serializable {
     }
     
     protected Grade(String value, GradeScale gradeScale) {
-	if(value == null || gradeScale == null) {
+	if (EmptyGrade.qualifiesAsEmpty(value)) {
 	    throw new DomainException("error.grade.invalid.argument");
 	}
 
@@ -33,6 +35,30 @@ public class Grade implements Serializable {
 	
 	setValue(value);
 	setGradeScale(gradeScale);
+    }
+
+    public int compareTo(final Grade otherGrade) {
+	if (isApproved() && otherGrade.isApproved()) {
+	    if (getValue().equals(GradeScale.AP)) {
+		return 1;
+	    } else if (otherGrade.getValue().equals(GradeScale.AP)) {
+		return -1;
+	    } else if (getGradeScale().equals(otherGrade.getGradeScale())) {
+		return getValue().compareTo(otherGrade.getValue());
+	    } else {
+		throw new DomainException("Grade.unsupported.comparassion.of.grades.of.different.scales");
+	    }
+	} else if (isApproved() || otherGrade.getValue().equals(GradeScale.NA) || otherGrade.getValue().equals(GradeScale.RE)) {
+	    return 1;
+	} else if (otherGrade.isApproved() || getValue().equals(GradeScale.NA) || getValue().equals(GradeScale.RE)) {
+	    return -1;
+	} else {
+	    return getValue().compareTo(otherGrade.getValue()); 
+	}
+    }
+    
+    public BigDecimal getNumericValue() {
+	return value == null ? null : new BigDecimal(getValue());
     }
 
     public String getValue() {
@@ -52,6 +78,10 @@ public class Grade implements Serializable {
     }
     
     public static Grade createGrade(String value, GradeScale gradeScale) {
+	if(EmptyGrade.qualifiesAsEmpty(value)) {
+	    return createEmptyGrade();
+	}
+	
 	Grade grade = gradeMap.get(exportAsString(gradeScale, value));
 	if(grade == null) {
 	    grade = new Grade(value, gradeScale);
@@ -65,7 +95,7 @@ public class Grade implements Serializable {
     }
     
     public static Grade importFromString(String string) {
-	if(string == null || string.equals("")) {
+	if(EmptyGrade.qualifiesAsEmpty(string)) {
 	    return emptyGrade;
 	}
 	
@@ -73,6 +103,11 @@ public class Grade implements Serializable {
 	return createGrade(tokens[1], GradeScale.valueOf(tokens[0]));
     }
 
+    @Override
+    public String toString() {
+        return exportAsString();
+    }
+    
     public String exportAsString() {
 	return exportAsString(getGradeScale(), getValue());
     }
@@ -94,4 +129,20 @@ public class Grade implements Serializable {
 	return StringUtils.isNumeric(getValue()); 
     }
     
+    public boolean isApproved() {
+	return getGradeScale().isApproved(this); 
+    }
+    
+    public boolean isNotApproved() {
+	return getGradeScale().isNotApproved(this);
+    }
+
+    public boolean isNotEvaluated() {
+	return getGradeScale().isNotEvaluated(this); 
+    }
+
+    static public Grade average(final Collection<Grade> grades) {
+	return null;
+    }
+
 }

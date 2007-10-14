@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,8 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -170,38 +168,19 @@ public class ReadCandidacies extends Service {
     }
 
     /**
-         * @param enrollments
+         * @param enrolments
          * @param infoClassification
          */
-    private InfoClassification getInfoClassification(List enrollments) {
+    private InfoClassification getInfoClassification(List<Enrolment> enrolments) {
 	InfoClassification infoClassification = new InfoClassification();
 	int auxInt = 0;
 	float acc = 0;
-	float grade = 0;
-	for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
-	    Enrolment enrollment = (Enrolment) iter1.next();
-	    List enrollmentEvaluations = enrollment.getEvaluations();
-	    EnrolmentEvaluation enrollmentEvaluation = null;
-	    if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-		enrollmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
-	    }
-
-	    String stringGrade;
-	    if (enrollmentEvaluation != null) {
-
-		stringGrade = enrollmentEvaluation.getGradeValue();
-	    } else {
-		stringGrade = GradeScale.NA;
-	    }
-
-	    if (stringGrade != null && !stringGrade.equals("") && !stringGrade.equals(GradeScale.RE)
-		    && !stringGrade.equals(GradeScale.NA) && !stringGrade.equals(GradeScale.AP)) {
-		Float gradeObject = new Float(stringGrade);
-		grade = gradeObject.floatValue();
-		acc += grade;
+	for (final Enrolment enrolment : enrolments) {
+	    final Grade grade = enrolment.getGrade();
+	    if (grade.isApproved() && grade.isNumeric()) {
+		acc += Float.valueOf(grade.getValue()).floatValue();
 		auxInt++;
 	    }
-
 	}
 	if (auxInt != 0) {
 	    String value = new DecimalFormat("#0.0").format(acc / auxInt);

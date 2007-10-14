@@ -25,9 +25,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -225,7 +223,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
         IUserView userView = getUserView(request);
         try {
-	    ServiceUtils.executeService(userView, "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getNewGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason(), userView.getPerson().getEmployee()});
+	    ServiceUtils.executeService(userView, "CreateRectificationMarkSheet", new Object[] {rectifyBean.getMarkSheet(), rectifyBean.getEnrolmentEvaluation(), rectifyBean.getRectifiedGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason(), userView.getPerson().getEmployee()});
             return mapping.findForward("searchMarkSheetFilled");
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");

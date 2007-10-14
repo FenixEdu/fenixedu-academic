@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
@@ -595,7 +596,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    addTabsToRow(externalEnrolmentRow, level);
 
 	    generateExternalEnrolmentLabelCell(externalEnrolmentRow, externalEnrolment, level);
-	    generateCellsBetweenLabelAndEctsCell(externalEnrolmentRow);
+	    generateCellsBetweenLabelAndGradeCell(externalEnrolmentRow);
+	    generateEnrolmentGradeCell(externalEnrolmentRow, externalEnrolment);
+	    generateEnrolmentWeightCell(externalEnrolmentRow, externalEnrolment);
 	    generateExternalEnrolmentEctsCell(externalEnrolmentRow, externalEnrolment);
 	    generateCellsBetweenEctsAndEvaluationDate(externalEnrolmentRow);
 	    generateCellsFromEvaluationDateToEnd(externalEnrolmentRow);
@@ -726,15 +729,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	}
 
-	private void generateEnrolmentWeightCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
+	private void generateEnrolmentWeightCell(HtmlTableRow enrolmentRow, IEnrolment enrolment) {
 	    // Weight is only relevant to show when enrolment has numeric value
 	    generateCellWithText(enrolmentRow, enrolment.getFinalGrade() != null ? enrolment.getWeigth().toString() : "-",
 		    getWeightCellClass());
 
 	}
 
-	private void generateEnrolmentGradeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    generateCellWithText(enrolmentRow, StringUtils.isEmpty(enrolment.getGradeValue()) ? "-" : enrolment.getGradeValue(),
+	private void generateEnrolmentGradeCell(HtmlTableRow enrolmentRow, IEnrolment enrolment) {
+	    final Grade grade = enrolment.getGrade();
+	    generateCellWithText(enrolmentRow, grade.isEmpty() ? "-" : grade.getValue(),
 		    getGradeCellClass());
 	}
 
@@ -821,7 +825,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
 		    .getCode()
 		    + " - " : "";
-
+		    
 	    if (enrolment instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
 		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code

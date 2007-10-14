@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -226,11 +224,8 @@ public class InfoEnrolmentEditor extends InfoObject {
     }
 
     public String getGradeValue() {
-	final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance()
-		.readCurriculumModuleByOID(getIdInternal());
-	final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrolment
-		.getEvaluationsSet());
-	return enrolmentEvaluation == null ? null : enrolmentEvaluation.getGradeValue();
+	final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(getIdInternal());
+	return enrolment.getGrade().getValue();
     }
 
     public boolean equals(Object obj) {

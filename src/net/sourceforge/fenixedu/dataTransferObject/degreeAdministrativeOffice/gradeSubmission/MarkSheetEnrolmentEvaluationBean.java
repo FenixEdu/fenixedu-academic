@@ -6,6 +6,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Grade;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     
@@ -19,10 +20,10 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     public MarkSheetEnrolmentEvaluationBean() {        
     }
      
-    public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, Date evaluationDate, String grade) {
+    public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, Date evaluationDate, Grade grade) {
         setEnrolment(enrolment);
         setEvaluationDate(evaluationDate);
-        setGradeValue(grade);
+        setGradeValue(grade.getValue());
     }
 
     public Date getEvaluationDate() {

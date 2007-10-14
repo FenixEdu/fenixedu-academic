@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -73,22 +74,15 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
-	    if ((enrolment.isEnrolmentStateApproved())
-		    && (!enrolment.getCurricularCourse().getType().equals(
-			    CurricularCourseType.P_TYPE_COURSE))) {
+	    if (enrolment.isEnrolmentStateApproved()
+		    && !enrolment.getCurricularCourse().getType().equals(
+			    CurricularCourseType.P_TYPE_COURSE)) {
 		if (!enrolment.isExtraCurricular()) {
-
-		    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
-
-		    try {
-			Integer enrolmentMark = Integer.valueOf(evaluation.getGradeValue());
-
-			if (enrolmentMark > 0) {
-			    marks += enrolmentMark;
-			    numberOfCourses++;
-			}
-
-		    } catch (NumberFormatException e) {
+		    final Grade grade = enrolment.getGrade();
+		    if (grade.isNumeric()) {
+			marks += Integer.valueOf(grade.getValue());
+			numberOfCourses++;
+		    } else {
 			// This mark will not count for the average
 		    }
 		}
@@ -109,23 +103,20 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
-	    if ((enrolment.isEnrolmentStateApproved())
-		    && (!enrolment.getCurricularCourse().getType().equals(
-			    CurricularCourseType.P_TYPE_COURSE))) {
-		if (!(enrolment.isExtraCurricular())) {
-
-		    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
-
-		    try {
-			int enrolmentMark = Integer.valueOf(evaluation.getGradeValue());
+	    if (enrolment.isEnrolmentStateApproved()
+		    && !enrolment.getCurricularCourse().getType().equals(
+			    CurricularCourseType.P_TYPE_COURSE)) {
+		if (!enrolment.isExtraCurricular()) {
+		    final Grade grade = enrolment.getGrade();
+		    if (grade.isNumeric()) {
+			int enrolmentMark = Integer.valueOf(grade.getValue());
 			double enrolmentWeight = enrolment.getCurricularCourse().getCredits();
 
 			if (enrolmentMark > 0) {
 			    marks += (enrolmentMark * enrolmentWeight);
 			    numberOfWeigths += enrolmentWeight;
 			}
-
-		    } catch (NumberFormatException e) {
+		    } else {
 			// This mark will not count for the average
 		    }
 		}

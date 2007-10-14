@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -56,28 +56,28 @@ public class InfoEnrolmentHistoricReport implements Serializable {
 	    return "--";
 	}
 	
-	final String grade = latestEnrolmentEvaluation.getGradeValue();
+	final Grade grade = latestEnrolmentEvaluation.getGrade();
 	if (!latestEnrolmentEvaluation.isFinal()) {
 	    return bundle.getString("msg.enrolled");
-	} else if ((grade == null && latestEnrolmentEvaluation.isFinal()) ||grade.equals(GradeScale.NA)) {
+	} else if (grade.isEmpty() || grade.isNotEvaluated()) {
 	    return bundle.getString("msg.notEvaluated");
-	} else if (grade.equals(GradeScale.RE)) {
+	} else if (grade.isNotApproved()) {
 	    return bundle.getString("msg.notApproved");
-	} else if (grade.equals(GradeScale.AP)) {
+	} else if (!grade.isNumeric() && grade.isApproved()) {
 	    return bundle.getString("msg.approved");
 	} else {
-	    return grade;
+	    return grade.getValue();
 	}
     }
 
     public String getLatestEnrolmentEvaluationInformation() {
 	if (getEnrolment().isEnrolmentStateApproved()) {
-	    final String grade = getEnrolment().getGradeValue();
+	    final Grade grade = getEnrolment().getGrade();
 	    
-	    if (grade.equals(GradeScale.AP)) {
+	    if (grade.isApproved()) {
 		return bundle.getString("msg.approved");
 	    } else {
-		return grade;
+		return grade.getValue();
 	    }
 	} else {
 	    return bundle.getString(getEnrolment().getEnrollmentState().name());

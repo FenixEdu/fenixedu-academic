@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
@@ -51,11 +52,12 @@ public class CreateMarkSheetByTeacher extends Service {
 
         Date nowDate = new Date(); 
         for (MarkSheetTeacherMarkBean markBean : submissionBean.getSelectedMarksToSubmit()) {
-            CurricularCourse curricularCourse = markBean.getAttends().getEnrolment().getCurricularCourse();
-            String grade = getGrade(markBean.getAttends(), markBean, markBean.getEvaluationDate(), nowDate);
+            final Enrolment enrolment = markBean.getAttends().getEnrolment();
+	    CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            final Grade grade = getGrade(markBean.getAttends(), markBean, markBean.getEvaluationDate(), nowDate);
 
             addMarkSheetEvaluationBeanToMap(markSheetsInformation, curricularCourse, executionCourse,
-                    new MarkSheetEnrolmentEvaluationBean(markBean.getAttends().getEnrolment(), markBean.getEvaluationDate(), grade));
+                    new MarkSheetEnrolmentEvaluationBean(enrolment, markBean.getEvaluationDate(), grade));
         }
     }
 
@@ -153,17 +155,20 @@ public class CreateMarkSheetByTeacher extends Service {
         }
     }
 
-    private String getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
-        String grade = GradeScale.NA;
+    private Grade getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
+        final String value;
 
-        FinalMark finalMark = attends.getFinalMark();
+        final FinalMark finalMark = attends.getFinalMark();
         if (finalMark != null) {
             finalMark.setSubmitedMark(markBean.getGradeValue());
             finalMark.setSubmitDateYearMonthDay(YearMonthDay.fromDateFields(evaluationDate));
             finalMark.setWhenSubmitedYearMonthDay(YearMonthDay.fromDateFields(nowDate));
-            grade = markBean.getGradeValue();
+            value = markBean.getGradeValue();
+        } else {
+            value = GradeScale.NA;
         }
-        return grade;
+        
+        return Grade.createGrade(value, attends.getEnrolment().getGradeScale());
     }
 
 }

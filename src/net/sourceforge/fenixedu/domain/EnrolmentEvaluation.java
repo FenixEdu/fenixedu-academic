@@ -79,8 +79,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setEnrolmentEvaluationType(type);
     }
 
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
-            EnrolmentEvaluationType type, Person responsibleFor, String grade, Date availableDate,
+    private EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
+            EnrolmentEvaluationType type, Person responsibleFor, Grade grade, Date availableDate,
             Date examDate) {
 
         this(enrolment, type);
@@ -90,31 +90,38 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
         setEnrolmentEvaluationState(enrolmentEvaluationState);
         setPersonResponsibleForGrade(responsibleFor);
-        setGradeValue(grade);
+        setGrade(grade);
         setGradeAvailableDate(availableDate);
         setExamDate(examDate);
 
         generateCheckSum();
     }
     
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
-            EnrolmentEvaluationType type, Person responsibleFor, String grade, Date availableDate,
+    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
+            EnrolmentEvaluationType type, Person responsibleFor, Grade grade, Date availableDate,
             Date examDate, DateTime when) {
 	this(enrolment, enrolmentEvaluationState, type, responsibleFor, grade, availableDate, examDate);
 	setWhenDateTime(when);
     }
 
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee) {
+    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState) {
 	this(enrolment, enrolmentEvaluationType);
-	if (evaluationState == null || employee == null) {
+	if (evaluationState == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
 	setEnrolmentEvaluationState(evaluationState);
-	setEmployee(employee);
 	setWhenDateTime(new DateTime());
     }
     
-    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee, ExecutionPeriod executionPeriod) {
+    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee) {
+	this(enrolment, enrolmentEvaluationType, evaluationState);
+	if (employee == null) {
+	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+	}
+	setEmployee(employee);
+    }
+    
+    protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState, Employee employee, ExecutionPeriod executionPeriod) {
 	this(enrolment, enrolmentEvaluationType, evaluationState, employee);
 	if(executionPeriod == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
@@ -139,35 +146,21 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    if(enrolmentEvaluation.isRectification()) {
 		return -1;
 	    }
-	    return compareByGrade(this.getGradeValue(), enrolmentEvaluation.getGradeValue());
+	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
 	    
 	} else {
-	    return compareByGrade(this.getGradeValue(), enrolmentEvaluation.getGradeValue());
+	    return compareByGrade(this.getGrade(), enrolmentEvaluation.getGrade());
 	}
     }
 
-    private int compareByGrade(final String grade, final String otherGrade) {
+    private int compareByGrade(final Grade grade, final Grade otherGrade) {
 	EnrollmentState gradeEnrolmentState = getEnrollmentStateByGrade(grade);
 	EnrollmentState otherGradeEnrolmentState = getEnrollmentStateByGrade(otherGrade);
 	if(gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
-	    return compareAprovedGrades(grade, otherGrade);
+	    return grade.compareTo(otherGrade);
 	}
 	
 	return compareByGradeState(gradeEnrolmentState, otherGradeEnrolmentState);
-    }
-
-    private int compareAprovedGrades(String grade, String otherGrade) {
-	if(grade.equals(otherGrade)) {
-	    return 0;
-	}
-	if(grade.equals(GradeScale.AP)) {
-	    return 1;
-	}
-	if(otherGrade.equals(GradeScale.AP)) {
-	    return -1;
-	}
-	
-	return Integer.valueOf(grade).compareTo(Integer.valueOf(otherGrade));
     }
 
     private int compareByGradeState(EnrollmentState gradeEnrolmentState, EnrollmentState otherGradeEnrolmentState) {
@@ -211,31 +204,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     }
 
-    private int compareMyGradeToAnotherGrade(String grade) {
-        Integer myGrade = null;
-        Integer otherGrade = null;
-        if (this.getGradeValue() == null) {
-            myGrade = new Integer(0);
-        } else {
-            myGrade = Integer.valueOf(this.getGradeValue());
-        }
-        if (grade == null) {
-            otherGrade = new Integer(0);
-        } else {
-
-            otherGrade = Integer.valueOf(grade);
-        }
-
-        if (myGrade.intValue() >= otherGrade.intValue()) {
-            return 1;
-        }
-
-        return -1;
-
+    private int compareMyGradeToAnotherGrade(final Grade otherGrade) {
+	return this.getGrade().compareTo(otherGrade);
     }
 
     private int compareForEqualStates(EnrollmentState myEnrolmentState,
-            EnrollmentState otherEnrolmentState, String otherGrade, Date otherExamDate) {
+            EnrollmentState otherEnrolmentState, Grade otherGrade, Date otherExamDate) {
         if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return compareMyGradeToAnotherGrade(otherGrade);
         }
@@ -259,14 +233,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
-        return getEnrollmentStateByGrade(getGradeValue());
+        return getEnrollmentStateByGrade(getGrade());
     }
 
     public GradeScale getGradeScale() {
-	return getEnrolment().getCurricularCourse().getGradeScaleChain();
+	return getEnrolment().getGradeScale();
     }
     
-    private EnrollmentState getEnrollmentStateByGrade(String grade) {
+    private EnrollmentState getEnrollmentStateByGrade(final Grade grade) {
 	return getGradeScale().getEnrolmentState(grade);
     }
 
@@ -303,11 +277,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         generateCheckSum();
     }
 
-    public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate) {
+    public void edit(Person responsibleFor, String gradeValue, Date availableDate, Date examDate) {
+	edit(responsibleFor, Grade.createGrade(gradeValue, getGradeScale()), availableDate, examDate);
+    }
+    
+    public void edit(Person responsibleFor, Grade grade, Date availableDate, Date examDate) {
         if (responsibleFor == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
-        setGradeValue(grade);
+        
+	setGrade(grade);
         setGradeAvailableDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
         setPersonResponsibleForGrade(responsibleFor);
 
@@ -317,7 +296,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState");
 	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
-        } else if (grade == null) {
+        } else if (grade.isEmpty()) {
             setExamDateYearMonthDay(null);
         } else {
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
@@ -360,7 +339,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     public boolean hasConfirmedMarkSheet() {
 	return hasMarkSheet() && getMarkSheet().isConfirmed();
     }
-    
+
     public boolean isTemporary() {
         return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
@@ -420,29 +399,21 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         removeMarkSheet();
     }
 
-    public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor,
+    public void insertStudentFinalEvaluationForMasterDegree(String gradeValue, Person responsibleFor,
             Date examDate) throws DomainException {
 
         DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan()
                 .getDegreeCurricularPlan();
 
-        if (grade == null ) {
-                edit(null, null, null, null);
-        }
-        else if (grade != null ) {
-            Calendar calendar = Calendar.getInstance();
-            if(grade.length() == 0){
-                edit(responsibleFor, grade, calendar.getTime(), examDate);
-            }else if (grade.length() > 0 && degreeCurricularPlan.isGradeValid(grade)) {  
-                edit(responsibleFor, grade, calendar.getTime(), examDate);
-            }
-
-            else
-                throw new DomainException("error.invalid.grade");
+        final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
+        if (!grade.isEmpty() && degreeCurricularPlan.isGradeValid(grade)){
+            edit(responsibleFor, gradeValue, Calendar.getInstance().getTime(), examDate);
+        } else {  
+            throw new DomainException("error.invalid.grade");
         }
     }
 
-    public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, Employee employee,
+    public void alterStudentEnrolmentEvaluationForMasterDegree(String gradeValue, Employee employee,
             Person responsibleFor, EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate,
             Date examDate, String observation) throws DomainException {
 
@@ -450,30 +421,22 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan()
                 .getDegreeCurricularPlan();
 
-        if (grade.equals("0") || grade.equals("")) {
-
+        final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
+        if (grade.isEmpty()) {
             EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
                     getEnrolmentEvaluationType());
             enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
             enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
-
         } else {
-
             if (degreeCurricularPlan.isGradeValid(grade)) {
-
                 EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
                         evaluationType);
                 enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
                 enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
+            } else {
+        	throw new DomainException("error.invalid.grade");
             }
-
-            else
-                throw new DomainException("error.invalid.grade");
         }
-    }
-
-    public IGrade getGradeWrapper() {
-        return GradeFactory.getInstance().getGrade(getGradeValue());
     }
 
     protected void generateCheckSum() {
@@ -484,13 +447,35 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
     
+    public IGrade getGradeWrapper() {
+	return GradeFactory.getInstance().getGrade(getGradeValue());
+    }
+    
     @Override
-    public void setGradeValue(String grade) {
-        if (isPayable() && !isPayed()) {
+    public String getGradeValue() {
+        return getGrade().getValue();
+    }
+    
+    @Override
+    @Deprecated
+    public void setGradeValue(final String grade) {
+	setGrade(grade);
+    }
+    
+    public void setGrade(final String grade) {
+	setGrade(Grade.createGrade(grade, getGradeScale()));
+    }
+    
+    @Override
+    public void setGrade(final Grade grade) {
+	if (isPayable() && !isPayed()) {
             throw new DomainException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", getRegistration().getNumber().toString());
         }
 	
-        super.setGradeValue((grade == null) ? null : grade.toUpperCase());
+        super.setGrade(grade);
+        
+        // TODO remove this once we're sure migration to Grade went OK
+        super.setGradeValue(grade.getValue());
     }
     
     @Deprecated
@@ -519,7 +504,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public boolean hasGrade() {
-	return getGradeValue() != null && getGradeValue().length() > 0;
+	return !getGrade().isEmpty();
     }
 
     public boolean isPayable() {

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -76,7 +77,7 @@ public class Thesis extends Thesis_Base {
 			
 		});
 	}
-
+	
     public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = new Comparator<Thesis>() {
 
         public int compare(Thesis t1, Thesis t2) {
@@ -355,7 +356,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree, ExecutionYear executionYear) {
-        List<Thesis> result = new ArrayList<Thesis>();
+	List<Thesis> result = new ArrayList<Thesis>();
         result.addAll(getThesisInState(degree, executionYear, ThesisState.APPROVED));
         
         return result;
@@ -665,12 +666,12 @@ public class Thesis extends Thesis_Base {
             String gradeValue = evaluation.getGradeValue();
             if (gradeValue.equals(getEvaluationMark())) {
                 return true;
-            } 
+            }
             else {
                 throw new DomainException("thesis.approve.evaluation.has.different.mark", gradeValue);
-            }
         }
-
+        }
+        
         return false;
     }
 
@@ -709,6 +710,7 @@ public class Thesis extends Thesis_Base {
         }
         
         Employee employee = responsible.getPerson().getEmployee();
+        
         List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
         
         return curricularCourse.createNormalMarkSheet(executionPeriod, responsible, evaluationDate, type, true, evaluations, employee);
@@ -769,7 +771,7 @@ public class Thesis extends Thesis_Base {
         return null;
     }
 
-    private String getEvaluationMark() {
+    private Grade getEvaluationMark() {
         Integer mark = getMark();
         
         GradeScale scale = getEnrolment().getCurricularCourse().getGradeScaleChain();
@@ -777,12 +779,7 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.grade.type20.expected");
         }
         
-        if (mark == null || mark < 10) {
-            return GradeScale.RE;
-        }
-        else {
-            return mark.toString();
-        }
+        return Grade.createGrade((mark == null || mark < 10) ? GradeScale.RE : mark.toString(), scale);
     }
 
     public void acceptDeclaration(ThesisVisibilityType visibility, DateTime availableAfter) {

@@ -61,42 +61,42 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
     
     private void setUpForGetEnrollmentStateByGradeCase() {
         enrolmentEvaluationA = new EnrolmentEvaluation();
-        enrolmentEvaluationA.setGradeValue(null);
+        enrolmentEvaluationA.setGrade(null);
         
         enrolmentEvaluationB = new EnrolmentEvaluation();
-        enrolmentEvaluationB.setGradeValue("");
+        enrolmentEvaluationB.setGrade("");
         
         enrolmentEvaluationC = new EnrolmentEvaluation();
-        enrolmentEvaluationC.setGradeValue(GradeScale.RE);
+        enrolmentEvaluationC.setGrade(GradeScale.RE);
         
         enrolmentEvaluationD = new EnrolmentEvaluation();
-        enrolmentEvaluationD.setGradeValue(GradeScale.NA);
+        enrolmentEvaluationD.setGrade(GradeScale.NA);
         
         enrolmentEvaluationE = new EnrolmentEvaluation();
-        enrolmentEvaluationE.setGradeValue(GradeScale.AP);
+        enrolmentEvaluationE.setGrade(GradeScale.AP);
         
         enrolmentEvaluationF = new EnrolmentEvaluation();
-        enrolmentEvaluationF.setGradeValue("15");
+        enrolmentEvaluationF.setGrade("15");
     }
     
     private void setUpForGetGradeWrapperCase() {
         enrolmentEvaluationA = new EnrolmentEvaluation();
-        enrolmentEvaluationA.setGradeValue(null);
+        enrolmentEvaluationA.setGrade(null);
         
         enrolmentEvaluationB = new EnrolmentEvaluation();
-        enrolmentEvaluationB.setGradeValue("");
+        enrolmentEvaluationB.setGrade("");
         
         enrolmentEvaluationC = new EnrolmentEvaluation();
-        enrolmentEvaluationC.setGradeValue(GradeScale.RE);
+        enrolmentEvaluationC.setGrade(GradeScale.RE);
         
         enrolmentEvaluationD = new EnrolmentEvaluation();
-        enrolmentEvaluationD.setGradeValue(GradeScale.NA);
+        enrolmentEvaluationD.setGrade(GradeScale.NA);
         
         enrolmentEvaluationE = new EnrolmentEvaluation();
-        enrolmentEvaluationE.setGradeValue(GradeScale.AP);
+        enrolmentEvaluationE.setGrade(GradeScale.AP);
         
         enrolmentEvaluationF = new EnrolmentEvaluation();
-        enrolmentEvaluationF.setGradeValue("15");
+        enrolmentEvaluationF.setGrade("15");
     }
 
 	private void setUpConfirmSubmission() {
@@ -113,9 +113,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		Enrolment notEvaluatedEnrolment = new Enrolment();
 		notEvaluatedEnrolment.addEvaluations(notEvaluatedEvaluation);
 		
-		aprovedEvaluation.setGradeValue("20");
-		notAprovedEvaluation.setGradeValue(GradeScale.RE);
-		notEvaluatedEvaluation.setGradeValue(GradeScale.NA);
+		aprovedEvaluation.setGrade("20");
+		notAprovedEvaluation.setGrade(GradeScale.RE);
+		notEvaluatedEvaluation.setGrade(GradeScale.NA);
 		
 //		employee = new Employee();
 		aprovedEvaluation.setEmployee(employee);
@@ -195,7 +195,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		assertTrue("Failed to assign checkSum", normalEvaluation.getCheckSum().equals(newChecksum));
 
 		
-		evaluationToClear.edit(null, null, null, null);
+		evaluationToClear.edit((Person) null, (String) null, (Date) null, (Date) null);
 		
 		assertFalse("Failed to clear personResponsibleForGrade", evaluationToClear.hasPersonResponsibleForGrade());
 		assertNull("Failed to clear grade", evaluationToClear.getGrade());

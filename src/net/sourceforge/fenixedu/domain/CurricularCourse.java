@@ -1559,9 +1559,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation,
-	    Date evaluationDate, String grade, String reason, Employee employee) {
+	    Date evaluationDate, Grade grade, String reason, Employee employee) {
 
-	if (markSheet == null || evaluationDate == null || grade == null || grade.length() == 0) {
+	if (markSheet == null || evaluationDate == null || grade.isEmpty()) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
 	}
 

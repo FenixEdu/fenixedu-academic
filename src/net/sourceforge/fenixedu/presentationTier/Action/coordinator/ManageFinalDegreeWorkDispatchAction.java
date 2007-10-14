@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -1380,11 +1381,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 							row.setCell(registration.getNumber().toString());
 							for (final CurricularCourse curricularCourse : curricularCourses) {
 								if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
-									final String grade = findGradeForCurricularCourse(registration, curricularCourse);
-									if (grade != null) {
-										row.setCell(grade);
+									final Grade grade = registration.findGradeForCurricularCourse(curricularCourse);
+									if (!grade.isEmpty()) {
+									    row.setCell(grade.getValue());
 									} else {
-										row.setCell(GradeScale.AP);
+									    // FIXME what's the sense in this?...
+									    row.setCell(GradeScale.AP);
 									}
 								} else {
 									row.setCell("");
@@ -1396,34 +1398,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			}
 		}
 	}
-
-    private String findGradeForCurricularCourse(final Registration registration, final CurricularCourse curricularCourse) {
-    	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-    	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-    		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-    			final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
-    			if (enrolmentCurricularCourse == curricularCourse
-                        || (enrolmentCurricularCourse.getCompetenceCourse() != null
-    							&& enrolmentCurricularCourse.getCompetenceCourse() == curricularCourse.getCompetenceCourse())
-                        || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
-    				enrolments.add(enrolment);
-    			}
-    		}
-    	}
-    	for (final Enrolment enrolment : enrolments) {
-    		final EnrolmentEvaluation enrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
-    		if (enrolmentEvaluation != null && enrolmentEvaluation.isApproved()) {
-    			final String grade = enrolmentEvaluation.getGradeValue();
-    			return grade == null || grade.length() == 0 ? null : grade;
-    		}
-    	}
-		return null;
-	}
-
-	private boolean hasGlobalEquivalence(final CurricularCourse curricularCourse, final CurricularCourse enrolmentCurricularCourse) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws FenixActionException, FenixFilterException, FenixServiceException {

@@ -921,17 +921,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
-    public boolean isGradeValid(String grade) {
+    public boolean isGradeValid(Grade grade) {
 
 	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
 		.getInstance();
 	IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
 		.getDegreeCurricularPlanStrategy(this);
 
-	if (grade == null || grade.length() == 0)
+	if (grade.isEmpty())
 	    return false;
 
-	return degreeCurricularPlanStrategy.checkMark(grade.toUpperCase());
+	return degreeCurricularPlanStrategy.checkMark(grade.getValue());
     }
 
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(
@@ -1562,7 +1562,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
-        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
         List<ExecutionYear> years = new ArrayList<ExecutionYear>();
         
@@ -1579,13 +1579,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         
         for (ExecutionYear y : years) {
             for (CurricularCourse curricularCourse : getCurricularCourses(y)) {
-                if (curricularCourse.isDissertation()) {
-                    result.add(curricularCourse);
-                }
-            }
+	    if (curricularCourse.isDissertation()) {
+		result.add(curricularCourse);
+	    }
+	}
         }
 
-        return result;
+	return result;
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses() {
