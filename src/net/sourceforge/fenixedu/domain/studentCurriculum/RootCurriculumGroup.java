@@ -24,28 +24,87 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     public RootCurriculumGroup() {
 	super();
-
 	createExtraCurriculumGroup();
     }
 
     public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
 	    ExecutionPeriod executionPeriod, CycleType cycleType) {
 	this();
-
-	if (studentCurricularPlan == null) {
-	    throw new DomainException("error.studentCurriculum.curriculumGroup.studentCurricularPlan.cannot.be.null");
-	}
-
-	setParentStudentCurricularPlan(studentCurricularPlan);
-	init(rootCourseGroup, executionPeriod, cycleType);
+	init(studentCurricularPlan, rootCourseGroup, executionPeriod, cycleType);
     }
-
-    private void init(RootCourseGroup courseGroup, ExecutionPeriod executionPeriod, CycleType cycleType) {
-	checkParameters(courseGroup, executionPeriod);
+    
+    private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup, ExecutionPeriod executionPeriod, CycleType cycleType) {
+	checkParameters(studentCurricularPlan, courseGroup, executionPeriod);
+	checkInitConstraints(studentCurricularPlan, courseGroup);
+	
+	setParentStudentCurricularPlan(studentCurricularPlan);
 	setDegreeModule(courseGroup);
 	addChildCurriculumGroups(courseGroup, executionPeriod, cycleType);
     }
+    
+    private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+	checkParameters(studentCurricularPlan, courseGroup);
+	if (executionPeriod == null) {
+	    throw new DomainException("error.studentCurriculum.executionPeriod.cannot.be.null");
+	}
+    }
 
+    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup, CycleType cycleType) {
+	this();
+	init(studentCurricularPlan, rootCourseGroup, cycleType);
+    }
+    
+    private void init(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup rootCourseGroup, final CycleType cycleType) {
+	checkParameters(studentCurricularPlan, rootCourseGroup);
+	checkInitConstraints(studentCurricularPlan, rootCourseGroup);
+	
+	setParentStudentCurricularPlan(studentCurricularPlan);
+	setDegreeModule(rootCourseGroup);
+	addChildCurriculumGroups(rootCourseGroup, cycleType);
+    }
+    
+    private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup rootCourseGroup) {
+	if (studentCurricularPlan == null) {
+	    throw new DomainException("error.studentCurriculum.studentCurricularPlan.cannot.be.null");
+	}
+	if (rootCourseGroup == null) {
+	    throw new DomainException("error.studentCurriculum.rootCourseGroup.cannot.be.null");
+	}
+    }
+    
+    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, final ExecutionPeriod executionPeriod, CycleType cycle) {
+	if (rootCourseGroup.hasCycleGroups()) {
+	    createCycle(rootCourseGroup, executionPeriod, cycle);
+	} else {
+	    super.addChildCurriculumGroups(rootCourseGroup, executionPeriod);
+	}
+    }
+    
+    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, CycleType cycle) {
+	if (rootCourseGroup.hasCycleGroups()) {
+	    createCycle(rootCourseGroup, null, cycle);
+	}
+    }
+    
+    private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionPeriod executionPeriod, CycleType cycle) {
+	if (cycle == null) {
+	    cycle = rootCourseGroup.getDegree().getDegreeType().getFirstCycleType();
+	}
+	if (cycle != null) {
+	    if (executionPeriod != null) {
+		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionPeriod);
+	    } else {
+		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle));
+	    }
+	}
+    }
+    
+    private void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup rootCourseGroup) {
+	if (studentCurricularPlan.getDegreeCurricularPlan() != rootCourseGroup.getParentDegreeCurricularPlan()) {
+	    throw new DomainException("error.rootCurriculumGroup.scp.and.root.have.different.degreeCurricularPlan");
+	}
+    }
+    
     public void setRootCourseGroup(final RootCourseGroup rootCourseGroup) {
 	setDegreeModule(rootCourseGroup);
     }
@@ -73,23 +132,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return getParentStudentCurricularPlan();
-    }
-
-    private void addChildCurriculumGroups(RootCourseGroup rootCourseGroup, ExecutionPeriod executionPeriod, CycleType cycle) {
-
-	if (rootCourseGroup.hasCycleGroups()) {
-	    if (cycle == null) {
-		cycle = rootCourseGroup.getDegree().getDegreeType().getFirstCycleType();
-	    }
-
-	    if (cycle != null) {
-		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionPeriod);
-	    }
-
-	} else {
-	    super.addChildCurriculumGroups(rootCourseGroup, executionPeriod);
-	}
-
     }
 
     private void createExtraCurriculumGroup() {
