@@ -76,20 +76,22 @@
 	final Curriculum curriculum = registration.getCurriculum(executionYear);
 	request.setAttribute("curriculum", curriculum);	
 
-	final BigDecimal sumPiCi = curriculum.getSumPiCi();
-	request.setAttribute("sumPiCi", sumPiCi);
+	if (!curriculum.isEmpty()) {
+		final BigDecimal sumPiCi = curriculum.getSumPiCi();
+		request.setAttribute("sumPiCi", sumPiCi);
 
-	final BigDecimal sumPi = curriculum.getSumPi();
-	request.setAttribute("sumPi", sumPi);
+		final BigDecimal sumPi = curriculum.getSumPi();
+		request.setAttribute("sumPi", sumPi);
 
-	final BigDecimal average = curriculum.getAverage();
-	request.setAttribute("average", average);
+		final BigDecimal average = curriculum.getAverage();
+		request.setAttribute("average", average);
 
-	final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
-	request.setAttribute("sumEctsCredits", sumEctsCredits);
-	
-	final Integer curricularYear = curriculum.getCurricularYear();
-	request.setAttribute("curricularYear", curricularYear);
+		final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
+		request.setAttribute("sumEctsCredits", sumEctsCredits);
+		
+		final Integer curricularYear = curriculum.getCurricularYear();
+		request.setAttribute("curricularYear", curricularYear);
+	}
 %>
 
 <bean:size id="curricularEntriesCount" name="curriculum" property="curriculumEntries"/>
