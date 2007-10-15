@@ -9,8 +9,13 @@
 	<bean:message key="title.library.card.generateMissingCards"/>
 </h2>	
 
+<p class="infoop2">
+	<bean:message key="text.library.card.generateMissingCards" bundle="LIBRARY_RESOURCES"/>
+</p>
+
 <logic:notPresent name="nothingMissing">
 	<p>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<html:link page="/cardManagement.do?method=generateMissingCards">
 			<bean:message key="link.card.generateMissingCards" bundle="LIBRARY_RESOURCES"/>
 		</html:link>

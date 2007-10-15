@@ -279,6 +279,8 @@ table.thnowrap { white-space: nowrap; }
 .nowrap { white-space: nowrap; }
 .breakword { word-wrap: break-word; }
 
+/* rowclasses */
+tr.bgfafafa td { background-color: #fafafa; }
 
 /* ------------------------- */
 /* Table classes definitions */
@@ -301,7 +303,7 @@ text-align: center;
 }
 
 
-.tstyle1 th { border: 1px solid #ccc; background: #f8f8f8;}
+.tstyle1 th { border: 1px solid #ccc; background: #f5f5f5;}
 .tstyle2 th { border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #f5f5f5; }
 .tstyle3 th { border: 1px solid #ccc; background: #eee; }
 .tstyle4 th { border: 1px solid #ccc; background: #eee; }

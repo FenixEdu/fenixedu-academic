@@ -49,7 +49,7 @@
 			</html:link>
 		</p>
 	</logic:equal>
-		
+	
 	<bean:size id="numberOfElements" name="libraryCardSearch" property="searchResult"/>		
 	<p class="mtop15">
 		<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
@@ -65,6 +65,7 @@
 		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>
+			<fr:property name="rowClasses" value=",bgfafafa"/>
 			
 			<fr:property name="sortParameter" value="sortBy"/>
 	        <fr:property name="sortUrl" value="/cardManagement.do?method=showUsers"/>

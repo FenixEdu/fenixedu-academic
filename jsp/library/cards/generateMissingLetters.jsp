@@ -6,10 +6,15 @@
 
 <h2>
 	<bean:message key="title.library.card.generateMissingLetters"/>
-</h2>	
+</h2>
+
+<p class="infoop2">
+	<bean:message key="text.library.card.generateMissingLetters" bundle="LIBRARY_RESOURCES"/>
+</p>
 
 <logic:notPresent name="nothingMissing">
 	<p>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<html:link page="/cardManagement.do?method=generateMissingLetters&amp;students=no">
 			<bean:message key="link.card.generateMissingLetters" bundle="LIBRARY_RESOURCES"/>
 		</html:link>
