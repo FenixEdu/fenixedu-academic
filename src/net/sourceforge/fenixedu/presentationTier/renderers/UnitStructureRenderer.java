@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -570,7 +571,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 	units.addAll(unit.getActiveSubUnits(new YearMonthDay()));
 
 	for (Unit sub : units) {
-	    if(!sub.getOrderedActiveFunctions().isEmpty()) {
+	    if(hasPersonFunctions(sub)) {
 		createStructure(sub, root, level + 1);
 	    }
 	}
@@ -584,4 +585,15 @@ public class UnitStructureRenderer extends OutputRenderer {
 	this.showDates = showDates;
     }
 
+    private boolean hasPersonFunctions(Unit unit) {
+
+	for(Function function : unit.getOrderedActiveFunctions()) {
+	  if(!getPersonFunctions(function, new TreeSet<PersonFunction>(
+		    PersonFunction.COMPARATOR_BY_PERSON_NAME)).isEmpty()) {
+	      return true;
+	  }
+	}
+	return false;
+
+    }
 }
