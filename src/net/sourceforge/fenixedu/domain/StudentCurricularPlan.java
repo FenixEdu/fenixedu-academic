@@ -576,15 +576,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
-	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+	if (hasRoot()) {
+	    final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
 
-	getRoot().addApprovedCurriculumLines(result);
-
-	return result;
+	    getRoot().addApprovedCurriculumLines(result);
+	    
+	    return result;
+	} else {
+	    return new HashSet<CurriculumLine>(getAprovedEnrolments());
+	}
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
-	return getRoot().hasAnyApprovedCurriculumLines();
+	return hasRoot() ? getRoot().hasAnyApprovedCurriculumLines() : hasAnyApprovedEnrolment();
     }
 
     final public List<Enrolment> getAprovedEnrolments() {
