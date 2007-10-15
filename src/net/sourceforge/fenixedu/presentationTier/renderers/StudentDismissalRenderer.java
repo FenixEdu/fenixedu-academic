@@ -13,8 +13,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -168,7 +169,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 		radioButtonGroup.bind(getInputContext().getMetaObject(), "courseGroup"); // slot refered by name
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
 		container.addChild(radioButtonGroup);
-		generateCourseGroups(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan().getRoot(), 0);
+		generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan());
+		//generateCourseGroups(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan().getRoot(), 0);
 		
 	    } else {
 		HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
@@ -180,6 +182,24 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    }
 
 	    return container;
+	}
+	
+	private void generateCourseGroupCycles(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan) {
+	    if (studentCurricularPlan.isBolonhaDegree()) {
+		for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
+		    final CourseGroup courseGroup = getCourseGroupWithCycleType(studentCurricularPlan, cycleType);
+		    if (courseGroup != null) {
+			generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, 0);
+		    }
+		}
+	    } else {
+		generateCourseGroups(blockContainer, studentCurricularPlan, studentCurricularPlan.getRoot().getDegreeModule(), 0);
+	    }
+	}
+	
+	private CourseGroup getCourseGroupWithCycleType(final StudentCurricularPlan studentCurricularPlan, final CycleType cycleType) {
+	    final CycleCurriculumGroup curriculumGroup = studentCurricularPlan.getCycle(cycleType);
+	    return curriculumGroup != null ? curriculumGroup.getDegreeModule() : studentCurricularPlan.getDegreeCurricularPlan().getCycleCourseGroup(cycleType);
 	}
 
 	private void generateCurricularCourses(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan) {

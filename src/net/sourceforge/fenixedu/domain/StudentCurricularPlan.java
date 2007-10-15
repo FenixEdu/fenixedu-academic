@@ -2148,11 +2148,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note: This is enrolment without rules and should only be used for first
      * time enrolments
-     * 
-     * @param curriculumGroup
-     * @param curricularPeriod
-     * @param executionPeriod
-     * @param createdBy
      */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod executionPeriod, String createdBy) {
@@ -2314,12 +2309,44 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasExtraCurriculumGroup() {
 	return getExtraCurriculumGroup() != null;
     }
+    
+    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
+	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
+	if (isBolonhaDegree()) {
+	    for (final CycleType cycleType : getDegreeType().getSupportedCyclesToEnrol()) {
+		final CourseGroup courseGroup = getCourseGroupWithCycleTypeToCollectCurricularCourses(cycleType);
+		if (courseGroup != null) {
+		    for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses()) {
+			if (!isApproved(curricularCourse)) {
+			    result.add(curricularCourse);
+			}
+		    }
+		}
+	    }
+	} else {
+	    for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
+		if (!isApproved(curricularCourse)) {
+		    result.add(curricularCourse);
+		}
+	    }
+	}
+	return result;
+    }
 
-    final public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
-	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
-	    if (!getRoot().isApproved(curricularCourse)) {
-		result.add(curricularCourse);
+    private CourseGroup getCourseGroupWithCycleTypeToCollectCurricularCourses(final CycleType cycleType) {
+	final CycleCurriculumGroup curriculumGroup = getCycle(cycleType);
+	return curriculumGroup != null ? curriculumGroup.getDegreeModule() : getDegreeCurricularPlan().getCycleCourseGroup(cycleType);
+    }
+    
+    public Collection<ExternalCurriculumGroup> getExternalCurriculumGroups() {
+	if (!hasRoot()) {
+	    return Collections.emptyList();
+	}
+	
+	final Collection<ExternalCurriculumGroup> result = new ArrayList<ExternalCurriculumGroup>();
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getRoot().getCycleCurriculumGroups()) {
+	    if (cycleCurriculumGroup.isExternal()) {
+		result.add((ExternalCurriculumGroup) cycleCurriculumGroup);
 	    }
 	}
 	return result;
