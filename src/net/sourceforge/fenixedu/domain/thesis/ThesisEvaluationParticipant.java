@@ -66,7 +66,11 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
         Teacher teacher = person.getTeacher();
         
         if (teacher != null) {
-            setCategory(teacher.getCategory().getName().getContent());
+            if(teacher.getCategory() == null) {
+        	setCategory("-");
+            } else {
+        	setCategory(teacher.getCategory().getName().getContent());
+            }
             setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
         }
         else {
