@@ -190,7 +190,7 @@ public class Curriculum implements Serializable {
 	countCurricularYear(curricularYearEntries);
 	curricularYear = calculateCurricularYear();
 	
-	System.out.println(toString());
+	//System.out.println(toString());
     }
     
     private void countAverage(final Set<ICurriculumEntry> entries) {

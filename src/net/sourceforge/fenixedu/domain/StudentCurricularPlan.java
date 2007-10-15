@@ -275,7 +275,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	final RootCurriculumGroup rootCurriculumGroup = getRoot();
 	if (rootCurriculumGroup == null) {
-	    System.out.println("[NO ROOT CURRICULUM GROUP!]" + "[STUDENT]" + getRegistration().getStudent().getNumber() + " [REGISTRATION]" + getRegistration().getNumber() + " [SCP NAME]" + getName());
+	    //System.out.println("[NO ROOT CURRICULUM GROUP!]" + "[STUDENT]" + getRegistration().getStudent().getNumber() + " [REGISTRATION]" + getRegistration().getNumber() + " [SCP NAME]" + getName());
 	    return Curriculum.createEmpty(executionYear);
 	} else {
 	    return rootCurriculumGroup.getCurriculum(executionYear);
@@ -2309,7 +2309,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean hasExtraCurriculumGroup() {
 	return getExtraCurriculumGroup() != null;
     }
-    
+
     public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
 	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
 	if (isBolonhaDegree()) {
@@ -2324,9 +2324,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 	    }
 	} else {
-	    for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
+	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
 		if (!isApproved(curricularCourse)) {
-		    result.add(curricularCourse);
+		result.add(curricularCourse);
 		}
 	    }
 	}
