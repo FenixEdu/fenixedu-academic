@@ -29,20 +29,17 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	    throw new DomainException("person cannot be null");
 	}
 	if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
-	    StudentCandidacy existentCandidacy = person
-		    .getStudentCandidacyForExecutionDegree(executionDegree);
-	    if (!existentCandidacy.hasRegistration()
-		    || existentCandidacy.getRegistration().getActiveStateType().isActive())
+	    StudentCandidacy existentCandidacy = person.getStudentCandidacyForExecutionDegree(executionDegree);
+	    if (!existentCandidacy.hasRegistration() || existentCandidacy.getRegistration().getActiveStateType().isActive())
 		throw new DomainException("error.candidacy.already.created");
 	}
 	setExecutionDegree(executionDegree);
 	setPerson(person);
 	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
     }
-    
-    private void checkParameters(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent, String ingression,
-	     EntryPhase entryPhase) {
+
+    private void checkParameters(final Person person, final ExecutionDegree executionDegree, final Person creator,
+	    Double entryGrade, String contigent, String ingression, EntryPhase entryPhase) {
 	if (executionDegree == null) {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
 	}
@@ -65,11 +62,9 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     }
 
-    protected void init(final Person person, final ExecutionDegree executionDegree,
-	    final Person creator, Double entryGrade, String contigent, String ingression,
-	    EntryPhase entryPhase) {
-	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression,
-		entryPhase);
+    protected void init(final Person person, final ExecutionDegree executionDegree, final Person creator, Double entryGrade,
+	    String contigent, String ingression, EntryPhase entryPhase) {
+	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
 	super.setExecutionDegree(executionDegree);
 	super.setPerson(person);
 	super.setPrecedentDegreeInformation(new PrecedentDegreeInformation());
@@ -77,15 +72,13 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	super.setContigent(contigent);
 	super.setIngression(ingression);
 	super.setEntryPhase(entryPhase);
-    }    
-
-    public DateTime getCandidacyDate() {
-	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR)
-		.getSituationDate();
     }
 
-    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree,
-	    Person studentPerson) {
+    public DateTime getCandidacyDate() {
+	return Collections.min(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR).getSituationDate();
+    }
+
+    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
 
 	switch (executionDegree.getDegree().getTipoCurso()) {
 
@@ -148,11 +141,9 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
 	    if (candidacy instanceof StudentCandidacy) {
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-		if (!studentCandidacy.isConcluded()
-			&& studentCandidacy.getExecutionDegree() == executionDegree
+		if (studentCandidacy.hasAnyCandidacySituations() && !studentCandidacy.isConcluded() && studentCandidacy.getExecutionDegree() == executionDegree
 			&& studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
-			&& studentCandidacy.getEntryPhase() != null
-			&& studentCandidacy.getEntryPhase().equals(entryPhase)) {
+			&& studentCandidacy.getEntryPhase() != null && studentCandidacy.getEntryPhase().equals(entryPhase)) {
 		    result.add(studentCandidacy);
 		}
 	    }
@@ -177,8 +168,17 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
 		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
-    
+
     public Ingression getIngressionEnum() {
 	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
     }
+
+    public boolean cancelCandidacy() {
+	if (!isConcluded()) {
+	    new CancelledCandidacySituation(this, this.getPerson());
+	    return true;
+	}
+	return false;
+    }
+
 }
