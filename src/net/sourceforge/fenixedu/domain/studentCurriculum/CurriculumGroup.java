@@ -65,7 +65,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     }
 
-    final protected void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+    protected void checkParameters(CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
 	if (courseGroup == null) {
 	    throw new DomainException("error.studentCurriculum.curriculumGroup.courseGroup.cannot.be.null");
 	}
@@ -95,7 +95,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	checkParameters(courseGroup, executionPeriod);
     }
 
-    final protected void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+    protected void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
 	for (final CourseGroup childCourseGroup : courseGroup.getNotOptionalChildCourseGroups(executionPeriod)) {
 	    new CurriculumGroup(this, childCourseGroup, executionPeriod);
 	}
