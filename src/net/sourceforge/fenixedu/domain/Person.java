@@ -2421,6 +2421,14 @@ public class Person extends Person_Base {
 	return institutionalEmail != null && institutionalEmail.length() > 0;
     }
 
+    public static Collection<Person> findPerson(final String name) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final PersonName personName : PersonName.findPerson(name, Integer.MAX_VALUE)) {
+	    people.add(personName.getPerson());
+	}
+	return people;
+    }
+
     public static Collection<Person> findInternalPerson(final String name) {
 	final Collection<Person> people = new ArrayList<Person>();
 	for (final PersonName personName : PersonName.findInternalPerson(name, Integer.MAX_VALUE)) {

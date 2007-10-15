@@ -72,13 +72,9 @@
 			</html:link>
 		</li>
 
-	 <% Map sendMailParameters = new TreeMap(request.getParameterMap());
-        sendMailParameters.put("method","start");
-        sendMailParameters.put("studentGroupCode", groupingOID.toString());
-		request.setAttribute("sendMailParameters",sendMailParameters);%>
-		<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
+		<bean:define id="sendMailLink">/sendMailToWorkGroupStudents.do?method=start&amp;studentGroupCode=<bean:write name="groupingOID"/>&amp;objectCode=<bean:write name="objectCode"/></bean:define>
 		<li>
-			<html:link page="/sendMailToWorkGroupStudents.do" name="sendMailLinkParameters">
+			<html:link page="<%= sendMailLink %>">
 				<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
 			</html:link>	
 		</li>

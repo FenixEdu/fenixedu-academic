@@ -105,6 +105,12 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	}
     }
 
+    public static Collection<PersonName> findPerson(final String name, final int size) {
+	final PersonNameLimitedOrderedSet personNameLimitedOrderedSet = new PersonNameLimitedOrderedSet(size);
+	find(personNameLimitedOrderedSet, name, size);
+	return personNameLimitedOrderedSet;
+    }
+
     public static Collection<PersonName> findInternalPerson(final String name, final int size) {
 	final InternalPersonNameLimitedOrderedSet personNameLimitedOrderedSet = new InternalPersonNameLimitedOrderedSet(
 		size);

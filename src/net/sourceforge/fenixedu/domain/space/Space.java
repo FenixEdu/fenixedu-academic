@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +27,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -1056,6 +1059,7 @@ public abstract class Space extends Space_Base {
 
 	    String[] labelWords = getIdentificationWords(labelToSearch);
 	    Set<ExecutionCourse> executionCoursesToTest = searchExecutionCoursesByName(searchType, labelWords);
+	    Collection<Person> personsToTest = searchPersonsByName(searchType, labelToSearch);
 
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 
@@ -1074,13 +1078,12 @@ public abstract class Space extends Space_Base {
 			    break;
 
 			case PERSON:			    
-			    SortedSet<PersonSpaceOccupation> personSpaceOccupations = space.getActivePersonSpaceOccupations();
-			    for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
-				if(personSpaceOccupation.getPerson().verifyNameEquality(labelWords)) {			    
+			    for (Person person : personsToTest) {
+				if(person.getActivePersonSpaces().contains(resource)) {							   
 				    toAdd = true;
 				    break;
 				}
-			    } 	
+			    } 			    			   			    
 			    break;			   
 
 			case EXECUTION_COURSE:			    
@@ -1135,10 +1138,16 @@ public abstract class Space extends Space_Base {
 	return result;
     }
 
+    private static Collection<Person> searchPersonsByName(SpacesSearchCriteriaType searchType, String labelToSearch) {	
+	if(labelToSearch != null && !StringUtils.isEmpty(labelToSearch) && searchType.equals(SpacesSearchCriteriaType.PERSON)) {
+	    return Person.findPerson(labelToSearch);	    
+	}	
+	return Collections.EMPTY_LIST;
+    }
+    
     private static Set<ExecutionCourse> searchExecutionCoursesByName(SpacesSearchCriteriaType searchType, String[] labelWords) {
 	Set<ExecutionCourse> executionCoursesToTest = null;
-	if(labelWords != null && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) 
-		|| searchType.equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
+	if(labelWords != null && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) || searchType.equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
 	    executionCoursesToTest = new HashSet<ExecutionCourse>();
 	    for (ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
 		if(executionCourse.verifyNameEquality(labelWords)) {
