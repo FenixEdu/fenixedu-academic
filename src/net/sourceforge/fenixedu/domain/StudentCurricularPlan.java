@@ -135,25 +135,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
-
 	this();
-
-	setDegreeCurricularPlan(degreeCurricularPlan);
-	setStartDateYearMonthDay(startDate);
-	setRegistration(registration);
-	setWhenDateTime(new DateTime());
+	init(registration, degreeCurricularPlan, startDate);
     }
 
-    final public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
+    public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, ExecutionPeriod executionPeriod) {
-
 	return createBolonhaStudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionPeriod, null);
     }
 
-    final public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
+    public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, ExecutionPeriod executionPeriod,
 	    CycleType cycleType) {
-
 	return new StudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionPeriod, cycleType);
     }
 
