@@ -28,4 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Remove old contributor column from receipts" removeOldContributorFromReceipts.sql
-
+execute "Delete attends. Remove this script after it is run in the production env. !!!" delteAttends.sql
