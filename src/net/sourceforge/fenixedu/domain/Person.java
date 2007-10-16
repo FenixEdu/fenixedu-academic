@@ -1010,9 +1010,12 @@ public class Person extends Person_Base {
 	if (hasHomepage()) {
 	    getHomepage().delete();
 	}
+	
+	getPersonRoles().clear();
 	if (hasUser()) {
 	    getUser().delete();
 	}
+	
 	if (hasStudent()) {
 	    getStudent().delete();
 	}
@@ -1020,7 +1023,6 @@ public class Person extends Person_Base {
 	    getPersonName().delete();
 	}
 
-	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getBookmarkedBoards().clear();
 	getPersonRoles().clear();
