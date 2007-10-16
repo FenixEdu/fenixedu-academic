@@ -20,7 +20,11 @@
 	</logic:messagesPresent>
 			
 	<logic:empty name="calendarEntry">					
+		
 		<logic:notEmpty name="calendarEntryBean">
+		
+			<bean:define id="beginDate" name="calendarEntryBean" property="beginPartialString" type="java.lang.String"/>
+			<bean:define id="endDate" name="calendarEntryBean" property="endPartialString" type="java.lang.String"/>
 									
 			<p class="mtop05"><b><bean:message key="label.create.academic.entry" bundle="MANAGER_RESOURCES"/></b></p>												
 			<bean:define id="goBackToPrepareCreateEntryURL">/academicCalendarsManagement.do?method=chooseCalendarEntryTypePostBack</bean:define>
@@ -34,12 +38,13 @@
 			</fr:form>
 			
 			<logic:notEmpty name="calendarEntryBean" property="type">									
+			
 				<bean:define id="schemaName">Create<bean:write name="calendarEntryBean" property="type.simpleName"/>CalendarEntryType</bean:define>	
 				<bean:define id="entryType" name="calendarEntryBean" property="type.name"/>				
 								
 				<logic:notEmpty name="calendarEntryBean" property="academicCalendar">				
 					<b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="calendarEntryBean" property="academicCalendar.title.content"/>				
-					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="calendarEntryBean" property="academicCalendar.idInternal"/></bean:define>					
+					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="calendarEntryBean" property="academicCalendar.idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>					
 					<fr:form action="<%= createCalendarEntryURL %>">
 						<fr:edit id="calendarEntryBeanWithType1" visible="false" name="calendarEntryBean" />	
 						<fr:create id="calendarEntryBeanWithInfo" type="<%= entryType.toString() %>" schema="<%= schemaName.toString() %>">													
@@ -59,10 +64,11 @@
 						</p>											     				
 					</fr:form>				
 				</logic:notEmpty>
-				
+								
 				<logic:notEmpty name="calendarEntryBean" property="parentEntry">											
+					
 					<b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="calendarEntryBean" property="parentEntry.title.content"/>									
-					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntryBean" property="parentEntry.idInternal"/></bean:define>										
+					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntryBean" property="parentEntry.idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>										
 					<fr:form action="<%= createCalendarEntryURL %>">
 						<fr:edit id="calendarEntryBeanWithType2" visible="false" name="calendarEntryBean" />	
 						<fr:create id="calendarEntryBeanWithInfo" type="<%= entryType.toString() %>" schema="<%= schemaName.toString() %>">								
@@ -89,7 +95,7 @@
 	
 	<logic:notEmpty name="calendarEntry">
 		<p class="mtop05"><b><bean:message key="label.edit.academic.entry" bundle="MANAGER_RESOURCES"/></b></p>		
-		<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntry" property="idInternal"/></bean:define>			
+		<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntry" property="idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>			
 		<fr:edit name="calendarEntry" schema="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry"
 			action="<%= createCalendarEntryURL %>">
 			<fr:layout name="tabular">      										  

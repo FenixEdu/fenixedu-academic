@@ -6,6 +6,11 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 
+import org.jfree.data.time.Year;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
+import org.joda.time.YearMonthDay;
+
 public class CalendarEntryBean implements Serializable {
 
     private DomainReference<AcademicCalendarEntry> parentEntryReference;
@@ -14,13 +19,21 @@ public class CalendarEntryBean implements Serializable {
     
     private Class type;
     
+    private Partial beginDateToDisplay;
     
-    public CalendarEntryBean(AcademicCalendarEntry academicCalendarEntry) {
+    private Partial endDateToDisplay;
+           
+    
+    public CalendarEntryBean(AcademicCalendarEntry academicCalendarEntry, Partial begin, Partial end) {
 	setParentEntry(academicCalendarEntry);
+	setBeginDateToDisplay(begin);
+	setEndDateToDisplay(end);
     }
-    
-    public CalendarEntryBean(AcademicCalendar academicCalendar) {
+        
+    public CalendarEntryBean(AcademicCalendar academicCalendar, Partial begin, Partial end) {
 	setAcademicCalendar(academicCalendar);
+	setBeginDateToDisplay(begin);
+	setEndDateToDisplay(end);
     }
     
     public AcademicCalendar getAcademicCalendar() {
@@ -45,5 +58,55 @@ public class CalendarEntryBean implements Serializable {
 
     public void setType(Class type) {
         this.type = type;
+    }
+
+    public Partial getBeginDateToDisplay() {
+        return beginDateToDisplay;
+    }
+
+    public void setBeginDateToDisplay(Partial beginDateToDisplay) {
+        this.beginDateToDisplay = beginDateToDisplay;
+    }
+
+    public Partial getEndDateToDisplay() {
+        return endDateToDisplay;
+    }
+
+    public void setEndDateToDisplay(Partial endDateToDisplay) {
+        this.endDateToDisplay = endDateToDisplay;
+    }
+    
+    public String getBeginPartialString() {
+	return getPartialString(getBeginDateToDisplay());
+    }
+    
+    public String getEndPartialString() {
+	return getPartialString(getEndDateToDisplay());
+    }
+    
+    public static String getPartialString(Partial partial) {
+	return partial.toString("MMyyyy");
+    }
+    
+    public static Partial getPartialFromString(String date) {
+	Integer month = Integer.valueOf(date.substring(0, 2));
+	Integer year = Integer.valueOf(date.substring(2));
+	return new Partial(new DateTimeFieldType[] {DateTimeFieldType.year(), DateTimeFieldType.monthOfYear()}, new int[] {year.intValue(), month.intValue()});
+    }
+    
+    public static Partial getPartialFromYearMonthDay(YearMonthDay day) {
+	return new Partial(new DateTimeFieldType[] {DateTimeFieldType.year(), DateTimeFieldType.monthOfYear()}, new int[] {day.getYear(), day.getMonthOfYear()});	
+    }
+    
+    public static YearMonthDay getDateFromPartial(Partial partial) {
+	return new YearMonthDay(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType.monthOfYear()), 1);	
+    }
+
+    public YearMonthDay getBeginDateToDisplayInYearMonthDayFormat() {
+	return getDateFromPartial(getBeginDateToDisplay()); 	
+    }
+    
+    public YearMonthDay getEndDateToDisplayInYearMonthDayFormat() {
+	return getDateFromPartial(getEndDateToDisplay()); 	
     }
 }

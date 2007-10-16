@@ -39,9 +39,9 @@ public class AcademicChronology extends AssembledChronology {
     private transient DateTimeField acDayOfAcademicSemester;
 
     
-    public AcademicChronology(AcademicCalendar academicCalendar_) {
+    public AcademicChronology(AcademicCalendar academicCalendar) {
 	super(ISOChronology.getInstance(), null);
-	academicCalendar = academicCalendar_;	
+	this.academicCalendar = academicCalendar;	
     }     
     
     // Overrided Methods

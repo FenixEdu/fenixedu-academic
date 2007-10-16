@@ -265,6 +265,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException, FenixServiceException {
 	final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();	
 	if (rooms != null) {
+	    ExecutionPeriod executionPeriod = getExecutionPeriod();
 	    final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap = new HashMap<AllocatableSpace, List<CalendarLink>>();                
 	    for (final AllocatableSpace room : rooms) {
 		final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
@@ -272,7 +273,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 		    if(roomOccupation.isWrittenEvaluationSpaceOccupation()) {
 			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation)roomOccupation).getWrittenEvaluations();
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {			    		
-			    if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
+			    if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, executionPeriod)) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
 				final CalendarLink calendarLink = new CalendarLink();
 				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());

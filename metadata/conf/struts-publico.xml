@@ -383,12 +383,7 @@
    	</action>
 
 	  <!-- SALAS -->
-      <action path="/prepareConsultRooms"
-              type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultRoomsFormAction"
-              >
-          <forward name="Sucess" path="/consultRooms.jsp"/>
-      </action>
-
+	  
        <action path="/prepareConsultRoomsNew"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultRoomsDispatchAction"
               name="chooseContextForm"
@@ -396,17 +391,6 @@
               >
           <forward name="Sucess" path="consultRooms"/>
           <forward name="choose" path="/prepareConsultRoomsNew.do?method=prepare&amp;page=0"/>
-      </action>
-
-      <action attribute="roomForm"
-              input="/prepareConsultRooms.do"
-              name="roomForm"
-              path="/chooseRoomsForm"
-              scope="request"
-              validate="true"
-              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
-        <forward name="list" path="chooseRoom"/>
-        <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
       </action>
            
        <action attribute="roomForm"
@@ -467,6 +451,7 @@
               >
           <forward name="Sucess" path="/viewShiftTimeTable.jsp"/>
       </action>
+      
 
 	<!-- Start of Gesdis-->
 		

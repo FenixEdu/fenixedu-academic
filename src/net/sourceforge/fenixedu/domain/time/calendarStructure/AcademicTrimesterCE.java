@@ -29,4 +29,14 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
     public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {	
 	return false;
     }
+
+    @Override
+    public boolean areIntersectionsPossible() { 
+	return false;
+    }
+
+    @Override
+    public boolean areOutOfBoundsPossible() {	
+	return false;
+    }
 }

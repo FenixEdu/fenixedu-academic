@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -66,20 +67,30 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	return type;
     }
 
-    public List<AcademicCalendarEntry> getEntriesOrderByDate(){
-	Set<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+    public Set<AcademicCalendarEntry> getEntriesOrderByDate(){
+	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	result.addAll(getEntries());
-	return new ArrayList<AcademicCalendarEntry>(result);
+	return result;
     }
     
+    public Set<AcademicCalendarEntry> getEntriesOrderByDate(DateTime begin, DateTime end){
+	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);	
+	for (AcademicCalendarEntry academicCalendarEntry : getEntries()) {
+	    if(academicCalendarEntry.belongsToPeriod(begin, end)) {
+		result.add(academicCalendarEntry);
+	    }
+	}	
+	return result;
+    }
+          
     public DateTime getBegin() {
-	SortedSet<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+	SortedSet<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	result.addAll(getEntries());
 	return (result.isEmpty()) ? null : result.first().getBegin();
     }
     
     public DateTime getEnd() {
-	SortedSet<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+	SortedSet<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	result.addAll(getEntries());
 	return (result.isEmpty()) ? null : result.last().getEnd();
     }
@@ -88,11 +99,10 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	    Class<? extends AcademicCalendarEntry> entryClass,
 	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
 
-	Set<AcademicCalendarEntry> result = new TreeSet(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
+	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	for (AcademicCalendarEntry entry : getEntriesSet()) {
-	    if (entry.getClass().equals(entryClass)
-		    && (parentEntryClass == null || (parentEntryClass != null && entry.getParentEntry()
-			    .getClass().equals(parentEntryClass)))) {
+	    if (entry.getClass().equals(entryClass) && 
+		    (parentEntryClass == null || (parentEntryClass != null && entry.getParentEntry().getClass().equals(parentEntryClass)))) {
 		result.add(entry);
 	    }
 	    result.addAll(entry.getAllSubEntries(entry, entryClass, parentEntryClass));
@@ -100,12 +110,10 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	return new ArrayList(result);
     }
     
-    public AcademicCalendarEntry getEntryByInstant(long instant,
-	    Class<? extends AcademicCalendarEntry> entryClass,
+    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
 	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
 	
-	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllEntriesOrderByDate(
-		entryClass, parentEntryClass);
+	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllEntriesOrderByDate(entryClass, parentEntryClass);
 	for (AcademicCalendarEntry entry : allEntriesByType) {
 	    if (entry.containsInstant(instant)) {
 		return entry;
@@ -114,12 +122,9 @@ public class AcademicCalendar extends AcademicCalendar_Base {
 	return null;
     }
 
-    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
-	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
-	
+    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {	
 	Integer counter = 0;
-	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllEntriesOrderByDate(
-		entryClass, parentEntryClass);
+	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllEntriesOrderByDate(entryClass, parentEntryClass);
 	for (AcademicCalendarEntry entry : allEntriesByType) {
 	    counter++;
 	    if (entry.containsInstant(instant)) {

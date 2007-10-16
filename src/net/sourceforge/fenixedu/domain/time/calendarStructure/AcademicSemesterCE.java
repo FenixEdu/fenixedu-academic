@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
+import org.joda.time.Partial;
+import org.joda.time.Period;
 
 public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
@@ -29,7 +31,17 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {
 	if(childEntry.isAcademicTrimester()) {
 	    return (getSubEntries(AcademicTrimesterCE.class).size() >= 2) ? true : false;
-	}
+	}	
 	return false;
     }
+
+    @Override
+    public boolean areIntersectionsPossible() {	
+	return true;
+    }
+
+    @Override
+    public boolean areOutOfBoundsPossible() { 
+	return false;
+    }              
 }

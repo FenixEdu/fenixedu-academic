@@ -31,5 +31,15 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 	    return (getSubEntries(AcademicTrimesterCE.class).size() >= 4) ? true : false;
 	}
 	return false;
+    }
+
+    @Override
+    public boolean areIntersectionsPossible() {	
+	return false;
+    }
+
+    @Override
+    public boolean areOutOfBoundsPossible() {	
+	return false;
     }    
 }

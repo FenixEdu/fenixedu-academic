@@ -32,7 +32,7 @@
 	
 	<logic:notEmpty name="academicCalendar">
 		<p class="mtop05"><b><bean:message key="label.edit.academic.calendar" bundle="MANAGER_RESOURCES"/></b></p>
-		<bean:define id="viewCalendarURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="academicCalendar" property="idInternal"/></bean:define>
+		<bean:define id="viewCalendarURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="academicCalendar" property="idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>
 		<fr:edit schema="EditAcademicCalendar" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" name="academicCalendar"
 			action="<%= viewCalendarURL %>">
 			<fr:layout name="tabular">

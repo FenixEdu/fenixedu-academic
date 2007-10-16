@@ -19,7 +19,8 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
 
     @Override
     public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isEnrolmentsPeriod() || parentEntry.isExamsPeriod() || parentEntry.isLessonsPerid()) {
+	if (parentEntry.isEnrolmentsPeriod() || parentEntry.isExamsPeriod() || parentEntry.isLessonsPerid()
+		|| parentEntry.isGradeSubmissionPeriod()) {
 	    return true;
 	}
 	return false;
@@ -28,5 +29,15 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     @Override
     public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {
 	return false;
+    }
+
+    @Override
+    public boolean areIntersectionsPossible() {	
+	return true;
+    }
+
+    @Override
+    public boolean areOutOfBoundsPossible() {	
+	return true;
     }        
 }

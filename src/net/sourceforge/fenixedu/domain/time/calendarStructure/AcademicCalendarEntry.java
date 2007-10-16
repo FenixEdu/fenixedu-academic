@@ -21,32 +21,37 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base implements GanttDiagramEvent{
 
-    public static final Comparator COMPARATOR_BEGIN_DATE = new ComparatorChain();
+    public static final Comparator<AcademicCalendarEntry> COMPARATOR_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(new BeanComparator("begin"));
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
+
     public abstract boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry);
-    
+
     public abstract boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry);
+
+    public abstract boolean areIntersectionsPossible();
+
+    public abstract boolean areOutOfBoundsPossible();
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
 	super();	
 	setRootDomainObject(RootDomainObject.getInstance());	
     }
-    
+
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end) {
 	setTitle(title);
 	setDescription(description);
 	setTimeInterval(begin, end, getParentEntry());
     }
-    
+
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void delete() {
 	if(!getChildEntries().isEmpty()) {
@@ -57,11 +62,11 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     protected void init(AcademicCalendar academicCalendar, AcademicCalendarEntry parentEntry,
 	    MultiLanguageString title, MultiLanguageString description, DateTime begin,
 	    DateTime end) {
-	
+
 	if(parentEntry == null && academicCalendar == null) {
 	    throw new DomainException("error.AcademicCalendarEntry.empty.parentEntry.and.academicCalendar");
 	}
@@ -71,7 +76,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	setDescription(description);
 	setTimeInterval(begin, end, parentEntry);	
     }          
-   
+
     @Override
     public void setParentEntry(AcademicCalendarEntry parentEntry) {
 	if(parentEntry != null && isParentEntryInvalid(parentEntry)) {
@@ -83,16 +88,40 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	super.setParentEntry(parentEntry);
     } 
     
+    public boolean isBased() {
+	return hasTemplateEntry();
+    }
+
     @Override
     public void setBegin(DateTime begin) {
-	setTimeInterval(begin, getEnd(), getParentEntry());
+	if(!hasTemplateEntry()) {
+	    setTimeInterval(begin, getEnd(), getParentEntry());
+	}
     }
 
     @Override
     public void setEnd(DateTime end) {
-	setTimeInterval(getBegin(), end, getParentEntry());
+	if(!hasTemplateEntry()) {
+	    setTimeInterval(getBegin(), end, getParentEntry());
+	}
     }
-  
+    
+    @Override
+    public DateTime getEnd() {
+        if(hasTemplateEntry()) {
+            return getTemplateEntry().getEnd();
+        }
+        return super.getEnd();
+    }
+    
+    @Override
+    public DateTime getBegin() {
+        if(hasTemplateEntry()) {
+            return getTemplateEntry().getBegin();
+        }
+        return super.getBegin();
+    }
+
     @Override
     public void setTitle(MultiLanguageString title) {
 	if (title.isEmpty()) {
@@ -100,18 +129,18 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}
 	super.setTitle(title);    
     }
-    
+
     public String getPresentationTimeInterval() {
 	return getBegin().toString("dd-MM-yyyy HH:mm") + " - " + getEnd().toString("dd-MM-yyyy HH:mm");
     }
-    
+
     public MultiLanguageString getType() {
 	MultiLanguageString type = new MultiLanguageString();
 	String key = "label." + getClass().getSimpleName() + ".type";
 	type.setContent(Language.pt, ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));	
 	return type;
     }
-           
+
     @Override
     public AcademicCalendar getAcademicCalendar() {
 	if(super.getAcademicCalendar() != null) {
@@ -127,7 +156,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    Class<? extends AcademicCalendarEntry> entryClass,
 	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
 
-	Set<AcademicCalendarEntry> result = new HashSet();
+	Set<AcademicCalendarEntry> result = new HashSet<AcademicCalendarEntry>();
 	for (AcademicCalendarEntry subEntry : parentEntry.getChildEntriesSet()) {
 	    if (subEntry.getClass().equals(entryClass)
 		    && (parentEntryClass == null || (parentEntryClass != null && subEntry
@@ -140,7 +169,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}
 	return result;
     }
-    
+
     public List<AcademicCalendarEntry> getSubEntries(Class<? extends AcademicCalendarEntry> entryClass){
 	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();
 	for (AcademicCalendarEntry subEntry : getChildEntriesSet()) {
@@ -150,47 +179,27 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}
 	return result;
     }
-        
-    public List<AcademicCalendarEntry> getSubEntriesOrderByDate(){
+
+    public Set<AcademicCalendarEntry> getSubEntriesOrderByDate(){
 	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(COMPARATOR_BEGIN_DATE);
 	result.addAll(getChildEntries());
-	return new ArrayList<AcademicCalendarEntry>(result);
+	return result;
     }
-    
+
     public long getDurationMillis() {
 	return getEnd().getMillis() - getBegin().getMillis();
     }
 
+    public boolean belongsToPeriod(DateTime begin, DateTime end) {
+	return !getBegin().isAfter(end) && !getEnd().isBefore(begin);
+    }
+        
     public boolean containsInstant(long instant) {
 	return (getBegin().getMillis() <= instant && getEnd().getMillis() >= instant) ? true : false;
-    }
-    
-    public boolean isAcademicYear() {
-	return false;
-    }
-    
-    public boolean isAcademicSemester() {
-	return false;
-    }
-    
-    public boolean isAcademicTrimester() {
-	return false;
-    }
-    
-    public boolean isLessonsPerid() {
-	return false;
-    }
-    
-    public boolean isExamsPeriod() {
-	return false;
-    }
-    
-    public boolean isEnrolmentsPeriod() {
-	return false;
-    }
-    
+    } 
+
     private void setTimeInterval(DateTime begin, DateTime end, AcademicCalendarEntry parentEntry) {
-	
+
 	if (begin == null) {
 	    throw new DomainException("error.AcademicCalendarEntry.empty.begin.dateTime");
 	}
@@ -200,52 +209,84 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	if (!end.isAfter(begin)) {
 	    throw new DomainException("error.begin.after.end");
 	}	
-	
+
 	if(parentEntry != null) {	    
-	    if(parentEntry.getBegin().isAfter(begin) || parentEntry.getEnd().isBefore(end)) {
-		throw new DomainException("error.AcademicCalendarEntry.invalid.dates");
+	    if(!areOutOfBoundsPossible()) {
+		if(parentEntry.getBegin().isAfter(begin) || parentEntry.getEnd().isBefore(end)) {
+		    throw new DomainException("error.AcademicCalendarEntry.invalid.dates");
+		}
 	    }
-	    for (AcademicCalendarEntry childEntry : parentEntry.getChildEntries()) {
-		if(!childEntry.equals(this) && childEntry.entriesTimeIntervalIntersection(begin, end)) {
-		    throw new DomainException("error.AcademicCalendarEntry.dates.intersection");
+	    if(!areIntersectionsPossible()) {
+		for (AcademicCalendarEntry childEntry : parentEntry.getChildEntries()) {
+		    if(!childEntry.equals(this) && childEntry.entriesTimeIntervalIntersection(begin, end)) {
+			throw new DomainException("error.AcademicCalendarEntry.dates.intersection");
+		    }
 		}
 	    }
 	}
-	
+
 	super.setBegin(begin);
 	super.setEnd(end);
     }
-    
+
     private boolean entriesTimeIntervalIntersection(DateTime begin, DateTime end) {
 	return (!this.getBegin().isAfter(end) && !this.getEnd().isBefore(begin));
     }
-    
+
     public List<Interval> getGanttDiagramEventSortedIntervals() {
 	List<Interval> result = new ArrayList<Interval>();
 	result.add(new Interval(getBegin(), getEnd()));
 	return result;
     }
-    
+
     public MultiLanguageString getGanttDiagramEventName() {
 	return new MultiLanguageString(getType() + ": " + getTitle().getContent());
     }
-    
+
     public int getGanttDiagramEventOffset() {
 	if(getParentEntry() == null) {
 	    return 0;
 	}
 	return getParentEntry().getGanttDiagramEventOffset() + 1;
     }
-    
+
     public String getGanttDiagramEventObservations() {
 	return "-"; 
     }
-    
+
     public String getGanttDiagramEventPeriod() {
 	return getBegin().toString("dd/MM/yyyy HH:mm") + " - " + getEnd().toString("dd/MM/yyyy HH:mm"); 
     }
-    
+
     public String getGanttDiagramEventIdentifier() {
 	return getIdInternal().toString();
+    }
+    
+    public boolean isAcademicYear() {
+	return false;
+    }
+
+    public boolean isAcademicSemester() {
+	return false;
+    }
+
+    public boolean isAcademicTrimester() {
+	return false;
+    }
+
+    public boolean isLessonsPerid() {
+	return false;
+    }
+
+    public boolean isExamsPeriod() {
+	return false;
+    }
+
+    public boolean isEnrolmentsPeriod() {
+	return false;
+    }
+    
+    public boolean isGradeSubmissionPeriod() {
+	return false;
     }
 }

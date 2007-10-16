@@ -364,7 +364,7 @@
 
 <schema name="AcademicCalendarInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar" bundle="MANAGER_RESOURCES">
 	<slot name="title" layout="link" key="label.academicCalendar.title">
-		<property name="linkFormat" value="/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=${idInternal}"/>
+		<property name="linkFormat" value="/academicCalendarsManagement.do?method=prepareViewAcademicCalendar&amp;academicCalendarID=${idInternal}"/>
     	<property name="contextRelative" value="true"/>
     	<property name="moduleRelative" value="true"/>    	    	
         <property name="useParent" value="true"/>
@@ -439,6 +439,17 @@
 	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    					
 	<setter signature="edit(title, description, begin, end)" />
+</schema>
+
+<schema name="ChooseDatesToViewAcademicCalendarSchema" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
+	<slot name="beginDateToDisplay" layout="year-month" key="label.begin.date.to.displar.academic.calendar" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7" />
+		<property name="size" value="7" />
+	</slot>
+	<slot name="endDateToDisplay" layout="year-month" key="label.end.date.to.displar.academic.calendar" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7" />
+		<property name="size" value="7" />
+	</slot> 
 </schema>
 
 <schema name="PaymentsFileBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsFileBean" bundle="MANAGER_RESOURCES">	
