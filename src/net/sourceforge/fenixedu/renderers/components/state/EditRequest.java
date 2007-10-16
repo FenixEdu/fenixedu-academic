@@ -47,9 +47,8 @@ public class EditRequest extends HttpServletRequestWrapper {
     }
 
     private void checkUserIdentity(IViewState viewState, UserIdentity userIdentity) {
-	if(!((HttpServletRequest)getRequest()).getRequestURL().toString().startsWith("/publico") && !viewState.getUser().equals(userIdentity)) {
-	    throw new RuntimeException("viewstate.user.changed");
-	}
-    }
-
+        if (! viewState.getUser().equals(userIdentity)) {
+            throw new RuntimeException("viewstate.user.changed");
+        }
+    }        
 }
