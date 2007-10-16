@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.stm.RelationList;
-import net.sourceforge.fenixedu.stm.VBox;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
@@ -328,6 +326,10 @@ public class Attends extends Attends_Base {
     
     public Registration getRegistration() {
         return super.getAluno();
+    }
+    
+    public void setRegistration(final Registration registration) {
+	super.setAluno(registration);
     }
     
     @Override
