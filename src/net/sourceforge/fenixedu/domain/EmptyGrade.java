@@ -28,7 +28,9 @@ public class EmptyGrade extends Grade {
     }
     
     static protected boolean qualifiesAsEmpty(String value) {
-	value = value.trim();
+	if (value != null) {
+	    value = value.trim();
+	}
 	return StringUtils.isEmpty(value) || value.equals("null") || value.equals("0");
     }
     
