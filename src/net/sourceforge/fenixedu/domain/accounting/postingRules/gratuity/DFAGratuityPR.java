@@ -162,7 +162,8 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-	    return getDfaAmountPerEctsCredit().multiply(((GratuityEvent) event).getTotalEctsCreditsForRegistration());
+	    final double enrolmentsEctsForRegistration = ((GratuityEvent) event).getEnrolmentsEctsForRegistration();
+	    return getDfaAmountPerEctsCredit().multiply(new BigDecimal(enrolmentsEctsForRegistration));
 	} else {
 	    final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, getDfaTotalAmount())
 		    : BigDecimal.ZERO;

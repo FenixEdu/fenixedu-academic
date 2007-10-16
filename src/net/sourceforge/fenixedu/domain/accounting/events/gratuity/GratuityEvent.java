@@ -29,45 +29,38 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     static {
 
-	GratuityEventStudentCurricularPlan
-		.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
-		    @Override
-		    public void beforeAdd(GratuityEvent gratuityEvent,
-			    StudentCurricularPlan studentCurricularPlan) {
-			if (gratuityEvent != null
-				&& studentCurricularPlan != null
-				&& studentCurricularPlan.getRegistration().hasGratuityEvent(
-					gratuityEvent.getExecutionYear())) {
-			    throw new DomainException(
-				    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
+	GratuityEventStudentCurricularPlan.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
+	    @Override
+	    public void beforeAdd(GratuityEvent gratuityEvent, StudentCurricularPlan studentCurricularPlan) {
+		if (gratuityEvent != null && studentCurricularPlan != null
+			&& studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear())) {
+		    throw new DomainException(
+			    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
 
-			}
-		    }
-		});
+		}
+	    }
+	});
     }
 
     protected GratuityEvent() {
 	super();
     }
 
-    protected void init(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+    protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
+	    ExecutionYear executionYear) {
 	super.init(administrativeOffice, EventType.GRATUITY, person, executionYear);
 	checkParameters(administrativeOffice, studentCurricularPlan);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 
     }
 
-    private void checkParameters(AdministrativeOffice administrativeOffice,
-	    StudentCurricularPlan studentCurricularPlan) {
+    private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan) {
 	if (studentCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
 	}
 
 	if (administrativeOffice == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityEvent.administrativeOffice.cannot.be.null");
+	    throw new DomainException("error.accounting.events.gratuity.GratuityEvent.administrativeOffice.cannot.be.null");
 	}
     }
 
@@ -92,10 +85,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
-		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-		getDegree().getName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
-		.appendLabel(")");
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
+		"enum").appendLabel(" - ").appendLabel(getDegree().getName()).appendLabel(" - ").appendLabel(
+		getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
     }
@@ -137,15 +129,14 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	return getRegistration().isCustomEnrolmentModel(getExecutionYear());
     }
 
-    public BigDecimal getTotalEctsCreditsForRegistration() {
-	return getRegistration().getTotalEctsCredits(getExecutionYear());
+    public double getEnrolmentsEctsForRegistration() {
+	return getRegistration().getEnrolmentsEcts(getExecutionYear());
     }
 
     public boolean canRemoveExemption(final DateTime when) {
 	if (hasGratuityExemption()) {
 	    if (isClosed()) {
-		return getPayedAmount().greaterOrEqualThan(
-			calculateTotalAmountToPayWithoutDiscount(when));
+		return getPayedAmount().greaterOrEqualThan(calculateTotalAmountToPayWithoutDiscount(when));
 	    }
 	}
 	return true;
@@ -188,8 +179,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public BigDecimal calculateDiscountPercentage(final Money amount) {
-	return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount)
-		: BigDecimal.ZERO;
+	return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount) : BigDecimal.ZERO;
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")

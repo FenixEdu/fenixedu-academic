@@ -1389,8 +1389,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PUBLIC)
     // -------------------------------------------------------------
+    
+    public double getEnrolmentsEctsCredits(final ExecutionYear executionYear) {
+	double result = 0.0;
 
-    final public double getEctsCredits(final ExecutionPeriod executionPeriod) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    result += getEnrolmentsEctsCredits(executionPeriod);
+	}
+
+	return result;
+    }
+    
+    final public double getEnrolmentsEctsCredits(final ExecutionPeriod executionPeriod) {
 	double result = 0.0;
 
 	for (final Enrolment enrolment : getEnrolmentsSet()) {

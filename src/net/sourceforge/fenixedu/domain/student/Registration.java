@@ -1735,6 +1735,10 @@ public class Registration extends Registration_Base {
     final public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumEctsCredits();
     }
+    
+    public double getEnrolmentsEcts(final ExecutionYear executionYear) {
+	return getLastStudentCurricularPlan().getEnrolmentsEctsCredits(executionYear);
+    }
 
     final public int getCurricularYear() {
 	return getCurricularYear((ExecutionYear) null);
