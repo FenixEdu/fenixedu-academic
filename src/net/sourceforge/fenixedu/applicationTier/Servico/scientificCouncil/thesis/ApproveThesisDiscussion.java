@@ -37,148 +37,148 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     private static final String SUBJECT_KEY = "thesis.evaluation.approve.subject";
     private static final String BODY_KEY = "thesis.evaluation.approve.body";
-    
+
     @Override
     public void process(Thesis thesis) {
-        thesis.approveEvaluation();
-        
-        if (thesis.isFinalAndApprovedThesis()) {
-        	createResult(thesis);
-        }
+	thesis.approveEvaluation();
+
+	if (thesis.isFinalAndApprovedThesis()) {
+	    createResult(thesis);
+	}
     }
 
-	private void createResult(Thesis thesis) {
-		ThesisFile dissertation = thesis.getDissertation();
-		Person author = thesis.getStudent().getPerson();
-        
-        IFileManager fileManager = DSpaceFileManagerFactory.getFactoryInstance().getSimpleFileManager();
-		InputStream stream = fileManager.retrieveFile(dissertation.getExternalStorageIdentification());
-		
-		FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
-		net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = 
-			new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
-				author,
-				ThesisType.Graduation_Thesis,
-				thesis.getFinalFullTitle().getContent(thesis.getLanguage()), 
-				thesis.getKeywords(), 
-				RootDomainObject.getInstance().getInstitutionUnit().getName(), 
-				thesis.getDiscussed().getYear(), // publication year 
-				getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
-				thesis.getThesisAbstract(), 
-				null, // number of pages
-				RenderUtils.getEnumString(thesis.getLanguage()), // language 
-				getMonth(thesis), // publication month
-				null, // year begin
-				null, // month begin
-				null); // url
+    private void createResult(Thesis thesis) {
+	ThesisFile dissertation = thesis.getDissertation();
+	Person author = thesis.getStudent().getPerson();
 
-		FileResultPermittedGroupType groupType;
-		switch (thesis.getVisibility()) {
-		case PUBLIC:
-			groupType = FileResultPermittedGroupType.PUBLIC;
-			break;
-		case INTRANET:
-			groupType = FileResultPermittedGroupType.INSTITUTION;
-			break;
-		default:
-			groupType = FileResultPermittedGroupType.INSTITUTION;
-			break;
-		}
-		
-		Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-		publication.addDocumentFile(descriptor.getFilename(), descriptor.getFilename(), groupType, descriptor
-				.getMimeType(), descriptor.getChecksum(), descriptor.getChecksumAlgorithm(), descriptor.getSize(),
-				descriptor.getUniqueId(), group);
-		
-		publication.setThesis(thesis);
-		author.addPersonRoleByRoleType(RoleType.RESEARCHER);
+	IFileManager fileManager = DSpaceFileManagerFactory.getFactoryInstance().getSimpleFileManager();
+	InputStream stream = fileManager.retrieveFile(dissertation.getExternalStorageIdentification());
+
+	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
+	net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = 
+	    new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
+		    author,
+		    ThesisType.Graduation_Thesis,
+		    thesis.getFinalFullTitle().getContent(thesis.getLanguage()), 
+		    thesis.getKeywords(), 
+		    RootDomainObject.getInstance().getInstitutionUnit().getName(), 
+		    thesis.getDiscussed().getYear(), // publication year 
+		    getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
+		    thesis.getThesisAbstract(), 
+		    null, // number of pages
+		    RenderUtils.getEnumString(thesis.getLanguage()), // language 
+		    getMonth(thesis), // publication month
+		    null, // year begin
+		    null, // month begin
+		    null); // url
+
+	FileResultPermittedGroupType groupType;
+	switch (thesis.getVisibility()) {
+	case PUBLIC:
+	    groupType = FileResultPermittedGroupType.PUBLIC;
+	    break;
+	case INTRANET:
+	    groupType = FileResultPermittedGroupType.INSTITUTION;
+	    break;
+	default:
+	    groupType = FileResultPermittedGroupType.INSTITUTION;
+	break;
 	}
 
-	private String getAddress(Unit institutionUnit) {
-		List<PhysicalAddress> addresses = institutionUnit.getPhysicalAddresses();
-		
-		if (addresses == null || addresses.isEmpty()) {
-			return null;
-		}
-		
-		for (PhysicalAddress address : addresses) {
-			String addr = address.getAddress();
-			
-			if (addr != null) {
-				return addr;
-			}
-		}
-		
-		return null;
+	Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
+	publication.addDocumentFile(descriptor.getFilename(), descriptor.getFilename(), groupType, descriptor
+		.getMimeType(), descriptor.getChecksum(), descriptor.getChecksumAlgorithm(), descriptor.getSize(),
+		descriptor.getUniqueId(), group);
+
+	publication.setThesis(thesis);
+	author.addPersonRoleByRoleType(RoleType.RESEARCHER);
+    }
+
+    private String getAddress(Unit institutionUnit) {
+	List<PhysicalAddress> addresses = institutionUnit.getPhysicalAddresses();
+
+	if (addresses == null || addresses.isEmpty()) {
+	    return null;
 	}
 
-	private Month getMonth(Thesis thesis) {
-		return Month.fromDateTime(thesis.getDiscussed());
+	for (PhysicalAddress address : addresses) {
+	    String addr = address.getAddress();
+
+	    if (addr != null) {
+		return addr;
+	    }
 	}
+
+	return null;
+    }
+
+    private Month getMonth(Thesis thesis) {
+	return Month.fromDateTime(thesis.getDiscussed());
+    }
 
     private Collection<FileSetMetaData> getMetadata(Thesis thesis) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
-		metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
-		metaData.add(FileSetMetaData.createTitleMeta(thesis.getFinalTitle().getContent(thesis.getDissertation().getLanguage())));
+	metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
+	metaData.add(FileSetMetaData.createTitleMeta(thesis.getFinalTitle().getContent(thesis.getDissertation().getLanguage())));
 
-		return metaData;
+	return metaData;
+    }
+
+    private VirtualPath getVirtualPath(Thesis thesis) {
+	VirtualPathNode[] nodes = { 
+		new VirtualPathNode("Research", "Research"), 
+		new VirtualPathNode("Results", "Results"), 
+		new VirtualPathNode("Publications", "Publications")
+	};
+
+	VirtualPath path = new VirtualPath();
+	for (VirtualPathNode node : nodes) {
+	    path.addNode(node);
 	}
 
-	private VirtualPath getVirtualPath(Thesis thesis) {
-		VirtualPathNode[] nodes = { 
-				 new VirtualPathNode("Research", "Research"), 
-				 new VirtualPathNode("Results", "Results"), 
-				 new VirtualPathNode("Publications", "Publications")
-		};
+	return path;
+    }
 
-		VirtualPath path = new VirtualPath();
-		for (VirtualPathNode node : nodes) {
-			path.addNode(node);
-		}
-
-		return path;
-	}
-
-	@Override
+    @Override
     protected void setMessage(Thesis thesis, MailBean bean) {
-        Person currentPerson = AccessControl.getPerson();
-        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        
-        String title = thesis.getTitle().getContent();
-        String year = executionYear.getYear();
-        String degreeName = thesis.getDegree().getName();
-        String studentName = thesis.getStudent().getPerson().getName();
-        String studentNumber = thesis.getStudent().getNumber().toString();
+	Person currentPerson = AccessControl.getPerson();
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-        String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
-        String currentPersonName = currentPerson.getNickname();
-        
-        bean.setSubject(getMessage(SUBJECT_KEY, title));
-        bean.setMessage(getMessage(BODY_KEY,
-                year,
-                degreeName,
-                studentName, studentNumber,
-                date,
-                currentPersonName
-        ));
+	String title = thesis.getTitle().getContent();
+	String year = executionYear.getYear();
+	String degreeName = thesis.getDegree().getName();
+	String studentName = thesis.getStudent().getPerson().getName();
+	String studentNumber = thesis.getStudent().getNumber().toString();
+
+	String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
+	String currentPersonName = currentPerson.getNickname();
+
+	bean.setSubject(getMessage(SUBJECT_KEY, title));
+	bean.setMessage(getMessage(BODY_KEY,
+		year,
+		degreeName,
+		studentName, studentNumber,
+		date,
+		currentPersonName
+	));
     }
 
     @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
-        Person student = thesis.getStudent().getPerson();
-        Person president = getPerson(thesis.getPresident());
-        
-        Set<Person> persons = personSet(student, president); 
-        
-        ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
-        for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
-            if (member.isContact()) {
-                persons.add(member.getPerson());
-            }
-        }
-        
-        return persons;
+	Person student = thesis.getStudent().getPerson();
+	Person president = getPerson(thesis.getPresident());
+
+	Set<Person> persons = personSet(student, president); 
+
+	ExecutionYear executionYear = thesis.getEnrolment().getExecutionYear();
+	for (ScientificCommission member : thesis.getDegree().getScientificCommissionMembers(executionYear)) {
+	    if (member.isContact()) {
+		persons.add(member.getPerson());
+	    }
+	}
+
+	return persons;
     }
 
 }
