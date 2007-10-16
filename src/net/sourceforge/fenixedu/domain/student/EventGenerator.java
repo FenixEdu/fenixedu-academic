@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
 public class EventGenerator {
@@ -23,6 +24,11 @@ public class EventGenerator {
 		new DfaGratuityEvent(administrativeOffice, person, studentCurricularPlan, ExecutionYear
 			.readCurrentExecutionYear());
 		new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
+		if (studentCurricularPlan.getRegistration().hasToPayGratuityOrInsurance()
+			&& !studentCurricularPlan.getPerson().hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
+				executionYear)) {
+		    new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
+		}		
 	    }
 	    break;
 
