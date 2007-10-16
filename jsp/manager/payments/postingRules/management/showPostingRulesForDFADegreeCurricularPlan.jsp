@@ -8,7 +8,7 @@
 <logic:present role="MANAGER">
 
 	<h2><bean:message
-		key="label.payments.postingRules.degreeCurricularPlan.rules"
+		key="label.payments.postingRules.degreeCurricularPlan.rulesFor"
 		bundle="MANAGER_RESOURCES" /> <bean:write name="degreeCurricularPlan" property="degree.name"/> - <bean:write name="degreeCurricularPlan" property="name"/></h2>
 
 	<br />
