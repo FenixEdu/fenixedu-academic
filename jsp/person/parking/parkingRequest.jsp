@@ -43,7 +43,7 @@
 					<p class="mvert05">
 						<strong>
 							<html:link page="/parking.do?method=acceptRegulation">
-								<bean:message key="button.acceptRegulation" bundle="PARKING_RESOURCES" /> &gt;&gt;
+								<bean:message key="button.acceptRegulation" bundle="PARKING_RESOURCES" /> &raquo;
 							</html:link>
 						</strong>
 					</p>
@@ -57,7 +57,7 @@
 					<p>
 						<strong>
 							<html:link page="/parking.do?method=prepareEditParking">
-								<bean:message key="label.insertParkingDocuments" bundle="PARKING_RESOURCES" /> &gt;&gt;
+								<bean:message key="label.insertParkingDocuments" bundle="PARKING_RESOURCES" /> &raquo;
 							</html:link>
 						</strong>
 					</p>

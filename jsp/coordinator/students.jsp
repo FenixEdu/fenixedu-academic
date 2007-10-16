@@ -82,7 +82,7 @@
 						<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
 					</c:url>
 					<a href='<c:out value="${pageURL}"/>'>
-						<c:out value="<<" />
+						<c:out value="&laquo;" />
 					</a>
 					<c:out value="&nbsp;&nbsp;" escapeXml="false" />
 				</c:if>
@@ -130,7 +130,7 @@
 				</c:url>
 				<c:out value="&nbsp;&nbsp;" escapeXml="false" />
 				<a href='<c:out value="${pageURL}"/>'>
-					<c:out value=">>"/>
+					<c:out value="&raquo;"/>
 				</a>
 			</c:if>
 			</c:if>
