@@ -211,7 +211,7 @@
 
 <schema name="ingression.information"
 	type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registrationAgreement" key="label.registrationAgreement" layout="menu-select-postback" >
+	<slot name="registrationAgreement" key="label.registrationAgreement" layout="menu-postback">
 		<property name="destination" value="agreementPostBack"/>
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.student.RegistrationAgreement" />
 	</slot>
@@ -1312,7 +1312,6 @@
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>	
 </schema>
-
 
 <schema name="DegreeCurricularPlan.view" 
 	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >

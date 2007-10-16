@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student;
 public enum RegistrationAgreement {
 
     NORMAL(true), AFA(false), MA(false), NC(false), ERASMUS(false), SOCRATES(false), SOCRATES_ERASMUS(false), TEMPUS(false), BILATERAL_AGREEMENT(
-	    false), ALFA2(false), UNIFOR(false), TIME(false), OTHER_EXTERNAL(false);
+	    false), ALFA2(false), UNIFOR(false), TIME(false), TOTAL(false), OTHER_EXTERNAL(false);
 
     private boolean enrolmentByStudentAllowed;
 
