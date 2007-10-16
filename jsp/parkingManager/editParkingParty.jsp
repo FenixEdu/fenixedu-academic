@@ -65,15 +65,21 @@ function addVehicle(){
 	</fr:edit>
 	</div>
 	 
-	<p class="mbottom05"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES"/>:</strong></p>
-	<html:messages id="message" property="vehicleMandatoryData" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
-	<html:messages id="message" property="noVehicles" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
-	<fr:edit id="vehicle" name="parkingPartyBean" property="vehicles" layout="tabular-editable" schema="edit.vehicleBean">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
-			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-		</fr:layout>
-	</fr:edit>
+	<logic:notEmpty name="parkingPartyBean" property="vehicles">
+		<p class="mbottom05"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES"/>:</strong></p>
+		<html:messages id="message" property="vehicleMandatoryData" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
+		<html:messages id="message" property="noVehicles" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
+		<fr:edit id="vehicle" name="parkingPartyBean" property="vehicles" layout="tabular-editable" schema="edit.vehicleBean">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
+				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+			</fr:layout>
+		</fr:edit>
+	</logic:notEmpty>
+	
+	<logic:empty name="parkingPartyBean" property="vehicles">
+		<p class="mvert15"><em><bean:message key="label.vehiclesNotFound" bundle="PARKING_RESOURCES"/>.</em></p>
+	</logic:empty>
 	
 	<p><html:link href="javascript:addVehicle()"><bean:message key="link.addVehicle" bundle="PARKING_RESOURCES"/></html:link></p>
 

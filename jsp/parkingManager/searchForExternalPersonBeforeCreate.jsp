@@ -27,8 +27,11 @@
 </fr:form>
 
 
+
 <logic:equal name="anyPersonSearchBean" property="hasBeenSubmitted" value="true">
+
 	<bean:define id="people" name="anyPersonSearchBean" property="search"/>
+	<logic:notEmpty name="people">
 		<table class="tstyle1 thlight mtop2">
 			<tr>
 				<th scope="col"><bean:message key="label.name" bundle="MANAGER_RESOURCES"/></th>
@@ -89,4 +92,16 @@
 			<bean:message key="link.create.person.user"/>
 		</html:link>
 	</p>
+	</logic:notEmpty>	
 </logic:equal>
+
+<logic:empty name="people">
+<p><em><bean:message key="label.userNotFound"/></em></p>
+<bean:define id="url" type="java.lang.String">/externalPerson.do?method=prepareCreate&amp;name=<bean:write name="anyPersonSearchBean" property="name"/>&amp;idDocumentType=<bean:write name="anyPersonSearchBean" property="idDocumentType"/>&amp;documentIdNumber=<bean:write name="anyPersonSearchBean" property="documentIdNumber"/></bean:define>
+	<p>
+		<bean:message key="label.create.external.person.afterSearch" bundle="MANAGER_RESOURCES"/>: 
+		<html:link action="<%= url %>">
+			<bean:message key="link.create.person.user"/>
+		</html:link>
+	</p>
+</logic:empty>

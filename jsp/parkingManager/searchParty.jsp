@@ -50,14 +50,16 @@
 					<p><bean:write name="occupation" filter="false"/></p>
 				</logic:iterate>
 			</p>
+			<%--
 			<p class="mtop15 mbottom05">
 				<logic:empty name="parkingParty" property="vehicles">
-					<strong><bean:message key="label.newUser" bundle="PARKING_RESOURCES"/></strong>
+					<strong><bean:message key="label.user" bundle="PARKING_RESOURCES"/></strong>
 				</logic:empty>
 			</p>
+			--%>
 			<p class="mtop05">
 				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;addVehicle=false&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
-					<bean:message key="title.editUser" bundle="PARKING_RESOURCES"/>
+					<bean:message key="link.editUserCard" bundle="PARKING_RESOURCES"/>
 				</html:link>
 				<logic:notEmpty name="parkingParty" property="cardNumber">
 					<%--
@@ -101,6 +103,7 @@
 				</table>
 			
 				<p class="mtop1 mbottom025"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES" /></strong></p>
+
 				<logic:iterate id="vehicle" name="parkingParty" property="vehicles">
 				<table class="tstyle1 thright thlight mvert025 mbottom1">
 					<tr>
@@ -225,7 +228,7 @@
 <logic:present name="partyList">
 	<logic:notEmpty name="partyList">
 
-	<table class="tstyle1 thlight smalltxt">
+	<table class="tstyle1 thlight">
 		<tr>
 			<th scope="col"><bean:message key="label.name" bundle="MANAGER_RESOURCES"/></th>
 			<th class="width8em" scope="col"><bean:message key="label.identification" bundle="MANAGER_RESOURCES"/></th>
@@ -254,7 +257,7 @@
 						<br/>
 					</td>
 				</logic:iterate>
-				<td rowspan="<%= numberUnits %>">
+				<td class="nowrap" rowspan="<%= numberUnits %>">
 					<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
 					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="idInternal"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/></bean:define>
 					<html:link page="<%= url %>"><bean:message key="link.viewUser" /></html:link>
