@@ -21,12 +21,14 @@
 	<logic:notPresent name="notCandidatedYearDelegate" >
 		<logic:notPresent name="votedYearDelegate" >
 			<logic:notPresent name="notVotedYearDelegate" >
-				<p class="mtop2 mbottom2">
-					<span class="error0"><b><bean:message key="label.student.elections.noCandidacyOrVotePeriods" bundle="APPLICATION_RESOURCES"/></b></span></p>
+				<p class="mvert15">
+					<em><bean:message key="label.student.elections.noCandidacyOrVotePeriods" bundle="APPLICATION_RESOURCES"/>.</em>
+				</p>
 					<logic:present name="yearDelegateResultsElection" >
 						<bean:define id="electionOID" name="yearDelegateElection" property="idInternal" />
 						<p class="mtop1 mbottom05">
-							<b><bean:message key="title.student.elections.results.elections" bundle="APPLICATION_RESOURCES"/></b></p>
+							<b><bean:message key="title.student.elections.results.elections" bundle="APPLICATION_RESOURCES"/></b>
+						</p>
 					
 						<fr:view name="yearDelegateElection" layout="tabular-nonNullValues" schema="student.electionPeriod.showResults.resume" >
 							<fr:layout>

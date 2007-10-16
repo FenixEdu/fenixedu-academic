@@ -20,19 +20,20 @@
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
 					<p class="mbottom0">
-					<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
-						<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.backToForum" />
-					</html:link>
+						<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
+							<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.backToForum" />
+						</html:link>
 					</p>
 
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
 						<fr:layout>
-						    <fr:property name="classes" value="tstyle5 thlight thright"/>
+						    <fr:property name="classes" value="tstyle2 thlight thright"/>
 						</fr:layout>
 					</fr:view>
 
 					<logic:notEqual name="showReplyBox" value="true">
 						<logic:equal name="loggedPersonCanWrite" value="true">
+							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 							<html:link action="<%= contextPrefix + "method=prepareCreateMessage&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=true&amp;goToLastPage=true"%>">
 								<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
 							</html:link>
@@ -79,18 +80,22 @@
 						<html:link linkName="<%="ID_" + currentMessageId.toString()%>"/>
 						<fr:view name="conversationMessage" layout="tabular" schema="conversationMessage.view-with-author-creationDate-and-body">			
 							<fr:layout>
-								<fr:property name="style" value="width:100%"/>
-							    <fr:property name="classes" value="tstyle4 thlight thright mbottom0 thtop forumthread"/>
+							    <fr:property name="classes" value="tstyle4 thlight thright mbottom0 thtop width100 forumthread"/>
 							    <fr:property name="columnClasses" value="width8em,"/>
 							</fr:layout>
 						</fr:view>
 						<logic:equal name="loggedPersonCanWrite" value="true">
 							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
-							<p class="mtop05">
-							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&amp;showReplyBox=true&amp;goToLastPage=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quotedMessageId=" + quotedMessageId%>"> 
-								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
-							</html:link>
-							</p>
+								<table class="width100 gluetop mtop0">
+									<tr>
+										<th class="width8em"></th>
+										<td class="aright">
+											<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&amp;showReplyBox=true&amp;goToLastPage=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quotedMessageId=" + quotedMessageId%>"> 
+												<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
+											</html:link>
+										</td>
+									</tr>
+								</table>
 						</logic:equal>
 					</logic:iterate>
 

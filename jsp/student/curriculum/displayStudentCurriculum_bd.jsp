@@ -323,14 +323,10 @@
 </div>
 <div class="cboth"></div>
 
-<br />
-<br />
+<div class="mtop15">
+	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
+	<html:img align="middle" src="<%= graph %>"/>
+</div>
 
-<tr>
-	<td>
-		<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %></bean:define>
-		<html:img align="middle" src="<%= graph %>"/>
-	</td>
-</tr>
 </logic:notEmpty>
 </html:form>

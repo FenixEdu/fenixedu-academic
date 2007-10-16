@@ -5,22 +5,25 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:messages id="message" message="true" bundle="MESSAGING_RESOURCES">
-	<span class="error0">
-		<bean:write name="message"/>
-	</span>
-</html:messages>
-
 <logic:present name="forum">
 	<bean:define id="forumId" name="forum" property="idInternal" />	
 	<bean:define id="contextPrefix" name="contextPrefix" />
 	
+	<em><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.forum" />&nbsp;<bean:write name="forum" property="name"/></em>
 	<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.title"/></h2>
+
+	<p>
+		<html:messages id="message" message="true" bundle="MESSAGING_RESOURCES">
+			<span class="error0">
+				<bean:write name="message"/>
+			</span>
+		</html:messages>
+	</p>
 	
 	<!-- Forum Details -->
 	<fr:view name="forum" schema="forum.view-full">
 		<fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle5 thlight thright"/>
+	        <fr:property name="classes" value="tstyle2 thlight thright"/>
 	    </fr:layout>
 	</fr:view>
 
@@ -74,8 +77,8 @@
 	
 		<fr:view name="conversationThreads" schema="conversationThread.view-full">
 			<fr:layout name="tabular">
-		        <fr:property name="classes" value="tstyle2"/>
-		        <fr:property name="columnClasses" value=",,,acenter"/>
+		        <fr:property name="classes" value="tstyle2 width100"/>
+		        <fr:property name="columnClasses" value=",acenter,acenter,acenter"/>
        			<fr:property name="link(view)" value="<%= contextPrefix + "method=viewThread"%>"/>
 				<fr:property name="param(view)" value="forum.idInternal/forumId,idInternal/threadId"/>
 				<fr:property name="key(view)" value="label.viewForum.viewThread"/>

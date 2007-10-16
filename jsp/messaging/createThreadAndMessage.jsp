@@ -7,20 +7,22 @@
 
 <logic:present name="forum">
 	<bean:define id="contextPrefix" name="contextPrefix" />
-		
+
+	<em><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.forum" />&nbsp;<bean:write name="forum" property="name"/></em>
 	<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.createThreadAndMessage.title"/></h2>
 	
 	<fr:view name="forum" layout="tabular" schema="forum.view-full">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="classes" value="tstyle2 thlight thright"/>
 		</fr:layout>
 	</fr:view>
 	
 	<logic:messagesPresent message="true">
-		<html:messages id="messages" message="true" bundle="MESSAGING_RESOURCES">
-			<span class="error"><bean:write name="messages" /></span>
-		</html:messages>
-		<br/><br/>
+		<p>
+			<html:messages id="messages" message="true" bundle="MESSAGING_RESOURCES">
+				<span class="error"><bean:write name="messages" /></span>
+			</html:messages>
+		</p>
 	</logic:messagesPresent>
 	
 	<bean:define id="forumId" name="forum" property="idInternal"/>
