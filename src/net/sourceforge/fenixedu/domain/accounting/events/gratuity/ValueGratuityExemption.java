@@ -52,5 +52,10 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 	final BigDecimal amountToDiscount = new BigDecimal(getValue().toString());
 	return amountToDiscount.divide(amount.getAmount(), 10, RoundingMode.HALF_EVEN);
     }
+    
+    @Override
+    public boolean isValueExemption() {
+	return true;
+    }
 
 }

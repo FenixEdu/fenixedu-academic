@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -22,19 +23,19 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
     }
 
     /**
-         * @param value
-         * @param transactionDate
-         * @param remarks
-         * @param paymentType
-         * @param transactionType
-         * @param wasInternalBalance
-         * @param responsiblePerson
-         * @param personAccount
-         * @param guideEntry
-         */
-    public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks,
-	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry) {
+     * @param value
+     * @param transactionDate
+     * @param remarks
+     * @param paymentType
+     * @param transactionType
+     * @param wasInternalBalance
+     * @param responsiblePerson
+     * @param personAccount
+     * @param guideEntry
+     */
+    public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+	    GuideEntry guideEntry) {
 	this();
 	setGuideEntry(guideEntry);
 	setValueBigDecimal(value);
@@ -61,6 +62,20 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 	removePersonAccount();
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public BigDecimal getValueWithAdjustment() {
+
+	BigDecimal reimbursedValue = BigDecimal.ZERO;
+	if (hasGuideEntry()) {
+	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+		if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
+		    reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+		}
+	    }
+	}
+
+	return getValueBigDecimal().subtract(reimbursedValue);
     }
 
 }

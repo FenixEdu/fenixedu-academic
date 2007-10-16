@@ -11,8 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -21,8 +19,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
-import org.apache.commons.lang.StringUtils;
-import org.jfree.data.time.Year;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -77,8 +73,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 
 	Specialization specialization = getStudentCurricularPlan().getSpecialization();
 	if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
-	    totalValue = this.getGratuityValues().calculateTotalValueForSpecialization(
-		    this.getStudentCurricularPlan());
+	    totalValue = this.getGratuityValues().calculateTotalValueForSpecialization(this.getStudentCurricularPlan());
 	} else if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 	    totalValue = this.getGratuityValues().calculateTotalValueForMasterDegree();
 	}
@@ -107,31 +102,13 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public double calculatePayedValue(final YearMonthDay date) {
-	double payedValue = 0;
-	double reimbursedValue = 0;
-
-	final List<GratuityTransaction> transactions = (date == null ? getTransactionList()
-		: getTransactionsUntil(date));
-	for (GratuityTransaction gratuityTransaction : transactions) {
-
-	    payedValue += gratuityTransaction.getValueBigDecimal().doubleValue();
-
-	    if (gratuityTransaction.getGuideEntry() != null) {
-
-		List<ReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
-			.getGuideEntry().getReimbursementGuideEntries();
-		for (ReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
-		    if (reimbursementGuideEntry.getReimbursementGuide()
-			    .getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
-				    ReimbursementGuideState.PAYED)) {
-
-			reimbursedValue += reimbursementGuideEntry.getValueBigDecimal().doubleValue();
-		    }
-		}
-	    }
+	final List<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
+	BigDecimal result = BigDecimal.ZERO;
+	for (final GratuityTransaction transaction : transactions) {
+	    result = result.add(transaction.getValueWithAdjustment());
 	}
 
-	return payedValue - reimbursedValue;
+	return result.doubleValue();
     }
 
     private List<GratuityTransaction> getTransactionsUntil(final YearMonthDay date) {
@@ -159,14 +136,15 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private void updatePaymentCode() {
-	super.getPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		new Money(getRemainingValue()), new Money(getRemainingValue()));
+	super.getPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(), new Money(getRemainingValue()),
+		new Money(getRemainingValue()));
     }
 
     private void createPaymentCode() {
-	GratuitySituationPaymentCode.create(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_TOTAL_GRATUITY,
-		new YearMonthDay(), calculatePaymentCodeEndDate(), new Money(getRemainingValue()),
-		new Money(getRemainingValue()), getStudent(), this);
+	GratuitySituationPaymentCode
+		.create(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_TOTAL_GRATUITY, new YearMonthDay(),
+			calculatePaymentCodeEndDate(), new Money(getRemainingValue()), new Money(getRemainingValue()),
+			getStudent(), this);
     }
 
     private Student getStudent() {
@@ -190,39 +168,87 @@ public class GratuitySituation extends GratuitySituation_Base {
     private double calculatePenalty(final double remainingValue) {
 	if (hasPenalty() && getGratuityValues().isPenaltyApplicable()) {
 
-	    final YearMonthDay now = new YearMonthDay();
-	    final YearMonthDay endPaymentDate = getEndPaymentDate();
-
 	    int monthsToChargePenalty = 0;
-	    if (endPaymentDate.getMonthOfYear() == now.getMonthOfYear()) {
-		monthsToChargePenalty += 1;
+	    final YearMonthDay now = new YearMonthDay();
 
+	    if (getEndPaymentDate().getMonthOfYear() == now.getMonthOfYear()) {
+		monthsToChargePenalty += 1;
 	    } else {
-		final YearMonthDay endOfMonth = endPaymentDate.plusMonths(1).withDayOfMonth(1)
-			.minusDays(1);
-		final int numberOfDaysLeftInMonth = new Period(endPaymentDate, endOfMonth).getDays();
-		if (numberOfDaysLeftInMonth > 0) {
-		    monthsToChargePenalty += 1;
-		}
-		final Period period = new Period(endPaymentDate.plusMonths(1).withDayOfMonth(1), now);
-		monthsToChargePenalty += period.getMonths() + 1;
+		monthsToChargePenalty = calculateMonthsToChargePenalty(calculateCloseDate());
 	    }
 
-	    return new Money(remainingValue).multiply(PENALTY_PERCENTAGE).multiply(
-		    new BigDecimal(monthsToChargePenalty)).getAmount().doubleValue();
+	    return new Money(remainingValue).multiply(PENALTY_PERCENTAGE).multiply(new BigDecimal(monthsToChargePenalty))
+		    .getAmount().doubleValue();
 	}
 
 	return 0;
     }
 
+    private int calculateMonthsToChargePenalty(final YearMonthDay when) {
+
+	final YearMonthDay endPaymentDate = getEndPaymentDate();
+	final YearMonthDay endOfMonth = endPaymentDate.plusMonths(1).withDayOfMonth(1).minusDays(1);
+	final int numberOfDaysLeftInMonth = new Period(endPaymentDate, endOfMonth).getDays();
+	int monthsToChargePenalty = 0;
+
+	if (numberOfDaysLeftInMonth > 0) {
+	    monthsToChargePenalty += 1;
+	}
+
+	final Period period = new Period(endPaymentDate.plusMonths(1).withDayOfMonth(1), when);
+	monthsToChargePenalty += period.getMonths() + 1;
+
+	return monthsToChargePenalty;
+    }
+
+    private YearMonthDay calculateCloseDate() {
+	for (final GratuityTransaction transaction : getTransactionListSet()) {
+	    if (canClose(transaction.getTransactionDateDateTime().toYearMonthDay())) {
+		return transaction.getTransactionDateDateTime().toYearMonthDay();
+	    }
+	}
+
+	return new YearMonthDay();
+
+    }
+
+    private boolean canClose(final YearMonthDay when) {
+	if (calculatePayedAmountUntil(when) > calculateOriginalValueWithExemption()) {
+	    return true;
+	} else {
+	    final int monthsToChargePenalty = calculateMonthsToChargePenalty(when);
+	    final double penaltyAmount = new Money(calculateOriginalValueWithExemption()).multiply(PENALTY_PERCENTAGE).multiply(
+		    new BigDecimal(monthsToChargePenalty)).getAmount().doubleValue();
+
+	    return calculatePayedAmountUntil(when) > (penaltyAmount + calculateOriginalValueWithExemption());
+	}
+
+    }
+
+    private double calculatePayedAmountUntil(final YearMonthDay endDate) {
+	Money result = Money.ZERO;
+	final DateTime limit = endDate.toDateTimeAtMidnight().plusDays(1).minusMinutes(1);
+	for (final GratuityTransaction transaction : getTransactionListSet()) {
+	    if (!transaction.getTransactionDateDateTime().isAfter(limit)) {
+		result = result.add(transaction.getValueWithAdjustment());
+	    }
+	}
+
+	return result.getAmount().doubleValue();
+    }
+
     private boolean hasPenalty() {
 	if (!getHasPenaltyExemption() && new YearMonthDay().isAfter(getEndPaymentDate())) {
 	    final double payedValue = calculatePayedValue(getEndPaymentDate());
-	    return payedValue < (calculateOriginalTotalValue() - calculateExemptionValue());
+	    return payedValue < calculateOriginalValueWithExemption();
 	}
 
 	return false;
 
+    }
+
+    private double calculateOriginalValueWithExemption() {
+	return (calculateOriginalTotalValue() - calculateExemptionValue());
     }
 
     @Override
@@ -273,12 +299,11 @@ public class GratuitySituation extends GratuitySituation_Base {
 	return new Money(getRemainingValue()).lessOrEqualThan(Money.ZERO);
     }
 
-    public GratuityTransaction processAmount(final Person responsiblePerson, final Money amount,
-	    final DateTime whenRegistered, final PaymentType paymentType) {
+    public GratuityTransaction processAmount(final Person responsiblePerson, final Money amount, final DateTime whenRegistered,
+	    final PaymentType paymentType) {
 
-	final GratuityTransaction transaction = new GratuityTransaction(amount.getAmount(),
-		whenRegistered, paymentType, TransactionType.GRATUITY_ADHOC_PAYMENT, responsiblePerson,
-		getOrCreatePersonAccount(), this);
+	final GratuityTransaction transaction = new GratuityTransaction(amount.getAmount(), whenRegistered, paymentType,
+		TransactionType.GRATUITY_ADHOC_PAYMENT, responsiblePerson, getOrCreatePersonAccount(), this);
 
 	updateRemainingValue();
 
@@ -287,20 +312,18 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private PersonAccount getOrCreatePersonAccount() {
-	return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount()
-		: new PersonAccount(getPerson());
+	return getPerson().hasAssociatedPersonAccount() ? getPerson().getAssociatedPersonAccount() : new PersonAccount(
+		getPerson());
     }
 
     @Override
     public void setTotalValue(Double value) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
     }
 
     @Override
     public void setRemainingValue(Double value) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.GratuitySituation.cannot.modify.value");
     }
 
     public void editPenaltyExemption(final Boolean hasPenaltyExemption, final String justification) {

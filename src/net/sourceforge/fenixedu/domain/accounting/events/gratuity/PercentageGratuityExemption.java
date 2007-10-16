@@ -14,15 +14,14 @@ import net.sourceforge.fenixedu.util.Money;
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 
     public PercentageGratuityExemption(final Employee employee, final GratuityEvent gratuityEvent,
-	    final GratuityExemptionJustificationType gratuityExemptionJustificationType,
-	    final String reason, final YearMonthDay dispatchDate, final BigDecimal percentage) {
+	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
+	    final YearMonthDay dispatchDate, final BigDecimal percentage) {
 	super();
-	init(employee, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent,
-		percentage);
+	init(employee, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
     }
 
-    protected void init(Employee employee, GratuityExemptionJustificationType exemptionType,
-	    String reason, YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
+    protected void init(Employee employee, GratuityExemptionJustificationType exemptionType, String reason,
+	    YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
 
 	checkParameters(percentage);
 	super.setPercentage(percentage);
@@ -32,8 +31,7 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
 
     private void checkParameters(BigDecimal percentage) {
 	if (percentage == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.PercentageGratuityExemption.percentage.cannot.be.null");
+	    throw new DomainException("error.accounting.events.gratuity.PercentageGratuityExemption.percentage.cannot.be.null");
 	}
     }
 
@@ -53,6 +51,11 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
 
     public String getFormattedPercentage() {
 	return getPercentage().multiply(BigDecimal.valueOf(100)).toPlainString();
+    }
+
+    @Override
+    public boolean isPercentageExemption() {
+	return true;
     }
 
 }

@@ -44,10 +44,9 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
     }
 
     protected void init(final Employee employee, final GratuityEvent gratuityEvent,
-	    final GratuityExemptionJustificationType exemptionType, final String reason,
-	    final YearMonthDay dispatchDate) {
-	super.init(employee, gratuityEvent, GratuityExemptionJustificationFactory.create(this,
-		exemptionType, reason, dispatchDate));
+	    final GratuityExemptionJustificationType exemptionType, final String reason, final YearMonthDay dispatchDate) {
+	super.init(employee, gratuityEvent, GratuityExemptionJustificationFactory.create(this, exemptionType, reason,
+		dispatchDate));
 
 	gratuityEvent.recalculateState(new DateTime());
     }
@@ -76,6 +75,14 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 	    throw new DomainException(
 		    "error.accounting.events.gratuity.GratuityExemption.remove.gratuity.exemption.will.cause.event.to.open");
 	}
+    }
+
+    public boolean isValueExemption() {
+	return false;
+    }
+
+    public boolean isPercentageExemption() {
+	return false;
     }
 
     abstract public BigDecimal calculateDiscountPercentage(Money amount);

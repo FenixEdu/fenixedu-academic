@@ -1312,3 +1312,10 @@
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>	
 </schema>
+
+
+<schema name="DegreeCurricularPlan.view" 
+	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >
+	<slot name="degree.name"/>
+	<slot name="name" />
+</schema>

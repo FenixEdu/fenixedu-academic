@@ -12,8 +12,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     }
 
     public GratuityExemptionJustification(final GratuityExemption gratuityExemption,
-	    final GratuityExemptionJustificationType gratuityExemptionJustificationType,
-	    final String reason) {
+	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason) {
 	this();
 	init(gratuityExemption, gratuityExemptionJustificationType, reason);
     }
@@ -33,8 +32,7 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     }
 
     @Override
-    public void setGratuityExemptionJustificationType(
-	    GratuityExemptionJustificationType gratuityExemptionJustificationType) {
+    public void setGratuityExemptionJustificationType(GratuityExemptionJustificationType gratuityExemptionJustificationType) {
 	throw new DomainException(
 		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustification.cannot.modify.gratuityExemptionJustificationType");
     }
@@ -47,6 +45,10 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
 
 	return labelFormatter;
 
+    }
+
+    public boolean isSocialShareGrantOwner() {
+	return getGratuityExemptionJustificationType() == GratuityExemptionJustificationType.SOCIAL_SHARE_GRANT_OWNER;
     }
 
 }

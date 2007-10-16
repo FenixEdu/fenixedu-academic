@@ -6,6 +6,12 @@
 	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.endDate"/>
 </schema>
 
+<schema name="PostingRule.view-with-eventType"
+	type="net.sourceforge.fenixedu.domain.accounting.PostingRule" extends="PostingRule.view"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="eventType" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.eventType"/>
+</schema>
+
 <schema name="ImprovementOfApprovedEnrolmentPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -55,6 +61,32 @@
 <schema name="DfaRegistrationPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
+<schema name="DFAGratuityPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"  
+		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
+	<slot name="dfaTotalAmount" />
+	<slot name="dfaAmountPerEctsCredit" />
+	<slot name="dfaPartialAcceptedPercentage" />
+</schema>
+
+<schema name="DFAGratuityPR.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaTotalAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="dfaAmountPerEctsCredit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="dfaPartialAcceptedPercentage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(dfaTotalAmount,dfaAmountPerEctsCredit,dfaPartialAcceptedPercentage)"/>
 </schema>
 
 <schema name="BaseAmountPlusAmountPerUnitPR.view"
@@ -181,3 +213,22 @@
 <schema name="CertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
+
+
+<schema name="CreateDFAGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerEctsCredit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="partialAcceptedPercentage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="totalAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+
+

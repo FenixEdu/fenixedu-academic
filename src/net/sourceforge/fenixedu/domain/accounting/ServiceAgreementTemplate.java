@@ -44,8 +44,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     @Override
     public void setCreationDate(DateTime creationDate) {
-	throw new DomainException(
-		"error.accounting.agreement.ServiceAgreementTemplate.cannot.modify.creationDate");
+	throw new DomainException("error.accounting.agreement.ServiceAgreementTemplate.cannot.modify.creationDate");
     }
 
     public Set<PostingRule> getActivePostingRules() {
@@ -97,8 +96,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {
 	final List<PostingRule> activePostingRulesInPeriod = new ArrayList<PostingRule>();
 	for (final PostingRule postingRule : getPostingRulesSet()) {
-	    if (postingRule.isActiveForPeriod(startDate, endDate)
-		    && postingRule.getEventType() == eventType) {
+	    if (postingRule.isActiveForPeriod(startDate, endDate) && postingRule.getEventType() == eventType) {
 		activePostingRulesInPeriod.add(postingRule);
 	    }
 	}
@@ -116,6 +114,14 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	}
 
 	return null;
+    }
+
+    public boolean hasPostingRuleFor(final EventType eventType) {
+	return hasPostingRuleFor(eventType, new DateTime());
+    }
+
+    public boolean hasPostingRuleFor(final EventType eventType, final DateTime when) {
+	return getPostingRuleByEventTypeAndDate(eventType, when) != null;
     }
 
     public boolean containsPostingRule(final EventType eventType, final DateTime when) {
@@ -137,14 +143,14 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public final void delete() {
-        if (!getServiceAgreementsSet().isEmpty()) {
-            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
-        }
-        if (!getPostingRulesSet().isEmpty()) {
-            throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
-        }
-        removeRootDomainObject();
-        deleteDomainObject();
+	if (!getServiceAgreementsSet().isEmpty()) {
+	    throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+	}
+	if (!getPostingRulesSet().isEmpty()) {
+	    throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     public PaymentPlan getDefaultPaymentPlan(final ExecutionYear executionYear) {
@@ -159,6 +165,10 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 
     public boolean hasDefaultPaymentPlan(final ExecutionYear executionYear) {
 	return getDefaultPaymentPlan(executionYear) != null;
+    }
+
+    public boolean hasActivePostingRuleFor(final EventType eventType) {
+	return getPostingRuleByEventTypeAndDate(eventType, new DateTime()) != null;
     }
 
 }

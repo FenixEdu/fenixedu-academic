@@ -23,7 +23,7 @@
 
 	<logic:notEmpty name="toEnrol">
 	    <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="APPLICATION_RESOURCES"/></h3>
-		<fr:view name="toEnrol" schema="student.registrationsWithStartData" >
+		<fr:view name="toEnrol" schema="student.registrationsToList" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
 				<fr:property name="linkFormat(enrol)" value="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning&registrationOID=${idInternal}" />

@@ -2497,6 +2497,22 @@
 			<forward name="chooseTargetEventForPaymentsTransfer" path="payments.events.chooseTargetEventForPaymentsTransfer" />
 		</action>
 		<!-- End: Payments Management -->
+		
+		<!-- Begin: Posting Rules Management -->
+       	<action path="/postingRules"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PostingRulesManagementDA">
+			    
+			<forward name="chooseCategory" path="payments.postingRules.management.chooseCategory" />
+			<forward name="chooseDFADegreeCurricularPlan" path="payments.postingRules.management.chooseDFADegreeCurricularPlan" />
+			<forward name="showPostingRulesForDFADegreeCurricularPlan" path="payments.postingRules.management.showPostingRulesForDFADegreeCurricularPlan" />
+			<forward name="viewDFAPostingRuleDetails" path="payments.postingRules.management.viewDFAPostingRuleDetails" />
+			<forward name="createDFAGratuityPR" path="payments.postingRules.management.createDFAGratuityPR" />
+			<forward name="editDFADegreeCurricularPlanPostingRule" path="payments.postingRules.management.editDFADegreeCurricularPlanPostingRule" />
+			    
+		</action>
+		<!-- End: Posting Rules Management -->
 
 	</action-mappings>
  

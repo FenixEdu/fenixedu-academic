@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 13/Nov/2003
@@ -16,55 +17,59 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Base {
 
     public ReimbursementGuideSituation() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	/**
+    /**
      * @return
      */
     public Calendar getModificationDate() {
-        if (this.getModification() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getModification());
-            return result;
-        }
-        return null;
+	if (this.getModification() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getModification());
+	    return result;
+	}
+	return null;
     }
 
     /**
      * @param modificationDate
      */
     public void setModificationDate(Calendar modificationDate) {
-        if (modificationDate != null) {
-            this.setModification(modificationDate.getTime());
-        } else {
-            this.setModification(null);
-        }
+	if (modificationDate != null) {
+	    this.setModification(modificationDate.getTime());
+	} else {
+	    this.setModification(null);
+	}
     }
 
     /**
      * @return Returns the officialDate.
      */
     public Calendar getOfficialDate() {
-        if (this.getOfficial() != null) {
-            Calendar result = Calendar.getInstance();
-            result.setTime(this.getOfficial());
-            return result;
-        }
-        return null;
+	if (this.getOfficial() != null) {
+	    Calendar result = Calendar.getInstance();
+	    result.setTime(this.getOfficial());
+	    return result;
+	}
+	return null;
     }
 
     /**
      * @param officialDate
-     *            The officialDate to set.
+     *                The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
-        if (officialDate != null) {
-            this.setOfficial(officialDate.getTime());
-        } else {
-            this.setOfficial(null);
-        }
+	if (officialDate != null) {
+	    this.setOfficial(officialDate.getTime());
+	} else {
+	    this.setOfficial(null);
+	}
+    }
+
+    public boolean isPayed() {
+	return getReimbursementGuideState().equals(ReimbursementGuideState.PAYED);
     }
 
 }

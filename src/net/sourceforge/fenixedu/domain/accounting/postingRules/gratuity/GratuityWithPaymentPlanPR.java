@@ -33,8 +33,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	super();
     }
 
-    public GratuityWithPaymentPlanPR(EntryType entryType, EventType eventType, DateTime startDate,
-	    DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate) {
+    public GratuityWithPaymentPlanPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate) {
 	this();
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
     }
@@ -42,8 +42,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 
-	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event)
-		: BigDecimal.ZERO;
+	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event) : BigDecimal.ZERO;
 
 	return getPaymentPlan(event).calculateTotalAmount(event, when, discountPercentage);
 
@@ -57,8 +56,8 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	final List<EntryDTO> result = new ArrayList<EntryDTO>();
-	final Map<Installment, Money> amountsByInstallment = getPaymentPlan(event)
-		.calculateInstallmentRemainingAmounts(event, when, getDiscountPercentage(event));
+	final Map<Installment, Money> amountsByInstallment = getPaymentPlan(event).calculateInstallmentRemainingAmounts(event,
+		when, getDiscountPercentage(event));
 
 	for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
 	    final Money installmentAmount = amountsByInstallment.get(installment);
@@ -67,35 +66,33 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 		continue;
 	    }
 
-	    result.add(new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, event, installmentAmount,
-		    event.getDescriptionForEntryType(getEntryType()), installment));
+	    result.add(new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, event, installmentAmount, event
+		    .getDescriptionForEntryType(getEntryType()), installment));
 
 	}
 
 	if (needsTotalAmountEntry(getPaymentPlan(event), result, event, when)) {
 	    final Money amountToPay = event.calculateAmountToPay(when);
-	    result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, amountToPay, event.getPayedAmount(),
-		    amountToPay, event.getDescriptionForEntryType(getEntryType()), amountToPay));
+	    result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, amountToPay, event.getPayedAmount(), amountToPay, event
+		    .getDescriptionForEntryType(getEntryType()), amountToPay));
 	}
 
 	return result;
     }
 
-    private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result,
-	    final Event event, final DateTime when) {
-	return (paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result
-		.size());
+    private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result, final Event event,
+	    final DateTime when) {
+	return (paymentPlan.getInstallmentsCount() != 1 && paymentPlan.getInstallmentsCount() == result.size());
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs,
-	    Event event, Account fromAccount, Account toAccount,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.GratuityWithPaymentConditionPR.invalid.number.of.entryDTOs",
-		    event.getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.gratuity.GratuityWithPaymentConditionPR.invalid.number.of.entryDTOs", event
+			    .getDescriptionForEntryType(getEntryType()));
 	}
 
 	final EntryDTO entryDTO = entryDTOs.get(0);
@@ -106,60 +103,54 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	    accountingTransaction = internalProcessInstallment(user, fromAccount, toAccount, entryDTO,
 		    gratuityEventWithPaymentPlan, transactionDetail);
 	} else {
-	    accountingTransaction = internalProcessTotal(user, fromAccount, toAccount, entryDTO,
-		    gratuityEventWithPaymentPlan, transactionDetail);
+	    accountingTransaction = internalProcessTotal(user, fromAccount, toAccount, entryDTO, gratuityEventWithPaymentPlan,
+		    transactionDetail);
 	}
 
 	return Collections.singleton(accountingTransaction);
 
     }
 
-    private AccountingTransaction internalProcessTotal(User user, Account fromAccount,
-	    Account toAccount, EntryDTO entryDTO, GratuityEventWithPaymentPlan event,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    private AccountingTransaction internalProcessTotal(User user, Account fromAccount, Account toAccount, EntryDTO entryDTO,
+	    GratuityEventWithPaymentPlan event, AccountingTransactionDetailDTO transactionDetail) {
 
-	event.changeGratuityTotalPaymentCodeState(event.getPaymentCodeStateFor(transactionDetail
-		.getPaymentMode()));
+	event.changeGratuityTotalPaymentCodeState(event.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
 	checkIfCanAddAmount(entryDTO, transactionDetail.getWhenRegistered(), event);
 
-	return super.makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(),
-		entryDTO.getAmountToPay(), transactionDetail);
+	return super.makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTO.getAmountToPay(),
+		transactionDetail);
 
     }
 
-    private AccountingTransaction internalProcessInstallment(User user, Account fromAccount,
-	    Account toAccount, EntryDTO entryDTO, GratuityEventWithPaymentPlan event,
-	    AccountingTransactionDetailDTO transactionDetail) {
+    private AccountingTransaction internalProcessInstallment(User user, Account fromAccount, Account toAccount,
+	    EntryDTO entryDTO, GratuityEventWithPaymentPlan event, AccountingTransactionDetailDTO transactionDetail) {
 
 	final EntryWithInstallmentDTO entryWithInstallmentDTO = (EntryWithInstallmentDTO) entryDTO;
 
-	checkIfCanAddAmountForInstallment(entryWithInstallmentDTO,
-		transactionDetail.getWhenRegistered(), event);
+	checkIfCanAddAmountForInstallment(entryWithInstallmentDTO, transactionDetail.getWhenRegistered(), event);
 	event.changeInstallmentPaymentCodeState(entryWithInstallmentDTO.getInstallment(), event
 		.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
 
-	return makeAccountingTransactionForInstallment(user, event, fromAccount, toAccount,
-		getEntryType(), entryDTO.getAmountToPay(), (entryWithInstallmentDTO).getInstallment(),
-		transactionDetail);
+	return makeAccountingTransactionForInstallment(user, event, fromAccount, toAccount, getEntryType(), entryDTO
+		.getAmountToPay(), (entryWithInstallmentDTO).getInstallment(), transactionDetail);
 
     }
 
     private void checkIfCanAddAmount(EntryDTO entryDTO, DateTime whenRegistered, Event event) {
 	if (entryDTO.getAmountToPay().compareTo(event.calculateAmountToPay(whenRegistered)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
-		    event.getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value", event
+			    .getDescriptionForEntryType(getEntryType()));
 	}
     }
 
-    private void checkIfCanAddAmountForInstallment(EntryWithInstallmentDTO entryDTO,
-	    DateTime whenRegistered, Event event) {
-	final Money installmentAmount = getPaymentPlan(event).calculateRemainingAmountFor(
-		entryDTO.getInstallment(), event, whenRegistered, getDiscountPercentage(event));
+    private void checkIfCanAddAmountForInstallment(EntryWithInstallmentDTO entryDTO, DateTime whenRegistered, Event event) {
+	final Money installmentAmount = getPaymentPlan(event).calculateRemainingAmountFor(entryDTO.getInstallment(), event,
+		whenRegistered, getDiscountPercentage(event));
 	if (entryDTO.getAmountToPay().compareTo(installmentAmount) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
-		    event.getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value", event
+			    .getDescriptionForEntryType(getEntryType()));
 	}
 
     }
@@ -173,12 +164,11 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	return (DegreeCurricularPlanServiceAgreementTemplate) super.getServiceAgreementTemplate();
     }
 
-    protected AccountingTransaction makeAccountingTransactionForInstallment(User responsibleUser,
-	    Event event, Account from, Account to, EntryType entryType, Money amount,
-	    Installment installment, AccountingTransactionDetailDTO transactionDetail) {
-	return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount
-		.negate(), from), makeEntry(entryType, amount, to), installment,
-		makeAccountingTransactionDetail(transactionDetail));
+    protected AccountingTransaction makeAccountingTransactionForInstallment(User responsibleUser, Event event, Account from,
+	    Account to, EntryType entryType, Money amount, Installment installment,
+	    AccountingTransactionDetailDTO transactionDetail) {
+	return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from),
+		makeEntry(entryType, amount, to), installment, makeAccountingTransactionDetail(transactionDetail));
     }
 
 }

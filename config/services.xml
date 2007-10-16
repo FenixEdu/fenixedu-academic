@@ -12440,5 +12440,14 @@
 		<filterChains>
 			<chain name="LibraryAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
+	<service>
+		<name>CreatePostingRule</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePostingRule</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

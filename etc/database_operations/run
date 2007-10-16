@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding Posting Rules management functionalities" changes-20071011184610.sql

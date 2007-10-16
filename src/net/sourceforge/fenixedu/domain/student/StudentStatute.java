@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -42,6 +43,16 @@ public class StudentStatute extends StudentStatute_Base {
 
 	if (getEndExecutionPeriod() != null && getEndExecutionPeriod().isBefore(executionPeriod)) {
 	    return false;
+	}
+
+	return true;
+    }
+
+    public boolean isValidOn(final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+	    if (!isValidInExecutionPeriod(executionPeriod)) {
+		return false;
+	    }
 	}
 
 	return true;
@@ -126,10 +137,16 @@ public class StudentStatute extends StudentStatute_Base {
 	}
 
     }
+    
+    public boolean isGrantOwnerStatute() {
+	return getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER;
+    }
 
     public String toDetailedString() {
 	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
 		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
+    
+
 
 }
