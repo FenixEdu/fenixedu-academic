@@ -355,17 +355,16 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-	if (getStudentDataByExecutionYearCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
-	}
+	for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete())
+	    ;
 
 	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete())
 	    ;
 
 	for (; hasAnyVotes(); getVotes().get(0).delete())
 	    ;
-
-	getElectedElections().clear();
+	
+	getElectedElections().clear();	
 
 	removePerson();
 	removeRootDomainObject();
@@ -647,15 +646,15 @@ public class Student extends Student_Base {
     }
 
     final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
-	for (Registration registration : getRegistrations()) {
-	    Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
+        for (Registration registration : getRegistrations()) {
+            Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
+            
+            if (dissertationEnrolment != null) {
+                return dissertationEnrolment;
+            }
+        }
 
-	    if (dissertationEnrolment != null) {
-		return dissertationEnrolment;
-	    }
-	}
-
-	return null;
+        return null;
     }
 
     public boolean doesNotWantToRespondToInquiries() {
@@ -723,7 +722,7 @@ public class Student extends Student_Base {
 
 	return false;
     }
-
+    
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
 	final List<Registration> result = new ArrayList<Registration>();
@@ -752,13 +751,13 @@ public class Student extends Student_Base {
     public List<Registration> getTransitedRegistrations() {
 	List<Registration> result = new ArrayList<Registration>();
 	for (Registration registration : super.getRegistrations()) {
-	    if (registration.isTransited()) {
+	    if(registration.isTransited()){
 		result.add(registration);
 	    }
 	}
 	return result;
     }
-
+    	    
     public boolean isAnyTuitionInDebt() {
 	for (final Registration registration : super.getRegistrations()) {
 	    if (!registration.getPayedTuition()) {
@@ -773,14 +772,14 @@ public class Student extends Student_Base {
 	for (Registration registration : super.getRegistrations()) {
 	    Set<DegreeCurricularPlan> degreeCurricularPlans = registration.getDegreeCurricularPlans();
 	    for (DegreeCurricularPlan degreeCurricularPlanToTest : degreeCurricularPlans) {
-		if (degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
+		if(degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
 		    return registration;
 		}
 	    }
 	}
 	return null;
     }
-
+    
     public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
@@ -800,177 +799,178 @@ public class Student extends Student_Base {
 
 	return null;
     }
-
+    
     public DelegateElection getLastElectedDelegateElection() {
-	List<DelegateElection> elections = new ArrayList<DelegateElection>(getElectedElections());
+    	List<DelegateElection> elections = new ArrayList<DelegateElection>(getElectedElections());
 	return (elections.isEmpty() ? null : Collections
 		.max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE));
     }
-
+        
     /*
      * ACTIVE DELEGATE FUNCTIONS OWNED BY STUDENT
      */
     public List<PersonFunction> getAllActiveDelegateFunctions() {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
-	    Set<Function> functions = Function.readAllActiveFunctionsByType(delegateFunctionType);
-	    for (Function function : functions) {
-		for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
-		    if (personFunction.getPerson().equals(this.getPerson())) {
-			result.add(personFunction);
-		    }
-		}
-	    }
-
-	}
-	return result;
+    	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    	
+    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+    	for(FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
+    		Set<Function> functions = Function.readAllActiveFunctionsByType(delegateFunctionType);
+    		for (Function function : functions) {
+    			for(PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
+    				if(personFunction.getPerson().equals(this.getPerson())) {
+    					result.add(personFunction);
+    				}
+    			}
+    		}
+    		
+    	}
+    	return result;
     }
-
+    
     public List<PersonFunction> getAllActiveDelegateFunctions(FunctionType functionType) {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	Set<Function> functions = Function.readAllActiveFunctionsByType(functionType);
-	for (Function function : functions) {
-	    for (PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
-		if (personFunction.getPerson().equals(this.getPerson())) {
-		    result.add(personFunction);
-		}
-	    }
-
-	}
-	return result;
+    	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+		Set<Function> functions = Function.readAllActiveFunctionsByType(functionType);
+		for (Function function : functions) {
+			for(PersonFunction personFunction : function.getActivePersonFunctionsStartingIn(currentExecutionYear)) {
+				if(personFunction.getPerson().equals(this.getPerson())) {
+					result.add(personFunction);
+				}
+			}
+    		
+    	}
+    	return result;
     }
-
+    
+    
     public boolean hasActiveDelegateFunction(FunctionType functionType) {
-	List<PersonFunction> personFunctions = getAllActiveDelegateFunctions(functionType);
-	return !personFunctions.isEmpty();
+    	List<PersonFunction> personFunctions = getAllActiveDelegateFunctions(functionType);
+    	return !personFunctions.isEmpty();
     }
-
+    
     public boolean hasAnyActiveDelegateFunction() {
-	for (FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
-	    if (hasActiveDelegateFunction(functionType)) {
-		return true;
-	    }
-	}
-	return false;
+    	for(FunctionType functionType : FunctionType.getAllDelegateFunctionTypes()) {
+    		if(hasActiveDelegateFunction(functionType)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
-
+    
     /*
      * ALL DELEGATE FUNCTIONS (ACTIVE AND PAST) OWNED BY STUDENT
      */
     public List<PersonFunction> getAllDelegateFunctions() {
-	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
-	    Set<Function> functions = Function.readAllFunctionsByType(delegateFunctionType);
-	    for (Function function : functions) {
-		for (PersonFunction personFunction : function.getPersonFunctions()) {
-		    if (personFunction.getPerson().equals(this.getPerson())) {
-			result.add(personFunction);
-		    }
-		}
-	    }
-	}
-	return result;
+    	List<PersonFunction> result = new ArrayList<PersonFunction>();
+    	for(FunctionType delegateFunctionType : FunctionType.getAllDelegateFunctionTypes()) {
+    		Set<Function> functions = Function.readAllFunctionsByType(delegateFunctionType);
+    		for (Function function : functions) {
+    			for(PersonFunction personFunction : function.getPersonFunctions()) {
+    				if(personFunction.getPerson().equals(this.getPerson())) {
+    					result.add(personFunction);
+    				}
+    			}
+    		}
+    	}
+    	return result;
     }
-
+    
     /*
-     * If student has delegate role, get the students he is responsible for
+     * If student has delegate role, get the students he is responsible for  
      */
     public List<Student> getStudentsResponsibleForGivenFunctionType(FunctionType delegateFunctionType, ExecutionYear executionYear) {
-	final Degree degree = getLastActiveRegistration().getDegree();
-	if (degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
-	    switch (delegateFunctionType) {
-	    case DELEGATE_OF_GGAE:
-		return degree.getAllStudents();
-	    case DELEGATE_OF_INTEGRATED_MASTER_DEGREE:
-		return degree.getAllStudents();
-	    case DELEGATE_OF_MASTER_DEGREE:
-		return getStudentsForMasterDegreeDelegate(degree, executionYear);
-	    case DELEGATE_OF_DEGREE:
-		return getStudentsForDegreeDelegate(degree, executionYear);
-	    case DELEGATE_OF_YEAR:
-		return getStudentsForYearDelegate(degree, executionYear);
-	    }
-	}
-
-	return new ArrayList<Student>();
+    	final Degree degree = getLastActiveRegistration().getDegree();
+    	if(degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
+			switch (delegateFunctionType) {
+				case  DELEGATE_OF_GGAE:
+					return degree.getAllStudents();
+				case  DELEGATE_OF_INTEGRATED_MASTER_DEGREE:
+					return degree.getAllStudents();
+				case DELEGATE_OF_MASTER_DEGREE:
+					return getStudentsForMasterDegreeDelegate(degree, executionYear);
+				case DELEGATE_OF_DEGREE:
+					return getStudentsForDegreeDelegate(degree, executionYear);
+				case DELEGATE_OF_YEAR:
+					return getStudentsForYearDelegate(degree, executionYear);
+			}
+    	}
+		
+		return new ArrayList<Student>();
     }
-
+    
     private List<Student> getStudentsForMasterDegreeDelegate(Degree degree, ExecutionYear executionYear) {
-	final DegreeType degreeType = degree.getDegreeType();
+    	final DegreeType degreeType = degree.getDegreeType();
 	return (degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) ? degree.getSecondCycleStudents(executionYear)
 		: degree.getAllStudents());
     }
-
+    
     private List<Student> getStudentsForDegreeDelegate(Degree degree, ExecutionYear executionYear) {
-	final DegreeType degreeType = degree.getDegreeType();
+    	final DegreeType degreeType = degree.getDegreeType();
 	return (degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) ? degree.getFirstCycleStudents(executionYear)
 		: degree.getAllStudents());
     }
-
+    
     private List<Student> getStudentsForYearDelegate(Degree degree, ExecutionYear executionYear) {
-	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
-		FunctionType.DELEGATE_OF_YEAR);
-	int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
-	return degree.getStudentsFromGivenCurricularYear(curricularYear, executionYear);
+    	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
+    			FunctionType.DELEGATE_OF_YEAR); 
+	    int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
+	    return degree.getStudentsFromGivenCurricularYear(curricularYear, executionYear);
     }
-
+    
     /*
      * If student has delegate role, get the curricular courses he is
      * responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType) {
-	final Degree degree = getLastActiveRegistration().getDegree();
+    	final Degree degree = getLastActiveRegistration().getDegree();
 	final PersonFunction delegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
 		delegateFunctionType);
-	if (delegateFunction != null) {
-	    final ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
-	    if (degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
-		switch (delegateFunctionType) {
-		case DELEGATE_OF_GGAE:
-		    return degree.getAllCurricularCourses(executionYear);
-		case DELEGATE_OF_INTEGRATED_MASTER_DEGREE:
-		    return degree.getAllCurricularCourses(executionYear);
-		case DELEGATE_OF_MASTER_DEGREE:
-		    return getCurricularCoursesForMasterDegreeDelegate(degree, executionYear);
-		case DELEGATE_OF_DEGREE:
-		    return getCurricularCoursesForDegreeDelegate(degree, executionYear);
-		case DELEGATE_OF_YEAR:
-		    return getCurricularCoursesForYearDelegate(degree, executionYear);
+		if(delegateFunction != null) {
+			final ExecutionYear executionYear = ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate());
+	    	if(degree.hasActiveDelegateFunctionForStudent(this, delegateFunctionType)) {
+				switch (delegateFunctionType) {
+					case  DELEGATE_OF_GGAE:
+						return degree.getAllCurricularCourses(executionYear);
+					case  DELEGATE_OF_INTEGRATED_MASTER_DEGREE:
+						return degree.getAllCurricularCourses(executionYear);
+					case DELEGATE_OF_MASTER_DEGREE:
+						return getCurricularCoursesForMasterDegreeDelegate(degree, executionYear);
+					case DELEGATE_OF_DEGREE:
+						return getCurricularCoursesForDegreeDelegate(degree, executionYear);
+					case DELEGATE_OF_YEAR:
+						return getCurricularCoursesForYearDelegate(degree, executionYear);
+				}
+	    	}
 		}
-	    }
-	}
-	return new HashSet<CurricularCourse>();
+		return new HashSet<CurricularCourse>();
     }
-
+    
     private Set<CurricularCourse> getCurricularCoursesForMasterDegreeDelegate(Degree degree, ExecutionYear executionYear) {
-	final DegreeType degreeType = degree.getDegreeType();
+    	final DegreeType degreeType = degree.getDegreeType();
 	return (degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) ? degree
 		.getSecondCycleCurricularCourses(executionYear) : degree.getAllCurricularCourses(executionYear));
     }
-
+    
     private Set<CurricularCourse> getCurricularCoursesForDegreeDelegate(Degree degree, ExecutionYear executionYear) {
-	final DegreeType degreeType = degree.getDegreeType();
+    	final DegreeType degreeType = degree.getDegreeType();
 	return (degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) ? degree
 		.getFirstCycleCurricularCourses(executionYear) : degree.getAllCurricularCourses(executionYear));
     }
-
+    
     private Set<CurricularCourse> getCurricularCoursesForYearDelegate(Degree degree, ExecutionYear executionYear) {
-	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this,
-		FunctionType.DELEGATE_OF_YEAR);
-	int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
-	return degree.getCurricularCoursesFromGivenCurricularYear(curricularYear, executionYear);
-    }
-
+    	final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(this, 
+    			FunctionType.DELEGATE_OF_YEAR); 
+	    int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
+	    return degree.getCurricularCoursesFromGivenCurricularYear(curricularYear, executionYear);
+    }    
+    
     public boolean isGrantOwner(final ExecutionYear executionYear) {
 	for (final StudentStatute studentStatute : getStudentStatutesSet()) {
 	    if (studentStatute.isGrantOwnerStatute() && studentStatute.isValidOn(executionYear)) {
 		return true;
 	    }
 	}
-
+    
 	return false;
     }
 }

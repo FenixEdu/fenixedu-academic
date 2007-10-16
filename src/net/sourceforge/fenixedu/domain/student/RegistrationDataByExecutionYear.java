@@ -29,8 +29,7 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
 	setRegistration(registration);
     }
 
-    public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements
-	    FactoryExecutor {
+    public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements FactoryExecutor {
 	public EnrolmentModelFactoryEditor(final Registration registration) {
 	    super(registration);
 	}
@@ -39,6 +38,13 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
 	    getRegistration().setEnrolmentModelForExecutionYear(getExecutionYear(), getEnrolmentModel());
 	    return null;
 	}
+    }
+
+    public void delete() {
+	removeExecutionYear();
+	removeRegistration();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
 }

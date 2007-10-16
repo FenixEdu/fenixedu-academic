@@ -228,6 +228,10 @@ public class Registration extends Registration_Base {
 	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
 	    ;
 
+	for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete())
+	    ;
+
+	
 	if (hasSenior()) {
 	    getSenior().delete();
 	}
