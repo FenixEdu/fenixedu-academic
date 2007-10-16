@@ -83,9 +83,8 @@
 			</td>
 			<td class="acenter">
 				<logic:empty name="board" property="readers">
-					<html:link module="" page="/external/announcementsRSS.do?method=simple"
-							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
-							<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
+					<html:link module="" page="/external/announcementsRSS.do?method=simple" paramId="announcementBoardId" paramName="board" paramProperty="idInternal" styleClass="tdnone">
+						<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 					</html:link>				
 				</logic:empty>
 			</td>

@@ -147,7 +147,7 @@
 						{
 						%>
 						<td class="acenter">
-							<html:link module="" action="/external/announcementsRSS" name="parameters">
+							<html:link module="" action="/external/announcementsRSS" name="parameters" styleClass="tdnone">
 									<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 							</html:link>				
 						</td>						

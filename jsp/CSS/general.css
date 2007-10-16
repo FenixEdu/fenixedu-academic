@@ -15,7 +15,7 @@ h2 { margin: 0.5em 0 0.75em 0; }
 ----------------------- */
 
 a img { border: none; }
-
+a.tdnone { border: none !important; }
 
 /* ----------------------
 ------- Show Info ------

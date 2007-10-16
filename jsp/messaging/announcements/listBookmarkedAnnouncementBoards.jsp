@@ -151,7 +151,7 @@
 						{
 						%>
 						<td class="acenter">
-							<html:link module="" action="/external/announcementsRSS" name="parameters">
+							<html:link module="" action="/external/announcementsRSS" name="parameters" styleClass="tdnone">
 									<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 							</html:link>				
 						</td>						
@@ -166,7 +166,8 @@
 						%>	
 				</tr>
 			</logic:iterate>
-		</table>		
+		</table>	
+
 	</logic:notEmpty>
 	<logic:empty name="bookmarkedAnnouncementBoards">
 		<em><bean:message key="label.messaging.no.bookmarked.announcement.boards" bundle="MESSAGING_RESOURCES"/></em>
