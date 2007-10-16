@@ -7,4 +7,11 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<p class="mvert05"><bean:message key="message.employee.welcomeScreen" /></p>
+<p class="mtop15 mbottom05">
+	<bean:message key="message.employee.welcomeScreen" />
+</p>
+
+<p class="mvert05">
+	<bean:message key="message.employee.welcomeScreen2" />
+</p>
+
