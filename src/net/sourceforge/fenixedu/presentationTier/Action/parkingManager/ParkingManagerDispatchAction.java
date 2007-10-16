@@ -345,6 +345,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (p.getGrantOwner() != null && p.getGrantOwner().hasCurrentContract()) {
 	    return "Nº: " + p.getGrantOwner().getNumber();
 	}
+	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
+		&& p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
+	}
 	return "";
     }
 

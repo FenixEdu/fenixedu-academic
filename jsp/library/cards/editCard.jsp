@@ -21,38 +21,51 @@
 <fr:form action="/cardManagement.do?method=editCard">
 	<fr:edit id="libraryCardSearch" name="libraryCardSearch" visible="false"/>	
 	
-	<logic:equal name="libraryCardDTO" property="partyClassification" value="TEACHER">
-		<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.teacher">
+	<bean:define id="personClassification" name="libraryCardDTO" property="person.partyClassification"/>
+	
+	<logic:equal name="personClassification" value="PERSON">
+		<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight thright"/>
 				<fr:property name="columnClasses" value=",,tderror1"/>
-			</fr:layout>
+			</fr:layout>			
 			<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
 		</fr:edit>
 	</logic:equal>
-	<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
-		
-		<logic:notEqual name="libraryCardDTO" property="partyClassification" value="PERSON">
-			<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
+	
+	<logic:notEqual name="personClassification" value="PERSON">
+		<logic:equal name="libraryCardDTO" property="partyClassification" value="TEACHER">
+			<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.teacher">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thright"/>
 					<fr:property name="columnClasses" value=",,tderror1"/>
-				</fr:layout>			
-				<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
-			</fr:edit>
-		</logic:notEqual>
-		
-		<logic:equal name="libraryCardDTO" property="partyClassification" value="PERSON">
-			<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.person">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thlight thright"/>
-					<fr:property name="columnClasses" value=",,tderror1"/>
-				</fr:layout>			
+				</fr:layout>
 				<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
 			</fr:edit>
 		</logic:equal>
-	</logic:notEqual>	
-	
+		<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
+			
+			<logic:notEqual name="libraryCardDTO" property="partyClassification" value="PERSON">
+				<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle2 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tderror1"/>
+					</fr:layout>			
+					<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+				</fr:edit>
+			</logic:notEqual>
+			
+			<logic:equal name="libraryCardDTO" property="partyClassification" value="PERSON">
+				<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit.person">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle2 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tderror1"/>
+					</fr:layout>			
+					<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+				</fr:edit>
+			</logic:equal>
+		</logic:notEqual>	
+	</logic:notEqual>
 	<p>
 		<html:submit><bean:message key="button.confirm" bundle="LIBRARY_RESOURCES"/></html:submit>		
 		<html:cancel property="cancel" bundle="HTMLALT_RESOURCES" altKey="submit.back">

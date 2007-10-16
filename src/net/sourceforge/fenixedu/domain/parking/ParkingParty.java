@@ -247,16 +247,16 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
-		String currenteDepartment = "";
+		String currentDepartment = "";
 		if (teacher.getCurrentWorkingDepartment() != null) {
-		    currenteDepartment = teacher.getCurrentWorkingDepartment().getName();
+		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
 		}
 		if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
 		    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
-			    + "<br/>" + currenteDepartment);
+			    + "<br/>" + currentDepartment);
 		} else {
 		    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
-			    + "<br/>" + currenteDepartment);
+			    + "<br/>" + currentDepartment);
 		}
 	    }
 	    Employee employee = person.getEmployee();
@@ -406,6 +406,10 @@ public class ParkingParty extends ParkingParty_Base {
 	    if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
 		return person.getGrantOwner().getNumber();
 	    }
+	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
+		    && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		return person.getTeacher().getTeacherNumber();
+	    }
 	}
 	return 0;
     }
@@ -474,19 +478,11 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean canRequestUnlimitedCard() {
 	List<RoleType> roles = getSubmitAsRoles();
-//	ParkingRequest parkingRequest = getFirstRequest();
 	if (getLastRequest() == null) {
 	    if (roles.contains(RoleType.GRANT_OWNER)) {
 		return Boolean.TRUE;
 	    } else if (roles.contains(RoleType.STUDENT)
 		    && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
-//		String parkingGroupName = parkingRequest.getParkingParty().getParkingGroup() != null ? parkingRequest
-//			.getParkingParty().getParkingGroup().getGroupName()
-//			: "";
-//		if (parkingRequest == null || !parkingRequest.getLimitlessAccessCard()
-//			|| parkingGroupName.equalsIgnoreCase("Limitados")) {
-//		    return true;
-//		}
 		return Boolean.TRUE;
 	    }
 	}
