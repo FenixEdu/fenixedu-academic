@@ -27,7 +27,7 @@ public class Contributor extends Contributor_Base {
     }    
 
     public void delete() {
-        if (hasAnyGuides() || hasAnyReceipts()) {
+        if (hasAnyGuides()) {
             throw new DomainException("contributor.cannot.be.deleted");
         }
         removeRootDomainObject();

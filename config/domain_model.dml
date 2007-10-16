@@ -8174,13 +8174,6 @@ relation QuestionsFromTest {
 	net.sourceforge.fenixedu.domain.onlineTests.Test playsRole test;
 }
 
-relation ReceiptContributor {
-	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
-		multiplicity *;
-	}
-}
-
 relation ReceiptContributorParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole contributorParty;
 	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole payedReceipts {

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -208,11 +207,6 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public void setContributor(Contributor contributor) {
-	throw new DomainException("error.accounting.receipt.cannot.modify.contributor");
-    }
-
-    @Override
     public void setContributorParty(Party contributorParty) {
 	throw new DomainException("error.accounting.receipt.cannot.modify.contributorParty");
     }
@@ -359,7 +353,6 @@ public class Receipt extends Receipt_Base {
 
 	deleteReceiptPrintVersions();
 
-	super.setContributor(null);
 	super.setContributorParty(null);
 	super.setEmployee(null);
 	super.getEntries().clear();
@@ -396,4 +389,8 @@ public class Receipt extends Receipt_Base {
 	return super.getNumber();
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void changeContributor(final Party contributor) {
+	super.setContributorParty(contributor);
+    }
 }
