@@ -26,21 +26,21 @@
 
 <h2><bean:message key="message.showShiftsToEnroll.title" /></h2>
 
-<div class="infoselected">		
-<bean:message key="message.showShiftsToEnroll.instructions0" />
+<div class="infoop2">		
 	<ul>
-	<li><bean:message key="message.showShiftsToEnroll.instructions1" /> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
-	<li><bean:message key="message.showShiftsToEnroll.instructions4" /></li>
+		<li><bean:message key="message.showShiftsToEnroll.instructions1"/> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
+		<li><bean:message key="message.showShiftsToEnroll.instructions4"/></li>
 	</ul>
 </div>
 
 <logic:present name="executionCourse">
-<ul>
-	<li><span>Disciplina: <strong><bean:write name="executionCourse" property="nome"/></strong></span></li>
-</ul>
+	<p class="mbottom05"><bean:message key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
+	<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
+	<p class="mtop05"><bean:message key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message key="link.student.seeAllClasses" /></html:link></p>
 </logic:present>
 
-<h2 class="redtxt"><bean:message key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h2>
+
+<h3 class="mtop15"><bean:message key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h3>
 
 <logic:present name="executionCourse">
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
@@ -54,8 +54,8 @@
 			application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoClasslessonsEndTime.toString() %>" action="add"/>
 </logic:notPresent>	 
 
-<br/>
-<p><strong><bean:message key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+
+<p class="mtop3"><strong><bean:message key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
 
 	
 <logic:present name="executionCourse">
@@ -70,7 +70,7 @@
 			application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoLessonsEndTime.toString() %>" action="remove"/>
 </logic:notPresent>
 
-<br />
+
 <ul>
-<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message key="button.finish" /></strong></html:link></li>
+	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message key="button.finish" /></strong></html:link></li>
 </ul>

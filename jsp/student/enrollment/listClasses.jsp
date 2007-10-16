@@ -8,11 +8,13 @@
 
 <logic:present name="executionCourse">
 <ul>
+	<%--
 	<li class="navheader">Visualizar:</li>
 	<li><span><bean:message key="label.curricular.course.name"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></span></li>
+	--%>
 	<li>
-	<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
-	<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message key="link.student.seeAllClasses" /></html:link>
+		<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
+		<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message key="link.student.seeAllClasses" /></html:link>
 	</li>
 </ul>
 </logic:present>

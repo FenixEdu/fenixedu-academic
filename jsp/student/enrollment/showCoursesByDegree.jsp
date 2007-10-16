@@ -9,9 +9,17 @@
 
 <logic:present name="registration" >
 
-<div class="center" >
-	<h2><bean:message key="title.student.shift.enrollment" /></h2>
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
+<div>
+	<h2 class="acenter"><bean:message key="title.student.shift.enrollment" /></h2>
+	
+	<p>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	</p>
+
+	<div class="infoop2">
+		<p><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
+	</div>
+
 	<logic:messagesPresent message="true">
 		<ul>
 			<html:messages id="messages" message="true">
@@ -22,21 +30,17 @@
 	</logic:messagesPresent>
 	
 
-	<p class="left">Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
+	<p>Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
 	
-	<ul class="left" style="margin-left: 4em">
-	<li>Alunos Externos</li>
-	<li>Melhorias de Nota</li>
-	<li>Alunos inscritos em Época Especial 2003/2004</li>
-	<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
-	<li>Alunos com processos de Equivalência em curso</li>
+	<ul style="margin-left: 4em">
+		<li>Alunos Externos</li>
+		<li>Melhorias de Nota</li>
+		<li>Alunos inscritos em Época Especial 2003/2004</li>
+		<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
+		<li>Alunos com processos de Equivalência em curso</li>
 	</ul>
 
-<div class="infoselected left">
-<p><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
-</div>
-
-	<ul class="left">
+	<ul>
 		<li><bean:message key="message.student.shiftEnrollment" /></li>
 	</ul>
 

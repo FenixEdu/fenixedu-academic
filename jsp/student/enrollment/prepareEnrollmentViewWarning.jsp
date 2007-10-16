@@ -14,7 +14,7 @@
 	</div>
 	
 	<p>
-		<span class="warning0">Reservas de turmas do 1º Ano só a partir de 24 de Setembro de 2007</span>
+		<em>Reservas de turmas do 1º Ano só a partir de 24 de Setembro de 2007</em>
 	</p>
 
 	<logic:messagesPresent message="true">
@@ -23,7 +23,7 @@
 		</html:messages>
 	</logic:messagesPresent>
 
-	<div class="infoop4" style="text-align: left">
+	<div class="infoop2" style="text-align: left">
 	<ul>
 		<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 		<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
