@@ -85,7 +85,6 @@
 
 		<logic:equal name="registration" property="degree.bolonhaDegree" value="false">
 
-<%-- 
 			<p class="mtop1 mbottom1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<bean:define id="url">
@@ -99,8 +98,7 @@
 					<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</p>
---%>
-
+<%--
 			<script language="JavaScript">	
 			function check(e,v){
 				if (e.className == "dnone")
@@ -178,7 +176,7 @@
 				check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
 				document.getElementById('instructionsButton').className="dinline";
 			</script>
-
+--%>
 		</logic:equal>
 
 	</logic:equal>
