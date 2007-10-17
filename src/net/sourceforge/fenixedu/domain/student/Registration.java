@@ -2404,7 +2404,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isEnrolmentByStudentInShiftsAllowed() {
-        return isActive() && !isSecondCycleInternalCandidacyIngression();
+        return isActive();
     }
 
 }
