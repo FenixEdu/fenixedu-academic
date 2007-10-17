@@ -9,7 +9,7 @@
 
 	<h:dataTable value="#{listStudentThesis.masterDegreeThesisDataVersions}" var="masterDegreeThesisDataVersion" cellpadding="0">
 		<h:column>
-			<h:panelGrid columns="1" styleClass="solidBorderClass" width="100%">
+			<h:panelGrid columns="1" styleClass="tstyle1" width="100%">
 				<h:panelGrid columns="3" width="100%">
 					<h:outputText value="#{bundle['label.coordinator.studentNumber']}" styleClass="bold" />
 					<h:outputText value="#{bundle['label.coordinator.studentName']}" styleClass="bold" />

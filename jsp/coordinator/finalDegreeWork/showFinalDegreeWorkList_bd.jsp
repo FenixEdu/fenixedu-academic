@@ -6,31 +6,32 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
-<br/>
-
 <h2>
-	<bean:message key="message.final.degree.work.administration"/>
-	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
+	<bean:message key="title.final.degree.work.administration"/>
 </h2>	
 
-<br />
-<br />
+<h3>
+	<bean:message key="message.final.degree.work.administration"/>
+	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
+</h3>	
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
-	<strong>
-		<bean:message key="message.final.degree.work.other.execution.degrees"/>
-	</strong>
-	<br/>
+	<p>
+		<strong>
+			<bean:message key="message.final.degree.work.other.execution.degrees"/>
+		</strong>
+	</p>
+
 	<table>
 		<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
 			<logic:notEqual name="currentExecutionDegree" property="idInternal" value="<%= executionDegreeOID.toString() %>">
 				<tr>
-					<td class="listClasses">
+					<td>
 						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
 					</td>
 <!--
-					<td class="listClasses">
+					<td>
 						<html:form action="/manageFinalDegreeWork">
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeExecutionDegree"/>
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
@@ -55,136 +56,140 @@
 			<bean:define id="executionDegrees" name="executionDegree" property="executionYear.executionDegreesSortedByDegreeName"/>
 
 			<tr>
-				<td class="listClasses">
+				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.otherExecutionDegreeID" property="otherExecutionDegreeID">
 						<html:option value=""/>
 						<html:options collection="executionDegrees" property="idInternal" labelProperty="degreeCurricularPlan.presentationName"/>
 					</html:select>
 				</td>
-				<td class="listClasses">
+				<td>
 					<html:submit><bean:message key="label.add"/></html:submit>
 				</td>
 			</tr>
 		</html:form>
 -->
 	</table>
-	<br />
-	<br />
 </logic:notEqual>
 </logic:present>
 
-<span class="error"><!-- Error messages go here --><html:errors /><br /><br /></span>
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <logic:present name="sucessfulSetOfDegreeProposalPeriod">
-	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
+	<p>
+		<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
+	</p>
 </logic:present>
 <logic:present name="sucessfulSetOfDegreeCandidacyPeriod">
-	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
+	<p>
+		<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
+	</p>
 </logic:present>
 
-<table width="90%">
-<tr>
-<td align="center">
+
 <html:form action="/manageFinalDegreeWork">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setFinalDegreeProposalPeriod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
-	<strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong>
-	<br />
-	<table>
+
+	<p class="mtop2 mbottom05"><strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong></p>
+
+	<table class="tstyle4 thlight mtop05">
 		<tr>
-			<th class="listClasses-header">
+			<th>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkProposal.ProposalPeriod.date"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkProposal.ProposalPeriod.hour"/>
 			</th>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkProposal.setProposalPeriod.start"/>
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startOfProposalPeriodDate" property="startOfProposalPeriodDate" size="14"/>
 			</td>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startOfProposalPeriodHour" property="startOfProposalPeriodHour" size="10"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkProposal.setProposalPeriod.end"/>
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endOfProposalPeriodDate" property="endOfProposalPeriodDate" size="14"/>
 			</td>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endOfProposalPeriodHour" property="endOfProposalPeriodHour" size="10"/>
 			</td>
 		</tr>
 	</table>
-	<br />
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="finalDegreeWorkProposal.setProposalPeriod.button"/>
-	</html:submit>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="finalDegreeWorkProposal.setProposalPeriod.button"/>
+		</html:submit>
+	</p>
 </html:form>
-</td>
-<td align="center">
+
+
+
 <html:form action="/setFinalDegreeWorkCandidacyPeriod">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setFinalDegreeCandidacyPeriod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
-	<strong><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header"/></strong>
-	<br />
-	<table>
+	<p class="mtop2 mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header"/></strong></p>
+
+	<table class="tstyle4 thlight mtop05">
 		<tr>
-			<th class="listClasses-header">
+			<th>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkCandidacy.CandidacyPeriod.date"/>
 			</th>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkCandidacy.CandidacyPeriod.hour"/>
 			</th>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.start"/>
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startOfCandidacyPeriodDate" property="startOfCandidacyPeriodDate" size="14"/>
 			</td>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startOfCandidacyPeriodHour" property="startOfCandidacyPeriodHour" size="10"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
+			<th>
 				<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.end"/>
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endOfCandidacyPeriodDate" property="endOfCandidacyPeriodDate" size="14"/>
 			</td>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endOfCandidacyPeriodHour" property="endOfCandidacyPeriodHour" size="10"/>
 			</td>
 		</tr>
 	</table>
-	<br />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.button"/>
-	</html:submit>
-</html:form>
-</td>
-</tr>
-</table>
 
-<br />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.button"/>
+		</html:submit>
+	</p>
+</html:form>
+
 
 <html:form action="/setFinalDegreeWorkCandidacyRequirements">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setFinalDegreeCandidacyRequirements"/>
@@ -193,75 +198,75 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
-		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
+		<p><span class="sucessfulOperarion"><bean:write name="msg"/></span></p>
 	</html:messages>
 
-	<strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong>
-	<br />
-	<table>
+	<p class="mtop2 mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong></p>
+
+	<table class="tstyle4 thlight thright mtop05">
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumNumberOfCompletedCourses" property="minimumNumberOfCompletedCourses" size="2"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumCurricularYearToCountCompletedCourses"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCurricularYearToCountCompletedCourses" property="maximumCurricularYearToCountCompletedCourses" size="2"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCurricularYear" property="minimumCompletedCurricularYear" size="2"/>
 			</td>
 		</tr>
 <!--
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumNumberOfStudents" property="minimumNumberOfStudents" size="2"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfStudents"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfStudents"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfStudents" property="maximumNumberOfStudents" size="2"/>
 			</td>
 		</tr>
 -->
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfProposalCandidaciesPerGroup" property="maximumNumberOfProposalCandidaciesPerGroup" size="2"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.attributionByTeachers" property="attributionByTeachers"/>
 			</td>
 		</tr>
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
+			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>:
 			</th>
-			<td class="listClasses">
+			<td>
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.allowSimultaneousCoorientationAndCompanion" property="allowSimultaneousCoorientationAndCompanion"/>
 			</td>
 		</tr>
@@ -276,41 +281,44 @@
 	</table>
 </html:form>
 
-<br />
-<br />
+<p>
+	<html:link page="/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+		Listagem em excel
+	</html:link>
+</p>
 
-<html:link page="/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
-	Listagem em excel
-</html:link>
-<br />
-<html:link page="/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
-	Listagem para imprimir
-</html:link>
+<p>
+	<html:link page="/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+		Listagem para imprimir
+	</html:link>
+</p>
 
-<br />
-<br />
 
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createNewFinalDegreeWorkProposal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
-
-	<html:submit>
-		<bean:message key="finalDegreeWorkProposal.create.new.button"/>
-	</html:submit>
+	<p>
+		<html:submit>
+			<bean:message key="finalDegreeWorkProposal.create.new.button"/>
+		</html:submit>
+	</p>
 </html:form>
+
 <html:form action="/manageFinalDegreeWork">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="publishAprovedProposals"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
-
-	<html:submit>
-		<bean:message key="finalDegreeWorkProposal.publishAproved.button"/>
-	</html:submit>
+	<p>
+		<html:submit>
+			<bean:message key="finalDegreeWorkProposal.publishAproved.button"/>
+		</html:submit>
+	</p>
 </html:form>
-<br />
+
+
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
 	<html:form action="/manageFinalDegreeWork">
@@ -320,51 +328,51 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
-		<table>
+		<table class="tstyle4 thlight">
 			<tr>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.number"/>
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.title"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 					<bean:message key="finalDegreeWorkProposal.status"/>
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 				</th>
-				<th class="listClasses-header" rowspan="2">
+				<th rowspan="2">
 				</th>
 			</tr>
 			<tr>
-		        <th class="listClasses-header">
+		        <th>
 		        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
 	    	    </th>
 			</tr>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
 				<tr>
-					<th class="listClasses-header" rowspan="2">
+					<th rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.proposal"/>
 					</th>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedProposals" property="selectedProposals">
 							<bean:write name="finalDegreeWorkProposalHeader" property="idInternal"/>
 						</html:multibox>
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID 
 			        			+ "&amp;executionDegreeOID="
 								+ executionDegreeOID.toString()
@@ -372,24 +380,24 @@
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="finalDegreeWorkProposalHeader" property="orientatorName"/> 
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="companyLink"/>
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="status">
 							<bean:write name="finalDegreeWorkProposalHeader" property="status.key"/> 
 						</logic:present>
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 					</td>
-					<td class="listClasses" rowspan="2">
+					<td rowspan="2">
 					</td>
 				</tr>
 				<tr>
-					<td class="listClasses">
+					<td>
 						<bean:write name="finalDegreeWorkProposalHeader" property="coorientatorName"/> 
 					</td>
 				</tr>
@@ -575,18 +583,25 @@
 			</logic:iterate>
 		</table>
 
-	<html:submit>
-		<bean:message key="finalDegreeWorkProposal.aproveSelectedProposals.button"/>
-	</html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='this.form.method.value=\'publishSelectedProposals\';this.form.submit();'>
-		<bean:message key="finalDegreeWorkProposal.publishSelectedProposals.button"/>
-	</html:submit>
+		<p>
+			<html:submit>
+				<bean:message key="finalDegreeWorkProposal.aproveSelectedProposals.button"/>
+			</html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='this.form.method.value=\'publishSelectedProposals\';this.form.submit();'>
+				<bean:message key="finalDegreeWorkProposal.publishSelectedProposals.button"/>
+			</html:submit>
+		</p>
 	</html:form>
 	</logic:greaterEqual>
 	<logic:lessThan name="finalDegreeWorkProposalHeaders" value="1">
-		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		<p>
+			<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		</p>
 	</logic:lessThan>
 </logic:present>
+
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
-	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+	<p>
+		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+	</p>
 </logic:notPresent>

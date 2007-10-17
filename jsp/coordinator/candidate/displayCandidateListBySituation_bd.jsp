@@ -4,14 +4,20 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<h2><bean:message key="link.coordinator.approveCandidates" /></h2>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 	<bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="request" />
 	<bean:define id="executionDegreeID" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
+
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
-	<br />
 </logic:present>
+
 	<p><bean:message key="label.numerusClausus" /> <span class="emphasis"><bean:write name="numerusClausus" /></span></p>
     <logic:present name="candidateList">
             <bean:message key="title.masterDegree.administrativeOffice.listCandidates" />

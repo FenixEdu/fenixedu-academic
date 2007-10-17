@@ -9,33 +9,33 @@
 				<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 			</logic:iterate>
 			<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-	<table>
+	<table class="tstyle4">
 		<tr>
-			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
-			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
-			<th class="listClasses-header"><bean:message key="label.curricularCourse"/></th>
-			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
+			<th><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
+			<th><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
+			<th><bean:message key="label.curricularCourse"/></th>
+			<th><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
 		</tr>
 			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope">
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<tr>
-						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
-						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
-						<th class="listClasses-header"><bean:message key="label.curricularCourse"/></th>
-						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
+						<th><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
+						<th><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
+						<th><bean:message key="label.curricularCourse"/></th>
+						<th><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>
 				<tr>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
-					<td class="listClasses" style="text-align:left">
+					<td class="acenter"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
+					<td class="acenter"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
+					<td style="text-align:left">
 					<bean:define id="curricularCourseCode" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
 						<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;infoCurricularCourseCode=" + curricularCourseCode + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") %>">
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name"/>
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						&nbsp;<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
 					</td>
 				</tr>

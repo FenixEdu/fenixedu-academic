@@ -5,10 +5,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.PrintAllCandidatesListDispatchAction" %>
-<h2>Imprimir lista de todos os candidatos</h2>
-<br/>
-<p>Esta opção permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
-<p>Mostrar sï¿½ : 
+
+
+<h2>Imprimir Lista de Candidatos</h2>
+
+
+<p class="mvert15">Esta opção permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
+
 <!-- first option-->
 <logic:notPresent name="filterNextSelectOptions">
 <html:form action="/printAllCandidatesList.do?method=prepareSecondFilter" method="post">

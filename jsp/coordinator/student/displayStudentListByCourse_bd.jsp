@@ -1,4 +1,4 @@
-<%@ page language="java" %>
+	<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -6,19 +6,30 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
  <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
+
+<h2><bean:message key="link.coordinator.studentListByCourse.title" /></h2>
+
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
-	<br />
 </logic:present>
-  <span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+	
   <bean:define id="enrolmentList" name="enrolment_list" scope="request" />
   <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
   <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
-  <p>
-    <h3><%= ((List) enrolmentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
-    <% if (((List) enrolmentList).size() != 0) { %>
-        </p>
-        <bean:message key="label.masterDegree.chooseOne"/><br/><br/><br/>
+	<p>
+		<strong>
+			<%= ((List) enrolmentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/>
+			<% if (((List) enrolmentList).size() != 0) { %>
+		</strong>
+	</p>
+	
+	<p>
+		<bean:message key="label.masterDegree.chooseOne"/>
+	</p>
         
         <logic:equal name="viewPhoto" value="true">
 	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
@@ -31,14 +42,14 @@
         	</html:link>
         </logic:notEqual>
     
-        <table>
+        <table class="tstyle4">
         	<tr>
         		<logic:equal name="viewPhoto" value="true">
-					<th class="listClasses-header"><bean:message key="label.photo" /></th>
+					<th><bean:message key="label.photo" /></th>
 			 	</logic:equal>
-    			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
-    			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
-    			<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.mark" /></th>
+    			<th><bean:message key="label.candidate.number" /></th>
+    			<th><bean:message key="label.person.name" /></th>
+    			<th><bean:message key="label.masterDegree.administrativeOffice.mark" /></th>
     			
     		</tr>
      	<logic:iterate id="enrolment" name="enrolmentList">
@@ -50,20 +61,20 @@
         	</bean:define>
         <tr>
         	<logic:equal name="viewPhoto" value="true">
-				<th class="listClasses-header">
+				<th>
 					<bean:define id="personID" name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.idInternal"/>
 					<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 			   </th>
 			</logic:equal>
-        	<td class="listClasses">
+        	<td>
         	<html:link page='<%= pageContext.findAttribute("studentLink").toString() %>'>
     			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
     		</html:link>
             </td>
-            <td class="listClasses">
+            <td>
     	        <bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
     	    </td>
-            <td class="listClasses">
+            <td>
     	       	<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 					<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 				</logic:notEqual>

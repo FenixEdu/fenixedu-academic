@@ -8,7 +8,11 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+
 <jsp:include page="../context.jsp"/>
+
+<h2><bean:message key="label.action.visualize"/></h2>
+
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <p>
     <bean:define id="candidateList" name="masterDegreeCandidateList" scope="request" />
@@ -20,28 +24,28 @@
     <span class="emphasis"><%= ((List) candidateList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
     <% if (((List) candidateList).size() != 0) { %>
 </p>    
-	    <table>
+	    <table class="tstyle4">
     		<tr>
-	    		<th class="listClasses-header"><bean:message key="label.name" /></th>
-				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.specialization" /></th>
-				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></th>
-				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></th>
+	    		<th><bean:message key="label.name" /></th>
+				<th><bean:message key="label.masterDegree.administrativeOffice.specialization" /></th>
+				<th><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></th>
+				<th><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></th>
 			</tr>
     		<logic:iterate id="candidate" name="candidateList" >
     			<bean:define id="candidateLink">
     				<bean:write name="link"/>&candidateID=<bean:write name="candidate" property="idInternal"/>
     			</bean:define>
     			<tr>
-    				<td class="listClasses">
+    				<td>
       				    <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
     						<bean:write name="candidate" property="infoPerson.nome" />
     					</html:link>
     				</td>
-    				<td class="listClasses"><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES" /></td>
-    				<td class="listClasses"><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
+    				<td><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES" /></td>
+    				<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
 		            <logic:present name="candidate" property="infoCandidateSituation.date" >
 	    	            <bean:define id="date" name="candidate" property="infoCandidateSituation.date" />
-						<td class="listClasses"><%= Data.format2DayMonthYear((Date) date) %></td>   
+						<td><%= Data.format2DayMonthYear((Date) date) %></td>   
 					</logic:present>
     			</tr>
     		</logic:iterate>

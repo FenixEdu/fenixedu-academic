@@ -4,22 +4,27 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="title.studentListByCourse" /></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<br />
-<br />
+
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
 <logic:present name="curricularCourses">
-	<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />
-	<br /><br />
+	<p>
+		<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />:
+	</p>
+
 	<bean:define id="path" value="/listStudentsByCourse" />
-	<table>
+	<ul>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses">
 		   	<bean:define id="courseID" name="curricularCourseElem" property="idInternal"/>
 		   	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-			<html:link page="<%= path + ".do?method=chooseCurricularCourseByID&amp;courseID=" + courseID + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-				<bean:write name="curricularCourseElem" property="name"/>
-			</html:link>
-			<br />
+		   	<li>
+				<html:link page="<%= path + ".do?method=chooseCurricularCourseByID&amp;courseID=" + courseID + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:write name="curricularCourseElem" property="name"/>
+				</html:link>
+			</li>
 		</logic:iterate>
-	</table>
+	</ul>
 </logic:present>
