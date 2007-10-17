@@ -14,6 +14,8 @@ public class EditRequest extends HttpServletRequestWrapper {
 
     private List<IViewState> viewStates;
 
+    private String publicModuleName = "publico";
+    
     public EditRequest(HttpServletRequest request) {
 	super(request);
     }
@@ -35,20 +37,24 @@ public class EditRequest extends HttpServletRequestWrapper {
 		this.viewStates = ViewState.decodeListFromBase64(getParameter(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME));
 	    }
 	}
-
+	
+	String contextPath = ((HttpServletRequest)getRequest()).getContextPath();
+	String requestURI = ((HttpServletRequest)getRequest()).getRequestURI().toString();	
+	
 	UserIdentity userIdentity = UserIdentityFactory.create(this);
 	for (IViewState viewState : this.viewStates) {
 	    viewState.setRequest(this);
 
-	    checkUserIdentity(viewState, userIdentity);
+	    checkUserIdentity(viewState, userIdentity, requestURI, contextPath);
 	}
 
 	return this.viewStates;
     }
 
-    private void checkUserIdentity(IViewState viewState, UserIdentity userIdentity) {
-        if (! viewState.getUser().equals(userIdentity)) {
-            throw new RuntimeException("viewstate.user.changed");
-        }
+    private void checkUserIdentity(IViewState viewState, UserIdentity userIdentity, String requestURI, String contextPath) {	
+	if(!requestURI.startsWith(contextPath + "/" + publicModuleName + "/")
+		&& !viewState.getUser().equals(userIdentity)) {
+	    throw new RuntimeException("viewstate.user.changed");
+	}
     }        
 }
