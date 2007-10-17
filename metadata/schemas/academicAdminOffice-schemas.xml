@@ -500,8 +500,8 @@
 			<property name="validationPeriod" value="pastOrToday" />
 		</validator>
 	</slot>		
-	<slot name="finalAverage" key="final.degree.average" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
-		<property name="size" value="4" />
+	<slot name="finalAverage" key="final.degree.average" read-only="true" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+		<property name="size" value="4"/>
 		<property name="maxLength" value="2" />
 	</slot>		
     <slot name="remarks" layout="longText">
@@ -1312,6 +1312,7 @@
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>	
 </schema>
+
 
 <schema name="DegreeCurricularPlan.view" 
 	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >
