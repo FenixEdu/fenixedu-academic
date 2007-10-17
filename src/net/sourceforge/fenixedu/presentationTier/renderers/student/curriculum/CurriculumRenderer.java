@@ -51,6 +51,16 @@ public class CurriculumRenderer extends InputRenderer {
 	    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
 
     private String selectionName;
+    
+    private boolean visibleCurricularYearEntries = true;
+    
+    public boolean isVisibleCurricularYearEntries() {
+	return visibleCurricularYearEntries;
+    }
+
+    public void setVisibleCurricularYearEntries(boolean visibleCurricularYearEntries) {
+	this.visibleCurricularYearEntries = visibleCurricularYearEntries;
+    }
 
     public CurriculumRenderer() {
 	super();
@@ -207,14 +217,16 @@ public class CurriculumRenderer extends InputRenderer {
 	    generateAverageRows(averageEntriesTable);
 	    generateAverageSums(averageEntriesTable);
 
-	    final HtmlContainer curricularYearContainer = new HtmlBlockContainer();
-	    container.addChild(curricularYearContainer);
-	    final HtmlTable curricularYearTable = new HtmlTable();
-	    curricularYearContainer.addChild(curricularYearTable);
-	    curricularYearTable.setClasses(getTableClass());
-	    generateCurricularYearRows(curricularYearTable);
-	    generateCurricularYearSums(curricularYearTable);
-
+	    if (isVisibleCurricularYearEntries()) {
+		final HtmlContainer curricularYearContainer = new HtmlBlockContainer();
+		container.addChild(curricularYearContainer);
+		final HtmlTable curricularYearTable = new HtmlTable();
+		curricularYearContainer.addChild(curricularYearTable);
+		curricularYearTable.setClasses(getTableClass());
+		generateCurricularYearRows(curricularYearTable);
+		generateCurricularYearSums(curricularYearTable);
+	    }
+	    
 	    return container;
 	}
 	
