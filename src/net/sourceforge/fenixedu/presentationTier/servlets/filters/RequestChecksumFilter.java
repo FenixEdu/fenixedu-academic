@@ -330,22 +330,50 @@ public class RequestChecksumFilter implements Filter {
 	    return i;
 	}
 
-	private int findHrefBodyStart(final StringBuilder source, final int offset, int limit) {
-	    final int indexOfHref = source.indexOf("href=", offset);
+	private int findBodyStart(final StringBuilder source, final String attribute, final int offset, int limit) {
+	    final int indexOfHref = source.indexOf(attribute, offset);
 	    if (indexOfHref >= limit) {
 		return -1;
 	    }
-	    final int nextChar = indexOfHref + 5;
-	    return source.charAt(nextChar) == '"' || source.charAt(nextChar) == '\'' ? nextChar + 1 : nextChar;
+	    final int nextCharPos = indexOfHref + attribute.length();
+	    final int indexOfNextDoubleQuote = source.indexOf("\"", nextCharPos);
+	    final int indexOfNextQuote = source.indexOf("'", nextCharPos);
+	    final int indexOfNextVisibleChar = findVisibleChar(source, nextCharPos);
+
+	    if (indexOfNextDoubleQuote >= 0
+		    && (indexOfNextDoubleQuote < indexOfNextQuote || indexOfNextQuote < 0)
+		    && indexOfNextDoubleQuote <= indexOfNextVisibleChar) {
+		return indexOfNextDoubleQuote + 1;
+	    }
+	    if (indexOfNextQuote >= 0
+		    && (indexOfNextQuote < indexOfNextDoubleQuote || indexOfNextDoubleQuote < 0)
+		    && indexOfNextQuote <= indexOfNextVisibleChar) {
+		return indexOfNextQuote + 1;
+	    }
+	    if ((indexOfNextVisibleChar < indexOfNextDoubleQuote || indexOfNextDoubleQuote < 0)
+		    && (indexOfNextVisibleChar < indexOfNextQuote || indexOfNextQuote < 0)){
+		return indexOfNextVisibleChar;
+	    }
+
+	    return nextCharPos;
+	}
+
+	private int findVisibleChar(final StringBuilder source, final int offset) {
+	    for (int i = offset; i < source.length(); i++) {
+		final char c = source.charAt(i);
+		if (c != ' ' && c != '\t' && c != '\n') {
+		    return i;
+		}
+	    }
+	    return Integer.MAX_VALUE;
+	}
+
+	private int findHrefBodyStart(final StringBuilder source, final int offset, int limit) {
+	    return findBodyStart(source, "href=", offset, limit);
 	}
 
 	private int findSrcBodyStart(final StringBuilder source, final int offset, int limit) {
-	    final int indexOfHref = source.indexOf("src=", offset);
-	    if (indexOfHref >= limit) {
-		return -1;
-	    }
-	    final int nextChar = indexOfHref + 5;
-	    return source.charAt(nextChar) == '"' || source.charAt(nextChar) == '\'' ? nextChar + 1 : nextChar;
+	    return findBodyStart(source, "src=", offset, limit);
 	}
 
     }
