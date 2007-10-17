@@ -63,28 +63,23 @@
 </logic:notPresent>
 
 
-<h3 class="mbottom025"><bean:message key="label.degreeCurricularPlan.student" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom025"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop025">
 	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<fr:form action="<%= "/registration.do?method=prepareRegistrationConclusionProcess&registrationID=" + registration.getIdInternal().toString() %>">
-		<fr:edit id="tucha" name="registration" property="lastStudentCurricularPlan">
-			<fr:layout>
-					<fr:property name="organizedBy" value="<%=OrganizationType.EXECUTION_YEARS.name()%>" />
-					<fr:property name="enrolmentStateFilter" value="<%=EnrolmentStateFilterType.APPROVED_OR_ENROLED.name()%>" />
-					<fr:property name="viewType" value="<%=ViewType.ALL.name()%>" />
-					<fr:property name="detailed" value="<%=Boolean.TRUE.toString()%>" />
-			</fr:layout>
-		</fr:edit>
-	</fr:form>
+	<fr:view name="registration" property="curriculum">
+		<fr:layout>
+			<fr:property name="visibleCurricularYearEntries" value="false" />
+		</fr:layout>
+	</fr:view>
 </p>
 
 <h3 class="mbottom025"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop025">
 	<p>
-		A Data de Conclusão sugerida para esta Matrícula é <fr:view name="registration" property="lastApprovementDate"/>
+		<bean:message key="conclusion.date.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="lastApprovementDate"/>
 	</p>
 	<p>
-		A Média Final da Matrícula sugerida para esta Matrícula é <fr:view name="registration" property="average" type="java.lang.Integer"/> valores
+		<bean:message key="final.average.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="average" type="java.lang.Integer"/> valores
 	</p>
 	<fr:edit id="mata" name="registrationStateBean" schema="student.manageRegistrationState.conclusionProcess" action="/manageRegistrationState.do?method=createNewState">
 		<fr:layout name="tabular">
