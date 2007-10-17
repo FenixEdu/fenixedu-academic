@@ -43,7 +43,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().hasAnyApprovedCurriculumLines()) {
+	    if (!getRegistration().getCurriculum().hasAnyEntries()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 
