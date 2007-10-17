@@ -353,7 +353,7 @@ application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
 #                    This latter implementation stores the inverse operations
 #                    performed on the database, so that the database state can
 #                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
+#                    the prior implementation must be used!!! Using this 
 #                    latter implementation in production is a major security
 #                    hole!
 #   roleback.filename: The filename to where the 
@@ -363,7 +363,7 @@ application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
 #                      database state, the sql instructions should be executed
 #                      starting from the end of the file.
 #
-JdbcAccessClass=net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
+JdbcAccessClass=org.apache.ojb.broker.accesslayer.JdbcAccessImpl
 roleback.filename=/tmp/roleback.sql
 #
 #
