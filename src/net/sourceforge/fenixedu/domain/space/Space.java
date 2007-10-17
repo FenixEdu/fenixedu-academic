@@ -246,15 +246,11 @@ public abstract class Space extends Space_Base {
     }
     
     public Set<? extends Space> getActiveContainedSpacesByType(Class<? extends Space> clazz){
-	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
-	List<Space> containedSpaces = getContainedSpaces();
-	for (Space space : containedSpaces) {
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);	
+	for (Space space : getContainedSpaces()) {
 	    if(space.getClass().equals(clazz) && space.isActive()) {
 		result.add(space);
 	    }
-	}
-	for (Space subSpace : containedSpaces) {
-	    result.addAll(subSpace.getActiveContainedSpacesByType(clazz));
 	}
 	return result;
     }
