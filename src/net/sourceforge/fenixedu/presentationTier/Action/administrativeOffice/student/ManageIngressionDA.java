@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationIngressionFactorExecutor.RegistrationIngressionEditor;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -49,7 +50,15 @@ public class ManageIngressionDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	executeFactoryMethod();
+	try {
+	    executeFactoryMethod();
+	} catch (DomainException e) {
+	    request.setAttribute("ingressionBean", getRenderedObject());
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, e.getKey());
+	    return mapping.findForward("showEditIngression");
+	}
+	
 	addActionMessage(request, "message.registration.ingression.edit.success");
 	request.setAttribute("registrationId", ((RegistrationIngressionEditor) getRenderedObject())
 		.getRegistration().getIdInternal());
