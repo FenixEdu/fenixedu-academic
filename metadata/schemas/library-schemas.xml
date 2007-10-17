@@ -259,9 +259,9 @@
 </schema>
 
 <schema name="library.card.create.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
-	 <slot name="person" layout="autoComplete" key="label.card.name">
+	 <slot name="personName" layout="autoComplete" key="label.card.name">
 		<property name="size" value="80"/>
-		<property name="labelField" value="text"/>		
+		<property name="labelField" value="name"/>		
 		<property name="rawSlotName" value="name"/>		
 		<property name="format" value="${text}"/>
 		<property name="indicatorShown" value="true"/>		

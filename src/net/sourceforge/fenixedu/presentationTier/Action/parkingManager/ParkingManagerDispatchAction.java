@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -437,6 +439,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    parkingParty = parkingPartyBean.getParkingParty();
 	    request.setAttribute("parkingPartyBean", parkingPartyBean);
 	    request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+	    ((DynaActionForm)actionForm).set("addVehicle", "no");
 	    RenderUtils.invalidateViewState();
 	} else {
 	    Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
@@ -446,7 +449,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	if (parkingParty.getFirstCarMake() != null) {
+	if (parkingParty.hasAnyVehicles()) {
 	    if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) {
 		dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in case of error validation
 	    } else {
@@ -489,6 +492,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	boolean vehicleDataCorrect = true;
 	boolean deleteAllVehicles = true;
+	Set<String> vehiclePlates = new HashSet<String>(); 
 	for (final Iterator<VehicleBean> iter = parkingPartyBean.getVehicles().iterator(); iter
 		.hasNext();) {
 	    VehicleBean vehicle = iter.next();
@@ -502,6 +506,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    } else if (vehicle.getVehicle() == null) {
 		iter.remove();
 		parkingPartyBean.getVehicles().remove(vehicle);
+	    }
+	    if(!vehicle.getDeleteVehicle() && !vehiclePlates.add(vehicle.getVehiclePlateNumber())) {
+		saveErrorMessage(request, "repeatedPlates", "error.parkingParty.vehicle.repeatedPlates");
+		    return prepareEditParkingParty(mapping, actionForm, request, response);
 	    }
 	}
 	if (!vehicleDataCorrect) {

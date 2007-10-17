@@ -34,6 +34,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
     private final static int maxUserNameLength = 45;
@@ -50,17 +52,19 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	LibraryCardSearch libraryCardSearch = (LibraryCardSearch) getRenderedObject("libraryCardSearch");
 
 	if (libraryCardSearch == null) {
-	    libraryCardSearch = (LibraryCardSearch) getRenderedObject();
+	    PartyClassification partyClassification = null;
+	    if (request.getAttribute("newUser") == null) {
+		libraryCardSearch = (LibraryCardSearch) getRenderedObject();
+		partyClassification = PartyClassification.TEACHER;
+	    } else {
+		partyClassification = PartyClassification.PERSON;
+	    }
 	    if (libraryCardSearch == null) {
 		libraryCardSearch = new LibraryCardSearch();
-		libraryCardSearch.setPartyClassification(PartyClassification.TEACHER);
+		libraryCardSearch.setPartyClassification(partyClassification);
 	    }
 	}
 
-	//        if (libraryCardSearch.getPartyClassification().equals(PartyClassification.PERSON)
-	//                && StringUtils.isEmpty(libraryCardSearch.getUserName())) {
-	//            addMessage(request, "message.card.searchPerson.emptyUserName");
-	//        }
 	libraryCardSearch.doSearch();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("libraryCardSearch", libraryCardSearch);
@@ -129,13 +133,13 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardToCreate");
 
-	if(!libraryCardDTO.getUnlimitedCard() && libraryCardDTO.getValidUntil() == null) {
+	if (!libraryCardDTO.getUnlimitedCard() && libraryCardDTO.getValidUntil() == null) {
 	    setError(request, "error.card.date.canNotBeNull");
 	    request.setAttribute("presentDate", "presentDate");
 	    request.setAttribute("libraryCardDTO", libraryCardDTO);
 	    return mapping.findForward("create-card");
 	}
-	
+
 	boolean validationError = validateNamesMaxLength(request, libraryCardDTO);
 	if (validationError) {
 	    request.setAttribute("libraryCardDTO", libraryCardDTO);
@@ -166,6 +170,9 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
 		addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson()
 			.getName().length(), maxUserNameLength);
+	    }
+	    if (libraryCardDTO.getPartyClassification().equals(PartyClassification.TEACHER)) {
+		libraryCardDTO.setChosenUnitNameToEdit();
 	    }
 	    request.setAttribute("libraryCardDTO", libraryCardDTO);
 	    request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
@@ -377,7 +384,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	if (isCancelled(request)) {
+	if (RenderUtils.getViewState().isCanceled()) {
+	    request.setAttribute("newUser", "newUser");
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
@@ -385,9 +393,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	if (externalPersonBean == null) {
 	    externalPersonBean = (ExternalPersonBean) request.getAttribute("externalPersonBean");
 	}
+
 	if (externalPersonBean.getPerson() != null
 		&& !externalPersonBean.getName().equalsIgnoreCase(
-			externalPersonBean.getPerson().getName())) {
+			StringNormalizer.normalize(externalPersonBean.getPerson().getName()))) {
 	    externalPersonBean.setPerson(null);
 	    RenderUtils.invalidateViewState();
 	}
@@ -457,13 +466,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    addMessage(request, "message.card.userName.tooLong", libraryCard.getUserName().length(),
 		    maxUserNameLength);
 	}
-	
-	PartyClassification partyClassification = libraryCard.getPerson().getPartyClassification();
+
 	Integer number = !StringUtils.isEmpty(request.getParameter("number")) ? Integer.valueOf(request
 		.getParameter("number")) : null;
 	String name = request.getParameter("name");
-	request.setAttribute("libraryCardSearch", new LibraryCardSearch(partyClassification, name,
-		number));
+	request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCard
+		.getPartyClassification(), name, number));
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	return mapping.findForward("show-details");
     }
@@ -476,12 +484,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName()
 		    .length(), maxUserNameLength);
 	}
-	
+
 	if (!libraryCardDTO.getUnlimitedCard()) {
 	    request.setAttribute("presentDate", "presentDate");
 	} else {
 	    libraryCardDTO.setValidUntil(null);
-	}	
+	}
 	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
 	request.setAttribute("libraryCardDTO", libraryCardDTO);
 	RenderUtils.invalidateViewState();
@@ -546,7 +554,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	actionMessages.add("error", new ActionMessage(errorMsg));
 	saveMessages(request, actionMessages);
     }
-    
+
     private void setError(HttpServletRequest request, String errorMsg, int parameter1, int parameter2) {
 	ActionMessages actionMessages = getMessages(request);
 	actionMessages.add("error", new ActionMessage(errorMsg, parameter1, parameter2));

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.library;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.YearMonthDay;
@@ -301,5 +303,14 @@ public class LibraryCardDTO implements Serializable {
 
     public String getNumberToPDF() {
 	return getNumber() != 0 ? getNumber().toString() : "";
+    }
+
+    public void setChosenUnitNameToEdit() {
+	List<String> unitsNames = (List<String>) new LibraryCardUnitsProvider().provide(null, null);
+	for (String unitName : unitsNames) {
+	    if (unitName.contains(getChosenUnitName())) {
+		this.chosenUnitName = unitName;
+	    }
+	}
     }
 }

@@ -43,6 +43,7 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
         if (parkingParty.getParty().isPerson()) {
             setEmail(((Person) parkingParty.getParty()).getEmail());
         }
+        setCardAlwaysValid(parkingParty.getCardStartDate() == null);
         setVehicles(parkingParty.getVehicles());        
     }
 

@@ -64,11 +64,12 @@ function addVehicle(){
 		</fr:layout>
 	</fr:edit>
 	</div>
-	 
+
+	<p class="mtop15"><html:messages id="message" property="noVehicles" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages></p>	 
 	<logic:notEmpty name="parkingPartyBean" property="vehicles">
 		<p class="mbottom05"><strong><bean:message key="label.vehicles" bundle="PARKING_RESOURCES"/>:</strong></p>
-		<html:messages id="message" property="vehicleMandatoryData" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
-		<html:messages id="message" property="noVehicles" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
+		<html:messages id="message" property="vehicleMandatoryData" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>		
+		<html:messages id="message" property="repeatedPlates" message="true" bundle="PARKING_RESOURCES"><span class="error0"><bean:write name="message"/></span></html:messages>
 		<fr:edit id="vehicle" name="parkingPartyBean" property="vehicles" layout="tabular-editable" schema="edit.vehicleBean">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
