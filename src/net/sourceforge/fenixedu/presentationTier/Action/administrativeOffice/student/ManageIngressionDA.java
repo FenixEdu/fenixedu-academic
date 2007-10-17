@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationIngressionFactorExecutor.RegistrationIngressionEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,8 +33,15 @@ public class ManageIngressionDA extends FenixDispatchAction {
 
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	
+	RegistrationIngressionEditor ingressionInformationBean = (RegistrationIngressionEditor) getRenderedObject();
+	if (ingressionInformationBean.getRegistrationAgreement() != null
+		&& !ingressionInformationBean.getRegistrationAgreement().isNormal()) {
+	    ingressionInformationBean.setIngression(null);
+	}
 
-	request.setAttribute("ingressionBean", getRenderedObject());
+	RenderUtils.invalidateViewState();
+	request.setAttribute("ingressionBean", ingressionInformationBean);
 	return mapping.findForward("showEditIngression");
     }
 
@@ -42,7 +50,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
 	    FenixServiceException {
 
 	executeFactoryMethod();
-	addActionMessage(request, "ingression.edit.success");
+	addActionMessage(request, "message.registration.ingression.edit.success");
 	request.setAttribute("registrationId", ((RegistrationIngressionEditor) getRenderedObject())
 		.getRegistration().getIdInternal());
 

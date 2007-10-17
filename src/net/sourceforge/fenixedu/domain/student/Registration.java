@@ -1491,12 +1491,40 @@ public class Registration extends Registration_Base {
 
     final public void setIngression(String ingression) {
 	if (hasStudentCandidacy()) {
+	    if (!StringUtils.isEmpty(ingression)) {
+		checkIngression(Ingression.valueOf(ingression));
+	    }
 	    getStudentCandidacy().setIngression(ingression);
 	} else {
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
 
     }
+
+    public void setIngression(Ingression ingression) {
+	this.setIngression(ingression != null ? ingression.name() : null);
+    }
+    
+    private void checkIngression(Ingression ingression) {
+	checkIngression(ingression, getPerson(), getFirstStudentCurricularPlan().getDegreeCurricularPlan());
+    }
+
+    public static void checkIngression(Ingression ingression, Person person, DegreeCurricularPlan degreeCurricularPlan) {
+	if (ingression == Ingression.RI) {
+	    if (person == null || !person.hasStudent()) {
+		throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
+	    }
+	    if (degreeCurricularPlan.getEquivalencePlan() != null) {
+		Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().getDegree();
+		final Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
+		if (sourceRegistration == null) {
+		    throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
+		} else if (!sourceRegistration.getActiveStateType().canReingress()) {
+		    throw new DomainException("error.registration.preBolonhaSourceRegistrationCannotReingress");
+		}
+	    }
+	}
+    } 
 
     final public String getContigent() {
 	return hasStudentCandidacy() ? getStudentCandidacy().getContigent() : null;
@@ -1735,7 +1763,7 @@ public class Registration extends Registration_Base {
     final public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumEctsCredits();
     }
-    
+
     public double getEnrolmentsEcts(final ExecutionYear executionYear) {
 	return getLastStudentCurricularPlan().getEnrolmentsEctsCredits(executionYear);
     }

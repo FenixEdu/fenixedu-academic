@@ -7,6 +7,12 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	</p>
+</html:messages>
+
 <bean:define id="registration" name="ingressionBean" property="registration" />
 
 <ul class="mtop2 list5">
@@ -43,7 +49,9 @@
 </fr:view>
 </logic:present>
 
-<fr:edit name="ingressionBean" schema="ingression.information-edit" action="/manageIngression.do?method=editIngression">
+<fr:edit name="ingressionBean" schema="ingression.information" action="/manageIngression.do?method=editIngression">
+	<fr:destination name="agreementPostBack"
+		path="/manageIngression.do?method=postBack" />
 	<fr:destination name="ingressionPostBack"
 		path="/manageIngression.do?method=postBack" />
 	<fr:destination name="entryPhasePostBack"

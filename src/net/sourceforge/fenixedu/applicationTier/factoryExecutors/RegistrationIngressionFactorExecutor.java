@@ -28,7 +28,8 @@ public class RegistrationIngressionFactorExecutor {
 	}
 
 	public Object execute() {
-	    getRegistration().setIngression(getIngression().name());
+	    getRegistration().setRegistrationAgreement(getRegistrationAgreement());
+	    getRegistration().setIngression(getIngression() != null ? getIngression().name() : null);
 	    getRegistration().setEntryPhase(getEntryPhase());
 	    return getRegistration();
 	}

@@ -195,7 +195,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    person = choosePersonBean.getPerson();
 	}
 
-	if (!checkIngression(mapping, request, executionDegreeBean, ingressionInformationBean, person, choosePersonBean)) {
+	if (!checkIngression(request, executionDegreeBean, ingressionInformationBean, person, choosePersonBean)) {
 	    return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
 	}
 
@@ -216,35 +216,19 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("fillNewPersonData");
     }
 
-    private boolean checkIngression(ActionMapping mapping, HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
+    private boolean checkIngression(HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
 	    IngressionInformationBean ingressionInformationBean, Person person, ChoosePersonBean choosePersonBean) {
-	if (ingressionInformationBean.getIngression() == Ingression.RI) {
-	    Degree sourceDegree = executionDegreeBean.getDegreeCurricularPlan().getEquivalencePlan()
-		    .getSourceDegreeCurricularPlan().getDegree();
 
-	    if (person == null || !person.hasStudent()) {
-		RenderUtils.invalidateViewState();
-		request.setAttribute("choosePersonBean", choosePersonBean);
-		addActionMessage(request, "error.registration.preBolonhaSourceDegreeNotFound");
-		return false;
-
-	    } else {
-		final Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
-		if (sourceRegistration == null) {
-		    RenderUtils.invalidateViewState();
-		    request.setAttribute("choosePersonBean", choosePersonBean);
-		    addActionMessage(request, "error.registration.preBolonhaSourceDegreeNotFound");
-		    return false;
-		}
-		if (!sourceRegistration.getActiveStateType().canReingress()) {
-		    RenderUtils.invalidateViewState();
-		    request.setAttribute("choosePersonBean", choosePersonBean);
-		    addActionMessage(request, "error.registration.preBolonhaSourceRegistrationCannotReingress");
-		    return false;
-		}
-	    }
-
+	try {
+	    Registration.checkIngression(ingressionInformationBean.getIngression(), person, executionDegreeBean
+		    .getDegreeCurricularPlan());
+	} catch (DomainException e) {
+	    RenderUtils.invalidateViewState();
+	    request.setAttribute("choosePersonBean", choosePersonBean);
+	    addActionMessage(request, e.getKey());
+	    return false;
 	}
+
 	return true;
     }
 
