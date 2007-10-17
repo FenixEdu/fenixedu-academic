@@ -97,12 +97,12 @@ public class Curriculum implements Serializable {
 	return curriculumModule.getStudentCurricularPlan();
     }
     
-    public Set<ICurriculumEntry> getEntries() {
-	return entries;
+    public boolean isEmpty() {
+	return curriculumModule == null || !hasAnyEntries() || this.curricularYearEntries.isEmpty();
     }
     
-    public Set<ICurriculumEntry> getDismissalRelatedEntries() {
-	return dismissalRelatedEntries;
+    public boolean hasAnyEntries() {
+	return !entries.isEmpty() || !dismissalRelatedEntries.isEmpty();
     }
     
     public Collection<ICurriculumEntry> getCurriculumEntries() {
@@ -114,12 +114,16 @@ public class Curriculum implements Serializable {
 	return result;
     }
     
-    public Set<ICurriculumEntry> getCurricularYearEntries() {
-	return curricularYearEntries;
+    public Set<ICurriculumEntry> getEntries() {
+	return entries;
     }
     
-    public boolean isEmpty() {
-	return this.entries.isEmpty() && this.dismissalRelatedEntries.isEmpty() && this.curricularYearEntries.isEmpty();
+    public Set<ICurriculumEntry> getDismissalRelatedEntries() {
+	return dismissalRelatedEntries;
+    }
+    
+    public Set<ICurriculumEntry> getCurricularYearEntries() {
+	return curricularYearEntries;
     }
     
     public BigDecimal getSumPiCi() {
