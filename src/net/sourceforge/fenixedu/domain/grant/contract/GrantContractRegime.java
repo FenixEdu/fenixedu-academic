@@ -54,8 +54,8 @@ public class GrantContractRegime extends GrantContractRegime_Base {
     }
 
     public void editTimeInterval(Date dateBeginContract, Date dateEndContract) {
-	super.setDateBeginContract(dateBeginContract);
-	super.setDateEndContract(dateEndContract);
+	super.setDateBeginContractYearMonthDay(YearMonthDay.fromDateFields(dateBeginContract));
+	super.setDateEndContractYearMonthDay(YearMonthDay.fromDateFields(dateEndContract));
 
 	addNewLoginPeriodIfNecessary();	
     }
