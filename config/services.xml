@@ -8363,6 +8363,24 @@
         	<chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerAuthorization"></chain>
         </filterChains>     
     </service>
+   	<service>
+    	<name>CreateOldCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateOldCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+   	<service>
+    	<name>EditOldCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditOldCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
     <service>
     	<name>EditCurricularCourseBolonhaManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularCourse</implementationClass>
