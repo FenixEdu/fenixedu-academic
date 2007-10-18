@@ -106,9 +106,6 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             } catch (FenixServiceException e) {
                 return setError(request, mapping, "errors.grant.contact.regime.read",
                         "manage-grant-contract-regime", null);
-            } catch (Exception e) {
-                return setError(request, mapping, "errors.grant.unrecoverable",
-                        "manage-grant-contract-regime", null);
             }
         } else {
             request.setAttribute("grantContractRegimeId", request.getParameter("grantContractRegimeId"));
@@ -181,9 +178,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.contract.regime.edit", null, null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        }
+        } 
     }
 
     /*

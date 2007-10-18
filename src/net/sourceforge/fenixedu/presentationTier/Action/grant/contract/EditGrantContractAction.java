@@ -95,19 +95,11 @@ public class EditGrantContractAction extends FenixDispatchAction {
             } catch (FenixServiceException e) {
                 return setError(request, mapping, "errors.grant.contract.read", "manage-grant-contract",
                         null);
-            } catch (Exception e) {
-                return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract",
-                        null);
-            }
+            } 
         } else {
-            //New contract
-            try {
+            //New contract            
                 grantContractForm.set("idInternal", new Integer(request.getParameter("idInternal")));
-                request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));
-            } catch (Exception e) {
-                return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract",
-                        null);
-            }
+                request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));            
         }
 
         return mapping.findForward("edit-grant-contract");
@@ -138,50 +130,46 @@ public class EditGrantContractAction extends FenixDispatchAction {
             request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
             
             //Edit Grant Contract
-            Object[] args = { infoGrantContract };
-            ServiceUtils.executeService(userView, "CreateOrEditGrantContract", args);
+            Object[] args = { infoGrantContract, infoGrantContractRegime };
+            ServiceUtils.executeService(userView, "CreateOrEditGrantContractAndRegime", args);
 
-            if (infoGrantContract.getIdInternal() == null
-                    || infoGrantContract.getIdInternal().equals(new Integer(0))) //In
-            // case of a new contract
-            {
-                Object[] argcontract = { infoGrantContract.getGrantOwnerInfo().getIdInternal() };
-                infoGrantContract = null;
-                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
-                        "ReadLastGrantContractCreatedByGrantOwner", argcontract);
-                
-                
-               infoGrantContractRegime.setInfoTeacher(infoGrantContract
-                        .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());         
-                 if (infoGrantContract.getGrantCostCenterInfo()!=null){
-                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());             
-                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-                   }
-                   infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
-               
-            } else {               
-                if (infoGrantContract.getGrantCostCenterInfo()!=null && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length()>0){
-                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());
-                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-                }
-
-                infoGrantContractRegime.setInfoTeacher(infoGrantContract
-                        .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());  
-             	infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
-            	
-            }
-            //Edit Grant Contract Regime
-            Object[] argregime = { infoGrantContractRegime };
-            ServiceUtils.executeService(userView, "EditGrantContractRegime", argregime);
+//            if (infoGrantContract.getIdInternal() == null
+//                    || infoGrantContract.getIdInternal().equals(new Integer(0))) //In
+//            // case of a new contract
+//            {
+//                Object[] argcontract = { infoGrantContract.getGrantOwnerInfo().getIdInternal() };
+//                infoGrantContract = null;
+//                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+//                        "ReadLastGrantContractCreatedByGrantOwner", argcontract);
+//                
+//                
+//               infoGrantContractRegime.setInfoTeacher(infoGrantContract
+//                        .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());         
+//                 if (infoGrantContract.getGrantCostCenterInfo()!=null){
+//                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());             
+//                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+//                   }
+//                   infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+//               
+//            } else {               
+//                if (infoGrantContract.getGrantCostCenterInfo()!=null && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length()>0){
+//                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());
+//                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+//                }
+//
+//                infoGrantContractRegime.setInfoTeacher(infoGrantContract
+//                        .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());  
+//             	infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+//            	
+//            }
+//            //Edit Grant Contract Regime
+//            Object[] argregime = { infoGrantContractRegime };
+//            ServiceUtils.executeService(userView, "EditGrantContractRegime", argregime);
             return mapping.findForward("manage-grant-contract");
         } catch (GrantTypeNotFoundException e) {
             return setError(request, mapping, "errors.grant.type.not.found", null, null);
         } catch (InvalidGrantPaymentEntityException e) {
             return setError(request, mapping, "errors.invalidCostCenter", null, null);
-        } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.contract.bd.create", null, null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
         }
     }
 

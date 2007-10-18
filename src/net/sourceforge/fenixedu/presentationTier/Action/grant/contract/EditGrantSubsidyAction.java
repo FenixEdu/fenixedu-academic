@@ -101,9 +101,6 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
             request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.subsidy.read", "manage-grant-contract", null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract",
-                    null);
         }
         return mapping.findForward("edit-grant-subsidy");
     }
@@ -132,9 +129,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.subsidy.edit", null, null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        }
+        } 
         return mapping.findForward("manage-grant-subsidy");
     }
 

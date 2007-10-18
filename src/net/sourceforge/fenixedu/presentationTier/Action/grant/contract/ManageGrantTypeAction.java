@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -26,19 +25,16 @@ import org.apache.struts.action.ActionMapping;
 public class ManageGrantTypeAction extends FenixDispatchAction {
 
     public ActionForward prepareManageGrantTypeForm(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            Object[] args = {};
-            IUserView userView = SessionUtils.getUserView(request);
-            List infoGrantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes",
-                    args);
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-            if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
-                request.setAttribute("infoGrantTypeList", infoGrantTypeList);
+	Object[] args = {};
+	IUserView userView = SessionUtils.getUserView(request);
+	List infoGrantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
 
-            return mapping.findForward("manage-grant-type");
-        } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-type", null);
-        }
+	if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
+	    request.setAttribute("infoGrantTypeList", infoGrantTypeList);
+
+	return mapping.findForward("manage-grant-type");
+
     }
 }

@@ -9,6 +9,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 
 /**
@@ -43,11 +45,13 @@ public class InfoGrantContractRegime extends InfoObject {
 
     private InfoGrantCostCenter grantCostCenterInfo;
 
+    private DomainReference<GrantContract> grantContract;
+
     /**
      * @return Returns the costCenterKey.
      */
     public Integer getCostCenterKey() {
-        return costCenterKey;
+	return costCenterKey;
     }
 
     /**
@@ -55,14 +59,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The costCenterKey to set.
      */
     public void setCostCenterKey(Integer costCenterKey) {
-        this.costCenterKey = costCenterKey;
+	this.costCenterKey = costCenterKey;
     }
 
     /**
      * @return Returns the grantCostCenterInfo.
      */
     public InfoGrantCostCenter getGrantCostCenterInfo() {
-        return grantCostCenterInfo;
+	return grantCostCenterInfo;
     }
 
     /**
@@ -70,14 +74,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The grantCostCenterInfo to set.
      */
     public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
-        this.grantCostCenterInfo = grantCostCenterInfo;
+	this.grantCostCenterInfo = grantCostCenterInfo;
     }
 
     /**
      * @return Returns the dateBeginContract.
      */
     public Date getDateBeginContract() {
-        return dateBeginContract;
+	return dateBeginContract;
     }
 
     /**
@@ -85,14 +89,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateBeginContract to set.
      */
     public void setDateBeginContract(Date dateBeginContract) {
-        this.dateBeginContract = dateBeginContract;
+	this.dateBeginContract = dateBeginContract;
     }
 
     /**
      * @return Returns the dateDispatchCC.
      */
     public Date getDateDispatchCC() {
-        return dateDispatchCC;
+	return dateDispatchCC;
     }
 
     /**
@@ -100,14 +104,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateDispatchCC to set.
      */
     public void setDateDispatchCC(Date dateDispatchCC) {
-        this.dateDispatchCC = dateDispatchCC;
+	this.dateDispatchCC = dateDispatchCC;
     }
 
     /**
      * @return Returns the dateDispatchCD.
      */
     public Date getDateDispatchCD() {
-        return dateDispatchCD;
+	return dateDispatchCD;
     }
 
     /**
@@ -115,14 +119,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateDispatchCD to set.
      */
     public void setDateDispatchCD(Date dateDispatchCD) {
-        this.dateDispatchCD = dateDispatchCD;
+	this.dateDispatchCD = dateDispatchCD;
     }
 
     /**
      * @return Returns the dateEndContract.
      */
     public Date getDateEndContract() {
-        return dateEndContract;
+	return dateEndContract;
     }
 
     /**
@@ -130,14 +134,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateEndContract to set.
      */
     public void setDateEndContract(Date dateEndContract) {
-        this.dateEndContract = dateEndContract;
+	this.dateEndContract = dateEndContract;
     }
 
     /**
      * @return Returns the dateSendDispatchCC.
      */
     public Date getDateSendDispatchCC() {
-        return dateSendDispatchCC;
+	return dateSendDispatchCC;
     }
 
     /**
@@ -145,14 +149,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateSendDispatchCC to set.
      */
     public void setDateSendDispatchCC(Date dateSendDispatchCC) {
-        this.dateSendDispatchCC = dateSendDispatchCC;
+	this.dateSendDispatchCC = dateSendDispatchCC;
     }
 
     /**
      * @return Returns the dateSendDispatchCD.
      */
     public Date getDateSendDispatchCD() {
-        return dateSendDispatchCD;
+	return dateSendDispatchCD;
     }
 
     /**
@@ -160,14 +164,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The dateSendDispatchCD to set.
      */
     public void setDateSendDispatchCD(Date dateSendDispatchCD) {
-        this.dateSendDispatchCD = dateSendDispatchCD;
+	this.dateSendDispatchCD = dateSendDispatchCD;
     }
 
     /**
      * @return Returns the teacher.
      */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+	return infoTeacher;
     }
 
     /**
@@ -175,14 +179,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The teacher to set.
      */
     public void setInfoTeacher(InfoTeacher teacher) {
-        this.infoTeacher = teacher;
+	this.infoTeacher = teacher;
     }
 
     /**
      * @return Returns the state.
      */
     public Integer getState() {
-        return state;
+	return state;
     }
 
     /**
@@ -190,14 +194,14 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The state to set.
      */
     public void setState(Integer state) {
-        this.state = state;
+	this.state = state;
     }
 
     /**
      * @return Returns the infoGrantContract.
      */
     public InfoGrantContract getInfoGrantContract() {
-        return infoGrantContract;
+	return infoGrantContract;
     }
 
     /**
@@ -205,62 +209,62 @@ public class InfoGrantContractRegime extends InfoObject {
      *            The infoGrantContract to set.
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-        this.infoGrantContract = infoGrantContract;
+	this.infoGrantContract = infoGrantContract;
     }
 
     public boolean getContractRegimeActive() {
-        if (this.dateEndContract.after(Calendar.getInstance().getTime())) {
-            return true;
-        }
-        return false;
+	if (this.dateEndContract.after(Calendar.getInstance().getTime())) {
+	    return true;
+	}
+	return false;
 
     }
 
     public Integer getActiveStateValue() {
-        return new Integer(activeState);
+	return new Integer(activeState);
     }
 
     public Integer getInactiveStateValue() {
-        return new Integer(inactiveState);
+	return new Integer(inactiveState);
     }
 
     /**
      * @return Returns the activeState.
      */
     public static Integer getActiveState() {
-        return new Integer(activeState);
+	return new Integer(activeState);
     }
 
     /**
      * @return Returns the inactiveState.
      */
     public static Integer getInactiveState() {
-        return new Integer(inactiveState);
+	return new Integer(inactiveState);
     }
 
     /**
      * @param GrantContractRegime
      */
     public void copyFromDomain(GrantContractRegime grantContractRegime) {
-        super.copyFromDomain(grantContractRegime);
-        if (grantContractRegime != null) {
-            setState(grantContractRegime.getState());
-            setDateBeginContract(grantContractRegime.getDateBeginContract());
-            setDateEndContract(grantContractRegime.getDateEndContract());
-            setDateDispatchCC(grantContractRegime.getDateDispatchCC());
-            setDateDispatchCD(grantContractRegime.getDateDispatchCD());
-            setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
-            setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
-            if (grantContractRegime.getGrantContract().getGrantCostCenter() != null) {
+	super.copyFromDomain(grantContractRegime);
+	if (grantContractRegime != null) {
+	    setState(grantContractRegime.getState());
+	    setDateBeginContract(grantContractRegime.getDateBeginContract());
+	    setDateEndContract(grantContractRegime.getDateEndContract());
+	    setDateDispatchCC(grantContractRegime.getDateDispatchCC());
+	    setDateDispatchCD(grantContractRegime.getDateDispatchCD());
+	    setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
+	    setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
+	    if (grantContractRegime.getGrantContract().getGrantCostCenter() != null) {
 
-                setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter()
-                        .getIdInternal());
-                setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime
-                        .getGrantContract().getGrantCostCenter()));
+		setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter()
+			.getIdInternal());
+		setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime
+			.getGrantContract().getGrantCostCenter()));
 
-            }
+	    }
 
-        }
+	}
     }
 
     /**
@@ -268,13 +272,22 @@ public class InfoGrantContractRegime extends InfoObject {
      * @return
      */
     public static InfoGrantContractRegime newInfoFromDomain(GrantContractRegime grantContractRegime) {
-        InfoGrantContractRegime infoGrantContractRegime = null;
+	InfoGrantContractRegime infoGrantContractRegime = null;
 
-        if (grantContractRegime != null) {
-            infoGrantContractRegime = new InfoGrantContractRegime();
-            infoGrantContractRegime.copyFromDomain(grantContractRegime);
-        }
-        return infoGrantContractRegime;
+	if (grantContractRegime != null) {
+	    infoGrantContractRegime = new InfoGrantContractRegime();
+	    infoGrantContractRegime.copyFromDomain(grantContractRegime);
+	}
+	return infoGrantContractRegime;
+    }
+
+    public GrantContract getGrantContract() {
+	return grantContract != null ? grantContract.getObject() : null;
+    }
+
+    public void setGrantContract(GrantContract grantContract) {
+	this.grantContract = grantContract != null ? new DomainReference<GrantContract>(grantContract)
+		: null;
     }
 
 }

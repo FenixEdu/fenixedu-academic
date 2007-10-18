@@ -27,30 +27,26 @@ import org.apache.struts.action.ActionMapping;
 public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 
     public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        try {
-            IUserView userView = SessionUtils.getUserView(request);
-            String grantPaymentEntity = null;
+	    HttpServletResponse response) throws Exception {
 
-            if (verifyParameterInRequest(request, "project")) {
-                grantPaymentEntity = GrantProject.class.getName();
-                request.setAttribute("project", "yes");
-            } else if (verifyParameterInRequest(request, "costcenter")) {
-                grantPaymentEntity = GrantCostCenter.class.getName();
-                request.setAttribute("costcenter", "yes");
-            } else {
-                throw new Exception();
-            }
+	IUserView userView = SessionUtils.getUserView(request);
+	String grantPaymentEntity = null;
 
-            Object[] args = { grantPaymentEntity };
-            List grantPaymentList = (List) ServiceUtils.executeService(userView,
-                    "ReadAllGrantPaymentEntitiesByClassName", args);
-            request.setAttribute("grantPaymentList", grantPaymentList);
+	if (verifyParameterInRequest(request, "project")) {
+	    grantPaymentEntity = GrantProject.class.getName();
+	    request.setAttribute("project", "yes");
+	} else if (verifyParameterInRequest(request, "costcenter")) {
+	    grantPaymentEntity = GrantCostCenter.class.getName();
+	    request.setAttribute("costcenter", "yes");
+	} else {
+	    throw new Exception();
+	}
 
-            return mapping.findForward("show-payment-entities");
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "show-payment-entities",
-                    null);
-        }
+	Object[] args = { grantPaymentEntity };
+	List grantPaymentList = (List) ServiceUtils.executeService(userView,
+		"ReadAllGrantPaymentEntitiesByClassName", args);
+	request.setAttribute("grantPaymentList", grantPaymentList);
+
+	return mapping.findForward("show-payment-entities");
     }
 }

@@ -20,22 +20,26 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
 	    throws ExcepcaoPersistencia {
-	
+
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-	
-	GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
-		.getInfoGrantContract().getIdInternal());	
-	
+
+	GrantContract grantContract = infoGrantContractRegime.getGrantContract();
+	if (grantContract == null) {
+	    grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
+		    .getInfoGrantContract().getIdInternal());
+	}
+
 	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
 	grantContractRegime.setGrantContract(grantContract);
-	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(), infoGrantContractRegime.getDateEndContract());	
+	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(),
+		infoGrantContractRegime.getDateEndContract());
 	grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
-	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());	
+	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
 	grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
 	grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
 	grantContractRegime.setKeyGrantCostCenter(infoGrantContractRegime.getCostCenterKey());
 	grantContractRegime.setState(infoGrantContractRegime.getState());
-	
+
 	if (grantContract.getKeyGrantCostCenter() != null && grantContract.getKeyGrantCostCenter() != 0) {
 	    GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
 		    .readGrantPaymentEntityByOID(infoGrantContractRegime.getIdInternal());
@@ -72,9 +76,11 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 	    GrantContractRegime grantContractRegime = (GrantContractRegime) domainObjectLocked;
 	    // Set the correct grant orientation teacher
 
-	    GrantContract grantContract = rootDomainObject
-		    .readGrantContractByOID(infoGrantContractRegime.getInfoGrantContract()
-			    .getIdInternal());
+	    GrantContract grantContract = infoGrantContractRegime.getGrantContract();
+	    if (grantContract == null) {
+		grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
+			.getInfoGrantContract().getIdInternal());
+	    }
 
 	    if (infoGrantContractRegime.getGrantCostCenterInfo() != null
 		    && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length() > 0) { // ||

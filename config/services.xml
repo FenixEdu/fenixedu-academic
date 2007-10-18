@@ -5246,9 +5246,9 @@
 		<filterChains />
 	</service>
 	<service>
-        <name>CreateOrEditGrantContract</name>
+        <name>CreateOrEditGrantContractAndRegime</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.CreateOrEditGrantContract</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.CreateOrEditGrantContractAndRegime</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

@@ -27,18 +27,14 @@ import org.apache.struts.action.ActionMapping;
 public class ShowAllTeachersAction extends FenixDispatchAction {
 
     public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        try {
-            IUserView userView = SessionUtils.getUserView(request);
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = {};
-            List teachersList = (List) ServiceUtils.executeService(userView,
-                    "ReadAllTeachersNumberAndName", args);
-            request.setAttribute("teachersList", teachersList);
+	Object[] args = {};
+	List teachersList = (List) ServiceUtils.executeService(userView, "ReadAllTeachersNumberAndName",
+		args);
+	request.setAttribute("teachersList", teachersList);
 
-            return mapping.findForward("show-teachers");
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "show-teachers", null);
-        }
+	return mapping.findForward("show-teachers");
     }
 }

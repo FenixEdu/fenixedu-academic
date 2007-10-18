@@ -85,8 +85,6 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.insurance.read", "edit-grant-insurance",
                     null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "edit-grant-insurance", null);
         }
         return mapping.findForward("edit-grant-insurance");
     }
@@ -147,9 +145,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             return setError(request, mapping, "errors.grant.insurance.edit", null, null);
-        } catch (Exception e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        }
+        } 
         return mapping.findForward("manage-grant-contract");
     }
 

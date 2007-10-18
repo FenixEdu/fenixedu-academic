@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -30,7 +29,7 @@ public class ManageGrantPartAction extends FenixDispatchAction {
      */
     public ActionForward prepareManageGrantPart(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
+
 
             Integer idSubsidy = null;
             try {
@@ -68,8 +67,5 @@ public class ManageGrantPartAction extends FenixDispatchAction {
             request.setAttribute("subsidyTotalCost", infoGrantSubsidy.getTotalCost());
 
             return mapping.findForward("manage-grant-part");
-        } catch (FenixServiceException e) {
-            return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-part", null);
-        }
     }
 }

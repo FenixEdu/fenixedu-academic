@@ -125,9 +125,8 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
 
     private ActionForward listGrantContract(ActionMapping mapping, HttpServletRequest request,
             ActionForm form, HttpServletResponse response,
-            InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner) {
+            InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner) throws Exception {
 
-        try {
             IUserView userView = SessionUtils.getUserView(request);
 
             // Read the grant contracts
@@ -158,13 +157,6 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
                 return setError(request, mapping, "errors.grant.list.noResults", "select-criteria", null);
             }
             return mapping.findForward("list-byCriteria-grant-contract-and-insurance");
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        }
     }
 
     public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form,
@@ -177,29 +169,22 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
         IUserView userView = SessionUtils.getUserView(request);
 
         if (grantOwnerId != null) {
-            try {
-                // Read all the information about the grant owner
-                Object[] args = { grantOwnerId };
-                InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
-                        .executeService(userView, "ShowGrantOwner", args);
 
-                if (listGrantOwnerCompleteInfo != null) {
-                    // Set the request
-                    request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo
-                            .getInfoGrantOwner());
-                    request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo
-                            .getInfoQualifications());
-                    request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo
-                            .getInfoListGrantContracts());
-                }
-            } catch (FenixServiceException e) {
-                return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
-            } catch (Exception e) {
-                return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
-            }
-        } else {
-            return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
-        }
+            // Read all the information about the grant owner
+	    Object[] args = { grantOwnerId };
+	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
+		    .executeService(userView, "ShowGrantOwner", args);
+
+	    if (listGrantOwnerCompleteInfo != null) {
+		// Set the request
+		request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo.getInfoGrantOwner());
+		request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo
+			.getInfoQualifications());
+		request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo
+			.getInfoListGrantContracts());
+	    }
+
+        } 
         return mapping.findForward("show-grant-owner");
     }
 
