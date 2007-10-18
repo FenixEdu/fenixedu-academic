@@ -14,10 +14,6 @@ public enum GradeScale {
     TYPE20 {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
@@ -37,10 +33,6 @@ public enum GradeScale {
 
 	@Override
 	protected boolean checkNotFinal(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
@@ -87,15 +79,11 @@ public enum GradeScale {
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && (grade.isEmpty() || value.equals(GradeScale.NA));
+	    return grade.isEmpty() || value.equals(GradeScale.NA);
 	}
 	
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
 		return true;
@@ -110,10 +98,6 @@ public enum GradeScale {
 	
 	@Override
 	protected boolean isApproved(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(GradeScale.AP)) {
 		return true;
@@ -150,10 +134,6 @@ public enum GradeScale {
     TYPE5 {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
@@ -173,10 +153,6 @@ public enum GradeScale {
 
 	@Override
 	protected boolean checkNotFinal(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
@@ -220,10 +196,6 @@ public enum GradeScale {
 	
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    if (grade.isEmpty()) {
 		return true;
 	    }
@@ -233,10 +205,6 @@ public enum GradeScale {
 	
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    final String value = grade.getValue();
 	    if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
 		return true;
@@ -251,10 +219,6 @@ public enum GradeScale {
 	
 	@Override
 	protected boolean isApproved(final Grade grade) {
-	    if (grade.getGradeScale() != this) {
-		return false;
-	    }
-	    
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
 		return 3 <= intValue && intValue <= 5;
@@ -288,13 +252,13 @@ public enum GradeScale {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && (value.equals(NA) || value.equals(RE) || value.equals(AP));
+	    return value.equals(NA) || value.equals(RE) || value.equals(AP);
 	}
 
 	@Override
 	protected boolean checkNotFinal(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && (value.equals(NA) || value.equals(RE) || value.equals(AP));
+	    return value.equals(NA) || value.equals(RE) || value.equals(AP);
 	}
 
 	@Override
@@ -320,19 +284,19 @@ public enum GradeScale {
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && (grade.isEmpty() || value.equals(GradeScale.NA));
+	    return grade.isEmpty() || value.equals(GradeScale.NA);
 	}
 	
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && (value.equals(GradeScale.RE) || isNotEvaluated(grade));
+	    return value.equals(GradeScale.RE) || isNotEvaluated(grade);
 	}
 	
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    final String value = grade.getValue();
-	    return grade.getGradeScale() == this && value.equals(GradeScale.AP);
+	    return value.equals(GradeScale.AP);
 	}
 	
 	@Override
