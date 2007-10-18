@@ -209,7 +209,7 @@ public class Curriculum implements Serializable {
     }
     
     private BigDecimal calculateAverage() {
-	return sumPi == BigDecimal.ZERO ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
+	return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
     }
     
     private Integer calculateCurricularYear() {
