@@ -87,7 +87,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public Integer getNumberOfUnits() {
-	return getRegistration().getApprovedEnrolments().size();
+	return getRegistration().getCurriculum().getCurriculumEntries().size();
     }
 
 }

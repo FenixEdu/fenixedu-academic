@@ -91,7 +91,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     final public Integer getNumberOfUnits() {
-	return getDetailed() ? getRegistration().getApprovedEnrolments().size() : 0;
+	return getDetailed() ? getRegistration().getCurriculum().getCurriculumEntries().size() : 0;
     }
 
 }
