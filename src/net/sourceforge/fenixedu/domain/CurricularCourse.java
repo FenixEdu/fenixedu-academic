@@ -87,15 +87,30 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setWeigth(d);
     }
 
-    protected CurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+    protected CurricularCourse(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
 	this();
+	checkParameters(name, code, acronym);
+	checkForCurricularCourseWithSameAttributes(degreeCurricularPlan, name, code, acronym);
 	setName(name);
 	setCode(code);
 	setAcronym(acronym);
 	setEnrollmentAllowed(enrolmentAllowed);
 	setCurricularStage(curricularStage);
+	setDegreeCurricularPlan(degreeCurricularPlan);
 	if (curricularStage == CurricularStage.OLD) {
 	    setRegimeType(RegimeType.SEMESTRIAL);
+	}
+    }
+
+    private void checkParameters(final String name, final String code, final String acronym) {
+	if (StringUtils.isEmpty(name)) {
+	    throw new DomainException("error.curricularCourse.invalid.name");
+	}
+	if (StringUtils.isEmpty(code)) {
+	    throw new DomainException("error.curricularCourse.invalid.code");
+	}
+	if (StringUtils.isEmpty(acronym)) {
+	    throw new DomainException("error.curricularCourse.invalid.acronym");
 	}
     }
 
@@ -142,14 +157,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return false;
     }
 
-    public boolean isBolonhaDegree() {
-	return getDegreeCurricularPlan().isBolonhaDegree();
-    }
-
     /**
      * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     * @return
      */
     private boolean isBoxStructure() {
 	return !(getCurricularStage() == CurricularStage.OLD);
@@ -157,8 +166,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-	// FIXME: in the future, a curricular course may be included in contexts
-	// of diferent curricular plans?
 	if (isBoxStructure()) {
 	    return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan()
 		    : null;
@@ -190,6 +197,34 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setName(name);
 	setNameEn(nameEn);
 	setCurricularStage(curricularStage);
+    }
+
+    /**
+     * - Edit Pre-Bolonha CurricularCourse 
+     */
+    public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits) {
+	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
+	setName(name);
+	setNameEn(nameEn);
+	setCode(code);
+	setAcronym(acronym);
+	setWeigth(weigth);
+	setCredits(credits);
+	setEctsCredits(ectsCredits);
+    }
+    
+    private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym) {
+	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+	    if(curricularCourse == this) {
+		continue;
+	    }
+	    if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
+		throw new DomainException("error.curricularCourseWithSameNameAndCode");
+	    }
+	    if (curricularCourse.getAcronym().equals(acronym)) {
+		throw new DomainException("error.curricularCourseWithSameAcronym");
+	    }
+	}
     }
 
     @Override

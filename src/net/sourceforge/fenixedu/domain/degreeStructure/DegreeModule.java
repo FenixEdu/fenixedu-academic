@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
@@ -255,6 +256,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
 	return false;
     }
+    
+    public boolean isBolonhaDegree() {
+	return getParentDegreeCurricularPlan().isBolonhaDegree();
+    }
 
     public boolean isOptional() {
 	return false;
@@ -272,11 +277,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return false;
     }
 
-    final public Degree getDegree() {
+    public Degree getDegree() {
 	return getParentDegreeCurricularPlan().getDegree();
     }
 
-    final public DegreeType getDegreeType() {
+    public DegreeType getDegreeType() {
 	return getDegree().getDegreeType();
     }
 
@@ -379,9 +384,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public ExecutionPeriod getMinimumExecutionPeriod() {
 	if (isRoot()) {
-	    return getBeginBolonhaExecutionPeriod();
+	    return isBolonhaDegree() ? getBeginBolonhaExecutionPeriod() : getFirstExecutionPeriodOfFirstExecutionDegree();
 	}
-
 	final SortedSet<ExecutionPeriod> executionPeriods = new TreeSet<ExecutionPeriod>();
 	for (final Context context : getParentContextsSet()) {
 	    executionPeriods.add(context.getBeginExecutionPeriod());
@@ -393,6 +397,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	final String year = PropertiesManager.getProperty("start.year.for.bolonha.degrees");
 	final Integer semester = Integer.valueOf(PropertiesManager.getProperty("start.semester.for.bolonha.degrees"));
 	return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
+    }
+    
+    private ExecutionPeriod getFirstExecutionPeriodOfFirstExecutionDegree() {
+	final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
+	return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : getBeginBolonhaExecutionPeriod();
     }
 
     public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {

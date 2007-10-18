@@ -205,10 +205,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
 	} else if (hasAnyExecutionDegrees() && curricularStage == CurricularStage.DRAFT) {
 	    throw new DomainException("degreeCurricularPlan.has.already.been.executed");
-	} else if (curricularStage == CurricularStage.APPROVED) {
+	} else if (isBolonhaDegree() && curricularStage == CurricularStage.APPROVED) {
 	    approve(beginExecutionYear);
 	} else {
-	    this.setCurricularStage(curricularStage);
+	    setCurricularStage(curricularStage);
 	}
     }
 
@@ -252,7 +252,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	newStructureFieldsChange(curricularStage, beginExecutionYear);
 
 	this.setState(state);
-
 	this.getRoot().setName(name);
 	this.getRoot().setNameEn(name);
     }
@@ -318,8 +317,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     /**
      * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     * @return
      */
     public boolean isBoxStructure() {
 	return !getCurricularStage().equals(CurricularStage.OLD);
@@ -945,23 +942,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
-    public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
-	    CurricularStage curricularStage) {
-	checkAttributes(name, code, acronym);
-	final CurricularCourse curricularCourse = new CurricularCourse(name, code, acronym, enrolmentAllowed, curricularStage);
-	this.addCurricularCourses(curricularCourse);
-	return curricularCourse;
-    }
-
-    private void checkAttributes(String name, String code, String acronym) {
-	for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
-	    if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
-		throw new DomainException("error.curricularCourseWithSameNameAndCode");
-	    }
-	    if (curricularCourse.getAcronym().equals(acronym)) {
-		throw new DomainException("error.curricularCourseWithSameAcronym");
-	    }
-	}
+    /**
+     * Used to create a CurricularCourse to non box structure 
+     */
+    public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+	return new CurricularCourse(this, name, code, acronym, enrolmentAllowed, curricularStage);
     }
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
@@ -1196,7 +1181,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
-	    if (degreeTypes.contains(degreeCurricularPlan.getDegree().getTipoCurso()) && degreeCurricularPlan.getState() == state) {
+	    if (degreeTypes.contains(degreeCurricularPlan.getDegree().getDegreeType()) && degreeCurricularPlan.getState() == state) {
 		result.add(degreeCurricularPlan);
 	    }
 	}
