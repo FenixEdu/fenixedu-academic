@@ -10,10 +10,7 @@ public class LoginRequest extends LoginRequest_Base {
 		if (user.getLoginRequest() != null) {
 			throw new DomainException("error.user.already.has.loginRequest");
 		}
-		if (!user.getPerson().hasExternalResearchContract()) {
-			throw new DomainException("error.login.request.for.external.person.only");
-		}
-
+	
 		setRootDomainObject(RootDomainObject.getInstance());
 		super.setUser(user);
 		super.setHash(generateHash());

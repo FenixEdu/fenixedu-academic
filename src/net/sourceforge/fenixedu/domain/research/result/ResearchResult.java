@@ -154,6 +154,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 			throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
 		}
 
+		for(;!getResultTeachers().isEmpty();getResultTeachers().get(0).delete());
 		removeAssociations();
 		removeRootDomainObject();
 		deleteDomainObject();

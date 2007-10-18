@@ -12,6 +12,7 @@ public class EnableExternalLogin extends Service {
 		Person person = bean.getPerson();
 		if (person.getUser().getLoginRequest() != null) {
 		person.setGender(bean.getGender());
+		person.setPhone(bean.getPhone());
 		person.setPassword(PasswordEncryptor.encryptPassword(bean.getPassword()));
 		person.getUser().getLoginRequest().delete();
 		}

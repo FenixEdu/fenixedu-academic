@@ -17,6 +17,7 @@ public class EnableExternalLoginWithKerberos extends Service {
 		if (person.getUser().getLoginRequest() != null) {
 			try {
 				person.setGender(bean.getGender());
+				person.setPhone(bean.getPhone());
 				person.setPassword(PasswordEncryptor.encryptPassword(bean.getPassword()));
 				Script.createUser(person.getIstUsername(), bean.getPassword());
 				person.setIsPassInKerberos(true);

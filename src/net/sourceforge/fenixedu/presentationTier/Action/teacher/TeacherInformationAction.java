@@ -418,6 +418,9 @@ public class TeacherInformationAction extends FenixDispatchAction {
         List<ResearchResult> didaticResults = new ArrayList<ResearchResult>();
         List<ResearchResult> cientificResults = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacherResults) {
+           if(resultTeacher.getResult() == null) {
+               continue;
+           }
             if (resultTeacher.getPublicationArea().equals(PublicationArea.DIDATIC))
                 didaticResults.add(resultTeacher.getResult());
             else

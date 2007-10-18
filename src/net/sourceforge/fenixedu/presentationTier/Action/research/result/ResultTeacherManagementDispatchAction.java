@@ -27,7 +27,7 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 
         List<ResearchResult> results = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
-            if (resultTeacher.getPublicationArea().getName().equals(type))
+            if (resultTeacher.getPublicationArea().getName().equals(type) && resultTeacher.getResult()!=null)
                 results.add(resultTeacher.getResult());
         }
 

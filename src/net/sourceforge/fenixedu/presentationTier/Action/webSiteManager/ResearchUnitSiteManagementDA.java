@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
@@ -66,7 +67,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 	    	ResearchContractBean bean = (ResearchContractBean) RenderUtils.getViewState("createPersonContract").getMetaObject().getObject();
-		return (request.getParameter("createPerson") != null || (bean.getPerson()!=null && bean.getExternalPerson() && StringUtils.isEmpty(bean.getPerson().getEmail()))) ? prepareAddNewPerson(mapping, actionForm,
+		return (request.getParameter("createPerson") != null || (bean.getPerson()!=null && StringUtils.isEmpty(bean.getPerson().getEmail()))) ? prepareAddNewPerson(mapping, actionForm,
 				request, response) : addPerson(mapping, actionForm, request, response);
 	}
 
@@ -76,6 +77,11 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		IViewState viewState = RenderUtils.getViewState();
 		if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
 			ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
+			Person person = bean.getPerson(); 
+			if(person != null) {
+			    bean.setDocumentType(person.getIdDocumentType());
+			    bean.setDocumentIDNumber(person.getDocumentIdNumber());
+			}
 			request.setAttribute("bean", bean);
 			return mapping.findForward("externalPersonExtraInfo");
 		}

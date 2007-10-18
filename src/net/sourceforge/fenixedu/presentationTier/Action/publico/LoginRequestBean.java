@@ -22,6 +22,8 @@ public class LoginRequestBean implements Serializable {
 
 	private Gender gender;
 
+	private String phone;
+	
 	private String username;
 
 	private String password;
@@ -109,5 +111,16 @@ public class LoginRequestBean implements Serializable {
 		this.gender = null;
 		this.username = person.getUser().readUserLoginIdentification().getUsername();
 		this.password = null;
+		this.phone = person.getPhone();
 	}
+
+	public String getPhone() {
+	    return phone;
+	}
+
+	public void setPhone(String phone) {
+	    this.phone = phone;
+	}
+	
+	
 }

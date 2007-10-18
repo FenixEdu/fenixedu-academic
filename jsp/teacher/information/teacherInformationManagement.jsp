@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <bean:define id="datePattern" value="dd-MM-yyyy"/>
 
 <em><bean:message key="label.teacherPortal"/></em>
@@ -219,6 +221,7 @@
 		<bean:message key="message.teacherInformation.ownPublications" />
 		</p>
 		<!-- DELETE (replace by resultpublications)  -->
+		<%-- 
 		 <div class="gen-button">
 			<html:link page="/readPublications.do?typePublication=Didatic&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
@@ -240,10 +243,10 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
-
+		--%>
 		<!-- END DELETE  -->
 		<!-- DIDATIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
-		<%-- 
+
 		<div class="gen-button">
 			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Didatic">
 				<bean:message key="label.teacherInformation.manage"/>
@@ -265,13 +268,13 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
-		--%>
+
 		<!--  END DIDATIC PUBLICATIONS -->
 		<br />
 		<p class="infoop mtop15"><span class="emphasis-box">6</span>
 		<bean:message key="message.teacherInformation.cientificPublications" /></p>
 		<!-- DELETE (replace by resultpublications)  -->
-		
+		<%-- 
 		<div class="gen-button">
 			<html:link page="/readPublications.do?typePublication=Cientific&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
@@ -293,10 +296,10 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
-		
+		--%>
 		<!-- END DELETE  -->
 		<!-- CIENTIFIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
-		<%-- 
+		 
 		<div class="gen-button">
 			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Cientific">
 				<bean:message key="label.teacherInformation.manage"/>
@@ -318,7 +321,7 @@
 			<bean:message key="label.teachersInformation.notModified" />
 			<br/>&nbsp;<br/>
 		</logic:empty>
-		--%>
+		
 		<!--  END CIENTIFIC PUBLICATIONS -->
 		<br />
 		<!-- TJBF & PFON -->

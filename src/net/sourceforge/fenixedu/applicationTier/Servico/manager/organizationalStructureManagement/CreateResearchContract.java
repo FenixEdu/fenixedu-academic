@@ -59,6 +59,9 @@ public class CreateResearchContract extends Service {
 
 			List<String> tos = new ArrayList<String>();
 			tos.add(bean.getEmail());
+			if(person.getEmail() == null) {
+			    person.setEmail(bean.getEmail());
+			}
 			new Email(creator.getName(), creator.getEmail(), null, tos, null, null, subject, message);
 		}
 	}

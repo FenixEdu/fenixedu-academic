@@ -249,6 +249,14 @@
 	<slot name="documentIDNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
 
+<schema name="research.contract.extraInformation.for.internalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
+	<slot name="email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator" key="messaging.email.label">
+		<property name="size" value="40"/>	
+	</slot>
+	<slot name="documentType" read-only="true"/>
+	<slot name="documentIDNumber" read-only="true"/>
+</schema>	
+
 <schema name="edit.loginBean" type="net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestBean" bundle="SITE_RESOURCES">
 	<slot name="name" read-only="true"/>	
     <slot name="documentType" read-only="true"/>
@@ -257,6 +265,7 @@
 	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="radio">
 		<property name="classes" value="liinline"/>
 	</slot>
+	<slot name="phone" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="username" read-only="true"/>
 	<slot name="password" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="passwordConfirmation" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>

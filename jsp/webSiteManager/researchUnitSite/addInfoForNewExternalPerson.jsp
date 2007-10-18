@@ -14,7 +14,14 @@
 	</fr:layout>
 </fr:view>
 
-<fr:edit id="extraInfo" name="bean" schema="research.contract.extraInformation.for.externalPerson" action="<%= "/manageResearchUnitSite.do?method=addNewPerson&oid=" + siteID %>" >
+
+<bean:define id="schema" value="research.contract.extraInformation.for.externalPerson"/>
+
+<logic:present name="bean" property="documentIDNumber">
+	<bean:define id="schema" value="research.contract.extraInformation.for.internalPerson"/>
+</logic:present>
+
+<fr:edit id="extraInfo" name="bean" schema="<%= schema %>" action="<%= "/manageResearchUnitSite.do?method=addNewPerson&oid=" + siteID %>" >
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
