@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Data Cleaning, please remove this SQL after running in production" resultTeacherDataCleaning.sql
