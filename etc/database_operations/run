@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alter degrees management funtionality names" renameDegreesManagementFunctionalityNames.sql
