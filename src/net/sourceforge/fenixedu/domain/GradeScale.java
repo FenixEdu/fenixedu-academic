@@ -354,19 +354,4 @@ public enum GradeScale {
 	}
     }
 
-    final protected EnrollmentState getEnrolmentState(final Grade grade) {
-	if (isNotEvaluated(grade)) {
-	    return EnrollmentState.NOT_EVALUATED;
-	} else if (isNotApproved(grade)) {
-	    return EnrollmentState.NOT_APROVED;
-	} else if (isApproved(grade)) {
-	    return EnrollmentState.APROVED;
-	} else {
-	    return EnrollmentState.NOT_APROVED;
-	    
-	    //TODO:
-	    //throw new DomainException("GradeScale.unable.to.get.enrolment.state");
-	}
-    }
-    
 }

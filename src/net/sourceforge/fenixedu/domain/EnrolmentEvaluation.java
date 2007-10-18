@@ -154,8 +154,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     private int compareByGrade(final Grade grade, final Grade otherGrade) {
-	EnrollmentState gradeEnrolmentState = getEnrollmentStateByGrade(grade);
-	EnrollmentState otherGradeEnrolmentState = getEnrollmentStateByGrade(otherGrade);
+	EnrollmentState gradeEnrolmentState = getEnrollmentStateByGrade();
+	EnrollmentState otherGradeEnrolmentState = getEnrollmentStateByGrade();
 	if(gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
 	    return grade.compareTo(otherGrade);
 	}
@@ -233,17 +233,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
-        return getEnrollmentStateByGrade(getGrade());
+        return getGrade().getEnrolmentState();
     }
 
     public GradeScale getGradeScale() {
 	return getEnrolment().getGradeScale();
     }
     
-    private EnrollmentState getEnrollmentStateByGrade(final Grade grade) {
-	return getGradeScale().getEnrolmentState(grade);
-    }
-
     public boolean isNormal() {
         return getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL;
     }

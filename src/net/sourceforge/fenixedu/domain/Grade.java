@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -143,6 +144,18 @@ public class Grade implements Serializable, Comparable<Grade> {
 
     static public Grade average(final Collection<Grade> grades) {
 	return null;
+    }
+
+    public EnrollmentState getEnrolmentState() {
+	if (isNotEvaluated()) {
+	    return EnrollmentState.NOT_EVALUATED;
+	} else if (isNotApproved()) {
+	    return EnrollmentState.NOT_APROVED;
+	} else if (isApproved()) {
+	    return EnrollmentState.APROVED;
+	} else {
+	    return EnrollmentState.NOT_APROVED;
+	}
     }
 
 }
