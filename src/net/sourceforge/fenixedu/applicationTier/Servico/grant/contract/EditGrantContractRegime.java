@@ -23,7 +23,11 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 	
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 	
-	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;		
+	GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
+		.getInfoGrantContract().getIdInternal());	
+	
+	GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
+	grantContractRegime.setGrantContract(grantContract);
 	grantContractRegime.editTimeInterval(infoGrantContractRegime.getDateBeginContract(), infoGrantContractRegime.getDateEndContract());	
 	grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
 	grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());	
@@ -31,11 +35,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 	grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
 	grantContractRegime.setKeyGrantCostCenter(infoGrantContractRegime.getCostCenterKey());
 	grantContractRegime.setState(infoGrantContractRegime.getState());
-
-	GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractRegime
-		.getInfoGrantContract().getIdInternal());
-	grantContractRegime.setGrantContract(grantContract);
-
+	
 	if (grantContract.getKeyGrantCostCenter() != null && grantContract.getKeyGrantCostCenter() != 0) {
 	    GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
 		    .readGrantPaymentEntityByOID(infoGrantContractRegime.getIdInternal());
