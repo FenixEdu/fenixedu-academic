@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "alter table AcademicCalendarEntry" alterTableAcademicCalendarEntry.sql
+execute "alter degrees management funtionality names" renameDegreesManagementFunctionalityNames.sql

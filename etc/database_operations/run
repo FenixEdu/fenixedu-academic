@@ -27,5 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "alter degrees management funtionality names" renameDegreesManagementFunctionalityNames.sql
 execute "Data Cleaning, please remove this SQL after running in production" resultTeacherDataCleaning.sql
