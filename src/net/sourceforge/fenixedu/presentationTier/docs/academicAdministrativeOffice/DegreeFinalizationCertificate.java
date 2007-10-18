@@ -154,7 +154,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
 	result.append(
 		StringUtils.multipleLineRightPadWithSuffix(
-			"",//getEnrolmentName(academicUnitIdentifiers, approvedIEnrolment), 
+			getCurriculumEntryName(academicUnitIdentifiers, entry), 
 			LINE_LENGTH,
 			'-', 
 			getCreditsAndGradeInfo(entry))).append("\n");
