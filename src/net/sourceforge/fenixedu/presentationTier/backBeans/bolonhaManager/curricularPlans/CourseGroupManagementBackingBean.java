@@ -35,10 +35,12 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return getAndHoldIntegerParameter("parentCourseGroupID");
     }
 
+    @Override
     public Integer getCourseGroupID() {
         return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
     }
 
+    @Override
     public void setCourseGroupID(Integer courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
@@ -167,12 +169,6 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             return "editCurricularPlanStructure";
         }        
         return "";
-    }
-    
-    private void checkCourseGroup() throws FenixFilterException, FenixServiceException, FenixActionException {
-        if (getCourseGroupID() == null || getCourseGroupID().equals(this.NO_SELECTION)) {
-            throw new FenixActionException("error.mustChooseACourseGroup");
-        }
     }
     
     private List<SelectItem> readCourseGroups() {

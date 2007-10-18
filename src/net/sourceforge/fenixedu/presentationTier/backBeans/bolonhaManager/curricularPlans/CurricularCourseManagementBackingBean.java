@@ -513,12 +513,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
     
-    private void checkCourseGroup() throws FenixActionException {
+    protected void checkCourseGroup() throws FenixActionException {
         if (getCourseGroupID() == null || getCourseGroupID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACourseGroup");
         }
     }
-
+    
     private void checkCurricularCourse() throws FenixActionException {
         if (getCurricularCourseID() == null || getCurricularCourseID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACurricularCourse");
@@ -534,7 +534,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private void checkCurricularSemesterAndYear() throws FenixActionException {
+    protected void checkCurricularSemesterAndYear() throws FenixActionException {
         if (getCurricularSemesterID() == null || getCurricularSemesterID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACurricularSemester");
         }
@@ -690,12 +690,16 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        //ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegrees()) {
+        final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
+        
+        if (executionDegrees.isEmpty()) {
+            final ExecutionYear executionYear = getDegreeCurricularPlan().getRoot().getMinimumExecutionPeriod().getExecutionYear();
+	    result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            return result;
+        }
+        
+	for (ExecutionDegree executionDegree : executionDegrees) {
             result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear().getYear()));
-            //if (executionDegree.getExecutionYear().equals(currentExecutionYear)) {
-            //    setExecutionYearID(currentExecutionYear.getIdInternal());
-            //}
         }
         
         if (getExecutionYearID() == null) {
