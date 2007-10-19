@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,7 +86,7 @@ public class ConcludedState extends ConcludedState_Base {
 	    super(registration);
 	    setStateType(RegistrationStateType.CONCLUDED);
 	    setStateDate(registration.getLastApprovementDate());
-	    setFinalAverage(registration.getAverage().intValue());
+	    setFinalAverage(registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue());
 	}
 
 	Integer finalAverage;
