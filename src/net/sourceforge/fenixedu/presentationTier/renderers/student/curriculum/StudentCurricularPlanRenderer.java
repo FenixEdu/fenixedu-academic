@@ -549,7 +549,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 		final CurricularCourse curricularCourse = dismissal.getCurricularCourse();
 		if (curricularCourse != null) {
-		    final HtmlText text = new HtmlText(studentResources.getString("label.dismissal") + ": ");
+		    final HtmlText text = new HtmlText(studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()) + ": ");
 		    container.addChild(text);
 
 		    String codeAndName = "";
