@@ -46,7 +46,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
-	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription()));
+	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription(diplomaRequest.getRequestedCycle())));
 	} else if (diplomaRequest.hasDissertationTitle()) {
 	    parameters.put("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle().getContent());
 	}
