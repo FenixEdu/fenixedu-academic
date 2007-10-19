@@ -11,6 +11,7 @@ public class GrantContractMovement extends GrantContractMovement_Base {
 
     public void delete() {
         removeRootDomainObject();
+        removeGrantContract();
         super.deleteDomainObject();
     }
 

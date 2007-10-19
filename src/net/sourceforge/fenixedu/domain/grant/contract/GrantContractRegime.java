@@ -30,6 +30,9 @@ public class GrantContractRegime extends GrantContractRegime_Base {
 
     public void delete() {
 	removeRootDomainObject();
+	removeGrantContract();
+	removeGrantCostCenter();
+	removeTeacher();
 	super.deleteDomainObject();
     }
 
