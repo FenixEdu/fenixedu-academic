@@ -32,7 +32,7 @@ public class InsertDegree extends Service {
             }
         }
 
-        new Degree(name, nameEn, code, degreeType, gradeScale, DegreeCurricularPlan.class.getName());
+        new Degree(name, nameEn, code, degreeType, gradeScale);
     }
 
 }

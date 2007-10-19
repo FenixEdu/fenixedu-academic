@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop Unnecessary Degree Columns" dropUnnecessaryDegreeColumns.sql

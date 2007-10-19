@@ -483,7 +483,7 @@ public class CreateTestData {
 
         private Degree createDegree(final DegreeType degreeType, final int i) {
             return new Degree("Agricultura do Conhecimento " + i, "Knowledge Agriculture " + i, "CODE" + i, degreeType,
-                    degreeType.getGradeScale(), DegreeCurricularPlan.class.getName());
+                    degreeType.getGradeScale());
         }
 
         private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree) {
@@ -1146,7 +1146,7 @@ public class CreateTestData {
                 degreeCurricularPlan = degree.createBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", gradeScale, person);
                 degreeCurricularPlan.setCurricularStage(CurricularStage.PUBLISHED);
             } else {
-                degree = new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, gradeScale, DegreeCurricularPlan.class.getName());
+                degree = new Degree("Agricultura do Conhecimento", "Knowledge Agriculture", "CODE" + i, degreeType, gradeScale);
                 degreeCurricularPlan = degree.createPreBolonhaDegreeCurricularPlan("DegreeCurricularPlanName", DegreeCurricularPlanState.ACTIVE,
                         new Date(), null, degreeType.getYears(), Integer.valueOf(1), Double.valueOf(degreeType.getDefaultEctsCredits()),
                         MarkType.TYPE20_OBJ, Integer.valueOf(100), null, gradeScale);

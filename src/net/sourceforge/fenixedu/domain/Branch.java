@@ -100,8 +100,6 @@ public class Branch extends Branch_Base {
 	final Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 
 	this.getStudentCurricularPlans().clear();
-	this.getSecundaryStudentCurricularPlansLEIC().clear();
-	this.getSecundaryStudentCurricularPlansLEEC().clear();
 
 	final Iterator curricularCourseGroupsIterator = getCurricularCourseGroupsIterator();
 	while (curricularCourseGroupsIterator.hasNext()) {

@@ -93,8 +93,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         new DegreeSite(this);
     }
 
-    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
-	    String concreteClassForDegreeCurricularPlans) {
+    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
 	this();
 	commonFieldsChange(name, nameEn, code, gradeScale);
 
@@ -102,11 +101,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    throw new DomainException("degree.degree.type.not.null");
 	}
 	this.setDegreeType(degreeType);
-
-	if (concreteClassForDegreeCurricularPlans == null) {
-	    throw new DomainException("degree.concrete.class.not.null");
-	}
-	this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
     }
 
     public Degree(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
@@ -239,23 +233,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         removeRootDomainObject();
         removeUnit();
         deleteDomainObject();
-    }
-
-    public DegreeCurricularPlan getNewDegreeCurricularPlan() {
-	DegreeCurricularPlan degreeCurricularPlan = null;
-
-	try {
-	    Class classDefinition = Class.forName(getConcreteClassForDegreeCurricularPlans());
-	    degreeCurricularPlan = (DegreeCurricularPlan) classDefinition.newInstance();
-	} catch (InstantiationException e) {
-	    throw new RuntimeException(e);
-	} catch (IllegalAccessException e) {
-	    throw new RuntimeException(e);
-	} catch (ClassNotFoundException e) {
-	    throw new RuntimeException(e);
-	}
-
-	return degreeCurricularPlan;
     }
 
     public GradeScale getGradeScaleChain() {

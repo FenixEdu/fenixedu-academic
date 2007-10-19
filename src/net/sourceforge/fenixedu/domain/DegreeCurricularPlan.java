@@ -140,7 +140,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	this(degree, name, gradeScale);
 	super.setCurricularStage(CurricularStage.OLD);
-	this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
 	super.setState(state);
 
 	oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType,
@@ -373,20 +372,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public StudentCurricularPlan getNewStudentCurricularPlan() {
-	StudentCurricularPlan studentCurricularPlan = null;
-
-	try {
-	    Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
-	    studentCurricularPlan = (StudentCurricularPlan) classDefinition.newInstance();
-	} catch (InstantiationException e) {
-	    throw new RuntimeException(e);
-	} catch (IllegalAccessException e) {
-	    throw new RuntimeException(e);
-	} catch (ClassNotFoundException e) {
-	    throw new RuntimeException(e);
-	}
-
-	return studentCurricularPlan;
+	return new StudentCurricularPlan();
     }
 
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
