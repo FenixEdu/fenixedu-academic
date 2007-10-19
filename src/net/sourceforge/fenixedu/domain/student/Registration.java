@@ -75,6 +75,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
@@ -406,17 +407,34 @@ public class Registration extends Registration_Base {
     }
 
     final public Curriculum getCurriculum() {
-	return getCurriculum(null);
+	return getCurriculum((ExecutionYear) null, (CycleType) null);
     }
     
     final public Curriculum getCurriculum(final ExecutionYear executionYear) {
+	return getCurriculum(executionYear, (CycleType) null);
+    }
+
+    final public Curriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
 	if (!hasAnyStudentCurricularPlans()) {
 	    return Curriculum.createEmpty(executionYear);
 	}
 	
 	if (getDegreeType().isBolonhaType()) {
 	    final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
-	    return studentCurricularPlan == null ? Curriculum.createEmpty(executionYear) : studentCurricularPlan.getCurriculum(executionYear);
+	    if (studentCurricularPlan == null) {
+		return Curriculum.createEmpty(executionYear);
+	    }
+
+	    if (cycleType  == null) {
+		return studentCurricularPlan.getCurriculum(executionYear);
+	    }
+	    
+	    final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
+	    if (cycleCurriculumGroup == null) {
+		return Curriculum.createEmpty(executionYear);
+	    }
+	    
+	    return cycleCurriculumGroup.getCurriculum(executionYear);
 	} else {
 	    final List<StudentCurricularPlan> sortedStudentCurricularPlans = getSortedStudentCurricularPlans();
 	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedStudentCurricularPlans.listIterator(sortedStudentCurricularPlans.size());
@@ -446,24 +464,58 @@ public class Registration extends Registration_Base {
     }
     
     final public BigDecimal getAverage() {
-	return isConcluded() ? BigDecimal.valueOf(getFinalAverage()) : getAverage(null);
+	return getAverage((ExecutionYear) null, (CycleType) null);
     }
 
     final public BigDecimal getAverage(final ExecutionYear executionYear) {
-	return getCurriculum(executionYear).getAverage();
+	return getAverage(executionYear, (CycleType) null);
     }
-    
+
+    final public BigDecimal getAverage(final CycleType cycleType) {
+	return getAverage((ExecutionYear) null, cycleType);
+    }
+
+    final public BigDecimal getAverage(final ExecutionYear executionYear, final CycleType cycleType) {
+	return executionYear == null && cycleType == null && isConcluded() ? BigDecimal.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
+    }
+
     @Override
     final public Integer getFinalAverage() {
 	return isConcluded() ? super.getFinalAverage() : null;
     }
 
+    final public Integer getFinalAverage(final CycleType cycleType) {
+	if (cycleType == null || cycleType == getDegreeType().getLastCycleType()) {
+	    return getFinalAverage();
+	}
+
+	if (getDegreeType().getCycleTypes().isEmpty()) {
+	    throw new DomainException("Registration.has.no.cycle.type");
+	}
+
+	if (!getDegreeType().hasCycleTypes(cycleType)) {
+	    throw new DomainException("Registration.doesnt.have.such.cycle.type");
+	}
+
+	return hasConcludedCycle(cycleType) ? getAverage(cycleType).intValue() : null;
+    }
+
     final public String getFinalAverageDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getFinalAverage().toString());
+	return getFinalAverageDescription((CycleType) null);
+    }
+
+    final public String getFinalAverageDescription(final CycleType cycleType) {
+	final Integer finalAverage = getFinalAverage(cycleType);
+	return finalAverage == null ? null : ResourceBundle.getBundle("resources.EnumerationResources").getString(finalAverage.toString());
     }
 
     final public String getFinalAverageQualified() {
-	return getDegreeType().getGradeScale().getQualifiedName(getFinalAverage().toString());
+	return getFinalAverageQualified((CycleType) null);
+    }
+
+    final public String getFinalAverageQualified(final CycleType cycleType) {
+	final Integer finalAverage = getFinalAverage(cycleType);
+	return finalAverage == null ? null : getDegreeType().getGradeScale().getQualifiedName(finalAverage.toString());
     }
 
     final public boolean isInFinalDegreeYear() {
@@ -1152,6 +1204,16 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasConcludedDiplomaRequest() {
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isDiploma() && documentRequest.isConcluded()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     // Special Season
 
     final public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
@@ -1521,7 +1583,7 @@ public class Registration extends Registration_Base {
 		    throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
 		} else if (!sourceRegistration.getActiveStateType().canReingress()) {
 		    throw new DomainException("error.registration.preBolonhaSourceRegistrationCannotReingress");
-		}
+    }
 	    }
 	}
     } 
@@ -1797,7 +1859,7 @@ public class Registration extends Registration_Base {
 	    return getConclusionDate();
 	}
 
-	if (!hasConcludedCycle(cycleType, (ExecutionYear) null)) {
+	if (!hasConcludedCycle(cycleType)) {
 	    throw new DomainException("Registration.hasnt.finished.given.cycle");
 	}
 
@@ -1830,7 +1892,7 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("Registration.doesnt.have.such.cycle.type");
 	}
 
-	if (hasConcludedCycle(cycleType, null)) {
+	if (hasConcludedCycle(cycleType)) {
 	    return getLastDegreeCurricularPlan().getGraduateTitle(cycleType);
 	}
 
@@ -1838,17 +1900,19 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasConcludedFirstCycle() {
-	return hasConcludedCycle(CycleType.FIRST_CYCLE, null);
+	return hasConcludedCycle(CycleType.FIRST_CYCLE);
     }
 
     final public boolean hasConcludedSecondCycle() {
-	return hasConcludedCycle(CycleType.SECOND_CYCLE, null);
+	return hasConcludedCycle(CycleType.SECOND_CYCLE);
     }
 
-    final public boolean hasConcludedCycle(final CycleType cycleType, ExecutionYear executionYear) {
+    final public boolean hasConcludedCycle(final CycleType cycleType) {
+	return hasConcludedCycle(cycleType, (ExecutionYear) null);
+    }
 
-	StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-
+    final public boolean hasConcludedCycle(final CycleType cycleType, final ExecutionYear executionYear) {
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 	if (lastStudentCurricularPlan == null) {
 	    throw new DomainException("error.registration.has.no.student.curricular.plan");
 	}
@@ -1856,6 +1920,26 @@ public class Registration extends Registration_Base {
 	return lastStudentCurricularPlan.hasConcludedCycle(cycleType, executionYear);
     }
 
+    /**
+     * 
+     * FIXME:Temporary solution until implementation of concluded first cycle is
+     * finished
+     */
+    public boolean hasConcluded() {
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
+	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
+	    if (cycle == null || cycle.getAprovedEctsCredits() < cycleType.getDefaultEcts()) {
+	        return false;
+	    }
+	}
+	return true;
+    }
+
+    public boolean getHasConcluded() {
+	return hasConcluded();
+    }
+    
     final public Collection<CycleType> getConcludedCycles() {
 	return getConcludedCycles(null);
     }
@@ -1868,7 +1952,7 @@ public class Registration extends Registration_Base {
 
 	for (final CycleType cycleType : CycleType.getSortedValues()) {
 	    if ((lastCycleTypeToInspect == null || cycleType.isBeforeOrEquals(lastCycleTypeToInspect))
-		    && hasConcludedCycle(cycleType, null)) {
+		    && hasConcludedCycle(cycleType)) {
 		result.add(cycleType);
 	    }
 	}
@@ -2400,22 +2484,6 @@ public class Registration extends Registration_Base {
                 newRegistration.addShifts(shift);
             }
         }
-    }
-
-    /**
-     * 
-     * FIXME:Temporary solution until implementation of concluded first cycle is
-     * finished
-     */
-    public boolean hasConcluded() {
-	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
-	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
-	    if (cycle == null || cycle.getAprovedEctsCredits() < cycleType.getDefaultEcts()) {
-	        return false;
-	    }
-	}
-	return true;
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
