@@ -343,3 +343,12 @@
 	</slot>
 </schema>
 
+
+<schema name="AnnulAccountingTransactionBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="whenRegistered" read-only="true"/>
+	<slot name="paymentMode" read-only="true"/>
+	<slot name="amountWithAdjustment" read-only="true"/>
+	<slot name="reason" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+	

@@ -12,7 +12,7 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
-		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&registrationOID=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${idInternal}" />
 		<fr:property name="key(view)" value="view.curricular.plans"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
 		<fr:property name="contextRelative(view)" value="true"/>

@@ -12468,4 +12468,32 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>AnnulAccountingTransaction</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>AnnulReceipt</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulReceipt</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>OpenEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
+	
 </serviceDefinitions>

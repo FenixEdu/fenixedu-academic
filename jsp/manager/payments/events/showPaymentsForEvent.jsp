@@ -30,6 +30,11 @@
 				<fr:property name="classes" value="tstyle4 thlight mtop05" />
 				<fr:property name="columnClasses"
 					value=",,,aright,aright,aright,acenter" />
+					
+				<fr:property name="linkFormat(annul)" value="/payments.do?method=prepareAnnulTransaction&amp;transactionId=${accountingTransaction.idInternal}&amp;eventId=${accountingTransaction.event.idInternal}" />
+				<fr:property name="key(annul)" value="label.payments.annul" />
+				<fr:property name="bundle(annul)" value="MANAGER_RESOURCES" />
+				<fr:property name="order(annul)" value="0" />
 			</fr:layout>
 		</fr:view>
 

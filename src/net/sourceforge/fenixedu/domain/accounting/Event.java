@@ -454,6 +454,16 @@ public abstract class Event extends Event_Base {
 	return (!hasAdministrativeOffice() || getAdministrativeOffice() == administrativeOffice);
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void open() {
+	if (isCancelled()) {
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.open.cancelled.events");
+	}
+
+	changeState(EventState.OPEN, new DateTime());
+
+    }
+
     public void cancel(final Employee responsibleEmployee) {
 	cancel(responsibleEmployee, null);
     }

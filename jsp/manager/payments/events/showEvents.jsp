@@ -42,13 +42,32 @@
 				<fr:property name="visibleIf(transferPaymentsAndCancel)" value="notCancelled" />
 				<fr:property name="order(transferPaymentsAndCancel)" value="1" />
 				
+				<fr:property name="linkFormat(open)" value="/payments.do?method=openEvent&amp;eventId=${idInternal}" />
+				<fr:property name="key(open)" value="label.open" />
+				<fr:property name="bundle(open)" value="APPLICATION_RESOURCES" />
+				<fr:property name="order(open)" value="3" />
+				<fr:property name="visibleIf(open)" value="closed" />
+				<fr:property name="confirmationKey(open)" value="label.payments.events.confirmOpen" />
+				<fr:property name="confirmationBundle(open)" value="ACADEMIC_OFFICE_RESOURCES"></fr:property>
+				
 				<fr:property name="linkFormat(cancel)" value="/payments.do?method=prepareCancelEvent&amp;eventId=${idInternal}" />
 				<fr:property name="key(cancel)" value="label.cancel" />
 				<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
-				<fr:property name="visibleIf(cancel)" value="open" />
-				<fr:property name="order(cancel)" value="2" />
+				<fr:property name="order(cancel)" value="3" />
+				<fr:property name="visibleIfNot(cancel)" value="cancelled" />
+
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
+	
+	<bean:define id="personId" name="person" property="idInternal" />
+	
+	<fr:form
+		action="<%="/payments.do?method=showOperations&amp;personId=" + personId%>">
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel">
+			<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
+		</html:cancel>
+	</fr:form>
 
 </logic:present>

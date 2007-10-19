@@ -53,6 +53,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 	Set<String> standBy = new HashSet<String>();
 	standBy.add(CandidacySituationType.STAND_BY_FILLED_DATA.toString());
 	standBy.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
+	standBy.add(CandidacySituationType.CANCELLED.toString());
 	stateMap.put(CandidacySituationType.STAND_BY.toString(), standBy);
 
 	Set<String> standByConfirmedData = new HashSet<String>();

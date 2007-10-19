@@ -190,6 +190,10 @@ public abstract class Candidacy extends Candidacy_Base {
 	    }
 	    break;	    
 	case STAND_BY:
+	    if (isCancelling(nextState)) {
+		break;
+	    }
+	    
 	    if (!checkIfDataIsFilled()) {
 		throw new DomainException("error.mandatory.data.not.filled.yet");
 	    }
@@ -202,6 +206,10 @@ public abstract class Candidacy extends Candidacy_Base {
 	default:
 	    break;
 	}
+    }
+    
+    private boolean isCancelling(final String nextState) {
+	return CandidacySituationType.valueOf(nextState) == CandidacySituationType.CANCELLED;
     }
 
 

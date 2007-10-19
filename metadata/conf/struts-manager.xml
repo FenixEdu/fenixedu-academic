@@ -2490,11 +2490,16 @@
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsManagementDA">
 			    
-			<forward name="chooseStudent" path="payments.events.chooseStudent" />    
+			<forward name="searchPersons" path="payments.events.searchPersons" />    
+			<forward name="choosePerson" path="payments.events.choosePerson" />
 			<forward name="showEvents" path="payments.events.showEvents" />    
 			<forward name="editCancelEventJustification" path="payments.events.editCancelEventJustification" />
 			<forward name="showPaymentsForEvent" path="payments.events.showPaymentsForEvent" />
 			<forward name="chooseTargetEventForPaymentsTransfer" path="payments.events.chooseTargetEventForPaymentsTransfer" />
+			<forward name="annulTransaction" path="payments.events.annulTransaction"></forward>
+			<forward name="showOperations" path="payments.showOperations" />
+			<forward name="showReceipts" path="payments.receipts.showReceipts" />
+			<forward name="showReceipt" path="payments.receipts.showReceipt" />
 		</action>
 		<!-- End: Payments Management -->
 		

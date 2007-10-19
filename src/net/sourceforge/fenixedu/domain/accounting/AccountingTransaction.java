@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 /**
@@ -191,16 +192,47 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
-	return reimburse(responsibleUser, paymentMode, amountToReimburse, true);
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, null);
+    }
+
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse, String comments) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true);
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
-	return reimburse(responsibleUser, paymentMode, amountToReimburse, false);
+	return reimburseWithoutRules(responsibleUser, paymentMode, amountToReimburse, null);
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+	    String comments) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, false);
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void annul(final User responsibleUser, final String reason) {
+
+	if (StringUtils.isEmpty(reason)) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.AccountingTransaction.cannot.annul.without.reason");
+	}
+
+	checkRulesToAnnul();
+
+	reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMode(), getAmountWithAdjustment(), reason);
+
+    }
+
+    private void checkRulesToAnnul() {
+	if (getToAccountEntry().isAssociatedToAnyActiveReceipt()) {
+	    throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.while.associated.to.active.receipt");
+	}
+
     }
 
     private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
-	    boolean checkRules) {
+	    String comments, boolean checkRules) {
 
 	if (checkRules && !canApplyReimbursement(amountToReimburse)) {
 	    throw new DomainException("error.accounting.AccountingTransaction.cannot.reimburse.events.that.may.open");
@@ -215,8 +247,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(EntryType.ADJUSTMENT,
 		amountToReimburse.negate(), getToAccount()),
 		new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()), new AccountingTransactionDetail(
-			new DateTime(), paymentMode), this);
-	
+			new DateTime(), paymentMode, comments), this);
+
 	getEvent().recalculateState(getWhenRegistered());
 
 	return transaction;
