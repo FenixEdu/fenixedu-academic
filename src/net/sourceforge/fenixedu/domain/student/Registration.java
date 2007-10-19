@@ -207,36 +207,31 @@ public class Registration extends Registration_Base {
     }
 
     @Deprecated
-    final public void delete() {
+    public void delete() {
 
 	checkRulesToDelete();
 
-	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
-	    ;
-	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete())
-	    ;
-	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete())
-	    ;
+	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete());
+	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete());
+	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete());
+	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete());
+	for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete());
 		
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
 	}
-
 	if (hasExternalRegistrationData()) {
 	    getExternalRegistrationData().delete();
 	}
-
-	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
-	    ;
-
-	for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete())
-	    ;
-
-	
 	if (hasSenior()) {
 	    getSenior().delete();
 	}
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().delete();
+	}
 	
+	removeSourceRegistration();
+	removeDestinyRegistration();
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
