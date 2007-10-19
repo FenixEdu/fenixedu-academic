@@ -86,7 +86,7 @@
 		<fr:edit name="entryBean" property="entry" schema="<%= entryInfoSchema %>" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" 
 			action="<%= createCalendarEntryURL %>">
 			<fr:layout name="tabular">   
-				<fr:hidden slot="rootEntryDestination" name="entryBean" property="rootEntry"/>									  
+				<fr:hidden slot="parentEntry" name="entryBean" property="rootEntry"/>									  
 	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
 	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
    			</fr:layout> 

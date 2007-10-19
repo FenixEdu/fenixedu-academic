@@ -44,8 +44,12 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
-	    AcademicCalendarRootEntry rootEntryDestination) {
+	    AcademicCalendarEntry rootEntryDestination) {
 
+	if(!rootEntryDestination.isRootEntry()) {
+	    throw new DomainException("error.AcademicCalendarEntry.invalid.rootEntry");
+	}
+	
 	if(!rootEntryDestination.equals(getRooEntry())) {	    
 	    List<AcademicCalendarEntry> entryPath = getEntryFullPath();
 	    entryPath.remove(0);
@@ -64,7 +68,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void delete() {
 	if(!getChildEntries().isEmpty()) {
-	    throw new DomainException("error.academicCalendarEntry.has.childs");
+	    throw new DomainException("error.AcademicCalendarEntry.has.childs");
 	}	
 	super.setParentEntry(null);
 	super.setTemplateEntry(null);	
