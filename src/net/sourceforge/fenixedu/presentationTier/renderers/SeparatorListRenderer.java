@@ -31,6 +31,17 @@ public class SeparatorListRenderer extends OutputRenderer {
     
     private String emptyLabel;
 
+    private Boolean targetBlank;
+  
+    
+    
+    public Boolean getTargetBlank() {
+        return targetBlank;
+    }
+
+    public void setTargetBlank(Boolean targetBlank) {
+        this.targetBlank = targetBlank;
+    }
 
     public String getEmptyLabel() {
         return emptyLabel;
@@ -84,6 +95,7 @@ public class SeparatorListRenderer extends OutputRenderer {
 	this.link = link;
     }
 
+ 
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
@@ -129,7 +141,11 @@ public class SeparatorListRenderer extends OutputRenderer {
 		HtmlLink htmlLink = new HtmlLink();
 		htmlLink.setUrl(getLink().trim());			
 		htmlLink.setModuleRelative(false);
-		htmlLink.setTarget(HtmlLink.Target.BLANK);
+		
+		if(getTargetBlank() != null && getTargetBlank()) {
+		    htmlLink.setTarget(HtmlLink.Target.BLANK);
+		}
+		
 		htmlLink.setBody(htmlComponent);
 
 		if(slotValue != null) {

@@ -8,36 +8,47 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
       
     public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
 	    MultiLanguageString description, DateTime begin, DateTime end) {
+	
 	super();
-	super.init(null, academicCalendarEntry, title, description, begin, end);
+	super.initEntry(academicCalendarEntry, title, description, begin, end);
     }
         
+    private EnrolmentsPeriodCE(AcademicCalendarEntry parentEntry, EnrolmentsPeriodCE enrolmentsPeriodCE) {
+	super();
+	super.initVirtualEntry(parentEntry, enrolmentsPeriodCE);
+    }
+
     @Override
     public boolean isEnrolmentsPeriod() {
 	return true;
     }
 
     @Override
-    public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isEnrolmentsPeriod() || parentEntry.isExamsPeriod() || parentEntry.isLessonsPerid()
-		|| parentEntry.isGradeSubmissionPeriod()) {
-	    return true;
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
+	return !parentEntry.isAcademicSemester() && !parentEntry.isAcademicTrimester();
+    }
+
+    @Override
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
+	return false;
+    }
+
+    @Override
+    protected boolean areIntersectionsPossible() {	
+	return false;
+    }
+
+    @Override
+    protected boolean areOutOfBoundsPossible() {	
+	return false;
+    }
+
+    @Override
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
+	if(virtual) {
+	    return new EnrolmentsPeriodCE(parentEntry, this);
+	} else {
+	    return new EnrolmentsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());   
 	}
-	return false;
-    }
-
-    @Override
-    public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {	
-	return false;
-    }
-
-    @Override
-    public boolean areIntersectionsPossible() {	
-	return false;
-    }
-
-    @Override
-    public boolean areOutOfBoundsPossible() {	
-	return false;
     }
 }

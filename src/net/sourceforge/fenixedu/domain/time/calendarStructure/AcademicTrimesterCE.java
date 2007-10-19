@@ -6,37 +6,49 @@ import org.joda.time.DateTime;
 
 public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
-    public AcademicTrimesterCE(AcademicCalendar academicCalendar, AcademicCalendarEntry parentEntry,
-	    MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end) {
+    public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
+	    MultiLanguageString description, DateTime begin, DateTime end) {
+	
 	super();
-	super.init(academicCalendar, parentEntry, title, description, begin, end);
+	super.initEntry(parentEntry, title, description, begin, end);
     } 
     
+    private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, AcademicTrimesterCE academicTrimesterCE) {
+	super();
+	super.initVirtualEntry(parentEntry, academicTrimesterCE);
+    }
+
     @Override
     public boolean isAcademicTrimester() {
 	return true;
     }
     
     @Override
-    public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isAcademicYear() || parentEntry.isAcademicSemester()) {
-	    return false;
-	}
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
+	return !parentEntry.isAcademicYear() && !parentEntry.isAcademicSemester();
+    }
+
+    @Override
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
+	return false;
+    }
+
+    @Override
+    protected boolean areIntersectionsPossible() { 
 	return true;
     }
 
     @Override
-    public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {	
-	return false;
+    protected boolean areOutOfBoundsPossible() {	
+	return true;
     }
 
     @Override
-    public boolean areIntersectionsPossible() { 
-	return false;
-    }
-
-    @Override
-    public boolean areOutOfBoundsPossible() {	
-	return false;
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
+	if(virtual) {
+	    return new AcademicTrimesterCE(parentEntry, this);
+	} else {
+	    return new AcademicTrimesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());
+	}
     }
 }

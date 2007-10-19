@@ -6,10 +6,16 @@ import org.joda.time.DateTime;
 
 public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     
-    public LessonsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
+    public LessonsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 	    
 	    MultiLanguageString description, DateTime begin, DateTime end) {
+	
 	super();
-	super.init(null, academicCalendarEntry, title, description, begin, end);
+	super.initEntry(academicCalendarEntry, title, description, begin, end);
+    }
+    
+    private LessonsPeriodCE(AcademicCalendarEntry entry, LessonsPeriodCE lessonsPeriodCE) {
+	super();
+	super.initVirtualEntry(entry, lessonsPeriodCE);
     }
     
     @Override
@@ -18,26 +24,31 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     }  
 
     @Override
-    public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isEnrolmentsPeriod() || parentEntry.isExamsPeriod() || parentEntry.isLessonsPerid()
-		|| parentEntry.isGradeSubmissionPeriod()) {
-	    return true;
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
+	return !parentEntry.isAcademicSemester() && !parentEntry.isAcademicTrimester();
+    }
+
+    @Override
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
+	return false;
+    }
+
+    @Override
+    protected boolean areIntersectionsPossible() {	
+	return false;
+    }
+
+    @Override
+    protected boolean areOutOfBoundsPossible() {	
+	return false;
+    }
+
+    @Override
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
+	if(virtual) {
+	    return new LessonsPeriodCE(parentEntry, this);
+	} else {
+	    return new LessonsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());
 	}
-	return false;
     }
-
-    @Override
-    public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {
-	return false;
-    }
-
-    @Override
-    public boolean areIntersectionsPossible() {	
-	return true;
-    }
-
-    @Override
-    public boolean areOutOfBoundsPossible() {	
-	return true;
-    }        
 }

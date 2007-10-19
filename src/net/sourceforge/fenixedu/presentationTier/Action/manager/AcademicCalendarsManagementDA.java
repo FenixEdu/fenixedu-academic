@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -20,7 +20,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -29,195 +28,141 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	List<AcademicCalendar> academicCalendars = rootDomainObject.getAcademicCalendars();
+	List<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
 	request.setAttribute("academicCalendars", academicCalendars);
+	
 	return mapping.findForward("prepareChooseCalendar");
     }
-    
+         
     public ActionForward prepareViewAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendar academicCalendar = getAcademicCalendarFromParameter(request);
+	AcademicCalendarEntry academicCalendar = getAcademicCalendarEntryFromParameter(request);
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
 	Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
 
-	CalendarEntryBean bean = new CalendarEntryBean(academicCalendar, begin, end);
-
-	request.setAttribute("datesToDisplayBean", bean);
-	return viewAcademicCalendarInInterval(mapping, request, bean.getAcademicCalendar(), bean.getBeginDateToDisplay(), bean.getEndDateToDisplay());	
+	CalendarEntryBean bean = new CalendarEntryBean((AcademicCalendarRootEntry) academicCalendar, academicCalendar, begin, end);
+	
+	return generateGanttDiagram(mapping, request, bean);	
     }
 
     public ActionForward viewAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("datesToDisplay");
-	if(bean == null) {
-	    AcademicCalendar academicCalendar = getAcademicCalendarFromParameter(request);
-	    Partial beginPartial = getBeginFromParameter(request);
-	    Partial endPartial = getEndFromParameter(request);
-	    bean = new CalendarEntryBean(academicCalendar, beginPartial, endPartial);
-	} 
+	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("datesToDisplayID");
 	
-	request.setAttribute("datesToDisplayBean", bean);	
-	return viewAcademicCalendarInInterval(mapping, request, bean.getAcademicCalendar(), bean.getBeginDateToDisplay(), bean.getEndDateToDisplay());			
+	return generateGanttDiagram(mapping, request, bean);			
     }    
-
+      
     public ActionForward viewAcademicCalendarEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntryFromParameter(request);
+	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);
+	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
+	
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);
 
-	CalendarEntryBean bean = new CalendarEntryBean(academicCalendarEntry.getAcademicCalendar(), beginPartial, endPartial);
-	request.setAttribute("datesToDisplayBean", bean);
-	
-	return viewAcademicCalendarEntryInInterval(mapping, request, beginPartial, endPartial, academicCalendarEntry);
-    }
-
+	CalendarEntryBean bean = new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial);
+		
+	return generateGanttDiagram(mapping, request, bean);
+    }    
+        
     public ActionForward chooseCalendarEntryTypePostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("calendarEntryBeanWithType");		
-	request.setAttribute("calendarEntryBean", bean);
+	request.setAttribute("parentEntryBean", bean);
+	
 	return mapping.findForward("prepareCreateCalendarEntry");
     }
     
-    public ActionForward prepareCreateEntryForAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareCreateEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendar academicCalendar = getAcademicCalendarFromParameter(request);	
+	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);	
+	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
+	
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);	
-	request.setAttribute("calendarEntryBean", new CalendarEntryBean(academicCalendar, beginPartial, endPartial));
+	
+	request.setAttribute("parentEntryBean", new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
+	
 	return mapping.findForward("prepareCreateCalendarEntry");
-    }            
+    }        
     
-    public ActionForward prepareCreateEntryForAcademicCalendarEntry(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareEditEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntryFromParameter(request);
+	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);
+	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
+	
 	Partial beginPartial = getBeginFromParameter(request);
-	Partial endPartial = getEndFromParameter(request);
-	request.setAttribute("calendarEntryBean", new CalendarEntryBean(academicCalendarEntry, beginPartial, endPartial));
+	Partial endPartial = getEndFromParameter(request);		
+	
+	request.setAttribute("entryBean", new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
+	
 	return mapping.findForward("prepareCreateCalendarEntry");
-    }
-        
-    public ActionForward deleteAcademicCalendarEntry(ActionMapping mapping, ActionForm actionForm,
+    } 
+           
+    public ActionForward deleteEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntryFromParameter(request);	
-	AcademicCalendar academicCalendar = academicCalendarEntry.getAcademicCalendar();
-	AcademicCalendarEntry parentEntry = academicCalendarEntry.getParentEntry();
+	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);	
+	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
+	
+	AcademicCalendarRootEntry entryRootEntry = entry.getRooEntry();
+	AcademicCalendarEntry entryParentEntry = entry.getParentEntry();
+	
+	boolean deletedRootEntry = entry.isRootEntry();
+	
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);
-
-	CalendarEntryBean bean = new CalendarEntryBean(academicCalendar, beginPartial, endPartial);
-	request.setAttribute("datesToDisplayBean", bean);
 	
 	try {
-	    executeService("DeleteAcademicCalendarEntry", new Object[] {academicCalendarEntry});
+	    executeService("DeleteAcademicCalendarEntry", new Object[] {entry});
 
 	} catch(DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
-	    return viewAcademicCalendarEntryInInterval(mapping, request, beginPartial, endPartial, academicCalendarEntry);
+	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
 	}
-		
-	if(parentEntry != null) {
-	    request.setAttribute("academicCalendarEntryID", parentEntry.getIdInternal());
-	    return viewAcademicCalendarEntryInInterval(mapping, request, beginPartial, endPartial, parentEntry);
-	} else {
-	    return viewAcademicCalendarInInterval(mapping, request, academicCalendar, beginPartial, endPartial);
-	}	
+	
+	if(deletedRootEntry) {
+	    return prepareChooseCalendar(mapping, actionForm, request, response);    
+	 
+	} else if(entryParentEntry != null) {	    	    
+	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entryParentEntry, beginPartial, endPartial));
+	    
+	} else {	  	   
+	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entryRootEntry, beginPartial, endPartial));
+	}		
     }
-    
-    public ActionForward deleteAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	AcademicCalendar academicCalendar = getAcademicCalendarFromParameter(request);
-	Partial beginPartial = getBeginFromParameter(request);
-	Partial endPartial = getEndFromParameter(request);
-
-	try {
-	    executeService("DeleteAcademicCalendar", new Object[] {academicCalendar});
-
-	} catch(DomainException domainException) {
-	    addActionMessage(request, domainException.getMessage());
-	    CalendarEntryBean bean = new CalendarEntryBean(academicCalendar, beginPartial, endPartial);
-	    request.setAttribute("datesToDisplayBean", bean);
-	    return viewAcademicCalendarInInterval(mapping, request, academicCalendar, beginPartial, endPartial);
-	}	
-
-	return prepareChooseCalendar(mapping, actionForm, request, response);
-    }    
-
-    public ActionForward prepareEditAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	AcademicCalendar academicCalendar = getAcademicCalendarFromParameter(request);
-	Partial beginPartial = getBeginFromParameter(request);
-	Partial endPartial = getEndFromParameter(request);
-	
-	request.setAttribute("beginDate", CalendarEntryBean.getPartialString(beginPartial));
-	request.setAttribute("endDate", CalendarEntryBean.getPartialString(endPartial));	
-	request.setAttribute("academicCalendar", academicCalendar);			
-	
-	return mapping.findForward("prepareEditAcademicCalendar");
-    } 
-
-    public ActionForward prepareEditAcademicCalendarEntry(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntryFromParameter(request);
-	Partial beginPartial = getBeginFromParameter(request);
-	Partial endPartial = getEndFromParameter(request);
-	
-	request.setAttribute("beginDate", CalendarEntryBean.getPartialString(beginPartial));
-	request.setAttribute("endDate", CalendarEntryBean.getPartialString(endPartial));
-	request.setAttribute("calendarEntry", academicCalendarEntry);			
-	
-	return mapping.findForward("prepareCreateCalendarEntry");
-    } 
-
+         
     // Private Methods
 
-    private ActionForward viewAcademicCalendarInInterval(ActionMapping mapping, HttpServletRequest request, AcademicCalendar academicCalendar, Partial begin, Partial end) throws InvalidArgumentException {	
+    private ActionForward generateGanttDiagram(ActionMapping mapping, HttpServletRequest request, CalendarEntryBean bean) throws InvalidArgumentException {		
+	
+	YearMonthDay beginDate = bean.getBeginDateToDisplayInYearMonthDayFormat();
+	YearMonthDay endDate = bean.getEndDateToDisplayInYearMonthDayFormat();
 
-	YearMonthDay beginDate = CalendarEntryBean.getDateFromPartial(begin);
-	YearMonthDay endDate = CalendarEntryBean.getDateFromPartial(end);
-
-	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, academicCalendar, beginDate, endDate);	
+	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, bean.getRootEntry(), beginDate, endDate);	
 	GanttDiagram diagram = GanttDiagram.getNewTotalGanttDiagram(newEntries, beginDate, endDate);
 
-	request.setAttribute("academicCalendar", academicCalendar);
-	request.setAttribute("ganttDiagram", diagram);		
-
-	return mapping.findForward("viewAcademicCalendar");
-    }
-
-    private ActionForward viewAcademicCalendarEntryInInterval(ActionMapping mapping, HttpServletRequest request, Partial begin, Partial end, AcademicCalendarEntry entry) throws InvalidArgumentException {		
-
-	YearMonthDay beginDate = CalendarEntryBean.getDateFromPartial(begin);
-	YearMonthDay endDate = CalendarEntryBean.getDateFromPartial(end);
-
-	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, entry.getAcademicCalendar(), beginDate, endDate);	
-	GanttDiagram diagram = GanttDiagram.getNewTotalGanttDiagram(newEntries, beginDate, endDate);
-
-	request.setAttribute("calendarEntry", entry);
+	request.setAttribute("entryBean", bean);
 	request.setAttribute("ganttDiagram", diagram);	
 
 	return mapping.findForward("viewAcademicCalendar");
     }
 
-    private List<GanttDiagramEvent> generateEntriesTree(HttpServletRequest request, AcademicCalendar academicCalendar, YearMonthDay begin, YearMonthDay end) {
+    private List<GanttDiagramEvent> generateEntriesTree(HttpServletRequest request, AcademicCalendarRootEntry academicCalendar, YearMonthDay begin, YearMonthDay end) {
 
 	DateTime beginDateTime = begin.toDateTimeAtMidnight();
 	DateTime endDateTime = end.toDateTimeAtMidnight();
 
 	List<GanttDiagramEvent> result = new ArrayList<GanttDiagramEvent>();
-	for (AcademicCalendarEntry entry : academicCalendar.getEntriesOrderByDate(beginDateTime, endDateTime)) {
+	for (AcademicCalendarEntry entry : academicCalendar.getChildEntriesWithTemplateEntriesOrderByDate(beginDateTime, endDateTime)) {
 	    if(!result.contains(entry)) {
 		getSubEntriesTree(entry, result);
 	    }
@@ -227,23 +172,23 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
     private void getSubEntriesTree(AcademicCalendarEntry entry, List<GanttDiagramEvent> result) {			
 	result.add(entry);
-	for (AcademicCalendarEntry subEntry : entry.getSubEntriesOrderByDate()) {
+	for (AcademicCalendarEntry subEntry : entry.getChildEntriesOrderByDate()) {
 	    getSubEntriesTree(subEntry, result);
 	}
     }
 
-    private AcademicCalendar getAcademicCalendarFromParameter(final HttpServletRequest request) {
-	final String calendarIDString = request.getParameter("academicCalendarID");
-	final Integer calendarID = Integer.valueOf(calendarIDString);
-	return rootDomainObject.readAcademicCalendarByOID(calendarID);
-    }
-
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
-	final String calendarIDString = request.getParameter("academicCalendarEntryID");
+	final String calendarIDString = request.getParameter("entryID");
 	final Integer calendarID = Integer.valueOf(calendarIDString);
 	return rootDomainObject.readAcademicCalendarEntryByOID(calendarID);
     } 
 
+    private AcademicCalendarRootEntry getAcademicCalendarRootEntryFromParameter(final HttpServletRequest request) {
+	final String calendarIDString = request.getParameter("rootEntryID");
+	final Integer calendarID = Integer.valueOf(calendarIDString);
+	return (AcademicCalendarRootEntry) rootDomainObject.readAcademicCalendarEntryByOID(calendarID);
+    } 
+    
     private Partial getBeginFromParameter(final HttpServletRequest request) {
 	final String date = request.getParameter("begin");
 	return CalendarEntryBean.getPartialFromString(date);

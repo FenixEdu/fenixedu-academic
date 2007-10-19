@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 public class DeleteAcademicCalendarEntry extends Service {
 
     public void run(AcademicCalendarEntry academicCalendarEntry) {
-	academicCalendarEntry.delete();
+	if(academicCalendarEntry != null) {
+	    academicCalendarEntry.delete();
+	}
     }
 }

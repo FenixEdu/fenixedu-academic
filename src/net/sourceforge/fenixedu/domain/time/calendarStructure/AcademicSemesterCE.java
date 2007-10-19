@@ -3,16 +3,20 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
-import org.joda.time.Partial;
-import org.joda.time.Period;
 
 public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
-    public AcademicSemesterCE(AcademicCalendar academicCalendar, AcademicCalendarEntry parentEntry,
-	    MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end) {
+    public AcademicSemesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
+	    MultiLanguageString description, DateTime begin, DateTime end) {
+	
 	super();
-	super.init(academicCalendar, parentEntry, title, description, begin, end);
+	super.initEntry(parentEntry, title, description, begin, end);
     }    
+
+    private AcademicSemesterCE(AcademicCalendarEntry parentEntry, AcademicSemesterCE academicSemesterCE) {
+	super();
+	super.initVirtualEntry(parentEntry, academicSemesterCE);
+    }
 
     @Override
     public boolean isAcademicSemester() {
@@ -20,28 +24,34 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
-    public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isAcademicYear()) {
-	    return false;
-	}
-	return true;
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
+	return !parentEntry.isAcademicYear();
     }
 
     @Override
-    public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
 	if(childEntry.isAcademicTrimester()) {
-	    return (getSubEntries(AcademicTrimesterCE.class).size() >= 2) ? true : false;
+	    return getChildEntries(AcademicTrimesterCE.class).size() >= 2;
 	}	
 	return false;
     }
 
     @Override
-    public boolean areIntersectionsPossible() {	
+    protected boolean areIntersectionsPossible() {	
 	return true;
     }
 
     @Override
-    public boolean areOutOfBoundsPossible() { 
-	return false;
+    protected boolean areOutOfBoundsPossible() { 
+	return true;
+    }
+
+    @Override
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
+	if(virtual) {
+	    return new AcademicSemesterCE(parentEntry, this);
+	} else {
+	    return new AcademicSemesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());
+	}
     }              
 }

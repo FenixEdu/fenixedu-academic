@@ -4265,18 +4265,16 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		ThesisParticipationType type;
 	}
 
-	class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar extends net.sourceforge.fenixedu.domain.DomainObject {
-		MultiLanguageString description;
-		MultiLanguageString title;
-	}
-
 	class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime begin;
-		MultiLanguageString description;
-		DateTime end;
 		MultiLanguageString title;
+		MultiLanguageString description;		
+		DateTime begin;
+		DateTime end;		
 	}
 
+		class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {			
+		}
+		
 		class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
 		}
 
@@ -4445,13 +4443,6 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
  * Relations definitions
  * 
  */
-
-relation AcademicCalendarAcademicCalendarEntry {
-	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar playsRole academicCalendar;
-	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole entries {
-		multiplicity *;
-	}
-}
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
 	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
@@ -8415,9 +8406,9 @@ relation RootDomainMarkSheet {
 	}
 }
 
-relation RootDomainObjectAcademicCalendar {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar playsRole academicCalendars {
+relation RootDomainObjectAcademicCalendarRootEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForRootEntries;
+	net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry playsRole academicCalendars {
 		multiplicity *;
 	}
 }

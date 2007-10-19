@@ -541,7 +541,8 @@
 		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
 		<property name="eachLayout" value="values" />
 		<property name="param" value="idInternal/spaceID" />
-		<property name="link" value="/publico/findSpaces.do?method=viewSpace" />		
+		<property name="link" value="/publico/findSpaces.do?method=viewSpace" />
+		<property name="targetBlank" value="true" />		
 	</slot>
 </schema>
 
@@ -574,7 +575,7 @@
 		<property name="separator" value=", "/>
 		<property name="eachSchema" value="SelectedSpaceExtensionsSchema" />	
 		<property name="eachLayout" value="values" />
-		<property name="emptyLabel" value="--" />
+		<property name="emptyLabel" value="--" />		
 	</slot>
 </schema>
 

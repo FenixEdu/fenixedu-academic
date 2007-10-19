@@ -9,11 +9,22 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
     
     public ExamsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
 	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType) {
+	
 	super();
-	super.init(null, academicCalendarEntry, title, description, begin, end);
+	super.initEntry(academicCalendarEntry, title, description, begin, end);
 	setSeasonType(seasonType);
     }
-    
+
+    private ExamsPeriodCE(AcademicCalendarEntry parentEntry, ExamsPeriodCE examsPeriodCE) {
+	super();
+	super.initVirtualEntry(parentEntry, examsPeriodCE);
+    }
+
+    @Override
+    public boolean isExamsPeriod() {
+	return true;
+    }
+
     @Override
     public void setSeasonType(SeasonType seasonType) {
         if(seasonType == null) {
@@ -23,31 +34,39 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
     }
     
     @Override
-    public boolean isExamsPeriod() {
-	return true;
+    public SeasonType getSeasonType() {
+        if(isVirtual()) {
+            return ((ExamsPeriodCE)getTemplateEntry()).getSeasonType();
+        }
+        return super.getSeasonType();
+    }
+    
+    @Override
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
+	return !parentEntry.isAcademicSemester() && !parentEntry.isAcademicTrimester();
     }
 
     @Override
-    public boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
-	if (parentEntry.isEnrolmentsPeriod() || parentEntry.isExamsPeriod() || parentEntry.isLessonsPerid()
-		|| parentEntry.isGradeSubmissionPeriod()) {
-	    return true;
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
+	return false;
+    }
+
+    @Override
+    protected boolean areIntersectionsPossible() {	
+	return false;
+    }
+
+    @Override
+    protected boolean areOutOfBoundsPossible() {
+	return false;
+    }
+
+    @Override
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
+	if(virtual) {
+	    return new ExamsPeriodCE(parentEntry, this);
+	} else {
+	    return new ExamsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), getSeasonType());
 	}
-	return false;
-    }
-
-    @Override
-    public boolean exceededNumberOfSubEntries(AcademicCalendarEntry childEntry) {
-	return false;
-    }
-
-    @Override
-    public boolean areIntersectionsPossible() {	
-	return true;
-    }
-
-    @Override
-    public boolean areOutOfBoundsPossible() {
-	return true;
     }
 }

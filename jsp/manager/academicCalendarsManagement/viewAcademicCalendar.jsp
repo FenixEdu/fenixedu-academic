@@ -72,30 +72,42 @@
 		<p>
 	</logic:messagesPresent>
 		
-	<logic:notEmpty name="datesToDisplayBean">
-	
-		<logic:notEmpty name="calendarEntry">					
-			<bean:define id="nextEntry" name="calendarEntry" toScope="request" />
-			<bean:define id="calendarEntrySelected" name="calendarEntry" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" toScope="request"/>
+	<logic:notEmpty name="entryBean">
+		
+		<logic:notEmpty name="entryBean" property="entry">								
+			<bean:define id="nextEntry" name="entryBean" property="entry" toScope="request" />
+			<bean:define id="rootEntry" name="entryBean" property="rootEntry" toScope="request" />
+			<bean:define id="calendarEntrySelected" name="entryBean" property="entry" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" toScope="request"/>
 		</logic:notEmpty>
+							
 		<div class="mbottom2">
 			<jsp:include page="entriesCrumbs.jsp"/>
 		</div>		
-			
-		<bean:define id="beginDate" name="datesToDisplayBean" property="beginPartialString" type="java.lang.String"/>
-		<bean:define id="endDate" name="datesToDisplayBean" property="endPartialString" type="java.lang.String"/>							
+					
+		<bean:define id="rootEntryID" name="rootEntry" property="idInternal" />			
+		<bean:define id="beginDate" name="entryBean" property="beginPartialString" />
+		<bean:define id="endDate" name="entryBean" property="endPartialString" />												
 		
-		<fr:edit id="datesToDisplay" name="datesToDisplayBean" schema="ChooseDatesToViewAcademicCalendarSchema" action="/academicCalendarsManagement.do?method=viewAcademicCalendar">
+		<fr:edit id="datesToDisplayID" name="entryBean" schema="ChooseDatesToViewAcademicCalendarSchema" action="/academicCalendarsManagement.do?method=viewAcademicCalendar">
 			<fr:layout name="tabular">      			
    				<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>   				
    			</fr:layout>
    			<fr:destination name="cancel" path="/academicCalendarsManagement.do?method=prepareChooseCalendar"/>
 		</fr:edit>						
+				
 		
-		<logic:notEmpty name="academicCalendar">
-			
+		<logic:notEmpty name="entryBean">
+						
+			<bean:define id="entryInfoSchema" type="java.lang.String" value=""/>			
+			<logic:empty name="entryBean" property="entry.parentEntry">
+				<bean:define id="entryInfoSchema" value="AcademicCalendarInfoWithoutLinks"/>
+			</logic:empty>
+			<logic:notEmpty name="entryBean" property="entry.parentEntry">
+				<bean:define id="entryInfoSchema" value="AcademicCalendarEntryInfo"/>
+			</logic:notEmpty>
+						
 			<p class="mtop2">
-				<fr:view name="academicCalendar" schema="AcademicCalendarInfoWithoutLinks" layout="tabular">
+				<fr:view name="entryBean" property="entry" schema="<%= entryInfoSchema %>" layout="tabular">
 					<fr:layout name="tabular">      			
 		   				<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
 		   			</fr:layout>
@@ -103,45 +115,22 @@
 			</p>		
 			
 			<p>				
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareCreateEntryForAcademicCalendar&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarID" paramName="academicCalendar" paramProperty="idInternal">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareCreateEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.insert.calendar.entry"/>
 				</html:link>,	
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditAcademicCalendar&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarID" paramName="academicCalendar" paramProperty="idInternal">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar.entry"/>
 				</html:link>,		
-				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteAcademicCalendar&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarID" paramName="academicCalendar" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar o calendário?')">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o calendário?')">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.delete.academic.calendar"/>
 				</html:link>
 			</p>
 			
-		</logic:notEmpty>		
-		
-		<logic:notEmpty name="calendarEntry">
-					
-			<p class="mtop2">
-				<fr:view name="calendarEntry" schema="AcademicCalendarEntryInfo" layout="tabular">
-					<fr:layout name="tabular">      			
-		   				<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
-		   			</fr:layout>
-				</fr:view>		
-			</p>
-			<p>		
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareCreateEntryForAcademicCalendarEntry&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarEntryID" paramName="calendarEntry" paramProperty="idInternal">		
-					<bean:message bundle="MANAGER_RESOURCES" key="label.insert.calendar.entry"/>
-				</html:link>,	
-				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditAcademicCalendarEntry&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarEntryID" paramName="calendarEntry" paramProperty="idInternal">		
-					<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar.entry"/>
-				</html:link>,
-				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteAcademicCalendarEntry&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="academicCalendarEntryID" paramName="calendarEntry" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a entrada?')">
-					<bean:message bundle="MANAGER_RESOURCES" key="label.delete.academic.calendar"/>
-				</html:link>
-			</p>	
-				
-		</logic:notEmpty>		
+		</logic:notEmpty>					
 		
 		<logic:notEmpty name="ganttDiagram">
 			<p>										
-				<gd:ganttDiagram ganttDiagram="ganttDiagram" eventParameter="academicCalendarEntryID" eventUrl="<%= "/manager/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;begin=" + beginDate + "&amp;end=" + endDate %>" bundle="MANAGER_RESOURCES"/>		
+				<gd:ganttDiagram ganttDiagram="ganttDiagram" eventParameter="entryID" eventUrl="<%= "/manager/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" bundle="MANAGER_RESOURCES"/>		
 			</p>
 		</logic:notEmpty>
 		

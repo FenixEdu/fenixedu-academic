@@ -3,53 +3,60 @@ package net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarMana
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 
-import org.jfree.data.time.Year;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class CalendarEntryBean implements Serializable {
-
-    private DomainReference<AcademicCalendarEntry> parentEntryReference;
-    
-    private DomainReference<AcademicCalendar> academicCalendarReference;
-    
+       
     private Class type;
     
     private Partial beginDateToDisplay;
     
     private Partial endDateToDisplay;
-           
+
+    private DomainReference<AcademicCalendarEntry> entryReference;
     
-    public CalendarEntryBean(AcademicCalendarEntry academicCalendarEntry, Partial begin, Partial end) {
-	setParentEntry(academicCalendarEntry);
+    private DomainReference<AcademicCalendarEntry> templateEntryReference;
+    
+    private DomainReference<AcademicCalendarRootEntry> selectedRootEntryReference;
+    
+    public CalendarEntryBean(AcademicCalendarRootEntry rootEntry, AcademicCalendarEntry academicCalendarEntry, Partial begin, Partial end) {	
+	setRootEntry(rootEntry);
+	setEntry(academicCalendarEntry);
 	setBeginDateToDisplay(begin);
 	setEndDateToDisplay(end);
     }
-        
-    public CalendarEntryBean(AcademicCalendar academicCalendar, Partial begin, Partial end) {
-	setAcademicCalendar(academicCalendar);
-	setBeginDateToDisplay(begin);
-	setEndDateToDisplay(end);
+
+    public AcademicCalendarRootEntry getAcademicCalendar() {
+	return getEntry().getRooEntry();
     }
     
-    public AcademicCalendar getAcademicCalendar() {
-	return academicCalendarReference == null ? null : academicCalendarReference.getObject();
+    public AcademicCalendarRootEntry getRootEntry() {
+	return selectedRootEntryReference == null ? null : selectedRootEntryReference.getObject();
     }
     
-    public void setAcademicCalendar(AcademicCalendar academicCalendar) {
-	this.academicCalendarReference = academicCalendar == null ? null : new DomainReference<AcademicCalendar>(academicCalendar);
+    public void setRootEntry(AcademicCalendarRootEntry entry) {
+	this.selectedRootEntryReference = entry == null ? null : new DomainReference<AcademicCalendarRootEntry>(entry);
+    } 
+       
+    public AcademicCalendarEntry getTemplateEntry() {
+	return templateEntryReference == null ? null : templateEntryReference.getObject();
     }
     
-    public AcademicCalendarEntry getParentEntry() {
-	return parentEntryReference == null ? null : parentEntryReference.getObject();
+    public void setTemplateEntry(AcademicCalendarEntry entry) {
+	this.templateEntryReference = entry == null ? null : new DomainReference<AcademicCalendarEntry>(entry);
+    } 
+    
+    public AcademicCalendarEntry getEntry() {
+	return entryReference == null ? null : entryReference.getObject();
     }
     
-    public void setParentEntry(AcademicCalendarEntry academicCalendarEntry) {
-	this.parentEntryReference = academicCalendarEntry == null ? null : new DomainReference<AcademicCalendarEntry>(academicCalendarEntry);
+    public void setEntry(AcademicCalendarEntry academicCalendarEntry) {
+	this.entryReference = academicCalendarEntry == null ? null : new DomainReference<AcademicCalendarEntry>(academicCalendarEntry);
     }  
 
     public Class getType() {

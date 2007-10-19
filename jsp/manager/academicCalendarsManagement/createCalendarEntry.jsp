@@ -19,17 +19,15 @@
 		<p>
 	</logic:messagesPresent>
 			
-	<logic:empty name="calendarEntry">					
+	<logic:empty name="entryBean">					
 		
-		<logic:notEmpty name="calendarEntryBean">
-		
-			<bean:define id="beginDate" name="calendarEntryBean" property="beginPartialString" type="java.lang.String"/>
-			<bean:define id="endDate" name="calendarEntryBean" property="endPartialString" type="java.lang.String"/>
-									
+		<logic:notEmpty name="parentEntryBean">
+						
 			<p class="mtop05"><b><bean:message key="label.create.academic.entry" bundle="MANAGER_RESOURCES"/></b></p>												
 			<bean:define id="goBackToPrepareCreateEntryURL">/academicCalendarsManagement.do?method=chooseCalendarEntryTypePostBack</bean:define>
+			
 			<fr:form action="<%= goBackToPrepareCreateEntryURL %>">
-				<fr:edit id="calendarEntryBeanWithType" name="calendarEntryBean" schema="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean">
+				<fr:edit id="calendarEntryBeanWithType" name="parentEntryBean" schema="ChooseAcademicCalendarEntryType">
 					<fr:destination name="postBack" path="<%= goBackToPrepareCreateEntryURL %>"/>
 					<fr:layout name="tabular">      										  
 			   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
@@ -37,72 +35,63 @@
 				</fr:edit>		
 			</fr:form>
 			
-			<logic:notEmpty name="calendarEntryBean" property="type">									
+			<logic:notEmpty name="parentEntryBean" property="type">									
 			
-				<bean:define id="schemaName">Create<bean:write name="calendarEntryBean" property="type.simpleName"/>CalendarEntryType</bean:define>	
-				<bean:define id="entryType" name="calendarEntryBean" property="type.name"/>				
-								
-				<logic:notEmpty name="calendarEntryBean" property="academicCalendar">				
-					<b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="calendarEntryBean" property="academicCalendar.title.content"/>				
-					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendar&amp;academicCalendarID=<bean:write name="calendarEntryBean" property="academicCalendar.idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>					
-					<fr:form action="<%= createCalendarEntryURL %>">
-						<fr:edit id="calendarEntryBeanWithType1" visible="false" name="calendarEntryBean" />	
-						<fr:create id="calendarEntryBeanWithInfo" type="<%= entryType.toString() %>" schema="<%= schemaName.toString() %>">													
-							<fr:hidden slot="academicCalendar" name="calendarEntryBean" property="academicCalendar"/>																																		
-							<fr:layout name="tabular">      										  
-					   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
-					   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				   			</fr:layout> 
-						</fr:create>
-						<p>
-							<html:submit>
-								<bean:message key="label.create" bundle="MANAGER_RESOURCES"/>
-							</html:submit>
-							<html:cancel>
-								<bean:message key="label.cancel" bundle="MANAGER_RESOURCES"/>
-							</html:cancel>
-						</p>											     				
-					</fr:form>				
-				</logic:notEmpty>
-								
-				<logic:notEmpty name="calendarEntryBean" property="parentEntry">											
+				<bean:define id="schemaName">Create<bean:write name="parentEntryBean" property="type.simpleName"/>CalendarEntryType</bean:define>	
+				<bean:define id="entryType" name="parentEntryBean" property="type.name"/>				
+																						
+				<logic:notEmpty name="parentEntryBean" property="entry">											
 					
-					<b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="calendarEntryBean" property="parentEntry.title.content"/>									
-					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntryBean" property="parentEntry.idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>										
+					<b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="parentEntryBean" property="entry.title.content"/>									
+					<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;rootEntryID=<bean:write name="parentEntryBean" property="rootEntry.idInternal"/>&amp;entryID=<bean:write name="parentEntryBean" property="entry.idInternal"/>&amp;begin=<bean:write name="parentEntryBean" property="beginPartialString"/>&amp;end=<bean:write name="parentEntryBean" property="endPartialString"/></bean:define>										
+										
 					<fr:form action="<%= createCalendarEntryURL %>">
-						<fr:edit id="calendarEntryBeanWithType2" visible="false" name="calendarEntryBean" />	
+					
+						<fr:edit name="parentEntryBean" id="calendarEntryBeanWithType2" visible="false" />	
+					
 						<fr:create id="calendarEntryBeanWithInfo" type="<%= entryType.toString() %>" schema="<%= schemaName.toString() %>">								
-							<fr:hidden slot="parentEntry" name="calendarEntryBean" property="parentEntry"/>																		
+							<fr:hidden slot="parentEntry" name="parentEntryBean" property="entry"/>																		
 							<fr:layout name="tabular">      										  
 					   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
-					   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>					   								   								   	
 				   			</fr:layout> 
 						</fr:create>				
+					
 						<p>
-							<html:submit>
-								<bean:message key="label.create" bundle="MANAGER_RESOURCES"/>
-							</html:submit>
-							<html:cancel>
-								<bean:message key="label.cancel" bundle="MANAGER_RESOURCES"/>
-							</html:cancel>
+							<html:submit><bean:message key="label.create" bundle="MANAGER_RESOURCES"/></html:submit>
+							<html:cancel><bean:message key="label.cancel" bundle="MANAGER_RESOURCES"/></html:cancel>
 						</p>		
-					</fr:form>				
+						
+					</fr:form>
+									
 				</logic:notEmpty>											
 				
 			</logic:notEmpty>			
 		</logic:notEmpty>
 	</logic:empty>	
 	
-	<logic:notEmpty name="calendarEntry">
+	<logic:notEmpty name="entryBean">
+		
 		<p class="mtop05"><b><bean:message key="label.edit.academic.entry" bundle="MANAGER_RESOURCES"/></b></p>		
-		<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;academicCalendarEntryID=<bean:write name="calendarEntry" property="idInternal"/>&amp;begin=<bean:write name="beginDate"/>&amp;end=<bean:write name="endDate"/></bean:define>			
-		<fr:edit name="calendarEntry" schema="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry"
+		<bean:define id="createCalendarEntryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;rootEntryID=<bean:write name="entryBean" property="rootEntry.idInternal"/>&amp;entryID=<bean:write name="entryBean" property="entry.idInternal"/>&amp;begin=<bean:write name="entryBean" property="beginPartialString"/>&amp;end=<bean:write name="entryBean" property="endPartialString"/></bean:define>			
+		
+		<bean:define id="entryInfoSchema" type="java.lang.String" value=""/>			
+		<logic:empty name="entryBean" property="entry.parentEntry">
+			<bean:define id="entryInfoSchema" value="EditAcademicCalendar"/>
+		</logic:empty>
+		<logic:notEmpty name="entryBean" property="entry.parentEntry">
+			<bean:define id="entryInfoSchema" value="EditAcademicCalendarEntryType"/>
+		</logic:notEmpty>
+	
+		<fr:edit name="entryBean" property="entry" schema="<%= entryInfoSchema %>" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" 
 			action="<%= createCalendarEntryURL %>">
-			<fr:layout name="tabular">      										  
+			<fr:layout name="tabular">   
+				<fr:hidden slot="rootEntryDestination" name="entryBean" property="rootEntry"/>									  
 	   			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05"/>
 	   			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
    			</fr:layout> 
-		</fr:edit>		
+		</fr:edit>	
+				
 	</logic:notEmpty>
 	
 </logic:present>	

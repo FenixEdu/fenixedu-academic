@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.time.chronologies;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendar;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
@@ -22,7 +22,7 @@ import org.joda.time.chrono.ISOChronology;
 
 public class AcademicChronology extends AssembledChronology {
       
-    private transient AcademicCalendar academicCalendar;
+    private transient AcademicCalendarRootEntry academicCalendar;
     
     
     private transient DurationField acAcademicYearsField;
@@ -39,7 +39,7 @@ public class AcademicChronology extends AssembledChronology {
     private transient DateTimeField acDayOfAcademicSemester;
 
     
-    public AcademicChronology(AcademicCalendar academicCalendar) {
+    public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {
 	super(ISOChronology.getInstance(), null);
 	this.academicCalendar = academicCalendar;	
     }     

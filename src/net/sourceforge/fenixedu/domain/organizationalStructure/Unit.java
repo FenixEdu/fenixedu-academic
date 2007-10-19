@@ -1022,7 +1022,8 @@ public class Unit extends Unit_Base {
 	destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
 	destinationUnit.getResultUnitAssociations().addAll(fromUnit.getResultUnitAssociations());
 	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
-		
+	destinationUnit.getPrecedentDegreeInformations().addAll(fromUnit.getPrecedentDegreeInformations());	
+	
 	fromUnit.delete();
     }
 
