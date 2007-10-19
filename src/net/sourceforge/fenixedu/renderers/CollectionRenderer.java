@@ -732,6 +732,34 @@ public class CollectionRenderer extends OutputRenderer {
     public void setContextRelative(String name, String value) {
         getTableLink(name).setContextRelative(Boolean.parseBoolean(value));
     }
+    
+    /**
+     * The confirmationKey property indicates the key of the confirmation
+     * message to show
+     * 
+     * @property
+     */
+    public void setConfirmationKey(String name, String value) {
+	getTableLink(name).setConfirmationKey(value);
+    }
+
+    public String getConfirmationKey(String name) {
+	return getTableLink(name).getConfirmationKey();
+    }
+
+    /**
+     * The confirmationBundle property indicates the bundle for the confirmation
+     * key message to show
+     * 
+     * @property
+     */
+    public void setConfirmationBundle(String name, String value) {
+	getTableLink(name).setConfirmationBundle(value);
+    }
+
+    public String getConfirmationBundle(String name) {
+	return getTableLink(name).getConfirmationBundle();
+    }
 
     protected int getNumberOfLinkColumns() {
         if (isRowForLinks()) {
@@ -1085,6 +1113,8 @@ public class CollectionRenderer extends OutputRenderer {
         private String custom;
         private String visibleIf;
         private String visibleIfNot;
+        private String confirmationKey;
+        private String confirmationBundle;
 
         public TableLink() {
             super();
@@ -1219,9 +1249,25 @@ public class CollectionRenderer extends OutputRenderer {
 
         public void setCustom(String custom) {
             this.custom = custom;
-        }
+        }        
 
-        public int compareTo(TableLink other) {
+        public String getConfirmationKey() {
+	    return confirmationKey;
+	}
+
+	public void setConfirmationKey(String confirmationKey) {
+	    this.confirmationKey = confirmationKey;
+	}
+
+	public String getConfirmationBundle() {
+	    return confirmationBundle;
+	}
+
+	public void setConfirmationBundle(String confirmationBundle) {
+	    this.confirmationBundle = confirmationBundle;
+	}
+
+	public int compareTo(TableLink other) {
             if (getOrder() == null) {
                 return 0;
             }
@@ -1278,6 +1324,12 @@ public class CollectionRenderer extends OutputRenderer {
                     link.setUrl(getLink());
                     setLinkParameters(object, link, this);
                 }
+                
+                if (getConfirmationKey() != null) {
+		    final String confirmationMessage = getConfirmationBundle() != null ? RenderUtils.getResourceString(
+			    getConfirmationBundle(), getConfirmationKey()) : RenderUtils.getResourceString(getConfirmationKey());
+		    link.setOnClick("return confirm('" + confirmationMessage + "');");
+		}
     
                 return link;
             }
