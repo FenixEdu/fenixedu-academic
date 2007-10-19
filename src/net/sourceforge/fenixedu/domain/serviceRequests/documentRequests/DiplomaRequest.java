@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -89,7 +92,11 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().hasConcludedCycle(getRequestedCycle(), null)) {
+	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
+		throw new DomainException("DiplomaRequest.diploma.not.available");
+	    }
+	    
+	    if (!getRegistration().hasConcludedCycle(getRequestedCycle())) {
 		throw new DomainException("DiplomaRequest.registration.hasnt.concluded.requested.cycle");
 	    }
 	    
@@ -102,6 +109,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	}
     }
 
+    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
+	    DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA,
+	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+    
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();
     }
