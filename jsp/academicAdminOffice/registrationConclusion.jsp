@@ -2,9 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType"%>
 
 <html:xhtml/>
 
@@ -62,6 +59,31 @@
 </fr:view>
 </logic:notPresent>
 
+<logic:equal name="registration" property="hasConcluded" value="false">
+	<ul class="list7 mtop2 error0" style="list-style: none;">
+		<li>
+			<span><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+		</li>
+	</ul>
+</logic:equal>
+<logic:equal name="registration" property="hasConcluded" value="true">
+	<h3 class="mbottom025"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<p class="mtop025">
+		<p>
+			<bean:message key="conclusion.date.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="lastApprovementDate"/>
+		</p>
+		<p>
+			<bean:message key="final.average.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="average" type="java.lang.Integer"/> valores
+		</p>
+	
+		<fr:edit id="mata" name="registrationStateBean" schema="student.manageRegistrationState.conclusionProcess" action="/manageRegistrationState.do?method=createNewState">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop025"/>
+				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+			</fr:layout>
+		</fr:edit>
+	</p>
+</logic:equal>
 
 <h3 class="mbottom025"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop025">
@@ -71,20 +93,4 @@
 			<fr:property name="visibleCurricularYearEntries" value="false" />
 		</fr:layout>
 	</fr:view>
-</p>
-
-<h3 class="mbottom025"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mtop025">
-	<p>
-		<bean:message key="conclusion.date.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="lastApprovementDate"/>
-	</p>
-	<p>
-		<bean:message key="final.average.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="average" type="java.lang.Integer"/> valores
-	</p>
-	<fr:edit id="mata" name="registrationStateBean" schema="student.manageRegistrationState.conclusionProcess" action="/manageRegistrationState.do?method=createNewState">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop025"/>
-			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-		</fr:layout>
-	</fr:edit>
 </p>
