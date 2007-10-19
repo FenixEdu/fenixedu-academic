@@ -715,13 +715,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     final public YearMonthDay getConclusionDate() {
+	if (!isConcluded((ExecutionYear) null)) {
+	    throw new DomainException("CurriculumGroup.is.not.concluded");
+	}
+
 	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
 
-	YearMonthDay result = curriculumModules.iterator().next().getConclusionDate();
+	YearMonthDay result = null;
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    final YearMonthDay curriculumModuleConclusionDate = curriculumModule.getConclusionDate();
-	    if (curriculumModuleConclusionDate.isAfter(result)) {
-		result = curriculumModuleConclusionDate;
+	    if (curriculumModule.isConcluded((ExecutionYear) null)) {
+		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.getConclusionDate();
+		if (result == null || curriculumModuleConclusionDate.isAfter(result)) {
+		    result = curriculumModuleConclusionDate;
+		}
 	    }
 	}
 
