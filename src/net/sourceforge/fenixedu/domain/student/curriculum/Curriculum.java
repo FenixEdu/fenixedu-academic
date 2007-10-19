@@ -8,9 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 public class Curriculum implements Serializable {
     
@@ -57,32 +59,55 @@ public class Curriculum implements Serializable {
     public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear, final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries, final Collection<ICurriculumEntry> curricularYearEntries) {
 	this(curriculumModule, executionYear);
 	
-	addEntries(this.entries, entries);
-	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries);
-	
-	this.curricularYearEntries.addAll(curricularYearEntries);
+	addEntries(this.entries, entries, true);
+	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries, true);
+	addEntries(this.curricularYearEntries, curricularYearEntries, false);
     }
 
     public void add(final Curriculum curriculum) {
-	addEntries(this.entries, curriculum.getEntries());
-	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
-	this.curricularYearEntries.addAll(curriculum.getCurricularYearEntries());
+	addEntries(this.entries, curriculum.getEntries(), true);
+	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries(), true);
+	addEntries(this.curricularYearEntries, curriculum.getCurricularYearEntries(), false);
 
 	forceCalculus = true;
     }
 
-    private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
+    private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries, boolean mustBeNumeric) {
 	for (final ICurriculumEntry newEntry : newEntries) {
-	    if (newEntry.getGrade().isNumeric()) {
-//		if (newEntry instanceof Dismissal) {
-//		    Dismissal dismissal = (Dismissal) newEntry;
-//		    for (IEnrolment iEnrolment : dismissal.getSourceIEnrolments()) {
-//			this.entries.remove(iEnrolment);
-//		    }
-//		}
+	    if ((newEntry.getGrade().isNumeric() || !mustBeNumeric) && shouldAdd(newEntry)) {
 		entries.add(newEntry);
 	    }
 	}
+    }
+    
+    public boolean shouldAdd(ICurriculumEntry newEntry) {
+	if (newEntry instanceof IEnrolment) {
+	    final IEnrolment iEnrolment = (IEnrolment) newEntry;
+	    
+	    for (final ICurriculumEntry entry : curricularYearEntries) {
+		if (entry instanceof Dismissal) {
+		    for (IEnrolment source : ((Dismissal) entry).getSourceIEnrolments()) {
+			if (source == iEnrolment) {
+			    return false;
+			}
+		    }
+		} else if (entry == iEnrolment) {
+			return false;
+		}
+	    }
+	} else if (newEntry instanceof Dismissal) {
+	    final Dismissal dismissal = (Dismissal) newEntry;
+	    
+	    for (final ICurriculumEntry entry : curricularYearEntries) {
+		if (entry instanceof Dismissal) {
+		    if (((Dismissal) entry).getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments())) {
+			return false;
+		    }
+		}
+	    }
+	}
+
+	return true;
     }
 
     public CurriculumModule getCurriculumModule() {
@@ -94,7 +119,7 @@ public class Curriculum implements Serializable {
     }
     
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return curriculumModule.getStudentCurricularPlan();
+	return curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan();
     }
     
     public boolean isEmpty() {
