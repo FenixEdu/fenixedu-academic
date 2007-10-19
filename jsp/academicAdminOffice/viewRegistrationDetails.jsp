@@ -80,10 +80,10 @@
 		</html:link>
 	</span>
 	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-			<bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+				<bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
 	</span>
 	<span class="pleft1">	
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -109,12 +109,14 @@
 	</logic:equal>
 <%--
 	<logic:equal name="registration" property="concluded" value="false">
-	<span class="pleft1">	
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-			<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</span>	
+		<logic:equal name="registration" property="lastStudentCurricularPlan.boxStructure" value="true">
+			<span class="pleft1">	
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+				<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+					<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</span>	
+		</logic:equal>
 	</logic:equal>
 --%>
 </p>
