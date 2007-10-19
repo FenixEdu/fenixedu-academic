@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -19,7 +20,6 @@ public class ConcludedState extends ConcludedState_Base {
 
     public ConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
-
 
 	if (!registration.hasConcluded()) {
 	    throw new DomainException("error.registration.is.not.concluded");
@@ -45,7 +45,11 @@ public class ConcludedState extends ConcludedState_Base {
 
     @Override
     public void delete() {
-        getRegistration().setFinalAverage(null);
+	if (getRegistration().hasConcludedDiplomaRequest()) {
+	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
+	} 
+	
+	getRegistration().setFinalAverage(null);
         super.delete();
     }
     
@@ -101,5 +105,5 @@ public class ConcludedState extends ConcludedState_Base {
 	}
 	
     }
-
+    
 }
