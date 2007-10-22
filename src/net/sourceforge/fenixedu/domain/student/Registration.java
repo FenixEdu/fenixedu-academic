@@ -285,7 +285,7 @@ public class Registration extends Registration_Base {
 
     public boolean attends(final ExecutionCourse executionCourse) {
 	for (final Attends attends : getAssociatedAttends()) {
-	    if (attends.getExecutionCourse() == executionCourse) {
+	    if (attends.isFor(executionCourse)) {
 		return true;
 	    }
 	}
@@ -295,7 +295,7 @@ public class Registration extends Registration_Base {
     final public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionPeriod executionPeriod) {
 	final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attend.isFor(executionPeriod)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
 			result.add((WrittenEvaluation) evaluation);
@@ -320,7 +320,7 @@ public class Registration extends Registration_Base {
     final public List<Exam> getUnenroledExams(final ExecutionPeriod executionPeriod) {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attend.isFor(executionPeriod)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
 			result.add((Exam) evaluation);
@@ -356,10 +356,10 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
+    public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
 	final List<Project> result = new ArrayList<Project>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attend.isFor(executionPeriod)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof Project) {
 			result.add((Project) evaluation);
@@ -915,10 +915,10 @@ public class Registration extends Registration_Base {
 	return attends;
     }
 
-    final public List<Attends> readAttendsByExecutionPeriod(ExecutionPeriod executionPeriod) {
-	List<Attends> attends = new ArrayList<Attends>();
-	for (Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
+    public List<Attends> readAttendsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	final List<Attends> attends = new ArrayList<Attends>();
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.isFor(executionPeriod)) {
 		attends.add(attend);
 	    }
 	}
@@ -1306,7 +1306,7 @@ public class Registration extends Registration_Base {
     final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionPeriod executionPeriod) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attends.isFor(executionPeriod)) {
 		result.add(attends.getExecutionCourse());
 	    }
 	}
@@ -1327,7 +1327,7 @@ public class Registration extends Registration_Base {
     final public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attends.isFor(executionPeriod)) {
 		result.add(attends);
 	    }
 	}
@@ -1422,7 +1422,7 @@ public class Registration extends Registration_Base {
 	return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
     }
 
-    final public void addAttendsTo(final ExecutionCourse executionCourse) {
+    public void addAttendsTo(final ExecutionCourse executionCourse) {
 
 	checkIfReachedAttendsLimit();
 
@@ -2260,9 +2260,9 @@ public class Registration extends Registration_Base {
 	return getStudent().readAttendByExecutionCourse(executionCourse);
     }
 
-    final public Attends readRegistrationAttendByExecutionCourse(ExecutionCourse executionCourse) {
-	for (Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().equals(executionCourse)) {
+    final public Attends readRegistrationAttendByExecutionCourse(final ExecutionCourse executionCourse) {
+	for (final Attends attend : this.getAssociatedAttends()) {
+	    if (attend.isFor(executionCourse)) {
 		return attend;
 	    }
 	}
@@ -2449,8 +2449,7 @@ public class Registration extends Registration_Base {
             for (final Attends attends : getAssociatedAttendsSet()) {
                 final ExecutionCourse executionCourse = attends.getExecutionCourse();
                 final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                    System.out.println("Did not find Target registration for attends!!! Transfering to any.");
+                if (executionPeriod.isCurrent()) {
                     transferAttends(attends, newRegistration);
                 }
             }
@@ -2461,7 +2460,7 @@ public class Registration extends Registration_Base {
         for (final Attends attends : getAssociatedAttendsSet()) {
             final ExecutionCourse executionCourse = attends.getExecutionCourse();
             final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+            if (executionPeriod.isCurrent()) {
                 for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                     final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                     if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
