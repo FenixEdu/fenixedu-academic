@@ -1,0 +1,28 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="index" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/index.jsp"/>
+    </definition>	    
+   <definition name="students.search" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/searchStudents.jsp"></put>
+    </definition> 
+    <definition name="students.viewStudentDetails" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/viewStudentDetails.jsp"></put>
+    </definition> 
+     <definition name="student.viewPersonalData" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/viewPersonalData.jsp"></put>
+    </definition>
+     <definition name="student.viewRegistrationDetails" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationDetails.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="internRelationOffice.masterPage">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="student.showStudentCurriculum" extends="internRelationOffice.masterPage" >
+		<put name="body" value="/internationalRelatOffice/displayStudentCurriculum_bd.jsp" />
+	</definition>  
+    
+</tiles-definitions>
