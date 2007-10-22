@@ -116,19 +116,24 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     private void checkIfCanAddAmountForCompleteEnrolmentModel(final Money amountToAdd, final Event event, final DateTime when) {
 
-	if (hasAlreadyPayedAnyAmount(event, when) && !isPayingRemaingAmount(event, when, amountToAdd)) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-		    event.getDescriptionForEntryType(getEntryType()));
-	}
+	if (hasAlreadyPayedAnyAmount(event, when)) {
+	    final Money totalFinalAmount = event.getPayedAmount().add(amountToAdd);
+	    if (!(totalFinalAmount.greaterOrEqualThan(calculateTotalAmountToPay(event, when)) || totalFinalAmount
+		    .equals(getPartialPaymentAmount(event, when)))) {
+		throw new DomainExceptionWithLabelFormatter(
+			"error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
+			event.getDescriptionForEntryType(getEntryType()));
+	    }
+	} else {
+	    if (!isPayingTotalAmount(event, when, amountToAdd) && !isPayingPartialAmount(event, when, amountToAdd)) {
+		final LabelFormatter percentageLabelFormatter = new LabelFormatter();
+		percentageLabelFormatter.appendLabel(getDfaPartialAcceptedPercentage().multiply(BigDecimal.valueOf(100))
+			.toString());
 
-	if (!isPayingTotalAmount(event, when, amountToAdd) && !isPayingPartialAmount(event, when, amountToAdd)) {
-	    final LabelFormatter percentageLabelFormatter = new LabelFormatter();
-	    percentageLabelFormatter.appendLabel(getDfaPartialAcceptedPercentage().multiply(BigDecimal.valueOf(100)).toString());
-
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.DFAGratuityPR.invalid.partial.payment.value", event
-			    .getDescriptionForEntryType(getEntryType()), percentageLabelFormatter);
+		throw new DomainExceptionWithLabelFormatter(
+			"error.accounting.postingRules.gratuity.DFAGratuityPR.invalid.partial.payment.value", event
+				.getDescriptionForEntryType(getEntryType()), percentageLabelFormatter);
+	    }
 	}
     }
 
@@ -138,10 +143,6 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     private boolean isPayingPartialAmount(final Event event, final DateTime when, final Money amountToAdd) {
 	return amountToAdd.equals(getPartialPaymentAmount(event, when));
-    }
-
-    private boolean isPayingRemaingAmount(final Event event, final DateTime when, final Money amountToAdd) {
-	return amountToAdd.greaterOrEqualThan(event.calculateAmountToPay(when));
     }
 
     private boolean hasAlreadyPayedAnyAmount(final Event event, final DateTime when) {
