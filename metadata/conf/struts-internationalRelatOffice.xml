@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+	
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    <data-sources />
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="studentManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationID" type="java.lang.Integer" />
+	    </form-bean>
+	    <form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+			<form-property name="organizedBy" type="java.lang.String" />
+			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
+			<form-property name="viewType" type="java.lang.String"/>
+		</form-bean>	
+    </form-beans>
+
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"/>
+	</global-exceptions>
+
+    <!-- ========== Global Forward Definitions =============================== -->
+       
+    <global-forwards type="org.apache.struts.action.ActionForward">
+    	
+    	<forward name="index" path="index.do" redirect="true"/>
+    	
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      
+       	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="index"/>
+        </action>  
+        <action path="/students"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.SearchForStudents">
+			<forward name="search" path="students.search"/>
+			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+		</action>   
+		<action path="/student"
+				name="studentManagementForm"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
+			
+			<forward name="viewPersonalData" path="student.viewPersonalData"/>
+			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
+			
+		</action>     
+		<action path="/registration"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
+				scope="request">
+			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+			<forward name="registrationConclusion" path="registrationConclusion"/>
+		</action>	    
+		<action path="/viewCurriculum"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+			scope="request"
+			validate="true"
+			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
+	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>			
+	    <action path="/viewStudentCurriculum"
+		   	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
+	       	parameter="method">
+			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
+    	</action>
+	
+    </action-mappings>
+
+    <!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
+	<message-resources parameter="resources.InternRelationOfficeResources" key="INTERNATIONAL_RELATION_OFFICE" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+	
+
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-internRelationOffice.xml"/>
+    </plug-in>        
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/internRelationOffice/tiles-internRelatOffice-definitions.xml,/WEB-INF/tiles/internRelationOffice/tiles-internRelatOffice-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+</struts-config>
