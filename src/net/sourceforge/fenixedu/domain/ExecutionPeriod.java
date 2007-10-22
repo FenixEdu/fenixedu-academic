@@ -29,7 +29,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 /**
  * Created on 11/Fev/2003
  * 
- * @author Joï¿½o Mota
+ * @author João Mota
  * @author jpvl
  * 
  */
@@ -37,10 +37,9 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     public static final Comparator EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
     static {
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR)
-		.addComparator(new BeanComparator("executionYear.year"));
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR)
-		.addComparator(new BeanComparator("semester"));
+	final ComparatorChain chain = (ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR;
+	chain.addComparator(new BeanComparator("executionYear.year"));
+	chain.addComparator(new BeanComparator("semester"));
     }
 
     public ExecutionPeriod() {
@@ -60,27 +59,24 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public String getQualifiedName() {
-	return new StringBuilder().append(this.getName()).append(" ").append(
-		this.getExecutionYear().getYear()).toString();
+	return new StringBuilder().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
     }
 
-    public boolean containsDay(Date day) {
-	return !(this.getBeginDate().after(day) || this.getEndDate().before(day));
+    public boolean containsDay(final Date day) {
+	return containsDay(YearMonthDay.fromDateFields(day));
     }
 
-    final public boolean containsDay(final DateTime dateTime) {
-	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay(); 
-	return !(this.getBeginDateYearMonthDay().isAfter(yearMonthDay) || this.getEndDateYearMonthDay().isBefore(yearMonthDay));
+    public boolean containsDay(final DateTime dateTime) {
+	return containsDay(dateTime.toYearMonthDay());
     }
 
-    public boolean containsDay(YearMonthDay date) {
-	return !(this.getBeginDateYearMonthDay().isAfter(date) || this.getEndDateYearMonthDay()
-		.isBefore(date));
+    public boolean containsDay(final YearMonthDay date) {
+	return !(this.getBeginDateYearMonthDay().isAfter(date) || this.getEndDateYearMonthDay().isBefore(date));
     }
 
     public DateMidnight getThisMonday() {
-	final DateTime beginningOfSemester = new DateTime(this.getBeginDate());
-	final DateTime endOfSemester = new DateTime(this.getEndDate());
+	final DateTime beginningOfSemester = getBeginDateYearMonthDay().toDateTimeAtMidnight();
+	final DateTime endOfSemester = getEndDateYearMonthDay().toDateTimeAtMidnight();
 
 	if (beginningOfSemester.isAfterNow() || endOfSemester.isBeforeNow()) {
 	    return null;
@@ -116,8 +112,45 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return this.compareTo(executionPeriod) <= 0;
     }
 
-    public ExecutionCourse getExecutionCourseByInitials(String courseInitials) {
-	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+    public boolean isOneYearAfter(final ExecutionPeriod executionPeriod) {
+	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+	return (nextExecutionPeriod == null) ? false : this == nextExecutionPeriod.getNextExecutionPeriod();
+    }
+
+    public boolean isCurrent() {
+	return getState().equals(PeriodState.CURRENT);
+    }
+
+    public boolean isClosed() {
+	return getState().equals(PeriodState.CLOSED);
+    }
+
+    public boolean isNotOpen() {
+	return getState().equals(PeriodState.NOT_OPEN);
+    }
+
+    public boolean isFor(final Integer semester) {
+	return getSemester().equals(semester);
+    }
+
+    public boolean isFor(final String year) {
+	return getExecutionYear().isFor(year);
+    }
+
+    public boolean isForSemesterAndYear(final Integer semester, final String year) {
+	return isFor(semester) && isFor(year);
+    }
+
+    public boolean isInTimePeriod(final Date begin, final Date end) {
+	return isInTimePeriod(YearMonthDay.fromDateFields(begin), YearMonthDay.fromDateFields(end));
+    }
+
+    public boolean isInTimePeriod(final YearMonthDay begin, final YearMonthDay end) {
+	return getBeginDateYearMonthDay().isBefore(end) && getEndDateYearMonthDay().isAfter(begin);
+    }
+
+    public ExecutionCourse getExecutionCourseByInitials(final String courseInitials) {
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
 	    if (executionCourse.getSigla().equalsIgnoreCase(courseInitials)) {
 		return executionCourse;
 	    }
@@ -126,8 +159,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public List<ExecutionCourse> getExecutionCoursesWithNoCurricularCourses() {
-	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
 	    if (!executionCourse.hasAnyAssociatedCurricularCourses()) {
 		result.add(executionCourse);
 	    }
@@ -136,16 +169,16 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-	    DegreeCurricularPlan degreeCurricularPlan, CurricularYear curricularYear, String name) {
-	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-	String normalizedName = (name != null) ? StringNormalizer.normalize(name).toLowerCase()
-		.replaceAll("%", ".*") : null;
-	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
-	    String executionCourseName = StringNormalizer.normalize(executionCourse.getNome())
-		    .toLowerCase();
+	    final DegreeCurricularPlan degreeCurricularPlan, final CurricularYear curricularYear, final String name) {
+
+	final String normalizedName = (name != null) ? StringNormalizer.normalize(name).toLowerCase().replaceAll("%", ".*")
+		: null;
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+	    final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome()).toLowerCase();
 	    if (normalizedName != null && executionCourseName.matches(normalizedName)) {
-		if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear,
-			degreeCurricularPlan)) {
+		if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan)) {
 		    result.add(executionCourse);
 		}
 	    }
@@ -154,32 +187,33 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public Collection<MarkSheet> getWebMarkSheetsNotPrinted() {
-	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-	for (MarkSheet sheet : this.getMarkSheets()) {
+	final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
+	for (final MarkSheet sheet : getMarkSheets()) {
 	    if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
 		markSheets.add(sheet);
 	    }
 	}
 	return markSheets;
     }
-    
-    public Collection<MarkSheet> getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AdministrativeOffice administrativeOffice, Campus campus) {
-	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-	for (MarkSheet sheet : this.getMarkSheets()) {
+
+    public Collection<MarkSheet> getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(
+	    AdministrativeOffice administrativeOffice, Campus campus) {
+	final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
+	for (final MarkSheet sheet : getMarkSheets()) {
 	    if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
-		if(sheet.getCurricularCourse().getDegreeType().getAdministrativeOfficeType() == administrativeOffice.getAdministrativeOfficeType() && 
-			sheet.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(getExecutionYear(), campus) != null) {
+		if (sheet.getAdministrativeOfficeType() == administrativeOffice.getAdministrativeOfficeType()
+			&& sheet.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(
+				getExecutionYear(), campus) != null) {
 		    markSheets.add(sheet);
 		}
 	    }
 	}
 	return markSheets;
-    }    
+    }
 
-    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(
-	    DegreeCurricularPlan degreeCurricularPlan) {
+    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(final DegreeCurricularPlan degreeCurricularPlan) {
 	final Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-	for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 	    if (executionCourse.hasAnyDegreeGradeToSubmit(this, degreeCurricularPlan)) {
 		executionCourses.add(executionCourse);
 	    }
@@ -187,11 +221,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return executionCourses;
     }
 
-    public Collection<MarkSheet> getMarkSheetsToConfirm(DegreeCurricularPlan degreeCurricularPlan) {
+    public Collection<MarkSheet> getMarkSheetsToConfirm(final DegreeCurricularPlan degreeCurricularPlan) {
 	final Collection<MarkSheet> markSheets = new ArrayList<MarkSheet>();
 	for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
-	    if ((degreeCurricularPlan == null || markSheet.getCurricularCourse()
-		    .getDegreeCurricularPlan().equals(degreeCurricularPlan))
+	    if ((degreeCurricularPlan == null || markSheet.getCurricularCourse().getDegreeCurricularPlan().equals(
+		    degreeCurricularPlan))
 		    && markSheet.isNotConfirmed()) {
 		markSheets.add(markSheet);
 	    }
@@ -201,130 +235,15 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     public List<Attends> getAttendsByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
 	final List<Attends> attendsList = new ArrayList<Attends>();
-	for (ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
-	    for (Attends attends : executionCourse.getAttendsSet()) {
-		if (attends.getEnrolment() != null
-			&& attends.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan()
-				.equals(degreeCurricularPlan)) {
+	for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+	    for (final Attends attends : executionCourse.getAttendsSet()) {
+		if (attends.hasEnrolment()
+			&& attends.getEnrolment().getDegreeCurricularPlanOfStudent().equals(degreeCurricularPlan)) {
 		    attendsList.add(attends);
 		}
 	    }
 	}
 	return attendsList;
-    }
-
-    // -------------------------------------------------------------
-    // read static methods
-    // -------------------------------------------------------------
-
-    private static transient ExecutionPeriod currentExecutionPeriod = null;
-
-    public static ExecutionPeriod readActualExecutionPeriod() {
-	if (currentExecutionPeriod == null
-		|| currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
-		|| !currentExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
-	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		    .getExecutionPeriodsSet()) {
-		if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-		    currentExecutionPeriod = executionPeriod;
-		    break;
-		}
-	    }
-	}
-	return currentExecutionPeriod;
-    }
-
-    public static ExecutionPeriod readFirstExecutionPeriod() {
-        final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
-	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
-    }
-
-    public static ExecutionPeriod readLastExecutionPeriod() {
-        final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
-        final int size = exeutionPeriods.size();
-	return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);
-    }
-
-    public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (!executionPeriod.getState().equals(PeriodState.CLOSED)) {
-		result.add(executionPeriod);
-	    }
-	}
-	return result;
-    }
-
-    public static List<ExecutionPeriod> readPublicExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (!executionPeriod.getState().equals(PeriodState.NOT_OPEN)) {
-		result.add(executionPeriod);
-	    }
-	}
-	return result;
-    }
-
-    public static List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (!executionPeriod.getState().equals(PeriodState.NOT_OPEN)
-		    && !executionPeriod.getState().equals(PeriodState.CLOSED)) {
-		result.add(executionPeriod);
-	    }
-	}
-	return result;
-    }
-
-    public static List<ExecutionPeriod> readExecutionPeriodsInTimePeriod(final Date beginDate,
-	    final Date endDate) {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (executionPeriod.getBeginDate().before(endDate)
-		    && executionPeriod.getEndDate().after(beginDate)) {
-		result.add(executionPeriod);
-	    }
-	}
-	return result;
-    }
-
-    public static ExecutionPeriod readByNameAndExecutionYear(String name, String year) {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (executionPeriod.getName().equals(name)
-		    && executionPeriod.getExecutionYear().getYear().equals(year)) {
-		return executionPeriod;
-	    }
-	}
-	return null;
-    }
-
-    public static ExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year) {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (executionPeriod.getSemester().equals(semester)
-		    && executionPeriod.getExecutionYear().getYear().equals(year)) {
-		return executionPeriod;
-	    }
-	}
-	return null;
-    }
-
-    public static ExecutionPeriod readByDateTime(final DateTime dateTime) {
-	final YearMonthDay yearMonthDay = new YearMonthDay(dateTime);
-
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-		.getExecutionPeriodsSet()) {
-	    if (executionPeriod.containsDay(yearMonthDay)) {
-		return executionPeriod;
-	    }
-	}
-
-	return null;
     }
 
     public void checkValidCreditsPeriod(RoleType roleType) {
@@ -333,9 +252,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	    if (validCreditsPerid == null) {
 		throw new DomainException("message.invalid.credits.period2");
 	    } else if (!validCreditsPerid.containsNow()) {
-		throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart()
-			.toString("dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString(
-			"dd-MM-yyy HH:mm"));
+		throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart().toString(
+			"dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
 	    }
 	}
     }
@@ -349,10 +267,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 		return null;
 	    }
 	case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-	    if (getDepartmentAdmOfficeCreditsPeriodBegin() != null
-		    && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
-		return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(),
-			getDepartmentAdmOfficeCreditsPeriodEnd());
+	    if (getDepartmentAdmOfficeCreditsPeriodBegin() != null && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
+		return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(), getDepartmentAdmOfficeCreditsPeriodEnd());
 	    } else {
 		return null;
 	    }
@@ -362,18 +278,18 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public OccupationPeriod getLessonsPeriod() {
-	
+
 	Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
-	if(degrees.isEmpty()) {
+	if (degrees.isEmpty()) {
 	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
 	}
-	if(degrees.isEmpty()) {
+	if (degrees.isEmpty()) {
 	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 	}
-	if(degrees.isEmpty()) {
+	if (degrees.isEmpty()) {
 	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
 	}
-		
+
 	for (ExecutionDegree executionDegree : degrees) {
 	    if (getSemester() == 1) {
 		return executionDegree.getPeriodLessonsFirstSemester();
@@ -381,7 +297,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 		return executionDegree.getPeriodLessonsSecondSemester();
 	    }
 	}
-	
+
 	return null;
     }
 
@@ -403,18 +319,9 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	deleteDomainObject();
     }
 
-    public boolean isOneYearAfter(final ExecutionPeriod executionPeriod) {
-	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
-	if (nextExecutionPeriod == null) {
-	    return false;
-	}
-	return this == nextExecutionPeriod.getNextExecutionPeriod();
-    }
-
     public int getNumberOfProfessorships(CurricularCourse curricularCourse) {
 	int count = 0;
-	for (ExecutionCourse executionCourse : curricularCourse
-		.getExecutionCoursesByExecutionPeriod(this)) {
+	for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(this)) {
 	    count += executionCourse.getProfessorshipsCount();
 	}
 	return count;
@@ -423,12 +330,109 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     public EnrolmentPeriod getEnrolmentPeriod(final Class<? extends EnrolmentPeriod> clazz,
 	    final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodSet()) {
-	    if (enrolmentPeriod.getClass().equals(clazz)
-		    && enrolmentPeriod.getDegreeCurricularPlan() == degreeCurricularPlan) {
+	    if (enrolmentPeriod.getClass().equals(clazz) && enrolmentPeriod.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		return enrolmentPeriod;
 	    }
 	}
 
+	return null;
+    }
+
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+
+    private static transient ExecutionPeriod currentExecutionPeriod = null;
+
+    public static ExecutionPeriod readActualExecutionPeriod() {
+	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
+		|| !currentExecutionPeriod.isCurrent()) {
+	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+		if (executionPeriod.isCurrent()) {
+		    currentExecutionPeriod = executionPeriod;
+		    break;
+		}
+	    }
+	}
+	return currentExecutionPeriod;
+    }
+
+    public static ExecutionPeriod readFirstExecutionPeriod() {
+	final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
+    }
+
+    public static ExecutionPeriod readLastExecutionPeriod() {
+	final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+	final int size = exeutionPeriods.size();
+	return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);
+    }
+
+    public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
+	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionPeriod.isClosed()) {
+		result.add(executionPeriod);
+	    }
+	}
+	return result;
+    }
+
+    public static List<ExecutionPeriod> readPublicExecutionPeriods() {
+	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionPeriod.isNotOpen()) {
+		result.add(executionPeriod);
+	    }
+	}
+	return result;
+    }
+
+    public static List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
+	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionPeriod.isClosed() && !executionPeriod.isNotOpen()) {
+		result.add(executionPeriod);
+	    }
+	}
+	return result;
+    }
+
+    public static List<ExecutionPeriod> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
+	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionPeriod.isInTimePeriod(beginDate, endDate)) {
+		result.add(executionPeriod);
+	    }
+	}
+	return result;
+    }
+
+    public static ExecutionPeriod readByNameAndExecutionYear(final String name, final String year) {
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionPeriod.getName().equals(name) && executionPeriod.isFor(year)) {
+		return executionPeriod;
+	    }
+	}
+	return null;
+    }
+
+    public static ExecutionPeriod readBySemesterAndExecutionYear(final Integer semester, final String year) {
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionPeriod.isForSemesterAndYear(semester, year)) {
+		return executionPeriod;
+	    }
+	}
+	return null;
+    }
+
+    public static ExecutionPeriod readByDateTime(final DateTime dateTime) {
+	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
+	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionPeriod.containsDay(yearMonthDay)) {
+		return executionPeriod;
+	    }
+	}
 	return null;
     }
 
