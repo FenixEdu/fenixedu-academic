@@ -472,6 +472,10 @@
             <param-value>/WEB-INF/conf/struts-library.xml</param-value>
         </init-param>         
         <init-param>
+            <param-name>config/internationalRelatOffice</param-name>
+            <param-value>/WEB-INF/conf/struts-internationalRelatOffice.xml</param-value>
+        </init-param>   
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
