@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
@@ -39,7 +38,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -53,7 +51,6 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -73,25 +70,28 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
 
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("executionPeriod"));
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome", Collator.getInstance()));
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator(
+		"executionPeriod"));
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
+		Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
 
 	((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("nome", Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_NAME_COMPARATOR).addComparator(DomainObject.COMPARATOR_BY_ID);
 
-	BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences", "referenceOrder");
+	BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>(
+		"associatedBibliographicReferences", "referenceOrder");
 	ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
 	super();
-	
-	setRootDomainObject(RootDomainObject.getInstance());	
+
+	setRootDomainObject(RootDomainObject.getInstance());
 	addAssociatedEvaluations(new FinalEvaluation());
 	setAvailableGradeSubmission(Boolean.TRUE);
 	setAvailableForInquiries(Boolean.TRUE);
-	
+
 	setNome(nome);
 	setSigla(sigla);
 	setExecutionPeriod(executionPeriod);
@@ -107,10 +107,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setComment(comment);
 	setAvailableGradeSubmission(availableGradeSubmission);
     }
-    
+
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
-	if(courseLoad == null) {	
+	if (courseLoad == null) {
 	    new CourseLoad(this, type, unitQuantity, totalQuantity);
 	} else {
 	    courseLoad.edit(unitQuantity, totalQuantity);
@@ -163,12 +163,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isMasterDegreeDFAOrDEAOnly() {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-	    if (!degreeType.equals(DegreeType.MASTER_DEGREE)
-		    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+	    if (!degreeType.equals(DegreeType.MASTER_DEGREE) && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
 		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
 		return false;
 	    }
-	}	
+	}
 	return true;
     }
 
@@ -202,8 +201,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
     }
 
-    public void createBibliographicReference(final String title, final String authors,
-	    final String reference, final String year, final Boolean optional) {
+    public void createBibliographicReference(final String title, final String authors, final String reference, final String year,
+	    final Boolean optional) {
 	if (title == null || authors == null || reference == null || year == null || optional == null)
 	    throw new NullPointerException();
 
@@ -216,16 +215,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	bibliographicReference.setExecutionCourse(this);
     }
 
-    public List<BibliographicReference> copyBibliographicReferencesFrom(
-	    final ExecutionCourse executionCourseFrom) {
+    public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
 	final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<BibliographicReference>();
 
-	for (final BibliographicReference bibliographicReference : executionCourseFrom
-		.getAssociatedBibliographicReferences()) {
+	for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
 	    if (canAddBibliographicReference(bibliographicReference)) {
-		this.createBibliographicReference(bibliographicReference.getTitle(),
-			bibliographicReference.getAuthors(), bibliographicReference.getReference(),
-			bibliographicReference.getYear(), bibliographicReference.getOptional());
+		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
+			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
+				.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -235,8 +232,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private boolean canAddBibliographicReference(final BibliographicReference bibliographicReferenceToAdd) {
-	for (final BibliographicReference bibliographicReference : this
-		.getAssociatedBibliographicReferences()) {
+	for (final BibliographicReference bibliographicReference : this.getAssociatedBibliographicReferences()) {
 	    if (bibliographicReference.getTitle().equals(bibliographicReferenceToAdd.getTitle())) {
 		return false;
 	    }
@@ -327,12 +323,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		getSite().delete();
 	    }
 
-	    for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete());
-	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete());
-	    for (; !getLessonPlannings().isEmpty(); getLessonPlannings().get(0).delete());
-	    for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete());
-	    for (; !getAttends().isEmpty(); getAttends().get(0).delete());
-	    for (; !getForuns().isEmpty(); getForuns().get(0).delete());
+	    for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete())
+		;
+	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete())
+		;
+	    for (; !getLessonPlannings().isEmpty(); getLessonPlannings().get(0).delete())
+		;
+	    for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete())
+		;
+	    for (; !getAttends().isEmpty(); getAttends().get(0).delete())
+		;
+	    for (; !getForuns().isEmpty(); getForuns().get(0).delete())
+		;
 
 	    if (hasBoard()) {
 		getBoard().delete();
@@ -350,11 +352,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean canBeDeleted() {
-	
+
 	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyAssociatedSummaries()
 		|| !getGroupings().isEmpty() || hasAnyAssociatedBibliographicReferences() || hasAnyAssociatedEvaluations()
-		|| hasEvaluationMethod() || !getAssociatedShifts().isEmpty() || hasCourseReport()
-		|| hasAnyAttends() || (hasSite() && !getSite().canBeDeleted()) || (hasBoard() && !getBoard().canBeDeleted())) {
+		|| hasEvaluationMethod() || !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
+		|| (hasSite() && !getSite().canBeDeleted()) || (hasBoard() && !getBoard().canBeDeleted())) {
 	    throw new DomainException("error.execution.course.cant.delete");
 	}
 
@@ -405,11 +407,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
 		    int numberOfEnrolmentsForThatExecutionCourse = 0;
 
-		    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry
-			    .getEnrolments()) {
+		    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
 			if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
-				&& (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(
-					courseExecutionPeriod) <= 0)) {
+				&& (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(courseExecutionPeriod) <= 0)) {
 			    ++numberOfEnrolmentsForThatExecutionCourse;
 			    if (numberOfEnrolmentsForThatExecutionCourse > enrolmentNumber) {
 				break;
@@ -461,7 +461,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
 	return courseLoad != null ? courseLoad.getWeeklyHours() : BigDecimal.ZERO;
     }
-    
+
     public Set<Shift> getAssociatedShifts() {
 	Set<Shift> result = new HashSet<Shift>();
 	for (CourseLoad courseLoad : getCourseLoadsSet()) {
@@ -469,7 +469,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return result;
     }
-    
+
     public Double getStudentsNumberByShift(ShiftType shiftType) {
 	int numShifts = getNumberOfShifts(shiftType);
 
@@ -483,8 +483,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<Enrolment> results = new ArrayList<Enrolment>();
 
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-	    List<Enrolment> enrollments = curricularCourse.getActiveEnrollments(this
-		    .getExecutionPeriod());
+	    List<Enrolment> enrollments = curricularCourse.getActiveEnrollments(this.getExecutionPeriod());
 
 	    results.addAll(enrollments);
 	}
@@ -494,10 +493,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean areAllOptionalCurricularCoursesWithLessTenEnrolments() {
 	int enrolments = 0;
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-	    if (curricularCourse.getType() != null
-		    && curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-		enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod())
-		.size();
+	    if (curricularCourse.getType() != null && curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
+		enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod()).size();
 		if (enrolments >= 10) {
 		    return false;
 		}
@@ -534,15 +531,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		evaluationComparisonDate = writtenEvaluation.getDayDate();
 	    } else if (evaluation instanceof FinalEvaluation) {
 		evaluationTypeDistinguisher = "4";
-		final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses()
-		.get(0);
+		final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
 		evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();
 	    } else {
 		throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
 	    }
 
-	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd",
-		    evaluationComparisonDate) + evaluation.getIdInternal();
+	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
+		    + evaluation.getIdInternal();
 	}
     };
 
@@ -560,24 +556,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return orderedAttends;
     }
 
-    private static class CurricularCourseExecutionCourseListener extends dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
-	
+    private static class CurricularCourseExecutionCourseListener extends
+	    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
+
 	@Override
 	public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
 	    for (final Enrolment enrolment : curricular.getEnrolments()) {
 		if (enrolment.getExecutionPeriod().equals(execution.getExecutionPeriod())) {
 		    associateAttend(enrolment, execution);
 		}
-	    }	    	    	   
-	    fillCourseLoads(execution, curricular);	    
+	    }
+	    fillCourseLoads(execution, curricular);
 	}
 
 	@Override
 	public void afterRemove(ExecutionCourse execution, CurricularCourse curricular) {
 	    if (execution != null) {
 		for (Attends attends : execution.getAttends()) {
-		    if ((attends.getEnrolment() != null)
-			    && (attends.getEnrolment().getCurricularCourse().equals(curricular))) {
+		    if ((attends.getEnrolment() != null) && (attends.getEnrolment().getCurricularCourse().equals(curricular))) {
 			attends.setEnrolment(null);
 		    }
 		}
@@ -602,17 +598,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	    return false;
 	}
-	
-	private void fillCourseLoads(ExecutionCourse execution, CurricularCourse curricular) {	    
+
+	private void fillCourseLoads(ExecutionCourse execution, CurricularCourse curricular) {
 	    for (ShiftType shiftType : ShiftType.values()) {
 		BigDecimal totalHours = curricular.getTotalHoursByShiftType(shiftType, execution.getExecutionPeriod());
-		if(totalHours != null && totalHours.compareTo(BigDecimal.ZERO) == 1) {
+		if (totalHours != null && totalHours.compareTo(BigDecimal.ZERO) == 1) {
 		    CourseLoad courseLoad = execution.getCourseLoadByShiftType(shiftType);
-		    if(courseLoad == null) {			
+		    if (courseLoad == null) {
 			new CourseLoad(execution, shiftType, null, totalHours);
 		    }
 		}
-	    }	    
+	    }
 	}
     }
 
@@ -637,8 +633,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    this.executionPeriodInterval = executionPeriodInterval;
 	    final Period period = executionPeriodInterval.toPeriod();
 	    int extraWeek = period.getDays() > 0 ? 1 : 0;
-	    numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks()
-	    + extraWeek + 1;
+	    numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek + 1;
 	    intervals = new Interval[numberOfWeeks];
 	    numberResponses = new int[numberOfWeeks];
 	    contactSum = new int[numberOfWeeks];
@@ -662,14 +657,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    contactSum[weekIndex] += contact != null ? contact.intValue() : 0;
 
 		    final Integer autounomousStudy = weeklyWorkLoad.getAutonomousStudy();
-		    autonomousStudySum[weekIndex] += autounomousStudy != null ? autounomousStudy
-			    .intValue() : 0;
+		    autonomousStudySum[weekIndex] += autounomousStudy != null ? autounomousStudy.intValue() : 0;
 
-			    final Integer other = weeklyWorkLoad.getOther();
-			    otherSum[weekIndex] += other != null ? other.intValue() : 0;
+		    final Integer other = weeklyWorkLoad.getOther();
+		    otherSum[weekIndex] += other != null ? other.intValue() : 0;
 
-			    totalSum[weekIndex] = contactSum[weekIndex] + autonomousStudySum[weekIndex]
-			                                                                     + otherSum[weekIndex];
+		    totalSum[weekIndex] = contactSum[weekIndex] + autonomousStudySum[weekIndex] + otherSum[weekIndex];
 		}
 	    }
 	}
@@ -725,8 +718,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	public double[] getTotalAverage() {
 	    final double[] valuesAverage = new double[numberOfWeeks];
 	    for (int i = 0; i < numberOfWeeks; i++) {
-		valuesAverage[i] = Math
-		.round((0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i])
+		valuesAverage[i] = Math.round((0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i])
 			/ getNumberResponses()[i]);
 	    }
 	    return valuesAverage;
@@ -792,26 +784,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	public double getAutonomousStudyAverageTotalAverage() {
 	    final int numberOfWeeks = getNumberWeeksForAverageCalculation();
-	    return numberOfWeeks > 0 ? Math.round(getAutonomousStudyAverageTotal()
-		    / getNumberWeeksForAverageCalculation()) : 0;
+	    return numberOfWeeks > 0 ? Math.round(getAutonomousStudyAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
 	}
 
 	public double getOtherAverageTotalAverage() {
 	    final int numberOfWeeks = getNumberWeeksForAverageCalculation();
-	    return numberOfWeeks > 0 ? Math.round(getOtherAverageTotal()
-		    / getNumberWeeksForAverageCalculation()) : 0;
+	    return numberOfWeeks > 0 ? Math.round(getOtherAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
 	}
 
 	public double getTotalAverageTotalAverage() {
 	    final int numberOfWeeks = getNumberWeeksForAverageCalculation();
-	    return numberOfWeeks > 0 ? Math.round(getTotalAverageTotal()
-		    / getNumberWeeksForAverageCalculation()) : 0;
+	    return numberOfWeeks > 0 ? Math.round(getTotalAverageTotal() / getNumberWeeksForAverageCalculation()) : 0;
 	}
 
 	public double getNumberResponsesTotalAverage() {
 	    final int numberOfWeeks = getNumberWeeksForAverageCalculation();
-	    return numberOfWeeks > 0 ? Math.round((0.0 + getNumberResponsesTotal())
-		    / getNumberWeeksForAverageCalculation()) : 0;
+	    return numberOfWeeks > 0 ? Math.round((0.0 + getNumberResponsesTotal()) / getNumberWeeksForAverageCalculation()) : 0;
 	}
 
     }
@@ -821,8 +809,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDateYearMonthDay());
 	final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
 	final DateTime endOfSemester = new DateTime(executionPeriod.getEndDateYearMonthDay());
-	final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1)
-	.plusWeeks(1);
+	final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
 	return new Interval(firstMonday, nextLastMonday);
     }
 
@@ -890,8 +877,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<Summary> summaries = new ArrayList<Summary>();
 	for (Summary summary : this.getAssociatedSummaries()) {
 	    if (!summary.hasProfessorship()
-		    && (summary.hasTeacher() || (summary.getTeacherName() != null && !summary
-			    .getTeacherName().equals("")))) {
+		    && (summary.hasTeacher() || (summary.getTeacherName() != null && !summary.getTeacherName().equals("")))) {
 		summaries.add(summary);
 	    }
 	}
@@ -914,8 +900,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
 	    DegreeCurricularPlan degreeCurricularPlan) {
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear,
-		    degreeCurricularPlan, getExecutionPeriod())) {
+	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
+		    getExecutionPeriod())) {
 		return true;
 	    }
 	}
@@ -941,11 +927,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
-	return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this),
-		null, new RoleTypeGroup(RoleType.MANAGER),
-		ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
-		ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC,
-		ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
+	return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this), null, new RoleTypeGroup(
+		RoleType.MANAGER), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
+		ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
     public boolean hasForumWithName(String name) {
@@ -1007,7 +991,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    competenceCourseInformations.add(competenceCourseInformation);
 		}
@@ -1020,8 +1004,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
 	    Degree degree = curricularCourse.getDegree();
-	    if (degree.getDegreeType() == DegreeType.DEGREE
-		    || degree.getDegreeType() == DegreeType.BOLONHA_DEGREE 
+	    if (degree.getDegreeType() == DegreeType.DEGREE || degree.getDegreeType() == DegreeType.BOLONHA_DEGREE
 		    || degree.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 		result.add(curricularCourse);
 	    }
@@ -1029,11 +1012,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
-    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period,
-	    DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
-	    if (degreeCurricularPlan == null
-		    || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
 		    return true;
 		}
@@ -1042,11 +1023,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return false;
     }
 
-    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period,
-	    DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
-	    if (degreeCurricularPlan == null
-		    || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
 		    return true;
 		}
@@ -1060,7 +1039,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	StringBuilder typesName = new StringBuilder();
 	for (ShiftType shiftType : shift.getSortedTypes()) {
 	    typesName.append(shiftType.getSiglaTipoAula());
-	}	
+	}
 	return StringAppender.append(getSigla(), typesName.toString(), number);
     }
 
@@ -1075,9 +1054,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void setShiftNames() {
-	final SortedSet<Shift> shifts = CollectionUtils.constructSortedSet(getAssociatedShifts(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	final SortedSet<Shift> shifts = CollectionUtils.constructSortedSet(getAssociatedShifts(),
+		Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 	int counter = 0;
-	for (final Shift shift : shifts) {	    	    
+	for (final Shift shift : shifts) {
 	    final String name = constructShiftName(shift, ++counter);
 	    shift.setNome(name);
 	}
@@ -1134,8 +1114,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public SortedSet<Professorship> getProfessorshipsSortedAlphabetically() {
-	final SortedSet<Professorship> professorhips = new TreeSet<Professorship>(
-		Professorship.COMPARATOR_BY_PERSON_NAME);
+	final SortedSet<Professorship> professorhips = new TreeSet<Professorship>(Professorship.COMPARATOR_BY_PERSON_NAME);
 	professorhips.addAll(getProfessorshipsSet());
 	return professorhips;
     }
@@ -1151,7 +1130,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return lessons;
     }
-      
+
     public SortedSet<WrittenEvaluation> getWrittenEvaluations() {
 	final SortedSet<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(
 		WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
@@ -1164,8 +1143,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public SortedSet<Shift> getShiftsOrderedByLessons() {
-	final SortedSet<Shift> shifts = new TreeSet<Shift>(
-		Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 	shifts.addAll(getAssociatedShifts());
 	return shifts;
     }
@@ -1199,8 +1177,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private boolean hasAnyBibliographicReferenceByBibliographicReferenceType(BibliographicReferenceType referenceType) {
 	for (final BibliographicReference bibliographicReference : getAssociatedBibliographicReferencesSet()) {
-	    if ((referenceType.equals(BibliographicReferenceType.SECONDARY) && bibliographicReference.getOptional().booleanValue())
-		    || (referenceType.equals(BibliographicReferenceType.MAIN) && !bibliographicReference.getOptional().booleanValue())) {
+	    if ((referenceType.equals(BibliographicReferenceType.SECONDARY) && bibliographicReference.getOptional()
+		    .booleanValue())
+		    || (referenceType.equals(BibliographicReferenceType.MAIN) && !bibliographicReference.getOptional()
+			    .booleanValue())) {
 		return true;
 	    }
 	}
@@ -1208,10 +1188,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences bibliographicReferences = competenceCourseInformation
-		    .getBibliographicReferences();
+			    .getBibliographicReferences();
 		    if (bibliographicReferences != null) {
 			for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
 				.getBibliographicReferencesList()) {
@@ -1239,15 +1219,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public LessonPlanning getLessonPlanning(ShiftType lessonType, Integer order) {
 	for (LessonPlanning planning : getLessonPlanningsSet()) {
-	    if (planning.getLessonType().equals(lessonType)
-		    && planning.getOrderOfPlanning().equals(order)) {
+	    if (planning.getLessonType().equals(lessonType) && planning.getOrderOfPlanning().equals(order)) {
 		return planning;
 	    }
 	}
 	return null;
     }
 
-    public Set<ShiftType> getShiftTypes() {	
+    public Set<ShiftType> getShiftTypes() {
 	Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
 	for (CourseLoad courseLoad : getCourseLoads()) {
 	    shiftTypes.add(courseLoad.getType());
@@ -1276,7 +1255,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (Summary summary : summaries) {
 	    for (ShiftType shiftType : shift.getTypes()) {
 		new LessonPlanning(summary.getTitle(), summary.getSummaryText(), shiftType, this);
-	    }	    
+	    }
 	}
     }
 
@@ -1300,25 +1279,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Double getCurricularCourseEnrolmentsWeight(CurricularCourse curricularCourse) {
 	Double totalEnrolmentStudentNumber = new Double(getTotalEnrolmentStudentNumber());
 	if (totalEnrolmentStudentNumber > 0d) {
-	    return curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod())
-	    / totalEnrolmentStudentNumber;
+	    return curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod()) / totalEnrolmentStudentNumber;
 	} else {
 	    return 0d;
 	}
     }
 
     public Set<ShiftType> getOldShiftTypesToEnrol() {
-	final List<ShiftType> validShiftTypes = Arrays.asList(
-		new ShiftType[] { ShiftType.TEORICA, ShiftType.PRATICA, ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
+	final List<ShiftType> validShiftTypes = Arrays.asList(new ShiftType[] { ShiftType.TEORICA, ShiftType.PRATICA,
+		ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
 
 	final Set<ShiftType> result = new HashSet<ShiftType>(4);
-	for (final Shift shift : getAssociatedShifts()) {	    
+	for (final Shift shift : getAssociatedShifts()) {
 	    for (ShiftType shiftType : shift.getTypes()) {
 		if (validShiftTypes.contains(shiftType)) {
 		    result.add(shiftType);
 		    break;
 		}
-	    }	    
+	    }
 	}
 	return result;
     }
@@ -1326,47 +1304,46 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     /**
      * Tells if all the associated Curricular Courses load are the same
      */
-    public String getEqualLoad() {	
+    public String getEqualLoad() {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    for (ShiftType type : ShiftType.values()) {
-		if(!getEqualLoad(type, curricularCourse)) {
+		if (!getEqualLoad(type, curricularCourse)) {
 		    return Boolean.FALSE.toString();
 		}
 	    }
 	}
 	return Boolean.TRUE.toString();
     }
-    
+
     public boolean getEqualLoad(ShiftType type, CurricularCourse curricularCourse) {
-	if(type != null) {
-	    if(type.equals(ShiftType.DUVIDAS) || type.equals(ShiftType.RESERVA)) {
+	if (type != null) {
+	    if (type.equals(ShiftType.DUVIDAS) || type.equals(ShiftType.RESERVA)) {
 		return true;
 	    }
 	    BigDecimal ccTotalHours = curricularCourse.getTotalHoursByShiftType(type, getExecutionPeriod());
-	    CourseLoad courseLoad = getCourseLoadByShiftType(type);		
-	    if((courseLoad == null && ccTotalHours == null) 
+	    CourseLoad courseLoad = getCourseLoadByShiftType(type);
+	    if ((courseLoad == null && ccTotalHours == null)
 		    || (courseLoad == null && ccTotalHours != null && ccTotalHours.compareTo(BigDecimal.ZERO) == 0)
 		    || (courseLoad != null && ccTotalHours != null && courseLoad.getTotalQuantity().compareTo(ccTotalHours) == 0)) {
 		return true;
-	    }	 
+	    }
 	}
 	return false;
     }
-    
+
     public List<Summary> getSummariesByShiftType(ShiftType shiftType) {
 	List<Summary> summaries = new ArrayList<Summary>();
 	for (Summary summary : getAssociatedSummariesSet()) {
-	    if (summary.getSummaryType() != null &&
-		    summary.getSummaryType().equals(shiftType)) {
+	    if (summary.getSummaryType() != null && summary.getSummaryType().equals(shiftType)) {
 		summaries.add(summary);
 	    }
 	}
 	return summaries;
     }
 
-    public List<Summary> getSummariesWithoutProfessorshipButWithTeacher(Teacher teacher){
+    public List<Summary> getSummariesWithoutProfessorshipButWithTeacher(Teacher teacher) {
 	List<Summary> summaries = new ArrayList<Summary>();
-	if(teacher != null) {
+	if (teacher != null) {
 	    for (Summary summary : getAssociatedSummariesSet()) {
 		if (summary.getTeacher() != null && summary.getTeacher().equals(teacher)) {
 		    summaries.add(summary);
@@ -1510,7 +1487,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public SortedSet<BibliographicReference> getOrderedBibliographicReferences() {
-	TreeSet<BibliographicReference> references = new TreeSet<BibliographicReference>(BibliographicReference.COMPARATOR_BY_ORDER);
+	TreeSet<BibliographicReference> references = new TreeSet<BibliographicReference>(
+		BibliographicReference.COMPARATOR_BY_ORDER);
 	references.addAll(getAssociatedBibliographicReferences());
 	return references;
     }
@@ -1523,7 +1501,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<BibliographicReference> references = new ArrayList<BibliographicReference>();
 
 	for (BibliographicReference reference : getAssociatedBibliographicReferences()) {
-	    if (! reference.isOptional()) {
+	    if (!reference.isOptional()) {
 		references.add(reference);
 	    }
 	}
@@ -1546,7 +1524,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Attends> getAttendsEnrolledOrWithActiveSCP() {
 	List<Attends> result = new ArrayList<Attends>();
 	for (Attends attends : this.getAttendsSet()) {
-	    if(attends.isEnrolledOrWithActiveSCP()) {
+	    if (attends.isEnrolledOrWithActiveSCP()) {
 		result.add(attends);
 	    }
 	}
@@ -1556,7 +1534,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isCompentenceCourseMainBibliographyAvailable() {
 	for (CompetenceCourseInformation information : getCompetenceCoursesInformations()) {
 	    BibliographicReferences bibliographicReferences = information.getBibliographicReferences();
-	    if (bibliographicReferences != null && ! bibliographicReferences.getMainBibliographicReferences().isEmpty()) {
+	    if (bibliographicReferences != null && !bibliographicReferences.getMainBibliographicReferences().isEmpty()) {
 		return true;
 	    }
 	}
@@ -1567,7 +1545,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isCompentenceCourseSecondaryBibliographyAvailable() {
 	for (CompetenceCourseInformation information : getCompetenceCoursesInformations()) {
 	    BibliographicReferences bibliographicReferences = information.getBibliographicReferences();
-	    if (bibliographicReferences != null && ! bibliographicReferences.getSecondaryBibliographicReferences().isEmpty()) {
+	    if (bibliographicReferences != null && !bibliographicReferences.getSecondaryBibliographicReferences().isEmpty()) {
 		return true;
 	    }
 	}
@@ -1579,7 +1557,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	final Collection<Curriculum> result = new HashSet<Curriculum>();
 
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-	    final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse.findLatestCurriculumModifiedBefore(executionYear.getEndDate());
+	    final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
+		    .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
 	    if (curriculum != null) {
 		result.add(curriculum);
 	    }
@@ -1594,8 +1573,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-	    final ExecutionDegree executionDegree = degreeCurricularPlan
-	    .getExecutionDegreeByYear(executionYear);
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 	    final YearMonthDay startExamsPeriod;
 	    if (executionPeriod.getSemester().intValue() == 1) {
 		startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay();
@@ -1629,20 +1607,20 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     }
 
-    public SortedSet<ExecutionDegree> getFirsExecutionDegreesByYearWithExecutionIn(ExecutionYear executionYear){
+    public SortedSet<ExecutionDegree> getFirsExecutionDegreesByYearWithExecutionIn(ExecutionYear executionYear) {
 	SortedSet<ExecutionDegree> result = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    ExecutionDegree executionDegree = curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
-	    if(executionDegree != null) {
+	    if (executionDegree != null) {
 		result.add(executionDegree);
 	    }
 	}
 	return result;
-    }   
+    }
 
     @Override
     public Boolean getAvailableForInquiries() {
-	if(super.getAvailableForInquiries() != null) {
+	if (super.getAvailableForInquiries() != null) {
 	    return super.getAvailableForInquiries();
 	}
 
@@ -1651,8 +1629,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public Boolean getAvailableGradeSubmission() {
-	if(super.getAvailableGradeSubmission() != null) {
-	    return  super.getAvailableGradeSubmission();
+	if (super.getAvailableGradeSubmission() != null) {
+	    return super.getAvailableGradeSubmission();
 	}
 	return Boolean.TRUE;
     }
@@ -1674,29 +1652,33 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	Integer semester = getExecutionPeriod().getSemester();
 
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-	    final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());	    
-	    if(semester.intValue() == 1) {
-		if(minBeginDate == null || minBeginDate.isAfter(executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay())) {
+	    final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());
+	    if (semester.intValue() == 1) {
+		if (minBeginDate == null
+			|| minBeginDate.isAfter(executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay())) {
 		    minBeginDate = executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay();
-		}		    
-		if(maxEndDate == null || maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay())) {
+		}
+		if (maxEndDate == null
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay())) {
 		    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay();
-		}	
+		}
 	    } else {
-		if(minBeginDate == null || minBeginDate.isAfter(executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay())) {
+		if (minBeginDate == null
+			|| minBeginDate.isAfter(executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay())) {
 		    minBeginDate = executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay();
-		}		    
-		if(maxEndDate == null || maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay())) {
+		}
+		if (maxEndDate == null
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay())) {
 		    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay();
-		}	
-	    }	
+		}
+	    }
 	}
-	
-	if(minBeginDate != null && maxEndDate != null) {
+
+	if (minBeginDate != null && maxEndDate != null) {
 	    return new GenericPair<YearMonthDay, YearMonthDay>(minBeginDate, maxEndDate);
 	}
-	
-	return null;  
+
+	return null;
     }
 
     public Map<ShiftType, CourseLoad> getCourseLoadsMap() {
@@ -1707,25 +1689,25 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return result;
     }
-    
+
     public CourseLoad getCourseLoadByShiftType(ShiftType type) {
-	if(type != null) {
-	    for (CourseLoad courseLoad : getCourseLoads()) {	
-		if(courseLoad.getType().equals(type)) {
+	if (type != null) {
+	    for (CourseLoad courseLoad : getCourseLoads()) {
+		if (courseLoad.getType().equals(type)) {
 		    return courseLoad;
 		}
 	    }
 	}
 	return null;
-    }          
-    
+    }
+
     public boolean hasCourseLoadForType(ShiftType type) {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
 	return courseLoad != null && !courseLoad.isEmpty();
     }
-    
-    public boolean verifyNameEquality(String[] nameWords) {	
-	if (nameWords != null) {		    
+
+    public boolean verifyNameEquality(String[] nameWords) {
+	if (nameWords != null) {
 	    String courseName = getNome() + " " + getSigla();
 	    if (courseName != null) {
 		String[] courseNameWords = courseName.trim().split(" ");
@@ -1750,16 +1732,38 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return false;
     }
-    
-    public Set<AllocatableSpace> getAllRooms(){
+
+    public Set<AllocatableSpace> getAllRooms() {
 	Set<AllocatableSpace> result = new HashSet<AllocatableSpace>();
 	Set<Lesson> lessons = getLessons();
 	for (Lesson lesson : lessons) {
 	    AllocatableSpace room = lesson.getSala();
-	    if(room != null) {
+	    if (room != null) {
 		result.add(room);
 	    }
 	}
 	return result;
+    }
+
+    public String getEvaluationMethodText() {
+	if (hasEvaluationMethod()) {
+	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
+
+	    return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? evaluationElements
+		    .getContent(Language.pt) : getCompetenceCourses().iterator().next().getEvaluationMethod();
+	} else {
+	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
+	}
+    }
+
+    public String getEvaluationMethodTextEn() {
+	if (hasEvaluationMethod()) {
+	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
+
+	    return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
+		    .getContent(Language.en) : getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	} else {
+	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	}
     }
 }
