@@ -1755,4 +1755,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
 	}
     }
+    
+    public String getEvaluationMethodTextEn() {
+	if (hasEvaluationMethod()) {
+	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
+
+	    return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
+		    .getContent(Language.en) : getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	} else {
+	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	}
+    }
 }
