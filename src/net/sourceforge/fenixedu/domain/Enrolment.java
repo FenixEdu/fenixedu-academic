@@ -526,30 +526,27 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private void createAttend(Registration registration, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 
-	List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
+	final List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
 
 	ExecutionCourse executionCourse = null;
 	if (executionCourses.size() > 1) {
-	    Iterator iterator = executionCourses.iterator();
+	    final Iterator<ExecutionCourse> iterator = executionCourses.iterator();
 	    while (iterator.hasNext()) {
-		ExecutionCourse executionCourse2 = (ExecutionCourse) iterator.next();
-		if (executionCourse2.getExecutionCourseProperties() == null
-			|| executionCourse2.getExecutionCourseProperties().isEmpty()) {
-		    executionCourse = executionCourse2;
+		final ExecutionCourse each = iterator.next();
+		if (!each.hasAnyExecutionCourseProperties()) {
+		    executionCourse = each;
 		}
 	    }
 	} else if (executionCourses.size() == 1) {
-	    executionCourse = (ExecutionCourse) executionCourses.get(0);
+	    executionCourse = executionCourses.get(0);
 	}
 
 	if (executionCourse != null) {
-	    Attends attend = executionCourse.getAttendsByStudent(registration);
-
+	    final Attends attend = executionCourse.getAttendsByStudent(registration);
 	    if (attend != null) {
 		addAttends(attend);
 	    } else {
-		Attends attendToWrite = new Attends(registration, executionCourse);
-		addAttends(attendToWrite);
+		addAttends(new Attends(registration, executionCourse));
 	    }
 	}
     }

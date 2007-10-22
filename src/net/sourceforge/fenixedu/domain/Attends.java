@@ -347,8 +347,8 @@ public class Attends extends Attends_Base {
     }
 
     public boolean isEnrolledOrWithActiveSCP() {
-	if(this.getEnrolment() == null) {
-	    RegistrationState lastRegistrationState = this.getRegistration().getLastRegistrationState(this.getExecutionCourse().getExecutionYear());
+	if(!hasEnrolment()) {
+	    final RegistrationState lastRegistrationState = getRegistration().getLastRegistrationState(getExecutionCourse().getExecutionYear());
 	    if(lastRegistrationState != null && !lastRegistrationState.isActive()) {
 		return false;
 	    }
@@ -357,7 +357,7 @@ public class Attends extends Attends_Base {
     }
     
     public void removeShifts() {
-	for (Shift shift : getRegistration().getShiftsSet()) {
+	for (final Shift shift : getRegistration().getShiftsSet()) {
 	    if(shift.getExecutionCourse() == getExecutionCourse()) {
 		getRegistration().removeShifts(shift);
 	    }
