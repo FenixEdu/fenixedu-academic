@@ -438,8 +438,11 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	} else {
 	    issueBean = new CreateIssueBean();
 	    issueBean.setJournal(bean.getScientificJournal());
-	    issueBean.setScientificJournalName(bean.getScientificJournalName());
-
+	    issueBean.setScientificJournalName(bean.getJournal());
+	    issueBean.setVolume(bean.getVolume());
+	    issueBean.setNumber(bean.getNumber());
+	    issueBean.setYear(bean.getYear());
+	    issueBean.setPublisher(bean.getPublisher());
 	}
 
 	request.setAttribute("issueBean", issueBean);
