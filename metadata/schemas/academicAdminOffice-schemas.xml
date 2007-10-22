@@ -495,7 +495,7 @@
 
 <schema name="student.manageRegistrationState.conclusionProcess"
 	type="net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState$RegistrationConcludedStateCreator" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="stateDate" key="label.conclusionDate" >
+	<slot name="stateDate" key="label.conclusionDate" read-only="true">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
 			<property name="validationPeriod" value="pastOrToday" />
 		</validator>
