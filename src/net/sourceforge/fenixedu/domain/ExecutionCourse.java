@@ -1012,8 +1012,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
-    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
-	for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+    public boolean hasAnyDegreeGradeToSubmit(final ExecutionPeriod period, final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final CurricularCourse curricularCourse : getCurricularCoursesWithDegreeType()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
 		    return true;
@@ -1753,17 +1753,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    .getContent(Language.pt) : getCompetenceCourses().iterator().next().getEvaluationMethod();
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
-	}
-    }
-
-    public String getEvaluationMethodTextEn() {
-	if (hasEvaluationMethod()) {
-	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
-
-	    return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
-		    .getContent(Language.en) : getCompetenceCourses().iterator().next().getEvaluationMethodEn();
-	} else {
-	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
 	}
     }
 }
