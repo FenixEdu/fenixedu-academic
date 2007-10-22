@@ -237,6 +237,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     public boolean isCurrent() {
 	return this.getState().equals(PeriodState.CURRENT);
     }
+    
+    public boolean isFor(final String year) {
+	return getYear().equals(year);
+    }
 
     public static ExecutionYear getExecutionYearByDate(YearMonthDay date) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
