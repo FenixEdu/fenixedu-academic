@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -662,6 +663,10 @@ public class MarkSheet extends MarkSheet_Base {
     public boolean canManage(final Employee employee) {
         final DegreeCurricularPlan degreeCurricularPlan = getCurricularCourse().getDegreeCurricularPlan();
         return degreeCurricularPlan.canManageMarkSheetsForExecutionPeriod(employee, getExecutionPeriod());
+    }
+
+    public AdministrativeOfficeType getAdministrativeOfficeType() {
+	return getCurricularCourse().getDegreeType().getAdministrativeOfficeType();
     }
     
 }
