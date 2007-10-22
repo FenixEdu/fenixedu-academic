@@ -24,14 +24,14 @@
 		<bean:message key="title.evaluationMethod"/>
 	</h3>
 	<blockquote>
-		<bean:write name="executionCourse" property="evaluationMethodText"/>
+		<bean:write name="executionCourse" property="evaluationMethodText" filter="false"/>
 	</blockquote>
 
 	<h3 class="mtop2">
 		<bean:message key="title.evaluationMethod.eng"/>
 	</h3>
 	<blockquote>
-		<bean:write name="executionCourse" property="evaluationMethodTextEn"/>
+		<bean:write name="executionCourse" property="evaluationMethodTextEn" filter="false"/>
 	</blockquote>
 
 	<p>
