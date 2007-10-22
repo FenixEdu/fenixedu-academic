@@ -91,7 +91,9 @@ public enum RoleType {
 
     PARKING_MANAGER("Parking Manager"),
     
-    LIBRARY("Library");
+    LIBRARY("Library"),
+    
+    INTERNATIONAL_RELATION_OFFICE("International Relation Office");
 
     public String getName() {
 	return name();
