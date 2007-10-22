@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -22,7 +22,7 @@ import org.joda.time.YearMonthDay;
 /**
  * Created on 11/Fev/2003
  * 
- * @author Joï¿½o Mota ciapl Dominio
+ * @author João Mota ciapl Dominio
  * 
  */
 public class ExecutionYear extends ExecutionYear_Base implements Comparable {
@@ -48,14 +48,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
 		ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-		return executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso() == degreeType;
+		return executionDegree.getDegreeCurricularPlan().getDegreeType() == degreeType;
 	    }
 	});
     }
 
     public ExecutionYear getPreviousExecutionYear() {
 	ExecutionYear previousExecutionYear = null;
-	ExecutionPeriod currentExecutionPeriod = this.getExecutionPeriods().get(0);
+	ExecutionPeriod currentExecutionPeriod = getExecutionPeriods().get(0);
 
 	while (currentExecutionPeriod.getPreviousExecutionPeriod() != null) {
 	    currentExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
@@ -68,6 +68,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
 	return previousExecutionYear;
     }
+    
+    public boolean hasPreviousExecutionYear() {
+	return getPreviousExecutionYear() != null;
+    }
 
     public ExecutionYear getNextExecutionYear() {
 	for (ExecutionPeriod executionPeriod = this.getExecutionPeriods().get(0); executionPeriod != null; executionPeriod = executionPeriod
@@ -76,8 +80,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 		return executionPeriod.getExecutionYear();
 	    }
 	}
-
 	return null;
+    }
+    
+    public boolean hasNextExecutionYear() {
+	return getNextExecutionYear() != null;
     }
 
     public int compareTo(Object object) {
@@ -102,16 +109,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(
-		getExecutionDegrees());
-	Collections.sort(executionDegrees,
-		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	return executionDegrees;
     }
 
-    public ExecutionPeriod readExecutionPeriodForSemester(Integer semester) {
-	for (final ExecutionPeriod executionPeriod : this.getExecutionPeriods()) {
-	    if (executionPeriod.getSemester().equals(semester)) {
+    public ExecutionPeriod readExecutionPeriodForSemester(final Integer semester) {
+	for (final ExecutionPeriod executionPeriod : getExecutionPeriods()) {
+	    if (executionPeriod.isFor(semester)) {
 		return executionPeriod;
 	    }
 	}
@@ -130,9 +135,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
     public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
 	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : this.getExecutionPeriodsSet()) {
-	    if (executionPeriod.getState() != PeriodState.NOT_OPEN
-		    && executionPeriod.getState() != PeriodState.CLOSED) {
+	for (final ExecutionPeriod executionPeriod : getExecutionPeriodsSet()) {
+	    if (!executionPeriod.isClosed() && !executionPeriod.isNotOpen()) {
 		result.add(executionPeriod);
 	    }
 	}
@@ -147,52 +151,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	}
 	return null;
     }
-
-    // -------------------------------------------------------------
-    // read static methods
-    // -------------------------------------------------------------
-    public static ExecutionYear readCurrentExecutionYear() {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
-		return executionYear;
-	    }
-	}
-	return null;
-    }
-
-    public static List<ExecutionYear> readOpenExecutionYears() {
-	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getState().equals(PeriodState.OPEN)) {
-		result.add(executionYear);
-	    }
-	}
-	return result;
-    }
-
-    public static List<ExecutionYear> readNotClosedExecutionYears() {
-	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (!executionYear.getState().equals(PeriodState.CLOSED)) {
-		result.add(executionYear);
-	    }
-	}
-	return result;
-    }
-
-    public static ExecutionYear readExecutionYearByName(final String year) {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getYear().equals(year)) {
-		return executionYear;
-	    }
-	}
-	return null;
-    }
-
-    static final public ExecutionYear readFirstBolonhaExecutionYear() {
-	//TODO: have the patience and time to parameterize this in build.properties
-	return ExecutionYear.readExecutionYearByName("2006/2007");
-    }
     
     public String getNextYearsYearString() {
 	final int yearPart1 = Integer.parseInt(getYear().substring(0, 4)) + 1;
@@ -200,7 +158,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return Integer.toString(yearPart1) + getYear().charAt(4) + Integer.toString(yearPart2);
     }
 
-    public DegreeInfo getDegreeInfo(Degree degree) {
+    public DegreeInfo getDegreeInfo(final Degree degree) {
 	for (final DegreeInfo degreeInfo : getDegreeInfos()) {
 	    if (degreeInfo.getDegree().equals(degree)) {
 		return degreeInfo;
@@ -208,24 +166,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	}
 	return null;
     }
-
-    public static ExecutionYear readByDateTime(final DateTime dateTime) {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.containsDate(dateTime)) {
-		return executionYear;
-	    }
-	}
-	return null;
+    
+    public boolean containsDate(final DateTime dateTime) {
+	final DateMidnight begin = getBeginDateYearMonthDay().toDateMidnight();
+	final DateMidnight end = getEndDateYearMonthDay().plusDays(1).toDateMidnight();
+	return new Interval(begin, end).contains(dateTime);
     }
 
-    public boolean containsDate(DateTime dateTime) {
-	return new Interval(getBeginDateYearMonthDay().toDateMidnight(), getEndDateYearMonthDay()
-		.plusDays(1).toDateMidnight()).contains(dateTime);
-    }
-
-    public List<ExecutionDegree> getExecutionDegreesFor(DegreeType... degreeTypes) {
+    public List<ExecutionDegree> getExecutionDegreesFor(final DegreeType... degreeTypes) {
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-	List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
+	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (degreeTypesList.contains(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
 		result.add(executionDegree);
@@ -238,19 +188,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return this.getState().equals(PeriodState.CURRENT);
     }
     
+    public boolean isOpen() {
+	return getState().equals(PeriodState.OPEN);
+    }
+    
+    public boolean isClosed() {
+	return getState().equals(PeriodState.CLOSED);
+    }
+    
     public boolean isFor(final String year) {
 	return getYear().equals(year);
     }
-
-    public static ExecutionYear getExecutionYearByDate(YearMonthDay date) {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
-		return executionYear;
-	    }
-	}
-	return null;
-    }
-
+    
     public ShiftDistribution createShiftDistribution() {
 	return new ShiftDistribution(this);
     }
@@ -259,9 +208,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	if (!getExecutionDegreesSet().isEmpty()) {
 	    throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
 	}
-	for (final Set<ExecutionPeriod> executionPeriods = getExecutionPeriodsSet(); !executionPeriods
-		.isEmpty(); executionPeriods.iterator().next().delete())
-	    ;
+	for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete());
+	
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -272,7 +220,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
     
     public boolean belongsToCivilYearInterval(int beginCivilYear, int endCivilYear) {
 	for(int year=beginCivilYear ; year<=endCivilYear; year++) {
-	    if(this.belongsToCivilYear(year)) {
+	    if(belongsToCivilYear(year)) {
 		return true;
 	    }
 	}
@@ -287,8 +235,80 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return getBeginDateYearMonthDay().getYear() > civilYear;
     }
     
-    public static List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
+    public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
+	final Collection<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    result.add(executionDegree.getDegreeCurricularPlan());
+	}
+	return result;
+    }
 
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+    
+    static public ExecutionYear readCurrentExecutionYear() {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.isCurrent()) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
+    static public List<ExecutionYear> readOpenExecutionYears() {
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.isOpen()) {
+		result.add(executionYear);
+	    }
+	}
+	return result;
+    }
+
+    static public List<ExecutionYear> readNotClosedExecutionYears() {
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (!executionYear.isClosed()) {
+		result.add(executionYear);
+	    }
+	}
+	return result;
+    }
+
+    static public ExecutionYear readExecutionYearByName(final String year) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.isFor(year)) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
+    static public ExecutionYear readFirstBolonhaExecutionYear() {
+	//TODO: have the patience and time to parameterize this in build.properties
+	return ExecutionYear.readExecutionYearByName("2006/2007");
+    }
+    
+    static public ExecutionYear readByDateTime(final DateTime dateTime) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.containsDate(dateTime)) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
+    static public ExecutionYear getExecutionYearByDate(final YearMonthDay date) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
+    static public List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
 	    if (executionYear.belongsToCivilYear(civilYear)) {
@@ -300,28 +320,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
     }
 
-    public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
-	final Collection<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-	
-	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    result.add(executionDegree.getDegreeCurricularPlan());
-	}
-	
-	return result;
-    }
-
-    public static ExecutionYear readFirstExecutionYear() {
-	for(ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
-	    if(executionYear.getPreviousExecutionYear()==null) {
+    static public ExecutionYear readFirstExecutionYear() {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (!executionYear.hasPreviousExecutionYear()) {
 		return executionYear;
 	    }
 	}
 	return null;
     }
     
-    public static ExecutionYear readLastExecutionYear() { 
-	for(ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
-	    if(executionYear.getNextExecutionYear()==null) {
+    static public ExecutionYear readLastExecutionYear() {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (!executionYear.hasNextExecutionYear()) {
 		return executionYear;
 	    }
 	}
