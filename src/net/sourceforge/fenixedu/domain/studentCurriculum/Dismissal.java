@@ -205,7 +205,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
 	iEnrolments.addAll(getSourceIEnrolments());
 
-	return iEnrolments.isEmpty() ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
+	// may not have source or all sources may not have approvement dates
+	return iEnrolments.isEmpty() || iEnrolments.last().getApprovementDate() == null ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
     }
 
     @Override
