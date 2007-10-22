@@ -298,7 +298,7 @@ public class ParkingParty extends ParkingParty_Base {
 			} else {
 			    stringBuilder.append(")");
 			}
-
+			stringBuilder.append("<br/>Média: ").append(registration.getArithmeticMean());
 			stringBuilder.append("\t");
 		    }
 		}
