@@ -11,24 +11,24 @@ import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
 public abstract class GeneralClassProperty extends GeneralClassProperty_Base {
 
     public GeneralClassProperty() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public GeneralClassPropertyName getName() {
-        return new GeneralClassPropertyName(getNameString());
+    public GeneralClassPropertyName getName() {
+	return new GeneralClassPropertyName(getNameString());
     }
 
     public void setName(GeneralClassPropertyName name) {
-        setNameString(name.getName());
+	setNameString(name.getName());
     }
 
     public GeneralClassPropertyValue getValue() {
-        return new GeneralClassPropertyValue(getValueString());
+	return new GeneralClassPropertyValue(getValueString());
     }
 
     public void setValue(GeneralClassPropertyValue value) {
-        setValueString(value.getValue());
+	setValueString(value.getValue());
     }
 
 }
