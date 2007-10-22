@@ -16,11 +16,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -30,385 +28,348 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 public class TeacherServiceDistributionAction extends FenixDispatchAction {
-	private static final Integer NOT_SELECTED_EXECUTION_PERIOD = -1;
+    private static final Integer NOT_SELECTED_EXECUTION_PERIOD = -1;
 
-	public ActionForward prepareTeacherServiceDistribution(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("showMain");
+    public ActionForward prepareTeacherServiceDistribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("showMain");
+    }
+
+    public ActionForward prepareForTeacherServiceDistributionCreation(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return mapping.findForward("showTeacherServiceDistributionCreationOptions");
+    }
+
+    public ActionForward prepareForEmptyTeacherServiceDistributionCreation(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(selectedExecutionYear.getExecutionPeriods());
+	setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
+
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
+
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+
+	return mapping.findForward("showTeacherServiceDistributionCreationForm");
+    }
+
+    public ActionForward createTeacherServiceDistribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<Integer> selectedExecutionPeriodIdList = new ArrayList<Integer>();
+
+	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
+	if (selectedExecutionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
+	    ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods()) {
+		selectedExecutionPeriodIdList.add(executionPeriod.getIdInternal());
+	    }
+	} else {
+	    selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
 	}
 
-	public ActionForward prepareForTeacherServiceDistributionCreation(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("showTeacherServiceDistributionCreationOptions");
+	Integer selectedDepartmentId = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal();
+	String name = (String) dynaForm.get("name");
+
+	Object[] parameters = new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId,
+		userView.getPerson().getIdInternal(), name };
+
+	TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) ServiceUtils.executeService(
+		userView, "CreateTeacherServiceDistribution", parameters);
+
+	return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistribution.getIdInternal(), userView);
+    }
+
+    public ActionForward prepareForTeacherServiceDistributionEdition(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYear != null) {
+	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
-	public ActionForward prepareForEmptyTeacherServiceDistributionCreation(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
+	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
 
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-		
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(selectedExecutionYear.getExecutionPeriods());
-		setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
+	List<TeacherServiceDistribution> teacherServiceDistributionList;
 
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
+	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
 
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-
-		return mapping.findForward("showTeacherServiceDistributionCreationForm");
+	if (selectedExecutionPeriod != null) {
+	    teacherServiceDistributionList = selectedDepartment
+		    .getTeacherServiceDistributionsByExecutionPeriod(selectedExecutionPeriod);
+	} else if (selectedExecutionYear != null) {
+	    teacherServiceDistributionList = selectedDepartment
+		    .getTeacherServiceDistributionsByExecutionYear(selectedExecutionYear);
+	} else {
+	    teacherServiceDistributionList = new ArrayList<TeacherServiceDistribution>(selectedDepartment
+		    .getTeacherServiceDistributions());
 	}
 
-	public ActionForward createTeacherServiceDistribution(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
+	final Person person = userView.getPerson();
+	teacherServiceDistributionList = (List<TeacherServiceDistribution>) CollectionUtils.select(
+		teacherServiceDistributionList, new Predicate() {
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
-
-		List<Integer> selectedExecutionPeriodIdList = new ArrayList<Integer>();
-
-		Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
-		if (selectedExecutionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
-			ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
-
-			for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods()) {
-				selectedExecutionPeriodIdList.add(executionPeriod.getIdInternal());
-			}
-		} else {
-			selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
-		}
-
-		Integer selectedDepartmentId = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal();
-		String name = (String) dynaForm.get("name");
-
-		Object[] parameters = new Object[] {
-				selectedExecutionPeriodIdList,
-				selectedDepartmentId,
-				userView.getPerson().getIdInternal(),
-				name };
-
-		TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) ServiceUtils.executeService(
-				userView,
-				"CreateTeacherServiceDistribution",
-				parameters);
-
-		return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistribution.getIdInternal(), userView);	
-	}
-
-	public ActionForward prepareForTeacherServiceDistributionEdition(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-
-		DynaActionForm dynaForm = (DynaActionForm) form;
-
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
-
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYear != null) {
-			executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
-		}
-
-		Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
-
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
-
-		List<TeacherServiceDistribution> teacherServiceDistributionList;
-
-		ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
-
-		if (selectedExecutionPeriod != null) {
-			teacherServiceDistributionList = selectedDepartment.getTeacherServiceDistributionsByExecutionPeriod(selectedExecutionPeriod);
-		} else if (selectedExecutionYear != null) {
-			teacherServiceDistributionList = selectedDepartment.getTeacherServiceDistributionsByExecutionYear(selectedExecutionYear);
-		} else {
-			teacherServiceDistributionList = new ArrayList<TeacherServiceDistribution>(selectedDepartment.getTeacherServiceDistributions());
-		}
-		
-		final Person person = userView.getPerson();
-		teacherServiceDistributionList = (List<TeacherServiceDistribution>) CollectionUtils.select(teacherServiceDistributionList, new Predicate() {
-
-			public boolean evaluate(Object arg0) {
-				TeacherServiceDistribution tsd = (TeacherServiceDistribution) arg0;
-				return tsd.hasAnyPermission(person);
-			}
+		    public boolean evaluate(Object arg0) {
+			TeacherServiceDistribution tsd = (TeacherServiceDistribution) arg0;
+			return tsd.hasAnyPermission(person);
+		    }
 		});
-		
-		Collections.sort(teacherServiceDistributionList, new BeanComparator("name"));
 
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-		request.setAttribute("teacherServiceDistributionList", teacherServiceDistributionList);
+	Collections.sort(teacherServiceDistributionList, new BeanComparator("name"));
 
-		return mapping.findForward("showTeacherServiceDistributions");
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+	request.setAttribute("teacherServiceDistributionList", teacherServiceDistributionList);
+
+	return mapping.findForward("showTeacherServiceDistributions");
+    }
+
+    public ActionForward showTeacherServiceDistributionServices(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	Integer teacherServiceDistributionId = new Integer(request.getParameter("teacherServiceDistribution"));
+	IUserView userView = SessionUtils.getUserView(request);
+
+	return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistributionId, userView);
+    }
+
+    private ActionForward loadTeacherServiceDistributionServices(ActionMapping mapping, HttpServletRequest request,
+	    Integer teacherServiceDistributionId, IUserView userView) {
+	setPermissionsOnRequest(request, rootDomainObject.readTeacherServiceDistributionByOID(teacherServiceDistributionId),
+		userView.getPerson());
+
+	request.setAttribute("teacherServiceDistribution", rootDomainObject
+		.readTeacherServiceDistributionByOID(teacherServiceDistributionId));
+	return mapping.findForward("showTeacherServiceDistributionServices");
+    }
+
+    private void setPermissionsOnRequest(HttpServletRequest request, TeacherServiceDistribution teacherServiceDistribution,
+	    Person userViewPerson) {
+	Boolean permissionToCoursesAndTeachersValuation = teacherServiceDistribution
+		.hasPermissionToCoursesAndTeachersValuation(userViewPerson)
+		|| teacherServiceDistribution.getHasSuperUserPermission(userViewPerson);
+
+	Boolean permissionToCoursesAndTeachersManagement = teacherServiceDistribution
+		.hasPermissionToCoursesAndTeachersManagement(userViewPerson)
+		|| teacherServiceDistribution.getHasSuperUserPermission(userViewPerson);
+
+	Boolean phaseManagementPermission = teacherServiceDistribution.getIsMemberOfPhasesManagementGroup(userViewPerson);
+
+	Boolean automaticValuationPermission = teacherServiceDistribution.getIsMemberOfAutomaticValuationGroup(userViewPerson);
+
+	Boolean omissionConfigurationPermission = teacherServiceDistribution
+		.getIsMemberOfOmissionConfigurationGroup(userViewPerson);
+
+	Boolean valuationCompetenceCoursesAndTeachersManagementPermission = teacherServiceDistribution
+		.getIsMemberOfValuationCompetenceCoursesAndTeachersManagementGroup(userViewPerson);
+
+	request.setAttribute("coursesAndTeachersValuationPermission", permissionToCoursesAndTeachersValuation);
+
+	request.setAttribute("coursesAndTeachersManagementPermission", permissionToCoursesAndTeachersManagement);
+
+	request.setAttribute("phaseManagementPermission", phaseManagementPermission);
+
+	request.setAttribute("automaticValuationPermission", automaticValuationPermission);
+
+	request.setAttribute("omissionConfigurationPermission", omissionConfigurationPermission);
+
+	request.setAttribute("valuationCompetenceCoursesAndTeachersManagementPermission",
+		valuationCompetenceCoursesAndTeachersManagementPermission);
+
+	request.setAttribute("permissionsGrantPermission", teacherServiceDistribution.getHavePermissionSettings(userViewPerson));
+
+	request.setAttribute("viewTeacherServiceDistributionValuationPermission", permissionToCoursesAndTeachersValuation
+		|| permissionToCoursesAndTeachersManagement || phaseManagementPermission || automaticValuationPermission
+		|| omissionConfigurationPermission || valuationCompetenceCoursesAndTeachersManagementPermission);
+    }
+
+    public ActionForward prepareForTeacherServiceDistributionCopy(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYear != null) {
+	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
-	public ActionForward showTeacherServiceDistributionServices(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer teacherServiceDistributionId = new Integer(request.getParameter("teacherServiceDistribution"));
-		IUserView userView = SessionUtils.getUserView(request);
+	ExecutionYear selectedExecutionYearForCopy = getSelectedExecutionYearForCopy(userView, dynaForm, executionYearList);
 
-		
-
-		return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistributionId, userView);
+	List<ExecutionPeriod> executionPeriodListForCopy = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYearForCopy != null) {
+	    executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
 	}
 
-	private ActionForward loadTeacherServiceDistributionServices(ActionMapping mapping, HttpServletRequest request, Integer teacherServiceDistributionId, IUserView userView) {
-		setPermissionsOnRequest(
-				request,
-				rootDomainObject.readTeacherServiceDistributionByOID(teacherServiceDistributionId),
-				userView.getPerson());
+	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
-		request.setAttribute("teacherServiceDistribution", rootDomainObject.readTeacherServiceDistributionByOID(teacherServiceDistributionId));
-		return mapping.findForward("showTeacherServiceDistributionServices");
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
+	Collections.sort(executionPeriodListForCopy, new BeanComparator("semester"));
+
+	List<TeacherServiceDistribution> teacherServiceDistributionList;
+
+	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
+
+	if (selectedExecutionPeriod != null) {
+	    teacherServiceDistributionList = selectedDepartment
+		    .getTeacherServiceDistributionsByExecutionPeriod(selectedExecutionPeriod);
+	} else if (selectedExecutionYear != null) {
+	    teacherServiceDistributionList = selectedDepartment
+		    .getTeacherServiceDistributionsByExecutionYear(selectedExecutionYear);
+	} else {
+	    teacherServiceDistributionList = new ArrayList<TeacherServiceDistribution>(selectedDepartment
+		    .getTeacherServiceDistributions());
 	}
 
-	private void setPermissionsOnRequest(
-			HttpServletRequest request,
-			TeacherServiceDistribution teacherServiceDistribution,
-			Person userViewPerson) {
-		Boolean permissionToCoursesAndTeachersValuation = teacherServiceDistribution.hasPermissionToCoursesAndTeachersValuation(userViewPerson)
-				|| teacherServiceDistribution.getHasSuperUserPermission(userViewPerson);
-		
-		Boolean permissionToCoursesAndTeachersManagement = teacherServiceDistribution.hasPermissionToCoursesAndTeachersManagement(userViewPerson)
-				|| teacherServiceDistribution.getHasSuperUserPermission(userViewPerson);
-		
-		Boolean phaseManagementPermission = teacherServiceDistribution.getIsMemberOfPhasesManagementGroup(userViewPerson);
-		
-		Boolean automaticValuationPermission = teacherServiceDistribution.getIsMemberOfAutomaticValuationGroup(userViewPerson);
-		
-		Boolean omissionConfigurationPermission = teacherServiceDistribution.getIsMemberOfOmissionConfigurationGroup(userViewPerson);
-		
-		Boolean valuationCompetenceCoursesAndTeachersManagementPermission = teacherServiceDistribution.getIsMemberOfValuationCompetenceCoursesAndTeachersManagementGroup(userViewPerson);
-		
-		request.setAttribute("coursesAndTeachersValuationPermission", permissionToCoursesAndTeachersValuation);
-
-		request.setAttribute("coursesAndTeachersManagementPermission", permissionToCoursesAndTeachersManagement);
-
-		request.setAttribute(
-				"phaseManagementPermission",
-				phaseManagementPermission);
-
-		request.setAttribute(
-				"automaticValuationPermission",
-				automaticValuationPermission);
-
-		request.setAttribute(
-				"omissionConfigurationPermission",
-				omissionConfigurationPermission);
-
-		request.setAttribute(
-				"valuationCompetenceCoursesAndTeachersManagementPermission",
-				valuationCompetenceCoursesAndTeachersManagementPermission);
-
-		request.setAttribute("permissionsGrantPermission", teacherServiceDistribution.getHavePermissionSettings(userViewPerson));
-		
-		request.setAttribute("viewTeacherServiceDistributionValuationPermission", permissionToCoursesAndTeachersValuation || permissionToCoursesAndTeachersManagement || phaseManagementPermission || automaticValuationPermission || omissionConfigurationPermission || valuationCompetenceCoursesAndTeachersManagementPermission);
+	if (teacherServiceDistributionList.size() > 0) {
+	    dynaForm.set("teacherServiceDistribution", teacherServiceDistributionList.get(0).getIdInternal());
+	    Collections.sort(teacherServiceDistributionList, new BeanComparator("name"));
 	}
 
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getIdInternal());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+	request.setAttribute("executionPeriodsListForCopy", executionPeriodListForCopy);
+	request.setAttribute("teacherServiceDistributionList", teacherServiceDistributionList);
 
-	public ActionForward prepareForTeacherServiceDistributionCopy(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	return mapping.findForward("showTeacherServiceDistributionsForCopy");
+    }
 
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-	
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+    public ActionForward copyTeacherServiceDistribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYear != null) {
-			executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
-		}
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
+	ExecutionPeriod selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
+	String name = (String) dynaForm.get("name");
+	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(userView, dynaForm);
 
-		ExecutionYear selectedExecutionYearForCopy = getSelectedExecutionYearForCopy(
-				userView,
-				dynaForm,
-				executionYearList);
-
-		List<ExecutionPeriod> executionPeriodListForCopy = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYearForCopy != null) {
-			executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
-		}
-
-		Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
-
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
-		Collections.sort(executionPeriodListForCopy, new BeanComparator("semester"));
-
-		List<TeacherServiceDistribution> teacherServiceDistributionList;
-
-		ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
-
-		if (selectedExecutionPeriod != null) {
-			teacherServiceDistributionList = selectedDepartment.getTeacherServiceDistributionsByExecutionPeriod(selectedExecutionPeriod);
-		} else if (selectedExecutionYear != null) {
-			teacherServiceDistributionList = selectedDepartment.getTeacherServiceDistributionsByExecutionYear(selectedExecutionYear);
-		} else {
-			teacherServiceDistributionList =  new ArrayList<TeacherServiceDistribution>(selectedDepartment.getTeacherServiceDistributions());
-		}
-
-		if (teacherServiceDistributionList.size() > 0) {
-			dynaForm.set("teacherServiceDistribution", teacherServiceDistributionList.get(0).getIdInternal());
-			Collections.sort(teacherServiceDistributionList, new BeanComparator("name"));
-		}
-
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getIdInternal());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-		request.setAttribute("executionPeriodsListForCopy", executionPeriodListForCopy);
-		request.setAttribute("teacherServiceDistributionList", teacherServiceDistributionList);
-
-		return mapping.findForward("showTeacherServiceDistributionsForCopy");
+	List<Integer> selectedExecutionPeriodListForCopyId = new ArrayList<Integer>();
+	if (selectedExecutionPeriodForCopy != null) {
+	    selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
+	} else {
+	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods())
+		selectedExecutionPeriodListForCopyId.add(executionPeriod.getIdInternal());
 	}
 
-	public ActionForward copyTeacherServiceDistribution(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	Object[] parameters = new Object[] { selectedExecutionPeriodListForCopyId,
+		selectedTeacherServiceDistribution.getIdInternal(), userView.getPerson().getIdInternal(), name };
 
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
-		ExecutionPeriod selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
-		String name = (String) dynaForm.get("name");
-		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(
-				userView,
-				dynaForm);
+	TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) ServiceUtils.executeService(
+		userView, "CopyTeacherServiceDistribution", parameters);
 
-		List<Integer> selectedExecutionPeriodListForCopyId = new ArrayList<Integer>();
-		if (selectedExecutionPeriodForCopy != null) {
-			selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
-		} else {
-			for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods())
-				selectedExecutionPeriodListForCopyId.add(executionPeriod.getIdInternal());
-		}
+	request.setAttribute("teacherServiceDistribution", teacherServiceDistribution);
+	return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistribution.getIdInternal(), userView);
+    }
 
-		Object[] parameters = new Object[] {
-				selectedExecutionPeriodListForCopyId,
-				selectedTeacherServiceDistribution.getIdInternal(),
-				userView.getPerson().getIdInternal(),
-				name };
+    private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm dynaForm,
+	    List<ExecutionYear> executionYearList) throws FenixServiceException, FenixFilterException {
+	Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYear");
 
-		TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) ServiceUtils.executeService(
-				userView,
-				"CopyTeacherServiceDistribution",
-				parameters);
+	ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
 
-		request.setAttribute("teacherServiceDistribution", teacherServiceDistribution);
-		return loadTeacherServiceDistributionServices(mapping, request, teacherServiceDistribution.getIdInternal(), userView);
+	if (selectedExecutionYear == null) {
+	    if (executionYearList != null && !executionYearList.isEmpty()) {
+		return getCurrentExecutionYear(executionYearList);
+	    } else {
+		return null;
+	    }
 	}
 
-	private ExecutionYear getSelectedExecutionYear(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			List<ExecutionYear> executionYearList) throws FenixServiceException, FenixFilterException {
-		Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYear");
+	return selectedExecutionYear;
+    }
 
-		ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+    private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
+	    FenixFilterException {
+	Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
 
-		if (selectedExecutionYear == null) {
-			if (executionYearList != null && !executionYearList.isEmpty()) {
-				return getCurrentExecutionYear(executionYearList);
-			} else {
-				return null;
-			}
-		}
-
-		return selectedExecutionYear;
+	if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
+	    return null;
 	}
 
-	private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
-		Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
+	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExeuctionPeriodId);
 
-		if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
-			return null;
-		}
+	return selectedExecutionPeriod;
+    }
 
-		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExeuctionPeriodId);
+    private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear)
+	    throws FenixServiceException, FenixFilterException {
+	dynaForm.set("executionYear", executionYear.getIdInternal());
+    }
 
-		return selectedExecutionPeriod;
+    private ExecutionYear getCurrentExecutionYear(List<ExecutionYear> executionYearList) {
+	return (ExecutionYear) CollectionUtils.find(executionYearList, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		ExecutionYear executionYear = (ExecutionYear) arg0;
+		return executionYear.isCurrent();
+	    }
+	});
+    }
+
+    private ExecutionYear getSelectedExecutionYearForCopy(IUserView userView, DynaActionForm dynaForm,
+	    List<ExecutionYear> executionYearList) throws FenixFilterException, FenixServiceException {
+	Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYearForCopy");
+
+	ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+
+	if (selectedExecutionYear == null) {
+	    if (executionYearList != null && !executionYearList.isEmpty()) {
+		return getCurrentExecutionYear(executionYearList);
+	    } else {
+		return null;
+	    }
 	}
 
-	private void setCurrentExecutionYearInDynamicForm(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			ExecutionYear executionYear) throws FenixServiceException, FenixFilterException {
-		dynaForm.set("executionYear", executionYear.getIdInternal());
-	}
-	
-	private ExecutionYear getCurrentExecutionYear(List<ExecutionYear> executionYearList) {
-		return (ExecutionYear) CollectionUtils.find(executionYearList, new Predicate() {
-			public boolean evaluate(Object arg0) {
-				ExecutionYear executionYear = (ExecutionYear) arg0;
-				return executionYear.getState().equals(PeriodState.CURRENT);
-			}
-		});
-	}
+	return selectedExecutionYear;
+    }
 
-	private ExecutionYear getSelectedExecutionYearForCopy(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			List<ExecutionYear> executionYearList) throws FenixFilterException, FenixServiceException {
-		Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYearForCopy");
+    private ExecutionPeriod getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
+	    throws FenixFilterException, FenixServiceException {
+	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
 
-		ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
 
-		if (selectedExecutionYear == null) {
-			if (executionYearList != null && !executionYearList.isEmpty()) {
-				return getCurrentExecutionYear(executionYearList);
-			} else {
-				return null;
-			}
-		}
+	return selectedExecutionPeriod;
+    }
 
-		return selectedExecutionYear;
-	}
+    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm)
+	    throws FenixServiceException, FenixFilterException {
+	Integer teacherServiceDistributionId = (Integer) dynaForm.get("teacherServiceDistribution");
+	TeacherServiceDistribution teacherServiceDistribution = rootDomainObject
+		.readTeacherServiceDistributionByOID(teacherServiceDistributionId);
 
-	private ExecutionPeriod getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
-		Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
-
-		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
-
-		return selectedExecutionPeriod;
-	}
-
-	private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
-		Integer teacherServiceDistributionId = (Integer) dynaForm.get("teacherServiceDistribution");
-		TeacherServiceDistribution teacherServiceDistribution = rootDomainObject.readTeacherServiceDistributionByOID(teacherServiceDistributionId);
-
-		return teacherServiceDistribution;
-	}
+	return teacherServiceDistribution;
+    }
 }

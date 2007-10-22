@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credi
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,13 +35,10 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -63,14 +59,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYears();
-
-	List<ExecutionYear> notClosedExecutionYears = (List<ExecutionYear>) CollectionUtils.select(executionYears, new Predicate() {
-	    public boolean evaluate(Object arg0) {
-		ExecutionYear executionYear = (ExecutionYear) arg0;
-		return !executionYear.getState().equals(PeriodState.CLOSED);
-	    }
-	});
+	final List<ExecutionYear> notClosedExecutionYears = ExecutionYear.readNotClosedExecutionYears(); 
 
 	Iterator<ExecutionYear> orderedExecutionYearsIter = new OrderedIterator<ExecutionYear>(notClosedExecutionYears.iterator(), new BeanComparator("beginDate"));
 	request.setAttribute("executionYears", orderedExecutionYearsIter);
@@ -78,8 +67,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	final Integer executionYearID = (Integer) dynaForm.get("executionYearID");
 	ExecutionYear executionYear = null;
 	if (executionYearID == null || executionYearID == 0) {
-	    for (ExecutionYear tempExecutionYear : notClosedExecutionYears) {
-		if (tempExecutionYear.getState().equals(PeriodState.CURRENT)) {
+	    for (final ExecutionYear tempExecutionYear : notClosedExecutionYears) {
+		if (tempExecutionYear.isCurrent()) {
 		    executionYear = tempExecutionYear;
 		    break;
 		}

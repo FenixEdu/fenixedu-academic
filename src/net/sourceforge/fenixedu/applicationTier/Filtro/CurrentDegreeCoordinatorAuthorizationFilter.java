@@ -70,7 +70,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
 
             Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
-            result = (coordinator != null) && executionYear.getState().equals(PeriodState.CURRENT);
+            result = (coordinator != null) && executionYear.isCurrent();
 
         } catch (Exception e) {
             return false;

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 public class LoggedCoordinatorCanEdit extends Service {
 
@@ -41,7 +40,7 @@ public class LoggedCoordinatorCanEdit extends Service {
         // coordinator can edit
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
         result = Boolean.valueOf((coordinator != null)
-                && executionYear.getState().equals(PeriodState.CURRENT)
+                && executionYear.isCurrent()
                 && curricularCourse.getBasic().equals(Boolean.FALSE));
 
         return result;

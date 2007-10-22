@@ -1445,7 +1445,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Campus getCurrentCampus() {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+	    if (executionYear.isCurrent()) {
 		return executionDegree.getCampus().getSpaceCampus();
 	    }
 	}

@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.NoArgumentsGroupBuilder;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -30,14 +28,12 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 
     @Override
     public Set<Person> getElements() {
-	Set<Person> elements = super.buildSet();
-	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance()
-		.getExecutionYears();
+	final Set<Person> elements = super.buildSet();
+	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
 	for (final ExecutionYear executionYear : executionYears) {
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+	    if (executionYear.isCurrent()) {
 		for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		    for (final ExecutionCourse executionCourse : executionPeriod
-			    .getAssociatedExecutionCourses()) {
+		    for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
 			for (final Professorship professorship : executionCourse.getProfessorships()) {
 			    if (professorship.getResponsibleFor().booleanValue()) {
 				final Teacher teacher = professorship.getTeacher();

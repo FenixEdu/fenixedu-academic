@@ -15,9 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -31,16 +29,14 @@ public class MasterDegreeCoordinatorsGroup extends Group {
     
     @Override
     public Set<Person> getElements() {
-	Set<Person> elements = super.buildSet();
-	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance()
-		.getExecutionYears();
+	final Set<Person> elements = super.buildSet();
+	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
 	for (final ExecutionYear executionYear : executionYears) {
-	    if (executionYear.getState().equals(PeriodState.CURRENT)) {
+	    if (executionYear.isCurrent()) {
 		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree
-			    .getDegreeCurricularPlan();
+		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 		    final Degree degree = degreeCurricularPlan.getDegree();
-		    if (degree.getTipoCurso() == DegreeType.MASTER_DEGREE) {
+		    if (degree.getDegreeType() == DegreeType.MASTER_DEGREE) {
 			for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
 			    final Person person = coordinator.getPerson();
 			    elements.add(person);

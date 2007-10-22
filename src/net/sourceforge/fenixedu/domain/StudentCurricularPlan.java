@@ -394,7 +394,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	int result = 0;
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    final ExecutionYear executionYear = enrolment.getExecutionPeriod().getExecutionYear();
-	    if (executionYear.getState().equals(PeriodState.CURRENT) && enrolment.isEnroled()) {
+	    if (executionYear.isCurrent() && enrolment.isEnroled()) {
 		result++;
 	    }
 	}
@@ -1910,7 +1910,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		if (!enrolment.isInvisible() && enrolment.isApproved()) {
 		    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 		    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-		    if (!PeriodState.CURRENT.equals(executionYear.getState())) {
+		    if (!executionYear.isCurrent()) {
 			final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 			final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 			final Degree degree = degreeCurricularPlan.getDegree();

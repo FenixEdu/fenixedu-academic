@@ -23,7 +23,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID extends Service 
                 executionDegrees, new Predicate() {
                     public boolean evaluate(Object arg0) {
                         final ExecutionDegree executionDegree = (ExecutionDegree) arg0;
-                        return PeriodState.CURRENT.equals(executionDegree.getExecutionYear().getState());
+                        return executionDegree.getExecutionYear().isCurrent();
                     }
                 });
 
