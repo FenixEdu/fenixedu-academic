@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -2497,5 +2498,10 @@ public class Registration extends Registration_Base {
     public boolean isEnrolmentByStudentInShiftsAllowed() {
         return isActive();
     }
+    
+    final public boolean getIsForDegreeOffice() {
+		return isForOffice(AdministrativeOffice
+				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
+	}
 
 }
