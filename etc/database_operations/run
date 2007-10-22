@@ -27,8 +27,11 @@ function executeWithTempFile() {
 	echo
 }
 
+
 execute "alter table AcademicEntry - 2" alterTableAcademicCalendarEntry.sql
 
 execute "Drop Unnecessary Degree Columns" dropUnnecessaryDegreeColumns.sql
 execute "Isto e para apagar" deleteMarkSheet.sql
 execute "Changing payments management functionalities link" changes-20071018120101.sql
+
+execute "update table Role" addedResourceInternationRelationOfficeRole.sql
