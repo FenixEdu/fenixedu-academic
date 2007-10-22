@@ -231,7 +231,7 @@ public class ReportsUtils extends PropertiesManager {
     }
     
     static private GenericPair<FontKey, PdfFont> createFont(final String fontName, final String pdfFontName) {
-	return new GenericPair<FontKey, PdfFont>(new FontKey(fontName, false, false), new PdfFont(System.getenv("JAVA_HOME") + "jre/lib/fonts/" + pdfFontName, BaseFont.CP1252, true));
+	return new GenericPair<FontKey, PdfFont>(new FontKey(fontName, false, false), new PdfFont(System.getenv("JAVA_HOME") + "/jre/lib/fonts/" + pdfFontName, BaseFont.CP1252, true));
     }
     
     static public boolean exportToPdfFile(String key, Map parameters, ResourceBundle bundle,
