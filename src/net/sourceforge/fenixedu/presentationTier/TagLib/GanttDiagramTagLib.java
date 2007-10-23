@@ -124,13 +124,14 @@ public class GanttDiagramTagLib extends TagSupport {
 
 	    int numberOfUnits = getNumberOfUnits();
 
+	    String selectedEvent = getRequest().getParameter(getEventParameter());
+	    Object selectedEventObject = getRequest().getAttribute(getEventParameter());
+		
 	    for (GanttDiagramEvent event : getEvents()) {	    
 
 		String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getGanttDiagramEventIdentifier();
 		String eventName = event.getGanttDiagramEventName().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-		String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";	    	    
-		String selectedEvent = getRequest().getParameter(getEventParameter());
-		Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
+		String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";	    	    		   
 
 		if(event.getGanttDiagramEventIdentifier().equals(selectedEvent) || 
 			(selectedEventObject != null && event.getGanttDiagramEventIdentifier().equals(selectedEventObject.toString()))) {
@@ -276,14 +277,15 @@ public class GanttDiagramTagLib extends TagSupport {
 	    generateHeaders(builder);            
 
 	    int scale = getScale();
+	    
+	    String selectedEvent = getRequest().getParameter(getEventParameter());
+	    Object selectedEventObject = getRequest().getAttribute(getEventParameter());
 
 	    for (GanttDiagramEvent event : getEvents()) {	    
 
 		String eventUrl = getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "=" + event.getGanttDiagramEventIdentifier();
 		String eventName = event.getGanttDiagramEventName().getContent(Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
-		String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";	    	    
-		String selectedEvent = getRequest().getParameter(getEventParameter());
-		Object selectedEventObject = getRequest().getAttribute(getEventParameter());	    
+		String paddingStyle ="padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";	    	    		  
 
 		if(event.getGanttDiagramEventIdentifier().equals(selectedEvent) || 
 			(selectedEventObject != null && event.getGanttDiagramEventIdentifier().equals(selectedEventObject.toString()))) {
@@ -591,6 +593,7 @@ public class GanttDiagramTagLib extends TagSupport {
     }    
 
     private int getScale() {
+
 	switch (getViewTypeEnum()) {
 
 	case TOTAL:

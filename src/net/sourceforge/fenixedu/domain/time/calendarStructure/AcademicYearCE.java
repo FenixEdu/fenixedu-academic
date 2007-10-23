@@ -33,7 +33,7 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {	
-	return !parentEntry.isRootEntry();
+	return !parentEntry.isRoot();
     }
 
     @Override

@@ -32,11 +32,12 @@ public class GradeSubmissionCE extends GradeSubmissionCE_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+    public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
 	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
-
-	super.edit(title, description, begin, end, rootEntryDestination, seasonType, templateEntry);
-	setSeasonType(seasonType);
+	
+	GradeSubmissionCE entry = (GradeSubmissionCE) super.edit(title, description, begin, end, rootEntryDestination, seasonType, templateEntry);
+	entry.setSeasonType(seasonType);
+	return entry;	
     }
 
     @Override

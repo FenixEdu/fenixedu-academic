@@ -166,13 +166,13 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	AcademicCalendarRootEntry entryRootEntry = entry.getRootEntry();
 	AcademicCalendarEntry entryParentEntry = entry.getParentEntry();
 	
-	boolean deletedRootEntry = entry.isRootEntry();
+	boolean deletedRootEntry = entry.isRoot();
 	
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);
 	
 	try {
-	    executeService("DeleteAcademicCalendarEntry", new Object[] {entry});
+	    executeService("DeleteAcademicCalendarEntry", new Object[] {entry, rootEntry});
 
 	} catch(DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
@@ -197,6 +197,10 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	YearMonthDay beginDate = bean.getBeginDateToDisplayInYearMonthDayFormat();
 	YearMonthDay endDate = bean.getEndDateToDisplayInYearMonthDayFormat();
 
+	if(beginDate.isAfter(endDate)) {
+	    beginDate = endDate.minusDays(1);
+	}
+	
 	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, bean.getRootEntry(), beginDate, endDate);	
 	GanttDiagram diagram = GanttDiagram.getNewTotalGanttDiagram(newEntries, beginDate, endDate);
 

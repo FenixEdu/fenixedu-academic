@@ -26,18 +26,19 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
                  
     @Override
-    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+    public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
 	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
 	
 	setTitle(title);
 	setDescription(description);
-	setTemplateEntry(templateEntry);
+	setTemplateEntry(templateEntry);	
+	return this;
     }
     
     @Override
-    public void delete() {
+    public void delete(AcademicCalendarRootEntry rootEntry) {
 	super.setRootDomainObjectForRootEntries(null);	
-        super.delete();
+        super.delete(rootEntry);
     }
     
     @Override
@@ -109,7 +110,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
     
     @Override
-    public boolean isRootEntry() {
+    public boolean isRoot() {
         return true;
     }
     

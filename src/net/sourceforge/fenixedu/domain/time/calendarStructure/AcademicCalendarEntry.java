@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -43,8 +45,12 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
-    public void delete() {
+    public void delete(AcademicCalendarRootEntry rootEntry) {
 
+	if(!getRootEntry().equals(rootEntry)) {
+	    throw new DomainException("error.AcademicCalendarEntry.different.rootEntry");
+	}
+	
 	if(!getChildEntries().isEmpty()) {
 	    throw new DomainException("error.AcademicCalendarEntry.has.childs");
 	}
@@ -58,10 +64,10 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
-    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end, 
+    public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end, 
 	    AcademicCalendarRootEntry rootEntry, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
 
-	if(isRootEntry() || rootEntry == null) {
+	if(isRoot() || rootEntry == null) {
 	    throw new DomainException("error.unsupported.operation");
 	}
 
@@ -69,11 +75,13 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    AcademicCalendarEntry newParentEntry = createVirtualPathUntil(getParentEntry(), rootEntry);	    
 	    AcademicCalendarEntry newEntry = makeAnEntryCopyInDifferentCalendar(newParentEntry, false);
 	    newEntry.edit(title, description, begin, end, rootEntry, seasonType, templateEntry);
+	    return newEntry;
 	    
 	} else {
 	    setTitle(title);
 	    setDescription(description);
 	    setTimeInterval(begin, end, getParentEntry());
+	    return this;
 	}
     }
 
@@ -110,12 +118,11 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     private AcademicCalendarEntry createVirtualPathUntil(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntryDestination) {	
-
-	if(!entry.isRootEntry()) {
-
+	if(!entry.isRoot()) {
+	    
 	    List<AcademicCalendarEntry> entryPath = entry.getEntryFullPath();
 	    entryPath.remove(0);//remove root entry
-
+	    
 	    AcademicCalendarEntry parentEntry = rootEntryDestination;
 	    AcademicCalendarEntry virtualOrRedefinedEntry = rootEntryDestination;
 
@@ -129,7 +136,6 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 		    parentEntry = virtualOrRedefinedEntry;
 		}
 	    }	
-
 	    return parentEntry;
 
 	} else {
@@ -174,7 +180,20 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     public boolean isVirtual() {
 	return hasTemplateEntry() && super.getBegin() == null;
     }
-
+    
+    public EntryState getEntryState() {
+	return isVirtual() ? EntryState.VIRTUAL : isRedefined() ? EntryState.REDEFINED : EntryState.ORIGINAL;
+    }
+    
+    public static enum EntryState {
+	
+	VIRTUAL, REDEFINED, ORIGINAL;
+	
+	public String getName() {
+	    return name();
+	}
+    }
+    
     public List<AcademicCalendarEntry> getEntryFullPath() {
 	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();	
 	result.add(this);	
@@ -235,7 +254,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Override
     public MultiLanguageString getTitle() {
-	if(isVirtual() && !isRootEntry()) {
+	if(isVirtual() && !isRoot()) {
 	    return getTemplateEntry().getTitle();
 	}
 	return super.getTitle();
@@ -243,7 +262,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Override
     public MultiLanguageString getDescription() {
-	if(isVirtual() && !isRootEntry()) {
+	if(isVirtual() && !isRoot()) {
 	    return getTemplateEntry().getDescription();
 	}
 	return super.getDescription();
@@ -265,7 +284,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public AcademicCalendarRootEntry getRootEntry() {
-	if(isRootEntry()) {
+	if(isRoot()) {
 	    return (AcademicCalendarRootEntry) this;
 	}
 	return getParentEntry().getRootEntry();
@@ -409,7 +428,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return false;
     }
 
-    public boolean isRootEntry() {
+    public boolean isRoot() {
 	return false;
     }   
 }

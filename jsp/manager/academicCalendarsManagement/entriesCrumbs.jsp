@@ -37,7 +37,7 @@
 		<bean:define id="entryURL">/academicCalendarsManagement.do?method=viewAcademicCalendarEntry&amp;begin=<bean:write name="entryBean" property="beginPartialString"/>&amp;end=<bean:write name="entryBean" property="endPartialString"/>&amp;rootEntryID=<bean:write name="entryBean" property="rootEntry.idInternal"/></bean:define>
 		
 		<logic:equal name="currentEntry" property="class.simpleName" value="<%= AcademicCalendarRootEntry.class.getSimpleName() %>">		  
-		  	<html:link page="<%= entryURL %>" paramId="entryID" paramName="currentEntry" paramProperty="idInternal">
+		  	<html:link page="<%= entryURL %>" paramId="entryID" paramName="rootEntry" paramProperty="idInternal">
 				<bean:write name="rootEntry" property="title.content"/>
 			</html:link>
 	    </logic:equal>

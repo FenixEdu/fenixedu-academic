@@ -10,8 +10,7 @@
 <h2><bean:message key="academic.calendars.management.title" bundle="MANAGER_RESOURCES"/></h2>
 
 <logic:present role="MANAGER">
-	
-	
+		
 	<style type="text/css">
 	.tcalendar {
 	border-collapse: collapse;
@@ -103,7 +102,7 @@
 				<bean:define id="entryInfoSchema" value="AcademicCalendarInfoWithoutLinks"/>
 			</logic:empty>
 			<logic:notEmpty name="entryBean" property="entry.parentEntry">
-				<bean:define id="entryInfoSchema" value="AcademicCalendarEntryInfo"/>
+				<bean:define id="entryInfoSchema"><bean:write name="entryBean" property="entry.class.simpleName"/>EntryInfo</bean:define>													
 			</logic:notEmpty>
 						
 			<p class="mtop2">

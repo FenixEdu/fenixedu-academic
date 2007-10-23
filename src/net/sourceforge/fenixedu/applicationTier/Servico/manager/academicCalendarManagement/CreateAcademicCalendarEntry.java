@@ -45,10 +45,8 @@ public class CreateAcademicCalendarEntry extends Service {
 		return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
 	    }
 
-	} else {
-	    AcademicCalendarEntry entry = bean.getEntry();	    	  
-	    entry.edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry(), bean.getSeasonType(), bean.getTemplateEntry());	   	   
-	    return entry;
+	} else {	    	    	 
+	    return bean.getEntry().edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry(), bean.getSeasonType(), bean.getTemplateEntry());	   	   	    
 	}
 
 	return null;
