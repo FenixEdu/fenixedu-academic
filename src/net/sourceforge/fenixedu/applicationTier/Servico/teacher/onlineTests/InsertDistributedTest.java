@@ -2,9 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -13,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -147,6 +152,67 @@ public class InsertDistributedTest extends Service {
         }
     }
 
+    private static class QuestionPair {
+	private final Integer testQuestionId;
+	private final Integer questionId;
+
+	public QuestionPair(final TestQuestion testQuestion, final Question question) {
+	    testQuestionId = testQuestion.getIdInternal();
+	    questionId = question.getIdInternal();
+	}
+
+	public TestQuestion getTestQuestion() {
+	    return rootDomainObject.readTestQuestionByOID(testQuestionId);
+	}
+
+	public Question getQuestion() {
+	    return rootDomainObject.readQuestionByOID(questionId);
+	}
+    }
+
+    private static class Distribution {
+
+	private Map<InfoStudent, Collection<QuestionPair>> questionMap = new HashMap<InfoStudent, Collection<QuestionPair>>();
+
+	public Distribution(final List<TestQuestion> testQuestionList, final List<InfoStudent> infoStudentList) {
+	    final int numberOfStudents = infoStudentList.size();
+
+	    final Random r = new Random();
+
+            for (final TestQuestion testQuestion : testQuestionList) {
+        	final List<Question> questions = getQuestions(testQuestion, numberOfStudents);
+        	if (questions.size() >= numberOfStudents) {
+        	    for (final InfoStudent infoStudent : infoStudentList) {
+        		Collection<QuestionPair> questionsForStudent = questionMap.get(infoStudent);
+        		if (questionsForStudent == null) {
+        		    questionsForStudent = new ArrayList<QuestionPair>();
+        		    questionMap.put(infoStudent, questionsForStudent);
+        		}
+                    
+        		int questionIndex = r.nextInt(questions.size());
+        		final Question question = questions.get(questionIndex);
+        		questionsForStudent.add(new QuestionPair(testQuestion, question));
+        		questions.remove(questionIndex);
+        	    }
+        	}
+            }
+	}
+
+	private List<Question> getQuestions(final TestQuestion testQuestion, final int numberOfStudents) {
+	    final List<Question> questions = new ArrayList<Question>();
+	    final Metadata metadata = testQuestion.getQuestion().getMetadata();
+	    while (metadata.getQuestionsCount() > 0 && questions.size() < numberOfStudents) {
+		for (final Question question : metadata.getQuestionsSet()) {
+		    if (question.getVisibility()) {
+			questions.add(question);
+		    }
+		}
+	    }
+	    return questions;
+	}
+    }
+
+
     public static class Distributor extends Thread implements TransactionalCommand {
 
         private final List<InfoStudent> infoStudentList;
@@ -171,16 +237,15 @@ public class InsertDistributedTest extends Service {
 
             List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
-            for (TestQuestion testQuestion : testQuestionList) {
-                List<Integer> questionList = new ArrayList<Integer>();
-                addAllQuestions(questionList, testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
-                for (InfoStudent infoStudent : infoStudentList) {
-                    try {
-                        DistributeForStudentThread.runThread(distributedTestId, replacedContextPath, infoStudent, questionList, testQuestion.getIdInternal());
-                    } catch (InterruptedException e) {
-                    }
-                }
+            final Distribution distribution = new Distribution(testQuestionList, infoStudentList);
+            for (final Entry<InfoStudent, Collection<QuestionPair>> entry : distribution.questionMap.entrySet()) {
+        	final InfoStudent infoStudent = entry.getKey();
+        	final Collection<QuestionPair> questions = entry.getValue();
+        	try {
+        	    DistributeForStudentThread.runThread(distributedTestId, replacedContextPath, infoStudent, questions);
+        	} catch (InterruptedException e) {
+        	}
             }
         }
 
@@ -203,16 +268,14 @@ public class InsertDistributedTest extends Service {
         private final Integer distributedTestId;
         private final String replacedContextPath;
         private final InfoStudent infoStudent;
-        private final List<Integer> questionList;
-        private final Integer testQuestionId;
+        private final Collection<QuestionPair> questionList;
 
         public DistributeForStudentThread(final Integer distributedTestId, final String replacedContextPath,
-                final InfoStudent infoStudent, final List<Integer> questionList, final Integer testQuestionId) {
+                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) {
             this.distributedTestId = distributedTestId;
             this.replacedContextPath = replacedContextPath;
             this.infoStudent = infoStudent;
             this.questionList = questionList;
-            this.testQuestionId = testQuestionId;
         }
 
         public void run() {
@@ -221,59 +284,48 @@ public class InsertDistributedTest extends Service {
 
         public void doIt() {
             final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-            final TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
+            final Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 
-            Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
-            StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-            studentTestQuestion.setStudent(registration);
-            studentTestQuestion.setDistributedTest(distributedTest);
-            studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-            studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-            studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-            studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
-            studentTestQuestion.setResponse(null);
+            for (final QuestionPair questionPair : questionList) {
+        	final TestQuestion testQuestion = questionPair.getTestQuestion();
 
-            if (questionList.size() == 0) {
-                addAllQuestions(questionList, testQuestion.getQuestion().getMetadata().getVisibleQuestions());
+        	final StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
+        	studentTestQuestion.setStudent(registration);
+        	studentTestQuestion.setDistributedTest(distributedTest);
+        	studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+        	studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+        	studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+        	studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
+        	studentTestQuestion.setResponse(null);
+
+        	Question question = null;
+        	try {
+        	    question = getStudentQuestion(questionPair.getQuestion(), replacedContextPath);
+        	} catch (ParseException e) {
+        	    throw new Error(e);
+        	} catch (ParseQuestionException e) {
+        	    throw new Error(e);
+        	}
+        	if (question == null) {
+        	    throw new Error();
+        	}
+        	if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
+        	    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+        	}
+        	studentTestQuestion.setQuestion(question);
+        	questionList.remove(question);
             }
-            Question question = null;
-            try {
-                question = getStudentQuestion(questionList, replacedContextPath);
-            } catch (ParseException e) {
-                throw new Error(e);
-//                throw new InvalidArgumentsServiceException();
-            } catch (ParseQuestionException e) {
-                throw new Error(e);
-//                throw new InvalidArgumentsServiceException();
-            }
-            if (question == null) {
-                throw new Error();
-//                throw new InvalidArgumentsServiceException();
-            }
-            if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-                studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
-            }
-            studentTestQuestion.setQuestion(question);
-            questionList.remove(question);
         }
 
-        private Question getStudentQuestion(List<Integer> questions, String path) throws ParseException, ParseQuestionException {
-            Question question = null;
-            if (questions.size() != 0) {
-                Random r = new Random();
-                int questionIndex = r.nextInt(questions.size());
-                question = rootDomainObject.readQuestionByOID(questions.get(questionIndex));
-                if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
-                    question = new ParseSubQuestion().parseSubQuestion(question, path);
-                }
-            }
-            return question;
+        private Question getStudentQuestion(final Question question, String path) throws ParseException, ParseQuestionException {
+            return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ?
+        	    new ParseSubQuestion().parseSubQuestion(question, path) : question;
         }
 
         protected static void runThread(final Integer distributedTestId, final String replacedContextPath, 
-                final InfoStudent infoStudent, final List<Integer> questionList, final Integer testQuestionId) throws InterruptedException {
+                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) throws InterruptedException {
             final DistributeForStudentThread distributeForStudentThread = new DistributeForStudentThread(distributedTestId,
-                    replacedContextPath, infoStudent, questionList, testQuestionId);
+                    replacedContextPath, infoStudent, questionList);
             distributeForStudentThread.start();
             //TODO
             distributeForStudentThread.join();
