@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -34,7 +35,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final Registration registration = degreeFinalizationCertificateRequest.getRegistration();
 
 	parameters.put("degreeFinalizationDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	parameters.put("degreeFinalizationGrade", getDegreeFinalizationGrade(degreeFinalizationCertificateRequest));
+	parameters.put("degreeFinalizationGrade", degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(registration.getFinalAverage()) : "");
 	parameters.put("degreeFinalizationEcts", String.valueOf(registration.getEctsCredits()));
 	parameters.put("creditsDescription", getCreditsDescription());
 	parameters.put("graduateTitle", getGraduateTitle());
@@ -42,16 +43,15 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	parameters.put("degreeFinalizationInfo", getDegreeFinalizationInfo(degreeFinalizationCertificateRequest, registration));
     }
 
-    final private String getDegreeFinalizationGrade(final DegreeFinalizationCertificateRequest degreeFinalizationCertificateRequest) {
+    static final public String getDegreeFinalizationGrade(final Integer finalAverage) {
 	final StringBuilder result = new StringBuilder();
+
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
 	
-	if (degreeFinalizationCertificateRequest.getAverage()) {
-	    final Integer finalAverage = degreeFinalizationCertificateRequest.getRegistration().getFinalAverage();
-	    result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
-	    result.append(" de ").append(finalAverage);
-	    result.append(" (").append(enumerationBundle.getString(finalAverage.toString()));
-	    result.append(") ").append(resourceBundle.getString("values"));
-	}
+	result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
+	result.append(" de ").append(finalAverage);
+	result.append(" (").append(enumerationBundle.getString(finalAverage.toString()));
+	result.append(") ").append(resourceBundle.getString("values"));
 	
 	return result.toString();
     }
