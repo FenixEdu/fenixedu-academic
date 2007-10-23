@@ -36,11 +36,6 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("create-assiduousness-person-function");
 	    }
 	    assiduousnessStructureSearch.setSearch();
-	    if ((assiduousnessStructureSearch.getSearchPerson() != null && !assiduousnessStructureSearch
-		    .getSearchPerson())
-		    && assiduousnessStructureSearch.getUnit() == null) {
-		assiduousnessStructureSearch.setSearchPerson(null);
-	    }
 	}
 	request.setAttribute("assiduousnessStructureSearch", assiduousnessStructureSearch);
 	return mapping.findForward("show-assiduousness-structure");

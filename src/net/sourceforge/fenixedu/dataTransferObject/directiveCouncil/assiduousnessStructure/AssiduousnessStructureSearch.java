@@ -150,7 +150,8 @@ public class AssiduousnessStructureSearch implements Serializable {
 		    personFunctionList.addAll(getPersonFunctions(allPersonFunctionList, getEmployee()
 			    .getCurrentWorkingPlace()));
 		}
-	    } else if ((getSearchPerson() != null && !getSearchPerson()) && getUnit() != null) {
+	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null)
+		    && getUnit() != null) {
 		personFunctionList
 			.addAll(getPersonFunctions(allPersonFunctionList, getUnit().getUnit()));
 	    } else {
@@ -164,7 +165,8 @@ public class AssiduousnessStructureSearch implements Serializable {
 		    personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(),
 			    getEmployee().getCurrentWorkingPlace()));
 		}
-	    } else if ((getSearchPerson() != null && !getSearchPerson()) && getUnit() != null) {
+	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null)
+		    && getUnit() != null) {
 		personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(),
 			getUnit().getUnit()));
 	    }

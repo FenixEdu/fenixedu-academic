@@ -67,32 +67,45 @@
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
 </schema>
 
-<schema name="show.employee" type="net.sourceforge.fenixedu.domain.Employee">
-	<slot name="person.name" key="label.name"/>
-</schema>
-
-<schema name="show.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="name" key="label.name"/>
-</schema>
-
 <schema name="show.assiduousnessPersonFunctionParties" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
 	<slot name="responsible.name" key="label.name"/>
 	<slot name="party.name" key="label.name"/>
 </schema>
 
-<schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="beginDate" key="label.beginDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-            <property name="required" value="false"/>
-         </validator>			
+<schema name="show.assiduousnessPersonFunctionResponsible" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="responsible.name" key="label.name"/>
+</schema>
+
+
+<schema name="show.employee" type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="person.name" key="label.name"/>
+</schema>
+
+<schema name="create.assiduousnessPersonFunctionFactory.employees" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="endDate" key="label.endDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-            <property name="required" value="false"/>
-         </validator>			
+	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="employeesList" layout="option-select" key="property.advisory.recipients.employees" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="eachLayout" value="values" />
+		<property name="saveOptions" value="true" />
+		<property name="eachSchema" value="show.employee" />
+  		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.UnitEmployeesProvider" />
+	</slot>
+</schema>
+
+<schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>
 </schema>
+
