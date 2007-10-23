@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacy.workflow;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -20,6 +18,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
