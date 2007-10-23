@@ -108,4 +108,13 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("registrationConclusion");
     }
 
+    public ActionForward prepareRegistrationConclusionDocument(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+	
+	request.setAttribute("registration", getRegistration(request));
+	
+	return mapping.findForward("registrationConclusionDocument");
+    }
+
 }
