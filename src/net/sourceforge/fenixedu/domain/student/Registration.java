@@ -2537,5 +2537,9 @@ public class Registration extends Registration_Base {
     public int getNumberOfCurriculumEntries() {
 	return getCurriculum().getCurriculumEntries().size();
     }
+    
+    public boolean isRegistrationConclusionProcessed() {
+	return getFinalAverage() != null;
+    }
 
 }

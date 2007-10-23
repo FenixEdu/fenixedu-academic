@@ -82,7 +82,7 @@
 						<c:param name="maxIndex" value="${CoordinatorStudentsBackingBean.maxIndex - CoordinatorStudentsBackingBean.resultsPerPage}"/>
 					</c:url>
 					<a href='<c:out value="${pageURL}"/>'>
-						<c:out value="&laquo;" />
+						<c:out value="&laquo;" escapeXml="false" />
 					</a>
 					<c:out value="&nbsp;&nbsp;" escapeXml="false" />
 				</c:if>
@@ -130,7 +130,7 @@
 				</c:url>
 				<c:out value="&nbsp;&nbsp;" escapeXml="false" />
 				<a href='<c:out value="${pageURL}"/>'>
-					<c:out value="&raquo;"/>
+					<c:out value="&raquo;" escapeXml="false"/>
 				</a>
 			</c:if>
 			</c:if>
@@ -272,9 +272,17 @@
 					<h:outputText value="#{bundle['label.average']}" />
 				</h:outputLink>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.registration.average}">
-				<f:converter converterId="net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter"/>
-			</h:outputText>
+			<h:panelGroup rendered="#{studentCurricularPlan.registration.concluded}">
+				<h:outputText rendered="#{studentCurricularPlan.registration.registrationConclusionProcessed}" value="#{studentCurricularPlan.registration.average}">
+					<f:convertNumber maxFractionDigits="0" minIntegerDigits="1" maxIntegerDigits="2"/>
+				</h:outputText>
+				<h:outputText rendered="#{ ! studentCurricularPlan.registration.registrationConclusionProcessed}" value=" - "  />
+			</h:panelGroup>
+			<h:panelGroup rendered="#{ ! studentCurricularPlan.registration.concluded}">
+				<h:outputText value="#{studentCurricularPlan.registration.average}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="2" />
+				</h:outputText>
+			</h:panelGroup>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
