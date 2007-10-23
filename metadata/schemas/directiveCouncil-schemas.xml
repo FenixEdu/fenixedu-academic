@@ -1,0 +1,98 @@
+<schema name="assiduousnessStructureSearch.responsible" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessStructureSearch">
+	<slot name="responsible" layout="autoComplete" key="label.teacherName">
+		<property name="size" value="80"/>
+		<property name="labelField" value="name"/>
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchEmployeesAndTeachers"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="searchPerson" key="label.responsibleFor" layout="radio-postback">
+        <property name="trueLabel" value="label.employee"/>
+        <property name="falseLabel" value="label.unit"/>
+        <property name="destination" value="changeSearchPerson"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+</schema>
+
+<schema name="assiduousnessStructureSearch.employee" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessStructureSearch">
+	<slot name="employee" key="label.employee" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchActiveEmployeeAssiduousness"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="minChars" value="2"/>
+		<property name="maxCount" value="100"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="assiduousnessStructureSearch.unit" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessStructureSearch">
+	<slot name="unit" key="label.unit" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="labelField" value="unit.name"/>		
+		<property name="rawSlotName" value="unitName"/>
+		<property name="format" value="${unit.presentationName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalUnits"/>	
+		<property name="serviceArgs" value="slot=name"/>		
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+
+<schema name="show.personFunctionList" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
+	<slot name="childParty.name" key="label.teacherName"/>
+	<slot name="parentParty.name" key="label.responsibleFor"/>
+	<slot name="beginDate" key="label.beginDate"/>
+	<slot name="endDate" key="label.endDate"/>
+</schema>
+
+<schema name="edit.assiduousnessPersonFunction" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
+	<slot name="childParty.name" key="label.name">
+		<property name="readOnly" value="true" />
+		<property name="size" value="100"/>
+	</slot>
+	<slot name="parentParty.name" key="label.name">
+		<property name="readOnly" value="true" />
+		<property name="size" value="100"/>
+	</slot>
+	<slot name="beginDate" key="label.beginDate"/>
+	<slot name="endDate" key="label.endDate"/>
+	<setter signature="setOccupationInterval(beginDate, endDate)"/>
+</schema>
+
+<schema name="show.employee" type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="person.name" key="label.name"/>
+</schema>
+
+<schema name="show.unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="name" key="label.name"/>
+</schema>
+
+<schema name="show.assiduousnessPersonFunctionParties" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="responsible.name" key="label.name"/>
+	<slot name="party.name" key="label.name"/>
+</schema>
+
+<schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="beginDate" key="label.beginDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+            <property name="required" value="false"/>
+         </validator>			
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+            <property name="required" value="false"/>
+         </validator>			
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+</schema>

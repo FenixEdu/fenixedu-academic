@@ -517,6 +517,12 @@ public class Assiduousness extends Assiduousness_Base {
 	return assiduousnessStatusList;
     }
 
+    public AssiduousnessStatus getCurrentStatus() {
+	YearMonthDay now = new YearMonthDay();
+	List<AssiduousnessStatusHistory> result = getStatusBetween(now, now);
+	return result == null || result.isEmpty() ? null : result.get(0).getAssiduousnessStatus();
+    }
+
     public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {

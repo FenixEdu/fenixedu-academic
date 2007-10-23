@@ -14,6 +14,7 @@ import org.joda.time.YearMonthDay;
 public class PersonFunction extends PersonFunction_Base {
 
     public final static Comparator<PersonFunction> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+
     public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
 
     static {
@@ -41,7 +42,12 @@ public class PersonFunction extends PersonFunction_Base {
 
     public PersonFunction(Person parentParty, Person childParty, Function function, YearMonthDay begin,
 	    YearMonthDay end) {
-	this(parentParty, childParty, function, begin, end, 0.0);
+	super();
+	setParentParty(parentParty);
+	setChildParty(childParty);
+	setAccountabilityType(function);
+	setCredits(0.0);
+	setOccupationInterval(begin, end);
     }
 
     public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {
@@ -101,7 +107,7 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     public Unit getUnit() {
-	return (Unit) getParentParty();
+	return getParentParty() instanceof Unit ? (Unit) getParentParty() : null;
     }
 
     public Function getFunction() {

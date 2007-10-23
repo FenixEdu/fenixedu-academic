@@ -9322,6 +9322,13 @@
         <filterChains/>
 	</service>	
 	<service>
+		<name>SearchEmployeesAndTeachers</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeesAndTeachers</implementationClass>
+		<description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+	</service>	
+	<service>
 		<name>ChangeResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>
 		<description />
@@ -9720,6 +9727,14 @@
 	<service>
     	<name>SearchEmployeeAssiduousness</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeeAssiduousness</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>
+	<service>
+    	<name>SearchActiveEmployeeAssiduousness</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchActiveEmployeeAssiduousness</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

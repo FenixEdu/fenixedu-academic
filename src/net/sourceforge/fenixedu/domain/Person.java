@@ -965,7 +965,34 @@ public class Person extends Person_Base {
 
 	return result;
     }
-  
+
+    public List<PersonFunction> getPersonFunctions(Party party, boolean includeSubUnits, Boolean active,
+	    Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
+	if (party.isUnit()) {
+	    return getPersonFunctions((Unit) party, includeSubUnits, active, virtual,
+		    AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+	}
+	List<PersonFunction> result = new ArrayList<PersonFunction>();
+
+	YearMonthDay today = new YearMonthDay();
+	for (PersonFunction personFunction : getPersonFunctions(accountabilityTypeEnum)) {
+	    if (active != null && (personFunction.isActive(today) == !active)) {
+		continue;
+	    }
+	    if (virtual != null && (personFunction.getFunction().isVirtual() == !virtual)) {
+		continue;
+	    }
+	    if (personFunction.getParentParty().isPerson()) {
+		Person functionPerson = (Person) personFunction.getParentParty();
+		if (party == null || functionPerson.equals(party)) {
+		    result.add(personFunction);
+		}
+	    }
+	}
+
+	return result;
+    }
+ 
     public boolean hasFunctionType(FunctionType functionType, AccountabilityTypeEnum accountabilityTypeEnum) {
 	for (PersonFunction accountability : getPersonFunctions(null, false, true, false, accountabilityTypeEnum)) {
 	    if (accountability.getFunction().getFunctionType() == functionType) {

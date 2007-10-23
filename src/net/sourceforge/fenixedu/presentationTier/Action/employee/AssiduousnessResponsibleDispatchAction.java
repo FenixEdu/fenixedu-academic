@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.employee;
 
 import java.io.DataOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -67,38 +68,61 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 		yearMonth.getMonth().ordinal() + 1, 01);
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
 		beginDate.dayOfMonth().getMaximumValue());
-	List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>();
+	HashMap<Unit, UnitEmployees> unitEmployeesMap = new HashMap<Unit, UnitEmployees>();
 	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(
 		AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE, beginDate, endDate)) {
 	    if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
-		List<Employee> employeeList = personFunction.getFunction().getUnit()
-			.getAllWorkingEmployees(beginDate, endDate);
-		if (!employeeList.isEmpty()) {
-		    UnitEmployees unitEmployees = new UnitEmployees();
-		    unitEmployees.setUnit(personFunction.getFunction().getUnit());
-		    unitEmployees.setEmployeeList(employeeList);
-		    Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
-			    "employeeNumber"));
-		    unitEmployeesList.add(unitEmployees);
-		}
-		for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(
-			new YearMonthDay())) {
-		    employeeList = unit.getAllWorkingEmployees(beginDate, endDate);
-		    if (!employeeList.isEmpty()) {
-			UnitEmployees unitEmployees = new UnitEmployees();
-			unitEmployees.setUnit(unit);
-			unitEmployees.setEmployeeList(employeeList);
-			Collections.sort(unitEmployees.getEmployeeList(), new BeanComparator(
-				"employeeNumber"));
-			unitEmployeesList.add(unitEmployees);
+
+		if (personFunction.getParentParty() instanceof Unit) {
+
+		    setUnitEmployeeMap(unitEmployeesMap, personFunction.getFunction().getUnit(),
+			    personFunction.getFunction().getUnit().getAllWorkingEmployees(beginDate,
+				    endDate));
+
+		    for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(
+			    new YearMonthDay())) {
+
+			setUnitEmployeeMap(unitEmployeesMap, unit, unit.getAllWorkingEmployees(
+				beginDate, endDate));
 		    }
+
+		} else {
+		    List<Employee> l = new ArrayList<Employee>();
+		    l.add(((Person) personFunction.getParentParty()).getEmployee());
+		    setUnitEmployeeMap(unitEmployeesMap, personFunction.getFunction().getUnit(), l);
 		}
 	    }
 	}
-	unitEmployeesList = filterRepeatedUnits(unitEmployeesList);
+	List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>(unitEmployeesMap.values());
 	Collections.sort(unitEmployeesList, new BeanComparator("unitCode"));
 	request.setAttribute("unitEmployeesList", unitEmployeesList);
 	return mapping.findForward("show-employee-list");
+    }
+
+    private void setUnitEmployeeMap(HashMap<Unit, UnitEmployees> unitEmployeesMap, Unit unit,
+	    List<Employee> employeeListToAdd) {
+	UnitEmployees unitEmployee = unitEmployeesMap.get(unit);
+	if (unitEmployee == null) {
+	    unitEmployee = new UnitEmployees(unit);
+	}
+	unitEmployeesMap.put(unit, concatLists(unitEmployee, employeeListToAdd));
+    }
+
+    private UnitEmployees concatLists(UnitEmployees unitEmployee, List<Employee> allWorkingEmployees) {
+	List<Employee> employeeList = new ArrayList<Employee>();
+	if (unitEmployee.getEmployeeList() != null) {
+	    employeeList = unitEmployee.getEmployeeList();
+	}
+	if (allWorkingEmployees != null && !allWorkingEmployees.isEmpty()) {
+	    for (Employee employee : allWorkingEmployees) {
+		if (!employeeList.contains(employee)) {
+		    employeeList.add(employee);
+		}
+	    }
+	}
+	Collections.sort(employeeList, new BeanComparator("employeeNumber"));
+	unitEmployee.setEmployeeList(employeeList);
+	return unitEmployee;
     }
 
     private List<UnitEmployees> filterRepeatedUnits(List<UnitEmployees> unitEmployeesList) {
