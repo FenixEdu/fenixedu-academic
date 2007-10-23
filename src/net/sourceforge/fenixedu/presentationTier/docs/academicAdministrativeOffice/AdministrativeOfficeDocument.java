@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,8 +13,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -167,38 +164,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final private String getDegreeDescription() {
-	final StringBuilder result = new StringBuilder();
-	
-	final Degree degree = getDocumentRequest().getDegree();
-	final DegreeType degreeType = degree.getDegreeType();
-	switch (degreeType) {
-	case BOLONHA_PHD_PROGRAM:
-	    break;
-	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    result.append("curso conducente ao ");
-	    break;
-	default:
-	    result.append("curso de ");
-	    break;
-	}
-	
-	result.append(degreeType.getFilteredName().toUpperCase());
-	result.append(" em ").append(degree.getFilteredName().toUpperCase());
-	
-	if (degreeType.isComposite()) {
-	    final CycleType lastConcludedCycleType = getDocumentRequest().getRegistration().getLastConcludedCycleType();
-	    if(lastConcludedCycleType != null){
-		result.append(" (").append(lastConcludedCycleType.getDescription()).append(")");
-	    }
-	} else if (degreeType.hasExactlyOneCycleType()) {
-	    result.append(" (").append(degreeType.getCycleType().getDescription()).append(")");
-	}
-	
-	return result.toString();
+	return getDocumentRequest().getRegistration().getDegreeDescription();
     }
     
     final protected String getCreditsDescription() {
-	return getDocumentRequest().getDegreeType() == DegreeType.MASTER_DEGREE ? " Créd." : " ECTS";
+	return getDocumentRequest().getDegreeType().getCreditsDescription();
     }
     
     final protected String generateEndLine() {
