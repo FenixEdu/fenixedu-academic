@@ -5,17 +5,25 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import org.joda.time.DateTime;
 
 public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
-      
+
     public EnrolmentsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end) {
-	
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+
 	super();
-	super.initEntry(academicCalendarEntry, title, description, begin, end);
+	super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
     }
-        
+
+    private EnrolmentsPeriodCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
+
+	super();
+	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
+	setTemplateEntry(templateEntry);
+    }
+
     private EnrolmentsPeriodCE(AcademicCalendarEntry parentEntry, EnrolmentsPeriodCE enrolmentsPeriodCE) {
 	super();
-	super.initVirtualEntry(parentEntry, enrolmentsPeriodCE);
+	super.initVirtualOrRedefinedEntry(parentEntry, enrolmentsPeriodCE);
     }
 
     @Override
@@ -48,7 +56,7 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
 	if(virtual) {
 	    return new EnrolmentsPeriodCE(parentEntry, this);
 	} else {
-	    return new EnrolmentsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());   
+	    return new EnrolmentsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);   
 	}
     }
 }

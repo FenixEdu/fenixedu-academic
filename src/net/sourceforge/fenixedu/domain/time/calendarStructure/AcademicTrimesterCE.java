@@ -7,15 +7,23 @@ import org.joda.time.DateTime;
 public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
     public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
-	    MultiLanguageString description, DateTime begin, DateTime end) {
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 	
 	super();
-	super.initEntry(parentEntry, title, description, begin, end);
+	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
+    } 
+    
+    private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
+	
+	super();
+	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
+	setTemplateEntry(templateEntry);
     } 
     
     private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, AcademicTrimesterCE academicTrimesterCE) {
 	super();
-	super.initVirtualEntry(parentEntry, academicTrimesterCE);
+	super.initVirtualOrRedefinedEntry(parentEntry, academicTrimesterCE);
     }
 
     @Override
@@ -48,7 +56,7 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 	if(virtual) {
 	    return new AcademicTrimesterCE(parentEntry, this);
 	} else {
-	    return new AcademicTrimesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());
+	    return new AcademicTrimesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);
 	}
     }
 }

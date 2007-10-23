@@ -7,15 +7,23 @@ import org.joda.time.DateTime;
 public class AcademicYearCE extends AcademicYearCE_Base {
     
     public AcademicYearCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
-	    MultiLanguageString description, DateTime begin, DateTime end) {
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 	
 	super();
-	super.initEntry(parentEntry, title, description, begin, end);
+	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
     } 
+    
+    private AcademicYearCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
+	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
+	
+	super();
+	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
+	setTemplateEntry(templateEntry);
+    }
     
     private AcademicYearCE(AcademicCalendarEntry parentEntry, AcademicYearCE academicYearCE) {
 	super();
-	super.initVirtualEntry(parentEntry, academicYearCE);
+	super.initVirtualOrRedefinedEntry(parentEntry, academicYearCE);
     }
 
     @Override
@@ -54,7 +62,7 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 	if(virtual) {
 	    return new AcademicYearCE(parentEntry, this);
 	} else {
-	    return new AcademicYearCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd());
+	    return new AcademicYearCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);
 	}
     }    
 }

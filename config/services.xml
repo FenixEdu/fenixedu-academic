@@ -11318,14 +11318,14 @@
         </filterChains>     
     </service>
 	<service>
-    	<name>DeleteAcademicCalendar</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendar</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="ManagerAuthorization"></chain>
-        </filterChains>     
-    </service> 
+		<name>CreateAcademicCalendarEntry</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>	
     <service>
     	<name>DeleteAcademicCalendarEntry</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry</implementationClass>

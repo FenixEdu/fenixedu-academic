@@ -25,6 +25,20 @@ import org.joda.time.YearMonthDay;
 
 public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
+    public ActionForward prepareCreateAcademicCalendar(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+	Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
+	Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
+	
+	CalendarEntryBean bean = CalendarEntryBean.createAcademicCalendarBean(begin, end);	
+	request.setAttribute("parentEntryBean", bean);
+	
+	return mapping.findForward("prepareCreateCalendarEntry");	
+    }
+    
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -43,7 +57,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
 	Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
 
-	CalendarEntryBean bean = new CalendarEntryBean((AcademicCalendarRootEntry) academicCalendar, academicCalendar, begin, end);
+	CalendarEntryBean bean = CalendarEntryBean.createCalendarEntryBeanToCreateEntry((AcademicCalendarRootEntry) academicCalendar, academicCalendar, begin, end);
 	
 	return generateGanttDiagram(mapping, request, bean);	
     }
@@ -65,7 +79,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);
 
-	CalendarEntryBean bean = new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial);
+	CalendarEntryBean bean = CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entry, beginPartial, endPartial);
 		
 	return generateGanttDiagram(mapping, request, bean);
     }    
@@ -82,16 +96,34 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareCreateEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);	
+	AcademicCalendarEntry parentEntry = getAcademicCalendarEntryFromParameter(request);	
 	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
 	
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);	
 	
-	request.setAttribute("parentEntryBean", new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
+	request.setAttribute("parentEntryBean", CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, parentEntry, beginPartial, endPartial));
 	
 	return mapping.findForward("prepareCreateCalendarEntry");
     }        
+    
+    public ActionForward createEntry(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("createdEntryBeanID");
+		
+	AcademicCalendarEntry entry = null; 
+	try {
+	    entry = (AcademicCalendarEntry) executeService("CreateAcademicCalendarEntry", new Object[] {bean, true});
+	    
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    request.setAttribute("parentEntryBean", bean);	
+	    return mapping.findForward("prepareCreateCalendarEntry");
+	}
+	
+	return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(entry.getRootEntry(), entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));	
+    }
     
     public ActionForward prepareEditEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -102,18 +134,36 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	Partial beginPartial = getBeginFromParameter(request);
 	Partial endPartial = getEndFromParameter(request);		
 	
-	request.setAttribute("entryBean", new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
+	request.setAttribute("entryBean", CalendarEntryBean.createCalendarEntryBeanToEditEntry(rootEntry, entry, beginPartial, endPartial));
 	
 	return mapping.findForward("prepareCreateCalendarEntry");
     } 
-           
+    
+    public ActionForward editEntry(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("editedEntryBeanID");
+	
+	AcademicCalendarEntry entry = null;
+	try {
+	    entry = (AcademicCalendarEntry) executeService("CreateAcademicCalendarEntry", new Object[] {bean, false});
+	    
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    request.setAttribute("entryBean", bean);		
+	    return mapping.findForward("prepareCreateCalendarEntry");
+	}
+	
+	return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(entry.getRootEntry(), entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
+    }
+                  
     public ActionForward deleteEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	AcademicCalendarEntry entry = getAcademicCalendarEntryFromParameter(request);	
 	AcademicCalendarRootEntry rootEntry = getAcademicCalendarRootEntryFromParameter(request);
 	
-	AcademicCalendarRootEntry entryRootEntry = entry.getRooEntry();
+	AcademicCalendarRootEntry entryRootEntry = entry.getRootEntry();
 	AcademicCalendarEntry entryParentEntry = entry.getParentEntry();
 	
 	boolean deletedRootEntry = entry.isRootEntry();
@@ -126,17 +176,17 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
 	} catch(DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
-	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entry, beginPartial, endPartial));
+	    return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entry, beginPartial, endPartial));
 	}
 	
 	if(deletedRootEntry) {
 	    return prepareChooseCalendar(mapping, actionForm, request, response);    
 	 
 	} else if(entryParentEntry != null) {	    	    
-	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entryParentEntry, beginPartial, endPartial));
+	    return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entryParentEntry, beginPartial, endPartial));
 	    
 	} else {	  	   
-	    return generateGanttDiagram(mapping, request, new CalendarEntryBean(rootEntry, entryRootEntry, beginPartial, endPartial));
+	    return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entryRootEntry, beginPartial, endPartial));
 	}		
     }
          
@@ -164,16 +214,16 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	List<GanttDiagramEvent> result = new ArrayList<GanttDiagramEvent>();
 	for (AcademicCalendarEntry entry : academicCalendar.getChildEntriesWithTemplateEntriesOrderByDate(beginDateTime, endDateTime)) {
 	    if(!result.contains(entry)) {
-		getSubEntriesTree(entry, result);
+		getSubEntriesTree(entry, result, beginDateTime, endDateTime);
 	    }
 	}
 	return result;
     }
 
-    private void getSubEntriesTree(AcademicCalendarEntry entry, List<GanttDiagramEvent> result) {			
+    private void getSubEntriesTree(AcademicCalendarEntry entry, List<GanttDiagramEvent> result, DateTime begin, DateTime end) {			
 	result.add(entry);
-	for (AcademicCalendarEntry subEntry : entry.getChildEntriesOrderByDate()) {
-	    getSubEntriesTree(subEntry, result);
+	for (AcademicCalendarEntry subEntry : entry.getChildEntriesWithTemplateEntriesOrderByDate(begin, end)) {
+	    getSubEntriesTree(subEntry, result, begin, end);
 	}
     }
 

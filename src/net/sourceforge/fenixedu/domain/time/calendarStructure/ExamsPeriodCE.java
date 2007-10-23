@@ -6,18 +6,37 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import org.joda.time.DateTime;
 
 public class ExamsPeriodCE extends ExamsPeriodCE_Base {
-    
+
     public ExamsPeriodCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType) {
-	
+	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType, 
+	    AcademicCalendarRootEntry rootEntry) {
+
 	super();
-	super.initEntry(academicCalendarEntry, title, description, begin, end);
+	super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
+	setSeasonType(seasonType);
+    }
+
+    private ExamsPeriodCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
+	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType,
+	    AcademicCalendarEntry templateEntry) {
+
+	super();
+	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
+	setSeasonType(seasonType);
+	setTemplateEntry(templateEntry);
+    }
+
+    @Override
+    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
+	
+	super.edit(title, description, begin, end, rootEntryDestination, seasonType, templateEntry);
 	setSeasonType(seasonType);
     }
 
     private ExamsPeriodCE(AcademicCalendarEntry parentEntry, ExamsPeriodCE examsPeriodCE) {
 	super();
-	super.initVirtualEntry(parentEntry, examsPeriodCE);
+	super.initVirtualOrRedefinedEntry(parentEntry, examsPeriodCE);
     }
 
     @Override
@@ -27,20 +46,20 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
 
     @Override
     public void setSeasonType(SeasonType seasonType) {
-        if(seasonType == null) {
-            throw new DomainException("error.ExamsPeriodCE.empty.season.type");
-        }
-        super.setSeasonType(seasonType);
+	if(seasonType == null) {
+	    throw new DomainException("error.ExamsPeriodCE.empty.season.type");
+	}
+	super.setSeasonType(seasonType);
     }
-    
+
     @Override
     public SeasonType getSeasonType() {
-        if(isVirtual()) {
-            return ((ExamsPeriodCE)getTemplateEntry()).getSeasonType();
-        }
-        return super.getSeasonType();
+	if(isVirtual()) {
+	    return ((ExamsPeriodCE)getTemplateEntry()).getSeasonType();
+	}
+	return super.getSeasonType();
     }
-    
+
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
 	return !parentEntry.isAcademicSemester() && !parentEntry.isAcademicTrimester();
@@ -66,7 +85,7 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
 	if(virtual) {
 	    return new ExamsPeriodCE(parentEntry, this);
 	} else {
-	    return new ExamsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), getSeasonType());
+	    return new ExamsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), getSeasonType(), this);
 	}
     }
 }

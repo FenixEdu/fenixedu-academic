@@ -2255,12 +2255,6 @@
        			<forward name="prepareCreateCalendarEntry" path="prepare-create-calendar-entry"/>
        			<forward name="prepareEditAcademicCalendar" path="prepare-edit-academic-calendar"/>
        	</action>
-       	
-      	<action path="/prepareCreateAcademicCalendar"
-     			scope="request"
-	    	    type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-      		  	<forward name="Success" path="create-academic-calendar"/>      	      
-      	</action>
       	      	
 		<!-- =================== Units Merge =================== -->
 		<action path="/unitsMerge"

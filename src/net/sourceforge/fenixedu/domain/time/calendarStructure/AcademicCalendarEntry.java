@@ -24,18 +24,18 @@ import org.joda.time.Interval;
 
 public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base implements GanttDiagramEvent {
 
+    protected abstract AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual);
     protected abstract boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry);
     protected abstract boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry);
     protected abstract boolean areIntersectionsPossible();
     protected abstract boolean areOutOfBoundsPossible();
-    protected abstract AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual);
 
     public static final Comparator<AcademicCalendarEntry> COMPARATOR_BEGIN_DATE = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(new BeanComparator("begin"));
 	((ComparatorChain) COMPARATOR_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
+
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
 	super();	
@@ -43,84 +43,136 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
-    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
-	    AcademicCalendarEntry rootEntryDestination) {
-
-	if(!rootEntryDestination.isRootEntry()) {
-	    throw new DomainException("error.AcademicCalendarEntry.invalid.rootEntry");
-	}
-	
-	if(!rootEntryDestination.equals(getRooEntry())) {	    
-	    List<AcademicCalendarEntry> entryPath = getEntryFullPath();
-	    entryPath.remove(0);
-	    AcademicCalendarEntry parentEntry = rootEntryDestination;
-	    for (AcademicCalendarEntry entryToMakeCopy : entryPath) {
-		parentEntry = entryToMakeCopy.makeAnEntryCopyInDifferentCalendar(parentEntry, entryToMakeCopy.equals(this));		
-	    }
-	    
-	}  else {
-	    setTitle(title);
-	    setDescription(description);
-	    setTimeInterval(begin, end, getParentEntry());
-	}
-    }
-
-    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public void delete() {
+
 	if(!getChildEntries().isEmpty()) {
 	    throw new DomainException("error.AcademicCalendarEntry.has.childs");
-	}	
+	}
+
+	getBasedEntries().clear();
+
 	super.setParentEntry(null);
 	super.setTemplateEntry(null);	
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
-    protected void initEntry(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end) {
+    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
+    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end, 
+	    AcademicCalendarRootEntry rootEntry, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
 
-	if(parentEntry == null) {
-	    throw new DomainException("error.AcademicCalendarEntry.empty.parentEntry");
+	if(isRootEntry() || rootEntry == null) {
+	    throw new DomainException("error.unsupported.operation");
 	}
-	setParentEntry(parentEntry);		
+
+	if(!rootEntry.equals(getRootEntry())) {	    	    
+	    AcademicCalendarEntry newParentEntry = createVirtualPathUntil(getParentEntry(), rootEntry);	    
+	    AcademicCalendarEntry newEntry = makeAnEntryCopyInDifferentCalendar(newParentEntry, false);
+	    newEntry.edit(title, description, begin, end, rootEntry, seasonType, templateEntry);
+	    
+	} else {
+	    setTitle(title);
+	    setDescription(description);
+	    setTimeInterval(begin, end, getParentEntry());
+	}
+    }
+
+    protected void initEntry(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description, 
+	    DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+
+	if(rootEntry == null || parentEntry == null) {
+	    throw new DomainException("error.unsupported.operation");
+	}
+
+	parentEntry = !parentEntry.getRootEntry().equals(rootEntry) ? createVirtualPathUntil(parentEntry, rootEntry) : parentEntry;
+
+	setParentEntry(parentEntry);			
 	setTitle(title);
 	setDescription(description);
-	setTimeInterval(begin, end, parentEntry);	
+	setTimeInterval(begin, end, parentEntry);   
     }          
 
-    protected void initVirtualEntry(AcademicCalendarEntry parentEntry, AcademicCalendarEntry templateEntry) {
-	if(parentEntry == null || templateEntry == null) {
-	    throw new DomainException("error.AcademicCalendarEntry.empty.parentEntry.or.template.entry");
-	}
+    protected void initVirtualOrRedefinedEntry(AcademicCalendarEntry parentEntry, AcademicCalendarEntry templateEntry) {		
 	setParentEntry(parentEntry);	
 	setTemplateEntry(templateEntry);
     }
-    
+
+    private AcademicCalendarEntry getVirtualOrRedefinedEntryIn(AcademicCalendarRootEntry rootEntry) {
+	if(rootEntry != null) {
+	    List<AcademicCalendarEntry> basedEntries = getBasedEntries();
+	    for (AcademicCalendarEntry entry : basedEntries) {
+		if(entry.getRootEntry().equals(rootEntry)) {
+		    return entry;
+		}
+	    }
+	}
+	return null;
+    }
+
+    private AcademicCalendarEntry createVirtualPathUntil(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntryDestination) {	
+
+	if(!entry.isRootEntry()) {
+
+	    List<AcademicCalendarEntry> entryPath = entry.getEntryFullPath();
+	    entryPath.remove(0);//remove root entry
+
+	    AcademicCalendarEntry parentEntry = rootEntryDestination;
+	    AcademicCalendarEntry virtualOrRedefinedEntry = rootEntryDestination;
+
+	    for (AcademicCalendarEntry entryToMakeCopy : entryPath) {
+		if(virtualOrRedefinedEntry != null) {
+		    virtualOrRedefinedEntry = entryToMakeCopy.getVirtualOrRedefinedEntryIn((AcademicCalendarRootEntry) rootEntryDestination);					
+		} 
+		if(virtualOrRedefinedEntry == null) {
+		    parentEntry = entryToMakeCopy.makeAnEntryCopyInDifferentCalendar(parentEntry, true);		
+		} else {
+		    parentEntry = virtualOrRedefinedEntry;
+		}
+	    }	
+
+	    return parentEntry;
+
+	} else {
+	    return rootEntryDestination;
+	}	
+    }
+
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-        if(templateEntry == null || !templateEntry.getClass().equals(getClass())) {
-            throw new DomainException("error.AcademicCalendarEntry.invalid.template.entry");
-        }
-        super.setTemplateEntry(templateEntry);
+	if(templateEntry != null && (!templateEntry.getClass().equals(getClass()) || getBasedEntries().contains(templateEntry))) {
+	    throw new DomainException("error.AcademicCalendarEntry.invalid.template.entry");
+	}
+	super.setTemplateEntry(templateEntry);
     }
-    
+
     @Override
     public void setParentEntry(AcademicCalendarEntry parentEntry) {
-	if(parentEntry != null && isParentEntryInvalid(parentEntry)) {
+	if(parentEntry == null) {
+	    throw new DomainException("error.AcademicCalendarEntry.empty.parentEntry");
+	}
+	if(isParentEntryInvalid(parentEntry)) {
 	    throw new DomainException("error.AcademicCalendarEntry.invalid.parent.entry");
 	}
-	if(parentEntry != null && parentEntry.exceededNumberOfChildEntries(this)) {
+	if(parentEntry.exceededNumberOfChildEntries(this)) {
 	    throw new DomainException("error.AcademicCalendarEntry.number.of.subEntries.exceeded");
 	}
 	super.setParentEntry(parentEntry);
     } 
 
+    @Override
+    public void setTitle(MultiLanguageString title) {
+	if (title == null || title.isEmpty()) {
+	    throw new DomainException("error.AcademicCalendarEntry.empty.title");
+	}
+	super.setTitle(title);    
+    }
+
     public boolean isRedefined() {
-	return hasTemplateEntry() && getBegin() != null;
+	return hasTemplateEntry() && super.getBegin() != null;
     }
 
     public boolean isVirtual() {
-	return hasTemplateEntry() && getBegin() == null;
+	return hasTemplateEntry() && super.getBegin() == null;
     }
 
     public List<AcademicCalendarEntry> getEntryFullPath() {
@@ -182,19 +234,19 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     @Override
-    public void setTitle(MultiLanguageString title) {
-	if (title.isEmpty()) {
-	    throw new DomainException("error.AcademicCalendarEntry.empty.title");
+    public MultiLanguageString getTitle() {
+	if(isVirtual() && !isRootEntry()) {
+	    return getTemplateEntry().getTitle();
 	}
-	super.setTitle(title);    
+	return super.getTitle();
     }
-    
+
     @Override
     public MultiLanguageString getDescription() {
-        if(isVirtual()) {
-            return getTemplateEntry().getDescription();
-        }
-        return super.getDescription();
+	if(isVirtual() && !isRootEntry()) {
+	    return getTemplateEntry().getDescription();
+	}
+	return super.getDescription();
     }
 
     public String getPresentationTimeInterval() {
@@ -209,14 +261,14 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public AcademicCalendarRootEntry getAcademicCalendar() {	
-	return getRooEntry();
+	return getRootEntry();
     }
 
-    public AcademicCalendarRootEntry getRooEntry() {
+    public AcademicCalendarRootEntry getRootEntry() {
 	if(isRootEntry()) {
 	    return (AcademicCalendarRootEntry) this;
 	}
-	return getParentEntry().getRooEntry();
+	return getParentEntry().getRootEntry();
     }
 
     public Set<? extends AcademicCalendarEntry> getAllChildEntries(AcademicCalendarEntry parentEntry,
@@ -239,10 +291,10 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public Set<AcademicCalendarEntry> getChildEntriesWithTemplateEntriesOrderByDate(DateTime begin, DateTime end) {
 	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(COMPARATOR_BEGIN_DATE);	
-	Set<AcademicCalendarEntry> templateEntries = new HashSet<AcademicCalendarEntry>();		
+	Set<AcademicCalendarEntry> templateEntriesToRemove = new HashSet<AcademicCalendarEntry>();		
 	for (AcademicCalendarEntry entry : getChildEntries()) {
 	    if(entry.isRedefined() || entry.isVirtual()) {		
-		templateEntries.add(entry.getTemplateEntry());		
+		templateEntriesToRemove.add(entry.getTemplateEntry());		
 	    }
 	    if(entry.belongsToPeriod(begin, end)) {
 		result.add(entry);
@@ -250,7 +302,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}	
 	if(hasTemplateEntry()) {	    
 	    for (AcademicCalendarEntry entry : getTemplateEntry().getChildEntriesWithTemplateEntriesOrderByDate(begin, end)) {
-		if(!templateEntries.contains(entry) && entry.belongsToPeriod(begin, end)) {
+		if(!templateEntriesToRemove.contains(entry) && entry.belongsToPeriod(begin, end)) {
 		    result.add(entry);
 		}
 	    }	    	   	    

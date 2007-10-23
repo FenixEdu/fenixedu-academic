@@ -5,34 +5,97 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class CalendarEntryBean implements Serializable {
        
-    private Class type;
+    
+    private MultiLanguageString title;
+    
+    private MultiLanguageString description;
+    
+    private DateTime begin;
+    
+    private DateTime end;
+    
+    private SeasonType seasonType;
+    
+    
+    private Class<? extends AcademicCalendarEntry> type;
     
     private Partial beginDateToDisplay;
     
     private Partial endDateToDisplay;
 
+    
     private DomainReference<AcademicCalendarEntry> entryReference;
     
     private DomainReference<AcademicCalendarEntry> templateEntryReference;
     
     private DomainReference<AcademicCalendarRootEntry> selectedRootEntryReference;
+            
     
-    public CalendarEntryBean(AcademicCalendarRootEntry rootEntry, AcademicCalendarEntry academicCalendarEntry, Partial begin, Partial end) {	
-	setRootEntry(rootEntry);
-	setEntry(academicCalendarEntry);
-	setBeginDateToDisplay(begin);
-	setEndDateToDisplay(end);
+    public CalendarEntryBean() {}
+    
+    public static CalendarEntryBean createAcademicCalendarBean(Partial begin, Partial end) {
+	CalendarEntryBean bean = new CalendarEntryBean();
+	bean.setBeginDateToDisplay(begin);
+	bean.setEndDateToDisplay(end);
+	bean.setType(AcademicCalendarRootEntry.class);
+	return bean;
+    }
+    
+    public static CalendarEntryBean createCalendarEntryBeanToCreateEntry(AcademicCalendarRootEntry rootEntry,
+	    AcademicCalendarEntry parentEntry, Partial begin, Partial end) {
+	
+	CalendarEntryBean bean = new CalendarEntryBean();
+	bean.setRootEntry(rootEntry);
+	bean.setEntry(parentEntry);
+	bean.setBeginDateToDisplay(begin);
+	bean.setEndDateToDisplay(end);
+	return bean;
+    }
+    
+    
+    public static CalendarEntryBean createCalendarEntryBeanToEditEntry(AcademicCalendarRootEntry rootEntry,
+	    AcademicCalendarEntry entry, Partial begin, Partial end) {
+	
+	CalendarEntryBean bean = new CalendarEntryBean();
+	
+	bean.setRootEntry(rootEntry);
+	bean.setEntry(entry);
+	bean.setBeginDateToDisplay(begin);
+	bean.setEndDateToDisplay(end);
+	
+	bean.setTemplateEntry(entry.getTemplateEntry());
+	bean.setType(entry.getClass());
+	bean.setTitle(entry.getTitle());
+	bean.setDescription(entry.getDescription());
+	bean.setBegin(entry.getBegin());
+	bean.setEnd(entry.getEnd());
+	
+	if(entry.isExamsPeriod()) {
+	    ExamsPeriodCE examsPeriodCE = (ExamsPeriodCE) entry;
+	    bean.setSeasonType(examsPeriodCE.getSeasonType());
+	    
+	} else if(entry.isGradeSubmissionPeriod()) {
+	    GradeSubmissionCE gradeSubmissionCE = (GradeSubmissionCE) entry;
+	    bean.setSeasonType(gradeSubmissionCE.getSeasonType());
+	}
+	
+	return bean;
     }
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
-	return getEntry().getRooEntry();
+	return getEntry().getRootEntry();
     }
     
     public AcademicCalendarRootEntry getRootEntry() {
@@ -59,11 +122,11 @@ public class CalendarEntryBean implements Serializable {
 	this.entryReference = academicCalendarEntry == null ? null : new DomainReference<AcademicCalendarEntry>(academicCalendarEntry);
     }  
 
-    public Class getType() {
+    public Class<? extends AcademicCalendarEntry> getType() {
         return type;
     }
 
-    public void setType(Class type) {
+    public void setType(Class<? extends AcademicCalendarEntry> type) {
         this.type = type;
     }
 
@@ -82,6 +145,46 @@ public class CalendarEntryBean implements Serializable {
     public void setEndDateToDisplay(Partial endDateToDisplay) {
         this.endDateToDisplay = endDateToDisplay;
     }
+    
+    public MultiLanguageString getTitle() {
+        return title;
+    }
+
+    public void setTitle(MultiLanguageString title) {
+        this.title = title;
+    }
+
+    public MultiLanguageString getDescription() {
+        return description;
+    }
+
+    public void setDescription(MultiLanguageString description) {
+        this.description = description;
+    }
+
+    public DateTime getBegin() {
+        return begin;
+    }
+
+    public void setBegin(DateTime begin) {
+        this.begin = begin;
+    }
+
+    public DateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(DateTime end) {
+        this.end = end;
+    }
+    
+    public SeasonType getSeasonType() {
+        return seasonType;
+    }
+
+    public void setSeasonType(SeasonType seasonType) {
+        this.seasonType = seasonType;
+    }   
     
     public String getBeginPartialString() {
 	return getPartialString(getBeginDateToDisplay());

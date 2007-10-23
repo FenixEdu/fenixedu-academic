@@ -21,7 +21,7 @@
 
 	<p class="mtop05"><b><bean:message key="label.academic.calendars" bundle="MANAGER_RESOURCES"/></b></p>
 	
-	<p><html:link page="/prepareCreateAcademicCalendar.do">
+	<p><html:link page="/academicCalendarsManagement.do?method=prepareCreateAcademicCalendar">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.insert.academic.calendar"/>
 	</html:link></p>
 	

@@ -9,7 +9,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -25,12 +24,14 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	setDescription(description);	
 	setTemplateEntry(templateCalendar);
     }
-       
-    @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
-    public void edit(MultiLanguageString title, MultiLanguageString description, AcademicCalendarEntry templateCalendar) {	
+                 
+    @Override
+    public void edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
+	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
+	
 	setTitle(title);
 	setDescription(description);
-	setTemplateEntry(templateCalendar);
+	setTemplateEntry(templateEntry);
     }
     
     @Override
@@ -40,33 +41,13 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
     
     @Override
-    public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-        if(templateEntry != null && getBasedEntries().contains(templateEntry)) {
-            throw new DomainException("error.RootEntry.invalid.templateEntry");
-        }
+    public void setTemplateEntry(AcademicCalendarEntry templateEntry) {        
+	if(templateEntry != null && !getChildEntries().isEmpty() && hasTemplateEntry() && !getTemplateEntry().equals(templateEntry)) {
+	    throw new DomainException("error.RootEntry.invalid.templateEntry");    
+	}	
         super.setTemplateEntry(templateEntry);
     }
-    
-    @Override
-    public void setBegin(DateTime begin) {        
-	throw new DomainException("error.AcademicCalendarRootEntry.impossible.edit.begin.date");
-    }
-    
-    @Override
-    public void setEnd(DateTime end) {        
-	throw new DomainException("error.AcademicCalendarRootEntry.impossible.edit.end.date");
-    }
-    
-    @Override
-    public void setParentEntry(AcademicCalendarEntry parentEntry) {
-        throw new DomainException("error.AcademicCalendarRootEntry.impossible.add.parent.unit");
-    }
-    
-    @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {	
-	throw new DomainException("error.unsupported.operation");	
-    }
-    
+              
     @Override
     public void setRootDomainObjectForRootEntries(RootDomainObject rootDomainObjectForRootEntries) {
         if(rootDomainObjectForRootEntries == null) {
@@ -74,24 +55,62 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         }
         super.setRootDomainObjectForRootEntries(rootDomainObjectForRootEntries);
     }
-               
-    public AcademicChronology getAcademicChronology() {
-	if (academicChronology == null) {
-	    academicChronology = new AcademicChronology(this);
-	}
-	return academicChronology;
-    }
-
+                  
     @Override
     public DateTime getBegin() {
 	SortedSet<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
 	result.addAll(getChildEntries());
 	return (result.isEmpty()) ? null : result.first().getBegin();
     }
-    
+           
     @Override
     public DateTime getEnd() {
         return null;
+    }
+           
+    @Override
+    public void setBegin(DateTime begin) {        
+	throw new DomainException("error.unsupported.operation");
+    }
+    
+    @Override
+    public void setEnd(DateTime end) {        
+	throw new DomainException("error.unsupported.operation");
+    }
+    
+    @Override
+    public void setParentEntry(AcademicCalendarEntry parentEntry) {
+	throw new DomainException("error.unsupported.operation");
+    }
+    
+    @Override
+    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {	
+	throw new DomainException("error.unsupported.operation");	
+    }
+                
+    @Override
+    protected boolean areIntersectionsPossible() {	
+	return true;
+    }
+
+    @Override
+    protected boolean areOutOfBoundsPossible() {	
+	return true;
+    }
+
+    @Override
+    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
+	return false;
+    }
+
+    @Override
+    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {	
+	return true;
+    }
+    
+    @Override
+    public boolean isRootEntry() {
+        return true;
     }
     
     public List<? extends AcademicCalendarEntry> getAllChildEntriesOrderByDate(Class<? extends AcademicCalendarEntry> entryClass,
@@ -131,29 +150,11 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	}
 	return null;
     }
-
-    @Override
-    protected boolean areIntersectionsPossible() {	
-	return true;
-    }
-
-    @Override
-    protected boolean areOutOfBoundsPossible() {	
-	return true;
-    }
-
-    @Override
-    protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
-	return false;
-    }
-
-    @Override
-    protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {	
-	return true;
-    }
-    
-    @Override
-    public boolean isRootEntry() {
-        return true;
+      
+    public AcademicChronology getAcademicChronology() {
+	if (academicChronology == null) {
+	    academicChronology = new AcademicChronology(this);
+	}
+	return academicChronology;
     }
 }

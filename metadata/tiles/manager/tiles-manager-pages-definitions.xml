@@ -841,10 +841,7 @@
 	</definition>	
 	<definition name="view-academic-calendar" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/academicCalendarsManagement/viewAcademicCalendar.jsp" />
-	</definition>	
-	<definition name="create-academic-calendar" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/academicCalendarsManagement/createAcademicCalendar.jsp" />
-	</definition>	
+	</definition>		
 	<definition name="prepare-create-calendar-entry" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/academicCalendarsManagement/createCalendarEntry.jsp" />
 	</definition>
