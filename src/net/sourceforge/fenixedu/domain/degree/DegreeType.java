@@ -268,6 +268,10 @@ public enum DegreeType {
 	}
     }
 
+    final public String getCreditsDescription() {
+	return this == DegreeType.MASTER_DEGREE ? " Créd." : " ECTS";
+    }
+    
     public boolean isBolonhaType() {
 	return this != DegreeType.DEGREE && this != DegreeType.MASTER_DEGREE;
     }
