@@ -232,6 +232,7 @@
 				scope="request">
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
 			<forward name="registrationConclusion" path="registrationConclusion"/>
+			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
 		</action>	
 
 		<action path="/viewCurriculum"

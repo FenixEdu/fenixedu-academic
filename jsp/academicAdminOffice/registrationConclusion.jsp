@@ -67,8 +67,8 @@
 	</ul>
 </logic:equal>
 <logic:equal name="registration" property="hasConcluded" value="true">
-	<h3 class="mbottom025"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<p class="mtop025">
+	<h3 class="mvert15"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<p class="mvert15">
 		<p>
 			<bean:message key="conclusion.date.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="lastApprovementDate"/>
 		</p>
@@ -82,11 +82,16 @@
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
 		</fr:edit>
+		<p>
+			<html:link page="/registration.do?method=prepareRegistrationConclusionDocument" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+				Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</p>
 	</p>
 </logic:equal>
 
-<h3 class="mbottom025"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mtop025">
+<h3 class="mvert15"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mvert15">
 	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 	<fr:view name="registration" property="curriculum">
 		<fr:layout>
