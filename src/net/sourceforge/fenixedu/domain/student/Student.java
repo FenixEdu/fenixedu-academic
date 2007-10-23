@@ -234,7 +234,7 @@ public class Student extends Student_Base {
 	    new StudentDataByExecutionYear(this);
 	}
     }
-    
+
     private StudentDataByExecutionYear createStudentDataForExecutionYear(ExecutionYear executionYear) {
 	if (getStudentDataByExecutionYear(executionYear) == null) {
 	    return new StudentDataByExecutionYear(this, executionYear);
@@ -259,7 +259,7 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-    
+
     public DegreeType getMostSignificantDegreeType() {
 	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
 	    return DegreeType.MASTER_DEGREE;
@@ -322,6 +322,11 @@ public class Student extends Student_Base {
 	return hasRegistrationForOffice(AccessControl.getPerson().getEmployee().getAdministrativeOffice());
     }
 
+    public boolean getHasRegistrationForOfficeOrEmptyRegistrations() {
+	return !hasAnyRegistrations()
+		|| hasRegistrationForOffice(AccessControl.getPerson().getEmployee().getAdministrativeOffice());
+    }
+    
     public boolean attends(ExecutionCourse executionCourse) {
 	for (final Registration registration : getRegistrationsSet()) {
 	    if (registration.attends(executionCourse)) {
