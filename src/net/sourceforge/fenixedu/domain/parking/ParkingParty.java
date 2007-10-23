@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -60,7 +61,8 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean getHasAllNecessaryPersonalInfo() {
 	Person person = (Person) getParty();
-	return (!StringUtils.isEmpty(person.getWorkPhone()) || !StringUtils.isEmpty(person.getMobile()))
+	return ((person.getPersonWorkPhone() != null && !StringUtils.isEmpty(person.getPersonWorkPhone()
+		.getNumber())) || !StringUtils.isEmpty(person.getMobile()))
 		&& (isEmployee() || !StringUtils.isEmpty(person.getEmail()));
     }
 
@@ -289,16 +291,18 @@ public class ParkingParty extends ParkingParty_Base {
 			    stringBuilder.append(student.getNumber()).append(" ");
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
-			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
-				"º ano");
+			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+			    stringBuilder.append("\n (").append(registration.getCurricularYear())
+				    .append("º ano");
 
-			if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				.getCurricularYear())) {
-			    stringBuilder.append(" - 1ª vez)");
-			} else {
-			    stringBuilder.append(")");
+			    if (isFirstTimeEnrolledInCurrentYear(registration, registration
+				    .getCurricularYear())) {
+				stringBuilder.append(" - 1ª vez)");
+			    } else {
+				stringBuilder.append(")");
+			    }
+			    stringBuilder.append("<br/>Média: ").append(registration.getAverage());
 			}
-			stringBuilder.append("<br/>Média: ").append(registration.getArithmeticMean());
 			stringBuilder.append("\t");
 		    }
 		}
@@ -326,7 +330,7 @@ public class ParkingParty extends ParkingParty_Base {
 		    if (contractRegime.isActive()) {
 			stringBuilder.append("Sim");
 		    } else {
-			stringBuilder.append("Nï¿½o");
+			stringBuilder.append("Não");
 		    }
 		    occupations.add(stringBuilder.toString());
 		}
@@ -471,6 +475,41 @@ public class ParkingParty extends ParkingParty_Base {
 	return null;
     }
 
+    public boolean isActiveInHisGroup() {
+	if (getParkingGroup() == null) {
+	    return Boolean.FALSE;
+	}
+	if (getParty().isPerson()) {
+	    Person person = (Person) getParty();
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Docentes")) {
+		return person.getTeacher() != null
+			&& person.getTeacher().getCurrentWorkingUnit() != null;
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Não Docentes")) {
+		return person.getEmployee() != null
+			&& person.getEmployee().getCurrentWorkingPlace() != null;
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Especiais")) {
+		if (person.getTeacher() != null) {
+		    return person.getTeacher().getCurrentWorkingUnit() != null;
+		} else {
+		    return person.getEmployee().getCurrentWorkingPlace() != null;
+		}
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Limitados")) {
+		boolean result = Boolean.FALSE;
+		if (person.getGrantOwner() != null) {
+		    result = person.getGrantOwner().isActive();
+		}
+		if (person.getStudent() != null) {
+		    result = result || person.getStudent().getMostSignificantDegreeType() != null;
+		}
+		return result;
+	    }
+	}
+	return Boolean.FALSE;
+    }
+
     public boolean getCanRequestUnlimitedCardAndIsInAnyRequestPeriod() {
 	return canRequestUnlimitedCard()
 		&& ParkingRequestPeriod.isDateInAnyRequestPeriod(new DateTime());
@@ -546,5 +585,9 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	}
 	return null;
+    }
+
+    public PartyClassification getPartyClassification() {
+	return getParty().isPerson() ? ((Person) getParty()).getPartyClassification() : null;
     }
 }

@@ -286,11 +286,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	String parkingPartyID = (String) dynaActionForm.get("parkingPartyID");
+	String parkingPartyID = (String) request.getParameter("parkingPartyID");//dynaActionForm.get("parkingPartyID");
 
 	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(
 		parkingPartyID));
-	Integer parkingGroupID = (Integer) dynaActionForm.get("groupID");
+	Integer parkingGroupID = Integer.valueOf(request.getParameter("groupID"));//dynaActionForm.get("groupID");
 	ParkingGroup parkingGroup = null;
 	if (parkingGroupID != null) {
 	    parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);

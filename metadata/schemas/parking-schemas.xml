@@ -401,3 +401,35 @@
 	<setter signature="editParkingRequestPeriod(beginDate,endDate)"/>
 </schema>
 
+<schema name="edit.parkingCardsRenewal" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardsRenewalBean" 
+		bundle="PARKING_RESOURCES">
+	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="format" value="${groupName}"/>
+		<property name="nullOptionHidden" value="true"/>
+	</slot>
+	<slot name="actualEndDate" key="label.actualEndDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="renewalEndDate" key="label.renewalEndDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+</schema>
+
+<schema name="show.parkingParty.notUpdatedEndDate" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>	
+	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES"/>
+</schema>

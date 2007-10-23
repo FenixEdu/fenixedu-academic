@@ -31,6 +31,11 @@ function hideCardValidPeriod(toShow){
 	}
 }
 		
+function exportParkingParkCard(){
+	document.forms[0].method.value='exportToPDFParkingCard';
+	document.forms[0].submit();
+	document.forms[0].method.value='editFirstTimeParkingParty';
+}
 // -->
 </script>
 
@@ -184,7 +189,7 @@ function hideCardValidPeriod(toShow){
 			</p>	
 			
 			<p>
-				<html:link target="printFrame" href="" onclick="document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
+				<html:link target="printFrame" href="" onclick="javascript:document.forms[0].method.value='exportToPDFParkingCard';document.forms[0].submit();document.forms[0].method.value='editFirstTimeParkingParty';">
 					<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/>
 				</html:link>
 			</p>

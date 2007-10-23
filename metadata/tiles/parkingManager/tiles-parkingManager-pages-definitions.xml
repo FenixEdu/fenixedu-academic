@@ -31,4 +31,7 @@
 	<definition name="manage-requests-periods" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/manageRequestsPeriods.jsp" />
 	</definition>
+	<definition name="cards-renewal" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/cardsRenewal.jsp" />
+	</definition>		
 </tiles-definitions>

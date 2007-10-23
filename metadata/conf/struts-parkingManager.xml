@@ -80,6 +80,14 @@
        		<forward name="exportFile" path="export-file"/>
        	</action>
 				
+		<action path="/manageParkingPeriods"
+				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ManageParkingPeriodsDA"
+				scope="request"
+				input="/exportParkingDB.do?method=prepareExportFile"
+				parameter="method">
+       		<forward name="cardsRenewal" path="cards-renewal"/>
+       	</action>
+       	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
