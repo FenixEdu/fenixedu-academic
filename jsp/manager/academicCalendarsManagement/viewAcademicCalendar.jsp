@@ -70,6 +70,14 @@
 			</span>
 		<p>
 	</logic:messagesPresent>
+	
+	<fr:hasMessages for="datesToDisplayID" type="conversion">
+		<p>
+			<span class="error0">			
+				<fr:message for="datesToDisplayID" show="message"/>
+			</span>
+		</p>
+	</fr:hasMessages>	
 		
 	<logic:notEmpty name="entryBean">
 		
@@ -79,7 +87,7 @@
 			<bean:define id="calendarEntrySelected" name="entryBean" property="entry" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" toScope="request"/>
 		</logic:notEmpty>
 							
-		<div class="mbottom2">
+		<div class="mbottom1">
 			<jsp:include page="entriesCrumbs.jsp"/>
 		</div>		
 					
@@ -87,13 +95,17 @@
 		<bean:define id="beginDate" name="entryBean" property="beginPartialString" />
 		<bean:define id="endDate" name="entryBean" property="endPartialString" />												
 		
-		<fr:edit id="datesToDisplayID" name="entryBean" schema="ChooseDatesToViewAcademicCalendarSchema" action="/academicCalendarsManagement.do?method=viewAcademicCalendar">
-			<fr:layout name="tabular">      			
-   				<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>   				
-   			</fr:layout>
-   			<fr:destination name="cancel" path="/academicCalendarsManagement.do?method=prepareChooseCalendar"/>
-		</fr:edit>						
-				
+		<fr:form action="/academicCalendarsManagement.do">
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="academicCalendarsManagementForm" value="viewAcademicCalendar"/>
+			<fr:edit id="datesToDisplayID" name="entryBean" schema="ChooseDatesToViewAcademicCalendarSchema" >
+				<fr:layout name="tabular">      			
+	   				<fr:property name="classes" value="tstyle4 thlight thright"/>   				
+	   				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+	   			</fr:layout>   				   				   	
+			</fr:edit>
+			<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES"/></html:submit>	
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareChooseCalendar';this.form.submit();"><bean:message key="label.return" bundle="MANAGER_RESOURCES"/></html:cancel>			
+		</fr:form>								
 		
 		<logic:notEmpty name="entryBean">
 						
@@ -108,9 +120,9 @@
 			<p class="mtop2">
 				<fr:view name="entryBean" property="entry" schema="<%= entryInfoSchema %>" layout="tabular">
 					<fr:layout name="tabular">      			
-		   				<fr:property name="classes" value="tstyle4 thlight thright mvert0"/>
+		   				<fr:property name="classes" value="tstyle4 thlight thright"/>
 		   			</fr:layout>
-				</fr:view>
+				</fr:view>				
 			</p>		
 			
 			<p>				

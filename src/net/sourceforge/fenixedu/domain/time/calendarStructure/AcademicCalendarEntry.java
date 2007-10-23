@@ -157,7 +157,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    throw new DomainException("error.AcademicCalendarEntry.empty.parentEntry");
 	}
 	if(isParentEntryInvalid(parentEntry)) {
-	    throw new DomainException("error.AcademicCalendarEntry.invalid.parent.entry");
+	    throw new DomainException("error.AcademicCalendarEntry.invalid.parent.entry", getClass().getSimpleName(), parentEntry.getClass().getSimpleName());
 	}
 	if(parentEntry.exceededNumberOfChildEntries(this)) {
 	    throw new DomainException("error.AcademicCalendarEntry.number.of.subEntries.exceeded");

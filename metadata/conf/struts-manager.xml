@@ -7,13 +7,15 @@
 		<!-- ========== Data Source Configuration =============================== -->
 	
 		<!-- ========== Form Bean Definitions ================================== -->
-		<form-beans type="org.apache.struts.action.ActionFormBean">  
-		
-		
+	<form-beans type="org.apache.struts.action.ActionFormBean">  
+				
 		<form-bean name="unitsMergeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="fromUnitID" type="java.lang.Integer" />       
 			<form-property name="destinationUnitID" type="java.lang.Integer"/>
-		</form-bean>
+		</form-bean>		
+		<form-bean name="academicCalendarsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />					
+		</form-bean>			
 		<form-bean name="chooseDegreesForExecutionCourseMerge"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
@@ -2246,6 +2248,7 @@
 
        	<!-- =================== Academic Calendar Management =================== -->
         <action path="/academicCalendarsManagement"
+        		name="academicCalendarsManagementForm"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.AcademicCalendarsManagementDA"
        			scope="request"       			
 				input="/index.do"
