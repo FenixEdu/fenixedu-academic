@@ -12495,5 +12495,22 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
-	
+	<service>
+		<name>CreateStudentDataByExecutionYear</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.CreateStudentDataByExecutionYear</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteStudentDataByExecutionYear</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.DeleteStudentDataByExecutionYear</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>
