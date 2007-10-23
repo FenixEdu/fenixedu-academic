@@ -1597,6 +1597,37 @@ public class Registration extends Registration_Base {
 
     }
 
+    final public String getDegreeDescription() {
+	final StringBuilder result = new StringBuilder();
+	
+	final Degree degree = getDegree();
+	final DegreeType degreeType = degree.getDegreeType();
+	switch (degreeType) {
+	case BOLONHA_PHD_PROGRAM:
+	    break;
+	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	    result.append("curso conducente ao ");
+	    break;
+	default:
+	    result.append("curso de ");
+	    break;
+	}
+	
+	result.append(degreeType.getFilteredName().toUpperCase());
+	result.append(" em ").append(degree.getFilteredName().toUpperCase());
+	
+	if (degreeType.isComposite()) {
+	    final CycleType lastConcludedCycleType = getLastConcludedCycleType();
+	    if(lastConcludedCycleType != null){
+		result.append(" (").append(lastConcludedCycleType.getDescription()).append(")");
+	    }
+	} else if (degreeType.hasExactlyOneCycleType()) {
+	    result.append(" (").append(degreeType.getCycleType().getDescription()).append(")");
+	}
+	
+	return result.toString();
+    }
+    
     @Override
     final public Degree getDegree() {
 	return super.getDegree() != null ? super.getDegree() : (hasAnyStudentCurricularPlans() ? getLastStudentCurricularPlan()
@@ -2501,6 +2532,6 @@ public class Registration extends Registration_Base {
     final public boolean getIsForDegreeOffice() {
 		return isForOffice(AdministrativeOffice
 				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
-	}
+    }
 
 }
