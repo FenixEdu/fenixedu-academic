@@ -157,8 +157,7 @@
 	     <form-property name="method" type="java.lang.String" />
          <form-property name="notNeedToEnrolEnrolments" type="java.lang.Integer[]" />
       </form-bean>
-      
-		
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -864,6 +863,14 @@
             <forward name="showPlan" path="show-student-equivalency.plan"/>
             <forward name="addEquivalency" path="add-student-equivalency"/>
         </action>
+        
+        <!-- Begin: StudentDataByExecutionYear -->
+        <action path="/studentDataByExecutionYear"
+            type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearManagement"
+            parameter="method">
+            <forward name="showStudentData" path="show.studentData.by.executionYear"/>
+        </action>
+        <!-- End: StudentDataByExecutionYear -->
 
     </action-mappings>
 

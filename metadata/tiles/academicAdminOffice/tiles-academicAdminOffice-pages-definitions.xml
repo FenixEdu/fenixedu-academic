@@ -486,7 +486,6 @@
 	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
 	</definition>
-			
 	
 	<!-- NotNeedToEnrol -->
 	<definition name="notNeedToEnrol.chooseStudent" extends="academicAdminOffice.masterPage">
@@ -508,16 +507,19 @@
     <definition name="lists.studentByCurricularCourse" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/lists/studentsByCurricularCourses.jsp"></put>
     </definition>
-    
-    
+
     <!-- Manage Curriculum Line Groups -->
     <definition name="curriculum.curriculumLines.location.management.showCurriculum" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"></put>
     </definition>
-    
+
     <definition name="curriculum.curriculumLines.location.management.chooseNewLocation" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"></put>
     </definition>
-    
-    
+
+	<!-- Manage StudentDataByExecutionYear -->    
+    <definition name="show.studentData.by.executionYear" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/personalDataAuthorization/studentDataByExecutionYear.jsp"></put>
+    </definition>
+
 </tiles-definitions>

@@ -1315,7 +1315,21 @@
 
 
 <schema name="DegreeCurricularPlan.view" 
-	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >
+	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES">
 	<slot name="degree.name"/>
 	<slot name="name" />
+</schema>
+
+<schema name="StudentDataByExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" label="label.executionYear.year" />
+	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
+</schema>
+
+<schema name="StudentDataByExecutionYearBean" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" label="label.executionYear.year" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="choice" label="label.personalDataAuthorization" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>

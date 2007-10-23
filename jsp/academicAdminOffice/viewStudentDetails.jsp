@@ -88,3 +88,13 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
 	</html:link>
 </p>
+
+
+<!-- StudentDataByExecutionYear -->
+<h3 class="mbottom025"><bean:message key="label.studentDataByExecutionYear" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mvert05">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link action="/studentDataByExecutionYear.do?method=show" paramName="student" paramProperty="idInternal" paramId="studentId">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.manage" />
+	</html:link>
+</p>
