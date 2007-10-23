@@ -3,12 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -108,14 +110,12 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public Double getMinGrade() {
 	final String minGradeString = getMinGradeString();
-	return (minGradeString != null && minGradeString.length() > 0) ? Double.valueOf(minGradeString)
-		: null;
+	return (minGradeString != null && minGradeString.length() > 0) ? Double.valueOf(minGradeString) : null;
     }
 
     public Double getMaxGrade() {
 	final String maxGradeString = getMaxGradeString();
-	return (maxGradeString != null && maxGradeString.length() > 0) ? Double.valueOf(maxGradeString)
-		: null;
+	return (maxGradeString != null && maxGradeString.length() > 0) ? Double.valueOf(maxGradeString) : null;
     }
 
     public String getMaxNumberApprovedString() {
@@ -176,21 +176,20 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public Double getMinStudentNumber() {
 	final String minStudentNumberString = getMinStudentNumberString();
-	return (minStudentNumberString != null && minStudentNumberString.length() > 0) ? Double
-		.valueOf(minStudentNumberString) : null;
+	return (minStudentNumberString != null && minStudentNumberString.length() > 0) ? Double.valueOf(minStudentNumberString)
+		: null;
     }
 
     public Double getMaxStudentNumber() {
 	final String maxStudentNumberString = getMaxStudentNumberString();
-	return (maxStudentNumberString != null && maxStudentNumberString.length() > 0) ? Double
-		.valueOf(maxStudentNumberString) : null;
+	return (maxStudentNumberString != null && maxStudentNumberString.length() > 0) ? Double.valueOf(maxStudentNumberString)
+		: null;
     }
 
     public int getNumberResults() throws FenixFilterException, FenixServiceException {
 	int matches = 0;
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		.getStudentCurricularPlans()) {
+	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 	    if (matchesSelectCriteria(studentCurricularPlan)) {
 		matches++;
 	    }
@@ -199,22 +198,59 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	return matches;
     }
 
-    public Collection<StudentCurricularPlan> getStudentCurricularPlans() throws FenixFilterException,
-	    FenixServiceException {
+    public Collection<StudentCurricularPlan> getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-		.getStudentCurricularPlans()) {
+	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 	    if (matchesSelectCriteria(studentCurricularPlan)) {
 		studentCurricularPlans.add(studentCurricularPlan);
 	    }
 	}
 
 	final String sortBy = (getSortBy() != null) ? getSortBy() : "student.number";
-	Collections.sort(studentCurricularPlans, new BeanComparator(sortBy));
 
-	return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex(),
-		studentCurricularPlans.size()));
+	if (sortBy.equals("registration.average")) {
+	    Collections.sort(studentCurricularPlans, new Comparator<StudentCurricularPlan>() {
+		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
+		    if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())
+			    && isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
+			return left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
+		    }
+
+		    if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())) {
+			return 1;
+		    }
+
+		    if (isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
+			return -1;
+		    }
+
+		    if (left.getRegistration().isConcluded() && right.getRegistration().isConcluded()) {
+			return left.getIdInternal().compareTo(right.getIdInternal());
+		    }
+
+		    if (left.getRegistration().isConcluded()) {
+			return -1;
+		    }
+
+		    if (right.getRegistration().isConcluded()) {
+			return 1;
+		    }
+
+		    return left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
+		    		
+		}
+
+		private boolean isConcludedAndRegistrationConclusionProcessed(final Registration registration) {
+		    return registration.isConcluded() && registration.isRegistrationConclusionProcessed();
+
+		}
+	    });
+	} else {
+	    Collections.sort(studentCurricularPlans, new BeanComparator(sortBy));
+	}
+
+	return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex(), studentCurricularPlans.size()));
     }
 
     private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
@@ -234,8 +270,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	    return false;
 	}
 
-	final int approvedEnrollmentsNumber = studentCurricularPlan.getRegistration()
-		.getApprovedEnrollmentsNumber();
+	final int approvedEnrollmentsNumber = studentCurricularPlan.getRegistration().getApprovedEnrollmentsNumber();
 
 	final Double minNumberApproved = getMinNumberApproved();
 	if (minNumberApproved != null && minNumberApproved.doubleValue() > approvedEnrollmentsNumber) {
