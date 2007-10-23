@@ -2533,5 +2533,9 @@ public class Registration extends Registration_Base {
 		return isForOffice(AdministrativeOffice
 				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
+    
+    public int getNumberOfCurriculumEntries() {
+	return getCurriculum().getCurriculumEntries().size();
+    }
 
 }
