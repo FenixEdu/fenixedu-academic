@@ -49,6 +49,22 @@
 	</fr:layout>
 </fr:view>
 
+<%
+	request.setAttribute("degreeFinalizationDate", registration.getLastApprovementDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	final Integer finalAverage = registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue();	
+	request.setAttribute("finalAverage", finalAverage);
+	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
+	request.setAttribute("degreeFinalizationEcts", String.valueOf(registration.getEctsCredits()));
+	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
+	
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Person administrativeOfficeCoordinator = employee.getCurrentWorkingPlace().getActiveUnitCoordinator();
+	request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
+	request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
+	request.setAttribute("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	request.setAttribute("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+%>
+
 <table class="apura-final" width="90%" cellspacing="0" border="0">
 	<tr>
 		<td colspan="3" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição da Média</td>
@@ -62,7 +78,7 @@
 	</tr>
 	<tr>
 		<td style="padding: 5px;">Média Final</td>
-		<td style="padding: 5px;"><bean:write name="registration" property="average" /> valores</td>
+		<td style="padding: 5px;"><bean:write name="finalAverage"/> valores</td>
 		<td style="padding: 5px; padding-left: 100px;">	</td>
 	</tr>
 	<tr>
@@ -74,20 +90,6 @@
 </table>
 
 <br/>
-
-<%
-	request.setAttribute("degreeFinalizationDate", registration.getLastApprovementDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue()));
-	request.setAttribute("degreeFinalizationEcts", String.valueOf(registration.getEctsCredits()));
-	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
-	
-	final Employee employee = AccessControl.getPerson().getEmployee();
-	final Person administrativeOfficeCoordinator = employee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-	request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
-	request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
-	request.setAttribute("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
-	request.setAttribute("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-%>
 
 <table class="apura-final" width="90%" cellspacing="0" border="0">
 	<tr>
@@ -102,7 +104,7 @@
 				</logic:equal>
 				o <bean:write name="registration" property="degreeDescription"/>
 				em <bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
-				tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>
+				tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>.
 			</p>
 		</td>
 	</tr>
