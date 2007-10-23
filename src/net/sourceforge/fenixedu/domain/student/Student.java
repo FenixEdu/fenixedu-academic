@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -181,24 +180,6 @@ public class Student extends Student_Base {
 	return nextNumber + 1;
     }
 
-    public StudentDataByExecutionYear getActualExecutionYearStudentData() {
-	for (StudentDataByExecutionYear studentData : getStudentDataByExecutionYear()) {
-	    if (studentData.getExecutionYear().isCurrent()) {
-		return studentData;
-	    }
-	}
-	return null;
-    }
-
-    public StudentDataByExecutionYear getStudentDataByExecutionYear(ExecutionYear executionYear) {
-	for (StudentDataByExecutionYear studentData : getStudentDataByExecutionYear()) {
-	    if (studentData.getExecutionYear().equals(executionYear)) {
-		return studentData;
-	    }
-	}
-	return null;
-    }
-
     public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {
 	if (getActualExecutionYearStudentData() == null) {
 	    return null;
@@ -234,10 +215,8 @@ public class Student extends Student_Base {
     }
 
     public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForCurrentExecutionYear() {
-	if (getActualExecutionYearStudentData() == null) {
-	    return null;
-	}
-	return getActualExecutionYearStudentData().getPersonalDataAuthorization();
+	return (getActualExecutionYearStudentData() == null) ? null : getActualExecutionYearStudentData()
+		.getPersonalDataAuthorization();
     }
 
     public boolean hasPersonDataAuthorizationChoiseForCurrentExecutionYear() {
@@ -245,18 +224,9 @@ public class Student extends Student_Base {
     }
 
     public void setPersonalDataAuthorizationForCurrentExecutionYear(
-	    StudentPersonalDataAuthorizationChoice personalDataAuthorization) {
+	    final StudentPersonalDataAuthorizationChoice personalDataAuthorization) {
 	createCurrentYearStudentData();
 	getActualExecutionYearStudentData().setPersonalDataAuthorization(personalDataAuthorization);
-    }
-
-    public void setPersonalDataAuthorizationForExecutionYear(StudentPersonalDataAuthorizationChoice personalDataAuthorization,
-	    ExecutionYear executionYear) {
-	StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
-	if (studentData == null) {
-	    studentData = createStudentDataForExecutionYear(executionYear);
-	}
-	studentData.setPersonalDataAuthorization(personalDataAuthorization);
     }
 
     private void createCurrentYearStudentData() {
@@ -264,14 +234,32 @@ public class Student extends Student_Base {
 	    new StudentDataByExecutionYear(this);
 	}
     }
-
+    
     private StudentDataByExecutionYear createStudentDataForExecutionYear(ExecutionYear executionYear) {
 	if (getStudentDataByExecutionYear(executionYear) == null) {
 	    return new StudentDataByExecutionYear(this, executionYear);
 	}
 	return getStudentDataByExecutionYear(executionYear);
     }
+    
+    public StudentDataByExecutionYear getActualExecutionYearStudentData() {
+	for (final StudentDataByExecutionYear studentData : getStudentDataByExecutionYear()) {
+	    if (studentData.getExecutionYear().isCurrent()) {
+		return studentData;
+	    }
+	}
+	return null;
+    }
 
+    public StudentDataByExecutionYear getStudentDataByExecutionYear(final ExecutionYear executionYear) {
+	for (StudentDataByExecutionYear studentData : getStudentDataByExecutionYear()) {
+	    if (studentData.getExecutionYear().equals(executionYear)) {
+		return studentData;
+	    }
+	}
+	return null;
+    }
+    
     public DegreeType getMostSignificantDegreeType() {
 	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
 	    return DegreeType.MASTER_DEGREE;
@@ -355,14 +343,9 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-	for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete())
-	    ;
-
-	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete())
-	    ;
-
-	for (; hasAnyVotes(); getVotes().get(0).delete())
-	    ;
+	for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete());
+	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete());
+	for (; hasAnyVotes(); getVotes().get(0).delete());
 	
 	getElectedElections().clear();	
 
