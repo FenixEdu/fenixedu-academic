@@ -563,7 +563,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		}
 
 	    } else {
-		generateCellWithText(dismissalRow, studentResources.getString("label.creditsDismissal"), getLabelCellClass(),
+		generateCellWithText(dismissalRow, studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()), getLabelCellClass(),
 			MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
 	    }
 
