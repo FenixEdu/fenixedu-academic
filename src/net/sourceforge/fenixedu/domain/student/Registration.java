@@ -388,6 +388,101 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
+    final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
+
+	int enrollmentsNumber = 0;
+	int approvedEnrollmentsNumber = 0;
+	int actualApprovedEnrollmentsNumber = 0;
+	int totalGrade = 0;
+
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+
+	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+		if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
+		    continue;
+		}
+
+		ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
+		if (onlyPreviousExecutionYear && (previousExecutionYear != enrolmentExecutionYear)) {
+		    continue;
+		}
+
+		if (enrolmentExecutionYear != currentExecutionYear) {
+
+		    enrollmentsNumber++;
+		    if (enrolment.isApproved()) {
+			actualApprovedEnrollmentsNumber++;
+
+			Integer finalGrade = enrolment.getFinalGrade();
+			if (finalGrade != null) {
+			    approvedEnrollmentsNumber++;
+			    totalGrade += finalGrade;
+			} else {
+			    enrollmentsNumber--;
+			}
+		    }
+		}
+	    }
+	}
+
+	setApprovedEnrollmentsNumber(Integer.valueOf(actualApprovedEnrollmentsNumber));
+
+	setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber / enrollmentsNumber);
+	setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade / approvedEnrollmentsNumber);
+
+    }
+
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
+    private void setApprovationRatio(Double approvationRatio) {
+	this.approvationRatio = approvationRatio;
+    }
+
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
+    private void setArithmeticMean(Double arithmeticMean) {
+	this.arithmeticMean = arithmeticMean;
+    }
+
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
+    final public Integer getApprovedEnrollmentsNumber() {
+	if (this.approvedEnrollmentsNumber == null) {
+	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
+	}
+	return approvedEnrollmentsNumber;
+    }
+
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
+    private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
+	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
+    }
+
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
 	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
@@ -395,6 +490,11 @@ public class Registration extends Registration_Base {
 	return this.approvationRatio;
     }
 
+    /**
+     * @Deprecated
+     * Use Curriculum algorithm instead
+     */
+    @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
 	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
@@ -451,6 +551,10 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public int getNumberOfCurriculumEntries() {
+	return getCurriculum().getCurriculumEntries().size();
+    }
+    
     final public BigDecimal getSumPiCi(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumPiCi();
     }
@@ -522,72 +626,7 @@ public class Registration extends Registration_Base {
 	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()
 		&& (isConcluded() || (isActive() && isInFinalDegreeYear()));
     }
-
-    final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
-
-	int enrollmentsNumber = 0;
-	int approvedEnrollmentsNumber = 0;
-	int actualApprovedEnrollmentsNumber = 0;
-	int totalGrade = 0;
-
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
-
-	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-	    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-		if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
-		    continue;
-		}
-
-		ExecutionYear enrolmentExecutionYear = enrolment.getExecutionPeriod().getExecutionYear();
-		if (onlyPreviousExecutionYear && (previousExecutionYear != enrolmentExecutionYear)) {
-		    continue;
-		}
-
-		if (enrolmentExecutionYear != currentExecutionYear) {
-
-		    enrollmentsNumber++;
-		    if (enrolment.isApproved()) {
-			actualApprovedEnrollmentsNumber++;
-
-			Integer finalGrade = enrolment.getFinalGrade();
-			if (finalGrade != null) {
-			    approvedEnrollmentsNumber++;
-			    totalGrade += finalGrade;
-			} else {
-			    enrollmentsNumber--;
-			}
-		    }
-		}
-	    }
-	}
-
-	setApprovedEnrollmentsNumber(Integer.valueOf(actualApprovedEnrollmentsNumber));
-
-	setApprovationRatio((enrollmentsNumber == 0) ? 0 : (double) approvedEnrollmentsNumber / enrollmentsNumber);
-	setArithmeticMean((approvedEnrollmentsNumber == 0) ? 0 : (double) totalGrade / approvedEnrollmentsNumber);
-
-    }
-
-    private void setApprovationRatio(Double approvationRatio) {
-	this.approvationRatio = approvationRatio;
-    }
-
-    private void setArithmeticMean(Double arithmeticMean) {
-	this.arithmeticMean = arithmeticMean;
-    }
-
-    final public Integer getApprovedEnrollmentsNumber() {
-	if (this.approvedEnrollmentsNumber == null) {
-	    calculateApprovationRatioAndArithmeticMeanIfActive(true);
-	}
-	return approvedEnrollmentsNumber;
-    }
-
-    private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
-	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
-    }
-
+    
     public Grade findGradeForCurricularCourse(final CurricularCourse curricularCourse) {
     	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
     	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -638,6 +677,16 @@ public class Registration extends Registration_Base {
 	    }
 	}
 
+	return false;
+    }
+
+    final public boolean hasAnyEnrolments() {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyEnrolments()) {
+		return true;
+	    }
+	}
+	
 	return false;
     }
 
@@ -1868,6 +1917,10 @@ public class Registration extends Registration_Base {
     final public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
+    
+    public boolean isRegistrationConclusionProcessed() {
+	return getFinalAverage() != null;
+    }
 
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
@@ -2532,14 +2585,6 @@ public class Registration extends Registration_Base {
     final public boolean getIsForDegreeOffice() {
 		return isForOffice(AdministrativeOffice
 				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
-    }
-    
-    public int getNumberOfCurriculumEntries() {
-	return getCurriculum().getCurriculumEntries().size();
-    }
-    
-    public boolean isRegistrationConclusionProcessed() {
-	return getFinalAverage() != null;
     }
 
 }
