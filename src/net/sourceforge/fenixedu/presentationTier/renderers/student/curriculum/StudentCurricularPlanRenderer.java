@@ -547,10 +547,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    container.addChild(checkBox);
 		}
 
+		final HtmlText text = new HtmlText(studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()) + ": ");
+		container.addChild(text);
+		
 		final CurricularCourse curricularCourse = dismissal.getCurricularCourse();
 		if (curricularCourse != null) {
-		    final HtmlText text = new HtmlText(studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()) + ": ");
-		    container.addChild(text);
 
 		    String codeAndName = "";
 		    if (!StringUtils.isEmpty(curricularCourse.getCode())) {
@@ -559,9 +560,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    codeAndName += dismissal.getName().getContent();
 		    final HtmlLink curricularCourseLink = createCurricularCourseLink(codeAndName, curricularCourse);
 		    container.addChild(curricularCourseLink);
-		} else {
-		    final HtmlText text = new HtmlText(studentResources.getString("label.creditsDismissal"));
-		    container.addChild(text);
 		}
 
 	    } else {
