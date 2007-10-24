@@ -10546,7 +10546,16 @@
          <filterChains>
         	<chain name="ParkingManagerAuthorizationFilter"></chain>
         </filterChains>   
-    </service>   
+    </service>
+    <service>
+    	<name>RenewParkingCards</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.parking.RenewParkingCards</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+         <filterChains>
+        	<chain name="ParkingManagerAuthorizationFilter"></chain>
+        </filterChains>   
+    </service>
 	<service>
     	<name>SelectCandidacies</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies</implementationClass>

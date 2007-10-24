@@ -419,9 +419,7 @@
 </schema>
 
 <schema name="show.parkingParty.notUpdatedEndDate" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
-	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES" layout="null-as-label">
-		<property name="label" value="-"/>
-	</slot>
+	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES"/>
 	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>

@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class ParkingCardsRenewalBean implements Serializable {
@@ -73,5 +75,10 @@ public class ParkingCardsRenewalBean implements Serializable {
 
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+    
+    public void orderNotRenewParkingParties(){
+	Collections.sort(getNotRenewedParkingParties(), new BeanComparator("partyClassification"));
+	Collections.sort(getNotRenewedParkingParties(), new BeanComparator("cardEndDateToCompare"));	
     }
 }

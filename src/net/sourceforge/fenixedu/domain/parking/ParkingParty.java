@@ -590,4 +590,12 @@ public class ParkingParty extends ParkingParty_Base {
     public PartyClassification getPartyClassification() {
 	return getParty().isPerson() ? ((Person) getParty()).getPartyClassification() : null;
     }
+
+    public DateTime getCardEndDateToCompare() {
+	if (getCardEndDate() == null) {
+	    return new DateTime(9999, 9, 9, 9, 9, 9, 9);
+	} else {
+	    return getCardEndDate();
+	}
+    }
 }

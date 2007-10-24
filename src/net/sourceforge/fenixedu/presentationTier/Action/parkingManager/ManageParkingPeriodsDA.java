@@ -8,19 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardsRenewalBean;
-import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
@@ -41,10 +39,29 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	ParkingCardsRenewalBean parkingCardsRenewalBean = (ParkingCardsRenewalBean) getRenderedObject("parkingCardsRenewalBean");
+	request.setAttribute("parkingCardsRenewalBean", parkingCardsRenewalBean);
+	String choosenGroupName = parkingCardsRenewalBean.getParkingGroup().getGroupName();
+	if (!choosenGroupName.equalsIgnoreCase("Docentes")
+		&& !choosenGroupName.equalsIgnoreCase("Não Docentes")
+		&& !choosenGroupName.equalsIgnoreCase("Especiais")
+		&& !choosenGroupName.equalsIgnoreCase("Limitados")) {
+	    setError(request, "error.cannot.renew.group");	    
+	    return mapping.findForward("cardsRenewal");
+	}
+	if(!areValidDates(parkingCardsRenewalBean)) {
+	    setError(request, "error.oldDate.biggerThan.newDate");	    
+	    return mapping.findForward("cardsRenewal");
+	}
+	parkingCardsRenewalBean.getNotRenewedParkingParties().clear();
 	parkingCardsRenewalBean = (ParkingCardsRenewalBean) ServiceUtils.executeService(SessionUtils
 		.getUserView(request), "RenewParkingCards", new Object[] { parkingCardsRenewalBean });
+	parkingCardsRenewalBean.orderNotRenewParkingParties();
 	request.setAttribute("parkingCardsRenewalBean", parkingCardsRenewalBean);
 	return mapping.findForward("cardsRenewal");
+    }
+
+    private boolean areValidDates(ParkingCardsRenewalBean parkingCardsRenewalBean) {
+	return !parkingCardsRenewalBean.getActualEndDate().isAfter(parkingCardsRenewalBean.getRenewalEndDate());
     }
 
     public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm,
@@ -71,5 +88,10 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 		new Object[] { parkingRequestPeriodToDeleteCode });
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
-
+    
+    private void setError(HttpServletRequest request, String errorMsg) {
+	ActionMessages actionMessages = getMessages(request);
+	actionMessages.add("error", new ActionMessage(errorMsg));
+	saveMessages(request, actionMessages);
+    }
 }

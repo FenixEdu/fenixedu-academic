@@ -6,6 +6,14 @@
 
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.cardsRenewal" /></h2>
+
+<p class="mtop15 mbottom05">	
+	<span class="error0">
+		<html:messages id="message" message="true" bundle="PARKING_RESOURCES">
+			<bean:write name="message" />
+		</html:messages>
+	</span>
+</p>
 	
 <fr:edit id="parkingCardsRenewalBean" name="parkingCardsRenewalBean" schema="edit.parkingCardsRenewal"
 	 action="/manageParkingPeriods.do?method=renewCards">
