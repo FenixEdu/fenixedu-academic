@@ -167,7 +167,7 @@
 </schema>
 
 <schema name="eventCreation.eventName" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="event" key="label.event.name" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="event" key="label.event.name" layout="autoComplete">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="eventName"/>
 		<property name="labelField" value="name"/>
@@ -231,7 +231,7 @@
 </schema>
 
 <schema name="eventEditionCreation.eventName" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="event" key="label.event.name" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="event" key="label.event.name" layout="autoComplete">
 		<property name="size" value="60"/>
 		<property name="rawSlotName" value="eventName"/>
 		<property name="labelField" value="name"/>
@@ -502,7 +502,7 @@ extends="eventCreation">
 
 
 <schema name="journalIssueCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="scientificJournal" key="label.scientificJournal.name" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="scientificJournal" key="label.scientificJournal.name" layout="autoComplete">
 		<property name="size" value="60"/>
 		<property name="rawSlotName" value="scientificJournalName"/>
 		<property name="labelField" value="name"/>
