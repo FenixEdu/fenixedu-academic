@@ -1142,7 +1142,7 @@ public abstract class Party extends Party_Base {
 
 	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
 	for (ResearchResultPublication publication : getResearchResultPublications()) {
-	    if (executionYear.belongsToCivilYear(publication.getYear())) {
+	    if (publication.getYear() == null || executionYear.belongsToCivilYear(publication.getYear())) {
 		publicationsForExecutionYear.add(publication);
 	    }
 	}
