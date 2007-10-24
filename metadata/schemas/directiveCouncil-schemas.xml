@@ -82,14 +82,6 @@
 </schema>
 
 <schema name="create.assiduousnessPersonFunctionFactory.employees" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
-	</slot>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
-	</slot>
 	<slot name="employeesList" layout="option-select" key="property.advisory.recipients.employees" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />
@@ -99,11 +91,17 @@
 </schema>
 
 <schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="beginDate" key="label.beginDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="true" />
+		</validator>
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="endDate" key="label.endDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="true" />
+		</validator>
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>

@@ -89,6 +89,7 @@
 
 	<action path="/assiduousnessStructure" name="assiduousnessForm" scope="request"
 			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.assiduousnessStructure.AssiduousnessStructureDispatchAction"
+			input="/assiduousnessStructure.do?method=showAssiduousnessStructure"
 			parameter="method">
 		<forward name="show-assiduousness-structure" path="show-assiduousness-structure"/>
 		<forward name="edit-assiduousness-person-function" path="edit-assiduousness-person-function"/>
