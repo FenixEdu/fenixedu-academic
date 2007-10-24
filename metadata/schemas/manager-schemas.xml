@@ -391,7 +391,7 @@
 	<slot name="end" key="label.end"/>
 	<slot name="rootEntry.title" key="label.entry.academicCalendar"/>
 	<slot name="entryState" key="label.entry.state">
-		<property name="classes" value="highlight3" />
+		<property name="classes" value="highlight1" />
 	</slot>	
 	<slot name="templateEntry" layout="null-as-label" key="label.entry.templateEntry">
 		<property name="label" value="--"/>

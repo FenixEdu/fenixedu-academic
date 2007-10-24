@@ -220,7 +220,9 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
 	YearMonthDay beginDate = bean.getBeginDateToDisplayInYearMonthDayFormat();
 	YearMonthDay endDate = bean.getEndDateToDisplayInYearMonthDayFormat();
-
+	
+	endDate = endDate.plusMonths(1).withDayOfMonth(1).minusDays(1);
+	
 	List<GanttDiagramEvent> newEntries = generateEntriesTree(request, bean.getRootEntry(), beginDate, endDate);	
 	GanttDiagram diagram = GanttDiagram.getNewTotalGanttDiagram(newEntries, beginDate, endDate);
 

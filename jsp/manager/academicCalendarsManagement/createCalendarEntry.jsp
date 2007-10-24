@@ -55,7 +55,7 @@
 			<logic:notEmpty name="parentEntryBean" property="type">																		
 																						
 				<logic:notEmpty name="parentEntryBean" property="entry">																						
-					<p class="mtop15"><b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="parentEntryBean" property="entry.title.content"/></p>									
+					<p class="mtop15"><b><bean:message key="label.create.where" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="parentEntryBean" property="entry.title.content"/> (<bean:write name="parentEntryBean" property="entry.presentationTimeInterval"/>)</p>													
 				</logic:notEmpty>
 								
 				<bean:define id="schemaName">Create<bean:write name="parentEntryBean" property="type.simpleName"/>CalendarEntryType</bean:define>										

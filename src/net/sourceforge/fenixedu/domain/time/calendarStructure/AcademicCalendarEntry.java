@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -104,19 +102,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	setParentEntry(parentEntry);	
 	setTemplateEntry(templateEntry);
     }
-
-    private AcademicCalendarEntry getVirtualOrRedefinedEntryIn(AcademicCalendarRootEntry rootEntry) {
-	if(rootEntry != null) {
-	    List<AcademicCalendarEntry> basedEntries = getBasedEntries();
-	    for (AcademicCalendarEntry entry : basedEntries) {
-		if(entry.getRootEntry().equals(rootEntry)) {
-		    return entry;
-		}
-	    }
-	}
-	return null;
-    }
-
+    
     private AcademicCalendarEntry createVirtualPathUntil(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntryDestination) {	
 	if(!entry.isRoot()) {
 	    
@@ -143,6 +129,18 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}	
     }
 
+    private AcademicCalendarEntry getVirtualOrRedefinedEntryIn(AcademicCalendarRootEntry rootEntry) {
+	if(rootEntry != null) {
+	    List<AcademicCalendarEntry> basedEntries = getBasedEntries();
+	    for (AcademicCalendarEntry entry : basedEntries) {
+		if(entry.getRootEntry().equals(rootEntry)) {
+		    return entry;
+		}
+	    }
+	}
+	return null;
+    }
+    
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
 	if(templateEntry != null && (!templateEntry.getClass().equals(getClass()) || getBasedEntries().contains(templateEntry))) {
@@ -269,7 +267,12 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public String getPresentationTimeInterval() {
-	return getBegin().toString("dd-MM-yyyy HH:mm") + " - " + getEnd().toString("dd-MM-yyyy HH:mm");
+	if(!isRoot()) {
+	    return getBegin().toString("dd-MM-yyyy HH:mm") + " - " + getEnd().toString("dd-MM-yyyy HH:mm");
+	} else {
+	    DateTime begin = getBegin();	    
+	    return  begin != null ? begin.toString("dd-MM-yyyy HH:mm") + " - " + "**-**-**** **:**" : "";
+	}
     }
 
     public MultiLanguageString getType() {
