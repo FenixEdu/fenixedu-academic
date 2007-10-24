@@ -56,11 +56,11 @@
 <schema name="edit.assiduousnessPersonFunction" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 	<slot name="childParty.name" key="label.name">
 		<property name="readOnly" value="true" />
-		<property name="size" value="100"/>
+		<property name="size" value="70"/>
 	</slot>
 	<slot name="parentParty.name" key="label.name">
 		<property name="readOnly" value="true" />
-		<property name="size" value="100"/>
+		<property name="size" value="70"/>
 	</slot>
 	<slot name="beginDate" key="label.beginDate"/>
 	<slot name="endDate" key="label.endDate"/>
@@ -68,8 +68,12 @@
 </schema>
 
 <schema name="show.assiduousnessPersonFunctionParties" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="responsible.name" key="label.name"/>
-	<slot name="party.name" key="label.name"/>
+	<slot name="responsible.name" key="label.responsible"/>
+	<slot name="party.name" key="label.worker"/>
+</schema>
+<schema name="show.assiduousnessPersonFunctionParties.byUnit" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
+	<slot name="responsible.name" key="label.responsible"/>
+	<slot name="party.name" key="label.party"/>
 </schema>
 
 <schema name="show.assiduousnessPersonFunctionResponsible" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
