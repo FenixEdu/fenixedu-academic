@@ -51,19 +51,21 @@ function selectNone(){
 						<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
 				        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>				
+					<fr:destination name="invalid" path="/assiduousnessStructure.do?method=prepareCreateAssiduousnessPersonFunction"/>
 				</fr:edit>		
 				<html:cancel><bean:message key="button.cancel"/></html:cancel>
 			</fr:form>
 		</logic:equal>
 		
 		<logic:notEqual name="employeesNumber" value="0">
-			<fr:form action="/assiduousnessStructure.do">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="assiduousnessForm" property="method" value="createAssiduousnessPersonFunction" />
-				<fr:edit id="assiduousnessPersonFunctionFactory" name="assiduousnessPersonFunctionFactory" schema="create.assiduousnessPersonFunctionFactory">
+			<fr:form action="/assiduousnessStructure.do?method=createAssiduousnessPersonFunction">
+				<fr:edit id="assiduousnessPersonFunctionFactory" name="assiduousnessPersonFunctionFactory" 
+				schema="create.assiduousnessPersonFunctionFactory">
 					<fr:layout>
 						<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
 				        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>
+					<fr:destination name="invalid" path="/assiduousnessStructure.do?method=prepareCreateAssiduousnessPersonFunction"/>
 				</fr:edit>
 				<p class="mbottom05">
 					Seleccionar: 
@@ -75,6 +77,7 @@ function selectNone(){
 						<fr:property name="classes" value="tstyle5 thlight thright thmiddle inobullet ulnomargin mtop05"/>
 				        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>
+					<fr:destination name="invalid" path="/assiduousnessStructure.do?method=prepareCreateAssiduousnessPersonFunction"/>
 				</fr:edit>
 				<p>
 					<html:submit><bean:message key="button.confirm"/></html:submit>
@@ -84,16 +87,32 @@ function selectNone(){
 		</logic:notEqual>
 	</logic:equal>
 	<logic:equal name="assiduousnessPersonFunctionFactory" property="byPersons" value="false">
-		<fr:view name="assiduousnessPersonFunctionFactory" schema="show.assiduousnessPersonFunctionParties.byUnit">
+		<fr:view name="assiduousnessPersonFunctionFactory" schema="show.assiduousnessPersonFunctionParties">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle2 thlight thright"/>
 			</fr:layout>
 		</fr:view>
-		<fr:edit id="assiduousnessPersonFunctionFactory" name="assiduousnessPersonFunctionFactory" schema="create.assiduousnessPersonFunctionFactory" action="/assiduousnessStructure.do?method=createAssiduousnessPersonFunction">
-			<fr:layout>
-				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
-		        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-			</fr:layout>
-		</fr:edit>
+		<logic:equal name="assiduousnessPersonFunctionFactory" property="isPartyAnUnit" value="true" >
+			<fr:edit id="assiduousnessPersonFunctionFactory" name="assiduousnessPersonFunctionFactory"
+				schema="create.assiduousnessPersonFunctionFactory"
+				action="/assiduousnessStructure.do?method=createAssiduousnessPersonFunction">
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+		        	<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/assiduousnessStructure.do?method=prepareCreateAssiduousnessPersonFunction"/>
+			</fr:edit>
+		</logic:equal>
+		<logic:equal name="assiduousnessPersonFunctionFactory" property="isPartyAnUnit" value="false" >
+			<fr:edit id="assiduousnessPersonFunctionFactory" name="assiduousnessPersonFunctionFactory"
+				schema="create.assiduousnessPersonFunctionFactory"
+				action="/assiduousnessStructure.do?method=createAssiduousnessPersonFunction">
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+		    	    <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/assiduousnessStructure.do?method=prepareCreateAssiduousnessPersonFunction"/>
+			</fr:edit>
+		</logic:equal>
 	</logic:equal>
 </logic:present>

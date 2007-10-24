@@ -62,8 +62,14 @@
 		<property name="readOnly" value="true" />
 		<property name="size" value="70"/>
 	</slot>
-	<slot name="beginDate" key="label.beginDate"/>
-	<slot name="endDate" key="label.endDate"/>
+	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+	</slot>
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
 </schema>
 
@@ -95,17 +101,11 @@
 </schema>
 
 <schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="beginDate" key="label.beginDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="true" />
-		</validator>
+	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>
-	<slot name="endDate" key="label.endDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="true" />
-		</validator>
+	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>

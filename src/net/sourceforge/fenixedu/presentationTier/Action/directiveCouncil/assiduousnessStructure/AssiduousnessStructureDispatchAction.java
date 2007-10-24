@@ -7,10 +7,13 @@ import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnes
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessStructureSearch;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 
@@ -53,9 +56,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
     public ActionForward prepareCreateAssiduousnessPersonFunction(ActionMapping mapping,
 	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	AssiduousnessStructureSearch assiduousnessStructureSearch = (AssiduousnessStructureSearch) getRenderedObject("assiduousnessStructureSearch");
-	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = new AssiduousnessPersonFunctionFactory(
-		assiduousnessStructureSearch, false);
+	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	request.setAttribute("assiduousnessPersonFunctionFactory", assiduousnessPersonFunctionFactory);
 	return mapping.findForward("create-assiduousness-person-function");
     }
@@ -64,8 +65,16 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
 	if (!isCancelled(request)) {
-	    executeService(request, "ExecuteFactoryMethod",
+	    Object result = executeService(request, "ExecuteFactoryMethod",
 		    new Object[] { assiduousnessPersonFunctionFactory });
+	    if (result != null) {
+		ActionMessages actionMessages = new ActionMessages();
+		actionMessages.add("errorMessage", (ActionMessage) result);
+		saveMessages(request, actionMessages);
+		request.setAttribute("assiduousnessPersonFunctionFactory",
+			assiduousnessPersonFunctionFactory);
+		return mapping.findForward("create-assiduousness-person-function");
+	    }
 	}
 	request.setAttribute("assiduousnessStructureSearch", new AssiduousnessStructureSearch(
 		assiduousnessPersonFunctionFactory));

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.apache.struts.action.ActionMessage;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessPersonFunctionFactory implements Serializable, FactoryExecutor {
@@ -51,6 +52,10 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 
     public Party getParty() {
 	return party != null ? party.getObject() : null;
+    }
+
+    public boolean getIsPartyAnUnit() {
+	return getParty() instanceof Unit;
     }
 
     public void setParty(Party party) {
@@ -93,6 +98,15 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
     }
 
     public Object execute() {
+	if (getBeginDate() == null) {
+	    return new ActionMessage("error.requiredBeginDate");
+	}
+	if (getEndDate() == null) {
+	    return new ActionMessage("error.requiredEndDate");
+	}
+	if (getBeginDate().isAfter(getEndDate())) {
+	    return new ActionMessage("error.beginDateAfterEndDate");
+	}
 	if (getParty() instanceof Unit) {
 	    Function function = getFunction((Unit) getParty(), getBeginDate());
 	    if (getEmployeesList() != null && getEmployeesList().size() != 0) {
