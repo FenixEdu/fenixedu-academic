@@ -18,7 +18,11 @@
 	<p><strong><bean:message key="label.grant.owner.filter"/></strong></p>
 </logic:equal>
 
-<bean:define id="decodedName"><%= ((java.lang.String)request.getAttribute("name")).replace("%","*") %></bean:define>
+<bean:define id="decodedName" value=""/>
+<logic:notEmpty name="decodedName">
+	<bean:define id="decodedName"><%= ((java.lang.String)request.getAttribute("name")).replace("%","*") %></bean:define>
+</logic:notEmpty>
+
 <table>
 <tr>
 	<logic:present name="beforeSpan">
