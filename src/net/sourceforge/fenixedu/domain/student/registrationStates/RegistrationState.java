@@ -156,6 +156,10 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	return (state != null) ? state.getStateDate() : null;
     }
     
+    public void setStateDate(YearMonthDay yearMonthDay) {
+        super.setStateDate(yearMonthDay.toDateTimeAtMidnight());
+    }
+    
     public static class RegistrationStateDeleter extends IdInternalBean implements FactoryExecutor {
 
 	public RegistrationStateDeleter(Integer idInternal) {
