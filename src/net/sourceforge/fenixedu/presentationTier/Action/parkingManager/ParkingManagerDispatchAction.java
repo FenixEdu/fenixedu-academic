@@ -284,13 +284,13 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	String parkingPartyID = (String) request.getParameter("parkingPartyID");//dynaActionForm.get("parkingPartyID");
+	
+	String parkingPartyID = (String) request.getParameter("parkingPartyID");
 
 	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(
 		parkingPartyID));
-	Integer parkingGroupID = Integer.valueOf(request.getParameter("groupID"));//dynaActionForm.get("groupID");
+	Integer parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request
+		.getParameter("groupID")) : null;
 	ParkingGroup parkingGroup = null;
 	if (parkingGroupID != null) {
 	    parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
@@ -439,7 +439,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    parkingParty = parkingPartyBean.getParkingParty();
 	    request.setAttribute("parkingPartyBean", parkingPartyBean);
 	    request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
-	    ((DynaActionForm)actionForm).set("addVehicle", "no");
+	    ((DynaActionForm) actionForm).set("addVehicle", "no");
 	    RenderUtils.invalidateViewState();
 	} else {
 	    Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
@@ -492,7 +492,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	boolean vehicleDataCorrect = true;
 	boolean deleteAllVehicles = true;
-	Set<String> vehiclePlates = new HashSet<String>(); 
+	Set<String> vehiclePlates = new HashSet<String>();
 	for (final Iterator<VehicleBean> iter = parkingPartyBean.getVehicles().iterator(); iter
 		.hasNext();) {
 	    VehicleBean vehicle = iter.next();
@@ -507,9 +507,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		iter.remove();
 		parkingPartyBean.getVehicles().remove(vehicle);
 	    }
-	    if(!vehicle.getDeleteVehicle() && !vehiclePlates.add(vehicle.getVehiclePlateNumber())) {
+	    if (!vehicle.getDeleteVehicle() && !vehiclePlates.add(vehicle.getVehiclePlateNumber())) {
 		saveErrorMessage(request, "repeatedPlates", "error.parkingParty.vehicle.repeatedPlates");
-		    return prepareEditParkingParty(mapping, actionForm, request, response);
+		return prepareEditParkingParty(mapping, actionForm, request, response);
 	    }
 	}
 	if (!vehicleDataCorrect) {
