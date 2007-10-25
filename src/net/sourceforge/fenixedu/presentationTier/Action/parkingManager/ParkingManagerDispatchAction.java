@@ -228,7 +228,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		return showRequest(mapping, actionForm, request, response);
 	    }
 
-	    if (!isValidCardNumber(cardNumber)) {
+	    ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
+	    if (!isValidCardNumber(cardNumber, parkingPartyBean)) {
 		saveErrorMessage(request, "cardNumber", "error.alreadyExistsCardNumber");
 		request.setAttribute("idInternal", parkingRequestID);
 		return showRequest(mapping, actionForm, request, response);
@@ -239,7 +240,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		return showRequest(mapping, actionForm, request, response);
 	    }
 
-	    ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
 	    String cardAlwaysValid = dynaForm.getString("cardAlwaysValid");
 	    if (cardAlwaysValid.equalsIgnoreCase("no")
 		    && (parkingPartyBean.getCardStartDate() == null || parkingPartyBean.getCardEndDate() == null)) {
@@ -284,7 +284,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+
 	String parkingPartyID = (String) request.getParameter("parkingPartyID");
 
 	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(
@@ -363,9 +363,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return false;
     }
 
-    private boolean isValidCardNumber(Long cardNumber) {
+    private boolean isValidCardNumber(Long cardNumber, ParkingPartyBean parkingPartyBean) {
 	for (ParkingParty parkingParty : rootDomainObject.getParkingParties()) {
-	    if (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().equals(cardNumber)) {
+	    if (parkingParty.getCardNumber() != null
+		    && parkingPartyBean.getParkingParty() != parkingParty
+		    && parkingParty.getCardNumber().equals(cardNumber)) {
 		return false;
 	    }
 	}
