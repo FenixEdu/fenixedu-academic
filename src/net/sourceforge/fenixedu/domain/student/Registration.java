@@ -1922,6 +1922,10 @@ public class Registration extends Registration_Base {
 	return getFinalAverage() != null;
     }
 
+    public boolean isQualifiedToRegistrationConclusionProcess() {
+	return getActiveState().isActive() && !isRegistrationConclusionProcessed() && getLastStudentCurricularPlan().isBoxStructure();
+    }
+
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
     }
