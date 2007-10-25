@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "apagar depois do deploy" updateStudentTestQuestion.sql
