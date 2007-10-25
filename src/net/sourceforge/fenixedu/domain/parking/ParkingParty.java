@@ -279,16 +279,14 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
-		DegreeType degreeType = student.getMostSignificantDegreeType();
-		Collection<Registration> registrations = student
-			.getRegistrationsByDegreeType(degreeType);
+
 		StringBuilder stringBuilder = null;
-		for (Registration registration : registrations) {
-		    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
+		for (Registration registration : student.getActiveRegistrations()) {
+		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
 		    if (scp != null) {
 			if (stringBuilder == null) {
 			    stringBuilder = new StringBuilder("<strong>Estudante</strong><br/> Nº ");
-			    stringBuilder.append(student.getNumber()).append(" ");
+			    stringBuilder.append(student.getNumber()).append("<br/>");
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
 			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
@@ -303,11 +301,22 @@ public class ParkingParty extends ParkingParty_Base {
 			    }
 			    stringBuilder.append("<br/>Média: ").append(registration.getAverage());
 			}
-			stringBuilder.append("\t");
+			stringBuilder.append("<br/>");
 		    }
 		}
 		if (stringBuilder != null) {
 		    occupations.add(stringBuilder.toString());
+		}
+	    }
+	    if (person.isResearcher()) {
+		String researchUnitNames = person.getWorkingResearchUnitNames();
+		if (!StringUtils.isEmpty(researchUnitNames)
+			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {
+		    occupations.add("<strong>Investigador</strong><br/> Nº "
+			    + person.getMostSignificantNumber());
+		    if (!StringUtils.isEmpty(researchUnitNames)) {
+			occupations.add("<br/>" + researchUnitNames);
+		    }
 		}
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();

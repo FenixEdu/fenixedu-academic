@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -1988,10 +1987,7 @@ public class Person extends Person_Base {
 	if (employee != null && employee.getCurrentWorkingContract() != null
 		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
 	    return PartyClassification.EMPLOYEE;
-	}
-	if (isResearcher()) {
-	    return PartyClassification.RESEARCHER;
-	}
+	}	
 	final GrantOwner grantOwner = getGrantOwner();
 	if (grantOwner != null && grantOwner.hasCurrentContract()) {
 	    return PartyClassification.GRANT_OWNER;
@@ -2002,6 +1998,9 @@ public class Person extends Person_Base {
 	    if (degreeType != null) {
 		return PartyClassification.getClassificationByDegreeType(degreeType);
 	    }
+	}
+	if (isResearcher()) {
+	    return PartyClassification.RESEARCHER;
 	}
 	return PartyClassification.PERSON;
     }
@@ -2680,9 +2679,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isResearcher() {
-	return getPersonRole(RoleType.RESEARCHER) != null
-		&& (getWorkingResearchUnits().isEmpty() || !getParentAccountabilities(
-			AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class).isEmpty());
+	return getPersonRole(RoleType.RESEARCHER) != null;
     }
 
     public Integer getMostSignificantNumber() {
