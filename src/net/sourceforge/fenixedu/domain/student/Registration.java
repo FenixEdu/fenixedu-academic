@@ -1923,7 +1923,9 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-	return getActiveState().isActive() && !isRegistrationConclusionProcessed() && getLastStudentCurricularPlan().isBoxStructure();
+	return getLastStudentCurricularPlan().isBoxStructure() &&
+		!isRegistrationConclusionProcessed() &&
+		(getActiveState().isActive() || isConcluded());
     }
 
     final public boolean isTransition() {
