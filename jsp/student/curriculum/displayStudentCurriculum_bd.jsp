@@ -72,13 +72,24 @@
 
 	<logic:equal name="registration" property="concluded" value="true">
 		<h3 class="separator2"><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-			<p class="mvert05"><bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
+		<logic:equal name="registration" property="registrationConclusionProcessed" value="true">
+			<p class="mvert05">
+				<bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</p>
 			<p>
 				<span class="highlight1">
 					<bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>:
 					<b><bean:write name="registration" property="average"/></b>
 				</span>
 			</p>
+		</logic:equal>				
+		<logic:equal name="registration" property="registrationConclusionProcessed" value="false">
+			<p class="mvert05">
+				<span class="error0">
+					<bean:message key="missing.final.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</span>
+			</p>
+		</logic:equal>				
 	</logic:equal>
 
 	<logic:equal name="registration" property="concluded" value="false">
