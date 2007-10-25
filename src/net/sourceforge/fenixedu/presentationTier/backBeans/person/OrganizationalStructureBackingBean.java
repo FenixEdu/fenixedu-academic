@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -102,8 +103,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 				   
 		// Title
 		if (partyTypeOrClassificationName == null) {
-		    partyTypeOrClassificationName = typeOrClassificationName;
-		    buffer.append("<h3 class='mtop2'>").append(getBundle().getString(partyTypeOrClassificationName)).append("</h3>\r\n");
+		    partyTypeOrClassificationName = typeOrClassificationName;		    		   
+		    
+		    buffer.append("<h3 class='mtop2'>").append(hasKey(bundle, partyTypeOrClassificationName) ? 
+			    getBundle().getString(partyTypeOrClassificationName) : partyTypeOrClassificationName).append("</h3>\r\n");
 		}
 		
 		buffer.append("<ul class='padding nobullet'>\r\n");
@@ -197,8 +200,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	Map<String, Set<Unit>> resultMap = new TreeMap<String, Set<Unit>>(
 		new Comparator<String>() {
 		    public int compare(String arg0, String arg1) {		
-			String firstString = StringNormalizer.normalize(getBundle().getString(arg0));
-			String secondString = StringNormalizer.normalize(getBundle().getString(arg1));			
+			String firstString = StringNormalizer.normalize(hasKey(getBundle(), arg0) ? getBundle().getString(arg0) : arg0);
+			String secondString = StringNormalizer.normalize(hasKey(getBundle(), arg1) ? getBundle().getString(arg1) : arg1);			
 			return firstString.compareToIgnoreCase(secondString);
 		    }
 		});
@@ -495,8 +498,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
-	SelectItem firstItem = new SelectItem();
-	firstItem.setLabel(bundle.getString("label.find.organization.listing.type.default"));
+	SelectItem firstItem = new SelectItem();	
+	firstItem.setLabel(hasKey(bundle, "label.find.organization.listing.type.default") ? 
+		bundle.getString("label.find.organization.listing.type.default") 
+		: "label.find.organization.listing.type.default");
 	firstItem.setValue("#");
 	list.add(0, firstItem);
     }
@@ -557,5 +562,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
         this.choosenExecutionYearID = choosenExecutionYearID;
+    }
+    
+    private boolean hasKey(ResourceBundle bundle, String key) {
+	Enumeration<String> keys = bundle.getKeys();
+	while(keys.hasMoreElements()) {
+	    String nextKey = keys.nextElement();
+	    if(nextKey.equals(key)) {
+		return true;
+	    }
+	}
+	return false;
     }
 }

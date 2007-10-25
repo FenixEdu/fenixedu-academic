@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -48,6 +49,7 @@ import org.joda.time.YearMonthDay;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
+    
     private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym, administrativeOfficeID;
 
     private String functionName, functionTypeName, functionBeginDate, functionEndDate, unitWebAddress, unitRelationTypeValue;
@@ -73,6 +75,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private Boolean viewUnitsWithoutParents;
     
 
+    
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
 	    getUnitIDHidden().setValue(Integer.valueOf(getRequestParameter("unitID").toString()));
@@ -101,7 +104,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    setViewUnitsWithoutParents(Boolean.FALSE);
 	}
     }
-
+       
     public List<Unit> getAllSubUnits() throws FenixFilterException, FenixServiceException {
 	YearMonthDay currentDate = new YearMonthDay();
 	boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
@@ -338,8 +341,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	SelectItem selectItem = null;
 	for (PartyTypeEnum type : PartyTypeEnum.values()) {
-	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(type.getName()));
+	    selectItem = new SelectItem();	    
+	    selectItem.setLabel(hasKey(bundle, type.getName()) ? bundle.getString(type.getName()) : type.getName());
 	    selectItem.setValue(type.getName());
 	    list.add(selectItem);
 	}
@@ -356,8 +359,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	SelectItem selectItem = null;
 	for (UnitClassification classification : UnitClassification.values()) {
-	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(classification.getName()));
+	    selectItem = new SelectItem();	    
+	    selectItem.setLabel(hasKey(bundle, classification.getName()) ? bundle.getString(classification.getName()) : classification.getName());	    
 	    selectItem.setValue(classification.getName());
 	    list.add(selectItem);
 	}
@@ -395,9 +398,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 	
 	for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {
-	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(administrativeOffice.getAdministrativeOfficeType().getClass().getSimpleName()
-		    + "." + administrativeOffice.getAdministrativeOfficeType().getName()));
+	    selectItem = new SelectItem();	    
+	    String name = administrativeOffice.getAdministrativeOfficeType().getClass().getSimpleName() + "." + administrativeOffice.getAdministrativeOfficeType().getName();
+	    selectItem.setLabel(hasKey(bundle, name) ? bundle.getString(name) : name);	    	    
 	    selectItem.setValue(administrativeOffice.getIdInternal().toString());
 	    list.add(selectItem);
 	}
@@ -502,8 +505,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
 	SelectItem selectItem = null;
 	for (FunctionType type : FunctionType.values()) {
-	    selectItem = new SelectItem();
-	    selectItem.setLabel(bundle.getString(type.getName()));
+	    selectItem = new SelectItem();	    	    
+	    selectItem.setLabel(hasKey(bundle, type.getName()) ? bundle.getString(type.getName()) : type.getName());	    
 	    selectItem.setValue(type.getName());
 	    list.add(selectItem);
 	}
@@ -525,8 +528,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    || type.equals(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)
 		    || type.equals(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)
 		    || type.equals(AccountabilityTypeEnum.GEOGRAPHIC)) {
+		
 		selectItem = new SelectItem();
-		selectItem.setLabel(bundle.getString(type.getName()));
+		selectItem.setLabel(hasKey(bundle, type.getName()) ? bundle.getString(type.getName()) : type.getName());		
 		selectItem.setValue(type.getName());
 		list.add(selectItem);
 	    }
@@ -540,7 +544,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void addDefaultSelectedItem(List<SelectItem> list, ResourceBundle bundle) {
 	SelectItem firstItem = new SelectItem();
-	firstItem.setLabel(bundle.getString("dropDown.Default"));
+	firstItem.setLabel(hasKey(bundle, "dropDown.Default") ? bundle.getString("dropDown.Default") : "dropDown.Default");	
 	firstItem.setValue("#");
 	list.add(0, firstItem);
     }
@@ -570,8 +574,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String createSubUnit() throws FenixFilterException, FenixServiceException {
 
 	if (getUnitRelationTypeValue().equals("#")) {
-	    ResourceBundle bundle = getResourceBundle("resources/ManagerResources");
-	    addErrorMessage(bundle.getString("error.no.unit.relation.type"));
+	    ResourceBundle bundle = getResourceBundle("resources/ManagerResources");	   
+	    addErrorMessage(hasKey(bundle, "error.no.unit.relation.type") ? bundle.getString("error.no.unit.relation.type") : "error.no.unit.relation.type");
 	    return "";
 	}
 
@@ -639,8 +643,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String associateParentUnit() throws FenixFilterException, FenixServiceException {
 	if (getUnitRelationTypeValue().equals("#")) {
-	    ResourceBundle bundle = getResourceBundle("resources/ManagerResources");
-	    addErrorMessage(bundle.getString("error.no.unit.relation.type"));
+	    ResourceBundle bundle = getResourceBundle("resources/ManagerResources");	    
+	    addErrorMessage(hasKey(bundle, "error.no.unit.relation.type") ? bundle.getString("error.no.unit.relation.type") : "error.no.unit.relation.type");
 	    return "";
 	}
 
@@ -977,9 +981,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 	    getUnitRelationsAccountabilityTypes().clear();
 	    for (Accountability accountability : unit.getParentsSet()) {
-		if (accountability.getParentParty().isUnit()) {
-		    getUnitRelationsAccountabilityTypes()
-			    .put(accountability.getIdInternal(), bundle.getString(accountability.getAccountabilityType().getType().getName()));
+		String accountabilityTypeName = accountability.getAccountabilityType().getType().getName();
+		if (accountability.getParentParty().isUnit()) {		    		    
+		    getUnitRelationsAccountabilityTypes().put(accountability.getIdInternal(), 
+				    hasKey(bundle, accountabilityTypeName) ? bundle.getString(accountabilityTypeName) : accountabilityTypeName);
 		}
 	    }
 	}
@@ -990,20 +995,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 	    getUnitRelationsAccountabilityTypes().clear();
 	    for (Accountability accountability : unit.getChildsSet()) {
+		String accountabilityTypeName = accountability.getAccountabilityType().getType().getName();
 		if (accountability.getChildParty().isUnit()) {
 		    Integer subUnitIdInternal = accountability.getChildParty().getIdInternal();
-		    if (getUnitRelationsAccountabilityTypes().containsKey(subUnitIdInternal)) {
-			getUnitRelationsAccountabilityTypes().put(
-				subUnitIdInternal,
-				getUnitRelationsAccountabilityTypes().get(subUnitIdInternal).concat(
-					", "
-						+ bundle.getString(accountability
-							.getAccountabilityType().getType().getName())));
+		    if (getUnitRelationsAccountabilityTypes().containsKey(subUnitIdInternal)) {			
+			getUnitRelationsAccountabilityTypes().put(subUnitIdInternal,
+				getUnitRelationsAccountabilityTypes().get(subUnitIdInternal).concat(", " + 
+					(hasKey(bundle, accountabilityTypeName) ? bundle.getString(accountabilityTypeName) : accountabilityTypeName)));
 		    } else {
 			getUnitRelationsAccountabilityTypes().put(
 				subUnitIdInternal,
-				bundle.getString(accountability.getAccountabilityType().getType()
-					.getName()));
+				(hasKey(bundle, accountabilityTypeName) ? bundle.getString(accountabilityTypeName) : accountabilityTypeName));
 		    }
 		}
 	    }
@@ -1456,5 +1458,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setUnitNameEn(String unitNameEn) {
         this.unitNameEn = unitNameEn;
-    } 
+    }
+    
+    private boolean hasKey(ResourceBundle bundle, String key) {
+	Enumeration<String> keys = bundle.getKeys();
+	while(keys.hasMoreElements()) {
+	    String nextKey = keys.nextElement();
+	    if(nextKey.equals(key)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
