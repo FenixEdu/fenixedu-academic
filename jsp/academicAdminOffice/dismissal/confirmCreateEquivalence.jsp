@@ -37,7 +37,6 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
-
 <logic:empty name="dismissalBean" property="selectedEnrolments">
 	<em><bean:message key="label.studentDismissal.no.selected.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 </logic:empty>
@@ -49,11 +48,13 @@
 		<html:hidden property="method" value="createDismissals"/>
 		<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
 		
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<logic:notEmpty name="dismissalBean" property="dismissals">
-			<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-			<fr:messages for="dismissalBean-dismissals" type="validation">
-				<span class="error0"><bean:message key="error.studentDismissal.curriculumGroup.required" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
-			</fr:messages>
+			<fr:hasMessages for="dismissalBean-dismissals">
+				<fr:messages for="dismissalBean-dismissals" type="validation">
+					<li><span class="error0"><fr:message show="label"/>: <fr:message /></span></li>
+				</fr:messages>
+			</fr:hasMessages>
 			<fr:edit id="dismissalBean-dismissals" name="dismissalBean" property="dismissals" schema="DismissalBean.SelectedCurricularCourse.chooseParent">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight"/>
@@ -61,7 +62,22 @@
 				</fr:layout>
 				<fr:destination name="invalid" path="/studentEquivalences.do?method=stepThree"/>
 			</fr:edit>
-		</logic:notEmpty>	
+		</logic:notEmpty>
+		<logic:notEmpty name="dismissalBean" property="optionalDismissals">
+			<logic:notEmpty name="dismissalBean" property="dismissals"><br/></logic:notEmpty>
+			<fr:hasMessages for="dismissalBean-optionalDismissals">
+				<fr:messages for="dismissalBean-optionalDismissals" type="validation">
+					<li><span class="error0"><fr:message show="label"/>: <fr:message /></span></li>
+				</fr:messages>
+			</fr:hasMessages>
+			<fr:edit id="dismissalBean-optionalDismissals" name="dismissalBean" property="optionalDismissals" schema="DismissalBean.SelectedOptionalCurricularCourse.chooseParent">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle4 thlight"/>
+					<fr:property name="columnClasses" value=",,,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/studentCredits.do?method=stepThree"/>
+			</fr:edit>
+		</logic:notEmpty>
 		<br/>
 		<br/>	
 	
@@ -92,9 +108,9 @@
 			<fr:property name="classes" value="tstyle4 thlight mbottom2" />
 		</fr:layout>
 	</fr:view>
-	<logic:notEmpty name="dismissalBean" property="dismissals">
+	<logic:notEmpty name="dismissalBean" property="allDismissals">
 		<p class="mvert05"><strong><bean:message key="label.studentDismissal.not.need.to.enrol" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-		<fr:view name="dismissalBean" property="dismissals" schema="student.dismissal.view.not.need.to.enrol">
+		<fr:view name="dismissalBean" property="allDismissals" schema="student.dismissal.view.not.need.to.enrol">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight" />
 			</fr:layout>
