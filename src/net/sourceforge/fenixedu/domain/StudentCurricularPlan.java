@@ -261,8 +261,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRoot().hasConcludedCycle(cycleType, executionYear);
     }
 
+    final public YearMonthDay getConclusionDate() {
+	return getLastApprovementDate();
+    }
+
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
-	return getRoot().getConclusionDate(cycleType);
+	if (cycleType == null) {
+	    return getConclusionDate();
+	}
+
+	if (getDegreeType().getCycleTypes().isEmpty()) {
+	    throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
+	}
+
+	if (!getDegreeType().hasCycleTypes(cycleType)) {
+	    throw new DomainException("StudentCurricularPlan.doesnt.have.such.cycle.type");
+	}
+
+	return getCycle(cycleType).getConclusionDate();
     }
 
     final public Curriculum getCurriculum(final ExecutionYear executionYear) {
@@ -578,6 +594,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	} else {
 	    return new HashSet<CurriculumLine>(getAprovedEnrolments());
 	}
+    }
+
+    final public YearMonthDay getLastApprovementDate() {
+    	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE);
+	curriculumLines.addAll(getApprovedCurriculumLines());
+
+	if (curriculumLines.isEmpty()) {
+	    throw new DomainException("Registration.has.no.approved.curriculum.lines");
+	}
+
+	return curriculumLines.last().getApprovementDate();
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
