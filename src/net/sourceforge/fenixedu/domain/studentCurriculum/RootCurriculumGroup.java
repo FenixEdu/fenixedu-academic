@@ -185,18 +185,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
     }
 
-    final public YearMonthDay getConclusionDate(final CycleType cycleType) {
-	if (!getDegreeType().hasAnyCycleTypes()) {
-	    return null;
-	}
-
-	if (!hasConcludedCycle(cycleType, (ExecutionYear) null)) {
-	    throw new DomainException("RootCurriculumGroup.hasnt.concluded.cicle");
-	}
-
-	return getCycleCurriculumGroup(cycleType).getConclusionDate();
-    }
-    
     /**
      * Only the DegreeType's CycleTypes should be inspected.
      * CycleCurriculumGroups of other CycleType might exist and shouldn't be
