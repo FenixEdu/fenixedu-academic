@@ -576,7 +576,9 @@ public class Registration extends Registration_Base {
     }
 
     final public BigDecimal getAverage(final ExecutionYear executionYear, final CycleType cycleType) {
-	return executionYear == null && cycleType == null && isConcluded() ? BigDecimal.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
+	return executionYear == null && cycleType == null && isConcluded() &&
+		isRegistrationConclusionProcessed() ? BigDecimal.valueOf(getFinalAverage())
+		: getCurriculum(executionYear, cycleType).getAverage();
     }
 
     @Override
@@ -773,15 +775,7 @@ public class Registration extends Registration_Base {
     }
 
     final public YearMonthDay getLastApprovementDate() {
-	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(
-		CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE);
-	curriculumLines.addAll(getApprovedCurriculumLines());
-
-	if (curriculumLines.isEmpty()) {
-	    throw new DomainException("Registration.has.no.approved.curriculum.lines");
-	}
-
-	return curriculumLines.last().getApprovementDate();
+	return getLastStudentCurricularPlan().getLastApprovementDate();
     }
 
     final public Collection<IEnrolment> getApprovedIEnrolments() {
@@ -1227,36 +1221,6 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
-    }
-
-    final public Collection<DocumentRequest> getDocumentRequests() {
-	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
-	for (AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest.isDocumentRequest()) {
-		result.add((DocumentRequest) academicServiceRequest);
-	    }
-	}
-	return result;
-    }
-
-    final public boolean hasDiplomaRequest() {
-	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma()) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    final public boolean hasConcludedDiplomaRequest() {
-	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma() && documentRequest.isConcluded()) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     // Special Season
@@ -1937,7 +1901,7 @@ public class Registration extends Registration_Base {
     }
 
     final public YearMonthDay getConclusionDate() {
-	return isConcluded() ? getActiveState().getStateDate().toYearMonthDay() : null; 
+	return isConcluded() ? getLastApprovementDate() : null;
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
@@ -1968,14 +1932,6 @@ public class Registration extends Registration_Base {
     final public String getGraduateTitle(final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getGraduateTitle();
-	}
-
-	if (getDegreeType().getCycleTypes().isEmpty()) {
-	    throw new DomainException("Registration.has.no.cycle.type");
-	}
-
-	if (!getDegreeType().hasCycleTypes(cycleType)) {
-	    throw new DomainException("Registration.doesnt.have.such.cycle.type");
 	}
 
 	if (hasConcludedCycle(cycleType)) {
@@ -2228,6 +2184,54 @@ public class Registration extends Registration_Base {
 
     final public boolean hasToPayGratuityOrInsurance() {
 	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
+    }
+
+    final public boolean hasDiplomaRequest() {
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isDiploma()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    final public boolean hasConcludedDiplomaRequest() {
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isDiploma() && documentRequest.isConcluded()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    final public Collection<DocumentRequest> getDocumentRequests() {
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+	for (AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest.isDocumentRequest()) {
+		result.add((DocumentRequest) academicServiceRequest);
+	    }
+	}
+	return result;
+    }
+    
+    final public Set<DocumentRequest> getDocumentRequests(DocumentRequestType documentRequestType, AcademicServiceRequestSituationType academicServiceRequestSituationType, ExecutionYear executionYear,
+	     boolean collectDocumentsMarkedAsFreeProcessed) {
+
+	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.getDocumentRequestType() == documentRequestType && 
+		    documentRequest.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType && 
+		    executionYear.containsDate(documentRequest.getCreationDate()) && 
+		    (!collectDocumentsMarkedAsFreeProcessed || documentRequest.isFreeProcessed())) {
+
+		result.add(documentRequest);
+	    }
+	}
+
+	return result;
     }
 
     final public Set<DocumentRequest> getSucessfullyFinishedDocumentRequestsBy(ExecutionYear executionYear,
