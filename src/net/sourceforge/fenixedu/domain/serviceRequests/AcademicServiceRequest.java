@@ -170,6 +170,17 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
     }
 
+    public void delete() {
+	for (;!getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete());
+	super.setAdministrativeOffice(null);
+        if (hasEvent()) {
+            getEvent().delete();
+        }
+        super.setRegistration(null);
+        super.setRootDomainObject(null);
+	super.deleteDomainObject();
+    }
+    
     @Override
     final public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException(

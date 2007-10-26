@@ -44,6 +44,12 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     }
 
     @Override
+    public void delete() {
+	super.setExecutionYear(null);
+	super.delete();
+    }
+    
+    @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE;
     }

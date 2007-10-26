@@ -51,6 +51,12 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     }
 
     @Override
+    public void delete() {
+	super.setExecutionYear(null);
+	super.delete();
+    }
+    
+    @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_CERTIFICATE;
     }

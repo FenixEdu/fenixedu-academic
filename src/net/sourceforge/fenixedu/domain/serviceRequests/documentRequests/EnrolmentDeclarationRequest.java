@@ -32,6 +32,12 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     }
 
     @Override
+    public void delete() {
+	super.setExecutionYear(null);
+	super.delete();
+    }
+    
+    @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_DECLARATION;
     }

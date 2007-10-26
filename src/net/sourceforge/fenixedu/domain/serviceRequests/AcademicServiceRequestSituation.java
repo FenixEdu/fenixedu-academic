@@ -79,9 +79,9 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	    throw new DomainException("AcademicServiceRequestSituation.already.delivered");
 	}
 	
-	super.removeRootDomainObject();
-	super.removeEmployee();
-	super.removeAcademicServiceRequest();
+	super.setRootDomainObject(null);
+	super.setEmployee(null);
+	super.setAcademicServiceRequest(null);
 	super.deleteDomainObject();
     }
     
