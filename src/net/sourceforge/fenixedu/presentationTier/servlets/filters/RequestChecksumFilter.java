@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Enumeration;
 import java.util.TreeSet;
 
 import javax.servlet.Filter;
@@ -568,12 +569,31 @@ public class RequestChecksumFilter implements Filter {
 	    checksum = (String) httpServletRequest.getAttribute(CHECKSUM_ATTRIBUTE_NAME);
 	}
 	if (!isValidChecksum(httpServletRequest, checksum)) {
-	    final IUserView userView = SessionUtils.getUserView(httpServletRequest);
-	    final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
 	    if (LogLevel.ERROR) {
+		final IUserView userView = SessionUtils.getUserView(httpServletRequest);
+		final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
 		final String url = httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString();
-	        System.out.println("Detected url tampering for request: " + url + " by user: " + userString);	        
-	        System.out.println(decodeURL(url));
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Detected url tampering by user: ");
+		stringBuilder.append(userString);
+		stringBuilder.append("\n           url: ");
+		stringBuilder.append(url);
+		stringBuilder.append("\n   decoded url: ");
+		stringBuilder.append(decodeURL(url));
+		stringBuilder.append("\n          from: ");
+		stringBuilder.append(httpServletRequest.getRemoteHost());
+		stringBuilder.append(" (");
+		stringBuilder.append(httpServletRequest.getRemoteAddr());
+		stringBuilder.append(")");
+		for (final Enumeration<String> headerNames = httpServletRequest.getHeaderNames(); headerNames.hasMoreElements(); ) {
+		    final String name = headerNames.nextElement();
+		    stringBuilder.append("\n        header: ");
+		    stringBuilder.append(name);
+		    stringBuilder.append(" = ");
+		    stringBuilder.append(httpServletRequest.getHeader(name));
+		}
+
+		System.out.println(stringBuilder.toString());
 	    }
 	    throw new UrlTamperingException();
 	}

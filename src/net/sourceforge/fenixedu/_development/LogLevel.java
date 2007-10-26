@@ -8,7 +8,7 @@ public class LogLevel {
 
     public static boolean WARN = false;
 
-    public static boolean ERROR = false;
+    public static boolean ERROR = true;
 
     public static boolean FATAL = true;
 
