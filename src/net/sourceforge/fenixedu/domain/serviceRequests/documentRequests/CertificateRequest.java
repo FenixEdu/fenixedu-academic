@@ -110,8 +110,11 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     private boolean isFirstRequestOfCurrentExecutionYear() {
-	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType(), false).isEmpty();
+	return getRegistration().getDocumentRequests(
+		getDocumentRequestType(),
+		AcademicServiceRequestSituationType.DELIVERED,
+		ExecutionYear.readCurrentExecutionYear(),
+		false).isEmpty();
     }
 
 }
