@@ -1110,7 +1110,7 @@ public class Person extends Person_Base {
 	Iterator<ResearchContract> iter = externalContracts.iterator();
 	if (iter.hasNext()) {
 	    ResearchContract contract = externalContracts.iterator().next();
-	    if (contract.getExternalContract()) {
+	    if (Boolean.TRUE.equals(contract.getExternalContract())) {
 		return contract;
 	    }
 	}
