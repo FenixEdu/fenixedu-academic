@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -54,6 +52,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -114,14 +116,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR);
         if (department != null) {
-            for (final CompetenceCourse competenceCourse : department.getCompetenceCourses()) {
-                for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-                    if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE) {
-                        final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                        executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
-                    }
-                }
-            }
+            addAllExecutionDegrees(executionDegrees, department.getCompetenceCoursesSet());
+            addAllExecutionDegrees(executionDegrees, department.getDepartmentUnit());
         }
         
         request.setAttribute("executionDegrees", executionDegrees);
@@ -129,6 +125,54 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         return mapping.findForward("show-choose-execution-degree-page");
     }
 
+    private void addAllExecutionDegrees(final Set<ExecutionDegree> executionDegrees, final Unit unit) {
+	if (unit.isCompetenceCourseGroupUnit()) {
+	    final CompetenceCourseGroupUnit competenceCourseGroupUnit = (CompetenceCourseGroupUnit) unit;
+	    addAllExecutionDegrees(executionDegrees, competenceCourseGroupUnit.getCompetenceCoursesSet());
+	}
+	for (final Accountability accountability : unit.getChildsSet()) {
+	    final Party party = accountability.getChildParty();
+	    if (party.isUnit()) {
+		addAllExecutionDegrees(executionDegrees, (Unit) party);
+	    }
+	}
+    }
+
+    private void addAllExecutionDegrees(final Set<ExecutionDegree> executionDegrees, final Set<CompetenceCourse> competenceCourses) {
+        for (final CompetenceCourse competenceCourse : competenceCourses) {
+            for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+        	if (curricularCourse.getType() == CurricularCourseType.TFC_COURSE || competenceCourse.isDissertation()) {
+        	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+        	    executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
+        	}
+            }
+        }
+    }
+
+    public ActionForward deleteProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	final String proposalIdString = request.getParameter("finalDegreeWorkProposalOID");
+	final Proposal proposal = rootDomainObject.readProposalByOID(Integer.valueOf(proposalIdString));
+	executeService("DeleteFinalDegreeWorkProposal", proposal);
+	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward deleteAttributions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	final String groupProposalIdString = request.getParameter("groupProposal");
+	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
+	executeService("DeleteGroupProposalAttribution", groupProposal);
+	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward deleteCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	final String groupProposalIdString = request.getParameter("groupProposal");
+	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(Integer.valueOf(groupProposalIdString));
+	executeService("DeleteGroupProposal", groupProposal);
+	return prepare(mapping, form, request, response);
+    }
+    
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);

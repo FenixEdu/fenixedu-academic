@@ -359,6 +359,14 @@
 					</td>
 					<td class="listClasses" rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
+						<bean:define id="deleteProposalLink">
+								/manageFinalDegreeWork.do?method=deleteProposal&amp;page=0&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+										%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
+										%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
+						</bean:define>
+						<html:link page='<%= deleteProposalLink.toString() %>'>
+							(<bean:message key="finalDegreeWorkProposal.delete"/>)
+						</html:link>
 					</td>
 					<td class="listClasses" rowspan="2">
 			        	<html:link page="<%= "/finalDegreeWorkProposal.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID 
@@ -494,6 +502,25 @@
 									</html:link>
 		--%>
 									<bean:write name="student" property="infoPerson.username"/>
+									<bean:define id="groupProposalId" name="groupProposal" property="idInternal"/>
+									<bean:define id="deleteCandidacyLink">
+										/manageFinalDegreeWork.do?method=deleteCandidacy&amp;page=0&amp;groupProposal=<%= groupProposalId.toString()
+												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
+												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
+									</bean:define>
+									<html:link page='<%= deleteCandidacyLink.toString() %>'>
+										(<bean:message key="finalDegreeWorkProposal.delete.candidacy"/>)
+									</html:link>
+									<bean:define id="deleteAttributionLink">
+										/manageFinalDegreeWork.do?method=deleteAttributions&amp;page=0&amp;groupProposal=<%= groupProposalId.toString()
+												%>&amp;finalDegreeWorkProposalOID=<%= ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString()
+												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
+												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
+									</bean:define>
+									<html:link page='<%= deleteAttributionLink.toString() %>'>
+										(<bean:message key="finalDegreeWorkProposal.delete.attribution"/>)
+									</html:link>
 								</logic:present>
 							</td>
 							<td bgcolor="<%= bgColor %>" align="center">

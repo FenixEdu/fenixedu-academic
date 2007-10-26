@@ -16,10 +16,27 @@ public class GroupProposal extends GroupProposal_Base {
     }
 
     public void delete() {
+	deleteAttributions();
 	removeFinalDegreeDegreeWorkGroup();
 	removeFinalDegreeWorkProposal();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public void deleteAttributions() {
+	final Proposal proposal = getFinalDegreeWorkProposal();
+	if (proposal.getGroupAttributed() == getFinalDegreeDegreeWorkGroup()) {
+	    proposal.removeGroupAttributed();
+	}
+	if (proposal.getGroupAttributedByTeacher() == getFinalDegreeDegreeWorkGroup()) {
+	    proposal.removeGroupAttributedByTeacher();
+	}
+	final FinalDegreeWorkGroup finalDegreeWorkGroup = getFinalDegreeDegreeWorkGroup();
+	for (final GroupStudent groupStudent : finalDegreeWorkGroup.getGroupStudentsSet()) {
+	    if (groupStudent.getFinalDegreeWorkProposalConfirmation() == proposal) {
+		groupStudent.removeFinalDegreeWorkProposalConfirmation();
+	    }
+	}
     }
 
 }

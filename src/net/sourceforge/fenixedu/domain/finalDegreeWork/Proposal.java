@@ -10,6 +10,16 @@ public class Proposal extends Proposal_Base {
     }
 
     public void delete() {
+	getAssociatedGroupStudentsSet().clear();
+	getBranchesSet().clear();
+	removeCoorientator();
+	removeGroupAttributed();
+	removeGroupAttributedByTeacher();
+	for (final GroupProposal groupProposal : getGroupProposalsSet()) {
+	    groupProposal.delete();
+	}
+	removeOrientator();
+	removeScheduleing();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
