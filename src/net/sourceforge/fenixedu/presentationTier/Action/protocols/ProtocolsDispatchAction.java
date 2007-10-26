@@ -9,9 +9,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory.ProtocolHistoryEditorFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory.ProtocolHistoryRenewerFactory;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -157,6 +159,17 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
         response.flushBuffer();
         return null;
     }
+    
+    public ActionForward viewProtocolDetails(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Integer protocolID = getIntegerFromRequest(request, "idInternal");
+        Protocol protocol = (Protocol) RootDomainObject
+                .readDomainObjectByOID(Protocol.class, protocolID);
+        request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
+        return mapping.findForward("view-protocol-details");
+    }
+
 
     private void setError(HttpServletRequest request, String error, ActionMessage actionMessage) {
         ActionMessages actionMessages = getMessages(request);

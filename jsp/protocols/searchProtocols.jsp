@@ -96,10 +96,14 @@
 	<bean:size id="protocolNumber" name="protocolSearch" property="search"/>
 	<bean:message key="message.protocol.number" arg0="<%= protocolNumber.toString()%>" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<logic:notEmpty name="protocolSearch" property="search">
-		<fr:view name="protocolSearch" property="search" layout="tabular" schema="show.protocol.toList" >
+		<fr:view name="protocolSearch" property="search" schema="show.protocol.toList" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1"/>
 				<fr:property name="columnClasses" value="acenter,nowrap,,"/>
+				<fr:property name="link(show)" value="/protocols.do?method=viewProtocolDetails" />
+				<fr:property name="key(show)" value="link.scientificCouncil.evaluated.view" />
+				<fr:property name="param(show)" value="idInternal" />
+				<fr:property name="bundle(show)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

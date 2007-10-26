@@ -79,6 +79,7 @@
    	       <forward name="renew-protocol" path="renew-protocol"/>
    	       <forward name="edit-protocol-history" path="edit-protocol-history"/>
    	       <forward name="search-protocols" path="search-protocols"/>
+   	       <forward name="view-protocol-details" path="view-protocol-details"/>
 	    </action>
 	    	    	
  		<action path="/editProtocol"

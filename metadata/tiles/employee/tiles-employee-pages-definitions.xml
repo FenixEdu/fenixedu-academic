@@ -75,5 +75,7 @@
     <definition name="search-protocols" extends="definition.employee.two-column">
         <put name="body" value="/protocols/searchProtocols.jsp"/>
     </definition>  
-    
+    <definition name="view-protocol-details" extends="definition.employee.two-column">
+        <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
+    </definition>  
 </tiles-definitions>

@@ -234,8 +234,11 @@
      <!-- Search -->
     <definition name="search-protocols" extends="scientificCouncil.masterPage">
         <put name="body" value="/protocols/searchProtocols.jsp"/>
-    </definition>  
-
+    </definition>
+	<definition name="view-protocol-details" extends="scientificCouncil.masterPage">
+        <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
+    </definition> 
+    
     <definition name="scientific.communication.sendMail" extends="scientificCouncil.masterPage">
        <put name="body" value="/scientificCouncil/communication/sendEmail.jsp"/>
     </definition>
