@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h3><bean:message key="message.testModels.manage" bundle="TESTS_RESOURCES" /></h3>
-<h2><bean:message key="title.generateTests" dle="TESTS_RESOURCES" /></h2>
+<h2><bean:message key="title.generateTests" bundle="TESTS_RESOURCES" /></h2>
 
 <p>
 Este modelo de teste tem a capacidade de gerar <bean:write name="bean" property="testModel.maxCombinations" /> varia��o(�es).

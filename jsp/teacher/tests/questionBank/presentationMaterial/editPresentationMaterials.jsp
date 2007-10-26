@@ -12,7 +12,7 @@
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialBean" />
 <bean:define id="returnPath" name="bean" property="returnPath" type="java.lang.String" />
 
-<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/teacher/tests/tests.js" %>"></script>
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>"></script>
 
 <ul>
 <li>

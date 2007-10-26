@@ -10,7 +10,7 @@
 
 <span class="errors"><html:errors/></span>
 
-<script type="text/javascript" language="javascript" src="tests.js">
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/student.js" %>">
 </script>
 
 <logic:equal name="test" property="unansweredQuestionsCount" value="0">

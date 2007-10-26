@@ -12,7 +12,7 @@
 <bean:define id="testModel" name="testModel" type="net.sourceforge.fenixedu.domain.tests.NewTestModel" />
 <bean:define id="testModelId"><bean:write name="testModel" property="idInternal" /></bean:define>
 
-<script type="text/javascript" language="javascript" src="tests.js"></script>
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>"></script>
 
 <ul>
 	<li>

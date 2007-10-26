@@ -8,7 +8,7 @@
 <h3><bean:message key="message.testModels.manage" bundle="TESTS_RESOURCES" /></h3>
 <h2><bean:message key="title.viewTests" bundle="TESTS_RESOURCES" /></h2>
 
-<script type="text/javascript" language="javascript" src="tests.js">
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/student.js" %>">
 </script>
 
 

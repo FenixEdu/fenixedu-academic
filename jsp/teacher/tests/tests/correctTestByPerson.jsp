@@ -9,7 +9,7 @@
 <h3><bean:message key="message.tests.manage" bundle="TESTS_RESOURCES" /></h3>
 <h2><fr:view name="test" property="testGroup.name" /></h2>
 
-<script type="text/javascript" language="javascript" src="tests.js">
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>">
 </script>
 
 <bean:define id="test" name="test" type="net.sourceforge.fenixedu.domain.tests.NewTest" />

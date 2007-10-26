@@ -7,7 +7,7 @@
 
 <h3><bean:message key="message.questionBank.manage" bundle="TESTS_RESOURCES" /></h3>
 
-<script type="text/javascript" language="javascript" src="tests.js">
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>">
 </script>
 
 <fr:view name="testElement" layout="details" />

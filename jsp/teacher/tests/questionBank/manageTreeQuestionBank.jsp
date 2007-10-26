@@ -10,7 +10,7 @@
 
 <p><strong><bean:message key="tests.questionBank.viewing" bundle="TESTS_RESOURCES" />:</strong> <fr:view name="questionBank" layout="short" /></p>
 
-<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/teacher/tests/tests.js" %>"></script>
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>"></script>
 
 <bean:define id="questionGroup" name="questionBank" type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" toScope="request" />
 
