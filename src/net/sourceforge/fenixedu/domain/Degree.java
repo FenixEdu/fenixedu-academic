@@ -363,7 +363,23 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return result;
     }
+    
+    public List<ExecutionDegree> getExecutionDegrees() {
+	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    result.addAll(degreeCurricularPlan.getExecutionDegrees());
+	}
+	return result;
+    }    
 
+    public List<ExecutionDegree> getExecutionDegreesForExecutionYear(ExecutionYear year) {
+	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    result.add(degreeCurricularPlan.getExecutionDegreeByYear(year));
+	}
+	return result;
+    }    
+    
     public List<ExecutionYear> getDegreeCurricularPlansExecutionYears() {
 	Set<ExecutionYear> result = new TreeSet<ExecutionYear>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
