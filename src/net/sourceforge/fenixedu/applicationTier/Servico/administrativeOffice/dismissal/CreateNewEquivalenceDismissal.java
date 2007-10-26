@@ -7,7 +7,7 @@ public class CreateNewEquivalenceDismissal extends Service {
     
     public void run(DismissalBean dismissalBean) {
 	dismissalBean.getStudentCurricularPlan().createNewEquivalenceDismissal(dismissalBean.getCourseGroup(),
-		dismissalBean.getDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(), dismissalBean.getGrade(),
+		dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(), dismissalBean.getGrade(),
 		dismissalBean.getExecutionPeriod());
     }
     

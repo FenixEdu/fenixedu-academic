@@ -8,12 +8,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.DismissalType;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
@@ -150,6 +152,8 @@ public class StudentDismissalRenderer extends InputRenderer {
     private class StudentDismissalLayout extends Layout {
 
 	private final CopyCheckBoxValuesController curricularCoursesController = new CopyCheckBoxValuesController();
+	private final CopyCheckBoxValuesController optionalCurricularCoursesController = new CopyCheckBoxValuesController();
+	
 	private HtmlRadioButtonGroup radioButtonGroup = null;
 	private DismissalBean dismissalBean = null;
 	
@@ -170,14 +174,20 @@ public class StudentDismissalRenderer extends InputRenderer {
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
 		container.addChild(radioButtonGroup);
 		generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan());
-		//generateCourseGroups(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan().getRoot(), 0);
 		
 	    } else {
-		HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
+		final HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
 		hiddenCurricularCourses.bind(getInputContext().getMetaObject(), "dismissals"); // slot refered by name
 		hiddenCurricularCourses.setConverter(new SelectedCurricularCoursesKeyConverter());
 		hiddenCurricularCourses.setController(curricularCoursesController);
 		container.addChild(hiddenCurricularCourses);
+		
+		final HtmlMultipleHiddenField hiddenOptionalCurricularCourses = new HtmlMultipleHiddenField();
+		hiddenOptionalCurricularCourses.bind(getInputContext().getMetaObject(), "optionalDismissals"); // slot refered by name
+		hiddenOptionalCurricularCourses.setConverter(new SelectedOptionalCurricularCoursesKeyConverter());
+		hiddenOptionalCurricularCourses.setController(optionalCurricularCoursesController);
+		container.addChild(hiddenOptionalCurricularCourses);
+		
 		generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan());
 	    }
 
@@ -222,11 +232,18 @@ public class StudentDismissalRenderer extends InputRenderer {
     	    	final HtmlTableCell checkBoxCell = htmlTableRow.createCell();
     	    	checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
     	    	
-    	    	final HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean.containsDismissal(curricularCourse));
+    	    	final HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean.containsDismissalOrOptionalDismissal(curricularCourse));
     	    	checkBox.setName("curricularCourseCheckBox" + curricularCourse.getIdInternal());
-    	    	checkBox.setUserValue(new DismissalBean.SelectedCurricularCourse(curricularCourse, studentCurricularPlan).getKey());
-    	    	checkBoxCell.setBody(checkBox);
-    	    	curricularCoursesController.addCheckBox(checkBox);
+    	    	if (curricularCourse.isOptionalCurricularCourse()) {
+    	    	    final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) curricularCourse;
+    	    	    checkBox.setUserValue(new DismissalBean.SelectedOptionalCurricularCourse(optionalCurricularCourse, studentCurricularPlan).getKey());
+    	    	    checkBoxCell.setBody(checkBox);
+    	    	    optionalCurricularCoursesController.addCheckBox(checkBox);
+    	    	} else {
+    	    	    checkBox.setUserValue(new DismissalBean.SelectedCurricularCourse(curricularCourse, studentCurricularPlan).getKey());
+    	    	    checkBoxCell.setBody(checkBox);
+    	    	    curricularCoursesController.addCheckBox(checkBox);
+    	    	}
 	    }
 	}
 
@@ -277,7 +294,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 	}
     }
     
-    public static class SelectedCurricularCoursesKeyConverter extends Converter {
+    private static class SelectedCurricularCoursesKeyConverter extends Converter {
 
 	@Override
 	public Object convert(Class type, Object value) {
@@ -302,7 +319,40 @@ public class StudentDismissalRenderer extends InputRenderer {
 		final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
 		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) converter.convert(type, parts[2]);
 		
-		SelectedCurricularCourse selectedCurricularCourse = new SelectedCurricularCourse(curricularCourse, studentCurricularPlan);
+		final SelectedCurricularCourse selectedCurricularCourse = new SelectedCurricularCourse(curricularCourse, studentCurricularPlan);
+		selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
+		result.add(selectedCurricularCourse);
+	    }
+	    return result;
+	}
+    }
+    
+    private static class SelectedOptionalCurricularCoursesKeyConverter extends Converter {
+
+	@Override
+	public Object convert(Class type, Object value) {
+	    
+	    if (value == null) {
+		return null;
+	    }
+	    
+	    final DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
+	    final List<SelectedOptionalCurricularCourse> result = new ArrayList<SelectedOptionalCurricularCourse>();
+
+	    final String[] values = (String[]) value;
+	    for (int i = 0; i < values.length; i++) {
+		String key = values[i];
+
+		String[] parts = key.split(",");
+		if (parts.length < 3) {
+		    throw new ConversionException("invalid key format: " + key);
+		}
+		
+		final OptionalCurricularCourse curricularCourse = (OptionalCurricularCourse) converter.convert(type, parts[0]);
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
+		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) converter.convert(type, parts[2]);
+		
+		final SelectedOptionalCurricularCourse selectedCurricularCourse = new SelectedOptionalCurricularCourse(curricularCourse, studentCurricularPlan);
 		selectedCurricularCourse.setCurriculumGroup(curriculumGroup);
 		result.add(selectedCurricularCourse);
 	    }

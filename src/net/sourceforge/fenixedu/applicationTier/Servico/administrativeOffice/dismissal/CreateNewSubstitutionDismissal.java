@@ -7,7 +7,7 @@ public class CreateNewSubstitutionDismissal extends Service {
     
     public void run(DismissalBean dismissalBean) {
 	dismissalBean.getStudentCurricularPlan().createNewSubstitutionDismissal(dismissalBean.getCourseGroup(),
-		dismissalBean.getDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
+		dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
 		dismissalBean.getExecutionPeriod());	
     }
     

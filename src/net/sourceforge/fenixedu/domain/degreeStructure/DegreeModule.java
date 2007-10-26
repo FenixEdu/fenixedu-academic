@@ -358,8 +358,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	    
 	    for (final ICurricularRule curricularRule : curricularRules) {
 		if (curricularRule.isValid(executionYear)) {
-		    if (curricularRule != null) {
-			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod");
+		    if (result != null) {
+			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod", getName());
 		    }
 		    
 		    result = curricularRule;

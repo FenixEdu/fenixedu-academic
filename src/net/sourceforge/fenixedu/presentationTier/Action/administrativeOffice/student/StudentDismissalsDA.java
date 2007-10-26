@@ -101,7 +101,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     
     private void checkArguments(HttpServletRequest request, DismissalBean dismissalBean) throws FenixActionException {
 	if(dismissalBean.getDismissalType() == DismissalType.CURRICULAR_COURSE_CREDITS) {
-	    if(dismissalBean.getDismissals() == null || dismissalBean.getDismissals().isEmpty()) {
+	    if (!dismissalBean.hasAnyDismissals() && !dismissalBean.hasAnyOptionalDismissals()) {
 		addActionMessage("error", request, "error.studentDismissal.curricularCourse.required");
 		throw new FenixActionException();
 	    }

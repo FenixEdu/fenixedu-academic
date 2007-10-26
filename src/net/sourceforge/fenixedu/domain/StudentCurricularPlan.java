@@ -71,7 +71,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurr
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -900,23 +899,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getAllEnrollments().size();
     }
 
-    private List<Enrolment> getAllEnrollmentsExceptTheOnesWithEnrolledState() {
-	final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
-	    final public boolean evaluate(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return !enrollment.isAnnulled()
-			&& !(enrollment.isEnroled() && enrollment.getExecutionPeriod().equals(actualExecutionPeriod));
-	    }
-	});
-    }
-
     public List<Enrolment> getStudentEnrollmentsWithApprovedState() {
 
 	return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
 	    final public boolean evaluate(Object obj) {
 		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.isEnrolmentStateApproved();
+		return enrollment.isApproved();
 	    }
 	});
     }
@@ -926,7 +914,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return CollectionUtils.countMatches(getAllEnrollments(), new Predicate() {
 	    final public boolean evaluate(Object obj) {
 		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.isEnrolmentStateApproved();
+		return enrollment.isApproved();
 	    }
 	});
     }
@@ -2401,7 +2389,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final public List<Dismissal> getDismissals() {
+    public List<Dismissal> getDismissals() {
 	final List<Dismissal> result = new ArrayList<Dismissal>();
 	if (isBoxStructure()) {
 	    getRoot().collectDismissals(result);
@@ -2409,11 +2397,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    final public Dismissal getDismissal(final CurricularCourse curricularCourse) {
+    public Dismissal getDismissal(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getDismissal(curricularCourse) : null;
     }
 
-    final public Substitution getSubstitution(final IEnrolment iEnrolment) {
+    public Substitution getSubstitution(final IEnrolment iEnrolment) {
 	for (final Dismissal dismissal : getDismissals()) {
 	    if (dismissal.getCredits().isSubstitution() && dismissal.getSourceIEnrolments().contains(iEnrolment)) {
 		return (Substitution) dismissal.getCredits();

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -104,8 +105,15 @@ public class Credits extends Credits_Base {
 	addEnrolments(enrolments);
 
 	for (final SelectedCurricularCourse selectedCurricularCourse : dismissals) {
-	    Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse.getCurriculumGroup(), 
-		    selectedCurricularCourse.getCurricularCourse());
+	    if (selectedCurricularCourse.isOptional()) {
+		final SelectedOptionalCurricularCourse selectedOptionalCurricularCourse = (SelectedOptionalCurricularCourse) selectedCurricularCourse;
+		Dismissal.createNewOptionalDismissal(this, studentCurricularPlan, selectedOptionalCurricularCourse
+			.getCurriculumGroup(), selectedOptionalCurricularCourse.getCurricularCourse(),
+			selectedOptionalCurricularCourse.getCredits());
+	    } else {
+		Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse.getCurriculumGroup(),
+			selectedCurricularCourse.getCurricularCourse());
+	    }
 	}
     }
 

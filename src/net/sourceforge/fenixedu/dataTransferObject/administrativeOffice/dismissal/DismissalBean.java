@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
@@ -19,7 +20,8 @@ public class DismissalBean implements Serializable {
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
     private DomainReference<ExecutionPeriod> executionPeriod;
-    private Collection<SelectedCurricularCourse> dismissals;    
+    private Collection<SelectedCurricularCourse> dismissals;
+    private Collection<SelectedOptionalCurricularCourse> optionalDismissals;
     private DomainReference<CourseGroup> courseGroup;
     private Collection<SelectedEnrolment> enrolments;
     private Collection<SelectedExternalEnrolment> externalEnrolments;
@@ -35,6 +37,59 @@ public class DismissalBean implements Serializable {
         this.dismissals = dismissals;
     }
     
+    public boolean hasAnyDismissals() {
+	return getDismissals() != null && !getDismissals().isEmpty();
+    }
+    
+    public boolean containsDismissal(CurricularCourse curricularCourse) {
+	if(getDismissals() != null) {
+	    for (SelectedCurricularCourse selectedCurricularCourse : getDismissals()) {
+		if(selectedCurricularCourse.getCurricularCourse().equals(curricularCourse)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    public Collection<SelectedOptionalCurricularCourse> getOptionalDismissals() {
+        return optionalDismissals;
+    }
+
+    public void setOptionalDismissals(Collection<SelectedOptionalCurricularCourse> optionalDismissals) {
+        this.optionalDismissals = optionalDismissals;
+    }
+    
+    public boolean hasAnyOptionalDismissals() {
+	return getOptionalDismissals() != null && !getOptionalDismissals().isEmpty();
+    }
+    
+    public boolean containsOptionalDismissal(CurricularCourse curricularCourse) {
+	if(getOptionalDismissals() != null) {
+	    for (SelectedOptionalCurricularCourse selectedCurricularCourse : getOptionalDismissals()) {
+		if(selectedCurricularCourse.getCurricularCourse().equals(curricularCourse)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    public boolean containsDismissalOrOptionalDismissal(final CurricularCourse curricularCourse) {
+	return containsDismissal(curricularCourse) || containsOptionalDismissal(curricularCourse);
+    }
+    
+    public Collection<SelectedCurricularCourse> getAllDismissals() {
+	final Collection<SelectedCurricularCourse> result = new ArrayList<SelectedCurricularCourse>();
+	if (getDismissals() != null) {
+	    result.addAll(getDismissals());
+	}
+	if (getOptionalDismissals() != null) {
+	    result.addAll(getOptionalDismissals());
+	}
+	return result;
+    }
+
     public Collection<SelectedEnrolment> getEnrolments() {
         return enrolments;
     }
@@ -99,17 +154,6 @@ public class DismissalBean implements Serializable {
         this.externalEnrolments = externalEnrolments;
     }
 
-    public boolean containsDismissal(CurricularCourse curricularCourse) {
-	if(getDismissals() != null) {
-	    for (SelectedCurricularCourse selectedCurricularCourse : getDismissals()) {
-		if(selectedCurricularCourse.getCurricularCourse().equals(curricularCourse)) {
-		    return true;
-		}
-	    }
-	}
-	return false;
-    }
-    
     public Collection<IEnrolment> getSelectedEnrolments() {
 	final Collection<IEnrolment> result = new ArrayList<IEnrolment>();
 	
@@ -133,7 +177,9 @@ public class DismissalBean implements Serializable {
     }
     
     public static class SelectedCurricularCourse implements Serializable {
+	
 	private Boolean selected = Boolean.FALSE;
+	
 	private DomainReference<CurricularCourse> curricularCourse;
 	private DomainReference<CurriculumGroup> curriculumGroup;
 	private DomainReference<StudentCurricularPlan> studentCurricularPlan;
@@ -190,6 +236,37 @@ public class DismissalBean implements Serializable {
 		    .append(":").append(this.getStudentCurricularPlan().getIdInternal());
 	    }
 	    return stringBuilder.toString();
+	}
+	
+	public boolean isOptional() {
+	    return false;
+	}
+    }
+    
+    public static class SelectedOptionalCurricularCourse extends SelectedCurricularCourse {
+	
+	private Double credits;
+
+	public SelectedOptionalCurricularCourse(final OptionalCurricularCourse curricularCourse, final StudentCurricularPlan studentCurricularPlan) {
+	    super(curricularCourse, studentCurricularPlan);
+	}
+	
+	@Override
+	public OptionalCurricularCourse getCurricularCourse() {
+	    return (OptionalCurricularCourse) super.getCurricularCourse();
+	}
+
+	public Double getCredits() {
+	    return credits;
+	}
+
+	public void setCredits(Double credits) {
+	    this.credits = credits;
+	}
+	
+	@Override
+	public boolean isOptional() {
+	    return true;
 	}
     }
     

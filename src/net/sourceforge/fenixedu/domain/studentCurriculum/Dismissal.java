@@ -88,6 +88,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
 	return new Dismissal(credits, curriculumGroup, curricularCourse);
     }
+    
+    static protected Dismissal createNewOptionalDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
+	    CurriculumGroup curriculumGroup, final OptionalCurricularCourse optionalCurricularCourse, final Double ectsCredits) {
+	return new OptionalDismissal(credits, curriculumGroup, optionalCurricularCourse, ectsCredits);
+    }
 
     static protected OptionalDismissal createNewOptionalDismissal(final Credits credits,
 	    final StudentCurricularPlan studentCurricularPlan, final OptionalCurricularCourse optionalCurricularCourse,
@@ -188,7 +193,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public boolean isConcluded(final ExecutionYear executionYear) {
-	return executionYear == null || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+	return executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override

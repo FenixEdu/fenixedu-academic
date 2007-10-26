@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
@@ -56,7 +55,7 @@ public class RegistrationOperation extends CandidacyOperation {
     private void correctExecutionCourseIfNecessary(Registration registration, Shift shift) {
 
 	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	final ExecutionCourse finalExecutionCourse = shift.getDisciplinaExecucao();
+	final ExecutionCourse finalExecutionCourse = shift.getExecutionCourse();
 
 	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
 
