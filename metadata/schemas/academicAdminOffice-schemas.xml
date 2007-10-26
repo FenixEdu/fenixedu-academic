@@ -747,8 +747,22 @@
 	<slot name="curriculumGroup" layout="menu-select" key="label.curriculumGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursePathsProvider" />
 		<property name="format" value="${fullPath}" /> 
-	</slot>		
+	</slot>
 </schema>
+
+<schema name="DismissalBean.SelectedOptionalCurricularCourse.chooseParent" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedOptionalCurricularCourse">
+	<slot name="curricularCourse.name" key="label.name" read-only="true"/>
+	<slot name="curriculumGroup" layout="menu-select" key="label.curriculumGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursePathsProvider" />
+		<property name="format" value="${fullPath}" /> 
+	</slot>
+	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="7"/>
+		<property name="maxLength" value="6"/>
+	</slot>
+</schema>
+
 
 <schema name="student.dismissal.view.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.IEnrolment">

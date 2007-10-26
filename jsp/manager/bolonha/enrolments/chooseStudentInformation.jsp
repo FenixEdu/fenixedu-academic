@@ -33,7 +33,7 @@
 	
 		<logic:notEmpty name="studentCurricularPlans">
 		
-			<fr:view name="studentCurricularPlans" schema="student.studentCurricularPlans">
+			<fr:view name="studentCurricularPlans" schema="StudentCurricularPlan.manager.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 mtop15" />
 				

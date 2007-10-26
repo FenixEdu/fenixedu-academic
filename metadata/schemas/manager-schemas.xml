@@ -627,3 +627,9 @@
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 	</slot>
 </schema>
+
+<schema name="StudentCurricularPlan.manager.view" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="startDateYearMonthDay" key="label.startDate" />
+	<slot name="degreeCurricularPlan.degree.tipoCurso.localizedName" key="label.degreeType" />
+	<slot name="degreeCurricularPlan.name" key="label.curricularPlan" />
+</schema>
