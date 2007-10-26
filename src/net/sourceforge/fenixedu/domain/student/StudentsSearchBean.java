@@ -107,7 +107,7 @@ public class StudentsSearchBean implements Serializable {
     public Set<Student> searchForOffice(final AdministrativeOffice administrativeOffice) {
 	final Set<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
 	for (Student student : search()) {
-	    if (student != null && student.hasRegistrationForOffice(administrativeOffice)) {
+	    if (student != null && (student.hasRegistrationForOffice(administrativeOffice) || !student.hasAnyRegistrations())) {
 		students.add(student);
 	    }
 	}
