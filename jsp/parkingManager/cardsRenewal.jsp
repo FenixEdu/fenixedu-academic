@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message key="label.parking" /></em>
-<h2><bean:message key="link.cardsRenewal" /></h2>
+<h2><bean:message key="link.parkingCards" /></h2>
 
 <p class="mtop15 mbottom05">	
 	<span class="error0">
@@ -15,15 +15,15 @@
 	</span>
 </p>
 	
-<fr:edit id="parkingCardsRenewalBean" name="parkingCardsRenewalBean" schema="edit.parkingCardsRenewal"
-	 action="/manageParkingPeriods.do?method=renewCards">
+<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.parkingCardSearch"
+	 action="/manageParkingPeriods.do?method=searchCards">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop025" />
 		<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 	</fr:layout>
 </fr:edit>
 
-<logic:equal name="parkingCardsRenewalBean" property="processed" value="true">
+<logic:equal name="parkingCardSearchBean" property="processed" value="true">
 	<bean:size id="notRenewedCards" name="parkingCardsRenewalBean" property="notRenewedParkingParties"/>
 	<p>
 		O grupo <bean:write name="parkingCardsRenewalBean" property="parkingGroup.groupName"/> possuí <bean:write name="parkingCardsRenewalBean" property="groupMembersCount"/> pessoas.<br/>

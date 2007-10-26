@@ -85,6 +85,7 @@
 				scope="request"
 				input="/exportParkingDB.do?method=prepareExportFile"
 				parameter="method">
+       		<forward name="cardsSearch" path="cards-search"/>
        		<forward name="cardsRenewal" path="cards-renewal"/>
        	</action>
        	

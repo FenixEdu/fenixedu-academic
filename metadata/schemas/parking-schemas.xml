@@ -401,33 +401,37 @@
 	<setter signature="editParkingRequestPeriod(beginDate,endDate)"/>
 </schema>
 
-<schema name="edit.parkingCardsRenewal" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardsRenewalBean" 
+<schema name="edit.parkingCardSearch" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean" 
 		bundle="PARKING_RESOURCES">
-	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="parkingCardUserState" key="label.parkingUserState" layout="radio">
+		<property name="classes" value="liinline"/>
+	</slot>
+	<slot name="parkingGroup" key="label.group" layout="menu-select">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
 		<property name="format" value="${groupName}"/>
-		<property name="nullOptionHidden" value="true"/>
+		<property name="sortBy" value="groupName"/>
 	</slot>
-	<slot name="actualEndDate" key="label.actualEndDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="actualEndDate" key="label.cardEndDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+		</validator>
 		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
+		<property name="size" value="10"/>		
 	</slot>
-	<slot name="renewalEndDate" key="label.renewalEndDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-		<property name="format" value="dd/MM/yyyy"/>
-		<property name="size" value="10"/>
-	</slot>
+	<slot name="parkingCardSearchPeriod" key="label.cardSearchPeriod"/>
 </schema>
 
-<schema name="show.parkingParty.notUpdatedEndDate" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
-	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES"/>
-	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
-		<property name="label" value="-"/>
-	</slot>
+<schema name="show.searchedParkingCards" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="parkingGroup.groupName" key="label.group"/>
 	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
-	</slot>	
+	</slot>
+	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES"/>
+	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES"/>
 </schema>

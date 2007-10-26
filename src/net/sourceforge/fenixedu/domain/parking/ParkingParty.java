@@ -499,21 +499,27 @@ public class ParkingParty extends ParkingParty_Base {
 			&& person.getEmployee().getCurrentWorkingPlace() != null;
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Especiais")) {
-		if (person.getTeacher() != null) {
-		    return person.getTeacher().getCurrentWorkingUnit() != null;
+		return person.getPartyClassification() != PartyClassification.PERSON;
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("2º ciclo")) {
+		if (person.hasStudent()) {
+		    return canRequestUnlimitedCard(person.getStudent());
 		} else {
-		    return person.getEmployee().getCurrentWorkingPlace() != null;
+		    return Boolean.FALSE;
+		}
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
+		if (person.hasStudent()) {
+		    Registration registration = getRegistrationByDegreeType(person.getStudent(),
+			    DegreeType.BOLONHA_PHD_PROGRAM);
+		    return registration != null && registration.isActive();
+		} else {
+		    return Boolean.FALSE;
 		}
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Limitados")) {
-		boolean result = Boolean.FALSE;
-		if (person.getGrantOwner() != null) {
-		    result = person.getGrantOwner().isActive();
-		}
-		if (person.getStudent() != null) {
-		    result = result || person.getStudent().getMostSignificantDegreeType() != null;
-		}
-		return result;
+		return person.getPartyClassification() != PartyClassification.PERSON
+			&& person.getPartyClassification() != PartyClassification.RESEARCHER;
 	    }
 	}
 	return Boolean.FALSE;
@@ -547,7 +553,7 @@ public class ParkingParty extends ParkingParty_Base {
 	for (DegreeType degreeType : degreeTypes) {
 	    Registration registration = getRegistrationByDegreeType(student, degreeType);
 	    if (registration != null && registration.isInFinalDegreeYear()) {
-		return degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ? true
+		return degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ? Boolean.TRUE
 			: isFirstTimeEnrolledInCurrentYear(registration, registration.getDegreeType()
 				.getYears());
 	    }
@@ -567,6 +573,9 @@ public class ParkingParty extends ParkingParty_Base {
 
     private boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	if(registration.getEnrolments(executionYear).isEmpty()) {
+	    return Boolean.FALSE;
+	}
 	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
 	for (final StudentCurricularPlan studentCurricularPlan : registration
 		.getStudentCurricularPlansSet()) {
@@ -577,11 +586,11 @@ public class ParkingParty extends ParkingParty_Base {
 		if (executionYear != enrolment.getExecutionYear()
 			&& context.getCurricularYear() == curricularYear
 			&& registration.getCurricularYear(enrolment.getExecutionYear()) == curricularYear) {
-		    return false;
+		    return Boolean.FALSE;
 		}
 	    }
 	}
-	return true;
+	return Boolean.TRUE;
     }
 
     private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {
@@ -605,6 +614,14 @@ public class ParkingParty extends ParkingParty_Base {
 	    return new DateTime(9999, 9, 9, 9, 9, 9, 9);
 	} else {
 	    return getCardEndDate();
+	}
+    }
+    
+    public DateTime getCardStartDateToCompare() {
+	if (getCardStartDate() == null) {
+	    return new DateTime(9999, 9, 9, 9, 9, 9, 9);
+	} else {
+	    return getCardStartDate();
 	}
     }
 }
