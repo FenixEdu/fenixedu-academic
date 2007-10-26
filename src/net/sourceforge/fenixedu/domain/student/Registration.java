@@ -549,12 +549,12 @@ public class Registration extends Registration_Base {
 	    
 	    return curriculum;
 	}
-    }
+	}
 
     public int getNumberOfCurriculumEntries() {
 	return getCurriculum().getCurriculumEntries().size();
     }
-    
+
     final public BigDecimal getSumPiCi(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumPiCi();
     }
@@ -628,7 +628,7 @@ public class Registration extends Registration_Base {
 	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()
 		&& (isConcluded() || (isActive() && isInFinalDegreeYear()));
     }
-    
+
     public Grade findGradeForCurricularCourse(final CurricularCourse curricularCourse) {
     	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
     	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -688,7 +688,7 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 
@@ -1221,7 +1221,7 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
-    }
+	}
 
     // Special Season
 
@@ -1743,6 +1743,11 @@ public class Registration extends Registration_Base {
 	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
     }
 
+    final public RegistrationState getFirstState() {
+	return hasAnyRegistrationStates() ? Collections.min(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
+    }
+
+    
     final public RegistrationStateType getActiveStateType() {
 	final RegistrationState activeState = getActiveState();
 	return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
