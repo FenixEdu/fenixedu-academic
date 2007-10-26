@@ -12537,4 +12537,28 @@
 			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
+        <service>
+                <name>DeleteGroupProposal</name>
+                <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposal</implementationClass>
+                <description />
+                <isTransactional>true</isTransactional>
+                <filterChains>
+                </filterChains>
+        </service>
+        <service>
+                <name>DeleteGroupProposalAttribution</name>
+                <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposalAttribution</implementationClass>
+                <description />
+                <isTransactional>true</isTransactional>
+                <filterChains>
+                </filterChains>
+        </service>
+        <service>
+                <name>DeleteFinalDegreeWorkProposal</name>
+                <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteFinalDegreeWorkProposal</implementationClass>
+                <description />
+                <isTransactional>true</isTransactional>
+                <filterChains>
+                </filterChains>
+        </service>
 </serviceDefinitions>
