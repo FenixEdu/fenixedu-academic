@@ -930,8 +930,8 @@ public class Registration extends Registration_Base {
     }
 
     final public List<StudentCurricularPlan> getStudentCurricularPlansByDegree(Degree degree) {
-	List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
+	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.getDegree() == degree) {
 		result.add(studentCurricularPlan);
 	    }
@@ -1221,10 +1221,9 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
-	}
+    }
 
     // Special Season
-
     final public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
 	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
 	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
@@ -1969,14 +1968,14 @@ public class Registration extends Registration_Base {
 
     /**
      * 
-     * FIXME:Temporary solution until implementation of concluded first cycle is
-     * finished
+     * FIXME:Temporary solution until correct implementation of 
+     * hasConcludedCycle(final CycleType cycleType, final ExecutionYear executionYear) method
      */
     public boolean hasConcluded() {
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
 	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
-	    if (cycle == null || cycle.getAprovedEctsCredits() < cycleType.getDefaultEcts()) {
+	    if (cycle == null || cycle.getCreditsConcluded(null) < cycleType.getDefaultEcts()) {
 	        return false;
 	    }
 	}
@@ -2173,7 +2172,6 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
-
 	return false;
     }
 
