@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -22,6 +22,8 @@
 				<bean:define id="semester" type="java.lang.Integer" name="executionPeriod" property="semester"/> <bean:message key="label.period" arg0="<%= semester.toString() %>"/>
 				-
 				<bean:write name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.executionYear.year"/>
+				
+				<bean:define id="degreeCurricularPlan" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
 			</strong>
 			<br/>
 			<bean:define id="iS"><%= i + 1 %></bean:define>
@@ -60,7 +62,7 @@
 						<% if (evaluationType == null || evaluationType.length() == 0 || evaluationType.equals(className)) { %>
 						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.WrittenTest">
 							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.WrittenTest"/>
-							<% if (writtenTest.hasScopeFor(year, semester)) { %>
+							<% if (writtenTest.hasScopeFor(year, semester, degreeCurricularPlan)) { %>
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>
@@ -93,7 +95,7 @@
 						</logic:equal>
 						<logic:equal name="className" value="net.sourceforge.fenixedu.domain.Exam">
 							<bean:define id="writtenTest" name="evaluation" type="net.sourceforge.fenixedu.domain.Exam"/>
-							<% if (writtenTest.hasScopeFor(year, semester)) { %>
+							<% if (writtenTest.hasScopeFor(year, semester, degreeCurricularPlan)) { %>
 							<tr>
 								<td>
 									<bean:write name="executionCourse" property="nome"/>

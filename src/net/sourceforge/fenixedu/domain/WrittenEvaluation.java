@@ -316,11 +316,11 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		addAssociatedContexts(((DegreeModuleScopeContext)degreeModuleScope).getContext());
 	    }
 	}        
-	
+
 	setDayDate(day);
 	setBeginningDate(beginning);
 	setEndDate(end);
-	
+
 	// Associate New Rooms
 	List<WrittenEvaluationSpaceOccupation> newOccupations = associateNewRooms(rooms);
 
@@ -363,17 +363,17 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
-	
+
 	List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();	
 	for (final AllocatableSpace room : rooms) {
 	    if (!hasOccupationForRoom(room)) {                
-		
+
 		WrittenEvaluationSpaceOccupation occupation =
 		    (WrittenEvaluationSpaceOccupation) room.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
-		
+
 		occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
 		occupation.edit(this);
-		
+
 		newInsertedOccupations.add(occupation);
 	    }
 	}
@@ -707,10 +707,24 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return vigilancies;
     }
 
-    public boolean hasScopeFor(final Integer year, final Integer semester) {
+    public boolean hasScopeFor(final Integer year, final Integer semester, DegreeCurricularPlan degreeCurricularPlan) {
 	for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-	    if (degreeModuleScope.getCurricularYear().equals(year) && degreeModuleScope.getCurricularSemester().equals(semester)) {
+	    if (degreeModuleScope.getCurricularYear().equals(year) 
+		    && degreeModuleScope.getCurricularSemester().equals(semester)
+		    && degreeModuleScope.getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
 		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasScopeOrContextFor(List<Integer> curricularYears, DegreeCurricularPlan degreeCurricularPlan) {
+	if(curricularYears != null && degreeCurricularPlan != null) {
+	    for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
+		if (curricularYears.contains(scope.getCurricularYear()) 
+			&& degreeCurricularPlan.equals(scope.getCurricularCourse().getDegreeCurricularPlan())) {
+		    return true;
+		}
 	    }
 	}
 	return false;
@@ -719,7 +733,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     public DiaSemana getDayOfWeek() {
 	return new DiaSemana(DiaSemana.getDiaSemana(getDayDateYearMonthDay()));
     }
-    
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	HourMinuteSecond beginTime = getBeginningDateHourMinuteSecond();

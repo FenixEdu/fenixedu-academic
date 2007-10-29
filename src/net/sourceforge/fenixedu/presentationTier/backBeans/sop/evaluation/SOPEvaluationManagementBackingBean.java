@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -665,21 +666,25 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixFilterException, FenixServiceException {
+
 	List<CalendarLink> result = new ArrayList<CalendarLink>();
+	Integer[] curricularYearIDs = getCurricularYearIDs();
 
-	for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-	    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-		if (evaluation instanceof WrittenEvaluation) {
-		    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-
-		    final CalendarLink calendarLink = new CalendarLink();
-		    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-		    calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentationString(
-			    writtenEvaluation, executionCourse));
-		    calendarLink.setLinkParameters(constructLinkParameters(executionCourse,
-			    writtenEvaluation));
-
-		    result.add(calendarLink);
+	if(curricularYearIDs != null) {
+	    List<Integer> curricularYears = Arrays.asList(getCurricularYearIDs());
+	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+	    for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+		for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+		    if (evaluation instanceof WrittenEvaluation) {
+			final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
+			if(writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
+			    final CalendarLink calendarLink = new CalendarLink();
+			    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
+			    calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentationString(writtenEvaluation, executionCourse));
+			    calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
+			    result.add(calendarLink);
+			}
+		    }
 		}
 	    }
 	}
@@ -737,10 +742,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public List<ExecutionCourseWrittenEvaluationAgregationBean> getExecutionCourseWrittenEvaluationAgregationBeans()
     throws FenixFilterException, FenixServiceException {
-	
+
 	final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean = new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
 	final Integer[] curricularYears = getCurricularYearIDs();
-	
+
 	if(curricularYears != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
 	    for (final Integer curricularYearID : curricularYears) {
@@ -772,22 +777,35 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() throws FenixFilterException, FenixServiceException {
-	List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
 
-	Collections.sort(getExecutionCourses(), new BeanComparator("sigla"));
 	writtenEvaluations.clear();
 	writtenEvaluationsMissingPlaces.clear();
 	writtenEvaluationsRooms.clear();
 	executionCoursesEnroledStudents.clear();
-	
-	for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-	    final List associatedWrittenEvaluations = executionCourse.getAssociatedWrittenTests();
-	    associatedWrittenEvaluations.addAll(executionCourse.getAssociatedExams());
-	    if (!associatedWrittenEvaluations.isEmpty()) {
-		Collections.sort(associatedWrittenEvaluations, new BeanComparator("dayDate"));
-		processWrittenTestAdditionalValues(executionCourse, associatedWrittenEvaluations);
-		writtenEvaluations.put(executionCourse.getIdInternal(), associatedWrittenEvaluations);
-		executionCoursesWithWrittenEvaluations.add(executionCourse);
+
+	List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
+	Integer[] curricularYearIDs = getCurricularYearIDs();
+
+	if(curricularYearIDs != null) {
+
+	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
+	    List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
+	    
+	    for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+
+		List<WrittenEvaluation> executionCourseWrittenEvaluations = new ArrayList<WrittenEvaluation>();
+		for (WrittenEvaluation writtenEvaluation : executionCourse.getAssociatedWrittenEvaluations()) {
+		    if(writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
+			executionCourseWrittenEvaluations.add(writtenEvaluation);
+		    }
+		}
+
+		if (!executionCourseWrittenEvaluations.isEmpty()) {
+		    Collections.sort(executionCourseWrittenEvaluations, WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+		    processWrittenTestAdditionalValues(executionCourse, executionCourseWrittenEvaluations);
+		    writtenEvaluations.put(executionCourse.getIdInternal(), executionCourseWrittenEvaluations);
+		    executionCoursesWithWrittenEvaluations.add(executionCourse);
+		}
 	    }
 	}
 	return executionCoursesWithWrittenEvaluations;
