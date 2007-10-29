@@ -90,7 +90,8 @@
 				parameter="method"
 				name="parkingRenewalForm">
        		<forward name="cardsSearch" path="cards-search"/>
-       		<forward name="cardsRenewal" path="cards-renewal"/>       		
+       		<forward name="cardsRenewal" path="cards-renewal"/>     
+       		<forward name="showParkingDetails" path="show-parking-details"/>  		
        	</action>
        	
 	</action-mappings>

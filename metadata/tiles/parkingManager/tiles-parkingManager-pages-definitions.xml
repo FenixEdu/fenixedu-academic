@@ -36,5 +36,8 @@
 	</definition>	
 	<definition name="cards-renewal" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/cardsRenewal.jsp" />
+	</definition>
+	<definition name="show-parking-details" extends="definition.parkingManager.masterPage">
+		<put name="body" value="/parkingManager/showParkingDetails.jsp" />
 	</definition>		
 </tiles-definitions>

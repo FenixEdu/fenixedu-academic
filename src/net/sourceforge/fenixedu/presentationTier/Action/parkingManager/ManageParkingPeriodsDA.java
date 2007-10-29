@@ -51,33 +51,37 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
 	RenderUtils.invalidateViewState();
 	if (parkingCardSearchBean == null) {
-	    parkingCardSearchBean = new ParkingCardSearchBean();
-	    String parkingCardUserState = request.getParameter("parkingCardUserState");
-	    if (!StringUtils.isEmpty(parkingCardUserState)) {
-		parkingCardSearchBean.setParkingCardUserState(ParkingCardUserState
-			.valueOf(parkingCardUserState));
-	    }
-	    String parkingGroupID = request.getParameter("parkingGroupID");
-	    if (!StringUtils.isEmpty(parkingGroupID)) {
-		parkingCardSearchBean.setParkingGroup(rootDomainObject.readParkingGroupByOID(Integer
-			.valueOf(parkingGroupID)));
-	    }
-	    String actualEndDate = request.getParameter("actualEndDate");
-	    if (!StringUtils.isEmpty(actualEndDate)) {
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyyMMdd");
-		parkingCardSearchBean
-			.setActualEndDate(dtf.parseDateTime(actualEndDate).toYearMonthDay());
-	    }
-	    String parkingCardSearchPeriod = request.getParameter("parkingCardSearchPeriod");
-	    if (!StringUtils.isEmpty(parkingCardSearchPeriod)) {
-		parkingCardSearchBean.setParkingCardSearchPeriod(ParkingCardSearchPeriod
-			.valueOf(parkingCardSearchPeriod));
-	    }
+	    parkingCardSearchBean = getSearchParameters(request);
 	}
 	parkingCardSearchBean.doSearch();
 	parkingCardSearchBean.orderSearchedParkingParties();
 	request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	return mapping.findForward("cardsSearch");
+    }
+
+    private ParkingCardSearchBean getSearchParameters(HttpServletRequest request) {
+	ParkingCardSearchBean parkingCardSearchBean = new ParkingCardSearchBean();
+	String parkingCardUserState = request.getParameter("parkingCardUserState");
+	if (!StringUtils.isEmpty(parkingCardUserState)) {
+	    parkingCardSearchBean.setParkingCardUserState(ParkingCardUserState
+		    .valueOf(parkingCardUserState));
+	}
+	String parkingGroupID = request.getParameter("parkingGroupID");
+	if (!StringUtils.isEmpty(parkingGroupID)) {
+	    parkingCardSearchBean.setParkingGroup(rootDomainObject.readParkingGroupByOID(Integer
+		    .valueOf(parkingGroupID)));
+	}
+	String actualEndDate = request.getParameter("actualEndDate");
+	if (!StringUtils.isEmpty(actualEndDate)) {
+	    DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyyMMdd");
+	    parkingCardSearchBean.setActualEndDate(dtf.parseDateTime(actualEndDate).toYearMonthDay());
+	}
+	String parkingCardSearchPeriod = request.getParameter("parkingCardSearchPeriod");
+	if (!StringUtils.isEmpty(parkingCardSearchPeriod)) {
+	    parkingCardSearchBean.setParkingCardSearchPeriod(ParkingCardSearchPeriod
+		    .valueOf(parkingCardSearchPeriod));
+	}
+	return parkingCardSearchBean;
     }
 
     public ActionForward prepareCardsRenewal(ActionMapping mapping, ActionForm actionForm,
@@ -108,6 +112,15 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	parkingCardSearchBean.setRenewalEndDate(null);
 	request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	return searchCards(mapping, actionForm, request, response);
+    }
+
+    public ActionForward showParkingDetails(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	ParkingCardSearchBean parkingCardSearchBean = getSearchParameters(request);
+	Integer parkingPartyID = Integer.valueOf(request.getParameter("parkingPartyID"));
+	request.setAttribute("parkingParty", rootDomainObject.readParkingPartyByOID(parkingPartyID));
+	request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
+	return mapping.findForward("showParkingDetails");
     }
 
     public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm,

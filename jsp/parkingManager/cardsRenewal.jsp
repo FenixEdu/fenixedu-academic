@@ -19,9 +19,9 @@
 	<logic:notEmpty name="parkingCardSearchBean" property="selectedParkingParties">
 		<bean:size id="selectedParkingPartiesSize" name="parkingCardSearchBean" property="selectedParkingParties"/>
 		<p>
-			Foram selecionados <bean:write name="selectedParkingPartiesSize"/> utentes para renovação.<br/>
+			Foram selecionados <strong><bean:write name="selectedParkingPartiesSize"/></strong> utentes para renovação.<br/>
 		</p>
-		<fr:view name="parkingCardSearchBean" property="searchedParkingParties" schema="show.searchedParkingCards">
+		<fr:view name="parkingCardSearchBean" property="selectedParkingParties" schema="show.selectedParkingCards">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 tdcenter"/>
 				<fr:property name="columnClasses" value=",smalltxt color888,,,,aleft"/>

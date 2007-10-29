@@ -178,24 +178,8 @@
 					</tr>
 				</table>
 				</logic:iterate>
-				
-				
+								
 			</logic:notEmpty>
-			
-			
-			<%--
-			<p class="mtop025">
-				<html:link page="<%= "/parking.do?method=prepareEditParkingParty&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
-					<bean:message key="title.editUser" bundle="PARKING_RESOURCES"/>
-				</html:link>
-				<logic:notEmpty name="parkingParty" property="cardNumber">
-					| <html:link target="printFrame" page="<%= "/parking.do?method=exportToPDFParkingCard&amp;parkingPartyID=" + parkingParty.getIdInternal()%>">
-						<bean:message key="label.exportToPDF" bundle="PARKING_RESOURCES"/>
-					</html:link>
-				</logic:notEmpty>
-			</p>
-			--%>
-
 					
 			<h3 class="separator2 mtop2"><bean:message key="label.requestList" /></h3>
 			<logic:notEmpty name="parkingRequests">		

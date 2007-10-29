@@ -70,6 +70,7 @@
 				<fr:property name="selectAllShown" value="true"/>
 				<fr:property name="selectAllLocation" value="top,bottom"/>
 			</fr:layout>
+			<fr:destination name="parkingDetails" path="<%= "/manageParkingPeriods.do?method=showParkingDetails&parkingPartyID=${idInternal}"  + query.toString() %>"/>
 		</fr:view>
 		<p><html:submit property="prepareRenewal"><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit></p>
 	</logic:notEmpty>

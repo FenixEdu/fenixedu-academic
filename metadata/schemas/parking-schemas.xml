@@ -433,6 +433,24 @@
 	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
+	<slot name="party.name" key="label.name" layout="link" bundle="PARKING_RESOURCES">
+		<property name="useParent" value="true"/>
+		<property name="destination" value="parkingDetails"/>
+	</slot>
+</schema>
+
+<schema name="show.selectedParkingCards" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
+	<slot name="parkingGroup.groupName" key="label.group"/>
+	<slot name="cardStartDate" key="label.cardStartDate" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="cardEndDate" key="label.cardEndDate" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="partyClassification" key="label.personActualClassification" bundle="PARKING_RESOURCES"/>
+	<slot name="mostSignificantNumber" key="label.number" bundle="PARKING_RESOURCES" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES"/>
 </schema>
 
