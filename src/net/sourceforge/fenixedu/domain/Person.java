@@ -1631,23 +1631,22 @@ public class Person extends Person_Base {
 
     public static Set<Person> findPerson(final FindPersonFactory findPersonFactory) {
 	final Set<Person> people = new HashSet<Person>();
-	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-	    if (party instanceof Person) {
-		final Person person = (Person) party;
-		if (findPersonFactory.getInstitutionalNumber() != null) {
-		    if (person.getTeacher() != null
-			    && person.getTeacher().getTeacherNumber().equals(
-				    findPersonFactory.getInstitutionalNumber())) {
-			people.add(person);
-		    } else if (person.getEmployee() != null
-			    && person.getEmployee().getEmployeeNumber().equals(
-				    findPersonFactory.getInstitutionalNumber())) {
-			people.add(person);
-		    } else if (person.hasStudentWithNumber(findPersonFactory.getInstitutionalNumber())) {
-			people.add(person);
-		    }
-		}
+	if (findPersonFactory.getInstitutionalNumber() != null) {
+
+	    Teacher teacher = Teacher.readByNumber(findPersonFactory.getInstitutionalNumber());
+	    if (teacher != null) {
+		people.add(teacher.getPerson());
 	    }
+
+	    Employee employee = Employee.readByNumber(findPersonFactory.getInstitutionalNumber());
+	    if (employee != null) {
+		people.add(employee.getPerson());
+	    }
+
+	    for (Registration registration : Registration.readByNumber(findPersonFactory.getInstitutionalNumber())) {
+		people.add(registration.getPerson());
+	    }
+
 	}
 	return people;
     }
