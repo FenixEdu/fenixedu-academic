@@ -89,10 +89,14 @@
 					</logic:iterate>
 				</td>
 				<td>
+				
+					<logic:iterate id="degreeModuleScope" name="writtenEvaluation" property="degreeModuleScopes">
+						<bean:write name="degreeModuleScope" property="curricularCourse.degreeCurricularPlan.degree.sigla"/><br />
+					</logic:iterate>
+				
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<logic:iterate id="curricularCourse" name="executionCourse" property="associatedCurricularCourses">
-							<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/><br />
-
+													
 							<logic:iterate id="executionDegree" name="curricularCourse" property="degreeCurricularPlan.executionDegrees">
 								<logic:equal name="executionDegree" property="executionYear.idInternal" value="<%= pageContext.findAttribute("executionYearID").toString() %>">
 									<bean:define id="executionDegreeID" name="executionDegree" property="idInternal"/>
@@ -102,8 +106,9 @@
 							<logic:iterate id="degreeModuleScope" name="curricularCourse" property="degreeModuleScopes">
 								<bean:define id="curricularYearID" name="degreeModuleScope" property="curricularYear"/>
 							</logic:iterate>
-						</logic:iterate>
+						</logic:iterate>						
 					</logic:iterate>
+					
 				</td>
 				<td>
 				<bean:define id="selectedBegin"><logic:present name="examSearchByDateForm" property="beginningHour"><logic:notEmpty name="examSearchByDateForm" property="beginningHour">true</logic:notEmpty><logic:empty name="examSearchByDateForm" property="beginningHour">false</logic:empty></logic:present><logic:notPresent name="examSearchByDateForm" property="beginningHour">false</logic:notPresent></bean:define>
