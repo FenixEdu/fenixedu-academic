@@ -83,5 +83,12 @@
 		<put name="head" value="/messaging/files/context.jsp"/>
 		<put name="body" value="/commons/unitFiles/editFile.jsp" />
 	</definition>	
-
+	
+	<!-- === Protocols === -->
+	<definition name="search-protocols" extends="definition.messaging.masterPage">
+        <put name="body" value="/protocols/searchProtocols.jsp"/>
+    </definition>
+	<definition name="view-protocol-details" extends="definition.messaging.masterPage">
+        <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
+    </definition> 
 </tiles-definitions>

@@ -44,5 +44,10 @@
 		<html:link page="/organizationalStructure/structurePage.faces">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.orgUnit" />
 		</html:link>
+	</li>		
+	<li>
+		<html:link page="/protocols.do?method=searchProtocols">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.protocols"  />
+		</html:link>
 	</li>
 </ul>

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
-<em><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 <bean:define id="protocolID"><bean:write name="protocolFactory" property="protocol.idInternal"/></bean:define>
