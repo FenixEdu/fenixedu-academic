@@ -492,7 +492,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Docentes")) {
 		return person.getTeacher() != null
-			&& person.getTeacher().getCurrentWorkingUnit() != null;
+			&& person.getTeacher().getCurrentWorkingDepartment() != null;
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Não Docentes")) {
 		return person.getEmployee() != null
@@ -507,6 +507,9 @@ public class ParkingParty extends ParkingParty_Base {
 		} else {
 		    return Boolean.FALSE;
 		}
+	    }
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Bolseiros")) {
+		return person.hasGrantOwner() && person.getGrantOwner().hasCurrentContract();
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
 		if (person.hasStudent()) {
@@ -573,7 +576,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     private boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	if(registration.getEnrolments(executionYear).isEmpty()) {
+	if (registration.getEnrolments(executionYear).isEmpty()) {
 	    return Boolean.FALSE;
 	}
 	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
@@ -616,7 +619,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    return getCardEndDate();
 	}
     }
-    
+
     public DateTime getCardStartDateToCompare() {
 	if (getCardStartDate() == null) {
 	    return new DateTime(9999, 9, 9, 9, 9, 9, 9);

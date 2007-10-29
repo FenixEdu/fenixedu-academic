@@ -435,3 +435,11 @@
 	</slot>
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES"/>
 </schema>
+
+<schema name="edit.cardsRenewalDate" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean">
+	<slot name="renewalEndDate" key="label.renewalEndDate">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>	
+</schema>

@@ -24,6 +24,9 @@
 			<form-property name="cardAlwaysValid" type="java.lang.String" />			
 			<form-property name="addVehicle" type="java.lang.String" />			
 		</form-bean>
+		<form-bean name="parkingRenewalForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="selectedParkingCards" type="java.lang.String[]" />
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================== -->
@@ -84,9 +87,10 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ManageParkingPeriodsDA"
 				scope="request"
 				input="/exportParkingDB.do?method=prepareExportFile"
-				parameter="method">
+				parameter="method"
+				name="parkingRenewalForm">
        		<forward name="cardsSearch" path="cards-search"/>
-       		<forward name="cardsRenewal" path="cards-renewal"/>
+       		<forward name="cardsRenewal" path="cards-renewal"/>       		
        	</action>
        	
 	</action-mappings>

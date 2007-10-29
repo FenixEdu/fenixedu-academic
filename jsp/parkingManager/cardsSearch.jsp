@@ -23,7 +23,7 @@
 		</fr:layout>
 	</fr:edit>
 	<html:submit><bean:message key="button.consultCards" bundle="PARKING_RESOURCES"/></html:submit>
-	<logic:equal name="parkingCardSearchBean" property="processed" value="true">
+	<logic:notEmpty name="parkingCardSearchBean" property="searchedParkingParties">
 	
 		<bean:define id="query" value=""/>
 		<logic:notEmpty name="parkingCardSearchBean" property="parkingCardUserState">
@@ -71,5 +71,9 @@
 				<fr:property name="selectAllLocation" value="top,bottom"/>
 			</fr:layout>
 		</fr:view>
-	</logic:equal>
+		<p><html:submit property="prepareRenewal"><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit></p>
+	</logic:notEmpty>
+	<logic:empty name="parkingCardSearchBean" property="searchedParkingParties">
+		<p>Não foram encontrados utentes com os critérios definidos.</p>
+	</logic:empty>
 </fr:form>	

@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -13,6 +11,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.YearMonthDay;
 
@@ -21,18 +20,18 @@ public class ParkingCardSearchBean implements Serializable {
     private DomainReference<ParkingGroup> parkingGroup;
 
     private DomainListReference<ParkingParty> searchedParkingParties = new DomainListReference<ParkingParty>();
+    
+    private DomainListReference<ParkingParty> selectedParkingParties = new DomainListReference<ParkingParty>();;
 
     private YearMonthDay actualEndDate;
 
-    private YearMonthDay renewalEndDate;
+    private DateTime renewalEndDate;
 
     private int groupMembersCount;
 
     private ParkingCardSearchPeriod parkingCardSearchPeriod;
 
     private ParkingCardUserState parkingCardUserState;
-
-    private boolean processed = Boolean.FALSE;
 
     public enum ParkingCardSearchPeriod {
 	ENDS_BEFORE_ONE_MONTH, ENDS_BEFORE_TWO_MONTHS, ENDED_UNTIL_ONE_MONTH_AGO, ENDED_UNTIL_SIX_MONTHS_AGO, ENDED_UNTIL_ONE_YEAR_AGO;
@@ -69,8 +68,7 @@ public class ParkingCardSearchBean implements Serializable {
 	    if (parkingParty.hasAnyVehicles() && satisfiesSearch(parkingParty)) {
 		getSearchedParkingParties().add(parkingParty);
 	    }
-	}
-	setProcessed(Boolean.TRUE);
+	}	
     }
 
     private boolean satisfiesSearch(ParkingParty parkingParty) {
@@ -151,11 +149,11 @@ public class ParkingCardSearchBean implements Serializable {
 	this.actualEndDate = actualEndDate;
     }
 
-    public YearMonthDay getRenewalEndDate() {
+    public DateTime getRenewalEndDate() {
 	return renewalEndDate;
     }
 
-    public void setRenewalEndDate(YearMonthDay renewalEndDate) {
+    public void setRenewalEndDate(DateTime renewalEndDate) {
 	this.renewalEndDate = renewalEndDate;
     }
 
@@ -179,6 +177,11 @@ public class ParkingCardSearchBean implements Serializable {
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("partyClassification"));
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("cardEndDateToCompare"));
     }
+    
+    public void orderSelectedParkingParties() {
+	Collections.sort(getSearchedParkingParties(), new BeanComparator("partyClassification"));
+	Collections.sort(getSearchedParkingParties(), new BeanComparator("cardEndDateToCompare"));
+    }
 
     public ParkingCardSearchPeriod getParkingCardSearchPeriod() {
 	return parkingCardSearchPeriod;
@@ -196,11 +199,11 @@ public class ParkingCardSearchBean implements Serializable {
 	this.parkingCardUserState = parkingCardUserState;
     }
 
-    public boolean getProcessed() {
-        return processed;
+    public DomainListReference<ParkingParty> getSelectedParkingParties() {
+        return selectedParkingParties;
     }
 
-    public void setProcessed(boolean processed) {
-        this.processed = processed;
+    public void setSelectedParkingParties(DomainListReference<ParkingParty> selectedParkingParties) {
+        this.selectedParkingParties = selectedParkingParties;
     }
 }

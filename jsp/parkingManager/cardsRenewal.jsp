@@ -5,33 +5,30 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message key="label.parking" /></em>
-<h2><bean:message key="link.parkingCards" /></h2>
-
-<p class="mtop15 mbottom05">	
-	<span class="error0">
-		<html:messages id="message" message="true" bundle="PARKING_RESOURCES">
-			<bean:write name="message" />
-		</html:messages>
-	</span>
-</p>
+<h2><bean:message key="title.renewParkingCards"/></h2>
 	
-<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.parkingCardSearch"
-	 action="/manageParkingPeriods.do?method=searchCards">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop025" />
-		<fr:property name="columnClasses" value=",,tderror1 tdclear" />
-	</fr:layout>
-</fr:edit>
-
-<logic:equal name="parkingCardSearchBean" property="processed" value="true">
-	<bean:size id="notRenewedCards" name="parkingCardsRenewalBean" property="notRenewedParkingParties"/>
-	<p>
-		O grupo <bean:write name="parkingCardsRenewalBean" property="parkingGroup.groupName"/> possuí <bean:write name="parkingCardsRenewalBean" property="groupMembersCount"/> pessoas.<br/>
-		A data de validade do cartão não foi actualizada para <bean:write name="notRenewedCards"/> pessoas.<br/>
-	</p>
-	<fr:view name="parkingCardsRenewalBean" property="notRenewedParkingParties" schema="show.parkingParty.notUpdatedEndDate">
+<fr:form action="/manageParkingPeriods.do?method=renewParkingCards">
+	<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.cardsRenewalDate">
 		<fr:layout name="tabular">
-			<fr:property name="class" value="tstyle1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop025" />
+			<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 		</fr:layout>
-	</fr:view>
-</logic:equal>
+	</fr:edit>
+	<html:submit><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit>
+	<html:submit property="cancel"><bean:message key="button.cancel" bundle="PARKING_RESOURCES"/></html:submit>
+	<logic:notEmpty name="parkingCardSearchBean" property="selectedParkingParties">
+		<bean:size id="selectedParkingPartiesSize" name="parkingCardSearchBean" property="selectedParkingParties"/>
+		<p>
+			Foram selecionados <bean:write name="selectedParkingPartiesSize"/> utentes para renovação.<br/>
+		</p>
+		<fr:view name="parkingCardSearchBean" property="searchedParkingParties" schema="show.searchedParkingCards">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 tdcenter"/>
+				<fr:property name="columnClasses" value=",smalltxt color888,,,,aleft"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="parkingCardSearchBean" property="selectedParkingParties">
+		<p>Não foram selecionados utentes para renovação.</p>
+	</logic:empty>
+</fr:form>
