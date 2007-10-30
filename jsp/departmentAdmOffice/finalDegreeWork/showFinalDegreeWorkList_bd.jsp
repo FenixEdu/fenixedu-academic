@@ -6,6 +6,8 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
+<bean:define id="confirmDelete">return confirm('<bean:message key="message.confirm.delete"/>')</bean:define>
+
 <strong>
 	<bean:message key="message.final.degree.work.administration"/>
 </strong>
@@ -364,7 +366,7 @@
 										%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 										%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 						</bean:define>
-						<html:link page='<%= deleteProposalLink.toString() %>'>
+						<html:link page='<%= deleteProposalLink.toString() %>' onclick="<%= confirmDelete.toString() %>">
 							(<bean:message key="finalDegreeWorkProposal.delete"/>)
 						</html:link>
 					</td>
@@ -509,7 +511,7 @@
 												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 									</bean:define>
-									<html:link page='<%= deleteCandidacyLink.toString() %>'>
+									<html:link page='<%= deleteCandidacyLink.toString() %>' onclick="<%= confirmDelete.toString() %>">
 										(<bean:message key="finalDegreeWorkProposal.delete.candidacy"/>)
 									</html:link>
 									<bean:define id="deleteAttributionLink">
@@ -518,7 +520,7 @@
 												%>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID
 												%>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %>
 									</bean:define>
-									<html:link page='<%= deleteAttributionLink.toString() %>'>
+									<html:link page='<%= deleteAttributionLink.toString() %>' onclick="<%= confirmDelete.toString() %>">
 										(<bean:message key="finalDegreeWorkProposal.delete.attribution"/>)
 									</html:link>
 								</logic:present>
