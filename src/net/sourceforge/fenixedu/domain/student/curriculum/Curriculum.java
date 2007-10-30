@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -82,18 +83,16 @@ public class Curriculum implements Serializable {
 	}
     }
     
-    public boolean shouldAdd(ICurriculumEntry newEntry) {
+    /**
+     * Just for pre-Bbolonha verification 
+     */
+    final private boolean shouldAdd(final ICurriculumEntry newEntry) {
 	if (newEntry instanceof IEnrolment) {
 	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
 	    
 	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal) {
-		    final Dismissal dismissal = (Dismissal) entry;
-		    for (IEnrolment source : dismissal.getSourceIEnrolments()) {
-			if (source == newIEnrolment) {
-			    return false;
-			}
-		    }
+		if (entry instanceof Dismissal && ((Dismissal) entry).hasSourceIEnrolments(newIEnrolment)) {
+		    return false;
 		} else if (entry == newIEnrolment) {
 		    return false;
 		}
@@ -102,13 +101,8 @@ public class Curriculum implements Serializable {
 	    final Dismissal newDismissal = (Dismissal) newEntry;
 	    
 	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal) {
-		    final Dismissal dismissal = (Dismissal) entry;
-		    
-		    if (dismissal.getDegreeModule() == newDismissal.getDegreeModule() && 
-			    dismissal.getSourceIEnrolments().containsAll(newDismissal.getSourceIEnrolments())) {
-			return false;
-		    }
+		if (entry instanceof Dismissal && newDismissal.isSimilar((Dismissal) entry)) {
+		    return false;
 		}
 	    }
 	}
