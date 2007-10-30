@@ -206,4 +206,13 @@ public class ParkingCardSearchBean implements Serializable {
     public void setSelectedParkingParties(DomainListReference<ParkingParty> selectedParkingParties) {
         this.selectedParkingParties = selectedParkingParties;
     }
+
+    public void removeSelectedParkingParty(Integer parkingPartyIDToRemove) {
+	for (ParkingParty parkingParty : getSelectedParkingParties()) {
+	    if(parkingParty.getIdInternal().equals(parkingPartyIDToRemove)) {
+		getSelectedParkingParties().remove(parkingParty);
+		break;
+	    }
+	}	
+    }
 }

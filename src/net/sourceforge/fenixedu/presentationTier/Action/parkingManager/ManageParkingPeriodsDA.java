@@ -85,7 +85,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCardsRenewal(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	String[] selectedParkingCards = ((DynaActionForm) actionForm).getStrings("selectedParkingCards");
 	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
 	RenderUtils.invalidateViewState();
@@ -93,6 +93,11 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	for (int iter = 0; iter < selectedParkingCards.length; iter++) {
 	    parkingCardSearchBean.getSelectedParkingParties().add(
 		    rootDomainObject.readParkingPartyByOID(Integer.valueOf(selectedParkingCards[iter])));
+	}
+	if (parkingCardSearchBean.getSelectedParkingParties().isEmpty()) {
+	    setMessage(request, "message.noParkingPartiesSelected");
+	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
+	    return mapping.findForward("cardsSearch");
 	}
 	parkingCardSearchBean.orderSelectedParkingParties();
 	request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
@@ -104,6 +109,16 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
 	if (request.getParameter("cancel") != null) {
 	    return searchCards(mapping, actionForm, request, response);
+	}
+	if (request.getParameter("remove") != null) {
+	    String[] parkingCardsToRemove = ((DynaActionForm) actionForm)
+		    .getStrings("parkingCardsToRemove");
+	    for (int iter = 0; iter < parkingCardsToRemove.length; iter++) {
+		parkingCardSearchBean.removeSelectedParkingParty(Integer
+			.valueOf(parkingCardsToRemove[iter]));
+	    }
+	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
+	    return mapping.findForward("cardsRenewal");
 	}
 	ServiceUtils.executeService(SessionUtils.getUserView(request), "RenewParkingCards",
 		new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
@@ -148,9 +163,9 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 
-    private void setError(HttpServletRequest request, String errorMsg) {
+    private void setMessage(HttpServletRequest request, String msg) {
 	ActionMessages actionMessages = getMessages(request);
-	actionMessages.add("error", new ActionMessage(errorMsg));
+	actionMessages.add("message", new ActionMessage(msg));
 	saveMessages(request, actionMessages);
     }
 }

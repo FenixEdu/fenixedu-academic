@@ -26,6 +26,7 @@
 		</form-bean>
 		<form-bean name="parkingRenewalForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="selectedParkingCards" type="java.lang.String[]" />
+			<form-property name="parkingCardsToRemove" type="java.lang.String[]" />
 		</form-bean>
 	</form-beans>
 

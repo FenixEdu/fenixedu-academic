@@ -25,8 +25,12 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 tdcenter"/>
 				<fr:property name="columnClasses" value=",smalltxt color888,,,,aleft"/>
+				<fr:property name="checkable" value="true"/>
+				<fr:property name="checkboxName" value="parkingCardsToRemove" />
+				<fr:property name="checkboxValue" value="idInternal"/>
 			</fr:layout>
 		</fr:view>
+		<html:submit property="remove"><bean:message key="button.remove" bundle="PARKING_RESOURCES"/></html:submit>
 	</logic:notEmpty>
 	<logic:empty name="parkingCardSearchBean" property="selectedParkingParties">
 		<p>Não foram selecionados utentes para renovação.</p>

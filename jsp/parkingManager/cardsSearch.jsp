@@ -6,14 +6,6 @@
 
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.parkingCards" /></h2>
-
-<p class="mtop15 mbottom05">	
-	<span class="error0">
-		<html:messages id="message" message="true" bundle="PARKING_RESOURCES">
-			<bean:write name="message" />
-		</html:messages>
-	</span>
-</p>
 	
 <fr:form action="/manageParkingPeriods.do?method=searchCards">
 	<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.parkingCardSearch">
@@ -25,6 +17,16 @@
 	<html:submit><bean:message key="button.consultCards" bundle="PARKING_RESOURCES"/></html:submit>
 	<logic:notEmpty name="parkingCardSearchBean" property="searchedParkingParties">
 	
+		<logic:messagesPresent message="true">
+			<p class="mtop15 mbottom05">	
+				<span class="warning0">
+					<html:messages id="message" message="true" bundle="PARKING_RESOURCES">
+						<bean:write name="message" />
+					</html:messages>
+				</span>
+			</p>
+		</logic:messagesPresent>
+		
 		<bean:define id="query" value=""/>
 		<logic:notEmpty name="parkingCardSearchBean" property="parkingCardUserState">
 			<bean:define id="parkingCardUserState" name="parkingCardSearchBean" property="parkingCardUserState"/>
