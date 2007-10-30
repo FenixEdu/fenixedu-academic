@@ -54,8 +54,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return isCertificate() || isDeclaration();
     }
 
-    final public static class DocumentRequestCreator extends DocumentRequestCreateBean implements
-	    FactoryExecutor {
+    final public static class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {
 
 	public DocumentRequestCreator(Registration registration) {
 	    super(registration);
@@ -65,19 +64,19 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
 	    if (getChosenDocumentRequestType().isCertificate()) {
 		return CertificateRequest.create(getRegistration(), getChosenDocumentRequestType(),
-			getChosenDocumentPurposeType(), getOtherPurpose(),
-			getUrgentRequest(), getAverage(), getDetailed(), getExecutionYear(), getMobilityProgram());
+			getChosenDocumentPurposeType(), getOtherPurpose(), getUrgentRequest(), getAverage(), getDetailed(),
+			getExecutionYear(), getMobilityProgram());
 
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {
 		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
-			getChosenDocumentPurposeType(), getOtherPurpose(),
-			getAverage(), getDetailed(), getYear(), getFreeProcessed());
+			getChosenDocumentPurposeType(), getOtherPurpose(), getAverage(), getDetailed(), getYear(),
+			getFreeProcessed());
 
 	    } else if (getChosenDocumentRequestType().isDiploma()) {
 		return new DiplomaRequest(getRegistration(), getRequestedCycle());
 
 	    }
-	    
+
 	    return null;
 	}
 
