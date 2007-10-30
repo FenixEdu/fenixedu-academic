@@ -1128,7 +1128,7 @@
 			<forward name="view-courses" path="scientific-area-site-courses"/>
             <forward name="unit-organization" path="scientific-area-organization"/>
 			
-	        <forward name="showPublications" path="show-unit-publications"/>
+	        <forward name="showPublications" path="scientific-area-publications"/>
             <forward name="announcementsAction" path="/scientificArea/announcements.do"/>
             <forward name="eventsAction" path="/scientificArea/events.do"/>
             <forward name="announcementsRSSAction" path="/scientificArea/announcementsRSS.do"/>
@@ -1136,6 +1136,12 @@
  			
  		</action>
 	   	
+  	     <action path="/scientificArea/showResearchResult"
+             parameter="method"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowResearchResultInUnitSite">
+            <forward name="showResult" path="show-scientificArea-unit-result"/>
+	     </action>
+     
 	   	<action path="/scientificArea/announcements"
                 parameter="method"
                 type="net.sourceforge.fenixedu.presentationTier.Action.publico.AnnouncementsBoardDA">

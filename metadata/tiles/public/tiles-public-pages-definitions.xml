@@ -654,6 +654,7 @@
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/publico/researcher/showResearchResult.jsp"/>
     </definition>
+
     <definition name="show-research-unit-organization" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/publico/researchUnitSite/unitOrganization.jsp"/>
@@ -746,7 +747,14 @@
 	<definition name="scientific-area-organization" extends="definition.public.basicUnit">
 		<put name="body" value="/publico/scientificAreaSite/organization.jsp" />
 	</definition>		
-		
-	
+
+	<definition name="scientific-area-publications" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/showPublications.jsp"/>
+	</definition>		
+
+	<definition name="show-scientificArea-unit-result" extends="definition.public.basicUnit">
+        <put name="body" value="/publico/researcher/showResearchResult.jsp"/>
+    </definition>    
+        
 
 </tiles-definitions>

@@ -13,6 +13,7 @@ public class ShowResearchResultInUnitSite extends ShowResearchResult {
 		if(siteID!=null) {
 			UnitSite site = (UnitSite) RootDomainObject.readDomainObjectByOID(UnitSite.class, Integer.valueOf(siteID));
 			request.setAttribute("site", site);
+			request.setAttribute("unit",site.getUnit());
 		}
 	}
 	
