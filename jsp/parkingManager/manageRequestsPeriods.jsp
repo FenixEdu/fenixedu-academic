@@ -17,7 +17,7 @@
 	
 <logic:present name="parkingRequestPeriodToEdit">
 	<p class="mbottom025"><strong><bean:message key="label.editPeriod"/></strong></p>
-	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/parking.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
+	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/manageParkingPeriods.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025" />
 			<fr:property name="columnClasses" value=",,tderror1 tdclear" />
@@ -26,7 +26,7 @@
 </logic:present>
 <logic:notPresent name="parkingRequestPeriodToEdit">
 	<p class="mbottom025"><strong><bean:message key="label.insertNewPeriod"/></strong></p>
-	<fr:form action="/parking.do?method=prepareManageRequestsPeriods">
+	<fr:form action="/manageParkingPeriods.do?method=prepareManageRequestsPeriods">
 		<fr:create id="aa" schema="show.parkingRequestPeriod" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mvert025" />
@@ -58,11 +58,11 @@
 				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 				
-				<fr:property name="link(edit)" value="/parking.do?method=editRequestPeriod" />
+				<fr:property name="link(edit)" value="/manageParkingPeriods.do?method=editRequestPeriod" />
 				<fr:property name="key(edit)" value="label.edit" />
 				<fr:property name="param(edit)" value="idInternal" />
 				<fr:property name="bundle(edit)" value="PARKING_RESOURCES" />
-				<fr:property name="link(delete)" value="/parking.do?method=deleteRequestPeriod" />
+				<fr:property name="link(delete)" value="/manageParkingPeriods.do?method=deleteRequestPeriod" />
 				<fr:property name="key(delete)" value="label.delete" />
 				<fr:property name="param(delete)" value="idInternal" />
 				<fr:property name="bundle(delete)" value="PARKING_RESOURCES" />

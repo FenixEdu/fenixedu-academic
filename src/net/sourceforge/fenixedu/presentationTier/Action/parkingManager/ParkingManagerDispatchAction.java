@@ -539,30 +539,4 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	return true;
     }
-
-    public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	List<ParkingRequestPeriod> parkingRequestPeriods = new ArrayList<ParkingRequestPeriod>(
-		rootDomainObject.getParkingRequestPeriods());
-	Collections.sort(parkingRequestPeriods, new BeanComparator("beginDate"));
-	request.setAttribute("parkingRequestPeriods", parkingRequestPeriods);
-	return mapping.findForward("manageRequestsPeriods");
-    }
-
-    public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Integer parkingRequestPeriodToEditCode = new Integer(request.getParameter("idInternal"));
-	request.setAttribute("parkingRequestPeriodToEdit", rootDomainObject
-		.readParkingRequestPeriodByOID(parkingRequestPeriodToEditCode));
-	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
-    }
-
-    public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("idInternal"));
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteParkingRequestPeriod",
-		new Object[] { parkingRequestPeriodToDeleteCode });
-	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
-    }
-
 }
