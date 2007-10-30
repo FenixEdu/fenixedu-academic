@@ -73,13 +73,49 @@ public class Curriculum implements Serializable {
     }
 
     private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries, boolean mustBeNumeric) {
+	final boolean bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
+	
 	for (final ICurriculumEntry newEntry : newEntries) {
-	    if (newEntry.getGrade().isNumeric() || !mustBeNumeric) {
+	    if ((newEntry.getGrade().isNumeric() || !mustBeNumeric) && (bolonhaDegree || shouldAdd(newEntry))) {
 		entries.add(newEntry);
 	    }
 	}
     }
     
+    public boolean shouldAdd(ICurriculumEntry newEntry) {
+	if (newEntry instanceof IEnrolment) {
+	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
+	    
+	    for (final ICurriculumEntry entry : curricularYearEntries) {
+		if (entry instanceof Dismissal) {
+		    final Dismissal dismissal = (Dismissal) entry;
+		    for (IEnrolment source : dismissal.getSourceIEnrolments()) {
+			if (source == newIEnrolment) {
+			    return false;
+			}
+		    }
+		} else if (entry == newIEnrolment) {
+		    return false;
+		}
+	    }
+	} else if (newEntry instanceof Dismissal) {
+	    final Dismissal newDismissal = (Dismissal) newEntry;
+	    
+	    for (final ICurriculumEntry entry : curricularYearEntries) {
+		if (entry instanceof Dismissal) {
+		    final Dismissal dismissal = (Dismissal) entry;
+		    
+		    if (dismissal.getDegreeModule() == newDismissal.getDegreeModule() && 
+			    dismissal.getSourceIEnrolments().containsAll(newDismissal.getSourceIEnrolments())) {
+			return false;
+		    }
+		}
+	    }
+	}
+
+	return true;
+    }
+
     public CurriculumModule getCurriculumModule() {
 	return curriculumModule;
     }
