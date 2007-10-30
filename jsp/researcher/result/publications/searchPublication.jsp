@@ -14,7 +14,11 @@
 		<bean:message key="label.search.description" bundle="RESEARCHER_RESOURCES"/> 
 	</div>
 
-	<fr:form id="searchForm" action="/publications/search.do?method=searchPublication">
+	<fr:form id="searchForm" action="/publications/search.do">
+		<html:hidden property="method" value="searchPublication"/>
+		<html:hidden property="addIndex" value=""/>
+		<html:hidden property="removeIndex" value=""/>
+		
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -78,10 +82,10 @@
 					</logic:greaterThan>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').method.value='addNewSearchCriteria';getElementById('searchForm').addIndex.value='" + (index+1) + "';getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').method.value='removeSearchCriteria';getElementById('searchForm').removeIndex.value='" + index + "';getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</logic:greaterThan>
 					</div>
 				</logic:equal>
@@ -91,8 +95,8 @@
 					<html:link page="<%="/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').method.value='addNewSearchCriteria'; getElementById('searchForm').addIndex.value='" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').method.value='removeSearchCriteria'; getElementById('searchForm').removeIndex.value='" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</div>
 				</logic:notEqual>
 			</td>
