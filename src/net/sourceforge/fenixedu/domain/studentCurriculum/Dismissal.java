@@ -133,6 +133,10 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	return getCredits().getIEnrolments();
     }
 
+    final public boolean hasSourceIEnrolments(final IEnrolment iEnrolment) {
+	return getCredits().hasIEnrolments(iEnrolment);
+    }
+
     @Override
     public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod);
