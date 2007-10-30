@@ -74,42 +74,12 @@ public class Curriculum implements Serializable {
 
     private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries, boolean mustBeNumeric) {
 	for (final ICurriculumEntry newEntry : newEntries) {
-	    if ((newEntry.getGrade().isNumeric() || !mustBeNumeric) && shouldAdd(newEntry)) {
+	    if (newEntry.getGrade().isNumeric() || !mustBeNumeric) {
 		entries.add(newEntry);
 	    }
 	}
     }
     
-    public boolean shouldAdd(ICurriculumEntry newEntry) {
-	if (newEntry instanceof IEnrolment) {
-	    final IEnrolment iEnrolment = (IEnrolment) newEntry;
-	    
-	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal) {
-		    for (IEnrolment source : ((Dismissal) entry).getSourceIEnrolments()) {
-			if (source == iEnrolment) {
-			    return false;
-			}
-		    }
-		} else if (entry == iEnrolment) {
-			return false;
-		}
-	    }
-	} else if (newEntry instanceof Dismissal) {
-	    final Dismissal dismissal = (Dismissal) newEntry;
-	    
-	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal) {
-		    if (((Dismissal) entry).getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments())) {
-			return false;
-		    }
-		}
-	    }
-	}
-
-	return true;
-    }
-
     public CurriculumModule getCurriculumModule() {
 	return curriculumModule;
     }
