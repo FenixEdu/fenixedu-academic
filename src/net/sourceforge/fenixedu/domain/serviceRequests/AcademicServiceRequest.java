@@ -2,10 +2,13 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -32,10 +35,23 @@ import org.joda.time.DateTime;
 
 public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
+    static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
+        public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
+            return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+        }
+    };
+    
     protected AcademicServiceRequest() {
 	super();
+	super.setServiceRequestNumber(generateServiceRequestNumber());
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setServiceRequestNumber(RootDomainObject.getInstance().getAcademicServiceRequestsCount());
+    }
+    
+    private Integer generateServiceRequestNumber() {
+	final SortedSet<AcademicServiceRequest> academicServiceRequests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
+	academicServiceRequests.addAll(RootDomainObject.getInstance().getAcademicServiceRequestsSet());
+	
+	return academicServiceRequests.last().getServiceRequestNumber() + 1;
     }
 
     final protected void init(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
