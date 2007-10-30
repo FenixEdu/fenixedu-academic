@@ -223,8 +223,6 @@ public class Curriculum implements Serializable {
     }
     
     private void countAverage(final Set<ICurriculumEntry> entries) {
-	final Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
-	
 	for (final ICurriculumEntry entry : entries) {
 	    final BigDecimal weigth = entry.getWeigthForCurriculum();
 		
@@ -244,8 +242,6 @@ public class Curriculum implements Serializable {
     }
     
     private void countCurricularYear(final Set<ICurriculumEntry> entries) {
-	final Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
-	
 	for (final ICurriculumEntry entry : entries) {
 	    sumEctsCredits = sumEctsCredits.add(entry.getEctsCreditsForCurriculum());
 	}
