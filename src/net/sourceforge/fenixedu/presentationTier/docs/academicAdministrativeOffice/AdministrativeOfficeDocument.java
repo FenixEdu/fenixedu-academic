@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.C
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
@@ -132,7 +133,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	parameters.put("amountPerPage", amountPerPage);
 	parameters.put("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
 	parameters.put("urgencyAmount", urgencyAmount);
-	parameters.put("isFree", certificateRequest.isFree());
+	parameters.put("printPriceFields", printPriceFields(certificateRequest));
+    }
+    
+    final private boolean printPriceFields(final CertificateRequest certificateRequest) {
+	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && 
+		!certificateRequest.isFree()) ||
+		certificateRequest.hasEvent();
     }
     
     final private PostingRule getPostingRule() {

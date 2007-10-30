@@ -26,7 +26,7 @@
 	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
 	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<parameter name="isFree" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="printPriceFields" isForPrompting="false" class="java.lang.Boolean"/>
 	<parameter name="postingRule" isForPrompting="false" class="net.sourceforge.fenixedu.domain.accounting.PostingRule"/>
 	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
 	<parameter name="baseAmountPlusAmountForUnits" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
@@ -138,7 +138,7 @@
 						height="11"
 						key="staticText-11"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -154,7 +154,7 @@
 						height="11"
 						key="staticText-12"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -170,7 +170,7 @@
 						height="11"
 						key="staticText-13"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -186,7 +186,7 @@
 						height="11"
 						key="staticText-14"
 						stretchType="RelativeToTallestObject">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement lineSpacing="Single">
@@ -201,7 +201,7 @@
 						width="50"
 						height="11"
 						key="textField-25">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -216,7 +216,7 @@
 						width="50"
 						height="11"
 						key="textField-26">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -231,7 +231,7 @@
 						width="50"
 						height="11"
 						key="textField-27">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
@@ -246,7 +246,7 @@
 						width="50"
 						height="11"
 						key="textField-29">
-							<printWhenExpression><![CDATA[!$P{isFree}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
