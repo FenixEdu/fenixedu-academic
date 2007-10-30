@@ -17,12 +17,12 @@
 	<fr:edit name="searchBean" schema="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan">
 		<fr:destination name="executionYearPostBack" path="/studentsListByCurricularCourse.do?method=chooseExecutionYearPostBack"/>	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
-	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
+	<html:submit><bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
 </fr:form>
 
 <p/>
@@ -31,7 +31,7 @@
 
 	<bean:define id="executionYear" name="searchBean" property="executionYear.idInternal"/>
 
-	<table class="tstyle4 thleft">
+	<table class="tstyle1 thleft thlight">
 		<%
 			int semester = 0;
 		%>

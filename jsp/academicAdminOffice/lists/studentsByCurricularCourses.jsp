@@ -12,6 +12,7 @@
 	</p>
 </html:messages>
 <fr:form action='<%= "/studentsListByCurricularCourse.do" %>'>
+
 <html:hidden property="method" value="searchByCurricularCourse"/>
 <bean:define id="searchBean" name="searchBean"/>
 <bean:define id="semester" name="semester"/>
@@ -24,34 +25,37 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseCode" property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"  />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseCode" property="year" value="<%= year.toString() %>"  />
 
-
-
 <h2>
-		<bean:write name="searchBean" property="curricularCourse.name"/>
-			&nbsp;- &nbsp;
-		<bean:write name="searchBean" property="degreeCurricularPlan.name"/>
-	</h2>
+	<bean:write name="searchBean" property="curricularCourse.name"/> 
+	(<bean:write name="searchBean" property="degreeCurricularPlan.name"/>)
+</h2>
 
-	<p class="mtop15 mbottom1"><em class="highlight5">
-	<bean:write name="searchBean" property="executionYear.year" /> - <bean:message key="label.period" arg0="<%=year.toString()%>" arg1="<%=semester.toString()%>"  bundle="ACADEMIC_OFFICE_RESOURCES"/></em></p>
+	<p class="mtop15 mbottom1">
+		<em class="highlight5">
+			<bean:write name="searchBean" property="executionYear.year" /> - <bean:message key="label.period" arg0="<%=year.toString()%>" arg1="<%=semester.toString()%>"  bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</em>
+	</p>
 	
 <logic:present name="enrolmentList">
-<bean:size id="enrolmentListSize" name="enrolmentList" />
-<p class="mtop2">
- <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/> <%= enrolmentListSize %>
-</p>
+	
+	<bean:size id="enrolmentListSize" name="enrolmentList" />
+
+	<p class="mtop2">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/>: <%= enrolmentListSize %>
+	</p>
+
 	<fr:view schema="enrolmentStudentsList.view" name="enrolmentList">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		</fr:layout>	
-		
 	</fr:view>
 	
 	<logic:greaterThan name="enrolmentListSize" value="0">
 		<p class="mtop15 mbottom15">	
 			<html:image border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>	
-				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
+			<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
 		</p>
 	</logic:greaterThan>
+	
 </logic:present>
 </fr:form>

@@ -47,8 +47,8 @@
 	
 	<ul>
 		<li class="navheader"><bean:message key="label.lists" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-		<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="label.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
-		<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="label.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+		<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="link.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+		<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="link.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
 	
 </logic:present>
