@@ -135,6 +135,16 @@ public class Credits extends Credits_Base {
 	}
 	return result;
     }
+    
+    final public boolean hasIEnrolments(final IEnrolment iEnrolment) {
+	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
+	    if (enrolmentWrapper.getIEnrolment() == iEnrolment) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
 
     final public boolean hasAnyIEnrolments() {
 	return hasAnyEnrolments();
