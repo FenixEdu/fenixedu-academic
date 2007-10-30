@@ -83,6 +83,19 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public List<Enrolment> getEnrolments();
 
     public abstract StudentCurricularPlan getStudentCurricularPlan();
+    
+    /**
+     * Temporary method, after all degrees migration this is no longer necessary
+     * 
+     * @return
+     */
+    final public boolean isBoxStructure() {
+	return getStudentCurricularPlan().isBoxStructure();
+    }
+
+    final public boolean isBolonhaDegree() {
+	return getStudentCurricularPlan().isBolonhaDegree();
+    }
 
     public DegreeCurricularPlan getDegreeCurricularPlanOfStudent() {
 	return getStudentCurricularPlan().getDegreeCurricularPlan();

@@ -123,19 +123,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
 
-    final public boolean isBolonhaDegree() {
-	return getStudentCurricularPlan().isBolonhaDegree();
-    }
-
-    /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     * @return
-     */
-    final public boolean isBoxStructure() {
-	return getStudentCurricularPlan().isBoxStructure();
-    }
-
     public boolean isOptional() {
 	return false;
     }
