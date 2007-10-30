@@ -37,9 +37,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
 	    String justification) {
 	this();
-
 	init(academicServiceRequest, academicServiceRequestSituationType, employee, justification);
-
     }
 
     private void checkParameters(AcademicServiceRequest academicServiceRequest,

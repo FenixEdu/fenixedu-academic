@@ -54,7 +54,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return academicServiceRequests.last().getServiceRequestNumber() + 1;
     }
 
-    final protected void init(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
+    protected void init(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
 	final Person loggedPerson = AccessControl.getPerson();
 
 	final AdministrativeOffice administrativeOffice;
@@ -71,12 +71,13 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 
-	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, AccessControl.getPerson().getEmployee(), null);
+	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, AccessControl.getPerson().getEmployee());
     }
 
     private void checkParameters(final Registration registration,
 	    final AdministrativeOffice administrativeOffice, final Boolean urgentRequest,
 	    final Boolean freeProcessed) {
+	
 	if (registration == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
@@ -140,15 +141,14 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     abstract public ExecutionYear getExecutionYear();
     
+    abstract public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
+    
     public boolean hasExecutionYear() {
 	return getExecutionYear() != null;
     }
 
-    final protected String getDescription(final String academicServiceRequestType,
-	    final String specificServiceType) {
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle(
-		"resources.EnumerationResources", LanguageUtils.getLocale());
-
+    protected String getDescription(final String academicServiceRequestType, final String specificServiceType) {
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	final StringBuilder result = new StringBuilder();
 	result.append(enumerationResources.getString(academicServiceRequestType));
 	if (specificServiceType != null) {
@@ -158,8 +158,6 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
 	return result.toString();
     }
-
-    abstract public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices();
 
     final public void process() throws DomainException {
 	final Employee employee = AccessControl.getPerson().getEmployee();
@@ -259,8 +257,8 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getSituationByType(AcademicServiceRequestSituationType.NEW);
     }
 
-    final public AcademicServiceRequestSituation getSituationByType(AcademicServiceRequestSituationType type) {
-	for (AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
+    final public AcademicServiceRequestSituation getSituationByType(final AcademicServiceRequestSituationType type) {
+	for (final AcademicServiceRequestSituation situation : getAcademicServiceRequestSituationsSet()) {
 	    if (situation.getAcademicServiceRequestSituationType().equals(type)) {
 		return situation;
 	    }
@@ -272,21 +270,18 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getActiveSituation().getAcademicServiceRequestSituationType();
     }
 
-    final public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    Employee employee, String justification) {
+    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
+	    String justification) {
 
 	if (!isEditable()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.is.not.editable");
 	}
 
 	if (getAcademicServiceRequestSituationType() != academicServiceRequestSituationType) {
-
 	    checkRulesToChangeState(academicServiceRequestSituationType);
-
 	    internalChangeState(academicServiceRequestSituationType, employee);
-
-	    new AcademicServiceRequestSituation(this, academicServiceRequestSituationType, employee,
-		    justification);
+	    new AcademicServiceRequestSituation(this, academicServiceRequestSituationType, employee, justification);
+	    
 	} else {
 	    getActiveSituation().edit(employee, justification);
 	}
