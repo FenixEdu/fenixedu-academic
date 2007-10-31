@@ -51,15 +51,19 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
 	
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
-	    if (registration.isFirstTime(executionYear)) {
+	    final boolean transition = registration.isTransition(executionYear);
+	    
+	    if (registration.isFirstTime(executionYear) && !transition) {
 		result.append(", pela 1ª vez");
-	    } else if (registration.hasApprovement(executionYear.getPreviousExecutionYear())) {
-		result.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
 	    } else {
-		result.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		final Registration registrationToInspect = transition ? registration.getSourceRegistration() : registration;
+		if (registrationToInspect.hasApprovement(executionYear.getPreviousExecutionYear())) {
+		    result.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		} else {
+		    result.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		}
 	    }
 	}
-	
 	return result.toString();
     }
 
