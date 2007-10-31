@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 public class CreateNewSubstitutionDismissal extends Service {
     
     public void run(DismissalBean dismissalBean) {
-	dismissalBean.getStudentCurricularPlan().createNewSubstitutionDismissal(dismissalBean.getCourseGroup(),
+	dismissalBean.getStudentCurricularPlan().createNewSubstitutionDismissal(dismissalBean.getCourseGroup(), dismissalBean.getCurriculumGroup(),
 		dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(), dismissalBean.getCredits(),
 		dismissalBean.getExecutionPeriod());	
     }

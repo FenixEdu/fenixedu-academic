@@ -68,6 +68,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 		noEnrolCurricularCourses);
     }
 
+    static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
+	    final CurriculumGroup curriculumGroup, final Collection<CurricularCourse> noEnrolCurricularCourses) {
+	return new CreditsDismissal(credits, curriculumGroup, noEnrolCurricularCourses);
+    }
+    
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup) {
 	final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(courseGroup);

@@ -771,6 +771,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	return result;
     }
+    
+    public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
+	Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
+	for (CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    res.addAll(curriculumGroup.getNoCourseGroupCurriculumGroups());
+	}
+	return res;
+    }
 
 
 }

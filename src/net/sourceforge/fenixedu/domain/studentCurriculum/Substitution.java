@@ -32,7 +32,13 @@ public class Substitution extends Substitution_Base {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
     }
-    
+
+    public Substitution(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+	    Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
+	this();
+	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionPeriod);
+    }
+
     @Override
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
 	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionPeriod executionPeriod) {

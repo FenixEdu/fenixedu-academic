@@ -23,6 +23,7 @@ public class DismissalBean implements Serializable {
     private Collection<SelectedCurricularCourse> dismissals;
     private Collection<SelectedOptionalCurricularCourse> optionalDismissals;
     private DomainReference<CourseGroup> courseGroup;
+    private DomainReference<CurriculumGroup> curriculumGroup;
     private Collection<SelectedEnrolment> enrolments;
     private Collection<SelectedExternalEnrolment> externalEnrolments;
     private DismissalType dismissalType;
@@ -106,6 +107,14 @@ public class DismissalBean implements Serializable {
 	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
     }
     
+    public CurriculumGroup getCurriculumGroup() {
+	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+    }
+
+    public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
+	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+    }
+
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
     }
@@ -360,7 +369,8 @@ public class DismissalBean implements Serializable {
 
     public static enum DismissalType {
 	CURRICULAR_COURSE_CREDITS,
-	CURRICULUM_GROUP_CREDITS;
+	CURRICULUM_GROUP_CREDITS,
+	NO_COURSE_GROUP_CURRICULUM_GROUP_CREDITS;
 	
 	public String getName() {
 	    return name();

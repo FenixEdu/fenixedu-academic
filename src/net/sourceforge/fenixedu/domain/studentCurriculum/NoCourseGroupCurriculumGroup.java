@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -160,6 +161,14 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public Double getAprovedEctsCredits() {
 	return Double.valueOf(0d);
+    }
+    
+    @Override
+    public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
+        Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
+        res.add(this);
+        res.addAll(super.getNoCourseGroupCurriculumGroups());
+        return res;
     }
 
 }

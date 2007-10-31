@@ -155,3 +155,40 @@
 		</p>
 	</fr:form>
 </logic:equal>
+
+<logic:equal name="dismissalBean" property="dismissalType.name" value="NO_COURSE_GROUP_CURRICULUM_GROUP_CREDITS">
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.final.group" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+	
+	<fr:view name="dismissalBean" schema="student.dismissal.view.final.no.course.group">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight mbottom2" />
+		</fr:layout>
+	</fr:view>
+	
+			
+	<br/>
+	<br/>
+	
+	<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+	<fr:form action="<%= "/studentCredits.do?scpID=" + scpID.toString() %>">
+		<html:hidden property="method" value="createDismissals"/>
+		
+		<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
+	
+		<bean:define id="dismissalType" name="dismissalBean" property="dismissalType.name"/>
+		<fr:edit id="dismissalBean-information" name="dismissalBean" schema="<%= "credit.DismissalBean.DismissalType." + dismissalType %>">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle4 thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/studentCredits.do?method=stepThree"/>
+		</fr:edit>
+	
+		<p>
+			<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+			<html:cancel onclick="this.form.method.value='stepTwo'; return true;"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+			<html:cancel onclick="this.form.method.value='manage'; return true;"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+		</p>
+	</fr:form>
+</logic:equal>
+

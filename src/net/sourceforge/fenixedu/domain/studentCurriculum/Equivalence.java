@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -29,11 +30,23 @@ public class Equivalence extends Equivalence_Base {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, grade, executionPeriod);
     }
+    
+    public Equivalence(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
+	    Double credits, Grade grade, ExecutionPeriod executionPeriod) {
+	this();
+	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, grade, executionPeriod);
+    }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
 	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
 	initGrade(enrolments, grade);
 	super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
+    }
+    
+    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade, ExecutionPeriod executionPeriod) {
+	initGrade(enrolments, grade);
+	super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan,

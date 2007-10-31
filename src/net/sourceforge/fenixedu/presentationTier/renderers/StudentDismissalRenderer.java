@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -175,7 +176,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 		container.addChild(radioButtonGroup);
 		generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan());
 		
-	    } else {
+	    } else if(dismissalTypeValue == DismissalType.CURRICULAR_COURSE_CREDITS){
 		final HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
 		hiddenCurricularCourses.bind(getInputContext().getMetaObject(), "dismissals"); // slot refered by name
 		hiddenCurricularCourses.setConverter(new SelectedCurricularCoursesKeyConverter());
@@ -189,11 +190,50 @@ public class StudentDismissalRenderer extends InputRenderer {
 		container.addChild(hiddenOptionalCurricularCourses);
 		
 		generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan());
+	    } else {
+		radioButtonGroup = new HtmlRadioButtonGroup();
+		radioButtonGroup.bind(getInputContext().getMetaObject(), "curriculumGroup"); // slot refered by name
+		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
+		container.addChild(radioButtonGroup);
+		generateNoCourseGroupCurriculumGroups(container, dismissalBean.getStudentCurricularPlan());
 	    }
 
 	    return container;
 	}
 	
+	private void generateNoCourseGroupCurriculumGroups(HtmlBlockContainer container,
+		StudentCurricularPlan studentCurricularPlan) {
+	    for (NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup : studentCurricularPlan.getNoCourseGroupCurriculumGroups()) {
+		generateNoCourseGroupCurriculumGroup(container, studentCurricularPlan, noCourseGroupCurriculumGroup, 0);
+	    }
+	    
+	}
+
+	private void generateNoCourseGroupCurriculumGroup(HtmlBlockContainer container,
+		StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, int depth) {
+	    final HtmlTable groupTable = new HtmlTable();
+	    container.addChild(groupTable);
+	    groupTable.setClasses(getTablesClasses());
+	    groupTable.setStyle("width: " + (getInitialWidth() - depth) + "em; margin-left: " + depth + "em;");
+	    
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
+	    htmlTableRow.setClasses(getGroupRowClasses());
+	    
+	    final HtmlTableCell nameCell = htmlTableRow.createCell();
+	    nameCell.setBody(new HtmlText(curriculumGroup.getFullPath()));
+	    nameCell.setClasses(getGroupNameClasses());
+	    
+	    
+	    final HtmlTableCell radioButtonCell = htmlTableRow.createCell();
+	    final HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
+	    radioButton.setUserValue(MetaObjectFactory.createObject(curriculumGroup, new Schema(CurriculumGroup.class)).getKey().toString());
+	    radioButton.setChecked(curriculumGroup == dismissalBean.getCurriculumGroup());
+	    radioButtonCell.setBody(radioButton);
+	    radioButtonCell.setClasses(getGroupRadioClasses());
+	    radioButtonCell.setStyle("width: 2em;");
+	    
+	}
+
 	private void generateCourseGroupCycles(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan) {
 	    if (studentCurricularPlan.isBolonhaDegree()) {
 		for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {

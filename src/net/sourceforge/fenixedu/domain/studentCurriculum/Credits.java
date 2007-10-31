@@ -38,6 +38,12 @@ public class Credits extends Credits_Base {
 	this();
 	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
     }
+    
+    public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
+	    Double credits, ExecutionPeriod executionPeriod) {
+	this();
+	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionPeriod);
+    }
 
     final protected void initExecutionPeriod(ExecutionPeriod executionPeriod) {
 	if (executionPeriod == null) {
@@ -61,6 +67,22 @@ public class Credits extends Credits_Base {
 
 	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup, noEnrolCurricularCourses);
     }
+    
+    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, Collection<IEnrolment> enrolments,
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionPeriod executionPeriod) {
+	if (studentCurricularPlan == null || curriculumGroup == null || credits == null) {
+	    throw new DomainException("error.credits.wrong.arguments");
+	}
+
+	initExecutionPeriod(executionPeriod);
+
+	setStudentCurricularPlan(studentCurricularPlan);
+	setGivenCredits(credits);
+	addEnrolments(enrolments);
+
+	Dismissal.createNewDismissal(this, studentCurricularPlan, curriculumGroup, noEnrolCurricularCourses);
+    }
+
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup, final Double credits) {

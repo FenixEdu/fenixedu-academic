@@ -92,6 +92,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	dismissalBean.setCredits(null);
 	dismissalBean.setCourseGroup(null);
 	dismissalBean.setDismissals(null);
+	dismissalBean.setCurriculumGroup(null);
 	
         RenderUtils.invalidateViewState();
         request.setAttribute("dismissalBean", dismissalBean);
@@ -105,11 +106,16 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 		addActionMessage("error", request, "error.studentDismissal.curricularCourse.required");
 		throw new FenixActionException();
 	    }
-	} else {
+	} else if(dismissalBean.getDismissalType() == DismissalType.CURRICULUM_GROUP_CREDITS) {
 	    if(dismissalBean.getCourseGroup() == null) {
 		addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
 		throw new FenixActionException();
 	    }
+	} else {
+	    if(dismissalBean.getCurriculumGroup() == null) {
+		addActionMessage("error", request, "error.studentDismissal.curriculumGroup.required");
+		throw new FenixActionException();
+	    }	    
 	}
     }
     

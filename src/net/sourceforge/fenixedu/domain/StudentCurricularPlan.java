@@ -2383,16 +2383,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    final public Credits createNewCreditsDismissal(CourseGroup courseGroup, Collection<SelectedCurricularCourse> dismissals,
-	    Collection<IEnrolment> enrolments, Double givenCredits, ExecutionPeriod executionPeriod) {
+    final public Credits createNewCreditsDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
+	    ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
 	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-	}
+		}
 	    }
 	    return new Credits(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionPeriod);
+	} else if(curriculumGroup != null) {
+	    return new Credits(this, curriculumGroup, enrolments, givenCredits, executionPeriod);
 	} else {
 	    return new Credits(this, dismissals, enrolments, executionPeriod);
 	}
@@ -2420,7 +2423,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    final public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup,
+    final public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    Grade givenGrade, ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
@@ -2428,16 +2431,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if (dismissals != null) {
 		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
 		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-	}
+		}
 	    }
 	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade,
+		    executionPeriod);
+	} else if(curriculumGroup != null){
+	    return new Equivalence(this, curriculumGroup, enrolments, givenCredits, givenGrade,
 		    executionPeriod);
 	} else {
 	    return new Equivalence(this, dismissals, enrolments, givenGrade, executionPeriod);
 	}
     }
 
-    final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup,
+    final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionPeriod executionPeriod) {
 	if (courseGroup != null) {
@@ -2448,6 +2454,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 	    }
 	    return new Substitution(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionPeriod);
+	} else if(curriculumGroup != null) {
+	    return new Substitution(this, curriculumGroup, enrolments, givenCredits, executionPeriod);
 	} else {
 	    return new Substitution(this, dismissals, enrolments, executionPeriod);
 	}
@@ -2675,6 +2683,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (hasAnyCredits())
 	    return false;
 	return true;
+    }
+    
+    public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
+	return isBoxStructure() ? getRoot().getNoCourseGroupCurriculumGroups() : new HashSet<NoCourseGroupCurriculumGroup>();
     }
     
 }
