@@ -115,12 +115,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 		    curricularYear.getYear().toString(), previousElection.getVotingPeriod().getPeriod() });
 	}
 
-	if (previousElection != null && !previousElection.getVotingPeriod().isPastPeriod()) { // future
-												// voting
-												// period
-												// (must
-												// be
-												// deleted)
+	if (previousElection != null && previousElection.getVotingPeriod() != null && !previousElection.getVotingPeriod().isPastPeriod()) {
+	    // future voting period (must be deleted)
 	    previousElection.getVotingPeriod().delete();
 	}
     }
