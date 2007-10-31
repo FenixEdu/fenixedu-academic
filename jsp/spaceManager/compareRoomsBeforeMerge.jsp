@@ -33,6 +33,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 				<fr:property name="columnClasses" value="width200px,,"/>
+				<fr:property name="rowClasses" value="bold,,,,," />	
             </fr:layout>		         							
 		</fr:view>
 		<fr:view name="spaceBean" property="space" schema="ViewRoomImportantAssociationsBeforeMerge">			
@@ -47,6 +48,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 				<fr:property name="columnClasses" value="width200px,,"/>
+				<fr:property name="rowClasses" value="bold,,,,," />		
             </fr:layout>		         							
 		</fr:view>
 		<fr:view name="spaceBean" property="selectedParentSpace" schema="ViewRoomImportantAssociationsBeforeMerge">			
