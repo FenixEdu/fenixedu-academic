@@ -361,8 +361,8 @@
 		<property name="labelFormat" value="label.${simpleName}" />
 		<property name="bundle" value="SPACE_RESOURCES" />
 	</slot>	
-	<slot name="barCodeNumber" key="label.material.barCodeNumber"/>
 	<slot name="presentationDetails" key="label.material.details"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber"/>	
 	<slot name="owner" key="label.material.owner">	
 		<property name="format" value="${presentationName}"/>
 	</slot>					
