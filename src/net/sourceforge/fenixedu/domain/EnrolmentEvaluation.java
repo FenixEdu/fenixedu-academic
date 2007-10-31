@@ -289,7 +289,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (examDate != null) {
             final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
 	    if (stateInExamDate == null || !stateInExamDate.isActive()) {
-        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState");
+        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", getEnrolment().getRegistration().getStudent().getNumber().toString());
 	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
         } else if (grade.isEmpty()) {
