@@ -529,6 +529,9 @@ public class RequestChecksumFilter implements Filter {
 	if (uri.indexOf("domainbrowser/") >= 0) {
 	    return false;
 	}
+	if (uri.indexOf("images/") >= 0) {
+	    return false;
+	}
         if (uri.indexOf("javaScript/") >= 0) {
             return false;
         }
