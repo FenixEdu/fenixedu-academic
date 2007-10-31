@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="net.sourceforge.fenixedu.domain.space.Space"%>
+<%@page import="net.sourceforge.fenixedu.domain.space.AllocatableSpace"%>
 <html:xhtml/>
 
 <logic:present name="selectedSpaceInformation">
@@ -131,7 +132,7 @@
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
 		</html:link>
 		
-		<% if(thisSpace.isAllocatableSpace()) {%>
+		<% if(thisSpace.isAllocatableSpace() && ((AllocatableSpace)thisSpace).isForEducation()) { %>
 		&nbsp;,	
 		<html:link page="/manageSpaces.do?method=viewEventSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.event.space.occupations"/>
