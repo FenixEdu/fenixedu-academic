@@ -726,6 +726,14 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Collection<Enrolment> getExtraCurricularEnrolments() {
+	return getLastStudentCurricularPlan().getExtraCurricularEnrolments();
+    }
+    
+    final public Collection<Enrolment> getPropaedeuticEnrolments() {
+	return getLastStudentCurricularPlan().getPropaedeuticEnrolments();
+    }
+    
     public YearMonthDay getLastExternalApprovedEnrolmentEvaluationDate() {
 
 	if (getExternalEnrolments().isEmpty()) {
