@@ -100,40 +100,44 @@
 			</td>
 		</tr>
 	</table>
-		 
+
+
 	<%
 		if(thisSpace.personHasPermissionsToManageSpace(person)){
 	%>
 	<p class="mtop0 mbottom2">
+		<bean:message bundle="SPACE_RESOURCES" key="label.version"/>: 
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-			<bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/>
-		</html:link>&nbsp;,
+			<bean:message bundle="SPACE_RESOURCES" key="label.edit"/>
+		</html:link> | 
 		<%
 			if(thisSpace.personIsSpacesAdministrator(person)){
 		%>
 		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
-			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space.information"/>
-		</html:link>&nbsp;,	
+			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
+		</html:link> | 
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-			<bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/>
-		</html:link>&nbsp;,		
+			<bean:message bundle="SPACE_RESOURCES" key="label.create"/>
+		</html:link>
 		<logic:equal name="selectedSpaceInformation" property="space.class.superclass.superclass.name" value="net.sourceforge.fenixedu.domain.space.AllocatableSpace">
+			 | 
 			<html:link page="/manageSpaces.do?method=prepareMergeRoom&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-				<bean:message bundle="SPACE_RESOURCES" key="link.merge.space"/>
-			</html:link>&nbsp;,
+				<bean:message bundle="SPACE_RESOURCES" key="label.merge"/>
+			</html:link>
 		</logic:equal>
 		<%
 			}
 		%>
+		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.space"/>: 
 		<html:link page="/manageSpaces.do?method=prepareMoveSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-			<bean:message bundle="SPACE_RESOURCES" key="link.move.space"/>
-		</html:link>&nbsp;,
+			<bean:message bundle="SPACE_RESOURCES" key="label.move"/>
+		</html:link> | 
 		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
-			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
+			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
 		</html:link>
 		
 		<% if(thisSpace.isAllocatableSpace() && ((AllocatableSpace)thisSpace).isForEducation()) { %>
-		&nbsp;,	
+		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.consult"/>: 
 		<html:link page="/manageSpaces.do?method=viewEventSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.event.space.occupations"/>
 		</html:link>		
@@ -142,6 +146,8 @@
 	<%
 		}
 	%>
+		 
+
 		
 	<%-- BluePrints --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
@@ -153,7 +159,8 @@
 		<bean:define id="urlToViewIdentifications">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewSpaceIdentifications=true</bean:define>		
 		<bean:define id="urlToViewOriginalSpaceBlueprint">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&viewOriginalSpaceBlueprint=true</bean:define>		
 	
-		(	
+		<p>
+			<bean:message bundle="SPACE_RESOURCES" key="label.show"/>: 
 		   	<logic:equal name="viewSpaceIdentifications" value="false">
 				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></html:link> 	
 		   	</logic:equal>
@@ -181,7 +188,7 @@
 			<logic:equal name="viewOriginalSpaceBlueprint" value="true">
 				<bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/>
 			</logic:equal>	   						   		
-		)
+		</p>
 
 		<p>
 			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>				
