@@ -37,26 +37,42 @@ public class UnitUtils {
 	List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
 	for (Party party : RootDomainObject.getInstance().getPartys()) {
 	    if (party.isUnit()) {
-                Unit unit = (Unit) party;
-                if (unit.getParentUnits().isEmpty()) {
-                    allUnitsWithoutParent.add(unit);
-                }
+		Unit unit = (Unit) party;
+		if (unit.getParentUnits().isEmpty()) {
+		    allUnitsWithoutParent.add(unit);
+		}
 	    }
 	}
 	return allUnitsWithoutParent;
     }
 
-    public static List<Unit> readAllActiveUnitsThatCanBeResponsibleOfSpaces(){
+    public static List<Unit> readAllInternalActiveUnitsThatCanBeResponsibleOfSpaces(){
 	List<Unit> result = new ArrayList<Unit>();
-	final YearMonthDay now = new YearMonthDay();	
-	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.isUnit() && ((Unit)party).getCanBeResponsibleOfSpaces() && ((Unit)party).isActive(now)) {
-		result.add((Unit) party);                
+	final YearMonthDay now = new YearMonthDay();
+	Unit institutionUnit = readInstitutionUnit();
+	if(institutionUnit != null) {
+	    if (institutionUnit.getCanBeResponsibleOfSpaces() && institutionUnit.isActive(now)) {
+		result.add(institutionUnit);		    
+	    }
+	    for (Unit subUnit : institutionUnit.getSubUnits()) {
+		if (subUnit.getCanBeResponsibleOfSpaces() && subUnit.isActive(now)) {
+		    result.add(subUnit);		    
+		}
+		readAllInternalActiveSubUnitsThatCanBeResponsibleOfSpaces(result, subUnit, now);
 	    }
 	}
 	return result;
     }
-    
+
+    private static void readAllInternalActiveSubUnitsThatCanBeResponsibleOfSpaces(List<Unit> result, Unit subUnit, YearMonthDay now) {
+	for (Unit unit : subUnit.getSubUnits()) {
+	    if (unit.getCanBeResponsibleOfSpaces() && unit.isActive(now)) {
+		result.add(unit);		    
+	    }
+	    readAllInternalActiveSubUnitsThatCanBeResponsibleOfSpaces(result, unit, now);
+	}
+    }
+
     public static List<Unit> readAllActiveUnitsByType(PartyTypeEnum type) {
 	final List<Unit> result = new ArrayList<Unit>();
 	final YearMonthDay now = new YearMonthDay();	
@@ -66,15 +82,15 @@ public class UnitUtils {
 	    for (Party party : parties) {
 		if (party.isUnit()) {
 		    Unit unit = (Unit) party;
-                    if (unit.isActive(now)) {
-                        result.add(unit);
-                    }
+		    if (unit.isActive(now)) {
+			result.add(unit);
+		    }
 		}
 	    }
 	}	
 	return result;
     }
-    
+
     public static List<Unit> readAllActiveUnitsByClassification(UnitClassification unitClassification) {
 	final List<Unit> result = new ArrayList<Unit>();
 	final YearMonthDay now = new YearMonthDay();		
@@ -191,21 +207,21 @@ public class UnitUtils {
 	    result.add(unit);
 	}
     }
-    
+
     public static Collection<Unit> readAllUnitsWithClassification(UnitClassification classification) {
-    	List<Unit> result = new ArrayList<Unit>();
-    	
-	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    	if (party.isUnit()) {
-	    		Unit unit = (Unit) party;
-	    		
-	    		UnitClassification unitClassification = unit.getClassification();
-				if (unitClassification != null && unitClassification.equals(classification)) {
-	    			result.add(unit);
-	    		}
-	    	}
+	List<Unit> result = new ArrayList<Unit>();
+
+	for (Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isUnit()) {
+		Unit unit = (Unit) party;
+
+		UnitClassification unitClassification = unit.getClassification();
+		if (unitClassification != null && unitClassification.equals(classification)) {
+		    result.add(unit);
+		}
 	    }
-	    
-	    return result;
+	}
+
+	return result;
     }
 }

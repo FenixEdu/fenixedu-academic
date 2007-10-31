@@ -6,8 +6,14 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <logic:present name="materialTypeBean">
+
 	<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 	<h2><bean:message key="title.insert.material.occupations" bundle="SPACE_RESOURCES"/></h2>	
+	
+	<bean:define id="space" name="materialTypeBean" property="spaceInformation.space" toScope="request"/>	
+	<bean:define id="selectedSpace" name="materialTypeBean" property="spaceInformation.space" toScope="request"/>
+	<jsp:include page="spaceCrumbs.jsp"/>	
+	<bean:define id="space" name="materialTypeBean" property="spaceInformation.space"/>
 
 	<bean:define id="spaceInformationID" name="materialTypeBean" property="spaceInformation.idInternal"/>
 	<bean:define id="showMaterialSpaceOccupationLink">/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0&spaceInformationID=<bean:write name="spaceInformationID"/></bean:define>

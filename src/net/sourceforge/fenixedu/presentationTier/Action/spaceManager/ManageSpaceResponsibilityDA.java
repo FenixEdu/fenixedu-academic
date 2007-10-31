@@ -53,7 +53,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 	
 	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	setSpaceInformation(request, spaceInformation);	
-	request.setAttribute("possibleInternalUnits", UnitUtils.readAllActiveUnitsThatCanBeResponsibleOfSpaces());		
+	request.setAttribute("possibleInternalUnits", UnitUtils.readAllInternalActiveUnitsThatCanBeResponsibleOfSpaces());		
 	request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
     }
 
