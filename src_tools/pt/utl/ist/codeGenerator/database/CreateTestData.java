@@ -300,7 +300,7 @@ public class CreateTestData {
 
         private void createRoom(Floor floor) {
             final Room room = new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
-                    Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1));
+                    Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1) , null, null);
             room.setExtensionOccupationsAccessGroup(managersGroup);
             room.setGenericEventOccupationsAccessGroup(managersGroup);
             room.setLessonOccupationsAccessGroup(managersGroup);
